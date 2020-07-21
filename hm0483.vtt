@@ -1,0 +1,2811 @@
+WEBVTT FILE
+
+1
+00:00:00.840 --> 00:00:03.930
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.930 --> 00:00:07.260
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:07.260 --> 00:00:11.550
+Tellerik create compelling app experiences
+across any screen with the
+
+4
+00:00:11.550 --> 00:00:16.410
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
+
+5
+00:00:16.410 --> 00:00:20.100
+leading UI tools with cloud
+services to simplify the entire
+
+6
+00:00:20.100 --> 00:00:24.570
+app development cycle Tellerik offers
+everything.net developers need to build
+
+7
+00:00:24.570 --> 00:00:33.990
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform
+
+8
+00:00:48.480 --> 00:00:54.090
+from hanselminutes.com. It's Hansel minutes,
+a weekly discussion with web
+
+9
+00:00:54.090 --> 00:00:58.890
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+10
+00:00:58.890 --> 00:01:02.850
+number four 87. In this
+episode, Scott talks with Dominic
+
+11
+00:01:02.850 --> 00:01:10.830
+buyer about identity server and
+asp.net. Hi, this is Scott
+
+12
+00:01:10.830 --> 00:01:13.470
+Hanselman. This is another episode
+of Hansel minutes today. I'm
+
+13
+00:01:13.470 --> 00:01:17.250
+talking with Dominic buyer and
+you've worked on identity services
+
+14
+00:01:17.250 --> 00:01:19.740
+and identity things for, for
+many years now, haven't you?
+
+15
+00:01:21.030 --> 00:01:24.570
+Yeah, it feels like forever.
+Why was that an area
+
+16
+00:01:24.570 --> 00:01:30.330
+that you jumped into? I
+think I was always like,
+
+17
+00:01:31.170 --> 00:01:34.920
+like a, like a believer
+in, in the authentication as
+
+18
+00:01:34.920 --> 00:01:38.520
+a service idea, you know,
+like way, way back when
+
+19
+00:01:38.520 --> 00:01:43.320
+I installed windows server groups.
+Yeah. The first mainstream way
+
+20
+00:01:43.420 --> 00:01:46.950
+to connect machines in, in
+a home network kind of
+
+21
+00:01:46.950 --> 00:01:51.720
+thing. You know, you had
+this, this idea of windows
+
+22
+00:01:51.720 --> 00:01:56.010
+that you basically could seamlessly
+access resource on the network,
+
+23
+00:01:56.010 --> 00:01:58.950
+like file fileshares and printers
+and so on, but to
+
+24
+00:01:58.950 --> 00:02:00.810
+make that work, you had
+to go to every single
+
+25
+00:02:00.810 --> 00:02:02.670
+machine and set up the
+same account with the same
+
+26
+00:02:02.670 --> 00:02:07.560
+password everywhere. And if you
+wanted to change your password,
+
+27
+00:02:07.560 --> 00:02:09.120
+you had to go to
+all of the machines and
+
+28
+00:02:09.120 --> 00:02:10.860
+change your password and so
+on and so forth. And
+
+29
+00:02:11.220 --> 00:02:14.120
+Microsoft fixed that by, you
+know, introducing the idea of
+
+30
+00:02:14.190 --> 00:02:19.740
+a domain like the windows
+domain. And that's where I
+
+31
+00:02:19.740 --> 00:02:24.060
+got interested into in authentication
+protocols. Like, you know, NTLM
+
+32
+00:02:24.060 --> 00:02:28.380
+first and then Kerberos and,
+you know, the domain, the
+
+33
+00:02:28.380 --> 00:02:30.510
+idea of a domain and
+the domain controller as a
+
+34
+00:02:30.510 --> 00:02:33.990
+technical means to it solve
+this problem, like single sign
+
+35
+00:02:33.990 --> 00:02:39.210
+on across your machines and
+the account on the list
+
+36
+00:02:39.210 --> 00:02:41.250
+in a single place and
+as a service in your
+
+37
+00:02:41.250 --> 00:02:45.360
+network that provides the authentication
+for all of the things
+
+38
+00:02:45.360 --> 00:02:48.060
+that are interested in it.
+And you know, that, that,
+
+39
+00:02:48.270 --> 00:02:51.570
+that kind of got me
+interested. And that was funny.
+
+40
+00:02:51.570 --> 00:02:54.450
+I remember that like, you're,
+you're bringing back a point
+
+41
+00:02:54.450 --> 00:02:57.360
+of pain from the past
+where we had to run
+
+42
+00:02:57.360 --> 00:02:59.470
+around to every machine and
+make sure that the same
+
+43
+00:02:59.470 --> 00:03:02.560
+users and passwords existed on
+the same machines, looking back
+
+44
+00:03:02.620 --> 00:03:09.450
+what a stupid idea that
+was. Yeah. And, and I,
+
+45
+00:03:09.540 --> 00:03:13.200
+by the time that was
+roughly the time when I,
+
+46
+00:03:13.200 --> 00:03:17.670
+you know, finished university and
+did that, ed was like,
+
+47
+00:03:17.970 --> 00:03:21.300
+like, you know, the late
+nineties kind of the NT
+
+48
+00:03:21.300 --> 00:03:24.990
+four days. And then, and
+then windows 2000 with this
+
+49
+00:03:25.860 --> 00:03:29.700
+really exciting thing called active
+directory and the protocols. And,
+
+50
+00:03:29.700 --> 00:03:33.870
+you know, it was really
+interesting and, and technically amazing
+
+51
+00:03:33.870 --> 00:03:39.090
+how this stuff worked. And
+so, you know, windows provided
+
+52
+00:03:39.090 --> 00:03:41.520
+and I was a w
+develop at a time and
+
+53
+00:03:41.520 --> 00:03:45.030
+I wrote mostly software for
+intranet. Well, like everybody did,
+
+54
+00:03:45.030 --> 00:03:48.690
+I guess at that time.
+And, you know, windows just
+
+55
+00:03:48.690 --> 00:03:51.090
+provide the disc, this magic,
+you know, this, this checkbox
+
+56
+00:03:51.240 --> 00:03:55.110
+enable windows integrated authentication, and,
+you know, that's all you
+
+57
+00:03:55.110 --> 00:04:03.780
+needed as things started working.
+And, and then later on,
+
+58
+00:04:04.170 --> 00:04:07.740
+you know, moving forward, I
+build more and more internet
+
+59
+00:04:08.280 --> 00:04:11.990
+enabled applications. And suddenly we
+didn't have the luxury anymore
+
+60
+00:04:12.040 --> 00:04:14.340
+of an active directory that,
+that just took care of
+
+61
+00:04:14.340 --> 00:04:18.750
+everything, right. Suddenly, you know,
+because windows authentication only works
+
+62
+00:04:18.780 --> 00:04:21.660
+if all of the parties
+are in the same domain,
+
+63
+00:04:21.660 --> 00:04:24.480
+like the client and the
+servers and the users and
+
+64
+00:04:24.480 --> 00:04:28.530
+all that. So, you know,
+built for many, many years
+
+65
+00:04:28.560 --> 00:04:31.170
+like everyone did, I guess,
+many applications, we have, you
+
+66
+00:04:31.170 --> 00:04:34.680
+know, forms authentication, for example.
+And you wrote that login
+
+67
+00:04:34.680 --> 00:04:38.340
+page over and over again.
+And, you know, writing a
+
+68
+00:04:38.340 --> 00:04:41.340
+good login page is actually
+hard work. I mean, all
+
+69
+00:04:41.340 --> 00:04:43.530
+of the, the things you
+need to know about how
+
+70
+00:04:43.530 --> 00:04:46.170
+to store your passwords and
+how to validate your passwords
+
+71
+00:04:46.170 --> 00:04:49.020
+and, you know, proved false
+attacks and you know, this
+
+72
+00:04:49.020 --> 00:04:55.230
+and that. So, and I
+thought, why, why doesn't do,
+
+73
+00:04:55.410 --> 00:04:57.720
+you know, like the same
+idea of indication as a
+
+74
+00:04:57.720 --> 00:05:02.310
+service, why doesn't this exist
+for, you know, non windows
+
+75
+00:05:02.310 --> 00:05:05.340
+environments, you know, just as
+an application service, so to
+
+76
+00:05:05.340 --> 00:05:09.600
+speak and, and you know,
+that, and, and the whole
+
+77
+00:05:09.600 --> 00:05:11.760
+idea of single sign on
+that comes with that. Like,
+
+78
+00:05:12.060 --> 00:05:15.210
+you know, like, like, like,
+like with the active directory,
+
+79
+00:05:15.210 --> 00:05:17.910
+you wouldn't install an ADE
+just for a single computer,
+
+80
+00:05:17.910 --> 00:05:20.370
+but once you have a
+number of computers, it gave
+
+81
+00:05:20.370 --> 00:05:22.920
+you many benefits. And the
+same idea was with applications.
+
+82
+00:05:22.950 --> 00:05:25.650
+Once you have like two
+or three applications, you might
+
+83
+00:05:25.650 --> 00:05:27.120
+want to give to use
+as a single sign on
+
+84
+00:05:27.120 --> 00:05:33.510
+experience across the applications. So,
+and then back in two
+
+85
+00:05:33.510 --> 00:05:37.500
+days, eight, I think Microsoft
+released a thing called the
+
+86
+00:05:37.500 --> 00:05:40.440
+windows identity foundation. And that
+was the first time, day,
+
+87
+00:05:40.580 --> 00:05:45.000
+day made single sign on
+protocols that are, that were
+
+88
+00:05:45.000 --> 00:05:49.950
+independent of windows authentication part
+of.net, or, but by the
+
+89
+00:05:49.950 --> 00:05:52.080
+time it, it was a
+separate download, but then it
+
+90
+00:05:52.080 --> 00:05:55.740
+became later part of.net and.net
+4.5. And that's where I
+
+91
+00:05:55.740 --> 00:05:59.600
+wrote my first, what is
+called a security token service.
+
+92
+00:05:59.600 --> 00:06:02.810
+So that's basically D the
+active directory domain controller for
+
+93
+00:06:02.810 --> 00:06:07.360
+applications, so to speak. We
+see that, that STS a
+
+94
+00:06:07.360 --> 00:06:10.210
+lot in, in URLs now,
+especially if you've done any
+
+95
+00:06:10.210 --> 00:06:13.960
+kind of logging into corporations,
+you know, you'll, you'll log
+
+96
+00:06:13.960 --> 00:06:16.840
+into a site, you'll bounce
+over to a secure token
+
+97
+00:06:16.840 --> 00:06:19.960
+service, and then you'll bounce,
+you'll bounce back. And that
+
+98
+00:06:19.960 --> 00:06:22.660
+seems like that marks a
+fundamental shift in how we
+
+99
+00:06:22.930 --> 00:06:27.670
+pass security information around. I
+mean, there's a lot of
+
+100
+00:06:27.670 --> 00:06:32.410
+websites using basic auth over
+SSL, and then maybe using
+
+101
+00:06:32.620 --> 00:06:35.530
+some hash to techniques over
+SSL, but for the most
+
+102
+00:06:35.530 --> 00:06:38.890
+part, they're throwing their name
+and password around. How does
+
+103
+00:06:38.890 --> 00:06:45.100
+this STS concept differ? So
+the idea is, is authentication
+
+104
+00:06:45.100 --> 00:06:48.310
+as a service. Yeah. So
+you're writing an application. You
+
+105
+00:06:48.310 --> 00:06:50.270
+don't have to be a
+security expert for that. You're,
+
+106
+00:06:50.270 --> 00:06:53.620
+you're concentrating on your business
+domain. You want to implement,
+
+107
+00:06:53.620 --> 00:06:56.230
+and you have to think
+called a security token service,
+
+108
+00:06:56.230 --> 00:06:59.710
+which implements the authentication process
+for you. And then you
+
+109
+00:06:59.710 --> 00:07:03.370
+use a protocol basically to
+hand over control to this
+
+110
+00:07:03.370 --> 00:07:06.040
+STS thing. The STS does
+all of the, you know,
+
+111
+00:07:06.250 --> 00:07:10.330
+the hard, complicated security stuff,
+validating the user's identity and
+
+112
+00:07:10.330 --> 00:07:13.810
+so on. And the SDS
+basically froze you back. So-called
+
+113
+00:07:13.810 --> 00:07:17.380
+security token over the fence
+that you can validate. And
+
+114
+00:07:17.380 --> 00:07:19.990
+once you, you know, you
+make sure it is coming
+
+115
+00:07:19.990 --> 00:07:23.620
+from a trusted, from a
+trusted party. Then this token
+
+116
+00:07:23.620 --> 00:07:26.350
+contains the information you want
+to know about that user.
+
+117
+00:07:26.920 --> 00:07:30.340
+And that that's a really
+simple contract. You, you, you
+
+118
+00:07:30.340 --> 00:07:32.530
+go to an STS, the
+STS makes it happen and
+
+119
+00:07:32.530 --> 00:07:35.170
+sends you back the information
+about the user, you know,
+
+120
+00:07:35.200 --> 00:07:38.440
+just like active directory back
+in the day. Now, how
+
+121
+00:07:38.440 --> 00:07:42.430
+does a secure token server
+relate or fit into this
+
+122
+00:07:42.430 --> 00:07:44.980
+concept that we hear so
+much about now called claims-based
+
+123
+00:07:44.980 --> 00:07:51.040
+authentication? Okay. So claims are
+really Just a way to,
+
+124
+00:07:51.160 --> 00:07:54.970
+To describe the identity of
+a user. So again, this
+
+125
+00:07:54.970 --> 00:07:58.360
+is not a new idea
+at all. So active directory
+
+126
+00:07:58.360 --> 00:08:01.180
+have claimed support since day,
+one day. They just had
+
+127
+00:08:01.180 --> 00:08:05.200
+a very limited support for
+it. So in windows security,
+
+128
+00:08:05.200 --> 00:08:08.020
+we basically only have two
+claim types as we call
+
+129
+00:08:08.020 --> 00:08:10.420
+them. One is the name
+of a user, and one
+
+130
+00:08:10.450 --> 00:08:14.830
+other two groups this user
+is member of. And so
+
+131
+00:08:14.830 --> 00:08:17.620
+basically every croup is a
+claim, but not every claim
+
+132
+00:08:17.620 --> 00:08:20.290
+is accrued. So claims are
+more like a product concept,
+
+133
+00:08:20.290 --> 00:08:22.840
+like think of key value
+pairs, like, you know, first
+
+134
+00:08:22.840 --> 00:08:28.240
+name, Dominic, last name, buyer,
+favorite color blue. Yeah. So
+
+135
+00:08:28.270 --> 00:08:31.870
+basically a way to, to
+describe the identity of a
+
+136
+00:08:31.870 --> 00:08:35.170
+user using key value pairs
+or statements as we call
+
+137
+00:08:35.180 --> 00:08:40.180
+them in claim space, identity.
+Okay. And when you're passing
+
+138
+00:08:40.180 --> 00:08:43.690
+claims around, do you pass
+less information or less context?
+
+139
+00:08:43.750 --> 00:08:46.060
+Do you like, do you
+have to do less because
+
+140
+00:08:46.060 --> 00:08:49.990
+you really only care if,
+if someone meets the claim
+
+141
+00:08:49.990 --> 00:08:51.820
+or not, you don't need
+all of the information about,
+
+142
+00:08:53.140 --> 00:08:57.690
+Well, typically protocols, a way
+of telling the STS, which
+
+143
+00:08:57.720 --> 00:09:00.630
+claims you're interested in. So,
+so for example, you can
+
+144
+00:09:00.630 --> 00:09:04.170
+say, Hey, I want to
+know profile information about Dominic.
+
+145
+00:09:04.170 --> 00:09:06.090
+So that might be the
+first name, last name, his
+
+146
+00:09:06.090 --> 00:09:09.180
+nickname, maybe a link to
+his profile picture, stuff like
+
+147
+00:09:09.180 --> 00:09:12.120
+that. Or, or you might
+say like, okay, I need
+
+148
+00:09:12.120 --> 00:09:14.790
+his email address. Or maybe
+you only care about having
+
+149
+00:09:14.790 --> 00:09:17.820
+a unique ID of the
+user that you can use
+
+150
+00:09:17.820 --> 00:09:21.930
+to correlate local information with
+that user. So that's basically
+
+151
+00:09:22.320 --> 00:09:27.860
+up to the application asking
+for those claims, okay. Trying
+
+152
+00:09:27.860 --> 00:09:29.210
+to get my head around
+this. I'm trying to put
+
+153
+00:09:29.210 --> 00:09:31.700
+these things into the context
+of how, how I do
+
+154
+00:09:31.700 --> 00:09:35.900
+things in existing applications. Like
+right now, I understand that
+
+155
+00:09:35.900 --> 00:09:37.550
+I think the people who
+are listening to understand how
+
+156
+00:09:37.550 --> 00:09:40.340
+to do basic authentication against
+a person, and then we
+
+157
+00:09:40.340 --> 00:09:43.010
+always have this, let's just
+refer to it in the
+
+158
+00:09:43.010 --> 00:09:47.600
+context of asp.net. This old
+idea of is enroll, right?
+
+159
+00:09:48.020 --> 00:09:51.050
+Where we, we have a
+data, another database somewhere that
+
+160
+00:09:51.050 --> 00:09:53.180
+keeps track of whether or
+not a user is in
+
+161
+00:09:53.180 --> 00:09:57.440
+a particular role. How does
+that differ from passing a
+
+162
+00:09:57.440 --> 00:10:03.200
+claim around like, is the
+claim cryptographically significant somehow? Well,
+
+163
+00:10:04.040 --> 00:10:06.560
+again, the way this works
+is typically, I mean, let's,
+
+164
+00:10:06.560 --> 00:10:10.160
+let's relate that maybe two
+forms authentication asp.net, because that's
+
+165
+00:10:10.370 --> 00:10:14.870
+a close idea, just that
+the form, now it doesn't
+
+166
+00:10:14.870 --> 00:10:17.090
+live anymore in your own
+application. It lives in a
+
+167
+00:10:17.090 --> 00:10:20.390
+central place. Okay. That's a
+good, that's a very good
+
+168
+00:10:20.390 --> 00:10:23.630
+example. So like in informs
+authentication, you always had to
+
+169
+00:10:24.110 --> 00:10:26.330
+have to provide a log
+in URL in your web
+
+170
+00:10:26.330 --> 00:10:28.850
+conflict, for example, right. But
+this had to be a
+
+171
+00:10:28.850 --> 00:10:32.120
+local URL in your local
+application. The way these authentication
+
+172
+00:10:32.120 --> 00:10:36.410
+protocols work is you specify
+basically a URL to some
+
+173
+00:10:36.470 --> 00:10:41.330
+other server other service login
+page. Right. Okay. And then
+
+174
+00:10:41.540 --> 00:10:44.720
+the user gets bounds to
+this server. This server is
+
+175
+00:10:44.720 --> 00:10:47.330
+connected to the database that
+holds the password of the
+
+176
+00:10:47.330 --> 00:10:50.780
+user, for example, and also
+holds, you know, other information
+
+177
+00:10:50.780 --> 00:10:53.870
+like his roles, for example.
+And then once that, that
+
+178
+00:10:54.170 --> 00:10:58.430
+central authentication service done it,
+it passes the information back
+
+179
+00:10:58.430 --> 00:11:01.010
+to the, to the application
+that are, that, that, that
+
+180
+00:11:01.010 --> 00:11:04.640
+was asking for it. And
+the way that the physical
+
+181
+00:11:04.640 --> 00:11:07.310
+format it passes that back
+is called a security token.
+
+182
+00:11:07.310 --> 00:11:11.840
+So that's a crypto graphically
+sealed data structure. And this
+
+183
+00:11:11.840 --> 00:11:14.900
+thing contains the claims and
+which claims it contains depends
+
+184
+00:11:14.900 --> 00:11:17.990
+typically on which claims the
+application wants to know about
+
+185
+00:11:17.990 --> 00:11:21.260
+that user. Okay. Yeah. So
+the thing that we passed
+
+186
+00:11:21.260 --> 00:11:26.030
+around in the context of
+asp.net was an asp.net formatted
+
+187
+00:11:26.330 --> 00:11:29.980
+cookie that had some cryptography
+in it. But this, this
+
+188
+00:11:29.990 --> 00:11:32.630
+new format is this a
+standard, has the world gotten
+
+189
+00:11:32.630 --> 00:11:34.730
+together and agreed that this
+is how we store these
+
+190
+00:11:34.730 --> 00:11:39.290
+things in cookies. So the
+cookie will, will, and is
+
+191
+00:11:39.680 --> 00:11:43.070
+still in private implementation form
+it because you, you don't
+
+192
+00:11:43.070 --> 00:11:47.810
+use cookies to cross boundaries.
+So the way the authentication
+
+193
+00:11:47.810 --> 00:11:51.110
+service exchanges, the data with
+data, client application that has
+
+194
+00:11:51.110 --> 00:11:54.280
+been standardized, and that is
+called a chase in DEP
+
+195
+00:11:54.290 --> 00:11:57.640
+token, that's basically a chase
+and formatted data structure, which
+
+196
+00:11:57.640 --> 00:12:02.140
+has, you know, key value
+pairs. And the authentication server
+
+197
+00:12:02.140 --> 00:12:05.380
+passes the information to the
+claims back to the, to
+
+198
+00:12:05.380 --> 00:12:09.550
+the client application using is
+chasing that token format. Then
+
+199
+00:12:09.550 --> 00:12:12.370
+the client application validates that,
+chasing that token and turns
+
+200
+00:12:12.370 --> 00:12:14.320
+it into a cookie. And
+from that point on, it
+
+201
+00:12:14.320 --> 00:12:17.530
+doesn't really matter anymore because
+it's cookie is a private
+
+202
+00:12:17.560 --> 00:12:21.810
+implementation detail off the application.
+And there's a website that's
+
+203
+00:12:21.840 --> 00:12:27.150
+jwt.io. That's really very educational,
+a good way to go
+
+204
+00:12:27.150 --> 00:12:30.060
+up and see tokens and
+then chop them up into
+
+205
+00:12:30.060 --> 00:12:33.540
+their component parts. So yeah,
+I use that thing all
+
+206
+00:12:33.540 --> 00:12:37.080
+the time when writing code,
+like, like it's a brilliant
+
+207
+00:12:37.080 --> 00:12:39.480
+way to Deepak you're chasing
+web tokens, so to speak.
+
+208
+00:12:39.480 --> 00:12:42.330
+So you are, you are,
+you are playing with your
+
+209
+00:12:42.330 --> 00:12:44.460
+token service. You want to
+see what's coming back, you
+
+210
+00:12:44.460 --> 00:12:46.890
+just copy and paste this
+thing into the, into the
+
+211
+00:12:46.890 --> 00:12:50.160
+website and they show you
+the contents because chasing up
+
+212
+00:12:50.160 --> 00:12:54.330
+tokens are basics for URL
+encoded. So, you know, that
+
+213
+00:12:54.330 --> 00:12:56.550
+makes it just easier to
+look, to have a peek
+
+214
+00:12:56.550 --> 00:12:59.670
+inside of the tokens. No,
+I have to say though,
+
+215
+00:12:59.670 --> 00:13:02.610
+as an old timer, a
+lot of this feels very
+
+216
+00:13:02.610 --> 00:13:05.160
+familiar to the things that
+we were doing with, you
+
+217
+00:13:05.160 --> 00:13:08.670
+know, Ws security, you know,
+a couple of years ago,
+
+218
+00:13:08.670 --> 00:13:11.670
+except it's curly braces instead
+of angle brackets, what are
+
+219
+00:13:11.670 --> 00:13:15.000
+we doing differently and how,
+how much of this is
+
+220
+00:13:15.000 --> 00:13:20.520
+the past coming back versus
+new new ideas. So all
+
+221
+00:13:20.520 --> 00:13:22.440
+of these protocols, to be
+honest with you, they are
+
+222
+00:13:22.440 --> 00:13:26.310
+just re implementations of Kerberos.
+That's why I left this
+
+223
+00:13:26.310 --> 00:13:28.770
+protocol the March, because it
+had all the ideas in
+
+224
+00:13:28.770 --> 00:13:32.700
+it. So Kerberos was binary
+and obviously not internet friendly.
+
+225
+00:13:33.060 --> 00:13:35.700
+Then the second wave was
+kind of Ws security, as
+
+226
+00:13:35.700 --> 00:13:38.610
+you mentioned, which was, you
+know, like text and XML
+
+227
+00:13:38.610 --> 00:13:42.870
+encoded and could be transported
+over HDP. But the problem
+
+228
+00:13:42.870 --> 00:13:46.140
+with Ws security is that
+it's way too complicated. So
+
+229
+00:13:46.140 --> 00:13:50.270
+you need like a fully
+featured XML stack on, on
+
+230
+00:13:50.280 --> 00:13:53.340
+every platform you're using with
+which supports, you know, XML,
+
+231
+00:13:53.340 --> 00:13:56.700
+encryption, and XML, digital signatures.
+And, you know, with the
+
+232
+00:13:56.700 --> 00:14:01.020
+advent of the, the small
+factor, personal computers, like your
+
+233
+00:14:01.020 --> 00:14:04.110
+phones, for example, people are
+looking for something, you know,
+
+234
+00:14:04.440 --> 00:14:07.830
+that can be implemented with,
+you know, Java script or,
+
+235
+00:14:07.920 --> 00:14:13.120
+you know, easier to use
+technologies. And w security has
+
+236
+00:14:13.120 --> 00:14:17.880
+still has its place it's
+it's around, but it is
+
+237
+00:14:18.090 --> 00:14:22.170
+confident to be very, very
+heavy, especially for mobile devices.
+
+238
+00:14:22.170 --> 00:14:24.720
+And you want to, you
+know, people often use the
+
+239
+00:14:24.720 --> 00:14:29.710
+term API friendly, so it
+must be API friendly and
+
+240
+00:14:29.790 --> 00:14:32.700
+it must be mobile friendly.
+And the chasing up tokens
+
+241
+00:14:32.760 --> 00:14:36.720
+completely meet this criteria because,
+you know, chasing is the
+
+242
+00:14:36.720 --> 00:14:40.800
+native format in, in script.
+And every platform out there
+
+243
+00:14:40.800 --> 00:14:46.500
+can read and craft chasing.
+So Web tokens and the
+
+244
+00:14:46.500 --> 00:14:51.410
+JWT dot, well, let me
+rephrase the jwt.io website comes
+
+245
+00:14:51.410 --> 00:14:55.280
+from this company called auth
+zero, right? How much of
+
+246
+00:14:55.280 --> 00:15:00.260
+this is what you call
+defacto standards versus standards that
+
+247
+00:15:00.260 --> 00:15:01.730
+someone's in our, you know,
+a bunch of players in
+
+248
+00:15:01.730 --> 00:15:05.410
+a room really agreeing on.
+Okay. So chasing that token
+
+249
+00:15:05.440 --> 00:15:10.510
+is an RFC. It's, it's
+a, it's a standard, all
+
+250
+00:15:10.510 --> 00:15:14.320
+the protocols that I'm describing,
+but haven't mentioned yet, which
+
+251
+00:15:14.320 --> 00:15:17.590
+is called open ID connect
+and OAuth two, they all
+
+252
+00:15:17.590 --> 00:15:21.250
+standards. So we are right
+now in a pretty good
+
+253
+00:15:21.250 --> 00:15:25.840
+spot that we actually have
+standards that everybody agrees on.
+
+254
+00:15:26.170 --> 00:15:29.890
+They are easy to use
+as opposed to Ws security,
+
+255
+00:15:29.890 --> 00:15:34.960
+for example, and they are
+interoperable. And so right now
+
+256
+00:15:34.990 --> 00:15:36.610
+we are in a, in
+a we're living in really
+
+257
+00:15:36.610 --> 00:15:40.480
+good times for, for these
+kinds of technologies Do now.
+
+258
+00:15:40.480 --> 00:15:43.900
+So on the asp.net side,
+there's been kind of a
+
+259
+00:15:43.900 --> 00:15:48.400
+number of reboots of identity
+over the years, some more
+
+260
+00:15:48.400 --> 00:15:53.800
+successful than others. And, and
+you've been very outspoken about
+
+261
+00:15:53.800 --> 00:15:55.510
+what you thought was good
+and what you thought wasn't
+
+262
+00:15:55.510 --> 00:15:58.900
+good. And is it true
+that you and your buddy
+
+263
+00:15:58.900 --> 00:16:01.660
+Brock Island kind of got
+together and said that, you
+
+264
+00:16:01.660 --> 00:16:04.390
+know, here's a, here's a
+better way to do identity?
+
+265
+00:16:06.790 --> 00:16:12.070
+So Brock I know broke
+for like, I think 10
+
+266
+00:16:12.070 --> 00:16:15.280
+or 12 years now. And,
+you know, like when we
+
+267
+00:16:15.280 --> 00:16:18.460
+start, when I started building
+identity about the very first
+
+268
+00:16:18.460 --> 00:16:21.550
+version was called starter STS.
+So, you know, which kind
+
+269
+00:16:21.550 --> 00:16:24.670
+of transports what I had
+in mind, like giving people
+
+270
+00:16:24.670 --> 00:16:27.580
+an easy start to, to
+get these technologies into their
+
+271
+00:16:27.580 --> 00:16:33.100
+applications. And then it evolved
+over the years. And so
+
+272
+00:16:33.160 --> 00:16:36.040
+starting with identities have aversion
+to Brock and I work
+
+273
+00:16:36.040 --> 00:16:38.410
+together. So for the last
+three or four years, we've
+
+274
+00:16:38.410 --> 00:16:42.370
+been pretty much, you know,
+working almost every, every day
+
+275
+00:16:42.370 --> 00:16:45.190
+together on, on, on the,
+We kicked it off. And
+
+276
+00:16:45.190 --> 00:16:49.990
+then you found your, your,
+your kindred spirit. Yeah. Luckily,
+
+277
+00:16:51.580 --> 00:16:54.070
+because that takes the first
+couple of years, it was
+
+278
+00:16:54.070 --> 00:16:57.430
+all me, but it became
+too much work to be
+
+279
+00:16:57.430 --> 00:17:01.180
+honest. So I was always
+like, as I said in
+
+280
+00:17:01.180 --> 00:17:04.240
+the beginning, more like on
+the protocol side of things.
+
+281
+00:17:04.510 --> 00:17:07.570
+So I was totally interested
+in how to implement these
+
+282
+00:17:07.570 --> 00:17:11.320
+protocols, that con that, you
+know, that transport the tokens
+
+283
+00:17:11.320 --> 00:17:13.600
+back and forth and how
+to build the tokens and
+
+284
+00:17:13.600 --> 00:17:17.500
+how to validate them and
+these things. And I remember
+
+285
+00:17:17.500 --> 00:17:19.960
+like broke and I had
+like a conversation couple of
+
+286
+00:17:19.960 --> 00:17:23.470
+years back, and we were
+like, you know, angry about
+
+287
+00:17:23.470 --> 00:17:27.820
+the original asp.net membership system,
+the membership provider, like a
+
+288
+00:17:28.420 --> 00:17:31.000
+broken, I have been teaching
+for many, many years. And
+
+289
+00:17:31.000 --> 00:17:34.470
+we, we, we basically explained
+the membership and the road
+
+290
+00:17:34.470 --> 00:17:37.030
+system to many people over
+those years. And I always
+
+291
+00:17:37.330 --> 00:17:39.340
+had to show them that
+desk is based class called
+
+292
+00:17:39.340 --> 00:17:42.010
+membership provider. And you have
+to 28 methods on that.
+
+293
+00:17:42.010 --> 00:17:44.830
+And you don't care about
+any of those besides the
+
+294
+00:17:44.830 --> 00:17:50.550
+validate user one. So one
+evening were basically choking Ohio.
+
+295
+00:17:50.550 --> 00:17:52.200
+I was talking basically saying
+like, you know what, this
+
+296
+00:17:52.200 --> 00:17:56.070
+membership thing needs to reboot.
+And that's why that's where
+
+297
+00:17:56.100 --> 00:17:58.920
+Brock picked up the idea
+of like, Oh, let's write
+
+298
+00:17:58.920 --> 00:18:04.110
+a something called membership reboot.
+And membership reboot is basically
+
+299
+00:18:04.200 --> 00:18:06.960
+an API over your database.
+Like just like the new
+
+300
+00:18:06.960 --> 00:18:12.480
+Espinoza identity that is part
+of ACO net. So Brock
+
+301
+00:18:12.510 --> 00:18:15.720
+was more at the times,
+at least more concentrating on
+
+302
+00:18:15.720 --> 00:18:19.920
+how to store users, how
+to validate users, how to
+
+303
+00:18:19.920 --> 00:18:22.740
+store passwords in a secure
+way, where I was more
+
+304
+00:18:22.740 --> 00:18:25.680
+like focusing on how to
+transport that stuff over the
+
+305
+00:18:25.680 --> 00:18:29.430
+network, like the outcome of
+the authentication event, so to
+
+306
+00:18:29.430 --> 00:18:33.750
+speak. And, you know, we've
+been working on that ever
+
+307
+00:18:33.750 --> 00:18:36.930
+since. And I think last
+year we finished version free
+
+308
+00:18:36.930 --> 00:18:40.170
+of a dentist, which is
+now a pure implementation of
+
+309
+00:18:40.170 --> 00:18:42.600
+OAuth two and open eConnect
+where you can block in
+
+310
+00:18:42.600 --> 00:18:45.150
+whatever identity system you like.
+You can block a membership
+
+311
+00:18:45.150 --> 00:18:47.910
+reboot, you can block an
+identity, or you can write
+
+312
+00:18:47.910 --> 00:18:50.280
+your own or connect to
+an existing one that might
+
+313
+00:18:50.280 --> 00:18:53.730
+be around in your, you
+know, in your, in your
+
+314
+00:18:53.730 --> 00:18:58.560
+company already. And the reason
+why we basically chose to
+
+315
+00:18:58.560 --> 00:19:01.290
+basically rewrite the whole thing
+and focus on these two
+
+316
+00:19:01.290 --> 00:19:06.150
+protocols of, to an open
+reconnect is because it, they
+
+317
+00:19:06.150 --> 00:19:09.900
+are like the perfect fit
+for building these modern web
+
+318
+00:19:10.050 --> 00:19:19.010
+and mobile applications that are
+powered by APIs. This episode
+
+319
+00:19:19.010 --> 00:19:21.440
+of Hansel minutes is brought
+to you by brain tree
+
+320
+00:19:21.740 --> 00:19:25.100
+code for easy online payments.
+If you're building a mobile
+
+321
+00:19:25.100 --> 00:19:28.040
+app and you're searching for
+a simple payment solution, check
+
+322
+00:19:28.040 --> 00:19:32.300
+out Braintree, the brain tree
+v.zero SDK makes it easy
+
+323
+00:19:32.300 --> 00:19:35.870
+to offer multiple mobile payment
+types. So you can start
+
+324
+00:19:35.870 --> 00:19:40.160
+accepting PayPal, Apple pay Bitcoin,
+Venmo, credit cards, and more
+
+325
+00:19:40.580 --> 00:19:44.480
+all with a single integration,
+one small snippet of code.
+
+326
+00:19:44.510 --> 00:19:47.060
+And you're set up in
+less than 10 minutes. If
+
+327
+00:19:47.060 --> 00:19:48.800
+you don't have time, you
+can give them a call.
+
+328
+00:19:48.800 --> 00:19:51.140
+They'll even handle the integration
+for you and walk you
+
+329
+00:19:51.140 --> 00:19:56.210
+through it. The SDK supports
+seven languages, dotnet node, Java,
+
+330
+00:19:56.210 --> 00:20:01.790
+Perl, PHP, Python, and Ruby
+elegant code clear documentation to
+
+331
+00:20:01.790 --> 00:20:06.050
+learn more. And for your
+first $50,000 in transactions fee
+
+332
+00:20:06.050 --> 00:20:19.010
+free, go to brain tree
+payments.com/hanselman that's Braintree payments.com/hanselman. What
+
+333
+00:20:19.250 --> 00:20:21.950
+do, what should the person
+who's listening, who, who may
+
+334
+00:20:21.950 --> 00:20:26.300
+be an asp.net person, think
+about how this fits into
+
+335
+00:20:26.300 --> 00:20:29.390
+what Comes out of the
+box and how Parts have
+
+336
+00:20:29.390 --> 00:20:33.110
+you said, this is better
+versus saying, this is an
+
+337
+00:20:33.110 --> 00:20:40.700
+extension and this adds new
+functions. So on the, on
+
+338
+00:20:40.700 --> 00:20:44.660
+the side of storing users
+and databases, it's pretty much
+
+339
+00:20:44.660 --> 00:20:46.760
+a matter of taste. The
+membership reboot and eighth minute
+
+340
+00:20:46.760 --> 00:20:50.830
+of the has pretty much
+the same feature set. Microsoft
+
+341
+00:20:50.830 --> 00:20:53.620
+started like a year later
+and then broke it, but
+
+342
+00:20:53.770 --> 00:20:57.910
+catched up quite quickly, the
+feature set is very, very
+
+343
+00:20:57.910 --> 00:21:01.000
+similar. They use different coding
+styles. So that's more or
+
+344
+00:21:01.000 --> 00:21:04.990
+less like a matter of
+taste if you like. I
+
+345
+00:21:04.990 --> 00:21:10.210
+wasn't particularly happy with, you
+know, like what used to
+
+346
+00:21:10.210 --> 00:21:15.910
+be called the, Oh, was
+a bear authorization server middleware
+
+347
+00:21:15.930 --> 00:21:19.120
+or something by the time,
+which is the thing that
+
+348
+00:21:19.120 --> 00:21:21.670
+can, that can create tokens.
+So since I was always
+
+349
+00:21:21.670 --> 00:21:25.960
+like the token creation geek,
+so to speak, yeah, I
+
+350
+00:21:25.960 --> 00:21:28.990
+thought like I can do
+that better. And we, we,
+
+351
+00:21:30.280 --> 00:21:33.040
+we created this thing called
+identity server, which is also
+
+352
+00:21:33.040 --> 00:21:36.820
+a middleware, you know, plucks
+into the Owen Katana pipeline,
+
+353
+00:21:36.820 --> 00:21:39.280
+chest STL and middleware, but
+it is designed right from
+
+354
+00:21:39.280 --> 00:21:43.030
+the start at a much
+higher abstraction level. So my
+
+355
+00:21:43.030 --> 00:21:45.880
+main point of critique for
+the built in middle West
+
+356
+00:21:45.880 --> 00:21:48.310
+by the time was that
+you still had to know
+
+357
+00:21:48.370 --> 00:21:54.070
+the protocols, very, very detailed
+to not have security problems.
+
+358
+00:21:54.460 --> 00:21:58.000
+Where were we in our
+middleware, you know, took a
+
+359
+00:21:58.000 --> 00:22:01.000
+step back and said, okay,
+we want to shield a
+
+360
+00:22:01.000 --> 00:22:04.090
+typical developer from the protocol
+details, but give him enough
+
+361
+00:22:05.590 --> 00:22:09.160
+express ability. So to speak,
+to, to model his application
+
+362
+00:22:09.160 --> 00:22:13.690
+architecture. So we, we don't
+require people to understand all
+
+363
+00:22:13.690 --> 00:22:15.910
+of the low level stuff.
+And, you know, like which,
+
+364
+00:22:16.090 --> 00:22:19.420
+which Paramita must go to
+where, and what's the signing
+
+365
+00:22:19.450 --> 00:22:22.180
+algorithm and all these little
+things, we kind of give
+
+366
+00:22:22.180 --> 00:22:24.610
+them three main things that
+they can model, which is
+
+367
+00:22:24.610 --> 00:22:29.290
+clients, which are the applications
+that are requiring authentication, which
+
+368
+00:22:29.320 --> 00:22:33.190
+are users, which are your
+humans, your carbon based life
+
+369
+00:22:33.190 --> 00:22:37.510
+forms in your, in your
+system. And, and just the
+
+370
+00:22:37.510 --> 00:22:40.120
+so called scopes. So scopes
+is a, is a term
+
+371
+00:22:40.120 --> 00:22:43.180
+from the oil specification, which
+models resources in your network.
+
+372
+00:22:43.180 --> 00:22:47.440
+Like, like you have APIs.
+So you define clients, use
+
+373
+00:22:47.440 --> 00:22:50.650
+us and scopes and identity
+that takes care of the
+
+374
+00:22:50.650 --> 00:22:53.490
+rest, so to speak. And
+it's very flexible. You've got
+
+375
+00:22:53.820 --> 00:22:55.440
+how to do it on
+NBC, how to do it
+
+376
+00:22:55.440 --> 00:22:57.420
+in a web API, how
+to do it in Ws
+
+377
+00:22:57.420 --> 00:23:01.340
+Federation. You've got self hosting.
+You've got, I mean, it's,
+
+378
+00:23:01.340 --> 00:23:05.670
+it's surprisingly deep, particularly I'm
+impressed with your, your server,
+
+379
+00:23:05.700 --> 00:23:08.370
+your samples, you know, they
+go on. Yeah. And on
+
+380
+00:23:08.370 --> 00:23:13.800
+and on. Yeah. I mean,
+the whole flexibility on the
+
+381
+00:23:13.800 --> 00:23:15.630
+hosting side of things like
+on the service side of
+
+382
+00:23:15.630 --> 00:23:20.670
+things was actually enabled by
+Catana. So Katana for me
+
+383
+00:23:20.670 --> 00:23:23.790
+was like one of the
+most important things that came
+
+384
+00:23:23.790 --> 00:23:25.530
+out in the last year,
+which, you know, gives me
+
+385
+00:23:25.530 --> 00:23:28.830
+the flexibility to host it,
+like in IAS or in
+
+386
+00:23:28.830 --> 00:23:31.980
+an empty service, embedded into
+an application and things like
+
+387
+00:23:31.980 --> 00:23:36.750
+that. And yeah, and then
+it turns out once, once
+
+388
+00:23:36.750 --> 00:23:39.720
+they implement those protocols, which
+are really designed from the
+
+389
+00:23:39.720 --> 00:23:43.920
+start to be cross-platform and
+there are no, no barriers
+
+390
+00:23:44.610 --> 00:23:48.140
+for the, to, to, to
+take part in that you
+
+391
+00:23:48.140 --> 00:23:51.290
+can write so many different
+clients for that. I mean,
+
+392
+00:23:51.290 --> 00:23:55.790
+from, from highly powered.net framework
+lines to, you know, embedded
+
+393
+00:23:55.790 --> 00:23:59.690
+systems, as long as the
+client can speak HTP, it,
+
+394
+00:23:59.930 --> 00:24:02.240
+it can take part in,
+in that, in that system.
+
+395
+00:24:03.190 --> 00:24:06.970
+So talk to me about
+where identity server would fit
+
+396
+00:24:06.970 --> 00:24:09.880
+into a world where we
+have all these, these companies
+
+397
+00:24:09.880 --> 00:24:12.640
+like auth zero that are
+promising to make things easy.
+
+398
+00:24:12.640 --> 00:24:14.770
+Like what is all zero
+four and why would I
+
+399
+00:24:14.770 --> 00:24:21.490
+use them and not identity
+server? So We made a
+
+400
+00:24:21.990 --> 00:24:26.330
+very deliberate decision. That identity
+server is not like a,
+
+401
+00:24:26.500 --> 00:24:29.050
+an off the shelf product.
+We don't have an install.
+
+402
+00:24:29.050 --> 00:24:34.660
+ACCE w we are a
+framework basically. So we require
+
+403
+00:24:35.830 --> 00:24:39.430
+at developer to, to start
+using it, to start customizing
+
+404
+00:24:39.430 --> 00:24:41.560
+it. So the whole point
+is we want people to
+
+405
+00:24:41.560 --> 00:24:44.950
+be able to customize it.
+So it's, it's a DLL,
+
+406
+00:24:44.950 --> 00:24:46.930
+you download a DLL, you
+have to host it in
+
+407
+00:24:46.930 --> 00:24:50.830
+your own process. You have
+to write code to get
+
+408
+00:24:50.830 --> 00:24:55.150
+it working. And by using
+that approach, I think we
+
+409
+00:24:55.150 --> 00:24:59.860
+have achieved a great deal
+of flexibility, because if I
+
+410
+00:24:59.860 --> 00:25:01.870
+learned one thing over the
+last, you know, 10 years
+
+411
+00:25:01.870 --> 00:25:04.960
+of consulting is that, you
+know, you talk to 10
+
+412
+00:25:04.960 --> 00:25:07.390
+customers and they have 11
+different ways of doing things.
+
+413
+00:25:07.420 --> 00:25:12.100
+Yeah. So, so with the
+previous version of identifier, we
+
+414
+00:25:12.100 --> 00:25:15.580
+kind of took the, the
+off the shelf approach and
+
+415
+00:25:15.580 --> 00:25:19.420
+try to make everything configurable
+and so on now. And
+
+416
+00:25:19.420 --> 00:25:21.700
+if it turned out it
+didn't work. There were so
+
+417
+00:25:21.700 --> 00:25:24.460
+many times people had to
+customize the source code to
+
+418
+00:25:24.790 --> 00:25:28.120
+get what they want. And
+it's, it's funny, you mentioned
+
+419
+00:25:28.120 --> 00:25:30.910
+Osira because they actually good
+friends of mine. And I
+
+420
+00:25:30.940 --> 00:25:33.910
+looked at their product. And
+when I saw their UI,
+
+421
+00:25:34.180 --> 00:25:37.000
+I thought like, wow, there's,
+there's no way I want
+
+422
+00:25:37.000 --> 00:25:39.190
+to compete with that. So
+they have a really good
+
+423
+00:25:39.520 --> 00:25:43.630
+user interface, you know, like
+for Orsiro is made for
+
+424
+00:25:43.630 --> 00:25:47.980
+people that don't want to
+own the technology in, in
+
+425
+00:25:47.980 --> 00:25:50.190
+their own, you know, like
+in their own team, they,
+
+426
+00:25:50.190 --> 00:25:51.460
+they, they want to be
+able to go to a
+
+427
+00:25:51.460 --> 00:25:54.430
+web interface and configure stuff,
+and they are really good
+
+428
+00:25:54.430 --> 00:26:00.790
+at their configuration story and,
+and be done where we
+
+429
+00:26:00.790 --> 00:26:03.790
+say like, you know what?
+We give you a framework
+
+430
+00:26:03.820 --> 00:26:07.300
+and you can customize it
+in many, much, much more
+
+431
+00:26:07.300 --> 00:26:09.460
+ways than you can ever
+customize an off the shelf
+
+432
+00:26:09.460 --> 00:26:12.910
+product. So that's kind of
+the distinction between us and
+
+433
+00:26:13.000 --> 00:26:16.990
+things like products like zero,
+when you choose identity server
+
+434
+00:26:17.050 --> 00:26:20.620
+a and it's a.net based
+library. So it mostly appeals
+
+435
+00:26:20.620 --> 00:26:25.390
+to.net shops, really where people
+write C sharp code and
+
+436
+00:26:25.390 --> 00:26:29.080
+you have be prepared to
+have a developer or a
+
+437
+00:26:29.080 --> 00:26:32.530
+team of developers that own,
+that feature inside your company.
+
+438
+00:26:32.890 --> 00:26:36.730
+There is, you know, austere
+or Azure active directory falls
+
+439
+00:26:36.730 --> 00:26:41.610
+in the same category. You're
+buying a hosted product. You
+
+440
+00:26:41.640 --> 00:26:43.230
+don't have to host it
+yourself. You don't have to
+
+441
+00:26:43.230 --> 00:26:46.890
+know that much about the
+internals as you probably need
+
+442
+00:26:46.890 --> 00:26:50.460
+to know with our stuff,
+but you also have less
+
+443
+00:26:50.490 --> 00:26:54.570
+flexibility. And the idea, and
+the other thing is, especially
+
+444
+00:26:54.570 --> 00:26:58.950
+in Germany, a cloud only
+solution in the security space
+
+445
+00:26:58.980 --> 00:27:02.220
+is not that interesting for
+most people in, in, in
+
+446
+00:27:02.220 --> 00:27:06.450
+Europe where, you know, Azure
+is a cloud only solution
+
+447
+00:27:06.450 --> 00:27:09.350
+or zero also has an
+appliance option, for example, but
+
+448
+00:27:09.360 --> 00:27:12.840
+I'm still, I think the
+main distinction point is a
+
+449
+00:27:12.840 --> 00:27:15.630
+framework versus a product. That's
+a really, that's a really
+
+450
+00:27:15.630 --> 00:27:18.140
+good way to explain it
+Because it's, it's confusing out
+
+451
+00:27:18.140 --> 00:27:20.360
+there for people who are
+interested in doing it right,
+
+452
+00:27:20.390 --> 00:27:22.910
+right. And everyone wants to
+do authentication. Right. And they
+
+453
+00:27:22.910 --> 00:27:26.210
+want to do it in
+a way that, that solves
+
+454
+00:27:26.210 --> 00:27:29.030
+all the problems that they
+have future, future proofs them.
+
+455
+00:27:29.150 --> 00:27:30.980
+You know, this seems to
+be that we seem to
+
+456
+00:27:30.980 --> 00:27:35.600
+have as an industry to
+finally start to standardize in
+
+457
+00:27:35.600 --> 00:27:37.910
+a way that we could
+write solutions that we don't
+
+458
+00:27:37.910 --> 00:27:43.160
+necessarily have to rewrite again
+in a few years. I
+
+459
+00:27:43.160 --> 00:27:45.560
+think that the main, the
+main success story for identity
+
+460
+00:27:45.560 --> 00:27:47.810
+service that over the last
+one and a half years
+
+461
+00:27:47.810 --> 00:27:50.630
+now, where we've been integrating
+it into a systems we
+
+462
+00:27:50.660 --> 00:27:54.500
+never, ever had to customize
+the source code for, for
+
+463
+00:27:54.500 --> 00:27:57.260
+a customer, for example. So
+they did, they could just
+
+464
+00:27:57.260 --> 00:28:02.120
+use the, the, the API
+service that we provide to
+
+465
+00:28:02.360 --> 00:28:05.660
+customize it in any way
+that it fits their workflows,
+
+466
+00:28:05.660 --> 00:28:11.390
+their existing databases, their, you
+know, existing regulations and, you
+
+467
+00:28:11.390 --> 00:28:15.980
+know, everything that, that is
+nonstandard Because you're just so
+
+468
+00:28:15.980 --> 00:28:17.810
+plugable, and you've gone out
+of your way to make
+
+469
+00:28:17.810 --> 00:28:22.970
+things plugable. Yes. I think
+we, you know, like the
+
+470
+00:28:22.970 --> 00:28:25.940
+last eight years or so
+of being India in the
+
+471
+00:28:25.940 --> 00:28:30.920
+security token business, kind of,
+we are, we've found a
+
+472
+00:28:30.920 --> 00:28:33.620
+good balance between, you know,
+what is, what are the
+
+473
+00:28:33.620 --> 00:28:36.260
+things that people shouldn't know
+about or shouldn't have to
+
+474
+00:28:36.260 --> 00:28:38.300
+know about and what are
+the things that people want
+
+475
+00:28:38.300 --> 00:28:42.410
+to change. And I think
+we are really, really happy
+
+476
+00:28:42.410 --> 00:28:44.540
+with how that turned out
+with the version free. Yeah.
+
+477
+00:28:44.690 --> 00:28:49.940
+So if you hit identity
+server.io, you're, you're given the
+
+478
+00:28:49.940 --> 00:28:53.780
+choice, identity manager, identity server
+identity model that, that kind
+
+479
+00:28:53.780 --> 00:28:55.910
+of left me wondering what
+to do next. Can you
+
+480
+00:28:55.910 --> 00:28:57.740
+explain those three things and
+what I'm supposed to do
+
+481
+00:28:57.740 --> 00:29:01.730
+now? Yes. So strictly speaking,
+we are involved in three
+
+482
+00:29:01.730 --> 00:29:05.390
+big open source projects, but
+like we are only two
+
+483
+00:29:05.390 --> 00:29:08.780
+people. So the domain one
+we're working on is identity
+
+484
+00:29:08.780 --> 00:29:11.510
+server. Really? That is actually
+also part of the dotnet
+
+485
+00:29:11.510 --> 00:29:16.700
+foundation. That's a dotnet foundation
+project as well. And that's
+
+486
+00:29:16.700 --> 00:29:19.400
+the, the security token service.
+That's our walls to an
+
+487
+00:29:19.400 --> 00:29:24.320
+open MediConnect implementation, then there's
+identity manager. And I think
+
+488
+00:29:24.320 --> 00:29:27.020
+you wrote a blog post
+about that, like a year
+
+489
+00:29:27.020 --> 00:29:30.980
+ago or something, which is
+like an, an idea a
+
+490
+00:29:30.980 --> 00:29:35.600
+user management tool made for
+admins or developers. So, you
+
+491
+00:29:35.600 --> 00:29:38.000
+know, roughly speaking, it's, it's
+like a replacement you've got
+
+492
+00:29:38.000 --> 00:29:39.500
+back in the days. That
+was the way that the
+
+493
+00:29:39.500 --> 00:29:43.840
+asp.net configuration tool or something
+built into visual studio that
+
+494
+00:29:43.930 --> 00:29:46.540
+allowed you to create users,
+to put them into roles
+
+495
+00:29:46.540 --> 00:29:49.240
+and all these things, and
+that got removed at some
+
+496
+00:29:49.240 --> 00:29:53.020
+point. So Brock basically wrote
+this replacement for it. So
+
+497
+00:29:53.020 --> 00:29:58.210
+it's, it's a web based
+user management tool, not for
+
+498
+00:29:58.210 --> 00:30:00.640
+self service because many people
+asking for self service, like,
+
+499
+00:30:00.640 --> 00:30:02.890
+do we support things like
+change password and reset password?
+
+500
+00:30:02.920 --> 00:30:05.170
+No, it it's more like
+an admin or a developer
+
+501
+00:30:05.170 --> 00:30:07.330
+tool. So you can, you
+know, have a view into
+
+502
+00:30:07.330 --> 00:30:10.690
+your user database. And again,
+we support a, through an
+
+503
+00:30:10.780 --> 00:30:14.410
+entity and membership reboot out
+of the box and identity
+
+504
+00:30:14.410 --> 00:30:20.020
+model is actually a collection
+of helper libraries that make
+
+505
+00:30:20.470 --> 00:30:22.420
+your life a little bit
+easier when dealing with this
+
+506
+00:30:22.420 --> 00:30:26.680
+claim space security, it's a,
+for both.net and also for
+
+507
+00:30:26.680 --> 00:30:30.070
+JavaScript. So we are, we've
+written Java script clients up.
+
+508
+00:30:30.640 --> 00:30:34.750
+That's actually proxy a little
+project Java script clients for
+
+509
+00:30:34.780 --> 00:30:37.420
+connecting to open ID connect
+service, like for example, identity
+
+510
+00:30:37.420 --> 00:30:42.550
+server. But they're also those
+net based libraries. For example,
+
+511
+00:30:42.550 --> 00:30:46.060
+again, same idea like an
+old client, for example, so
+
+512
+00:30:46.060 --> 00:30:49.060
+that you don't have to
+know the protocol you, but
+
+513
+00:30:49.060 --> 00:30:50.800
+if you say, give me
+a token, you, you know,
+
+514
+00:30:50.950 --> 00:30:55.150
+you use a library for
+that. So I identity model
+
+515
+00:30:55.150 --> 00:30:57.580
+our tools, identity manager as
+the user management story and
+
+516
+00:30:57.580 --> 00:31:01.230
+identity service, our token. Okay,
+cool. And when I, when
+
+517
+00:31:01.230 --> 00:31:03.690
+I show up here and
+I click on identity server,
+
+518
+00:31:03.690 --> 00:31:07.860
+is there a particular, you
+know, primary place for docs?
+
+519
+00:31:07.860 --> 00:31:10.590
+Are you keeping them all
+on, on the Wiki or
+
+520
+00:31:10.920 --> 00:31:13.380
+is there a, I know
+that you have got the
+
+521
+00:31:13.380 --> 00:31:18.390
+identity server documentation site. What
+are you doing your docs
+
+522
+00:31:18.390 --> 00:31:23.220
+in? Is this markdown or
+Yes, w we're using markdown
+
+523
+00:31:23.850 --> 00:31:27.690
+and we're using basically guitar
+pages like <inaudible>. So we,
+
+524
+00:31:27.900 --> 00:31:32.110
+we, that, that turns it
+into a aesthetic aesthetic, a
+
+525
+00:31:32.520 --> 00:31:36.510
+webpage and the, the, the,
+the main reason we did
+
+526
+00:31:36.510 --> 00:31:38.970
+that is the main feature
+I love about it is
+
+527
+00:31:38.970 --> 00:31:41.760
+that when people want to
+improve the docs or find
+
+528
+00:31:41.760 --> 00:31:43.710
+typos or whatever, they can
+just send us a poor
+
+529
+00:31:43.710 --> 00:31:47.070
+request and we can update
+the docs, or if they
+
+530
+00:31:47.070 --> 00:31:48.930
+want to add docs to
+it, like we had that,
+
+531
+00:31:48.930 --> 00:31:53.460
+like where somebody added more
+explanation to a walkthrough, you
+
+532
+00:31:53.460 --> 00:31:56.280
+know, that's, that's, that's so
+easy to do with this
+
+533
+00:31:56.580 --> 00:31:59.520
+approach. I really liked the
+page called the big picture
+
+534
+00:32:00.060 --> 00:32:03.060
+that sits down and explains
+to you, you know, how
+
+535
+00:32:03.060 --> 00:32:06.210
+apps usually work and how
+apps work when you have
+
+536
+00:32:06.210 --> 00:32:08.550
+all the different protocols plugged
+in, you know, whether it
+
+537
+00:32:08.550 --> 00:32:11.790
+be, Oh, Watts two, or,
+you know, how SAML works
+
+538
+00:32:11.790 --> 00:32:13.800
+and open ID connect and
+how it all plugged together.
+
+539
+00:32:14.580 --> 00:32:18.150
+Right. And also that desert
+has another one called terminology,
+
+540
+00:32:18.240 --> 00:32:20.940
+which I think is really,
+really important, which explains basically
+
+541
+00:32:20.940 --> 00:32:23.880
+what our users, what our
+clients, what our scopes, because
+
+542
+00:32:23.880 --> 00:32:27.270
+these are the spiffy speaking
+that the only three things
+
+543
+00:32:27.270 --> 00:32:30.660
+you have to understand. Yeah.
+Yeah. Fantastic. So people can
+
+544
+00:32:30.660 --> 00:32:35.940
+check all of this out@identityserver.io,
+and it definitely a big
+
+545
+00:32:35.970 --> 00:32:38.910
+thanks to you and, and
+Brock. And, and do you
+
+546
+00:32:38.910 --> 00:32:41.510
+have any other People who
+are helping or do you
+
+547
+00:32:41.510 --> 00:32:46.370
+have pull requests coming in?
+Yeah, it's amazing. Actually. So
+
+548
+00:32:46.370 --> 00:32:49.700
+when we started with this
+version three, we immediately kind
+
+549
+00:32:49.700 --> 00:32:51.740
+of had a feeling that
+we were like hitting the
+
+550
+00:32:51.740 --> 00:32:56.660
+sweet spot, because like, this
+thing wasn't even done yet.
+
+551
+00:32:56.660 --> 00:33:01.180
+And we had like hundreds
+and hundreds of issues, like,
+
+552
+00:33:01.180 --> 00:33:05.030
+like people actually asking questions
+and improving stuff. And we
+
+553
+00:33:05.030 --> 00:33:07.520
+have, let me have a
+look here. We have 23
+
+554
+00:33:08.240 --> 00:33:15.440
+con contributors. I mean, you
+know, mostly smaller stuff because
+
+555
+00:33:15.440 --> 00:33:17.240
+there were not that many
+people out there, which, you
+
+556
+00:33:17.240 --> 00:33:23.750
+know, have fun writing security
+libraries. Isn't exactly a high
+
+557
+00:33:23.750 --> 00:33:25.220
+on my list of fun
+things to do, which is
+
+558
+00:33:25.220 --> 00:33:29.540
+why I'm so glad that
+you guys do it. Yeah.
+
+559
+00:33:29.600 --> 00:33:32.990
+I actually got a lot
+out of that. Well, thanks
+
+560
+00:33:32.990 --> 00:33:35.900
+so much for chatting with
+me today. Yeah. This has
+
+561
+00:33:35.900 --> 00:33:38.900
+been another episode of Hanselminutes
+and we'll see you again
+
+562
+00:33:38.900 --> 00:33:39.410
+next week.
+

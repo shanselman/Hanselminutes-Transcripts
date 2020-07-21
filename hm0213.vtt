@@ -1,0 +1,3156 @@
+WEBVTT FILE
+
+1
+00:00:12.080 --> 00:00:16.610
+From Hanselman it's dot com.
+It's Hanselman. It's a weekly
+
+2
+00:00:16.610 --> 00:00:21.170
+discussion with web developer and
+technologist Scott Hanselman. This is
+
+3
+00:00:21.170 --> 00:00:24.830
+Lawrence Ryan. I known zoom show
+number two 13 recorded live
+
+4
+00:00:24.860 --> 00:00:30.170
+Thursday, April 29th, 2010. Support for Hanselman.
+This is provided by Telerik
+
+5
+00:00:30.170 --> 00:00:33.710
+rad controls, the most comprehensive
+suite of components for windows
+
+6
+00:00:33.710 --> 00:00:42.800
+forms and asp.net web applications.
+online@wwwdottelerik.com. In this episode, Scott
+
+7
+00:00:42.800 --> 00:00:48.530
+talks aspect oriented programming with
+Phillip Loriano. Hi, this is
+
+8
+00:00:48.530 --> 00:00:50.930
+Scott Hanselman, and this is
+another episode of Hansel minutes.
+
+9
+00:00:50.960 --> 00:00:53.720
+And I'm sitting down today
+with Phillip Loriano. Phillip is
+
+10
+00:00:53.720 --> 00:00:57.170
+actually calling in from Hong Kong.
+Thanks for taking the time.
+
+11
+00:00:57.170 --> 00:01:04.330
+I guess it's about midnight.
+Yeah, anytime man. So I
+
+12
+00:01:04.340 --> 00:01:08.180
+wanted to talk to you
+because you focus on aspect
+
+13
+00:01:08.180 --> 00:01:12.020
+oriented programming. What is aspect
+oriented programming and why should
+
+14
+00:01:12.020 --> 00:01:15.920
+I care? Well, aspect oriented
+programming is that missing piece
+
+15
+00:01:15.920 --> 00:01:22.190
+of object oriented programming that
+you've been hearing about over
+
+16
+00:01:22.190 --> 00:01:25.250
+the past 10, 15 years,
+but it's kind of hard
+
+17
+00:01:25.250 --> 00:01:28.670
+to explain if, if you
+think of it in traditional
+
+18
+00:01:28.670 --> 00:01:32.450
+object oriented design, I mean
+with object oriented design, you
+
+19
+00:01:32.480 --> 00:01:36.710
+have these nice diagrams and
+stuff, but there's one dimension
+
+20
+00:01:36.710 --> 00:01:41.390
+missing there. And that's time.
+There's nothing about object going
+
+21
+00:01:41.390 --> 00:01:44.990
+to design that actually says,
+okay, we've got to have
+
+22
+00:01:45.140 --> 00:01:51.740
+this one feature. They're only
+in certain certain times. And
+
+23
+00:01:51.740 --> 00:01:54.380
+sometimes it shouldn't be there.
+For example, logging. I mean,
+
+24
+00:01:54.380 --> 00:01:59.000
+everybody talks about logging with
+AOP, but one of the
+
+25
+00:01:59.000 --> 00:02:03.080
+problems with traditional object oriented
+design is the fact that
+
+26
+00:02:03.260 --> 00:02:06.320
+you've got, if you put
+in a lager, you have
+
+27
+00:02:06.320 --> 00:02:08.060
+to put in the lager
+in about a thousand different
+
+28
+00:02:08.060 --> 00:02:10.940
+places and you could either
+have it in there, or
+
+29
+00:02:10.940 --> 00:02:13.160
+you could either not have
+it in there. And if
+
+30
+00:02:13.160 --> 00:02:14.960
+you do have it in
+there, it's a maintenance problem
+
+31
+00:02:14.960 --> 00:02:18.410
+because you've got to take
+all these different instances of
+
+32
+00:02:18.410 --> 00:02:21.200
+that one logger that are
+scattered all over the place
+
+33
+00:02:21.230 --> 00:02:24.590
+and somehow find a way
+to take that abstraction and
+
+34
+00:02:24.830 --> 00:02:27.590
+make it nice and pretty.
+And you can't because it's
+
+35
+00:02:27.590 --> 00:02:32.000
+either there or it isn't
+there. And when you it's
+
+36
+00:02:32.000 --> 00:02:34.430
+a big problem, because I
+mean, this is just a
+
+37
+00:02:34.430 --> 00:02:39.860
+simple logger, but imagine there
+are other other features in
+
+38
+00:02:39.860 --> 00:02:41.810
+your application that you might
+need to have, like for
+
+39
+00:02:41.810 --> 00:02:47.540
+example, transactions, thread, synchronization, things
+like that, that you won't
+
+40
+00:02:47.540 --> 00:02:50.510
+be able to cleanly separate
+into different classes simply because
+
+41
+00:02:50.510 --> 00:02:53.720
+they're just scattered all over
+the place. So with aspect
+
+42
+00:02:53.720 --> 00:02:56.480
+oriented programming, it's not a
+lot of people say it's
+
+43
+00:02:56.480 --> 00:03:01.780
+interception, but it isn't what
+it really is, is a
+
+44
+00:03:01.780 --> 00:03:05.610
+way of thinking about when
+things should be in, in,
+
+45
+00:03:06.400 --> 00:03:08.860
+in place in your application
+and when they should not
+
+46
+00:03:08.860 --> 00:03:12.520
+be. So for example, with
+the logger itself, you could
+
+47
+00:03:12.520 --> 00:03:15.430
+say, you know, if the
+application crashes, I want the
+
+48
+00:03:15.430 --> 00:03:18.460
+logger to be turned on,
+but it's kind of hard
+
+49
+00:03:18.460 --> 00:03:21.220
+to say that at least
+with your traditional kind of
+
+50
+00:03:21.220 --> 00:03:24.730
+notation or at least in
+code without having to resort
+
+51
+00:03:24.730 --> 00:03:27.760
+to some pretty interesting tricks
+that you normally rely on
+
+52
+00:03:27.760 --> 00:03:30.780
+AOP to do. Okay. So
+a longer is like you
+
+53
+00:03:30.780 --> 00:03:32.760
+said, the example that people
+always give and it's a
+
+54
+00:03:32.760 --> 00:03:35.190
+good one because of that,
+that notion of what they
+
+55
+00:03:35.190 --> 00:03:39.360
+call cross cutting concerns, a
+logger cuts through. And typically
+
+56
+00:03:39.360 --> 00:03:43.740
+when you see object oriented
+programming described in boxes and
+
+57
+00:03:43.740 --> 00:03:46.620
+lines, it involves kind of
+a, a stack of things.
+
+58
+00:03:46.620 --> 00:03:48.780
+It kind of looks like
+Tetris. And then when they
+
+59
+00:03:49.050 --> 00:03:53.970
+describe AOP, they draw lines
+kind of perpendicularly cross cutting
+
+60
+00:03:53.970 --> 00:03:56.730
+throughout those. What else is
+there other than logging that
+
+61
+00:03:56.730 --> 00:04:01.950
+I might want to use
+AOP for? Well, a really
+
+62
+00:04:02.040 --> 00:04:06.300
+big one has to be
+a lazy loading, for example,
+
+63
+00:04:06.780 --> 00:04:10.920
+and hibernate uses Dyna dynamic
+proxies whether it's castle or,
+
+64
+00:04:10.970 --> 00:04:15.690
+or Lin Fu to do
+this kind of lazy loading,
+
+65
+00:04:15.690 --> 00:04:18.120
+where even if you pull
+the object out of the
+
+66
+00:04:18.120 --> 00:04:21.600
+database, it's not really gonna
+make the query until you
+
+67
+00:04:21.600 --> 00:04:24.330
+actually access the object's properties
+itself. I mean, it could
+
+68
+00:04:24.330 --> 00:04:28.830
+be anything from like five
+or five or 10,000 records
+
+69
+00:04:28.980 --> 00:04:31.440
+in one pass. But the
+point there is you want
+
+70
+00:04:31.440 --> 00:04:34.080
+to make sure that you
+you'll be able to use
+
+71
+00:04:34.080 --> 00:04:36.570
+this at the same time.
+You won't necessarily have to
+
+72
+00:04:36.570 --> 00:04:40.530
+explicitly say, I need to
+use lazy loading, or I
+
+73
+00:04:40.530 --> 00:04:42.900
+need to put that into
+my application. Other than through
+
+74
+00:04:42.900 --> 00:04:46.530
+maybe a setting in hibernate.
+The point of aspect oriented
+
+75
+00:04:46.530 --> 00:04:50.370
+programming is to have that
+kind of a nice separation
+
+76
+00:04:50.430 --> 00:04:55.350
+of concerns without having to
+do some sort of really
+
+77
+00:04:56.880 --> 00:05:00.690
+medieval cut and paste or
+copy and paste you would
+
+78
+00:05:00.690 --> 00:05:08.550
+normally see. And basically the
+problem is it's just, there's
+
+79
+00:05:08.550 --> 00:05:12.960
+no clean way to actually
+separate this out. It's either
+
+80
+00:05:13.020 --> 00:05:15.000
+it's going to be there
+or it's not going to
+
+81
+00:05:15.000 --> 00:05:18.210
+be there. I definitely don't
+recommend cut and paste, but
+
+82
+00:05:18.210 --> 00:05:20.430
+from what I've seen in
+a lot of systems, what
+
+83
+00:05:20.430 --> 00:05:23.850
+happens is you've got guys
+that have all these dependency
+
+84
+00:05:23.850 --> 00:05:26.010
+velvet plates and they have
+to use the dependency. So
+
+85
+00:05:26.010 --> 00:05:28.050
+you can't really pull it
+out, even if you were
+
+86
+00:05:28.050 --> 00:05:30.150
+to refactor it, you can't,
+it's still going to be
+
+87
+00:05:30.150 --> 00:05:33.420
+there. So the problem here
+is, I mean, you're back
+
+88
+00:05:33.420 --> 00:05:36.180
+to the example of diagrams.
+I mean, in terms of
+
+89
+00:05:36.180 --> 00:05:38.850
+object oriented design, where we're
+really looking at it as
+
+90
+00:05:38.850 --> 00:05:42.540
+if, I mean, this is
+like the difference between a
+
+91
+00:05:42.540 --> 00:05:46.170
+single frame and a series
+of frames of animation. I
+
+92
+00:05:46.170 --> 00:05:48.840
+mean, that's a good analogy
+for it because when we
+
+93
+00:05:48.840 --> 00:05:51.630
+have an object model, I
+mean, you're looking at one
+
+94
+00:05:51.630 --> 00:05:56.940
+picture. It never changes. But
+with AOL, AOP it really,
+
+95
+00:05:57.230 --> 00:06:01.970
+to that idea that an
+object model can change at
+
+96
+00:06:01.970 --> 00:06:04.610
+runtime. And there's certain features
+that can be introduced and
+
+97
+00:06:04.610 --> 00:06:07.880
+runtime that may or may
+not be there when you
+
+98
+00:06:07.880 --> 00:06:11.080
+actually compile the system. Well,
+what did you tell me?
+
+99
+00:06:11.080 --> 00:06:14.650
+That was the first rule
+of AOP. Oh yeah. That's
+
+100
+00:06:15.040 --> 00:06:18.250
+I call it the fight
+club rule because one of
+
+101
+00:06:18.250 --> 00:06:20.770
+the hardest things to understand
+about AOP is the fact
+
+102
+00:06:20.770 --> 00:06:24.100
+that it's supposed to be
+invisible. And if you have
+
+103
+00:06:24.100 --> 00:06:27.070
+to explicitly use it in
+your application, then you're missing
+
+104
+00:06:27.070 --> 00:06:32.410
+the point. Because if you,
+if, if AOP is supposed
+
+105
+00:06:32.410 --> 00:06:36.040
+to separate concerns and then
+you're explicitly saying, I need
+
+106
+00:06:36.040 --> 00:06:39.040
+to separate my concerns, then
+you're defeating the purpose. It
+
+107
+00:06:39.040 --> 00:06:43.030
+has to be invisible. So
+what do you use it
+
+108
+00:06:43.030 --> 00:06:46.530
+for other than logging though?
+I mean like in, in
+
+109
+00:06:46.570 --> 00:06:51.880
+like a production application, Another
+one is thread synchronization, for
+
+110
+00:06:51.880 --> 00:06:58.900
+example, or caching. Yeah. I've
+seen instances where people tag
+
+111
+00:06:58.930 --> 00:07:04.120
+a particular method or a
+property with a particular attribute
+
+112
+00:07:04.630 --> 00:07:08.350
+that says something like single-threaded.
+So that what happens is
+
+113
+00:07:08.680 --> 00:07:11.770
+once the method executes, it
+wraps it around a particular
+
+114
+00:07:11.770 --> 00:07:14.980
+center for a lock, and
+then you don't even have
+
+115
+00:07:14.980 --> 00:07:20.650
+to worry about synchronizing it
+because I'd run time. The
+
+116
+00:07:20.650 --> 00:07:24.610
+AOP part wraps it in
+a lock so that no
+
+117
+00:07:24.610 --> 00:07:26.560
+matter how many threads try
+to hit that one property
+
+118
+00:07:26.560 --> 00:07:31.390
+or method, it basically only
+goes through with one thread.
+
+119
+00:07:31.840 --> 00:07:36.820
+And you don't, it's completely
+transparent maybe aside from the
+
+120
+00:07:36.820 --> 00:07:42.460
+attribute or maybe the actual
+code itself. I mean, you
+
+121
+00:07:42.460 --> 00:07:45.130
+really don't see it. And
+that's probably why a lot
+
+122
+00:07:45.130 --> 00:07:48.580
+of people there, a lot
+of people shy away from
+
+123
+00:07:48.580 --> 00:07:51.910
+it because it looks like
+magic. And the truth is
+
+124
+00:07:51.910 --> 00:07:54.070
+it's not really magic at
+all. I mean, I've seen
+
+125
+00:07:54.370 --> 00:07:57.100
+the implementations and it's not
+as complicated as you think.
+
+126
+00:07:57.430 --> 00:07:59.560
+The only reason why I
+would think that people think
+
+127
+00:07:59.560 --> 00:08:02.070
+it's magic as you don't
+see what's going on behind
+
+128
+00:08:02.080 --> 00:08:04.390
+the scenes. And it's quite
+simple, right. Would you say
+
+129
+00:08:04.390 --> 00:08:06.730
+that this is one of
+those things that more people
+
+130
+00:08:06.730 --> 00:08:08.380
+should be using? And it's
+like, I mean, like you
+
+131
+00:08:08.380 --> 00:08:10.690
+said, it's the first rule
+is to not talk about
+
+132
+00:08:10.690 --> 00:08:13.660
+it. Is this the greatest
+thing since sliced bread? I
+
+133
+00:08:13.660 --> 00:08:16.060
+mean, should everyone be doing
+this and just, you have
+
+134
+00:08:16.060 --> 00:08:18.340
+no idea why they're not
+doing it. Are you that
+
+135
+00:08:18.340 --> 00:08:22.630
+into this? Well, I mean,
+for me, this has been
+
+136
+00:08:22.630 --> 00:08:25.600
+a passion for a long
+time, but I personally it's,
+
+137
+00:08:26.210 --> 00:08:29.020
+it's no silver bullet. Of
+course. It's just another tool
+
+138
+00:08:29.020 --> 00:08:32.830
+in the toolbox. In my
+own experience, it's really made
+
+139
+00:08:32.830 --> 00:08:35.470
+my object models really, really
+clean. I mean, we're talking
+
+140
+00:08:36.130 --> 00:08:39.070
+like one, one class, one
+method and less than 20
+
+141
+00:08:39.070 --> 00:08:44.650
+lines long it's it makes
+that kind of separation between
+
+142
+00:08:46.180 --> 00:08:49.720
+the concerns and all the
+implementations that much more simple.
+
+143
+00:08:49.720 --> 00:08:51.340
+I mean, then you tie
+it in with something like
+
+144
+00:08:51.340 --> 00:08:56.160
+an IOC container, and then
+it's pretty much golden because
+
+145
+00:08:56.160 --> 00:08:58.950
+of course, IOC is handle
+all the construction, but AOP
+
+146
+00:08:59.520 --> 00:09:02.160
+takes all these little bits
+and pieces that you put
+
+147
+00:09:02.160 --> 00:09:05.280
+together with IOC and even
+separates it even further. So
+
+148
+00:09:05.280 --> 00:09:07.430
+it's a great combination. Okay.
+So how do you do
+
+149
+00:09:07.430 --> 00:09:10.670
+this in.net? How does, how
+is AOP implemented in.net and
+
+150
+00:09:10.670 --> 00:09:13.250
+what do you have to
+do? That's what's built in
+
+151
+00:09:13.340 --> 00:09:16.490
+like, what is Microsoft ship
+and where does Microsoft drop
+
+152
+00:09:16.490 --> 00:09:19.870
+the ball and leave you
+to? Okay, well, a couple
+
+153
+00:09:19.890 --> 00:09:24.560
+years ago, what happened with
+what comes with Microsoft is
+
+154
+00:09:24.560 --> 00:09:28.010
+something called the context bound
+object. And again, I call
+
+155
+00:09:28.010 --> 00:09:31.220
+it medieval because it's just
+really, really crude. And it
+
+156
+00:09:31.220 --> 00:09:35.150
+had these certain events that
+you could hook into. I
+
+157
+00:09:35.150 --> 00:09:37.280
+think it was before after
+a particular method call, and
+
+158
+00:09:37.280 --> 00:09:40.220
+then you could add custom
+go to it, but the,
+
+159
+00:09:40.340 --> 00:09:42.620
+where they really dropped the
+ball was it forced you
+
+160
+00:09:42.620 --> 00:09:46.820
+to inherit from one base
+class. And sometimes you can't
+
+161
+00:09:46.820 --> 00:09:49.640
+really do that with your
+model. If you want a
+
+162
+00:09:49.640 --> 00:09:52.640
+clean model that has nothing
+to do with Microsoft libraries,
+
+163
+00:09:52.670 --> 00:09:55.820
+other than maybe using some
+of the system libraries itself,
+
+164
+00:09:57.800 --> 00:10:02.780
+that's Microsoft implementation. There are
+other implementations like mine, which
+
+165
+00:10:02.780 --> 00:10:08.330
+is LIMU for dynamic proxies.
+There's also castle. They, these
+
+166
+00:10:08.330 --> 00:10:11.570
+are dynamic proxies. And basically
+what these things do is
+
+167
+00:10:12.560 --> 00:10:17.270
+it takes any existing class
+and inherits from it at
+
+168
+00:10:17.270 --> 00:10:20.630
+runtime. And then it takes
+all the calls that you
+
+169
+00:10:20.630 --> 00:10:24.260
+make to that inherited class
+instance and redirects it to
+
+170
+00:10:24.260 --> 00:10:27.200
+some sort of interceptor that
+allows you to inject your
+
+171
+00:10:27.200 --> 00:10:35.330
+own custom code. There are
+other types of writers, I'll
+
+172
+00:10:35.330 --> 00:10:40.820
+re writers that people use
+for aspect oriented programming. And
+
+173
+00:10:41.330 --> 00:10:43.520
+one of them is LIMU.
+The other one is post
+
+174
+00:10:43.520 --> 00:10:47.930
+sharp, which is pretty popular.
+Basically what these things do
+
+175
+00:10:47.930 --> 00:10:52.640
+is they take your compiled
+assembly, this assemble it to
+
+176
+00:10:52.640 --> 00:10:56.750
+some degree and then reassemble
+it with their own custom
+
+177
+00:10:56.750 --> 00:10:59.630
+code. So now it has
+all those nice aspects that
+
+178
+00:10:59.750 --> 00:11:03.110
+you'd want to put into
+your application, like lazy loading
+
+179
+00:11:03.140 --> 00:11:08.030
+or transactions or whatnot. And
+the last and probably the
+
+180
+00:11:08.030 --> 00:11:10.970
+one I probably will never,
+ever do is the unmanaged
+
+181
+00:11:10.970 --> 00:11:18.890
+profiler API. Basically you're working
+with the CLRs unmanaged C
+
+182
+00:11:18.890 --> 00:11:24.020
+plus plus API for dealing
+with unmanaged code. You could
+
+183
+00:11:24.020 --> 00:11:27.860
+pretty much hook into the
+Git and actually change the
+
+184
+00:11:27.860 --> 00:11:34.010
+instructions right before it actually
+compiled into native code. For
+
+185
+00:11:34.010 --> 00:11:36.710
+me, I only stick with
+dynamic proxies and I'll re
+
+186
+00:11:36.710 --> 00:11:39.710
+writers because most of the
+time they get most of
+
+187
+00:11:39.710 --> 00:11:43.670
+the job done. If you're
+really masochistic, I would probably
+
+188
+00:11:43.670 --> 00:11:48.470
+recommend the unmanaged profile or
+API. So how does IO
+
+189
+00:11:48.470 --> 00:11:52.970
+rewriting sounds really scary. I
+mean, it sounds like just
+
+190
+00:11:53.080 --> 00:11:55.270
+initially, like my initial reaction
+was like, wow, really? I
+
+191
+00:11:55.270 --> 00:11:56.920
+mean, I've just compiled this
+and now I'm going to
+
+192
+00:11:56.920 --> 00:12:00.390
+go and mess around with
+it again. Well, actually that's
+
+193
+00:12:00.390 --> 00:12:03.060
+one of the things about
+IO or misconceptions about IO
+
+194
+00:12:03.060 --> 00:12:05.550
+that people are afraid of.
+Because if you look at
+
+195
+00:12:05.550 --> 00:12:08.670
+the aisle, the aisle language
+itself, it's a really simple
+
+196
+00:12:08.670 --> 00:12:11.910
+language. I mean, it still
+has all the same constructs
+
+197
+00:12:12.390 --> 00:12:15.930
+that you would normally associate
+with, you know, your CLR
+
+198
+00:12:15.930 --> 00:12:20.010
+1.0 language, for example, you
+know, you got your, if
+
+199
+00:12:20.010 --> 00:12:23.070
+statements, which is a little
+different, for example, you've got
+
+200
+00:12:23.070 --> 00:12:26.790
+branches and there is no
+such thing as loops, but
+
+201
+00:12:28.590 --> 00:12:31.590
+what the nice thing about
+using these libraries for ill
+
+202
+00:12:31.590 --> 00:12:33.420
+rewriting is that you never
+actually have to do it
+
+203
+00:12:33.420 --> 00:12:38.180
+yourself. And these libraries, whether
+it's LIMU pro sharp, sharp,
+
+204
+00:12:38.190 --> 00:12:43.200
+or castle or whatever, they
+all, they're all West well-tested.
+
+205
+00:12:43.860 --> 00:12:48.810
+So you can't, there's no
+way for whatever I'll re
+
+206
+00:12:48.840 --> 00:12:51.510
+rewrite or you're using to
+screw up. I mean, unless
+
+207
+00:12:51.510 --> 00:12:55.200
+you do something really crazy
+with it, most cases, the
+
+208
+00:12:55.200 --> 00:12:58.260
+uses are pretty benign. I
+mean, I I've seen a
+
+209
+00:12:58.260 --> 00:13:03.630
+couple people put in pervasive
+method interception throughout their entire
+
+210
+00:13:03.630 --> 00:13:07.470
+app, but I mean, even
+in cases where they want
+
+211
+00:13:07.470 --> 00:13:11.340
+to intercept everything and the
+kitchen sink, I've never seen
+
+212
+00:13:11.340 --> 00:13:15.000
+any case where it actually
+caused something to break simply
+
+213
+00:13:15.000 --> 00:13:17.100
+because we had it. What
+are some reasons why someone
+
+214
+00:13:17.100 --> 00:13:18.450
+would be afraid of this
+though? I mean, can you
+
+215
+00:13:18.450 --> 00:13:21.630
+understand my initial aversion of
+like, I've just assembled this
+
+216
+00:13:21.630 --> 00:13:23.520
+and I'm going to break
+it apart and then weave
+
+217
+00:13:23.520 --> 00:13:27.270
+into it. Yeah. I think
+it's more psychological than, than
+
+218
+00:13:27.270 --> 00:13:30.090
+anything. I mean, it's, I
+think as programmers, we were
+
+219
+00:13:30.090 --> 00:13:31.980
+pretty much control the cause
+we like to have control
+
+220
+00:13:31.980 --> 00:13:35.640
+of everything. And one of
+the things that the trade
+
+221
+00:13:35.640 --> 00:13:37.500
+offs that you do have
+to have is that you
+
+222
+00:13:37.500 --> 00:13:39.690
+have to surrender a part
+of your application and say,
+
+223
+00:13:39.690 --> 00:13:42.210
+okay, yeah, I need to
+add a little bit more
+
+224
+00:13:42.210 --> 00:13:46.080
+code to this, but when
+it actually changes the IFL,
+
+225
+00:13:46.080 --> 00:13:48.420
+it's going to be a
+little different. I mean, functionally,
+
+226
+00:13:48.420 --> 00:13:50.400
+it's still gonna work the
+same way. Like it's still
+
+227
+00:13:50.400 --> 00:13:52.440
+going to do the same
+thing for your business app.
+
+228
+00:13:53.340 --> 00:13:56.610
+But when you look at
+reflector, it looks completely Debug
+
+229
+00:13:56.610 --> 00:13:59.130
+that, I mean, if I'm
+going to go rewrite a
+
+230
+00:13:59.130 --> 00:14:01.200
+bunch of ill, what happens
+when I decided to go
+
+231
+00:14:01.200 --> 00:14:05.340
+and you know, F 11
+through my coat, It depends
+
+232
+00:14:05.340 --> 00:14:09.330
+on, on the particular I'll
+rewriter. If you go with
+
+233
+00:14:09.330 --> 00:14:11.460
+dynamic proxies, you'll be able
+to step right through it.
+
+234
+00:14:11.460 --> 00:14:14.100
+And you can just you'll,
+you'll see where it stops
+
+235
+00:14:15.150 --> 00:14:20.790
+in more, in other cases
+where you have I'll re
+
+236
+00:14:20.800 --> 00:14:26.370
+writers that do post build
+time compiling or where they
+
+237
+00:14:26.370 --> 00:14:30.420
+modify the assembly, right after
+a build there, it really
+
+238
+00:14:30.420 --> 00:14:32.910
+depends on whether or not
+it changes the PDB file
+
+239
+00:14:33.330 --> 00:14:36.750
+and updates the program, debug
+information so that when you
+
+240
+00:14:36.750 --> 00:14:39.930
+run through it, you'll, you'll
+be able to see what's
+
+241
+00:14:39.930 --> 00:14:46.380
+going on there. So like
+I said, it's, it really
+
+242
+00:14:46.380 --> 00:14:49.290
+depends, but there's so many
+options that you can pretty
+
+243
+00:14:49.290 --> 00:14:52.460
+much go with whatever you
+decide to order whatever fits
+
+244
+00:14:54.470 --> 00:14:56.420
+well, for me, I'm kind
+of biased. I mean, for
+
+245
+00:14:56.420 --> 00:15:00.860
+simple scenario there, I'd probably
+use one Fu from our
+
+246
+00:15:00.860 --> 00:15:04.850
+complex scenarios where it's just
+really off the wall, I'd
+
+247
+00:15:04.850 --> 00:15:07.640
+go with AOP, which would
+be with await dot AOP.
+
+248
+00:15:08.030 --> 00:15:11.050
+You could also go with
+push sharper Just to make
+
+249
+00:15:11.050 --> 00:15:13.000
+sure that for, for folks
+that are listening, who may
+
+250
+00:15:13.000 --> 00:15:17.980
+not speak English as their
+initial language, he's saying Lynn
+
+251
+00:15:17.980 --> 00:15:22.660
+Fu L I N F
+U. And that's a project
+
+252
+00:15:22.660 --> 00:15:25.420
+that's up at Google code.
+And then he's saying post
+
+253
+00:15:25.420 --> 00:15:29.140
+to sharp, P O S
+T Actually it's on get
+
+254
+00:15:29.140 --> 00:15:35.860
+hub. It's still there for
+historical references. Oh, but you
+
+255
+00:15:35.860 --> 00:15:37.150
+moved it over to get
+hub. I see. There's a
+
+256
+00:15:37.150 --> 00:15:41.740
+link right from there. There's
+a link straightaway. Yeah. LIMU
+
+257
+00:15:41.740 --> 00:15:44.710
+was just one of those
+things where I, I just
+
+258
+00:15:44.710 --> 00:15:46.900
+sat down and played around
+with ILO. And then I
+
+259
+00:15:46.900 --> 00:15:49.090
+realized that there's so many
+other language features you could
+
+260
+00:15:49.090 --> 00:15:55.510
+probably implement with, with just
+writing the IO yourself. Hey,
+
+261
+00:15:55.510 --> 00:15:59.290
+it's alternate universe, Scott Hanselman,
+going to thank our sponsors
+
+262
+00:15:59.290 --> 00:16:01.600
+for making this reshow possible.
+We've been doing Hansel minutes
+
+263
+00:16:01.600 --> 00:16:03.580
+for almost four years now,
+and we really couldn't do
+
+264
+00:16:03.580 --> 00:16:05.350
+it without tolerant. So I
+want to tell you about
+
+265
+00:16:05.350 --> 00:16:07.390
+some of the stuff they're
+working on. If you've already
+
+266
+00:16:07.390 --> 00:16:10.210
+started developing with Silverlight and
+now you probably need a
+
+267
+00:16:10.210 --> 00:16:13.030
+solid testing tool to do
+your serval at UIs. Unfortunately
+
+268
+00:16:13.030 --> 00:16:15.550
+though, a lot of the
+tools available today only help
+
+269
+00:16:15.550 --> 00:16:17.740
+you with unit testing. There's
+not really a good way
+
+270
+00:16:17.740 --> 00:16:20.620
+to simulate the actual behavior
+of those end users, unless
+
+271
+00:16:20.620 --> 00:16:22.240
+you spend days and weeks
+doing a lot of manual
+
+272
+00:16:22.240 --> 00:16:24.850
+testing, but the guys at
+Telerx, you've got a new
+
+273
+00:16:24.910 --> 00:16:28.000
+point and click UI testing
+tool for Silverlight called web
+
+274
+00:16:28.030 --> 00:16:30.580
+UI test studio. And the
+beauty is that you can
+
+275
+00:16:30.580 --> 00:16:34.350
+quickly record your tests with
+a cross browser recorder, and
+
+276
+00:16:34.350 --> 00:16:36.220
+you can enrich them with
+code if you've got really
+
+277
+00:16:36.220 --> 00:16:38.920
+complex scenarios. And on top
+of that, it supports all
+
+278
+00:16:38.920 --> 00:16:42.010
+the standard controls, as well
+as the Tellerik enhanced controls.
+
+279
+00:16:42.520 --> 00:16:44.740
+You can verify not only
+server life, but even complex
+
+280
+00:16:44.740 --> 00:16:48.910
+Ajax applications, best part web
+UI test studio lives in
+
+281
+00:16:48.910 --> 00:16:51.160
+visual studio. So you don't
+have to leave your favorite
+
+282
+00:16:51.160 --> 00:16:56.170
+development environment. You check it
+out at telerik.com/web hyphen testing,
+
+283
+00:16:56.170 --> 00:16:59.290
+hyphen tools, and be sure
+to thank Tellerik for supporting
+
+284
+00:16:59.290 --> 00:17:04.150
+the show on their Facebook
+fan page at facebook.com/tellerik. Okay.
+
+285
+00:17:04.150 --> 00:17:06.490
+Before we start digging into
+what you know, how someone
+
+286
+00:17:06.490 --> 00:17:08.770
+can get started with Lynn
+Fu talk a little bit
+
+287
+00:17:08.770 --> 00:17:11.890
+about dynamic proxies. What is,
+what is a dynamic proxy
+
+288
+00:17:11.890 --> 00:17:15.490
+and how does that work?
+A dynamic proxy is basically
+
+289
+00:17:15.820 --> 00:17:18.970
+a special when you look
+at it, it's basically, if
+
+290
+00:17:18.970 --> 00:17:22.090
+I were to write it
+manually you're and you were
+
+291
+00:17:22.090 --> 00:17:24.040
+just to write it in
+and say, see, sharper VB,
+
+292
+00:17:24.340 --> 00:17:26.770
+what you're really doing is
+you're inheriting from a class
+
+293
+00:17:26.800 --> 00:17:30.100
+that has a bunch of
+virtual methods. And for every
+
+294
+00:17:30.100 --> 00:17:32.650
+single one of those virtual
+message, you redirect it to
+
+295
+00:17:32.650 --> 00:17:35.860
+some interceptor instance that has
+all the information, like the
+
+296
+00:17:35.860 --> 00:17:40.720
+type arguments, the method, arguments,
+the method name, and based
+
+297
+00:17:40.720 --> 00:17:44.440
+on that input, you could
+actually change or make it
+
+298
+00:17:44.500 --> 00:17:50.460
+act like a real object
+space. It's a dynamic implementation
+
+299
+00:17:50.460 --> 00:17:54.150
+of the proxy pattern. I
+think it was around 2004
+
+300
+00:17:54.150 --> 00:17:59.160
+or 2003. Somebody figured out
+that you could take reflection,
+
+301
+00:17:59.160 --> 00:18:05.220
+not emit, and you can
+take any given type provided
+
+302
+00:18:05.250 --> 00:18:08.850
+that his properties were virtual.
+And then redirect those calls
+
+303
+00:18:08.850 --> 00:18:12.510
+back to something that looked
+exactly like the object. It
+
+304
+00:18:12.510 --> 00:18:15.390
+was, I mean, it was
+pretty brilliant. I can't claim
+
+305
+00:18:15.390 --> 00:18:19.260
+that I invented it cause
+I didn't, but that's basically
+
+306
+00:18:19.260 --> 00:18:22.470
+how proxies work on the
+Java side. I believe they,
+
+307
+00:18:22.660 --> 00:18:25.560
+they haven't built in, but
+for the.net side, we basically
+
+308
+00:18:25.560 --> 00:18:30.530
+had to create our own.
+So dynamic, dynamic proxies is
+
+309
+00:18:30.710 --> 00:18:32.870
+how is that something that's
+something I can get within
+
+310
+00:18:32.870 --> 00:18:34.820
+Lynn foods so that you're,
+you're talking that you're saying
+
+311
+00:18:34.820 --> 00:18:38.150
+that there are multiple flavors
+of AOP there's dynamic proxies
+
+312
+00:18:38.600 --> 00:18:42.440
+cause you is ill rewriting
+actually digging into the compiled
+
+313
+00:18:42.440 --> 00:18:46.880
+stuff that you just made
+and emitting more ill. And
+
+314
+00:18:46.910 --> 00:18:51.050
+Lynn, the Lynn Fu framework
+has those, all those different
+
+315
+00:18:51.050 --> 00:18:53.870
+things available so I can
+use different tools. There's a
+
+316
+00:18:53.870 --> 00:18:56.950
+whole toolbox of stuff. Yeah.
+And the best part is
+
+317
+00:18:57.070 --> 00:18:59.540
+you don't even have to
+see the aisle. You never
+
+318
+00:18:59.540 --> 00:19:04.130
+see it. It might sound
+scary because I'm saying that
+
+319
+00:19:04.130 --> 00:19:06.860
+yeah, you have to, you're
+giving up control. Yeah. You
+
+320
+00:19:06.860 --> 00:19:10.340
+do have to give up
+control. But I mean, it's
+
+321
+00:19:10.340 --> 00:19:13.520
+pretty, it's an I, for
+me, I think it's a,
+
+322
+00:19:13.610 --> 00:19:16.670
+it's a worthy sacrifice compared
+to seeing all this stuff
+
+323
+00:19:17.150 --> 00:19:19.520
+look like on, at least
+on an architectural level, like
+
+324
+00:19:19.520 --> 00:19:24.770
+it's cut, copy and paste
+it everywhere. Things tend out.
+
+325
+00:19:25.040 --> 00:19:27.890
+I mean, I, I hate
+to generalize, but it, for
+
+326
+00:19:27.890 --> 00:19:32.510
+me, at least it comes
+out much, much cleaner when
+
+327
+00:19:32.510 --> 00:19:36.200
+you don't have to see
+like six dependencies in a
+
+328
+00:19:36.200 --> 00:19:38.840
+hundred different places. Instead you
+probably just see it in
+
+329
+00:19:38.840 --> 00:19:42.290
+one place. And with aspect
+oriented programming, you get to
+
+330
+00:19:42.290 --> 00:19:49.520
+see where these particular dependencies
+should be at runtime. And
+
+331
+00:19:49.520 --> 00:19:53.570
+that's the difference with traditional
+object oriented design you to
+
+332
+00:19:53.580 --> 00:19:55.910
+say, it's either there or
+it isn't there. You can't,
+
+333
+00:19:57.230 --> 00:19:59.240
+you can't really say when
+it should be there or
+
+334
+00:19:59.240 --> 00:20:02.450
+when it shouldn't be there.
+And that one extra dimension
+
+335
+00:20:02.450 --> 00:20:05.810
+makes a huge difference in
+making sure that everything's clean.
+
+336
+00:20:08.540 --> 00:20:11.090
+Okay. So I want to
+get started with, with Lynn
+
+337
+00:20:11.090 --> 00:20:14.510
+Fu, I've got my, you
+know, maybe I'll take her
+
+338
+00:20:14.510 --> 00:20:17.480
+dinner, right? I've got an
+existing asp.net application. And I
+
+339
+00:20:17.480 --> 00:20:20.420
+want to add, you know,
+let's just start with logging.
+
+340
+00:20:20.540 --> 00:20:22.130
+What do I have to
+do to get started with
+
+341
+00:20:22.340 --> 00:20:26.840
+Fu Well, with Lynn Fu
+depending on what you want
+
+342
+00:20:26.840 --> 00:20:30.590
+to do with your asp.net
+application, if it's NBC, you'd
+
+343
+00:20:30.590 --> 00:20:34.070
+probably want to hook it
+in to as one of
+
+344
+00:20:35.780 --> 00:20:38.720
+our controller factory. And it's
+like one of the very
+
+345
+00:20:38.720 --> 00:20:41.480
+few controller factories that could
+pretty much take an infinite
+
+346
+00:20:41.540 --> 00:20:44.900
+number of arguments and you
+could pretty much parse it
+
+347
+00:20:44.900 --> 00:20:46.790
+out like that. So the
+first thing that you would
+
+348
+00:20:46.790 --> 00:20:49.810
+do is hook it into
+your controller factory. After that
+
+349
+00:20:50.890 --> 00:20:54.100
+there are different, there's a
+gazillion different ways that you
+
+350
+00:20:54.100 --> 00:20:57.760
+can tell the con the
+IOC container itself. Okay. Once
+
+351
+00:20:57.760 --> 00:21:00.130
+you create this, I want
+you to hook into this
+
+352
+00:21:00.130 --> 00:21:05.350
+particular aspect or introduce this
+particular feature. Like for example,
+
+353
+00:21:05.350 --> 00:21:10.090
+I've, I've got a friend
+in Norway and he was
+
+354
+00:21:10.090 --> 00:21:16.000
+able to introduce WCF to
+an object model that was
+
+355
+00:21:16.000 --> 00:21:19.120
+just a plain old CLR
+object. And you don't even
+
+356
+00:21:19.120 --> 00:21:22.840
+see the WCF at all.
+It's just like one line.
+
+357
+00:21:25.030 --> 00:21:26.410
+And all he did was
+he just put in a
+
+358
+00:21:26.410 --> 00:21:29.320
+hook into the container, says,
+okay, once you create something
+
+359
+00:21:29.680 --> 00:21:32.050
+and once it comes out
+of there, I want WCF
+
+360
+00:21:32.050 --> 00:21:41.200
+support. And it was pretty
+amazing considering it, it was
+
+361
+00:21:41.200 --> 00:21:43.300
+just like magic. It was
+one minute there, or the
+
+362
+00:21:43.300 --> 00:21:44.650
+next minute it wasn't there.
+But when you look at
+
+363
+00:21:44.650 --> 00:21:47.460
+the object model, it's just
+a bunch of properties. Someone
+
+364
+00:21:47.460 --> 00:21:51.480
+had complained to me recently
+at a presentation about some
+
+365
+00:21:51.480 --> 00:21:57.870
+of the complexities of WPF
+around event notification and how,
+
+366
+00:21:58.470 --> 00:22:02.070
+you know, basic properties when
+used in w PF have
+
+367
+00:22:02.070 --> 00:22:04.800
+to have to get really
+complicated, especially with the notifications
+
+368
+00:22:04.800 --> 00:22:08.490
+and stuff. Are there examples
+of using Lynne food clean
+
+369
+00:22:08.490 --> 00:22:12.150
+up WPF objects, objects that
+are used within the context
+
+370
+00:22:12.150 --> 00:22:16.140
+of WPF or Silverlight? Oh,
+no, there aren't any examples
+
+371
+00:22:16.140 --> 00:22:20.040
+with LIMU in WPF, but
+there are a couple examples
+
+372
+00:22:21.840 --> 00:22:26.520
+with, with Bernhard Richter, I'll
+post his log. And what
+
+373
+00:22:26.520 --> 00:22:29.010
+he did was he actually
+put up, he's got a
+
+374
+00:22:29.010 --> 00:22:33.420
+project up called I can't
+remember the project where we
+
+375
+00:22:33.570 --> 00:22:37.320
+post it later, but he
+has a project that actually
+
+376
+00:22:37.470 --> 00:22:42.090
+puts an I notified property
+change implementation as well as
+
+377
+00:22:42.090 --> 00:22:45.120
+I did an error validation.
+And it's pretty much transparent.
+
+378
+00:22:45.720 --> 00:22:48.900
+For example, you can have
+this one particular interface that
+
+379
+00:22:48.900 --> 00:22:53.760
+validates this one particular class
+type, and you just drop
+
+380
+00:22:53.760 --> 00:22:56.250
+the DLL onto some directory
+and LIMU scans it and
+
+381
+00:22:56.280 --> 00:22:59.220
+then inject it right into
+the container. And the container
+
+382
+00:22:59.220 --> 00:23:02.490
+is smart enough to say,
+okay, this particular instance needs
+
+383
+00:23:02.490 --> 00:23:04.500
+to be intercepted. And I
+need to put these features
+
+384
+00:23:04.500 --> 00:23:09.000
+onto that one particular class
+or object. It's pretty smart.
+
+385
+00:23:09.000 --> 00:23:12.690
+And a lot of containers
+can do that, but for
+
+386
+00:23:12.870 --> 00:23:17.250
+at least for LIMU, it's
+one of the interesting contradictions.
+
+387
+00:23:17.610 --> 00:23:19.620
+It does a lot of
+complicated things, but for the
+
+388
+00:23:19.620 --> 00:23:22.770
+most of the time you
+get most of the job
+
+389
+00:23:22.800 --> 00:23:24.810
+done in, but one or
+two lines of code and
+
+390
+00:23:24.810 --> 00:23:27.120
+no fuss. I mean, you
+never really see any ill
+
+391
+00:23:27.240 --> 00:23:29.580
+at all, unless you really
+want to get into it.
+
+392
+00:23:32.190 --> 00:23:34.380
+Do what I have. What
+if I have to debug
+
+393
+00:23:34.410 --> 00:23:36.360
+these things? What if I've
+changed something? You can you
+
+394
+00:23:36.360 --> 00:23:38.550
+keep saying that that is,
+I guess, where we both
+
+395
+00:23:38.550 --> 00:23:41.220
+agree that it can be
+scary, but it's psychological. And
+
+396
+00:23:41.220 --> 00:23:42.990
+then you're saying that I
+don't necessarily have to see
+
+397
+00:23:42.990 --> 00:23:44.550
+the IOL, but what if
+something goes wrong? How do
+
+398
+00:23:44.550 --> 00:23:46.820
+I debug logging? If I
+can't even see where it
+
+399
+00:23:46.820 --> 00:23:52.870
+got called? Well, do you
+still get to actually see
+
+400
+00:23:53.320 --> 00:23:57.070
+the logging? Because once the,
+the isle calls back to
+
+401
+00:23:57.070 --> 00:23:59.500
+your code, it tells you
+where it's, where it's actually
+
+402
+00:23:59.500 --> 00:24:03.490
+being called from. And in
+layman's terms, it's like a
+
+403
+00:24:03.490 --> 00:24:07.300
+styling home. It's pretty much
+telling you where it was
+
+404
+00:24:07.300 --> 00:24:10.180
+intercepted. It gives you all
+the information you need to
+
+405
+00:24:10.180 --> 00:24:13.720
+say, okay, this was intercepted
+here. This was interceptive here,
+
+406
+00:24:14.350 --> 00:24:18.310
+as well as it's you
+don't. Yeah, you do give
+
+407
+00:24:18.310 --> 00:24:20.170
+up some control, but the
+control that it gives you
+
+408
+00:24:20.170 --> 00:24:23.020
+back is you get to
+decide where, and when these
+
+409
+00:24:23.710 --> 00:24:27.880
+particular points of interception execute,
+for example, in dynamic proxies,
+
+410
+00:24:29.110 --> 00:24:32.260
+you will often get the
+method info and it'll tell
+
+411
+00:24:32.260 --> 00:24:34.930
+you everything you need to
+know about the particular method
+
+412
+00:24:34.940 --> 00:24:38.800
+is executing. And it has
+everything there, including the arguments,
+
+413
+00:24:39.190 --> 00:24:43.090
+whether it's generic or not.
+So basically on one hand,
+
+414
+00:24:43.090 --> 00:24:47.560
+yet you lose control about
+how it's actually compiled, but
+
+415
+00:24:47.590 --> 00:24:51.250
+when it actually runs, you
+get to decide where things
+
+416
+00:24:51.250 --> 00:24:53.890
+execute, how they should be
+executed and whether or not
+
+417
+00:24:53.890 --> 00:24:56.470
+you should just replace the
+code altogether. I mean, it
+
+418
+00:24:56.470 --> 00:24:59.980
+sounds scary, but it's actually
+quite simple. And a lot
+
+419
+00:24:59.980 --> 00:25:02.890
+of it is abstracted away.
+So I put this into
+
+420
+00:25:02.890 --> 00:25:05.170
+nerd dinner, then I plug
+it in like sit to
+
+421
+00:25:05.180 --> 00:25:07.030
+a controller factory. And then
+what are some of the
+
+422
+00:25:07.030 --> 00:25:09.520
+different kinds of interception I
+can do? I mean, I
+
+423
+00:25:09.520 --> 00:25:12.940
+can intercept at the class
+level. So I could say
+
+424
+00:25:12.940 --> 00:25:15.820
+like, I want all dinners
+to be intercepted. And then
+
+425
+00:25:15.820 --> 00:25:19.270
+can I intercept more granularly
+than that? Oh, absolutely. You
+
+426
+00:25:19.270 --> 00:25:23.890
+could intercept at an instance
+level. So if you have
+
+427
+00:25:23.890 --> 00:25:27.550
+one particular instance of that
+one class, you can just
+
+428
+00:25:27.550 --> 00:25:32.410
+go ahead and intercept pretty
+much anything on that particular
+
+429
+00:25:32.410 --> 00:25:36.730
+class instance, the types of
+interception we go over, at
+
+430
+00:25:36.730 --> 00:25:39.160
+least for Lynne Fu is
+there's method, body interceptions. That's
+
+431
+00:25:39.160 --> 00:25:41.980
+basically, you can take any
+method, body, whether it's sealed
+
+432
+00:25:41.980 --> 00:25:47.290
+static, private, or public, and
+you could pretty much swap
+
+433
+00:25:47.290 --> 00:25:51.310
+out the method, body implementation.
+There are a few restrictions.
+
+434
+00:25:51.310 --> 00:25:53.380
+For example, you still have
+to return the same type,
+
+435
+00:25:53.890 --> 00:25:55.300
+but for the most part,
+you can pretty much do
+
+436
+00:25:55.300 --> 00:25:59.650
+whatever you want with it.
+The other one is method
+
+437
+00:25:59.650 --> 00:26:02.590
+call site interception, which is,
+would scare a lot of
+
+438
+00:26:02.590 --> 00:26:06.100
+people. Basically I can take
+any system or any third
+
+439
+00:26:06.100 --> 00:26:09.460
+party method call and replace
+it with your own. For
+
+440
+00:26:09.460 --> 00:26:12.010
+example, if you want to,
+you had a hello world
+
+441
+00:26:12.010 --> 00:26:13.870
+program and you wanted to
+replace it so that it
+
+442
+00:26:13.870 --> 00:26:18.820
+would instead send the hello
+world over a network socket.
+
+443
+00:26:19.570 --> 00:26:21.580
+You could easily do that
+with just, and you just
+
+444
+00:26:21.580 --> 00:26:26.050
+swap it out. Whether the
+other one is new operators,
+
+445
+00:26:26.080 --> 00:26:29.680
+interception, which is, which is
+the ability to take your
+
+446
+00:26:29.680 --> 00:26:33.970
+standard. C-sharp a new operator
+or an IOP, the new
+
+447
+00:26:33.970 --> 00:26:39.760
+object instruction. And you basically
+wrap up an IOU. What
+
+448
+00:26:39.760 --> 00:26:41.920
+is actually doing is it's
+wrapping. And if statement around
+
+449
+00:26:41.920 --> 00:26:44.580
+it and saying, okay, should
+I just let this thing
+
+450
+00:26:44.580 --> 00:26:47.100
+create itself? Or should I
+provide something else in its
+
+451
+00:26:47.100 --> 00:26:51.360
+place? That's that's and it's
+pretty handy in some certain
+
+452
+00:26:51.360 --> 00:26:57.600
+situations, once you want to
+trace object construction, the other
+
+453
+00:26:57.600 --> 00:27:00.810
+one is field getter and
+setter interception. So for example,
+
+454
+00:27:00.810 --> 00:27:05.400
+I can take any field
+and intercept the point where
+
+455
+00:27:05.400 --> 00:27:08.940
+it's actually being accessed or
+changed. So if I were
+
+456
+00:27:08.940 --> 00:27:11.880
+to set a foo field,
+I could actually prevent it
+
+457
+00:27:11.880 --> 00:27:14.400
+from being set, or I
+could actually just replace it
+
+458
+00:27:14.400 --> 00:27:19.170
+with another value with, with
+whatever I want. The last
+
+459
+00:27:19.590 --> 00:27:23.910
+type is what I call
+throwing an exception catching, which
+
+460
+00:27:23.910 --> 00:27:30.690
+is the ability to dynamically
+catch any exception thrown from
+
+461
+00:27:30.690 --> 00:27:34.200
+any given method. There is
+a small note with at
+
+462
+00:27:34.200 --> 00:27:36.190
+least with Lynn food's way
+of doing it, which is
+
+463
+00:27:36.190 --> 00:27:39.510
+it's kind of opt in.
+So you have to explicitly
+
+464
+00:27:39.510 --> 00:27:42.510
+say, I want to catch
+exceptions out of this method.
+
+465
+00:27:42.510 --> 00:27:45.240
+And if I do catch
+it, I either want to
+
+466
+00:27:45.240 --> 00:27:48.480
+swallow it, or I should
+just let it regrow itself
+
+467
+00:27:48.510 --> 00:27:52.320
+back out. Those are the
+kinds of, of interception that
+
+468
+00:27:52.380 --> 00:27:57.690
+LIMU provides. Of course your
+mind was may vary. And,
+
+469
+00:27:59.250 --> 00:28:01.710
+and I really leave it
+up to the responsible developer
+
+470
+00:28:01.710 --> 00:28:04.320
+to actually figure out what
+they want to do with
+
+471
+00:28:04.320 --> 00:28:06.390
+it. But this is, it
+gives you a lot of
+
+472
+00:28:06.390 --> 00:28:08.410
+flexibility at the same time.
+You never ever see any
+
+473
+00:28:08.430 --> 00:28:11.300
+line of aisle. Do you
+find yourself doing static, ILD
+
+474
+00:28:11.300 --> 00:28:13.640
+writing, which sounded guy role
+rewriting makes more sense to
+
+475
+00:28:13.640 --> 00:28:15.530
+me, the idea that I'm
+going to take some code
+
+476
+00:28:15.530 --> 00:28:18.380
+and I'm going to compile
+it into, you know, I
+
+477
+00:28:18.380 --> 00:28:21.890
+L into DLLs, I think
+sometimes some, some newer.net developers
+
+478
+00:28:21.890 --> 00:28:24.200
+forget that there, that there
+is L I mean, they
+
+479
+00:28:24.200 --> 00:28:26.450
+think that they compile and
+then this binary pops out,
+
+480
+00:28:26.480 --> 00:28:29.120
+but there's, you know, there's
+ill in there and it
+
+481
+00:28:29.120 --> 00:28:31.970
+makes sense that post build
+steps I can deal with
+
+482
+00:28:31.970 --> 00:28:36.980
+like emotionally, I get that,
+but dynamic I'll be writing.
+
+483
+00:28:37.010 --> 00:28:40.550
+That seems scary. Like I'm
+over the, Hey, I'll rewrite
+
+484
+00:28:40.550 --> 00:28:42.950
+my isle part of things,
+but I'm not over the
+
+485
+00:28:43.040 --> 00:28:46.670
+I'll do it dynamically. Well,
+it's actually two steps when
+
+486
+00:28:46.670 --> 00:28:50.360
+you're doing with static, ill
+rewriting. It's basically that post
+
+487
+00:28:50.360 --> 00:28:54.200
+build step that changes your
+assembly. For example, I know
+
+488
+00:28:54.200 --> 00:28:57.200
+post sharp as last time
+I checked, they do static
+
+489
+00:28:57.200 --> 00:29:00.530
+I'll rewriting. So you could
+Mark a particular attribute on
+
+490
+00:29:00.530 --> 00:29:02.450
+a particular method. Then all
+of a sudden it would
+
+491
+00:29:02.450 --> 00:29:06.470
+just change that one particular
+method with Lynn foo. It
+
+492
+00:29:06.560 --> 00:29:10.850
+goes dynamic by taking that
+same static step. But instead
+
+493
+00:29:10.850 --> 00:29:14.780
+of putting in a specific
+type of aspect or a
+
+494
+00:29:14.780 --> 00:29:18.230
+piece of code, it wraps
+up a small little framework
+
+495
+00:29:18.230 --> 00:29:21.860
+around your, your methods. So
+what happens is it will
+
+496
+00:29:21.860 --> 00:29:24.920
+ask you once that framework
+is in place and you
+
+497
+00:29:24.920 --> 00:29:27.530
+run the program, it'll ask
+you, okay, I'm inside this
+
+498
+00:29:27.530 --> 00:29:30.320
+method. Should I intercept it?
+Or should I not? If
+
+499
+00:29:30.410 --> 00:29:32.960
+you don't want to intercept
+it, it acts like it's
+
+500
+00:29:32.960 --> 00:29:37.820
+not even there. So when
+we're talking about dynamic L
+
+501
+00:29:37.820 --> 00:29:42.190
+rewriting, what is actually, it's
+kind of it's plus a
+
+502
+00:29:42.190 --> 00:29:48.100
+runtime interception. That's a more
+accurate term for it. The,
+
+503
+00:29:48.290 --> 00:29:51.040
+the benefit of course, for
+dynamic IO rewriting is you
+
+504
+00:29:51.040 --> 00:29:54.010
+can pretty much decide where
+you want it to be.
+
+505
+00:29:55.240 --> 00:30:00.010
+There's also in terms of
+build time. It it's pretty
+
+506
+00:30:00.010 --> 00:30:03.610
+much negligible. It's not like
+a static where you'd have
+
+507
+00:30:03.610 --> 00:30:08.380
+to have to basically filter
+through everything and decide what
+
+508
+00:30:08.380 --> 00:30:09.880
+you want to put in
+and what you don't, because
+
+509
+00:30:09.910 --> 00:30:13.150
+there's some, there's some decisions
+about what you need in
+
+510
+00:30:13.150 --> 00:30:16.260
+the application that cannot be
+decided. And there's where it
+
+511
+00:30:16.260 --> 00:30:18.090
+gets interesting. And that's where
+I think of things like
+
+512
+00:30:18.090 --> 00:30:21.180
+authorization. Yeah. I mean, there's
+no way you could actually
+
+513
+00:30:21.180 --> 00:30:23.940
+put an authorization at compile
+time. It just sounds silly.
+
+514
+00:30:24.690 --> 00:30:28.680
+But at runtime, it, it
+makes perfect sense because you
+
+515
+00:30:28.680 --> 00:30:31.440
+need to be able to
+get this information when the
+
+516
+00:30:31.440 --> 00:30:34.620
+program is running. And that,
+of course, you're not going
+
+517
+00:30:34.620 --> 00:30:36.840
+to be able to get
+that if you have something
+
+518
+00:30:36.840 --> 00:30:39.450
+statically, compiled, and you don't
+know what machine is going
+
+519
+00:30:39.450 --> 00:30:42.390
+to run on and all
+these different settings that you
+
+520
+00:30:42.390 --> 00:30:45.300
+might be worried about. So
+what, what do you think
+
+521
+00:30:45.300 --> 00:30:47.490
+the future is for this?
+I mean, is this going
+
+522
+00:30:47.490 --> 00:30:51.000
+to be, I mean, how
+many people, let me ask
+
+523
+00:30:51.000 --> 00:30:52.200
+you, let me ask the
+hard question I was going
+
+524
+00:30:52.200 --> 00:30:53.400
+to try to be nice,
+but let me just ask
+
+525
+00:30:53.400 --> 00:30:58.410
+this, who's using this other
+than Right now. This is,
+
+526
+00:30:58.530 --> 00:31:01.350
+this is the tool of
+framework geeks. I mean, it's,
+
+527
+00:31:02.730 --> 00:31:07.320
+it sounds scary, but I
+honestly think this, at least
+
+528
+00:31:07.320 --> 00:31:10.770
+on the dotnet side, it's
+one of those rare things
+
+529
+00:31:10.770 --> 00:31:12.270
+that you won't hear about.
+I mean, on the Java
+
+530
+00:31:12.270 --> 00:31:14.190
+side, they've been using this
+a lot on aspect J
+
+531
+00:31:15.000 --> 00:31:19.140
+and they take advantage of
+this a lot. And this
+
+532
+00:31:19.140 --> 00:31:22.580
+is, again, I, you did
+bring up a valid point
+
+533
+00:31:22.590 --> 00:31:25.890
+that this is pretty exotic.
+I mean, I don't recommend
+
+534
+00:31:25.890 --> 00:31:30.570
+it for everybody, but it's,
+it's definitely another tool that
+
+535
+00:31:30.570 --> 00:31:34.920
+you put into your toolbox
+as far as people that
+
+536
+00:31:34.920 --> 00:31:38.550
+use it. I mean, pretty
+much anybody who uses in
+
+537
+00:31:38.550 --> 00:31:43.980
+hibernate uses some form of
+dynamic proxy. It's unavoidable. It's
+
+538
+00:31:43.980 --> 00:31:47.640
+either castle or Lynn Fu
+I mean it, and even
+
+539
+00:31:47.640 --> 00:31:50.250
+in your, your practice, I
+mean, you probably use an
+
+540
+00:31:50.250 --> 00:31:54.000
+hibernate more than a few
+dozen times, but the thing,
+
+541
+00:31:54.030 --> 00:31:55.980
+the thing that's nice is
+you never really know that
+
+542
+00:31:55.980 --> 00:31:59.460
+there's a proxy there. They
+never really, I mean, aside
+
+543
+00:31:59.460 --> 00:32:00.960
+from maybe that setting that
+they say it will be
+
+544
+00:32:00.960 --> 00:32:04.350
+pick one proxy, but for
+the most part, they never
+
+545
+00:32:04.350 --> 00:32:08.070
+really, you don't even realize
+it's there. And that's the
+
+546
+00:32:08.070 --> 00:32:10.260
+beauty of AOP. I mean,
+they're doing all this stuff
+
+547
+00:32:10.260 --> 00:32:12.870
+for you, but it's all
+in the background. So the
+
+548
+00:32:12.870 --> 00:32:18.060
+future, at least for AOP
+is that it's going to
+
+549
+00:32:18.060 --> 00:32:22.260
+be invisible, but there's, there's
+still a lot more interesting
+
+550
+00:32:22.260 --> 00:32:24.720
+things that I would love
+to dive into. I mean,
+
+551
+00:32:24.720 --> 00:32:30.110
+maybe I could talk about
+more on multithreading or, or
+
+552
+00:32:30.120 --> 00:32:35.070
+use AOP to do trans
+transparent IOC container injection. For
+
+553
+00:32:35.070 --> 00:32:37.500
+example, one of the big
+things that they're trying to
+
+554
+00:32:37.500 --> 00:32:41.060
+do with some of the
+containers right now, even with
+
+555
+00:32:41.060 --> 00:32:45.800
+meth, the management sensibility framework
+is the big question. There
+
+556
+00:32:45.800 --> 00:32:48.020
+is, how do you make
+it invisible? How do you
+
+557
+00:32:48.020 --> 00:32:51.680
+actually make extensibility invisible while
+at the same time, allowing
+
+558
+00:32:51.680 --> 00:32:54.920
+users to be able to
+take advantage of it with
+
+559
+00:32:54.950 --> 00:32:57.800
+AOP, it allows you to
+add those features into place
+
+560
+00:32:58.340 --> 00:33:00.860
+without necessarily telling the end
+user dev that you gotta
+
+561
+00:33:00.860 --> 00:33:03.100
+put this in yourself. And
+I think that that nails
+
+562
+00:33:03.100 --> 00:33:06.490
+it, that that's the way
+to do it. There are
+
+563
+00:33:06.490 --> 00:33:09.550
+things that developers shouldn't have
+to worry about. Think about
+
+564
+00:33:09.550 --> 00:33:12.160
+separation concerns. This allows you
+to do separation of concerns,
+
+565
+00:33:12.160 --> 00:33:16.750
+organizationally, Basically. And the other
+thing is, I mean, there's
+
+566
+00:33:16.750 --> 00:33:19.570
+so many things that a
+developer has to worry about
+
+567
+00:33:19.570 --> 00:33:22.390
+nowadays that, I mean, if
+you're talking about like the
+
+568
+00:33:22.390 --> 00:33:27.220
+second or third tier framework
+guys, like the architects, these
+
+569
+00:33:27.220 --> 00:33:29.770
+guys, I mean, for me,
+it's my job, just to
+
+570
+00:33:29.770 --> 00:33:32.590
+make sure that when it
+gets down to the ground
+
+571
+00:33:32.650 --> 00:33:35.770
+level or your average dev,
+they don't see this. I
+
+572
+00:33:35.770 --> 00:33:37.450
+mean, they don't have to
+worry about lazy loading. All
+
+573
+00:33:37.450 --> 00:33:39.760
+they got to worry about
+is the business domain. And
+
+574
+00:33:39.760 --> 00:33:41.320
+in the, at the end
+of the day, that's really
+
+575
+00:33:41.320 --> 00:33:44.140
+the focus here. We want
+to take away all the
+
+576
+00:33:44.140 --> 00:33:46.900
+plumbing so that once you
+strip everything away, the only
+
+577
+00:33:46.900 --> 00:33:51.880
+thing that you see is
+the business domain. And I
+
+578
+00:33:51.880 --> 00:33:53.980
+think that's, what's missing right
+now, because once you look
+
+579
+00:33:53.980 --> 00:33:57.370
+at these different frameworks that
+they have everything from security
+
+580
+00:33:57.370 --> 00:34:02.200
+to logging to transaction management,
+and it gets confusing. Once
+
+581
+00:34:02.200 --> 00:34:05.170
+you go through the code,
+AOP offers that kind of
+
+582
+00:34:05.170 --> 00:34:08.380
+separation, of course, but it's
+gonna take some time before
+
+583
+00:34:08.380 --> 00:34:10.000
+people wrap their heads around
+it. I mean, it took
+
+584
+00:34:10.000 --> 00:34:13.060
+a while for people to
+switch from imperative program to
+
+585
+00:34:13.060 --> 00:34:16.030
+event driven programming. And I
+think that's, that's the shift
+
+586
+00:34:16.030 --> 00:34:19.390
+that we'll see within five
+or 10 years in the
+
+587
+00:34:19.390 --> 00:34:22.990
+same way everybody takes object
+oriented programming for granted nowadays.
+
+588
+00:34:22.990 --> 00:34:25.330
+I mean, that's, I think
+where we're going to be
+
+589
+00:34:25.840 --> 00:34:29.290
+within five or 10 years
+with AOP In closing, gimme
+
+590
+00:34:29.470 --> 00:34:32.470
+give me something that people
+can, action can take action
+
+591
+00:34:32.470 --> 00:34:34.390
+on. So if someone's listening
+to this, they're sitting in
+
+592
+00:34:34.390 --> 00:34:36.730
+the driveway of their, their
+house or their place of
+
+593
+00:34:36.730 --> 00:34:38.500
+business. And they're like, all
+right, I'm going to go
+
+594
+00:34:38.500 --> 00:34:41.830
+download Lynn Fu what's a,
+an exercise that they can
+
+595
+00:34:41.830 --> 00:34:45.310
+do with an existing application.
+That'll make them that'll light
+
+596
+00:34:45.310 --> 00:34:48.010
+them up. Well, one of
+the things that you can
+
+597
+00:34:48.010 --> 00:34:52.840
+do with Lin Fu and
+even AOP is ex copy
+
+598
+00:34:52.840 --> 00:34:56.380
+deployment. I mean, we're talking
+about instant plugability. I mean,
+
+599
+00:34:56.380 --> 00:34:58.540
+that's has been talking about
+this for a while. I
+
+600
+00:34:58.540 --> 00:35:01.840
+was doing this back in
+2007, basically the idea is
+
+601
+00:35:02.260 --> 00:35:05.800
+you could, with AOP, you
+could just plug things right
+
+602
+00:35:05.800 --> 00:35:08.920
+in without even changing a
+lot of code. Like for
+
+603
+00:35:08.920 --> 00:35:13.450
+example, there are a was
+one project where a guy
+
+604
+00:35:13.450 --> 00:35:17.020
+took Lin Fu and took
+his five-year-old web app and
+
+605
+00:35:17.020 --> 00:35:19.450
+they couldn't change the production
+code. So what he did
+
+606
+00:35:19.450 --> 00:35:21.880
+was he actually plugged in
+food into it and he
+
+607
+00:35:21.880 --> 00:35:23.920
+was able to change it
+without changing a single line
+
+608
+00:35:23.920 --> 00:35:28.960
+of code. Everything works, all
+the tests passed, it just
+
+609
+00:35:28.960 --> 00:35:31.300
+works. So I could change.
+I could change an app.
+
+610
+00:35:31.300 --> 00:35:33.610
+I don't even have the
+source for correct. That'd be
+
+611
+00:35:33.610 --> 00:35:36.010
+interesting to add logging to
+an existing app, but you're,
+
+612
+00:35:36.130 --> 00:35:40.200
+you're either afraid or to
+recompile It. And it happens
+
+613
+00:35:40.200 --> 00:35:43.380
+a lot. There are other
+things I've played around with
+
+614
+00:35:43.380 --> 00:35:46.800
+is you can actually add
+a rapid unit test or
+
+615
+00:35:46.890 --> 00:35:49.110
+observe existing code. So you
+can see what the input
+
+616
+00:35:49.110 --> 00:35:52.740
+and the output of each
+method is. So I could
+
+617
+00:35:52.740 --> 00:35:56.820
+actually write, you know, your
+Michael feathers working effectively with
+
+618
+00:35:57.240 --> 00:36:03.960
+legacy code type tests, where
+you put in legacy characterization
+
+619
+00:36:03.960 --> 00:36:05.970
+tests, and you don't even
+have to touch the code.
+
+620
+00:36:05.970 --> 00:36:07.710
+You just have to observe
+what comes in and what
+
+621
+00:36:07.710 --> 00:36:13.770
+comes out. But that kind
+of thing is only possible
+
+622
+00:36:13.770 --> 00:36:16.890
+AOP, because you don't want
+to mess with production code,
+
+623
+00:36:17.130 --> 00:36:20.910
+especially if it works. If
+you've got unit tests even
+
+624
+00:36:20.910 --> 00:36:23.940
+better, because even if you
+plug the AOP right in,
+
+625
+00:36:25.620 --> 00:36:28.110
+you'll still be able to
+verify that it works in
+
+626
+00:36:28.110 --> 00:36:32.970
+99.99, nine, 9% of the
+time it works. And you
+
+627
+00:36:32.970 --> 00:36:35.030
+can easily verify with the
+test if it does it
+
+628
+00:36:35.730 --> 00:36:39.210
+very cool. Thank you very
+much for taking the time
+
+629
+00:36:39.210 --> 00:36:40.680
+to call in. And I
+know you're up at one
+
+630
+00:36:40.680 --> 00:36:57.030
+in the morning, not a
+problem. This has been another
+
+631
+00:36:57.030 --> 00:36:58.530
+episode of Hansel minutes.
+

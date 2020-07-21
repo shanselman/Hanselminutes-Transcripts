@@ -1,0 +1,3246 @@
+WEBVTT FILE
+
+1
+00:00:14.720 --> 00:00:18.230
+It's Hansel minutes, a weekly
+discussion with web developer and
+
+2
+00:00:18.230 --> 00:00:22.910
+technologist Scott Hanselman. This is
+Lawrence Ryan announcing show number three
+
+3
+00:00:22.910 --> 00:00:28.970
+26. Recorded live Thursday, June 28th, 2012.
+This episode is brought to
+
+4
+00:00:28.970 --> 00:00:32.060
+you by Tellerik offering the
+best in developer tools and
+
+5
+00:00:32.060 --> 00:00:39.260
+support online at <inaudible> dot
+com and by franklins.net training
+
+6
+00:00:39.260 --> 00:00:42.440
+developers to work smarter. And
+now I'll bring gesture, pack
+
+7
+00:00:42.590 --> 00:00:46.040
+a powerful gesture, recording and
+recognition system for Microsoft connect
+
+8
+00:00:46.040 --> 00:00:51.710
+for windows developers details at
+<inaudible> dot com. In this
+
+9
+00:00:51.710 --> 00:00:56.990
+episode, Scott talks with Dave
+ward about JavaScript performance and
+
+10
+00:00:56.990 --> 00:01:01.700
+the direction the web is
+taking. Hi, this is Scott
+
+11
+00:01:01.700 --> 00:01:04.520
+Hanselman. This is another episode
+of Hansel minutes. And today
+
+12
+00:01:04.520 --> 00:01:05.960
+I want to talk about
+the direction of the web
+
+13
+00:01:05.960 --> 00:01:08.150
+is going and I've got
+Dave ward with me on
+
+14
+00:01:08.150 --> 00:01:12.710
+the line. How's it going,
+Dave? Hey, pretty good. I
+
+15
+00:01:12.710 --> 00:01:14.630
+would like talking to you
+because you really, I think
+
+16
+00:01:14.630 --> 00:01:16.550
+have your finger on kind
+of the pulse of what's
+
+17
+00:01:16.550 --> 00:01:19.690
+happening on the internet. And
+I know that you, you
+
+18
+00:01:19.760 --> 00:01:22.730
+have a good, you have
+a purist attitude, cause I
+
+19
+00:01:22.730 --> 00:01:24.530
+know that I've worked with
+you on code and we've
+
+20
+00:01:24.530 --> 00:01:26.840
+paired where you've said this
+isn't really how I would
+
+21
+00:01:26.840 --> 00:01:28.610
+do it, and I want
+it to look nicer, but
+
+22
+00:01:28.610 --> 00:01:30.770
+you're also a pragmatist and
+you're willing to go and
+
+23
+00:01:30.770 --> 00:01:32.060
+kind of the direction that
+is going to get the
+
+24
+00:01:32.060 --> 00:01:35.420
+work done. And I think
+that we're seeing more and
+
+25
+00:01:35.420 --> 00:01:38.810
+more, that people are not
+wanting to render all of
+
+26
+00:01:38.810 --> 00:01:41.570
+their angle brackets in their
+HTML on the server side.
+
+27
+00:01:42.050 --> 00:01:45.590
+It seems like the browsers
+are fast enough now that
+
+28
+00:01:45.590 --> 00:01:48.740
+people are shovel, shoveling Jason
+around. Is that a fan
+
+29
+00:01:48.740 --> 00:01:50.150
+or do you think that's
+the way the web's going?
+
+30
+00:01:51.470 --> 00:01:54.200
+You know, that's an interesting
+question because if you had
+
+31
+00:01:54.200 --> 00:01:56.090
+asked me that a couple
+of years ago, I would
+
+32
+00:01:56.090 --> 00:01:58.130
+have very clearly said, you
+know, Jason, all the way,
+
+33
+00:01:59.090 --> 00:02:00.710
+you know, why would we
+even bother rendering on the
+
+34
+00:02:00.710 --> 00:02:04.160
+server? But now we have
+mobile devices, that account for
+
+35
+00:02:04.160 --> 00:02:06.410
+such a huge amount of
+the usage on the web.
+
+36
+00:02:09.350 --> 00:02:11.150
+It's almost like we've moved
+backwards a little bit there.
+
+37
+00:02:11.570 --> 00:02:13.400
+So I think it's a,
+it's a really complicated question.
+
+38
+00:02:14.660 --> 00:02:16.820
+But at the same time
+though, Google just announced mobile
+
+39
+00:02:16.820 --> 00:02:20.930
+devices, tablets. In this case,
+it had quad processors. Is
+
+40
+00:02:20.930 --> 00:02:22.790
+it, it's one of these
+things where every time we
+
+41
+00:02:22.790 --> 00:02:25.970
+think that a mobile machine
+or a small machine will
+
+42
+00:02:25.970 --> 00:02:28.310
+not have the power a
+few minutes later, it has
+
+43
+00:02:28.310 --> 00:02:31.010
+the power and we should,
+should we shoot the moon
+
+44
+00:02:31.010 --> 00:02:33.560
+and just assume that everyone
+will have 3d hardware accelerated
+
+45
+00:02:33.560 --> 00:02:36.920
+browsers in the next year
+or two And virtual reality
+
+46
+00:02:36.920 --> 00:02:42.140
+goggles too. Right? Of course.
+Yeah, no, I think that's
+
+47
+00:02:42.140 --> 00:02:44.570
+a great point. I think
+it's a temporary problem, certainly.
+
+48
+00:02:45.080 --> 00:02:48.800
+And you know, I've always
+been a fan of using
+
+49
+00:02:48.800 --> 00:02:51.830
+an API of some sort
+that returns Jason, even back
+
+50
+00:02:51.830 --> 00:02:53.540
+when we worked on nerd
+dinner, you know, we did
+
+51
+00:02:53.540 --> 00:02:56.540
+a bit of that and
+I've always liked clients. I
+
+52
+00:02:56.540 --> 00:02:59.080
+template. I think it's better
+because when you have the
+
+53
+00:02:59.080 --> 00:03:01.660
+data, you can do more
+granular updates. You can, you
+
+54
+00:03:01.660 --> 00:03:03.670
+can do things that really
+wouldn't even come to mind
+
+55
+00:03:03.670 --> 00:03:07.060
+as possibilities when you're rendering
+whole pages or even just
+
+56
+00:03:07.060 --> 00:03:10.150
+partials on the, on the
+server side because the, the
+
+57
+00:03:10.900 --> 00:03:13.810
+granularity just isn't there, you
+can't do the neat stuff
+
+58
+00:03:13.810 --> 00:03:16.300
+like fading out a single
+line or updating a, you
+
+59
+00:03:16.300 --> 00:03:18.640
+know, just a single value
+in, you know, give me
+
+60
+00:03:18.640 --> 00:03:21.160
+a flash to, to show
+that it updated small stuff
+
+61
+00:03:21.160 --> 00:03:23.320
+like that, that, you know,
+makes a great user interface,
+
+62
+00:03:24.010 --> 00:03:26.650
+but it's very difficult if
+you're not doing the rendering
+
+63
+00:03:26.650 --> 00:03:29.110
+on the client side. So
+I do think that's the
+
+64
+00:03:29.110 --> 00:03:30.940
+way it's going to go.
+I know for good user
+
+65
+00:03:30.940 --> 00:03:34.200
+experience, you really do need
+that. When you think about
+
+66
+00:03:34.200 --> 00:03:36.510
+what happened recently with, with
+Twitter and some of the
+
+67
+00:03:36.510 --> 00:03:39.420
+focus that they've been putting
+on performance, I assume you're
+
+68
+00:03:39.420 --> 00:03:42.180
+familiar with their, their recent
+kind of controversial blog posts.
+
+69
+00:03:42.210 --> 00:03:44.160
+Maybe you could talk a
+little bit about what a
+
+70
+00:03:44.160 --> 00:03:46.590
+hash bang is and why
+those show up in URLs,
+
+71
+00:03:46.620 --> 00:03:48.180
+what Twitter did a couple
+of years ago and what
+
+72
+00:03:48.180 --> 00:03:50.040
+they did now and why
+that matters to people who
+
+73
+00:03:50.040 --> 00:03:53.550
+care about the web. Sure.
+So if you want to
+
+74
+00:03:53.550 --> 00:03:56.370
+maintain state on the client
+side, you know, browser history,
+
+75
+00:03:56.820 --> 00:04:00.360
+you can't change the URL
+you couldn't before you can
+
+76
+00:04:00.360 --> 00:04:03.120
+now with an HTML five
+API, but it's still not
+
+77
+00:04:03.120 --> 00:04:05.100
+available in a lot of
+browsers that people are using.
+
+78
+00:04:05.280 --> 00:04:08.070
+If you ever, if you
+manipulate a document dot location
+
+79
+00:04:08.070 --> 00:04:11.130
+to change the URL in
+the browser, it triggered a
+
+80
+00:04:11.130 --> 00:04:13.470
+full page refresh, which generally
+isn't what you want when
+
+81
+00:04:13.470 --> 00:04:17.340
+you're doing sort of a
+client side rich application. And
+
+82
+00:04:17.340 --> 00:04:20.220
+so the way that people
+work around that to create
+
+83
+00:04:20.220 --> 00:04:22.740
+an application sort of like
+Twitter or Facebook or something
+
+84
+00:04:22.740 --> 00:04:25.140
+like that, where it's a
+lot of things are changing
+
+85
+00:04:25.140 --> 00:04:29.070
+without page reloads, you manipulate
+the hash portion of your
+
+86
+00:04:29.070 --> 00:04:30.780
+ALS, which is, you know,
+what you see when you
+
+87
+00:04:30.780 --> 00:04:34.050
+go to a Twitter URL
+today, or maybe not today.
+
+88
+00:04:34.050 --> 00:04:36.570
+I think they actually have
+started reverting that, but in
+
+89
+00:04:36.570 --> 00:04:39.360
+the past you see that
+hash bang and then a
+
+90
+00:04:39.360 --> 00:04:42.330
+path after that. And what
+that does is it allows
+
+91
+00:04:42.330 --> 00:04:45.210
+you to change the path
+on the client side without
+
+92
+00:04:45.360 --> 00:04:48.780
+triggering those page reloads. Of
+course, the problem with that
+
+93
+00:04:48.780 --> 00:04:51.570
+is the hash is not
+sent to the server at
+
+94
+00:04:51.570 --> 00:04:56.610
+all. So if I go
+to twitter.com hash, you know,
+
+95
+00:04:56.880 --> 00:05:00.570
+in kosha, for example, all
+Twitter gets on its server
+
+96
+00:05:00.570 --> 00:05:03.000
+is just twitter.com and it
+has to send down the
+
+97
+00:05:03.000 --> 00:05:06.540
+whole client side application and
+then has to the clients
+
+98
+00:05:06.540 --> 00:05:08.310
+that application has to parse
+out, you know, what's in
+
+99
+00:05:08.310 --> 00:05:11.580
+the hash Susan kosha, then
+make another call back to
+
+100
+00:05:11.580 --> 00:05:14.520
+the server, to the API
+and get, you know, whatever
+
+101
+00:05:14.970 --> 00:05:17.190
+stuff it was going to
+render for in kosha. And
+
+102
+00:05:17.190 --> 00:05:19.950
+then finally build me a
+page. So, you know, it's,
+
+103
+00:05:19.980 --> 00:05:22.680
+it's a lot slower than
+if I just went to
+
+104
+00:05:22.680 --> 00:05:26.010
+twitter.com/enclosure and it could serve
+me up the right thing
+
+105
+00:05:26.010 --> 00:05:28.470
+the first time around. And
+so that's what the performance
+
+106
+00:05:29.340 --> 00:05:33.150
+problems have been around that.
+So let me see if
+
+107
+00:05:33.150 --> 00:05:39.000
+I understand this when you
+hit, you know, hanselman.com and
+
+108
+00:05:39.060 --> 00:05:42.300
+there's an anchor that's on
+the current page, this is
+
+109
+00:05:42.300 --> 00:05:44.310
+kind of in the old
+web, the web of, you
+
+110
+00:05:44.310 --> 00:05:46.680
+know, the original web, you
+would have like a long
+
+111
+00:05:46.680 --> 00:05:50.100
+document, like chapter one, chapter
+two, chapter three, all on
+
+112
+00:05:50.100 --> 00:05:53.970
+one page. And then you
+would say a H ref,
+
+113
+00:05:54.030 --> 00:05:58.640
+a being anchor, and you'd
+say this named, you know,
+
+114
+00:05:58.670 --> 00:06:00.950
+chapter two, and then you
+could have another link that
+
+115
+00:06:00.950 --> 00:06:05.570
+would refer to hash, the
+number, sign shift three on
+
+116
+00:06:05.570 --> 00:06:07.940
+the U S keyboard. And
+that would refer to that
+
+117
+00:06:07.940 --> 00:06:10.910
+chapter and you would have
+an in page link, right.
+
+118
+00:06:11.600 --> 00:06:13.910
+And that would not hit
+the, that would not hit
+
+119
+00:06:13.910 --> 00:06:15.740
+the server. And we would
+use, we would use that
+
+120
+00:06:15.740 --> 00:06:18.290
+for funny hacks and stuff
+in the pre Ajax world,
+
+121
+00:06:18.320 --> 00:06:20.660
+right. Where we would jump
+up and down on a
+
+122
+00:06:20.660 --> 00:06:24.400
+page and the server would
+never know about it. Yeah,
+
+123
+00:06:24.400 --> 00:06:27.400
+that's exactly right. We're, we're
+taking something that was designed
+
+124
+00:06:27.400 --> 00:06:31.060
+exactly for that in page
+navigation, years and years ago.
+
+125
+00:06:31.150 --> 00:06:33.040
+And then we've sort of
+found that that was the
+
+126
+00:06:33.040 --> 00:06:35.740
+only thing that we could
+do before this new HTML
+
+127
+00:06:35.740 --> 00:06:37.720
+five API, to be able
+to find some way to
+
+128
+00:06:37.720 --> 00:06:41.740
+change the, you know, the
+browser history without reloading a
+
+129
+00:06:41.740 --> 00:06:46.750
+page. When you click around
+to a, to a hash,
+
+130
+00:06:47.240 --> 00:06:50.830
+a hash anchor, you're, you're
+not, there's no way to
+
+131
+00:06:50.830 --> 00:06:52.900
+hear about that on the
+server side. And then in
+
+132
+00:06:52.900 --> 00:06:56.980
+September of 2010, when Twitter
+built their UI all around
+
+133
+00:06:56.980 --> 00:06:59.680
+this, and we started seeing
+these hash bangs dollar sign,
+
+134
+00:06:59.680 --> 00:07:03.580
+exclamation point style URL, everyone
+thought that's the way the
+
+135
+00:07:03.580 --> 00:07:06.520
+web was, was going. And
+in fact, all of Twitter's
+
+136
+00:07:07.030 --> 00:07:10.480
+permalinks turned into this. Like
+we saw every single URL
+
+137
+00:07:10.480 --> 00:07:14.710
+change to this. I'm surprised
+like when it happened, like
+
+138
+00:07:14.710 --> 00:07:16.630
+how could anyone have thought
+that was a good idea.
+
+139
+00:07:17.830 --> 00:07:19.720
+I agree with you. I
+didn't think it was a
+
+140
+00:07:19.720 --> 00:07:23.470
+good idea then. And now
+they're saddled with a maintenance
+
+141
+00:07:23.470 --> 00:07:26.710
+nightmare forever. Because even when
+they revert back to normal
+
+142
+00:07:26.710 --> 00:07:30.850
+URLs for performance, they still
+have to somehow support these
+
+143
+00:07:30.850 --> 00:07:34.300
+old permanent links. At least
+they should, there's still going
+
+144
+00:07:34.310 --> 00:07:37.570
+to need, yeah, they're still
+gonna need twitter.com to be
+
+145
+00:07:37.570 --> 00:07:40.870
+able to have some, at
+least some bootstrap, the client
+
+146
+00:07:40.880 --> 00:07:42.820
+side code there that can
+detect that and realize, Oh,
+
+147
+00:07:42.820 --> 00:07:45.820
+Hey, I need to still
+do some sort of redirect.
+
+148
+00:07:45.820 --> 00:07:48.940
+So it's where this should
+be. So yeah, they really
+
+149
+00:07:49.030 --> 00:07:50.920
+painted themselves into a corner
+with that one. I don't
+
+150
+00:07:50.920 --> 00:07:53.260
+think it was a good
+idea at all. Google go
+
+151
+00:07:53.260 --> 00:07:55.440
+and put in some code
+and their stuff to there.
+
+152
+00:07:55.440 --> 00:07:58.090
+They're starting to have JavaScript
+in the Google bot, such
+
+153
+00:07:58.090 --> 00:08:02.140
+that they can see when,
+when, when things like this
+
+154
+00:08:02.140 --> 00:08:05.110
+are being done and they
+can still index the information
+
+155
+00:08:06.400 --> 00:08:09.550
+Well. So that's why the
+bang, the exclamation Mark comes
+
+156
+00:08:09.550 --> 00:08:15.100
+after the hash. That's a
+convention that Google recommended the
+
+157
+00:08:15.130 --> 00:08:16.870
+hash is all that's necessary.
+You don't need to do
+
+158
+00:08:16.870 --> 00:08:19.450
+a hash bang to, to
+get around the, the browser
+
+159
+00:08:19.450 --> 00:08:23.050
+navigation. The hash bang is
+something that Google wants so
+
+160
+00:08:23.050 --> 00:08:26.020
+that it sees that as
+a convention. And then if
+
+161
+00:08:26.080 --> 00:08:32.530
+say we had hanselman.com/hash bang,
+Dave, and, and what Google
+
+162
+00:08:32.530 --> 00:08:34.840
+would do is they would
+then if they ever saw
+
+163
+00:08:34.900 --> 00:08:40.090
+permalink to that, they would
+make a request to hanselman.com/question
+
+164
+00:08:40.090 --> 00:08:41.950
+Mark. They would do a
+query string. So that does
+
+165
+00:08:41.950 --> 00:08:43.840
+get sent to the server
+and it would be an
+
+166
+00:08:43.840 --> 00:08:47.350
+escaped fragment equals Dave. And
+so it's expecting your server
+
+167
+00:08:47.680 --> 00:08:49.810
+to be able to serve
+up something, at least for
+
+168
+00:08:49.810 --> 00:08:52.600
+it to index that corresponds
+to what that hash bang
+
+169
+00:08:52.600 --> 00:08:55.770
+URL was showing to users.
+So you can actually work
+
+170
+00:08:55.770 --> 00:08:58.440
+around the, you know, the
+fact that Google, but generally
+
+171
+00:08:58.440 --> 00:09:01.920
+couldn't run all that client
+side code to, to show
+
+172
+00:09:01.950 --> 00:09:05.810
+it what the users were
+seeing. One of the interesting
+
+173
+00:09:05.810 --> 00:09:07.670
+things that you said that
+got me thinking was the
+
+174
+00:09:07.670 --> 00:09:12.290
+idea that we want the
+speed of an application, but
+
+175
+00:09:12.290 --> 00:09:14.050
+we want the web to
+be powerful. Like the web
+
+176
+00:09:14.060 --> 00:09:18.530
+is, and web API APIs
+are supposed to be amazing
+
+177
+00:09:18.530 --> 00:09:20.000
+and supposed to be powerful,
+and they're supposed to be
+
+178
+00:09:20.000 --> 00:09:22.280
+the backbone of which we
+rest all of these applications.
+
+179
+00:09:22.610 --> 00:09:25.550
+And what Twitter has had
+attempted to do really was
+
+180
+00:09:25.820 --> 00:09:29.990
+create an application that ran
+on the user's browser, but
+
+181
+00:09:29.990 --> 00:09:33.680
+consumed their Twitter rest API
+as if it were a
+
+182
+00:09:33.680 --> 00:09:37.100
+client, any other kind of
+a client, which is basically
+
+183
+00:09:37.100 --> 00:09:40.340
+saying the Twitter website is
+no different than any other,
+
+184
+00:09:41.300 --> 00:09:44.960
+any other client, no matter
+where it's running, except in
+
+185
+00:09:44.960 --> 00:09:50.210
+this instance, the entire application,
+the Twitter application composed of
+
+186
+00:09:50.210 --> 00:09:53.030
+all the different images and
+CSS and JavaScript had to
+
+187
+00:09:53.030 --> 00:09:56.330
+come down a lot more
+often than, than with an
+
+188
+00:09:56.330 --> 00:10:00.710
+application. Is this showing an
+underlying problem with the whole
+
+189
+00:10:00.710 --> 00:10:03.860
+web versus application model? And
+we just need the concept
+
+190
+00:10:03.860 --> 00:10:07.880
+of web apps to really
+happen? No, I think this
+
+191
+00:10:07.880 --> 00:10:11.880
+is a case where Twitter
+may have, you know, there's,
+
+192
+00:10:11.880 --> 00:10:14.510
+there's always a line between
+what is a website and
+
+193
+00:10:14.510 --> 00:10:17.270
+what is a web application.
+Obviously, if I go to
+
+194
+00:10:17.300 --> 00:10:19.850
+Gmail, I know that's a
+web application. I know that
+
+195
+00:10:21.080 --> 00:10:24.350
+I'm not expecting to have
+a durable links to documents
+
+196
+00:10:24.350 --> 00:10:27.110
+there or any of those
+sort of things. Whereas I
+
+197
+00:10:27.110 --> 00:10:30.860
+think, you know, Twitter is
+this trying to straddle that
+
+198
+00:10:30.860 --> 00:10:33.440
+line a little bit farther
+toward the application side than
+
+199
+00:10:33.440 --> 00:10:35.660
+it really should. I think
+really we think of Twitter
+
+200
+00:10:35.660 --> 00:10:38.480
+more as a, you know,
+a resource, a full of
+
+201
+00:10:38.480 --> 00:10:40.730
+documents, you know, they happen
+to be tweets, but we,
+
+202
+00:10:40.970 --> 00:10:43.340
+we expect permalinks to work
+and we care less about,
+
+203
+00:10:43.820 --> 00:10:46.100
+you know, loading up an
+entire Twitter application every time
+
+204
+00:10:46.100 --> 00:10:48.260
+we want to view one
+tweet that someone links to
+
+205
+00:10:48.260 --> 00:10:51.800
+us. So, you know, I
+think that it's not that
+
+206
+00:10:51.800 --> 00:10:55.760
+the, the web can't be
+a rich application in the,
+
+207
+00:10:56.690 --> 00:10:58.820
+when it should be. I
+think just in the, in
+
+208
+00:10:58.820 --> 00:11:00.380
+the case of Twitter, I
+think they went too far
+
+209
+00:11:01.490 --> 00:11:03.920
+Well, and now what they've
+done is they've calling it
+
+210
+00:11:03.920 --> 00:11:08.270
+the optimizing to a time
+to first tweet. And apparently
+
+211
+00:11:08.270 --> 00:11:10.610
+they've dropped it down to
+a fifth of what it
+
+212
+00:11:10.610 --> 00:11:13.490
+was. So, I mean, that's
+a big number, but, you
+
+213
+00:11:13.490 --> 00:11:18.380
+know, phrased differently. It's 80%
+faster. That's pretty crazy. That
+
+214
+00:11:18.380 --> 00:11:21.260
+means that it was super
+slow before. And I know
+
+215
+00:11:21.260 --> 00:11:24.020
+that I've seen this when
+I'm logged into Twitter. If
+
+216
+00:11:24.020 --> 00:11:26.270
+you notice that flash where
+you see the background of
+
+217
+00:11:26.270 --> 00:11:30.560
+your own And suddenly you
+see the tweet you linked
+
+218
+00:11:30.590 --> 00:11:35.300
+to. Yeah, absolutely. Truly unfortunate.
+And they, the thing that
+
+219
+00:11:35.300 --> 00:11:38.150
+I think is most interesting
+that if we dig into
+
+220
+00:11:38.150 --> 00:11:40.760
+their little announcement here on
+improving performance on Twitter, is
+
+221
+00:11:40.760 --> 00:11:43.940
+that it came down to
+dependencies. But the issue was
+
+222
+00:11:43.940 --> 00:11:46.910
+that they were just downloading
+so much JavaScript and there's
+
+223
+00:11:46.910 --> 00:11:48.980
+really no good way to
+tell on a page by
+
+224
+00:11:48.980 --> 00:11:52.220
+page basis what's needed. And
+I think more and more
+
+225
+00:11:52.220 --> 00:11:55.420
+of us as we find
+different plugins and little snips
+
+226
+00:11:55.420 --> 00:11:58.030
+of JavaScript, no one really
+has a good sense about
+
+227
+00:11:58.030 --> 00:12:01.810
+what code path is being
+used on a per page
+
+228
+00:12:01.810 --> 00:12:07.110
+basis. Yeah. That's something where
+I I've long advocated that,
+
+229
+00:12:07.530 --> 00:12:10.710
+you know, especially in the
+jQuery ecosystem, which is, you
+
+230
+00:12:10.710 --> 00:12:12.360
+know, when we talk about
+JavaScript in the web, I
+
+231
+00:12:12.360 --> 00:12:14.880
+mean, it's sort of implied
+that we're talking about jQuery
+
+232
+00:12:14.880 --> 00:12:18.870
+for most people, th the
+ecosystem of plugins is just
+
+233
+00:12:18.870 --> 00:12:21.480
+gigantic, you know, and it's
+so tempting to put every
+
+234
+00:12:22.230 --> 00:12:24.720
+eye candy plugin that you
+find on your site, right.
+
+235
+00:12:24.720 --> 00:12:28.470
+But I've long advocated that
+you should really try to
+
+236
+00:12:28.470 --> 00:12:31.680
+implement it yourself first, because
+there were so many times
+
+237
+00:12:31.680 --> 00:12:35.310
+when say that fancy gallery
+or slider plugin, it turns
+
+238
+00:12:35.310 --> 00:12:38.160
+out that for the implementation
+on your site, it's just
+
+239
+00:12:38.160 --> 00:12:40.290
+a few lines of code.
+I mean, very, very short.
+
+240
+00:12:40.650 --> 00:12:43.170
+And the big plugin really
+is handling all the edge
+
+241
+00:12:43.170 --> 00:12:46.140
+cases and corner cases for
+every different sort of way
+
+242
+00:12:46.140 --> 00:12:48.840
+you might want to use
+it. That you're never exactly,
+
+243
+00:12:48.840 --> 00:12:50.760
+like you said, you're never
+using all those code paths.
+
+244
+00:12:51.480 --> 00:12:53.610
+And then it's so easy
+to build up that big
+
+245
+00:12:53.640 --> 00:12:57.600
+bloated site, like Twitter to,
+Yeah. There's a really interesting
+
+246
+00:12:57.600 --> 00:13:00.660
+project from Microsoft research called
+J S meter. Have you
+
+247
+00:13:00.660 --> 00:13:03.570
+seen that? No, I haven't.
+I think this would be
+
+248
+00:13:03.570 --> 00:13:05.610
+right up your alley. I
+can smell it. Dave ward
+
+249
+00:13:05.610 --> 00:13:07.470
+blog, post coming, even as
+I tell you about it.
+
+250
+00:13:07.830 --> 00:13:12.030
+So the gas meter goes
+and measures the runtime behavior
+
+251
+00:13:12.030 --> 00:13:15.180
+of a JavaScript program, and
+it's meant to help the
+
+252
+00:13:15.180 --> 00:13:19.560
+<inaudible> team, you know, figure
+out their, their JavaScript engine
+
+253
+00:13:19.560 --> 00:13:22.950
+and optimize it. But what's
+interesting is that they've gone
+
+254
+00:13:22.950 --> 00:13:25.800
+and looked at like typical
+web pages. And it turns
+
+255
+00:13:25.800 --> 00:13:28.020
+out according to the chart
+that they published on the
+
+256
+00:13:28.020 --> 00:13:34.230
+<inaudible> blog, that the average
+webpage only uses executes about
+
+257
+00:13:34.230 --> 00:13:40.470
+40% of the JavaScript that
+they download. So think about
+
+258
+00:13:40.470 --> 00:13:42.630
+that, right? You're, you're literally
+downloading a whole bunch of
+
+259
+00:13:42.630 --> 00:13:45.420
+code and not using it.
+And that's where things start
+
+260
+00:13:45.420 --> 00:13:49.350
+becoming really interesting. Where do
+you solve that problem? Right.
+
+261
+00:13:49.350 --> 00:13:51.690
+Do you download as many
+JavaScript libraries as you can
+
+262
+00:13:51.690 --> 00:13:54.000
+and cash them all and
+make jQuery built into the
+
+263
+00:13:54.000 --> 00:13:56.580
+browser so that you never
+have to download Jacory again?
+
+264
+00:13:57.240 --> 00:13:59.730
+Do you let the CDN
+handle that or do you
+
+265
+00:13:59.730 --> 00:14:04.650
+make the JavaScript engine really
+smart and somehow parse just
+
+266
+00:14:04.650 --> 00:14:06.480
+the minimal amount of work
+that you want to do,
+
+267
+00:14:06.480 --> 00:14:08.430
+because you want to find
+a balance between jitting, which
+
+268
+00:14:08.430 --> 00:14:12.600
+is, you know, just-in-time compiling
+stuff. And what do you
+
+269
+00:14:12.600 --> 00:14:14.250
+do with the rest? You
+know, how do you assume
+
+270
+00:14:14.250 --> 00:14:16.830
+that, well, this, this website
+may use these other libraries.
+
+271
+00:14:16.830 --> 00:14:18.240
+Do I want to get
+ready for those? Do I
+
+272
+00:14:18.240 --> 00:14:22.140
+want to parse this parse
+that I guess in <inaudible>
+
+273
+00:14:22.410 --> 00:14:27.450
+the new JavaScript library does
+syntax only parsing, and then
+
+274
+00:14:27.490 --> 00:14:29.190
+doesn't actually go and do
+the work of building the
+
+275
+00:14:29.190 --> 00:14:32.760
+syntax tree until the function's
+about to be invoked, but
+
+276
+00:14:32.790 --> 00:14:35.460
+it brings up a really
+interesting question, which is kind
+
+277
+00:14:35.460 --> 00:14:37.740
+of the underlying question of
+our entire conversation. Is that
+
+278
+00:14:38.280 --> 00:14:42.120
+whose responsibility is it when
+you're executing this kind of
+
+279
+00:14:42.120 --> 00:14:44.130
+code? Is it the server?
+Is it the client? Is
+
+280
+00:14:44.130 --> 00:14:45.930
+it the operating system? Is
+that the browser? Is it
+
+281
+00:14:45.930 --> 00:14:50.610
+the CDN? Well, I think
+definitely the, the advances in
+
+282
+00:14:50.610 --> 00:14:54.440
+the browsers, like you said,
+the E a blog on
+
+283
+00:14:54.440 --> 00:14:57.680
+MSDN, they have a great
+post about those new optimizations
+
+284
+00:14:57.680 --> 00:15:00.590
+they're doing with the syntax
+tree parsing and, and trying
+
+285
+00:15:00.590 --> 00:15:04.700
+to cash the already parsed
+tree when they can between
+
+286
+00:15:04.700 --> 00:15:07.380
+page views and things like
+that. That's awesome. I mean,
+
+287
+00:15:07.380 --> 00:15:10.040
+that's, that is really great
+innovative work. And, you know,
+
+288
+00:15:10.040 --> 00:15:12.230
+I'm sure that the V
+eight engine is probably doing
+
+289
+00:15:12.230 --> 00:15:15.080
+some similar things. You know,
+they, they do great innovation
+
+290
+00:15:15.080 --> 00:15:18.680
+there too, but, you know,
+going back to what we
+
+291
+00:15:18.680 --> 00:15:21.710
+were talking about earlier, you
+know, mobile browsers and, you
+
+292
+00:15:21.710 --> 00:15:23.750
+know, you have a browser
+and your TV now, and
+
+293
+00:15:23.750 --> 00:15:26.300
+probably in your refrigerator in
+a few years, you know,
+
+294
+00:15:26.300 --> 00:15:28.700
+I don't think that it's
+reasonable to expect to have
+
+295
+00:15:28.700 --> 00:15:31.610
+that kind of optimization. If
+your site falls flat and
+
+296
+00:15:31.610 --> 00:15:35.330
+takes, you know, 20 seconds
+to load without <inaudible>, that's
+
+297
+00:15:35.330 --> 00:15:38.750
+not good at all. And
+it was a good question.
+
+298
+00:15:38.930 --> 00:15:41.960
+You know, in some cases
+I've definitely been feeding a
+
+299
+00:15:41.960 --> 00:15:45.590
+server rendered HTML to mobile
+devices when I do jQuery
+
+300
+00:15:45.590 --> 00:15:48.560
+mobile apps, because I just
+found that doing the rendering
+
+301
+00:15:48.560 --> 00:15:51.400
+on the client side was
+painfully slow. Really. And how
+
+302
+00:15:51.400 --> 00:15:53.350
+are you doing that? Cause
+that, that brings up the,
+
+303
+00:15:53.530 --> 00:15:56.320
+kind of the final level
+of optimization, which is developer
+
+304
+00:15:56.320 --> 00:15:59.890
+time optimization, right? I mean,
+everyone's so excited about dynamic
+
+305
+00:15:59.890 --> 00:16:02.080
+languages and doing all these
+things on the client, but
+
+306
+00:16:02.080 --> 00:16:04.870
+you're really talking about what
+is a, an optimization where
+
+307
+00:16:04.870 --> 00:16:06.850
+you recognize this as something
+that needed to be on
+
+308
+00:16:06.850 --> 00:16:08.740
+the server. Was it, was
+there a tool that told
+
+309
+00:16:08.740 --> 00:16:11.430
+you this or did you
+just figure it out? I
+
+310
+00:16:11.440 --> 00:16:14.470
+just figured it out. We
+not even, we didn't even
+
+311
+00:16:14.470 --> 00:16:17.050
+have to profile. I would
+say that in some cases
+
+312
+00:16:17.050 --> 00:16:19.540
+it would be nice just
+to profile and see, but
+
+313
+00:16:19.540 --> 00:16:23.100
+in this case it happened
+to be Android devices, the
+
+314
+00:16:23.110 --> 00:16:27.070
+browser, at least pre ice
+cream sandwiches, just so painfully
+
+315
+00:16:27.070 --> 00:16:30.520
+slow. The difference was a
+order of magnitude or more.
+
+316
+00:16:31.350 --> 00:16:33.160
+And so we realized we
+had to do something and
+
+317
+00:16:33.160 --> 00:16:34.750
+it turned out that when
+we fed at HTML and
+
+318
+00:16:34.750 --> 00:16:37.030
+did just fine, and this
+was not something that needed
+
+319
+00:16:37.030 --> 00:16:38.620
+to be in the app
+store. So that wasn't really
+
+320
+00:16:38.620 --> 00:16:40.900
+a hurdle we had to
+worry about. So we did
+
+321
+00:16:40.900 --> 00:16:43.000
+that and it worked out
+pretty well. And, you know,
+
+322
+00:16:43.030 --> 00:16:45.670
+like I said earlier, I
+really would prefer to send
+
+323
+00:16:45.670 --> 00:16:47.740
+down Jason and, and render
+that somehow on the client
+
+324
+00:16:47.740 --> 00:16:50.200
+side, I think it's a
+better approach, but really you
+
+325
+00:16:50.200 --> 00:16:52.000
+do have to balance, you
+know, I think that's probably
+
+326
+00:16:52.000 --> 00:16:54.220
+what Twitter is learning now.
+They, they tried to go
+
+327
+00:16:54.490 --> 00:16:56.560
+too far into the future
+too fast. And they had
+
+328
+00:16:56.560 --> 00:16:59.650
+to pull back a little
+bit As, as developers that
+
+329
+00:16:59.650 --> 00:17:03.100
+are excited about using plugins
+and using the ecosystem that's
+
+330
+00:17:03.100 --> 00:17:06.670
+available to us are the
+tools available to us on
+
+331
+00:17:06.670 --> 00:17:09.040
+the client side, as a
+client side, front end developer,
+
+332
+00:17:09.310 --> 00:17:12.280
+to figure out what is
+being executed. Like for example,
+
+333
+00:17:12.280 --> 00:17:17.380
+I know that the modernizer
+guys insisted that people stop
+
+334
+00:17:17.440 --> 00:17:21.280
+installing and downloading the complete
+modernizer like, like jQuery used
+
+335
+00:17:21.280 --> 00:17:23.680
+to have like everything jQuery,
+like J crew dot JS.
+
+336
+00:17:23.680 --> 00:17:26.290
+And here it is. But
+we've seen with things like
+
+337
+00:17:26.290 --> 00:17:29.710
+gas meter that we might
+only use 40 50% of
+
+338
+00:17:29.710 --> 00:17:31.810
+a library. So we're sending
+the entire library down, but
+
+339
+00:17:31.810 --> 00:17:35.530
+only executing half of it
+modernize or has said, no,
+
+340
+00:17:35.530 --> 00:17:38.200
+no, you have to make
+a custom one. If you
+
+341
+00:17:38.200 --> 00:17:40.420
+want to use our product
+and tell us the features
+
+342
+00:17:40.420 --> 00:17:42.430
+you want, and we'll build
+you a custom modernize your
+
+343
+00:17:42.430 --> 00:17:44.380
+library. And they've actually said
+they don't want their library
+
+344
+00:17:44.380 --> 00:17:47.800
+on CDNs, but how would
+one even go in determine
+
+345
+00:17:48.100 --> 00:17:51.690
+the dependencies of, of what
+is the usage of these
+
+346
+00:17:51.690 --> 00:17:56.030
+common libraries that my application
+uses? Well, I think there's
+
+347
+00:17:56.030 --> 00:17:58.670
+a few things there, one
+modernize or something that you
+
+348
+00:17:58.670 --> 00:18:00.770
+have to include in the
+head of the page, instead
+
+349
+00:18:00.770 --> 00:18:02.960
+of putting as the bottom
+where you would generally put
+
+350
+00:18:02.960 --> 00:18:05.240
+something for performance reasons. So
+that's a big part of
+
+351
+00:18:05.240 --> 00:18:08.030
+why they don't want it
+up there because every, every
+
+352
+00:18:08.030 --> 00:18:11.150
+bite counts there in terms
+of download time and parsing
+
+353
+00:18:11.150 --> 00:18:14.270
+time, you know, cause that's
+gonna block. Cause it has
+
+354
+00:18:14.270 --> 00:18:15.410
+to be in the head,
+it's going to block, you
+
+355
+00:18:15.410 --> 00:18:18.470
+know, any of the page
+showing whatsoever it's, it's, you
+
+356
+00:18:18.470 --> 00:18:22.190
+know, horrible performance tax. Modernizers
+just, you know, awesome enough
+
+357
+00:18:22.190 --> 00:18:26.270
+that it's worth putting it
+there. You know, I disagree
+
+358
+00:18:26.270 --> 00:18:28.670
+when it comes to CDNs
+though, at least at least
+
+359
+00:18:28.670 --> 00:18:31.880
+for things like jQuery and
+very popular libraries like that,
+
+360
+00:18:31.910 --> 00:18:33.830
+I would say the validation
+plugins and other one that
+
+361
+00:18:33.830 --> 00:18:36.950
+is so widely used, it
+makes sense because so many
+
+362
+00:18:36.950 --> 00:18:38.720
+people use it. I've actually
+done a bit of testing
+
+363
+00:18:38.720 --> 00:18:41.870
+on this. People may be
+familiar. I have several blog
+
+364
+00:18:41.900 --> 00:18:44.990
+posts over the years about
+this, where I've actually run
+
+365
+00:18:45.020 --> 00:18:48.920
+a spider across the Alexa
+top a 200,000 and then
+
+366
+00:18:49.130 --> 00:18:51.860
+eventually 1 million sites just trying
+to see, you know, what,
+
+367
+00:18:52.150 --> 00:18:54.950
+what are they using? Are
+they using CDNs? Which CDN
+
+368
+00:18:55.160 --> 00:18:58.320
+are they using, et cetera.
+And I've found that the,
+
+369
+00:18:58.520 --> 00:19:00.410
+can I say Google, can
+I see the Google CDN
+
+370
+00:19:00.410 --> 00:19:05.480
+on the microphone? I feel
+bad about anything. I, I
+
+371
+00:19:05.480 --> 00:19:08.540
+may work, but I happily
+like everyone else, you know,
+
+372
+00:19:08.540 --> 00:19:10.730
+I don't, I'm not, I'm
+not married to anything when
+
+373
+00:19:10.730 --> 00:19:12.380
+it comes to me, I'm
+married to his success is
+
+374
+00:19:12.380 --> 00:19:15.530
+what I care about. No,
+no, I was joking. No,
+
+375
+00:19:15.530 --> 00:19:17.090
+I'm just saying it's, it's
+a good point though. Like
+
+376
+00:19:17.090 --> 00:19:18.800
+I'm using the I and
+S 10 blog as a
+
+377
+00:19:18.800 --> 00:19:22.760
+reference, but I don't care
+to. Yeah. But, but I
+
+378
+00:19:22.760 --> 00:19:25.070
+found that the Google CDN
+is so widely used. I
+
+379
+00:19:25.070 --> 00:19:28.280
+mean, just, just tons and
+tons of sites that have,
+
+380
+00:19:28.310 --> 00:19:31.160
+you know, in the Alexa
+top a thousand, especially there's
+
+381
+00:19:31.160 --> 00:19:33.590
+a, at least a few
+dozen. And you have to
+
+382
+00:19:33.590 --> 00:19:35.810
+think that the, the amount
+of reach that that has
+
+383
+00:19:35.810 --> 00:19:38.720
+on a daily basis, the
+hundreds of millions of browser
+
+384
+00:19:38.720 --> 00:19:42.860
+caches, that, that primes is
+just, just too big of
+
+385
+00:19:42.860 --> 00:19:45.470
+an opportunity to pass up.
+That means that if you
+
+386
+00:19:45.530 --> 00:19:48.530
+say stack overflow uses it,
+they do. And so if
+
+387
+00:19:48.710 --> 00:19:51.080
+then on my blog, I
+also referenced the exact same
+
+388
+00:19:51.080 --> 00:19:54.290
+URL when someone hits, you
+know, and probably most of
+
+389
+00:19:54.290 --> 00:19:55.760
+the people that come to
+my blog have been to
+
+390
+00:19:55.760 --> 00:19:57.950
+stack overflow, you know, several
+times before they come into
+
+391
+00:19:57.950 --> 00:20:01.280
+my blog. So when they
+hit my blog, there's not
+
+392
+00:20:01.310 --> 00:20:05.330
+even an HTTP request for
+jQuery. It just comes off
+
+393
+00:20:05.330 --> 00:20:08.420
+their disc instantly. It doesn't
+even have to check for
+
+394
+00:20:08.420 --> 00:20:10.340
+three or four, not modified,
+it's just instant off of
+
+395
+00:20:10.340 --> 00:20:13.730
+disk. And that's huge. I
+think it doesn't help with
+
+396
+00:20:13.730 --> 00:20:17.120
+the parsing and all of
+that. But, you know, I
+
+397
+00:20:17.120 --> 00:20:20.240
+think that with the ones,
+the libraries that are really
+
+398
+00:20:20.240 --> 00:20:24.410
+widely used finding the most
+popular CDN and using it
+
+399
+00:20:24.440 --> 00:20:26.810
+is, is a great thing
+to do on public facing
+
+400
+00:20:26.810 --> 00:20:30.170
+sites. No, whether or not
+it has to go. And
+
+401
+00:20:30.260 --> 00:20:31.820
+when do I know whether
+or not my system is
+
+402
+00:20:31.820 --> 00:20:33.560
+going to go and look
+to see if it needs
+
+403
+00:20:33.560 --> 00:20:36.500
+to update something like you
+made a throwaway comment there
+
+404
+00:20:36.500 --> 00:20:39.050
+that it doesn't even need
+to go and say three
+
+405
+00:20:39.050 --> 00:20:41.570
+or four, not modified. When
+do I know that that's
+
+406
+00:20:41.570 --> 00:20:44.840
+going to happen and not,
+There are a couple of
+
+407
+00:20:44.840 --> 00:20:49.420
+headers HTTP headers when client
+first got to a page
+
+408
+00:20:49.420 --> 00:20:51.340
+and did not have it
+cashed, say they hit stack
+
+409
+00:20:51.340 --> 00:20:54.430
+overflow, you know, at one
+point, and they needed to
+
+410
+00:20:54.820 --> 00:20:56.980
+request that it made it
+down to that script line
+
+411
+00:20:57.610 --> 00:21:01.120
+with the reference to the
+CDN checked, it's a cash
+
+412
+00:21:01.150 --> 00:21:03.970
+did not have it so
+requested. And in the response
+
+413
+00:21:03.970 --> 00:21:07.330
+that contains jQuery, there's also
+some HTTP headers. There's an
+
+414
+00:21:07.330 --> 00:21:10.630
+expires header, which people are
+probably most familiar with. There's
+
+415
+00:21:10.630 --> 00:21:12.610
+also a cache control header
+that can do the same
+
+416
+00:21:12.610 --> 00:21:16.380
+thing. And in those headers,
+you can specify this, this,
+
+417
+00:21:16.750 --> 00:21:19.450
+you know, resources good for
+the next, you know, month,
+
+418
+00:21:19.660 --> 00:21:23.260
+year, 20 years, whatever. And
+the browser then knows it,
+
+419
+00:21:23.260 --> 00:21:26.200
+stores it with that metadata
+and knows the next time
+
+420
+00:21:26.200 --> 00:21:28.870
+it encounters that exact same
+URL. It can just pull
+
+421
+00:21:28.870 --> 00:21:30.910
+it from disc because it
+already knows that it's been
+
+422
+00:21:30.910 --> 00:21:33.370
+instructed that this is good
+for a certain period of
+
+423
+00:21:33.370 --> 00:21:38.670
+time. What tools do you
+use when you're doing this
+
+424
+00:21:38.670 --> 00:21:40.320
+kind of work? What are
+you, are you a sublime
+
+425
+00:21:40.320 --> 00:21:42.600
+person? Are you visual studio?
+What do you do? Because
+
+426
+00:21:42.600 --> 00:21:44.820
+again, you're a pragmatist, so
+you're not married to a
+
+427
+00:21:44.820 --> 00:21:47.790
+particular tool set. I know
+you use what makes you,
+
+428
+00:21:49.470 --> 00:21:51.330
+You know, I've been all
+over the map. I really
+
+429
+00:21:51.330 --> 00:21:54.480
+like visual studio, 2012. I
+do a lot of NBC
+
+430
+00:21:54.480 --> 00:21:58.890
+for work currently and I
+use it daily for that,
+
+431
+00:21:59.970 --> 00:22:03.000
+for, for light work where
+I'm just opening up one
+
+432
+00:22:03.000 --> 00:22:04.890
+JavaScript file and I want
+to edit it real quick
+
+433
+00:22:05.460 --> 00:22:08.160
+or maybe I'm just beginning
+to work on something. I
+
+434
+00:22:08.160 --> 00:22:10.260
+haven't figured out even what
+backend is going to have
+
+435
+00:22:10.260 --> 00:22:12.870
+yet. So maybe I don't,
+maybe it doesn't make sense
+
+436
+00:22:12.870 --> 00:22:15.450
+yet to use visual studio.
+I like sublime text to
+
+437
+00:22:15.450 --> 00:22:19.530
+a lot. I use a
+PC as my primary development
+
+438
+00:22:19.530 --> 00:22:21.630
+machine, but I do also
+have a MacBook air that
+
+439
+00:22:21.630 --> 00:22:24.450
+I roam around with. So
+it's really great to have
+
+440
+00:22:24.450 --> 00:22:28.510
+the same environment on both.
+And then I also, for
+
+441
+00:22:28.560 --> 00:22:31.050
+some of my heavier work,
+w when I go into
+
+442
+00:22:31.050 --> 00:22:34.320
+say WordPress land, or sometimes
+when I'm working on node,
+
+443
+00:22:34.680 --> 00:22:37.680
+I like to use a
+JetBrains PHP storm or web
+
+444
+00:22:37.680 --> 00:22:40.140
+store. If you don't need
+the PHP support, it's a
+
+445
+00:22:40.140 --> 00:22:45.690
+bit heavier. And it sort
+of feels a little less
+
+446
+00:22:46.440 --> 00:22:49.830
+at home on windows. You
+know, it looks sort of
+
+447
+00:22:49.830 --> 00:22:51.420
+like eclipse, you know, you
+can kind of tell that
+
+448
+00:22:51.420 --> 00:22:55.410
+it's a cross platform app,
+but it works fantastically well
+
+449
+00:22:55.410 --> 00:22:59.850
+for, for node and PHP.
+I've just started dabbling with
+
+450
+00:22:59.850 --> 00:23:03.960
+web matrix too. They added
+sort of snuck in some
+
+451
+00:23:03.990 --> 00:23:06.990
+really impressive support for node.
+I didn't even realize it
+
+452
+00:23:06.990 --> 00:23:08.580
+was there until I saw
+a blog post a couple
+
+453
+00:23:08.580 --> 00:23:11.870
+of weeks after it came
+out. And so that's, that's
+
+454
+00:23:11.900 --> 00:23:14.190
+some really impressive stuff they're
+doing with it. Yeah. They
+
+455
+00:23:14.190 --> 00:23:17.460
+are spending a lot of
+time in that. It's going
+
+456
+00:23:17.460 --> 00:23:19.410
+to be interesting to see
+what the web matrix team
+
+457
+00:23:19.710 --> 00:23:22.140
+does as far as like,
+is this going to be
+
+458
+00:23:22.660 --> 00:23:25.650
+a different direction? Like, is
+it meant for a different
+
+459
+00:23:25.650 --> 00:23:28.140
+audience or is it going
+to be a playground for,
+
+460
+00:23:28.170 --> 00:23:29.910
+for features that are going
+to eventually show up in
+
+461
+00:23:29.910 --> 00:23:34.830
+visual studio? Well, we got
+razor from that, right? Yeah.
+
+462
+00:23:34.830 --> 00:23:37.470
+I guess the webpages product.
+So it was kind of,
+
+463
+00:23:37.470 --> 00:23:39.480
+you know, built in with
+web matrix. And then next
+
+464
+00:23:39.480 --> 00:23:41.100
+thing, you know, it's one
+of the best things about
+
+465
+00:23:41.100 --> 00:23:46.010
+NBC three. What is it
+about sublime text that makes
+
+466
+00:23:46.010 --> 00:23:48.680
+People so happy? And I'm
+wondering like, is it the
+
+467
+00:23:48.680 --> 00:23:50.800
+speed at which it loads
+or is it the text?
+
+468
+00:23:50.810 --> 00:23:55.160
+Is that it's a more,
+a more accessible way to
+
+469
+00:23:55.160 --> 00:23:59.290
+manipulate texts then maybe Emacs
+or something like that. You
+
+470
+00:23:59.290 --> 00:24:01.720
+know, I, I do not
+use it to its fullest
+
+471
+00:24:01.720 --> 00:24:05.020
+potential. So for me, it's
+definitely not the high end
+
+472
+00:24:05.050 --> 00:24:08.680
+manipulation stuff that sort of
+is analogous to them or
+
+473
+00:24:08.680 --> 00:24:12.550
+Emacs. I think for me,
+it's just the speed, not
+
+474
+00:24:12.550 --> 00:24:14.650
+even the speed that it
+opens up, but the speed
+
+475
+00:24:14.650 --> 00:24:17.140
+between when I press a
+key and I see the
+
+476
+00:24:17.140 --> 00:24:19.840
+result, it seems like it's
+just a little faster than
+
+477
+00:24:19.960 --> 00:24:22.330
+anything else I've ever used.
+It, it just feels so
+
+478
+00:24:22.330 --> 00:24:25.410
+fluid and fast to use
+it. And it sounds weird.
+
+479
+00:24:25.430 --> 00:24:27.760
+So it's almost a subjective
+thing to say, but I've
+
+480
+00:24:27.760 --> 00:24:29.260
+heard a lot of people
+say it too. I think
+
+481
+00:24:29.290 --> 00:24:31.990
+maybe it's just one of
+those 10 millisecond things it's
+
+482
+00:24:31.990 --> 00:24:36.070
+hard to quantify, but is
+actually important. I wonder if,
+
+483
+00:24:37.090 --> 00:24:38.590
+I mean, it might be
+blast for me to say
+
+484
+00:24:38.590 --> 00:24:40.180
+this, but I wonder what
+it'd be like to have
+
+485
+00:24:40.720 --> 00:24:45.130
+sublime the editor inside of
+visual studio or official studio.
+
+486
+00:24:45.130 --> 00:24:48.730
+Like the Chrome is too
+heavy for that to like
+
+487
+00:24:49.300 --> 00:24:50.860
+blast me to take this
+kind of thing that is
+
+488
+00:24:50.860 --> 00:24:53.050
+perceived as being slow and
+connected to this thing that
+
+489
+00:24:53.050 --> 00:24:56.470
+is perceived as being fast.
+I wonder It's my understanding
+
+490
+00:24:56.470 --> 00:24:58.750
+that a lot of the
+speed issues in visual studio
+
+491
+00:24:59.010 --> 00:25:01.900
+and I wouldn't even say
+speed issues because in my
+
+492
+00:25:01.900 --> 00:25:04.570
+experience, visual studio is plenty
+fast. I have not had
+
+493
+00:25:04.630 --> 00:25:08.560
+any serious problems with it.
+I'm just talking about what's
+
+494
+00:25:08.560 --> 00:25:12.610
+that you have an SSD.
+Yes, absolutely. I'm wondering if
+
+495
+00:25:12.610 --> 00:25:14.080
+VisualStudio hits the disc a
+lot. I know a lot
+
+496
+00:25:14.080 --> 00:25:15.910
+I've been work has been
+done in 2012. Like, let
+
+497
+00:25:15.910 --> 00:25:18.040
+me see if I hit,
+I'm gonna hit visual studio
+
+498
+00:25:18.040 --> 00:25:21.430
+2012 year one, 1002 when,
+okay, so it's already up.
+
+499
+00:25:21.430 --> 00:25:24.220
+So it's my visual studio
+launches in a second and
+
+500
+00:25:24.220 --> 00:25:29.740
+a half and sublime or
+sublime one, 1002, 1000. Yeah.
+
+501
+00:25:29.740 --> 00:25:31.660
+So, you know, they both,
+they both launched in a
+
+502
+00:25:31.660 --> 00:25:37.480
+second or two, but is
+it just that people, people
+
+503
+00:25:37.480 --> 00:25:40.480
+have slower hard drives or
+that I'm just spoiled with
+
+504
+00:25:40.480 --> 00:25:42.820
+a fast computer? You know,
+when I think when it
+
+505
+00:25:42.820 --> 00:25:45.220
+comes to visual studio and
+people talking about the speed,
+
+506
+00:25:45.220 --> 00:25:47.380
+I think they're generally talking
+about the speed once it
+
+507
+00:25:47.380 --> 00:25:51.070
+has already started. You know,
+it's my understanding from the
+
+508
+00:25:51.070 --> 00:25:53.470
+people on the team that
+I've talked to, that it
+
+509
+00:25:53.470 --> 00:25:55.840
+just does so much work.
+You, you, you take for
+
+510
+00:25:55.840 --> 00:25:58.030
+granted how much work it
+does every time you hit
+
+511
+00:25:58.030 --> 00:25:59.630
+a key. And it has
+to, to be able to
+
+512
+00:26:00.100 --> 00:26:03.610
+do some of the advanced
+things that it does. It's
+
+513
+00:26:03.610 --> 00:26:05.590
+so easy to take that
+for granted, but it does
+
+514
+00:26:06.040 --> 00:26:08.980
+really do some, some incredible
+things for you. Yeah. Yeah.
+
+515
+00:26:09.520 --> 00:26:13.390
+I think that, that one
+of the things that, yeah,
+
+516
+00:26:13.780 --> 00:26:15.820
+well, it's funny. I got
+in an argument with a
+
+517
+00:26:15.820 --> 00:26:18.310
+guy at a conference. I
+was at recently, I spoke
+
+518
+00:26:18.310 --> 00:26:21.550
+at the Arizona day of
+Scott goo that we do
+
+519
+00:26:21.550 --> 00:26:24.220
+every year and we're at
+about a thousand people. And
+
+520
+00:26:24.220 --> 00:26:26.500
+we had a guy who
+thought that IntelliSense and some
+
+521
+00:26:26.500 --> 00:26:28.360
+stuff that we were doing
+in visual studio was basically
+
+522
+00:26:28.360 --> 00:26:32.380
+stolen from sublime. And I
+reminded him how much older
+
+523
+00:26:32.980 --> 00:26:35.590
+other texts editors were that
+were doing similar kinds of
+
+524
+00:26:35.590 --> 00:26:39.400
+things. But what I think
+is going to be interesting
+
+525
+00:26:39.400 --> 00:26:41.980
+is not sublime versus visual
+studio, which I don't think
+
+526
+00:26:41.980 --> 00:26:45.090
+is a contest. They're different
+editors for different reasons and
+
+527
+00:26:45.090 --> 00:26:49.650
+more the in-browser editors. Because
+if you write some JavaScript
+
+528
+00:26:49.680 --> 00:26:52.830
+in visual studio, like if
+you write VAR a equals
+
+529
+00:26:52.830 --> 00:26:56.640
+quote, Scott, and then type
+a dot, you'll get IntelliSense
+
+530
+00:26:56.640 --> 00:26:58.890
+that indicates that visual studio
+actually knows that a is
+
+531
+00:26:58.890 --> 00:27:00.900
+a string and not an
+integer. So you'll be able
+
+532
+00:27:00.900 --> 00:27:02.700
+to, to operate and do
+things like that and sub
+
+533
+00:27:02.700 --> 00:27:06.600
+string. And if you said
+VAR equals one, you would
+
+534
+00:27:06.600 --> 00:27:11.070
+get decimal and integer related
+type things. That's because it's
+
+535
+00:27:11.070 --> 00:27:14.400
+running JavaScript right there too,
+for something like sublime to
+
+536
+00:27:14.400 --> 00:27:16.350
+do that would require a
+lot of work on their
+
+537
+00:27:16.350 --> 00:27:20.100
+part. So it focuses more
+on the text manipulation as
+
+538
+00:27:20.100 --> 00:27:22.800
+being really, really agile for
+text manipulation. But if you
+
+539
+00:27:22.800 --> 00:27:25.170
+move your IDE into the
+cloud and you have something
+
+540
+00:27:25.170 --> 00:27:28.680
+like cloud nine or a
+bracket, or any of these
+
+541
+00:27:28.680 --> 00:27:32.340
+other JavaScript based editors, it's
+in a JavaScript environment already,
+
+542
+00:27:33.360 --> 00:27:36.960
+then not necessarily at the
+general problem of IntelliSense, which
+
+543
+00:27:36.990 --> 00:27:39.900
+works for any language and
+visual studio F sharp VVC
+
+544
+00:27:39.900 --> 00:27:43.290
+sharp, but the JavaScript specific
+IntelliSense then becomes less of
+
+545
+00:27:43.290 --> 00:27:46.670
+a problem. When did you
+think That's, that's an interesting
+
+546
+00:27:46.670 --> 00:27:49.760
+question. You know, I, when
+you started going down that
+
+547
+00:27:49.760 --> 00:27:51.800
+path, I immediately figured out
+where you were headed. And
+
+548
+00:27:51.800 --> 00:27:53.510
+then the first thing I
+thought of was, so what
+
+549
+00:27:53.510 --> 00:27:55.400
+happens when you type an
+infinite loop in your single
+
+550
+00:27:55.400 --> 00:27:58.550
+threaded JavaScript environment in your
+browser and your IDE, does
+
+551
+00:27:58.550 --> 00:28:01.550
+it hang the whole browser,
+the whole ID for the
+
+552
+00:28:01.550 --> 00:28:04.040
+timeout period of your JavaScript
+engine? You know, that's a
+
+553
+00:28:04.040 --> 00:28:06.290
+good question. I don't know,
+presumably they come up with
+
+554
+00:28:06.290 --> 00:28:09.410
+some way to do that.
+And maybe, I don't know,
+
+555
+00:28:09.420 --> 00:28:12.380
+I actually haven't seen what
+happens in, in, in, in
+
+556
+00:28:12.380 --> 00:28:15.440
+VA or in chakra or
+any of these other JavaScript
+
+557
+00:28:16.070 --> 00:28:18.320
+environments, if they're smart enough
+to detect that, that would
+
+558
+00:28:18.320 --> 00:28:20.840
+be, we'll no doubt hear
+from, from the listeners about
+
+559
+00:28:20.840 --> 00:28:24.500
+that, but presume that they
+can solve that problem in
+
+560
+00:28:24.500 --> 00:28:28.670
+some way, does IntelliSense become
+becoming a nonissue in a,
+
+561
+00:28:28.670 --> 00:28:31.910
+in a browser based environment,
+an ID, and even then,
+
+562
+00:28:32.210 --> 00:28:34.760
+would I trust my browser
+to not crash while I
+
+563
+00:28:34.760 --> 00:28:37.040
+was doing all that work?
+You know, cloud nine is
+
+564
+00:28:37.040 --> 00:28:40.580
+definitely betting on that. Yeah.
+You know, I think cloud
+
+565
+00:28:40.580 --> 00:28:43.130
+nine, for me, I just
+saw their new release and
+
+566
+00:28:43.660 --> 00:28:45.890
+the killer feature there is
+the collaboration being able to
+
+567
+00:28:45.890 --> 00:28:49.250
+do the real time editing.
+That's really neat. That's something
+
+568
+00:28:49.270 --> 00:28:51.860
+I definitely wish I had
+had had several times in
+
+569
+00:28:51.860 --> 00:28:56.090
+the past. And in terms
+of it replacing something like
+
+570
+00:28:56.090 --> 00:28:59.270
+sublime or, you know, or
+visual studio, I don't know.
+
+571
+00:28:59.360 --> 00:29:02.030
+I mean, you know, the
+easy statement is like, Oh,
+
+572
+00:29:02.030 --> 00:29:05.030
+no know, we'll never use
+browser tools for that kind
+
+573
+00:29:05.030 --> 00:29:06.980
+of like Photoshop. We'll never
+do Photoshop in the browser,
+
+574
+00:29:06.980 --> 00:29:09.260
+but you know, maybe we
+will, we've seen so much
+
+575
+00:29:09.260 --> 00:29:12.680
+maturation in that area over
+the past few years and
+
+576
+00:29:12.680 --> 00:29:15.230
+things are getting so fast.
+I definitely wouldn't count it
+
+577
+00:29:15.230 --> 00:29:19.100
+out. No, absolutely not. Well,
+cloud nine, they just added
+
+578
+00:29:19.100 --> 00:29:23.330
+Azure support. They've got an
+offline version, a little application
+
+579
+00:29:23.330 --> 00:29:26.540
+for Mac and for Linux
+they'll depose, they'll, they'll deploy
+
+580
+00:29:26.570 --> 00:29:31.460
+to Heroku that deployed to
+cloud Foundry windows Azure. I
+
+581
+00:29:31.460 --> 00:29:33.920
+just, I don't know. I
+just, yeah, It's really cool.
+
+582
+00:29:34.070 --> 00:29:35.690
+You can, you can start
+up a get hub project
+
+583
+00:29:36.170 --> 00:29:38.300
+and start editing it in
+cloud nine and then deploy
+
+584
+00:29:38.300 --> 00:29:41.530
+it right over to Azure
+using their new node support
+
+585
+00:29:41.530 --> 00:29:44.100
+for websites. I can do
+a node project right there
+
+586
+00:29:44.100 --> 00:29:46.510
+and push it over. And
+that's really neat. I mean,
+
+587
+00:29:46.510 --> 00:29:49.920
+that's, that's great integration. What
+kinds of applications can I
+
+588
+00:29:49.920 --> 00:29:51.870
+do? I guess it supports
+a lot of different languages.
+
+589
+00:29:53.490 --> 00:29:56.130
+Yeah. I, you know, I'm
+not an expert in cloud
+
+590
+00:29:56.130 --> 00:29:58.980
+nine by any means, but
+I believe it'll edit anything,
+
+591
+00:29:59.460 --> 00:30:01.260
+but I think it has
+good support for, did they
+
+592
+00:30:01.260 --> 00:30:04.500
+just say PHP and Ruby
+that they just added a
+
+593
+00:30:04.500 --> 00:30:07.710
+node they've had for awhile?
+Yeah, that's it brings up
+
+594
+00:30:07.710 --> 00:30:10.470
+a really interesting question. That
+is, you know, we joke
+
+595
+00:30:10.470 --> 00:30:13.740
+about the browser just being
+like, you know, another terminal,
+
+596
+00:30:14.220 --> 00:30:16.140
+but it is becoming an
+OSTP on top of an
+
+597
+00:30:16.140 --> 00:30:18.630
+iOS, you know, and JavaScript
+is clearly the operating. I
+
+598
+00:30:18.630 --> 00:30:20.460
+said before, you know, it
+was the SMB language of
+
+599
+00:30:20.460 --> 00:30:23.070
+the web. It's becoming the
+virtual machine for the web,
+
+600
+00:30:23.400 --> 00:30:26.130
+frankly, Java has lost, JavaScript
+has won the VM is
+
+601
+00:30:26.130 --> 00:30:28.590
+there. So it's not much
+more to say that JavaScript
+
+602
+00:30:28.590 --> 00:30:31.590
+is the operating system of
+the internet. Yeah. I guess
+
+603
+00:30:31.590 --> 00:30:34.860
+that's what the Google is
+betting on with the Chromebooks
+
+604
+00:30:34.860 --> 00:30:38.730
+and Chrome iOS. Yeah, exactly.
+And it was, which makes
+
+605
+00:30:38.730 --> 00:30:43.050
+me funny. It makes me
+miss HPS web has all
+
+606
+00:30:43.050 --> 00:30:45.810
+the more like the idea
+of a tablet based entirely
+
+607
+00:30:45.810 --> 00:30:49.980
+JavaScript operating system. Yeah. You
+know, everything I saw about
+
+608
+00:30:49.980 --> 00:30:52.290
+and of that seemed like
+it was, it was really
+
+609
+00:30:52.290 --> 00:30:54.210
+nice. It seemed like they
+did a much better job
+
+610
+00:30:54.240 --> 00:30:57.420
+than the other attempts so
+far. And actually last question,
+
+611
+00:30:57.690 --> 00:30:59.550
+because I was thinking about
+JavaScript and operating systems, have
+
+612
+00:30:59.550 --> 00:31:02.160
+you written any JavaScript on
+windows eight? Because I haven't
+
+613
+00:31:02.160 --> 00:31:04.110
+tried it. And I was
+wondering as a JavaScript person,
+
+614
+00:31:04.140 --> 00:31:06.930
+is it easy to write
+a JavaScript app for windows?
+
+615
+00:31:07.860 --> 00:31:10.560
+I installed windows eight solely
+for the reason of getting
+
+616
+00:31:10.560 --> 00:31:13.830
+into that development space, because
+I think it's really exciting.
+
+617
+00:31:13.860 --> 00:31:17.160
+I am genuinely excited about
+the potential of windows eight
+
+618
+00:31:17.160 --> 00:31:21.450
+development using HTML, CSS and
+JavaScript. I have not had
+
+619
+00:31:21.450 --> 00:31:23.820
+a chance to build an
+app from scratch yet, but
+
+620
+00:31:23.820 --> 00:31:27.000
+I've a new project up
+some of the, the templates
+
+621
+00:31:27.000 --> 00:31:29.850
+and I've poked around and
+looked at how they're laid
+
+622
+00:31:29.850 --> 00:31:33.330
+out and some of those
+sort of things. And, you
+
+623
+00:31:33.330 --> 00:31:34.830
+know, it looks pretty clean.
+You know, I think that
+
+624
+00:31:34.830 --> 00:31:38.880
+they're doing things right. Obviously
+there's still some changes to
+
+625
+00:31:38.880 --> 00:31:42.930
+come in the API, but
+you know, I think it's
+
+626
+00:31:42.930 --> 00:31:45.270
+actually going to be pretty
+good. I think that a
+
+627
+00:31:45.270 --> 00:31:49.530
+JavaScript developer that as long
+as they are pretty comfortable
+
+628
+00:31:49.530 --> 00:31:52.860
+with MVVM as an approach
+to the rendering, I think
+
+629
+00:31:52.860 --> 00:31:54.540
+they can sit down with
+that and they would look
+
+630
+00:31:54.540 --> 00:31:56.550
+at the, the approach to
+it and think it was
+
+631
+00:31:56.560 --> 00:31:58.710
+a good approach. They wouldn't
+think it was us, this
+
+632
+00:31:58.770 --> 00:32:02.190
+Microsoft junk, you know? Yeah.
+So you think that JavaScript
+
+633
+00:32:02.190 --> 00:32:03.510
+is a safe place to
+be like, if you're a
+
+634
+00:32:03.510 --> 00:32:06.390
+web developer, it's great that,
+you know, Ruby or, you
+
+635
+00:32:06.390 --> 00:32:09.180
+know, PHP or, you know,
+asp.net. But if you got
+
+636
+00:32:09.180 --> 00:32:12.960
+to know JavaScript to be
+successful right now, Be successful,
+
+637
+00:32:13.200 --> 00:32:16.350
+maybe not. I see people
+definitely getting away with knowing
+
+638
+00:32:16.350 --> 00:32:21.690
+less than they should, but
+to really do the best
+
+639
+00:32:21.690 --> 00:32:23.610
+work possible. If you're on
+the web, yes. You should
+
+640
+00:32:23.610 --> 00:32:26.340
+absolutely know JavaScript and be
+comfortable with it. And it
+
+641
+00:32:26.340 --> 00:32:28.470
+has its flaws and there's
+some good workarounds for a
+
+642
+00:32:28.470 --> 00:32:30.630
+lot of those flaws. And
+just go ahead and embrace
+
+643
+00:32:30.630 --> 00:32:33.090
+it, realize that it is
+what it is. It's not
+
+644
+00:32:33.090 --> 00:32:36.990
+perfect, but it has such
+incredibly broad reach that it's
+
+645
+00:32:37.050 --> 00:32:39.620
+just worth looking past some
+of the, that it does
+
+646
+00:32:39.620 --> 00:32:42.800
+happen. Cool. Well, thanks for
+hanging out. I appreciate it.
+
+647
+00:32:43.160 --> 00:32:45.470
+Yeah, sure. It was great
+talking to you. This has
+
+648
+00:32:45.470 --> 00:32:47.960
+been another episode of Hansel
+minutes and we'll see you
+
+649
+00:32:47.960 --> 00:32:48.890
+again next week.
+

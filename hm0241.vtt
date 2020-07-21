@@ -1,0 +1,2762 @@
+WEBVTT FILE
+
+1
+00:00:12.060 --> 00:00:16.950
+From Hanselman it's dot com.
+It's Hansel minutes, our weekly
+
+2
+00:00:16.950 --> 00:00:21.120
+discussion with web developer and
+technologist Scott Hanselman. This is
+
+3
+00:00:21.120 --> 00:00:27.360
+Lawrence Ryan announcing show number two
+41. Recorded live Thursday, November 18th, 2010.
+
+4
+00:00:28.020 --> 00:00:31.920
+Support for Hanselman it's provided
+by Telerik rad controls, the
+
+5
+00:00:31.920 --> 00:00:35.940
+most comprehensive suite of components
+for windows forms and asp.net
+
+6
+00:00:35.940 --> 00:00:44.910
+web applications online@wwwdottelerik.com. In this
+episode, Scott talks with Lauren
+
+7
+00:00:44.910 --> 00:00:50.660
+booneyard about the model view
+view model pattern. Hi, this
+
+8
+00:00:50.660 --> 00:00:52.940
+is Scott Hanselman, and this
+is another episode of Hansel
+
+9
+00:00:52.940 --> 00:00:56.300
+minutes on today's show. We're
+going to learn about model
+
+10
+00:00:56.420 --> 00:01:02.060
+view, view model, and we've
+got a MVVM expert, Lauren,
+
+11
+00:01:02.060 --> 00:01:07.370
+booneyard calling in, where are
+you now? You're traveling. No,
+
+12
+00:01:07.370 --> 00:01:09.980
+I'm actually back home. I
+was in Berlin last week
+
+13
+00:01:09.980 --> 00:01:13.670
+for ticket Europe and I
+came back last weekend and
+
+14
+00:01:13.670 --> 00:01:16.670
+I'm home now for a
+moment. Ah, fantastic. Well, thanks
+
+15
+00:01:16.670 --> 00:01:19.340
+so much for pausing your
+travels for a moment and
+
+16
+00:01:19.340 --> 00:01:23.000
+chatting with us. I appreciate
+it. Yeah, me too, actually.
+
+17
+00:01:24.590 --> 00:01:27.950
+So I'm trying to get
+my head around MVVM and
+
+18
+00:01:28.490 --> 00:01:30.950
+you know, folks know that
+I'm a web person and
+
+19
+00:01:30.950 --> 00:01:36.170
+I've done a lot of
+MVC and you know, MVVM,
+
+20
+00:01:36.170 --> 00:01:39.170
+for some people who don't
+do WPF or Silverlight on
+
+21
+00:01:39.170 --> 00:01:43.190
+a regular basis is, you
+know, yet another acronym that
+
+22
+00:01:43.190 --> 00:01:46.610
+sounds confusing. It's another architectural
+pattern. It's another thing to
+
+23
+00:01:46.610 --> 00:01:50.060
+learn. And also I hear
+a lot that the Microsoft
+
+24
+00:01:50.060 --> 00:01:57.530
+tools don't necessarily give me
+a real strong of strong
+
+25
+00:01:57.530 --> 00:02:01.100
+scaffolding, a strong framework for
+which to put my MVVM
+
+26
+00:02:01.130 --> 00:02:03.530
+model on top of. So
+I need you to start
+
+27
+00:02:03.530 --> 00:02:07.400
+at the beginning, help me
+understand what MVVM is, what
+
+28
+00:02:07.400 --> 00:02:10.670
+model view, view model is,
+how it relates to MVC
+
+29
+00:02:11.270 --> 00:02:14.790
+what's missing. What's not, and
+what I can do to,
+
+30
+00:02:14.790 --> 00:02:19.940
+to get good at this.
+Sure. So, so MVVM is
+
+31
+00:02:19.940 --> 00:02:22.280
+very similar to MVC in
+the, in the sense that
+
+32
+00:02:22.280 --> 00:02:24.860
+it's also a separation pattern.
+So it's a pattern which
+
+33
+00:02:24.860 --> 00:02:29.180
+is used to separate components
+in your application and like
+
+34
+00:02:29.220 --> 00:02:31.280
+the name shows. So the
+M and the V right,
+
+35
+00:02:31.280 --> 00:02:33.500
+the model and the view
+are actually the same as
+
+36
+00:02:33.500 --> 00:02:37.010
+in MVC. The big difference
+is really at the controller
+
+37
+00:02:37.220 --> 00:02:40.820
+level. And in MVVM what
+we do is that instead
+
+38
+00:02:40.820 --> 00:02:44.270
+of having one controller for
+the application, which is kind
+
+39
+00:02:44.270 --> 00:02:48.410
+of driving the views, we
+actually have for each of
+
+40
+00:02:48.410 --> 00:02:52.280
+you, we have an object
+called a view model, or
+
+41
+00:02:52.520 --> 00:02:57.800
+sometimes also called a presentation
+model. And that's the major
+
+42
+00:02:57.800 --> 00:03:02.680
+difference. This pattern has quite
+A few advantages in Silverlight
+
+43
+00:03:02.680 --> 00:03:06.400
+and WPF over MVC. You
+know, it doesn't mean that
+
+44
+00:03:06.400 --> 00:03:10.840
+you cannot use MVC in
+Silverlight and WPF, but it's
+
+45
+00:03:10.870 --> 00:03:13.090
+just a pattern, which is
+a little bit more natural
+
+46
+00:03:13.360 --> 00:03:17.940
+when you do a Silverlight
+and WPF. When I'm doing
+
+47
+00:03:18.060 --> 00:03:23.580
+MVC model view controller, the
+controller is what we call
+
+48
+00:03:23.580 --> 00:03:26.370
+a front controller in that
+it's on the front lines.
+
+49
+00:03:26.370 --> 00:03:28.650
+And it's the first thing
+that gets called when someone
+
+50
+00:03:29.040 --> 00:03:32.970
+clicks a button or does
+something where's the controller in
+
+51
+00:03:32.970 --> 00:03:38.220
+a, in MVVM. Well, in
+MVVM things are a little
+
+52
+00:03:38.220 --> 00:03:40.860
+bit different in the sense
+that we rely very much
+
+53
+00:03:40.860 --> 00:03:43.500
+on a, on something, which
+is very powerful in Silverlight
+
+54
+00:03:43.500 --> 00:03:47.970
+and WPF, which is called
+a data binding and what
+
+55
+00:03:47.970 --> 00:03:50.130
+you do when, you know,
+every time the user is
+
+56
+00:03:50.130 --> 00:03:54.600
+actuating, something on the view.
+There is actually this action
+
+57
+00:03:54.600 --> 00:03:57.870
+is passed directly to the
+view model. In fact, now
+
+58
+00:03:57.870 --> 00:04:00.390
+there are cases where it's
+a little bit different because
+
+59
+00:04:00.390 --> 00:04:03.750
+you have also in the
+views, right? You know, like
+
+60
+00:04:03.750 --> 00:04:06.270
+in a, in asp.net, you
+also have some code behind,
+
+61
+00:04:06.270 --> 00:04:10.230
+behind your views, which can
+be executed. We try to,
+
+62
+00:04:10.860 --> 00:04:15.540
+to reduce the amount of
+code behind, because code behind
+
+63
+00:04:15.540 --> 00:04:18.060
+is a little bit more
+difficult to test automatically with
+
+64
+00:04:18.060 --> 00:04:20.610
+unit tests. So what we
+try to do is really
+
+65
+00:04:20.610 --> 00:04:23.160
+to have a communication, which
+is as direct as possible
+
+66
+00:04:23.160 --> 00:04:25.680
+between the view, which is
+actually rated by the user
+
+67
+00:04:26.130 --> 00:04:28.800
+and the view model, which
+is going to react to
+
+68
+00:04:28.800 --> 00:04:33.480
+this actuation by executing, you
+know, methods, et cetera. We
+
+69
+00:04:33.480 --> 00:04:36.420
+have a few tools at
+our disposal to do that.
+
+70
+00:04:36.420 --> 00:04:39.900
+So data mining, which I
+mentioned, which is really, you
+
+71
+00:04:39.900 --> 00:04:42.660
+know, linking or binding the
+view to the view model,
+
+72
+00:04:43.080 --> 00:04:46.380
+and also a things called
+commands, for example, which are
+
+73
+00:04:46.380 --> 00:04:50.640
+really way from the view
+to actuate something on the
+
+74
+00:04:50.640 --> 00:04:54.300
+view model directly. So in
+this sense, the controller is,
+
+75
+00:04:54.570 --> 00:04:57.630
+you know, it's kind of,
+how should I say it's
+
+76
+00:04:57.630 --> 00:05:02.100
+kind of dispatched between multiple
+objects. And in fact, we
+
+77
+00:05:02.100 --> 00:05:04.740
+don't have just one controller
+or one view model, but
+
+78
+00:05:04.740 --> 00:05:07.440
+in fact, we have, for
+every view in the application,
+
+79
+00:05:07.440 --> 00:05:12.690
+we have an object which
+is fulfilling. Okay, well, let
+
+80
+00:05:12.690 --> 00:05:14.340
+me try to put it
+into the context of the
+
+81
+00:05:14.340 --> 00:05:16.620
+kinds of demos that I
+usually see when someone is
+
+82
+00:05:16.620 --> 00:05:19.890
+learning server light or WPF.
+Let's say that I have
+
+83
+00:05:19.890 --> 00:05:22.770
+a book object that's in
+the database and I make
+
+84
+00:05:22.770 --> 00:05:24.690
+a data access layer. And
+I go, and I get
+
+85
+00:05:24.690 --> 00:05:27.960
+a list of books. So
+I'm in some code somewhere,
+
+86
+00:05:27.960 --> 00:05:32.850
+and I have a list
+of books. And in, in
+
+87
+00:05:32.850 --> 00:05:35.820
+demos, someone might just data
+bind that list of book
+
+88
+00:05:35.820 --> 00:05:38.550
+directly from the database or
+entity framework and put it
+
+89
+00:05:38.550 --> 00:05:40.860
+into a data grid or
+a list. And they'll say,
+
+90
+00:05:41.190 --> 00:05:45.120
+Hey look, great job data
+binding is wonderful. What's bad
+
+91
+00:05:45.120 --> 00:05:47.880
+about me doing that, just
+taking a list of books
+
+92
+00:05:47.880 --> 00:05:52.170
+from the database and putting
+it on the screen. Well,
+
+93
+00:05:52.400 --> 00:05:54.510
+You know, the biggest problems
+that you will get in
+
+94
+00:05:54.510 --> 00:05:58.640
+that particular example, right, is
+that if you suddenly decide
+
+95
+00:05:58.670 --> 00:06:02.090
+to move to a different
+database system, or you decide
+
+96
+00:06:02.090 --> 00:06:05.210
+to move to different ORM,
+or, you know, you decide
+
+97
+00:06:05.210 --> 00:06:08.930
+to do to separate your
+application in a client server
+
+98
+00:06:09.770 --> 00:06:12.440
+and to have the, you
+know, the client running on
+
+99
+00:06:12.440 --> 00:06:15.470
+the computer, on the client
+computer, for example, in the
+
+100
+00:06:15.470 --> 00:06:17.600
+web browser, or we Silverlight,
+and, and you want to
+
+101
+00:06:17.600 --> 00:06:20.630
+have your database on another
+computer. What it means is
+
+102
+00:06:20.630 --> 00:06:22.340
+that you're going to have
+to modify quite a lot
+
+103
+00:06:22.340 --> 00:06:25.490
+of things in your application
+while a, when you use
+
+104
+00:06:25.490 --> 00:06:28.730
+a separation pattern, like MVVM,
+for example, what you will
+
+105
+00:06:28.730 --> 00:06:32.120
+need to change in that
+particular case, you know, you
+
+106
+00:06:32.120 --> 00:06:34.760
+will have the connection to
+the objects, which is going
+
+107
+00:06:34.760 --> 00:06:37.310
+to be done in the
+view model, but your view
+
+108
+00:06:37.310 --> 00:06:42.500
+will mainly remain unchanged actually.
+So you try to have,
+
+109
+00:06:42.590 --> 00:06:45.440
+you know, as loose a
+coupling as possible between your
+
+110
+00:06:45.470 --> 00:06:49.460
+view on one end and
+the database at the other
+
+111
+00:06:49.460 --> 00:06:54.050
+end or whatever data persistence
+system you have. And by
+
+112
+00:06:54.050 --> 00:06:57.260
+adding some layers in between
+you really fulfill that. So
+
+113
+00:06:57.260 --> 00:07:02.420
+that's one advantage of MVVM,
+there are others, but this
+
+114
+00:07:02.420 --> 00:07:05.660
+one makes the application really
+more maintainable and easier to
+
+115
+00:07:05.660 --> 00:07:10.720
+extend. So that's probably one
+of the main advantages. Where
+
+116
+00:07:10.720 --> 00:07:13.090
+would I start in an
+example like that is this
+
+117
+00:07:13.360 --> 00:07:15.730
+in a small example, is
+this simply a matter of
+
+118
+00:07:15.730 --> 00:07:19.810
+just making a, a book's
+view model class, which is
+
+119
+00:07:19.810 --> 00:07:22.510
+effectively a copy of, of,
+of a book and then
+
+120
+00:07:22.510 --> 00:07:26.950
+shuffling data back and forth
+between the two I'm not
+
+121
+00:07:26.950 --> 00:07:30.490
+quiet. So the view model
+is really bound to the
+
+122
+00:07:30.490 --> 00:07:33.760
+view. So for example, in
+your particular example, you would
+
+123
+00:07:33.760 --> 00:07:36.880
+have maybe a view, which
+is called a shelf for
+
+124
+00:07:37.110 --> 00:07:39.670
+a bookshelf, right? And you
+have all your books, objects,
+
+125
+00:07:40.210 --> 00:07:43.210
+which appear on that shelf.
+So what you would have
+
+126
+00:07:43.210 --> 00:07:45.760
+in that case, you would
+have really a bookshelf view
+
+127
+00:07:45.760 --> 00:07:50.530
+model, which is driving the
+whole know data, getting the
+
+128
+00:07:50.530 --> 00:07:54.730
+data and preparing them in
+collections. So that's the first
+
+129
+00:07:55.420 --> 00:07:57.550
+view models that you get
+in your applications. This is
+
+130
+00:07:57.550 --> 00:08:00.460
+a view model, which is
+driving the view is then
+
+131
+00:08:00.460 --> 00:08:04.780
+after that your book objects,
+there are multiple cases, right?
+
+132
+00:08:04.810 --> 00:08:09.340
+In, in one case, let's
+say you get your book
+
+133
+00:08:09.340 --> 00:08:15.190
+objects directly from NTT frameworks
+through WCF. For example, in
+
+134
+00:08:15.190 --> 00:08:18.400
+that particular case, you can
+actually be able to represent
+
+135
+00:08:18.400 --> 00:08:22.870
+your book objects directly in
+the view, because a WCF
+
+136
+00:08:23.890 --> 00:08:26.410
+has that particular rate is
+at when it's wrapping an
+
+137
+00:08:26.410 --> 00:08:29.620
+object and any creates a
+proxy object, it will actually
+
+138
+00:08:31.030 --> 00:08:33.970
+make it so that you
+can data bind two properties
+
+139
+00:08:33.970 --> 00:08:38.530
+on that object. And, you
+know, the secret behind that
+
+140
+00:08:38.530 --> 00:08:42.030
+magic is called I notify
+property change. So this, this
+
+141
+00:08:42.050 --> 00:08:46.090
+very important interface that we
+have in civil rights, WPF,
+
+142
+00:08:46.090 --> 00:08:50.980
+in fact, whole of.net, which
+data binding rely on. So
+
+143
+00:08:50.980 --> 00:08:53.320
+in the particular case of
+the book, you know, the
+
+144
+00:08:53.320 --> 00:08:56.550
+bookshelf, you actually don't really
+have to wrap your book
+
+145
+00:08:56.550 --> 00:08:59.280
+object in a view model,
+but you will be, you
+
+146
+00:08:59.280 --> 00:09:01.290
+will have to wrap them
+in a, in a view
+
+147
+00:09:01.290 --> 00:09:04.350
+model, if you want to
+add properties. And those properties
+
+148
+00:09:04.350 --> 00:09:08.250
+are typically things which are
+very much view oriented. Like
+
+149
+00:09:08.250 --> 00:09:12.570
+for example, let's imagine that
+you want to modify the
+
+150
+00:09:12.570 --> 00:09:16.330
+title of a book and
+then save that back to
+
+151
+00:09:16.340 --> 00:09:20.340
+the database, right? What you
+can do is have a
+
+152
+00:09:20.340 --> 00:09:23.430
+property, which is called East
+dirty, for example, and this
+
+153
+00:09:23.430 --> 00:09:26.040
+property is set to true
+when the title has been
+
+154
+00:09:26.040 --> 00:09:29.040
+modified by the user, but
+the book has not been
+
+155
+00:09:29.040 --> 00:09:32.400
+saved yet to the database.
+These kinds of properties are
+
+156
+00:09:32.400 --> 00:09:34.770
+not seeing that you want
+to proceed in the database.
+
+157
+00:09:34.770 --> 00:09:37.050
+What you do is that
+you create a wrapper around
+
+158
+00:09:37.230 --> 00:09:40.680
+your data object or on
+your book object. And that's
+
+159
+00:09:40.680 --> 00:09:43.560
+also what we call a
+view model. There is a
+
+160
+00:09:43.560 --> 00:09:46.620
+slight confusion because of the,
+because we use the same
+
+161
+00:09:46.620 --> 00:09:48.930
+name for the view model,
+which is driving the view
+
+162
+00:09:48.930 --> 00:09:51.270
+and for the view model,
+which is a wrapper around
+
+163
+00:09:51.270 --> 00:09:54.030
+the data object. But in
+a sense, it's all the
+
+164
+00:09:54.030 --> 00:09:57.780
+same. It's here to host
+properties that you can data
+
+165
+00:09:57.780 --> 00:10:01.850
+bind to actually, Well, that
+brings up an interesting question
+
+166
+00:10:01.850 --> 00:10:05.630
+because when someone is doing
+XAML X, a M L
+
+167
+00:10:05.630 --> 00:10:10.190
+XAML, there is this thing
+called a, a value converter,
+
+168
+00:10:10.610 --> 00:10:13.730
+and people will say, ah,
+this is the moment when
+
+169
+00:10:13.730 --> 00:10:17.120
+you change the data to
+look more like the view,
+
+170
+00:10:17.630 --> 00:10:19.580
+but it sounds like what
+you're describing is that I'm
+
+171
+00:10:19.580 --> 00:10:21.500
+going to do more of
+that work in the code
+
+172
+00:10:21.500 --> 00:10:25.820
+behind, and basically get the
+view model as close as
+
+173
+00:10:25.880 --> 00:10:29.690
+possible to being a model
+of the view as possible.
+
+174
+00:10:30.170 --> 00:10:32.480
+And the data binding would
+then would come in in
+
+175
+00:10:32.480 --> 00:10:37.160
+the XAML would do less
+work. Yeah, that's absolutely correct.
+
+176
+00:10:37.160 --> 00:10:41.270
+So one issue, so value
+converters are great and there
+
+177
+00:10:41.270 --> 00:10:45.980
+are definitely places where you
+absolutely need them on the,
+
+178
+00:10:46.460 --> 00:10:49.790
+you know, on the other
+hand, a value converters are
+
+179
+00:10:49.790 --> 00:10:53.450
+a little bit costly in
+terms of performance. And especially
+
+180
+00:10:53.450 --> 00:10:55.880
+when you use them on
+the windows phone, which, you
+
+181
+00:10:55.880 --> 00:10:58.040
+know, it's a, it's a
+computer, but it's a smaller
+
+182
+00:10:58.040 --> 00:11:02.510
+and less powerful computer. So
+that can actually cost you
+
+183
+00:11:02.510 --> 00:11:05.270
+quite a lot of Perth.
+So what we do instead
+
+184
+00:11:05.270 --> 00:11:07.820
+is since we have the
+view model, which is preparing,
+
+185
+00:11:07.820 --> 00:11:11.270
+which is kind of, you
+know, massaging the, the data
+
+186
+00:11:11.300 --> 00:11:13.430
+for you, right. And preparing
+them, you know, in the
+
+187
+00:11:13.430 --> 00:11:15.650
+sense that you can really
+buy into them very easily.
+
+188
+00:11:16.370 --> 00:11:21.620
+It's actually easier to not
+use value converters. And instead
+
+189
+00:11:21.620 --> 00:11:23.930
+to just have a property,
+which is of the right
+
+190
+00:11:23.930 --> 00:11:27.590
+type, this led quite a
+few people to say that
+
+191
+00:11:27.620 --> 00:11:30.380
+when you use MVVM, you
+just don't need value converters
+
+192
+00:11:30.380 --> 00:11:34.160
+anymore. In fact, you know,
+I, I think it's actually
+
+193
+00:11:34.160 --> 00:11:36.170
+a little bit more subtle
+than that. There are cases
+
+194
+00:11:36.170 --> 00:11:39.860
+where value converters will actually
+make your life easier. So
+
+195
+00:11:39.860 --> 00:11:42.440
+why not use them? But
+it's true that in many
+
+196
+00:11:42.440 --> 00:11:45.860
+cases you can actually rely
+on simply having an additional
+
+197
+00:11:45.860 --> 00:11:49.370
+property on your view model
+and, and prepare the data
+
+198
+00:11:49.430 --> 00:11:52.790
+in that way. And that
+will definitely enhance your performance,
+
+199
+00:11:53.920 --> 00:11:56.620
+you know, in Silverlight and
+WPF on the desktop. You
+
+200
+00:11:56.620 --> 00:11:58.870
+might not even notice that,
+but on the phone, it's
+
+201
+00:11:58.870 --> 00:12:01.270
+actually not disabled. So you
+need to be careful about
+
+202
+00:12:01.270 --> 00:12:05.190
+that. Could you give an
+example using our book, examples,
+
+203
+00:12:05.190 --> 00:12:08.400
+say something about what a
+value converter is and kind
+
+204
+00:12:08.400 --> 00:12:11.550
+of a typical example. I
+think not everyone who's listening
+
+205
+00:12:11.550 --> 00:12:13.950
+would know what a value
+converter is. If I was
+
+206
+00:12:13.950 --> 00:12:17.610
+doing it the regular way,
+and I had a property
+
+207
+00:12:17.610 --> 00:12:20.080
+on my book and I
+used a value converter, what,
+
+208
+00:12:20.080 --> 00:12:22.710
+what would the, what would
+that provide me? And what's
+
+209
+00:12:22.710 --> 00:12:26.430
+an example. Well, you know,
+you could imagine that, for
+
+210
+00:12:26.430 --> 00:12:30.420
+example, your book has a
+promotion, right? So let's say,
+
+211
+00:12:30.420 --> 00:12:33.120
+okay, this week, 20% less
+on that book, and this
+
+212
+00:12:33.510 --> 00:12:38.040
+information is actually stored in
+the database, right? So when
+
+213
+00:12:38.040 --> 00:12:41.070
+you get the object, you
+will have maybe a Boolean
+
+214
+00:12:41.070 --> 00:12:44.220
+flag, for example, which says,
+okay, now I have 20%,
+
+215
+00:12:45.330 --> 00:12:49.250
+you know, 20% discount, or
+you could even have a
+
+216
+00:12:49.350 --> 00:12:54.360
+double value, which says that
+the percentage that is discounted
+
+217
+00:12:54.360 --> 00:12:58.680
+like 20% less right now
+with this value, it's actually
+
+218
+00:12:58.680 --> 00:13:00.780
+a little bit hard to
+start something at the level
+
+219
+00:13:00.780 --> 00:13:04.320
+of the view, because I
+might want to show a
+
+220
+00:13:04.320 --> 00:13:07.350
+visual indication that there is
+a promotion on that book.
+
+221
+00:13:07.350 --> 00:13:09.840
+Like maybe show up a
+flag or show, you know,
+
+222
+00:13:09.840 --> 00:13:13.440
+anything. Right. I can not
+really do that directly because
+
+223
+00:13:13.440 --> 00:13:15.870
+all I have for me
+is, is a bullion or
+
+224
+00:13:15.870 --> 00:13:18.730
+a double. And what I
+really want to have is,
+
+225
+00:13:19.350 --> 00:13:23.010
+you know, something which is,
+for example, a VBT, visibility's
+
+226
+00:13:23.010 --> 00:13:25.560
+a, is a type, it's
+an, it's an Anthem. Actually
+
+227
+00:13:26.120 --> 00:13:29.490
+it can be visible or
+collapsed. And until the light,
+
+228
+00:13:29.490 --> 00:13:33.300
+we use that to show,
+to hide visual elements. So
+
+229
+00:13:33.300 --> 00:13:35.610
+what you can do is
+wrap your book into a
+
+230
+00:13:35.610 --> 00:13:39.390
+book view model, and add
+a property, which is called
+
+231
+00:13:39.570 --> 00:13:42.930
+the well in that case.
+Okay. You, you asked with
+
+232
+00:13:42.930 --> 00:13:44.970
+the value converter, right? So
+if I don't use a
+
+233
+00:13:44.970 --> 00:13:46.500
+view model, what I will
+do is that I will
+
+234
+00:13:46.500 --> 00:13:51.600
+create a bullion to visibility
+converter, which is actually the
+
+235
+00:13:51.600 --> 00:13:54.420
+converters that would probably use
+the most in a sea
+
+236
+00:13:54.420 --> 00:13:58.140
+of light. And then you
+will say, okay, my visual
+
+237
+00:13:58.140 --> 00:14:02.190
+element indicating the promotion is
+going to be the data
+
+238
+00:14:02.190 --> 00:14:06.600
+bound to that flag, to
+that bullion flags through the
+
+239
+00:14:07.140 --> 00:14:10.110
+Boolean to visibility converter. So
+every time I have the
+
+240
+00:14:10.110 --> 00:14:14.460
+value true, then the visibility
+of the visual element will
+
+241
+00:14:14.460 --> 00:14:16.620
+be visible. And then the
+user will see that there
+
+242
+00:14:16.620 --> 00:14:19.740
+is something. So that's an
+example of a value converter.
+
+243
+00:14:20.130 --> 00:14:22.320
+Now, if you don't want
+to use the value converter,
+
+244
+00:14:22.320 --> 00:14:26.010
+what you can do is
+wrap your data object in
+
+245
+00:14:26.010 --> 00:14:28.740
+a, in a book view
+model and expose the property,
+
+246
+00:14:28.740 --> 00:14:32.670
+which is of type visibility
+directly. And what this property
+
+247
+00:14:32.670 --> 00:14:36.060
+does is just, you know,
+fetch the flagging and return
+
+248
+00:14:36.510 --> 00:14:41.280
+visible or collapsed depending on
+the flag. Hi, this is
+
+249
+00:14:41.280 --> 00:14:43.920
+Scott coming to you from
+another place in time. Are
+
+250
+00:14:43.920 --> 00:14:47.220
+you using agile practices to
+manage your software development? There's
+
+251
+00:14:47.220 --> 00:14:49.230
+lots of tools in the
+market that manage the steps
+
+252
+00:14:49.230 --> 00:14:51.830
+of a project, but most
+of them focus on roles,
+
+253
+00:14:52.670 --> 00:14:54.740
+get ready for a solution
+that caters for the success
+
+254
+00:14:54.740 --> 00:14:57.800
+of the whole team. Guys
+at Tellerik introduced team pulse.
+
+255
+00:14:58.370 --> 00:15:01.070
+It's an agile project management
+tool. That'll help you gather
+
+256
+00:15:01.070 --> 00:15:05.870
+ideas, estimate plan, track progress
+in a common workspace. Finally,
+
+257
+00:15:05.900 --> 00:15:08.150
+companies, regardless of their size
+can use a lightweight and
+
+258
+00:15:08.150 --> 00:15:10.250
+convenient tool that makes all
+the stakeholders work as a
+
+259
+00:15:10.250 --> 00:15:14.630
+United team. Even if they're
+in different countries by combining
+
+260
+00:15:14.630 --> 00:15:17.570
+intuitive energy interface and the
+power server light team poles
+
+261
+00:15:17.570 --> 00:15:20.480
+removes the roadblocks that you
+typically face and applying agile
+
+262
+00:15:20.480 --> 00:15:23.510
+in an effective manner, no
+more lost data, no disparate
+
+263
+00:15:23.510 --> 00:15:27.830
+systems, no lack of critical
+analytics regarding the health philosophy
+
+264
+00:15:27.830 --> 00:15:31.310
+project. See if yourself get
+a free copy for five
+
+265
+00:15:31.310 --> 00:15:37.790
+users in one project at
+tellerik.com/team pulse. And please do
+
+266
+00:15:37.790 --> 00:15:40.580
+thank Tellerik for supporting Hansel
+minutes on their Facebook fan
+
+267
+00:15:40.580 --> 00:15:47.000
+page, facebook.com/t L E R
+I K coloring. We do
+
+268
+00:15:47.000 --> 00:15:48.890
+appreciate it. There wouldn't be
+a Hansel minutes if there
+
+269
+00:15:48.890 --> 00:15:52.880
+wasn't teller helping us. Okay.
+So let me paraphrase and
+
+270
+00:15:52.880 --> 00:15:57.140
+see if I understand since
+hiding you're making something visible
+
+271
+00:15:57.140 --> 00:16:01.050
+or not visible in, in
+server light and WPF is,
+
+272
+00:16:01.050 --> 00:16:05.300
+is an enumeration, not just
+a simple Boolean and data
+
+273
+00:16:05.300 --> 00:16:08.900
+binding is effectively a free
+four loop. When I data
+
+274
+00:16:08.900 --> 00:16:12.350
+buying something, I say, Hey,
+that collection over there, I
+
+275
+00:16:12.350 --> 00:16:15.440
+want you to apply it
+to this grid over here.
+
+276
+00:16:15.950 --> 00:16:18.740
+And then the four loop
+for a, as it were
+
+277
+00:16:18.740 --> 00:16:21.590
+is done for you, someone's
+spins through your list and
+
+278
+00:16:21.590 --> 00:16:24.620
+applies it to a grid
+or a list with a
+
+279
+00:16:24.620 --> 00:16:27.980
+value converter. That conversion is
+going to happen on each
+
+280
+00:16:27.980 --> 00:16:32.000
+item. Every single time that
+binding happens. You know, if
+
+281
+00:16:32.000 --> 00:16:34.880
+you run your application for
+hours and you bind dozens
+
+282
+00:16:34.880 --> 00:16:39.050
+and dozens of times that
+value converters running over and
+
+283
+00:16:39.050 --> 00:16:42.890
+over and over hundreds, thousands,
+millions of times. But if
+
+284
+00:16:42.890 --> 00:16:46.250
+I simply say that the
+view model is in fact,
+
+285
+00:16:46.250 --> 00:16:50.060
+a model for the view,
+I do that on the
+
+286
+00:16:50.060 --> 00:16:53.090
+backend. And then when I
+do my data binding, I'm
+
+287
+00:16:53.090 --> 00:16:56.510
+simply not sending a bullying,
+but rather the enumeration that
+
+288
+00:16:56.510 --> 00:16:59.750
+the data binding wants, which
+means data binding does less
+
+289
+00:16:59.750 --> 00:17:03.610
+work. Is that correct? There
+is something which is not
+
+290
+00:17:03.610 --> 00:17:06.640
+quite correct in what you
+said in that the data
+
+291
+00:17:06.640 --> 00:17:09.310
+mining is actually not going
+to be executed like millions
+
+292
+00:17:09.310 --> 00:17:11.650
+of times or, or anything,
+right. It's going to be
+
+293
+00:17:11.650 --> 00:17:15.010
+executed only when the value
+changes, which is not very
+
+294
+00:17:15.010 --> 00:17:19.150
+often. So in matter of
+fact, you know, it will
+
+295
+00:17:19.150 --> 00:17:23.440
+be executed quite often when
+you do have, you know,
+
+296
+00:17:23.440 --> 00:17:27.370
+things like UI virtualization, which
+means that the view is
+
+297
+00:17:27.370 --> 00:17:29.620
+a template for the item
+is going to be rendered
+
+298
+00:17:29.620 --> 00:17:34.750
+quite often. UI virtualization is
+a technique where all the
+
+299
+00:17:34.750 --> 00:17:38.020
+items, which are outside of
+the visible screen are actually
+
+300
+00:17:38.350 --> 00:17:41.170
+garbage collected, right? So you,
+you don't see them anymore,
+
+301
+00:17:41.380 --> 00:17:43.420
+which means that they are
+just going from memory so
+
+302
+00:17:43.420 --> 00:17:46.660
+you can improve performance like
+that. This is a great
+
+303
+00:17:46.660 --> 00:17:49.590
+technique, but every time that
+you bring those items into
+
+304
+00:17:49.590 --> 00:17:52.830
+view, then you know, the
+data template is recreated and
+
+305
+00:17:52.830 --> 00:17:55.440
+then the binding is going
+to be evaluated. And then
+
+306
+00:17:55.440 --> 00:17:58.860
+you will get your value
+converters in the way, in
+
+307
+00:17:58.860 --> 00:18:01.620
+that sense, you know, having
+a property on the view
+
+308
+00:18:01.620 --> 00:18:03.810
+model is not going to
+solve that problem. It is
+
+309
+00:18:03.810 --> 00:18:06.930
+just going to avoid having
+an additional level of indirection
+
+310
+00:18:07.290 --> 00:18:11.460
+through the value converter. So
+again, you know, on silver,
+
+311
+00:18:11.460 --> 00:18:14.010
+right on the desktop, you
+will probably hardly notice it.
+
+312
+00:18:14.580 --> 00:18:17.310
+We just noticed that binding
+in general on the phone
+
+313
+00:18:17.310 --> 00:18:20.310
+is a little bit slower
+and biting through converters on
+
+314
+00:18:20.310 --> 00:18:23.450
+the phone is noticeably. So
+we try to avoid that.
+
+315
+00:18:24.080 --> 00:18:27.470
+Okay. So that the, we
+always want our phone to
+
+316
+00:18:27.470 --> 00:18:29.780
+use a Scott goo term.
+We always want the scrolling
+
+317
+00:18:29.780 --> 00:18:32.810
+to be buttery smooth. And
+if I have, you know,
+
+318
+00:18:32.840 --> 00:18:36.020
+thousands of items, but I
+have a viewport that's showing
+
+319
+00:18:36.020 --> 00:18:39.710
+10 or 15 as I
+scroll in and out and
+
+320
+00:18:40.070 --> 00:18:42.790
+know scroll quickly, is that
+when the value converter is
+
+321
+00:18:42.890 --> 00:18:44.660
+going to be firing, because
+that's when the data binding
+
+322
+00:18:44.660 --> 00:18:47.930
+is firing. Yeah. That's exactly
+that if your user, you
+
+323
+00:18:47.930 --> 00:18:51.920
+have each virtualization, which is
+what most applications actually do,
+
+324
+00:18:52.570 --> 00:18:54.800
+your value converters is going
+to be fired every time.
+
+325
+00:18:54.800 --> 00:18:59.270
+That's correct. But if I
+had, you know, hundreds or
+
+326
+00:18:59.270 --> 00:19:02.930
+thousands of items analyst, except
+this time, the list is
+
+327
+00:19:02.930 --> 00:19:09.080
+a view model, would I
+have not created the pooling?
+
+328
+00:19:09.080 --> 00:19:10.790
+And would I have not
+done the conversion of the
+
+329
+00:19:10.790 --> 00:19:15.470
+Boolean to visibility for items
+that may never even be
+
+330
+00:19:15.470 --> 00:19:18.260
+shown? So I may have
+done the work ahead of
+
+331
+00:19:18.260 --> 00:19:23.330
+time. Yes You can. So
+you can do things like
+
+332
+00:19:23.330 --> 00:19:27.200
+that, right? There are multiple
+techniques to do to load
+
+333
+00:19:27.830 --> 00:19:31.580
+data, right? So virtualization is
+definitely one technique. Another technique
+
+334
+00:19:31.580 --> 00:19:35.360
+would be to preload the
+items and to not virtualize
+
+335
+00:19:35.360 --> 00:19:38.720
+them at the same time.
+The big issue here is
+
+336
+00:19:38.720 --> 00:19:42.620
+that it's really, it's really
+more complicated to implement because
+
+337
+00:19:42.620 --> 00:19:45.620
+a virtualization is given by
+the, by the control, by
+
+338
+00:19:45.620 --> 00:19:48.680
+the least books control, which
+is built in Silverlight. So
+
+339
+00:19:48.680 --> 00:19:51.290
+you don't have to worry
+about that. If you start
+
+340
+00:19:51.290 --> 00:19:54.680
+doing pre-loading items and cashing
+them and fetching them in
+
+341
+00:19:54.680 --> 00:19:58.160
+oven, in advance and executing
+the conversion, this is called
+
+342
+00:19:58.160 --> 00:20:03.620
+that you need to write.
+So it's more complex. One
+
+343
+00:20:03.620 --> 00:20:08.000
+of the things that Microsoft
+has been criticized on specifically
+
+344
+00:20:08.000 --> 00:20:13.700
+around MVVM is that there,
+there, there wasn't, or maybe
+
+345
+00:20:13.700 --> 00:20:17.420
+isn't, now you can tell
+me standardization, you know, from
+
+346
+00:20:17.420 --> 00:20:20.840
+Microsoft, it's not like I
+say, file new project and
+
+347
+00:20:20.840 --> 00:20:25.400
+I'm all set for formal
+MVVM and this has caused,
+
+348
+00:20:25.850 --> 00:20:28.970
+you know, a dozen or
+more model view, view, model
+
+349
+00:20:29.000 --> 00:20:32.330
+toolkits to pop up, which
+I think is confusing for
+
+350
+00:20:32.330 --> 00:20:37.160
+new people who were about
+to start out. Yeah, yeah.
+
+351
+00:20:37.170 --> 00:20:40.190
+That has been, that has
+been an issue, especially, I
+
+352
+00:20:40.190 --> 00:20:42.410
+would say last year, and
+in the beginning of this
+
+353
+00:20:42.410 --> 00:20:47.290
+year, we starting actually things
+coming out of Microsoft. Like
+
+354
+00:20:47.290 --> 00:20:50.020
+for example, there is if
+you install the, is a
+
+355
+00:20:50.020 --> 00:20:53.290
+blend SDK, there is actually
+a data application there, which
+
+356
+00:20:53.290 --> 00:20:58.510
+is built according to MVVM.
+If you install a prison,
+
+357
+00:20:58.780 --> 00:21:01.120
+especially in the, in the
+new version, in version four,
+
+358
+00:21:01.810 --> 00:21:05.260
+they do actually have guidance
+and, and, and components, which
+
+359
+00:21:05.260 --> 00:21:08.260
+help you to build MVP
+and applications. So the good
+
+360
+00:21:08.260 --> 00:21:10.840
+news is that Microsoft has
+been listening to the community
+
+361
+00:21:10.840 --> 00:21:12.970
+and, and checking, you know,
+what is maybe the best
+
+362
+00:21:12.970 --> 00:21:17.020
+practices out there and, and
+using that at the same
+
+363
+00:21:17.020 --> 00:21:21.610
+time, I think that MVVM
+has really started to emerge
+
+364
+00:21:21.910 --> 00:21:25.000
+in the community. I mean,
+even though, you know, Silverlight
+
+365
+00:21:25.000 --> 00:21:28.090
+and WPF are built according
+to MVVM, so this pattern
+
+366
+00:21:28.120 --> 00:21:31.570
+is there from the start,
+but I think we really
+
+367
+00:21:31.570 --> 00:21:34.660
+started to use it a
+lot in the community, especially
+
+368
+00:21:34.690 --> 00:21:36.760
+like in my case, I,
+I started using it a
+
+369
+00:21:36.760 --> 00:21:40.060
+lot because I wanted to
+work with designers in expression
+
+370
+00:21:40.060 --> 00:21:43.660
+blend, and that made my
+life so much easier for
+
+371
+00:21:43.660 --> 00:21:45.880
+other people that I know
+they started using it because
+
+372
+00:21:45.880 --> 00:21:49.540
+they absolutely wanted to, you
+know, to unit test large
+
+373
+00:21:49.570 --> 00:21:53.680
+parts of their applications, including
+the view models. And it
+
+374
+00:21:53.770 --> 00:21:57.430
+absolutely made sense to have
+the separation in place. So
+
+375
+00:21:57.520 --> 00:22:00.590
+for different reasons, we saw
+really in the community, a,
+
+376
+00:22:00.590 --> 00:22:04.060
+a large movement in favor
+of MVVM, if you want.
+
+377
+00:22:04.570 --> 00:22:08.170
+And as with all things,
+right, when you see people
+
+378
+00:22:08.170 --> 00:22:11.170
+selling, using a pattern, you
+start to repeat the whole,
+
+379
+00:22:11.440 --> 00:22:13.960
+you know, the whole code
+sequence over and over again.
+
+380
+00:22:14.320 --> 00:22:17.260
+And that's when you start
+creating toolkits and frameworks, basically.
+
+381
+00:22:17.800 --> 00:22:21.040
+So, you know, there are
+quite a few frameworks around,
+
+382
+00:22:22.300 --> 00:22:26.110
+I sing that in time,
+you know, especially this year,
+
+383
+00:22:26.110 --> 00:22:29.260
+we saw a few, you
+know, a few frameworks, which
+
+384
+00:22:29.260 --> 00:22:33.700
+emerged as being probably as
+most used. And especially now
+
+385
+00:22:33.700 --> 00:22:36.640
+with windows seven, we saw
+that there are actually a
+
+386
+00:22:36.640 --> 00:22:39.310
+couple of frameworks, which are,
+which are used, which are
+
+387
+00:22:39.310 --> 00:22:42.610
+really from the community at
+the same time. We see
+
+388
+00:22:42.610 --> 00:22:46.000
+some guidance coming out out
+of Microsoft. And I know
+
+389
+00:22:46.000 --> 00:22:47.980
+that I've been talking with
+quite a few people at
+
+390
+00:22:47.980 --> 00:22:51.820
+Microsoft about that in the
+prison team and, and outside.
+
+391
+00:22:52.240 --> 00:22:54.820
+And so I think there
+is kind of a guidance
+
+392
+00:22:54.820 --> 00:22:57.790
+coming up, but yeah, there
+was definitely some confusion around
+
+393
+00:22:57.790 --> 00:23:03.930
+that in the beginning. You're
+Is there official MVVM guidance
+
+394
+00:23:03.930 --> 00:23:06.240
+from, from Microsoft? I mean,
+I see that on the
+
+395
+00:23:06.240 --> 00:23:10.620
+WPF code Plex site, that
+there's a toolkit from 2009.
+
+396
+00:23:11.610 --> 00:23:15.840
+And when you mentioned prism,
+what's the official MVVM toolkit
+
+397
+00:23:16.060 --> 00:23:19.470
+from Microsoft. And then what
+are some open source ones
+
+398
+00:23:19.470 --> 00:23:24.540
+that you would recommend In
+terms of a toolkit at
+
+399
+00:23:24.540 --> 00:23:27.390
+Microsoft? I don't really know.
+One, I think that the
+
+400
+00:23:27.390 --> 00:23:30.030
+closes that they have is
+really, as you know, in
+
+401
+00:23:30.030 --> 00:23:33.960
+the prison guidance, they have
+really parts which are really
+
+402
+00:23:33.960 --> 00:23:37.530
+talking about MVVM and explaining
+how to, how to take
+
+403
+00:23:37.530 --> 00:23:40.920
+advantage of that pattern and
+how to implement it. And
+
+404
+00:23:41.010 --> 00:23:44.040
+in the prison libraries, you
+also have components that you
+
+405
+00:23:44.040 --> 00:23:48.620
+can actually use build applications
+according to the MVVM pattern.
+
+406
+00:23:49.040 --> 00:23:52.190
+So that's really where I
+would look now as a
+
+407
+00:23:52.190 --> 00:23:54.590
+WPF tool key that you
+mentioned as far as I
+
+408
+00:23:54.590 --> 00:23:58.940
+know, was something like an
+experiment. And I don't think
+
+409
+00:23:58.940 --> 00:24:03.830
+it was actually ever maintained
+further than the 0.1 or
+
+410
+00:24:03.830 --> 00:24:07.220
+whatever it was. So I
+think that's probably not the
+
+411
+00:24:07.220 --> 00:24:11.060
+best direction to look into.
+So yeah, I would definitely
+
+412
+00:24:11.060 --> 00:24:15.590
+look into prison in terms
+of open source. You know,
+
+413
+00:24:15.590 --> 00:24:17.990
+there are quite a few,
+like you mentioned. I think
+
+414
+00:24:17.990 --> 00:24:21.020
+that we see, we see
+a few toolkit emerging as
+
+415
+00:24:21.020 --> 00:24:26.290
+being quite popular. So one
+is definitely caliber. Calorie burn
+
+416
+00:24:26.300 --> 00:24:29.180
+is a toolkit, which is
+made by Rob Eisenberg. He's
+
+417
+00:24:29.180 --> 00:24:33.470
+a, an MVP and his
+tool kit is very, very
+
+418
+00:24:33.470 --> 00:24:36.170
+impressive in terms of what
+it can do in terms
+
+419
+00:24:36.170 --> 00:24:41.570
+of features and functionality. It's
+a toolkit that relies on
+
+420
+00:24:41.570 --> 00:24:45.680
+convention over configuration, which is
+topic also quite popular nowadays.
+
+421
+00:24:46.220 --> 00:24:50.780
+And I think definitely was
+looking into that. The other
+
+422
+00:24:50.840 --> 00:24:53.240
+two kids that I have
+to mention obviously is the
+
+423
+00:24:53.240 --> 00:24:55.760
+one that I'm, I'm doing
+myself. So it's called the
+
+424
+00:24:55.760 --> 00:24:59.930
+MVVM light toolkit. It's also
+open source. It's on code
+
+425
+00:24:59.930 --> 00:25:04.010
+Plex. And these tool kits
+took a different approach and
+
+426
+00:25:04.010 --> 00:25:08.180
+calorie burn. It's a lot
+less powerful. It's a lot
+
+427
+00:25:08.180 --> 00:25:12.110
+lighter. So you can basically
+use whatever components you want
+
+428
+00:25:12.110 --> 00:25:15.230
+and leave the rest. And,
+but if you want to
+
+429
+00:25:15.230 --> 00:25:17.780
+use the whole thing, you
+can go into a visual
+
+430
+00:25:17.780 --> 00:25:20.960
+studio and do found new
+project, new MVVM light application
+
+431
+00:25:21.260 --> 00:25:25.130
+and have everything, which is
+pre-wired. There are, you know,
+
+432
+00:25:25.130 --> 00:25:29.510
+some others coming up. One
+is called Jones, for example,
+
+433
+00:25:29.510 --> 00:25:33.320
+foreseeable light and windows, phone
+seven Zara, a few others
+
+434
+00:25:33.320 --> 00:25:36.050
+as well, you know, probably
+too many to mention, but
+
+435
+00:25:36.050 --> 00:25:38.380
+I think caliber and then
+MVVM night or the tools
+
+436
+00:25:38.380 --> 00:25:43.480
+that I see being quite
+popular nowadays. Now speaking kind
+
+437
+00:25:43.480 --> 00:25:47.190
+of generally, when I install
+a framework like this, what,
+
+438
+00:25:47.190 --> 00:25:49.780
+what am I getting? If
+this is a simple model,
+
+439
+00:25:50.140 --> 00:25:52.120
+then why do I, what
+do I need a framework?
+
+440
+00:25:52.120 --> 00:25:56.770
+And when I install something
+like this, how is it
+
+441
+00:25:56.770 --> 00:26:01.510
+constraining me and hopefully helping
+me. Yeah. Yeah. That's a
+
+442
+00:26:01.510 --> 00:26:05.050
+great question. Because, you know,
+as I often say, there
+
+443
+00:26:05.050 --> 00:26:07.600
+is a lot of confusion
+around MVVM itself. I mean,
+
+444
+00:26:07.600 --> 00:26:10.150
+is that, you know, is
+that a pattern? Is that
+
+445
+00:26:10.150 --> 00:26:13.210
+a toolkit? Is that the
+helper is that the DLL
+
+446
+00:26:13.210 --> 00:26:16.870
+or whatever MVVM is really
+just a pattern. So, you
+
+447
+00:26:16.870 --> 00:26:21.520
+know, you can implement patterns
+in multiple ways, which kind
+
+448
+00:26:21.520 --> 00:26:23.800
+of explains why, why there
+are so many tool kits
+
+449
+00:26:23.800 --> 00:26:26.890
+is because they are just
+helpers that help you implement
+
+450
+00:26:26.890 --> 00:26:30.760
+MVVM in different ways. In
+the case of MPN light,
+
+451
+00:26:30.790 --> 00:26:34.180
+what you get when you
+install it is a set
+
+452
+00:26:34.210 --> 00:26:39.010
+of DLLs. So there are
+two DLLs plus the system
+
+453
+00:26:39.010 --> 00:26:43.200
+windows, interactivity, DLL, which is
+from the blend DK, and
+
+454
+00:26:43.200 --> 00:26:47.280
+those DLL have components that
+help you to build applications.
+
+455
+00:26:47.310 --> 00:26:50.880
+According to MVVM a one
+component is a class called
+
+456
+00:26:50.880 --> 00:26:54.840
+relay command, which is, you
+know, it's like a point
+
+457
+00:26:54.840 --> 00:26:57.540
+of entry for a method
+that you place on your
+
+458
+00:26:57.540 --> 00:26:59.610
+view model. And what you
+can do is at every
+
+459
+00:26:59.610 --> 00:27:03.210
+time your user is actuating
+the control on the view,
+
+460
+00:27:03.570 --> 00:27:06.390
+the command is going to
+be invoked directly on the
+
+461
+00:27:06.390 --> 00:27:09.660
+view model without having to
+write and even handler. So
+
+462
+00:27:09.660 --> 00:27:13.200
+this is a lose way
+if you want to, to
+
+463
+00:27:13.200 --> 00:27:16.620
+build an event, to react
+to an event. And the
+
+464
+00:27:16.620 --> 00:27:19.710
+one reason why we use
+commands in MVVM is that
+
+465
+00:27:19.710 --> 00:27:22.830
+we want to separate the
+view from the view model,
+
+466
+00:27:22.830 --> 00:27:25.350
+as much as we can.
+We don't want to handle
+
+467
+00:27:25.350 --> 00:27:29.430
+even handlers because those are
+very, very tight, coupled tightly,
+
+468
+00:27:29.430 --> 00:27:33.930
+coupled the elements and by
+using commands, what we do
+
+469
+00:27:33.930 --> 00:27:36.660
+is that we basically tells
+the designer, you can use
+
+470
+00:27:36.660 --> 00:27:39.570
+any control. You like, as
+long as this control is
+
+471
+00:27:39.570 --> 00:27:42.570
+going to invoke the command
+I'm, I'm fine. And what
+
+472
+00:27:42.570 --> 00:27:45.240
+we tell to be Roper
+is you don't know how
+
+473
+00:27:45.240 --> 00:27:47.370
+the command is going to
+be invoked. It could be
+
+474
+00:27:47.370 --> 00:27:49.380
+a click on the Burton,
+but it could, it could
+
+475
+00:27:49.380 --> 00:27:52.110
+also be a mouse left
+button down on the rectangle.
+
+476
+00:27:52.110 --> 00:27:55.590
+For example, you don't know
+that it doesn't matter. What
+
+477
+00:27:55.590 --> 00:27:57.960
+I want is that you
+just invoke the command and
+
+478
+00:27:58.290 --> 00:28:02.550
+execute executor method. So commands
+are very important. So you
+
+479
+00:28:02.550 --> 00:28:06.660
+have that. And other things
+that you have is something
+
+480
+00:28:06.690 --> 00:28:11.010
+that I call the messenger
+in, in prisons, they call
+
+481
+00:28:11.010 --> 00:28:15.150
+that the even aggregator. And
+in fact, this is an
+
+482
+00:28:15.150 --> 00:28:18.300
+object which allows you to
+send messages from one object
+
+483
+00:28:18.300 --> 00:28:22.170
+to another, but in a
+very decoupled manner. So typically
+
+484
+00:28:22.170 --> 00:28:25.770
+if you have multiple view
+models, like in WPF, you
+
+485
+00:28:25.770 --> 00:28:28.710
+could have multiple windows open
+at the same time, or
+
+486
+00:28:28.710 --> 00:28:30.750
+maybe in a windows phone,
+seven, you could have a
+
+487
+00:28:30.750 --> 00:28:34.260
+settings you model. And then
+the main view model, you
+
+488
+00:28:34.260 --> 00:28:37.440
+can basically pass messages from
+one to the other, but
+
+489
+00:28:37.440 --> 00:28:40.950
+in a very decoupled manner.
+So that's another class. So,
+
+490
+00:28:41.550 --> 00:28:43.620
+you know, there are also
+clouds into that, but in
+
+491
+00:28:43.620 --> 00:28:47.910
+a sense, if you want
+those classes are not really
+
+492
+00:28:48.240 --> 00:28:52.590
+forcing you, you know, nobody's
+forcing you to use them,
+
+493
+00:28:52.590 --> 00:28:56.070
+right? But if you do
+implement the MVVM pattern, you
+
+494
+00:28:56.070 --> 00:28:58.380
+are going to be faced
+with some issues that those
+
+495
+00:28:58.380 --> 00:29:00.810
+classes help you to solve.
+So that's what they do.
+
+496
+00:29:01.890 --> 00:29:04.440
+And other things that MVVM
+light installs, like I mentioned,
+
+497
+00:29:04.440 --> 00:29:06.780
+or a project templates that
+you can just do a
+
+498
+00:29:06.780 --> 00:29:09.210
+file new project, and then
+start with a, with an
+
+499
+00:29:09.210 --> 00:29:12.810
+application, which is already configured,
+according to the MVVM pattern.
+
+500
+00:29:14.620 --> 00:29:18.560
+When I, when I buy
+into the whole MVVM thing,
+
+501
+00:29:19.470 --> 00:29:22.490
+how much other things do
+I have to buy into,
+
+502
+00:29:22.490 --> 00:29:26.090
+do I have to start
+thinking about dependency, injection and
+
+503
+00:29:26.120 --> 00:29:30.110
+unit testing and IOC, is
+this a framework that brings
+
+504
+00:29:30.110 --> 00:29:32.600
+other frameworks along with it
+that I may or may
+
+505
+00:29:32.600 --> 00:29:35.180
+not be familiar with? Or
+is this something that I
+
+506
+00:29:35.180 --> 00:29:40.280
+can get started with in
+a fairly vanilla kind of
+
+507
+00:29:40.280 --> 00:29:45.520
+a way? Yeah. So it
+depends on the implementation that
+
+508
+00:29:45.520 --> 00:29:49.270
+you choose, obviously. But I,
+for example, in my case,
+
+509
+00:29:49.270 --> 00:29:51.700
+I really don't want to
+force anything on anybody. So
+
+510
+00:29:51.700 --> 00:29:56.770
+you can implement an MDM
+application without needing IOC, if
+
+511
+00:29:56.770 --> 00:30:01.340
+you don't want, without needing
+a dependency injection framework or
+
+512
+00:30:01.390 --> 00:30:05.830
+anything, you don't really need
+to unit tests. I mean,
+
+513
+00:30:05.830 --> 00:30:08.530
+obviously we recommend that you,
+you need test, but you
+
+514
+00:30:08.530 --> 00:30:12.520
+know, if you don't want
+to that's okay, your application
+
+515
+00:30:12.520 --> 00:30:16.720
+will work. You know, so
+I would say that you
+
+516
+00:30:16.720 --> 00:30:19.360
+can really do that in
+a very progressive manner. So
+
+517
+00:30:19.360 --> 00:30:22.150
+if you decide to go
+with, with MVVM, I would
+
+518
+00:30:22.150 --> 00:30:25.390
+start with small example where
+you don't use any dependency
+
+519
+00:30:25.390 --> 00:30:29.590
+injection, and then start building
+on that. And then after
+
+520
+00:30:29.590 --> 00:30:31.570
+a while, you know, that's
+always the same story with
+
+521
+00:30:31.570 --> 00:30:35.830
+dependency injection. When your application
+grows, then you start seeing
+
+522
+00:30:35.830 --> 00:30:41.410
+the advantages of using dependency
+injection to create your objects.
+
+523
+00:30:41.440 --> 00:30:44.560
+Like one things that we
+do a lot in a
+
+524
+00:30:44.570 --> 00:30:48.820
+MVVM is that we decouple
+actually a little bit more
+
+525
+00:30:48.820 --> 00:30:52.480
+than what I explained. We
+use services to talk to
+
+526
+00:30:52.480 --> 00:30:54.730
+the model and services, to
+talk to the viewer as
+
+527
+00:30:54.730 --> 00:30:58.570
+well. So one example could
+be okay if I, if
+
+528
+00:30:58.570 --> 00:31:00.700
+I want to show a
+dialogue to the user, I'm
+
+529
+00:31:00.700 --> 00:31:03.910
+going to have something which
+is a dialogue service, and
+
+530
+00:31:03.910 --> 00:31:06.820
+this dialogue service can be
+invoked. And, you know, in,
+
+531
+00:31:06.820 --> 00:31:09.550
+in a decoupled manner like
+this, my view model, doesn't
+
+532
+00:31:09.550 --> 00:31:11.740
+have to worry about showing
+a dialogue. It's just saying,
+
+533
+00:31:11.740 --> 00:31:14.770
+Hey, show me your dialogue
+and give me back the
+
+534
+00:31:14.770 --> 00:31:18.550
+result in that seat, these
+kinds of services, as well
+
+535
+00:31:18.550 --> 00:31:20.650
+as services. I talk to
+them to the model. So
+
+536
+00:31:20.650 --> 00:31:24.730
+services like, okay, get books
+or save a new book,
+
+537
+00:31:25.300 --> 00:31:28.660
+or, you know, things like
+that. Those can very well
+
+538
+00:31:28.660 --> 00:31:31.330
+be injected inside of your
+model. So if you want
+
+539
+00:31:31.870 --> 00:31:35.350
+using an IOC container for
+that is, you know, it's
+
+540
+00:31:35.350 --> 00:31:37.570
+going to help you, but
+if you don't want, you
+
+541
+00:31:37.570 --> 00:31:41.890
+can definitely go ahead and
+create those services by new
+
+542
+00:31:41.890 --> 00:31:44.770
+exam in the code and
+injecting them directly into your
+
+543
+00:31:44.770 --> 00:31:47.920
+model. That works, right. So
+it's just a matter of
+
+544
+00:31:48.730 --> 00:31:52.470
+scaling. All right, well, I'm
+going to put links to
+
+545
+00:31:52.470 --> 00:31:55.410
+all of the different frameworks
+that we've talked about and
+
+546
+00:31:55.410 --> 00:31:58.710
+a few others, as well
+as links to videos of
+
+547
+00:31:58.710 --> 00:32:02.280
+talks that you've done. And
+other resources for folks who
+
+548
+00:32:02.280 --> 00:32:05.520
+are listening to get involved
+and start learning about the
+
+549
+00:32:05.520 --> 00:32:10.380
+MVVM themselves. Very cool. Thank
+you so much for taking
+
+550
+00:32:10.380 --> 00:32:12.390
+the time to chat with
+us today on handsome minutes.
+
+551
+00:32:12.450 --> 00:32:16.290
+I really appreciate it. Pleasure.
+This has been another episode
+
+552
+00:32:16.620 --> 00:32:18.330
+and I'll see you again
+next week.
+

@@ -1,0 +1,2842 @@
+WEBVTT FILE
+
+1
+00:00:00.300 --> 00:00:03.450
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.450 --> 00:00:06.420
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.420 --> 00:00:10.590
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.590 --> 00:00:15.120
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.510 --> 00:00:19.590
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.620 --> 00:00:23.700
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:23.790 --> 00:00:49.040
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com
+From hanselminutes.com it's Hanselminutes all
+
+8
+00:00:49.040 --> 00:00:53.780
+weekly discussion with web developer
+and technologists. Scott Hanselman. This
+
+9
+00:00:53.780 --> 00:00:59.240
+is Lawrence Ryan announcing show number
+535. In this episode, Scott
+
+10
+00:00:59.240 --> 00:01:07.640
+talks with Andy kitchen about
+machine learning with TensorFlow. Hi,
+
+11
+00:01:07.640 --> 00:01:09.800
+this is Scott Hanselman. This
+is another episode of Hansel
+
+12
+00:01:09.800 --> 00:01:13.580
+minutes. And today we're talking
+with Andy kitchen about TensorFlow.
+
+13
+00:01:13.670 --> 00:01:16.160
+How's it going? Yeah. Hey
+Scott, thanks for having me.
+
+14
+00:01:16.310 --> 00:01:18.380
+This is, I'm really excited
+to talk to you about
+
+15
+00:01:18.380 --> 00:01:21.080
+this, actually. Yeah, this is
+great. So we met at
+
+16
+00:01:21.080 --> 00:01:23.390
+Oz con the open source
+conference. And what, what were
+
+17
+00:01:23.390 --> 00:01:26.480
+you speaking on there? I
+was also speaking about machine
+
+18
+00:01:26.480 --> 00:01:31.040
+learning and the talk itself
+is made to be really
+
+19
+00:01:31.040 --> 00:01:35.270
+accessible. So I try and
+explain machine learning, deep learning
+
+20
+00:01:35.570 --> 00:01:39.050
+to everyone without a lot
+of mathematics and a lot
+
+21
+00:01:39.050 --> 00:01:41.600
+of jargon. And of course
+that's important if you want
+
+22
+00:01:41.600 --> 00:01:44.810
+to do research, but if
+you want to find out
+
+23
+00:01:44.810 --> 00:01:47.600
+more, get excited, get your
+hands dirty. I don't think
+
+24
+00:01:47.600 --> 00:01:52.670
+that's necessarily what you need
+right away. Machine learning is
+
+25
+00:01:52.670 --> 00:01:54.980
+like the buzz word right
+now. Like I can't open
+
+26
+00:01:54.980 --> 00:01:57.470
+up. I can't open up
+the verge or ARS Technica
+
+27
+00:01:57.860 --> 00:02:01.610
+without something about machine learning.
+There's IBM's Watson. And everyone
+
+28
+00:02:01.610 --> 00:02:04.130
+always says that Siri and
+Google, like everyone is doing
+
+29
+00:02:04.130 --> 00:02:06.980
+machine learning. Microsoft is taking
+over the world machine learning
+
+30
+00:02:07.310 --> 00:02:09.470
+and I'm think that most
+of us who are listening
+
+31
+00:02:09.470 --> 00:02:13.220
+and myself included, we only
+know how to say machine
+
+32
+00:02:13.220 --> 00:02:15.680
+learning. And that's about as
+far as it goes. I
+
+33
+00:02:15.680 --> 00:02:19.610
+think that luckily our intuition
+is actually strong when we
+
+34
+00:02:19.610 --> 00:02:21.950
+talk about machine learning. And
+I think that's why we're
+
+35
+00:02:21.950 --> 00:02:26.060
+happy to say the words.
+So ultimately machine learning is
+
+36
+00:02:26.060 --> 00:02:29.480
+the idea or the paradigm
+of getting a computer to
+
+37
+00:02:29.480 --> 00:02:32.870
+become better at solving a
+problem as it gets more
+
+38
+00:02:32.870 --> 00:02:38.000
+experience. And so it's a
+kind of artificial intelligence. It's
+
+39
+00:02:38.000 --> 00:02:41.090
+a kind of AI and
+most people think that to
+
+40
+00:02:41.090 --> 00:02:44.060
+make AI really happen, to
+kind of make something that
+
+41
+00:02:44.060 --> 00:02:47.030
+was smart, like a person,
+a big part of that
+
+42
+00:02:47.090 --> 00:02:50.390
+would be having it learn.
+Is that okay? So as
+
+43
+00:02:50.390 --> 00:02:52.160
+soon as we said, machine
+learning, I started thinking to
+
+44
+00:02:52.160 --> 00:02:55.610
+myself, is that the same
+as artificial intelligence or is
+
+45
+00:02:55.610 --> 00:02:57.980
+it a step or a
+component on the way to
+
+46
+00:02:57.980 --> 00:03:01.750
+artificial intelligence machine learning is
+definitely a component of artificial
+
+47
+00:03:01.750 --> 00:03:05.350
+intelligence. So I would say
+that almost all work on
+
+48
+00:03:05.350 --> 00:03:09.280
+machine learning could be seen
+as artificial working towards artificial
+
+49
+00:03:09.280 --> 00:03:12.790
+intelligence, but there is artificial
+intelligence work, which isn't focusing
+
+50
+00:03:12.790 --> 00:03:15.190
+on the learning part. So
+it might be focusing on,
+
+51
+00:03:15.190 --> 00:03:20.430
+for example, a reasoning, Okay,
+but we're afraid of artificial
+
+52
+00:03:20.430 --> 00:03:23.760
+intelligence because Skynet will kill
+us all. Should we be
+
+53
+00:03:23.760 --> 00:03:25.830
+afraid of machine learning or
+is it, is it like
+
+54
+00:03:25.830 --> 00:03:30.300
+the safe part of artificial
+intelligence? I think that in
+
+55
+00:03:30.300 --> 00:03:33.840
+the future artificial intelligence machine
+learning will have a big
+
+56
+00:03:33.870 --> 00:03:36.600
+impact on our society. I
+think all commentators do. There's
+
+57
+00:03:36.600 --> 00:03:41.040
+a huge amount that people
+are saying, thinking about whether
+
+58
+00:03:41.850 --> 00:03:46.020
+artificial intelligence will be good,
+would be bad. I think
+
+59
+00:03:46.020 --> 00:03:52.650
+that me personally, with these
+movements, for example, with open
+
+60
+00:03:52.650 --> 00:03:58.290
+AI, the idea is to
+make these things open, make
+
+61
+00:03:58.320 --> 00:04:01.470
+artificial intelligence open. And so
+I believe that more openness
+
+62
+00:04:01.800 --> 00:04:04.410
+will mean that it'll be
+more safe. So I think
+
+63
+00:04:04.410 --> 00:04:08.520
+that we should all get
+involved and have a go
+
+64
+00:04:08.520 --> 00:04:10.530
+because the more people that
+are around the world who
+
+65
+00:04:10.530 --> 00:04:13.770
+understand it, I believe the
+less dangerous it could could
+
+66
+00:04:13.770 --> 00:04:17.160
+be if there is any
+risk at all. Okay. So
+
+67
+00:04:17.160 --> 00:04:19.560
+that makes sense, because you
+wanted the title of this
+
+68
+00:04:19.590 --> 00:04:23.310
+episode to be TensorFlow for
+everyone, you know, or for
+
+69
+00:04:23.310 --> 00:04:25.920
+all. So this isn't one
+of those secret things that
+
+70
+00:04:25.920 --> 00:04:28.320
+you need a PhD to
+do. That's correct. And I
+
+71
+00:04:28.320 --> 00:04:31.050
+think that's the really exciting
+part. Now we're just moving
+
+72
+00:04:31.050 --> 00:04:35.880
+into a time where if
+you can access the internet
+
+73
+00:04:35.910 --> 00:04:38.460
+and you can do a
+bit of Python, there are
+
+74
+00:04:38.490 --> 00:04:42.270
+great libraries, great tools, great
+tutorials that can get you
+
+75
+00:04:42.270 --> 00:04:47.940
+going in an afternoon. But
+now machine learning is related
+
+76
+00:04:47.940 --> 00:04:51.030
+to her in the family
+of the much more threatening
+
+77
+00:04:51.030 --> 00:04:55.260
+sounding name, computational statistics, machine
+learning is easy to say
+
+78
+00:04:55.410 --> 00:04:59.160
+computational statistics sounds like it
+requires a PhD. Why is
+
+79
+00:04:59.160 --> 00:05:02.280
+it that machine learning is
+for everyone? Well, I think
+
+80
+00:05:02.280 --> 00:05:05.340
+just involving the word, statistics
+makes people cringe and think
+
+81
+00:05:05.340 --> 00:05:11.640
+of like precalculus. So essentially
+I think that there is
+
+82
+00:05:11.640 --> 00:05:16.590
+a big difference between statistics
+and machine learning, which is
+
+83
+00:05:16.590 --> 00:05:19.050
+a bit subtle, but I'll
+try and explain it as
+
+84
+00:05:19.050 --> 00:05:25.170
+best I can, which is
+that statistics deals with noise.
+
+85
+00:05:25.290 --> 00:05:30.360
+So you can kind of
+imagine or uncertainty. So you're
+
+86
+00:05:30.360 --> 00:05:36.000
+trying to measure some particular
+number, but you get lots
+
+87
+00:05:36.000 --> 00:05:37.560
+of readings of it. And
+they're all a little bit
+
+88
+00:05:37.560 --> 00:05:40.770
+different in a, in a
+particular way with the machine
+
+89
+00:05:40.770 --> 00:05:45.030
+learning. One is much, much
+more interested in what I
+
+90
+00:05:45.030 --> 00:05:49.200
+would call structure in patterns.
+So to make that example
+
+91
+00:05:49.200 --> 00:05:52.140
+concrete, if you were trying
+to look at a picture
+
+92
+00:05:52.140 --> 00:05:55.560
+of a cat, it's not
+that there's so much snow
+
+93
+00:05:55.590 --> 00:05:58.280
+in the picture or so
+much film, grain that you
+
+94
+00:05:58.280 --> 00:06:01.510
+can't see, it's a cat.
+The reason why computers having
+
+95
+00:06:01.510 --> 00:06:03.650
+a hard time telling the
+difference between a dog and
+
+96
+00:06:03.650 --> 00:06:06.800
+a cat is that the
+complex patterns which make up
+
+97
+00:06:06.800 --> 00:06:11.060
+their whiskers and ears are
+actually give this kind of
+
+98
+00:06:11.060 --> 00:06:14.330
+texture to the pixels, which
+until now was hard to
+
+99
+00:06:14.330 --> 00:06:17.980
+pick up using computer programs.
+So the, the human brain
+
+100
+00:06:17.980 --> 00:06:21.520
+is really good. If I
+understand correctly at pattern matching
+
+101
+00:06:21.520 --> 00:06:24.760
+and like looking at a
+picture and seeing a cat
+
+102
+00:06:25.030 --> 00:06:27.610
+or even looking at a
+shadow, or even if you
+
+103
+00:06:27.610 --> 00:06:31.750
+had like a television tuned
+to analog static, and part
+
+104
+00:06:31.750 --> 00:06:34.540
+of the static was in
+a cat shape, we would
+
+105
+00:06:34.540 --> 00:06:37.030
+be extremely good at picking
+that up. Not in minutes,
+
+106
+00:06:37.030 --> 00:06:41.320
+but in milliseconds. Right? Absolutely
+correct. So if we're looking
+
+107
+00:06:41.320 --> 00:06:44.350
+at even a child can
+tell the difference between a
+
+108
+00:06:44.350 --> 00:06:47.350
+cat and a dog can
+look at something and recognize
+
+109
+00:06:47.350 --> 00:06:51.460
+it that it's a shoe
+or a face. And the
+
+110
+00:06:51.460 --> 00:06:55.240
+developments in deep learning have
+allowed computers to be much,
+
+111
+00:06:55.270 --> 00:07:03.160
+much better at recognizing and
+processing information in that context
+
+112
+00:07:03.160 --> 00:07:07.510
+where the noise isn't high,
+but the structure, the kind
+
+113
+00:07:07.510 --> 00:07:10.510
+of the patterns that we're
+looking for are complicated. And
+
+114
+00:07:10.510 --> 00:07:13.390
+that's where I think the
+real power of machine learning
+
+115
+00:07:13.390 --> 00:07:17.740
+and deep learning. When is
+machine learning a good idea,
+
+116
+00:07:17.770 --> 00:07:19.960
+versus I've heard some people
+say that maybe we shouldn't
+
+117
+00:07:19.960 --> 00:07:22.150
+do that. We should do
+like mechanical Turks. And we
+
+118
+00:07:22.150 --> 00:07:24.610
+just need the power of
+a, of a whole bunch
+
+119
+00:07:24.610 --> 00:07:27.070
+of people to solve these
+problems. And then we chop
+
+120
+00:07:27.070 --> 00:07:31.480
+the problems up into small,
+small human type operations. When
+
+121
+00:07:31.480 --> 00:07:33.670
+do computers just completely blow
+them out of the water?
+
+122
+00:07:33.670 --> 00:07:38.080
+Because they're just so much
+faster. I think that overall,
+
+123
+00:07:38.650 --> 00:07:40.900
+it will really depend on
+the situation. It's a hard
+
+124
+00:07:40.900 --> 00:07:43.120
+question to answer, but I
+think that there are, there
+
+125
+00:07:43.120 --> 00:07:48.040
+are some interesting parts to
+that. So part number one
+
+126
+00:07:48.070 --> 00:07:53.980
+would be that we may
+want to go through amounts
+
+127
+00:07:53.980 --> 00:07:58.210
+of data and content that
+no, even with mechanical Turk,
+
+128
+00:07:58.210 --> 00:08:00.820
+you just simply could not
+afford. So the amount of
+
+129
+00:08:00.820 --> 00:08:03.580
+YouTube, if we wanted to
+have an algorithm look and
+
+130
+00:08:03.580 --> 00:08:07.210
+categorize it, every YouTube video,
+every photo that's ever taken
+
+131
+00:08:07.210 --> 00:08:10.420
+on every smartphone, the volume
+is simply so high that
+
+132
+00:08:10.540 --> 00:08:14.380
+having people do, it isn't
+even a possibility. There you
+
+133
+00:08:14.380 --> 00:08:18.100
+go. I would say one
+of the areas that I'm
+
+134
+00:08:18.100 --> 00:08:20.770
+working on at the moment,
+which is incredibly exciting is
+
+135
+00:08:20.830 --> 00:08:26.320
+automatically diagnosing problems in x-ray
+images. So what we do
+
+136
+00:08:26.320 --> 00:08:29.650
+is we take some x-ray
+images, which have been looked
+
+137
+00:08:29.650 --> 00:08:32.320
+at by doctors and doctors
+have said, these ones have
+
+138
+00:08:32.320 --> 00:08:35.530
+problems. These other ones don't,
+then we'll feed them into
+
+139
+00:08:35.530 --> 00:08:38.800
+our algorithm and it will
+learn what the difference between
+
+140
+00:08:38.800 --> 00:08:41.140
+an X Ray that's healthy
+and an X Ray that
+
+141
+00:08:41.140 --> 00:08:43.810
+is unhealthy is so then
+when it's shown a new
+
+142
+00:08:43.810 --> 00:08:46.270
+x-ray that it's never seen
+before, it can make a
+
+143
+00:08:46.270 --> 00:08:49.840
+new diagnosis without a person.
+And so in that sense,
+
+144
+00:08:49.840 --> 00:08:53.320
+you can't hire people on
+mechanical Turk who have a
+
+145
+00:08:53.740 --> 00:08:58.350
+medical degrees. So if those
+systems can become accurate enough.
+
+146
+00:08:58.620 --> 00:09:03.090
+So for example, our system
+has the accuracy of just
+
+147
+00:09:03.090 --> 00:09:06.330
+shy of a junior doctor,
+which is actually very encouraging.
+
+148
+00:09:06.720 --> 00:09:08.880
+Doctors do get a lot
+better, luckily with years of
+
+149
+00:09:08.880 --> 00:09:12.430
+experience, but it is kind
+of in a way, the,
+
+150
+00:09:12.430 --> 00:09:14.550
+the first steps. And so
+I see that as a
+
+151
+00:09:14.550 --> 00:09:17.910
+way to, for example, provide
+cheap medical care kind of
+
+152
+00:09:17.910 --> 00:09:23.450
+expert oncology, even to people
+in developing countries. Interesting. So
+
+153
+00:09:23.450 --> 00:09:26.570
+is this where this is
+the learning aspect of machine
+
+154
+00:09:26.570 --> 00:09:28.760
+learning, right? The general idea
+is that you give it
+
+155
+00:09:28.760 --> 00:09:32.780
+this, this Corpus, this pile
+of data of which it
+
+156
+00:09:32.780 --> 00:09:35.660
+has no context. And then
+you provide it with a
+
+157
+00:09:35.660 --> 00:09:38.990
+bunch of context and then
+it starts to say, Oh,
+
+158
+00:09:39.260 --> 00:09:41.900
+I'm starting to notice a
+pattern here. And then it
+
+159
+00:09:41.900 --> 00:09:45.620
+can for lack of a
+better word, guess what you
+
+160
+00:09:45.620 --> 00:09:48.590
+would want it to think
+about that once you've given
+
+161
+00:09:48.590 --> 00:09:51.140
+it enough source material and
+enough context on the source
+
+162
+00:09:51.140 --> 00:09:54.920
+material? That's absolutely correct. So
+just in the same way
+
+163
+00:09:54.920 --> 00:09:57.680
+that you would teach a
+medical student, for example, what
+
+164
+00:09:57.680 --> 00:10:00.980
+some kind of condition looked
+like, you would get your
+
+165
+00:10:00.980 --> 00:10:06.530
+algorithm and essentially in code,
+you would say, look at
+
+166
+00:10:06.530 --> 00:10:08.840
+this, x-ray now tell me
+what you think. And I
+
+167
+00:10:08.840 --> 00:10:12.140
+might say, Oh, I think
+that's healthy. And then you
+
+168
+00:10:12.140 --> 00:10:13.820
+would compare it to what
+the doctor said, and if
+
+169
+00:10:13.820 --> 00:10:15.710
+it was right, you would
+give it a little bit
+
+170
+00:10:15.710 --> 00:10:18.770
+of encouragement. You'd say, yes,
+you got that. Right. And
+
+171
+00:10:18.770 --> 00:10:22.940
+you'd adjust the kind of
+in, in, let's just say
+
+172
+00:10:23.240 --> 00:10:25.940
+we're training using this thing
+called a neural network. And
+
+173
+00:10:25.940 --> 00:10:28.220
+I think we should talk
+a bit more about that,
+
+174
+00:10:28.220 --> 00:10:31.580
+but we take the algorithm,
+we change it. So it's
+
+175
+00:10:31.580 --> 00:10:34.610
+more likely to detect those
+patterns, more likely to say
+
+176
+00:10:34.670 --> 00:10:37.730
+healthy in that situation and
+agree with the doctor, or
+
+177
+00:10:37.730 --> 00:10:40.310
+if it disagreed with a
+doctor, then we'll say, no,
+
+178
+00:10:40.460 --> 00:10:42.830
+you did it wrong. You
+should do it differently next
+
+179
+00:10:42.830 --> 00:10:46.460
+time. And that concept is
+called supervised learning, where we
+
+180
+00:10:46.460 --> 00:10:48.950
+have the input and we
+have the output, for example,
+
+181
+00:10:48.950 --> 00:10:50.810
+a doctor's given it to
+us. And then we're going
+
+182
+00:10:50.810 --> 00:10:56.660
+to slowly IX sort of
+expose the computer to that
+
+183
+00:10:56.660 --> 00:10:59.660
+data and using the right
+algorithms. It will become better
+
+184
+00:11:00.020 --> 00:11:04.370
+at solving that problem. Okay.
+So machine learning is the
+
+185
+00:11:04.370 --> 00:11:09.410
+family, and there are dozens
+and dozens of algorithms that
+
+186
+00:11:09.410 --> 00:11:13.790
+you can apply to it
+that lean from supervised unsupervised.
+
+187
+00:11:13.790 --> 00:11:17.510
+Semi-supervised, it's kind of like
+a slider bar of how,
+
+188
+00:11:17.540 --> 00:11:19.700
+how much hand holding do
+you want to give this
+
+189
+00:11:19.760 --> 00:11:23.120
+machine in order to figure
+out how to think? Absolutely.
+
+190
+00:11:23.120 --> 00:11:29.720
+So in machine learning, there
+are three big problems with
+
+191
+00:11:29.750 --> 00:11:34.190
+many, many different possible techniques,
+but the three big problems
+
+192
+00:11:34.190 --> 00:11:38.600
+that people are interested in,
+unsupervised learning, supervised learning and
+
+193
+00:11:38.600 --> 00:11:43.400
+reinforcement learning. So unsupervised learning
+is, I don't know the
+
+194
+00:11:43.400 --> 00:11:46.700
+question, but I know there's
+structure there's patterns in my
+
+195
+00:11:46.700 --> 00:11:49.940
+data. And so this is
+hard to get, right. But
+
+196
+00:11:49.940 --> 00:11:52.400
+when you do get it
+right, it's incredibly powerful because
+
+197
+00:11:52.550 --> 00:11:54.970
+you might even, you might
+not even know the question
+
+198
+00:11:54.970 --> 00:11:58.150
+you're asking, but you could,
+for example, feeding your customer
+
+199
+00:11:58.150 --> 00:12:00.310
+data and it might tell
+you something new, you didn't
+
+200
+00:12:00.310 --> 00:12:05.290
+know about your customers. That
+for example, a certain demographic
+
+201
+00:12:05.290 --> 00:12:07.450
+of customer was much more
+likely to buy kind of
+
+202
+00:12:07.450 --> 00:12:10.200
+product, which you hadn't realized
+before. When in the, in
+
+203
+00:12:10.200 --> 00:12:12.210
+the movies, when they're trying
+to find the bad guy
+
+204
+00:12:12.510 --> 00:12:15.000
+and they asked the computer
+to look for patterns going
+
+205
+00:12:15.000 --> 00:12:16.950
+over the last 30 years
+across the city, and then
+
+206
+00:12:16.950 --> 00:12:20.160
+the computer figures out where
+the bad guy is. Absolutely.
+
+207
+00:12:20.160 --> 00:12:22.860
+And you see lots of
+green text and flashing patterns
+
+208
+00:12:22.890 --> 00:12:26.430
+like flushing association. I'm sure
+that's exactly what it's like
+
+209
+00:12:26.430 --> 00:12:29.700
+in your mind. Yeah. Yeah.
+It is that entertaining and
+
+210
+00:12:29.700 --> 00:12:34.440
+it takes that little guy.
+So then there is a
+
+211
+00:12:34.440 --> 00:12:37.680
+supervised learning and in supervised
+learning, we know the right
+
+212
+00:12:37.680 --> 00:12:39.540
+answer, but we want to
+get it. And you might
+
+213
+00:12:39.540 --> 00:12:41.190
+say, well, if we know
+the right answer, we know
+
+214
+00:12:41.190 --> 00:12:42.990
+how to get the right
+answer. Why would we even
+
+215
+00:12:42.990 --> 00:12:45.210
+bother? Well, the answer is
+because we want to do
+
+216
+00:12:45.210 --> 00:12:48.300
+it more quickly or more
+cheaply, or because it hasn't
+
+217
+00:12:48.300 --> 00:12:51.090
+happened yet. What I mean
+by that is if we
+
+218
+00:12:51.090 --> 00:12:53.940
+want to predict what happens
+tomorrow, we can just wait
+
+219
+00:12:53.940 --> 00:12:56.490
+towards it's tomorrow and train
+an algorithm to make those
+
+220
+00:12:56.490 --> 00:13:00.240
+predictions. So in supervised learning,
+we know the right answer,
+
+221
+00:13:00.420 --> 00:13:03.420
+and we're going to show
+the computer, the input and
+
+222
+00:13:03.420 --> 00:13:07.620
+the output that we want,
+and we're gonna then train
+
+223
+00:13:07.620 --> 00:13:10.800
+it to produce those outputs,
+even for inputs. It had
+
+224
+00:13:10.800 --> 00:13:13.380
+never seen before. So to
+detect kind of what the
+
+225
+00:13:13.410 --> 00:13:19.770
+relationship between the input and
+the output is. So Why
+
+226
+00:13:19.770 --> 00:13:21.660
+isn't, this is a little
+bit of a tangent, but
+
+227
+00:13:21.660 --> 00:13:23.700
+it's making me realize that
+there's so many problems that
+
+228
+00:13:23.700 --> 00:13:26.610
+we could be solving with
+this. There are probably people
+
+229
+00:13:26.610 --> 00:13:30.690
+listening right now who are
+solving problems at their work
+
+230
+00:13:30.930 --> 00:13:34.680
+in a moderately inaccurate way,
+with simple foreloops and hash
+
+231
+00:13:34.680 --> 00:13:38.370
+tables and machine learning would
+revolutionize their business if only
+
+232
+00:13:38.370 --> 00:13:41.670
+they do about it. I
+think that's absolutely true. So
+
+233
+00:13:41.670 --> 00:13:47.520
+I think that there's a,
+sometimes I feel like machine
+
+234
+00:13:47.520 --> 00:13:50.490
+learning has the chance to
+become very soon a new
+
+235
+00:13:50.490 --> 00:13:53.790
+paradigm of programming. So people
+will talk about object oriented,
+
+236
+00:13:53.790 --> 00:13:58.080
+programming, functional programming, and then
+machine learning, because it will
+
+237
+00:13:58.080 --> 00:14:02.640
+be such an indispensable part
+of solving problems. I think
+
+238
+00:14:02.640 --> 00:14:05.280
+that now we expect so
+much of our products. We
+
+239
+00:14:05.280 --> 00:14:09.330
+expect them to learn our
+habits, to make great recommendations,
+
+240
+00:14:09.570 --> 00:14:13.410
+to gently notify us, but
+not in on datas and
+
+241
+00:14:13.410 --> 00:14:16.200
+all those situations where you
+want to interact, say with
+
+242
+00:14:16.200 --> 00:14:20.160
+a customer or a client,
+but provide them experience, which
+
+243
+00:14:20.160 --> 00:14:24.840
+is customized, which is relevant.
+You're going to need to
+
+244
+00:14:24.840 --> 00:14:28.560
+use machine learning. Interesting. So
+you feel that we're at
+
+245
+00:14:28.560 --> 00:14:32.220
+the beginning of the, the,
+the hockey stick. This is
+
+246
+00:14:32.220 --> 00:14:37.350
+going to be huge. I
+definitely think that it will
+
+247
+00:14:37.350 --> 00:14:44.970
+become very, very, very broadly
+applied. Just like computers became,
+
+248
+00:14:45.000 --> 00:14:47.730
+went from a niche thing,
+which a few businesses might
+
+249
+00:14:47.730 --> 00:14:50.820
+have to every single part
+of commerce now involves a,
+
+250
+00:14:51.230 --> 00:14:53.660
+in some way, I see
+that when we hit that
+
+251
+00:14:53.660 --> 00:15:00.200
+hockey stick, simply every single
+product application that people interact
+
+252
+00:15:00.200 --> 00:15:04.550
+with will include machine learning
+in some way. And if
+
+253
+00:15:04.550 --> 00:15:07.460
+you will think about the
+amount of machine learning that
+
+254
+00:15:07.460 --> 00:15:12.770
+goes on, when you use
+to provide the newsfeed in
+
+255
+00:15:12.770 --> 00:15:17.690
+Facebook, to provide your Google
+search, to provide your response
+
+256
+00:15:17.840 --> 00:15:20.570
+suggestions in Gmail, you realize
+that there are very few
+
+257
+00:15:20.570 --> 00:15:22.940
+products that you interact with
+today, which don't have a
+
+258
+00:15:22.940 --> 00:15:28.930
+machine learning component. So, so
+why, Why is it suddenly
+
+259
+00:15:28.930 --> 00:15:32.020
+this, if it's got to
+be popular, why is it
+
+260
+00:15:32.020 --> 00:15:35.590
+also now becoming accessible? And
+was it not accessible before
+
+261
+00:15:35.740 --> 00:15:37.960
+some of these more recent
+tools have come out? I
+
+262
+00:15:37.960 --> 00:15:41.560
+know that like Microsoft Azure
+has machine learning stuff. Google
+
+263
+00:15:41.560 --> 00:15:44.740
+has machine learning libraries. We're
+going to talk about TensorFlow,
+
+264
+00:15:44.740 --> 00:15:48.160
+which is an open source
+library for machine learning. Is
+
+265
+00:15:48.160 --> 00:15:51.940
+it these open libraries that
+are now allowing the beginning
+
+266
+00:15:51.940 --> 00:15:56.560
+of that, that up until
+the right graph? I absolutely
+
+267
+00:15:56.560 --> 00:16:03.160
+think that like with all
+huge economic changes, that sort
+
+268
+00:16:03.160 --> 00:16:06.220
+of broad based economic changes,
+it's coming from a number
+
+269
+00:16:06.220 --> 00:16:10.270
+of different sources. So I
+would say that the content,
+
+270
+00:16:10.900 --> 00:16:16.300
+the, the educational material is
+free online over an extremely
+
+271
+00:16:16.300 --> 00:16:22.420
+high quality, the tools, as
+you just mentioned, TensorFlow being
+
+272
+00:16:22.420 --> 00:16:26.410
+the one we'll talk about
+and also offerings from Microsoft
+
+273
+00:16:26.410 --> 00:16:31.750
+and Amazon, just to name
+a few, these tools are
+
+274
+00:16:31.780 --> 00:16:35.980
+really, really good, and that
+they simply didn't exist sort
+
+275
+00:16:35.980 --> 00:16:40.960
+of 10 years ago. So
+the educational material, the tools,
+
+276
+00:16:40.960 --> 00:16:44.830
+and then the incentives. So
+there were points where a
+
+277
+00:16:44.830 --> 00:16:47.950
+company is just wouldn't have
+even collected the data to
+
+278
+00:16:48.040 --> 00:16:52.870
+enable machine learning. But now
+all companies are amassing huge
+
+279
+00:16:52.870 --> 00:16:55.600
+amounts of data because they
+record every interaction they have
+
+280
+00:16:55.600 --> 00:16:59.710
+with their customer. And they're
+looking at ways to improve
+
+281
+00:16:59.710 --> 00:17:03.820
+their business, using that data
+to bring value. And there's
+
+282
+00:17:03.820 --> 00:17:07.420
+only so much manual analysis
+that can happen. And the
+
+283
+00:17:07.420 --> 00:17:10.510
+other part of the, the,
+the only alternative then is
+
+284
+00:17:10.510 --> 00:17:13.120
+to get computers, to do
+it for you. Would they
+
+285
+00:17:13.120 --> 00:17:15.280
+give it away if it's,
+if it's such magic, if
+
+286
+00:17:15.280 --> 00:17:17.650
+it's like the, if this
+is the greatest thing since
+
+287
+00:17:17.650 --> 00:17:21.550
+sliced bread, why would they
+open source it? I think
+
+288
+00:17:21.550 --> 00:17:24.430
+that there's a number of
+reasons for it. I would
+
+289
+00:17:24.430 --> 00:17:31.360
+say obviously with Google, there's
+always one part of it
+
+290
+00:17:31.360 --> 00:17:34.630
+is self-interest. And other part
+of it is their general
+
+291
+00:17:35.380 --> 00:17:37.030
+trying to make the world
+a better place. So the
+
+292
+00:17:37.030 --> 00:17:43.600
+self-interested part is simply that
+machine learning right now doesn't
+
+293
+00:17:43.600 --> 00:17:46.720
+run itself. You still need
+smart people to think about
+
+294
+00:17:46.720 --> 00:17:49.830
+the problem to apply the
+tools. So in a way,
+
+295
+00:17:50.010 --> 00:17:52.740
+TensorFlow is a, is a
+raw material. So the more
+
+296
+00:17:52.740 --> 00:17:55.980
+people out there in the
+world who are great at
+
+297
+00:17:55.980 --> 00:18:01.800
+TensorFlow who improve TensorFlow, that
+is great for Google in
+
+298
+00:18:01.800 --> 00:18:04.350
+terms of, in terms of
+recruitment, in terms of Mindshare,
+
+299
+00:18:05.280 --> 00:18:07.050
+in terms of making the
+world a better place. I
+
+300
+00:18:07.050 --> 00:18:10.230
+think that we're seeing now
+with the open AI project,
+
+301
+00:18:10.560 --> 00:18:13.620
+a lot of money going
+into trying to make sure
+
+302
+00:18:13.620 --> 00:18:18.360
+that the raw material of
+artificial intelligence, the source code,
+
+303
+00:18:18.360 --> 00:18:21.420
+the knowhow is open source
+and freely available. So it
+
+304
+00:18:21.420 --> 00:18:25.590
+can't be controlled by sort
+of a select few or
+
+305
+00:18:25.590 --> 00:18:28.860
+nefarious for nefarious means. So
+I think there is a
+
+306
+00:18:28.860 --> 00:18:31.590
+part where Google sees this
+as a contribution to making
+
+307
+00:18:31.590 --> 00:18:36.590
+the world a better. Okay.
+So let's talk about TensorFlow
+
+308
+00:18:36.620 --> 00:18:38.780
+it's open source and you
+can get it at tensor,
+
+309
+00:18:38.810 --> 00:18:42.980
+T E N S O
+R flow.org. And it's pretty
+
+310
+00:18:42.980 --> 00:18:46.310
+portable. It runs on GPS
+at Raven runs using graphics
+
+311
+00:18:46.310 --> 00:18:53.180
+cards. It runs everywhere. That's
+absolutely right. So TensorFlow is
+
+312
+00:18:53.690 --> 00:18:57.680
+a very, very well polished
+product that came out of
+
+313
+00:18:58.490 --> 00:19:02.000
+Google research and the Google
+brain team. And in fact,
+
+314
+00:19:02.890 --> 00:19:06.530
+the Google really put their
+big guns on it. Jeff
+
+315
+00:19:06.530 --> 00:19:08.960
+Dean's was working on it
+for a long time. So
+
+316
+00:19:08.960 --> 00:19:13.070
+it really shows it's really
+well thought through. It's very
+
+317
+00:19:13.070 --> 00:19:17.540
+easy to install if you
+on Linux or on a
+
+318
+00:19:17.540 --> 00:19:21.500
+Mac, and if you on
+windows, then you can install
+
+319
+00:19:21.500 --> 00:19:26.810
+it using instructions from Scott's
+blog, in fact, and I'm
+
+320
+00:19:26.810 --> 00:19:30.140
+funny. So Yeah, there isn't
+a, there isn't a way
+
+321
+00:19:30.140 --> 00:19:31.580
+to put it on windows,
+but it turns out if
+
+322
+00:19:31.580 --> 00:19:33.920
+you have a bash on
+windows, you can, you can
+
+323
+00:19:33.920 --> 00:19:39.380
+use it As well. And
+so being well-packaged easy to
+
+324
+00:19:39.380 --> 00:19:43.250
+install good API APIs with
+good documentation. The fact was
+
+325
+00:19:43.250 --> 00:19:48.410
+that there were tools before
+TensorFlow, and there was a
+
+326
+00:19:48.410 --> 00:19:51.260
+great effort on the part
+of many, many, many dedicated
+
+327
+00:19:51.260 --> 00:19:58.910
+individuals, PhD students, enthusiasts to
+make them good, but they,
+
+328
+00:19:59.480 --> 00:20:02.090
+they never really reached that
+same level of Polish. So
+
+329
+00:20:02.090 --> 00:20:04.130
+I think the one thing
+I think about TensorFlow is
+
+330
+00:20:04.130 --> 00:20:06.770
+a machine learning tool. It's
+very polished and it's very
+
+331
+00:20:06.770 --> 00:20:10.700
+easy to get started with
+because the documentation and tutorials
+
+332
+00:20:10.700 --> 00:20:14.000
+are of a very high
+quality. Yeah. There's a bunch
+
+333
+00:20:14.000 --> 00:20:20.450
+of tutorials. I know that
+there's one@learningtensorflow.com. That'll walk you
+
+334
+00:20:20.450 --> 00:20:23.390
+through how to set this
+up. It took me 15,
+
+335
+00:20:23.390 --> 00:20:26.690
+20 minutes to get started.
+It was not, you know,
+
+336
+00:20:26.720 --> 00:20:28.220
+of course, it's one of
+those things. It's like the
+
+337
+00:20:28.220 --> 00:20:30.110
+game of go, right? It's
+a minute to learn a
+
+338
+00:20:30.110 --> 00:20:33.890
+lifetime to master as far
+as setup. It's certainly not.
+
+339
+00:20:34.130 --> 00:20:36.380
+It's, it's certainly easier than
+SharePoint. I'll tell you that.
+
+340
+00:20:36.710 --> 00:20:39.350
+Absolutely. So who is TensorFlow
+for? And I think it's
+
+341
+00:20:39.350 --> 00:20:43.190
+for everyone. I think everyone
+can get started. Clearly. Some
+
+342
+00:20:43.190 --> 00:20:45.920
+of the smartest people in
+the world, the great thing
+
+343
+00:20:45.920 --> 00:20:48.550
+is that some of the
+smartest people, the world at
+
+344
+00:20:48.550 --> 00:20:51.790
+Google at deep mine are
+using TensorFlow to do their
+
+345
+00:20:51.790 --> 00:20:55.330
+research and you can use
+the same thing, but when
+
+346
+00:20:55.870 --> 00:20:59.140
+you use it, you'll be
+able to get started using
+
+347
+00:20:59.140 --> 00:21:02.890
+tutorials, then go and try
+and solve harder problems yourself.
+
+348
+00:21:03.100 --> 00:21:06.850
+Find out the limitations of
+the information, the tutorials learn
+
+349
+00:21:06.850 --> 00:21:10.150
+more. But I really do
+feel like there's a gradient
+
+350
+00:21:10.240 --> 00:21:13.150
+that I'm right now, if
+you want to train a
+
+351
+00:21:13.150 --> 00:21:19.480
+simple machine learning model to,
+for example, look at images,
+
+352
+00:21:19.480 --> 00:21:22.210
+for example, tell the difference
+between cats and dogs. That
+
+353
+00:21:22.210 --> 00:21:25.840
+is really something that is
+a weekend project, which before
+
+354
+00:21:26.380 --> 00:21:29.590
+literally 10 years ago would
+have been a massive university
+
+355
+00:21:29.590 --> 00:21:32.440
+research project is now something
+you can do in your
+
+356
+00:21:32.440 --> 00:21:36.660
+home, on your laptop in
+a weekend. Wow. Yeah, there's
+
+357
+00:21:36.660 --> 00:21:40.200
+a, an, a great example
+by a guy named Elliot
+
+358
+00:21:40.230 --> 00:21:43.920
+Polak. Sukin who's got a
+whole section on TensorFlow tutorials
+
+359
+00:21:44.190 --> 00:21:47.010
+where he changed my perspective
+on it because I assume
+
+360
+00:21:47.020 --> 00:21:51.090
+that machine learning and learning
+TensorFlow meant huge datasets. And
+
+361
+00:21:51.090 --> 00:21:52.680
+if I didn't have a
+huge data set, then what
+
+362
+00:21:52.680 --> 00:21:55.350
+was the point? And in
+his example, he just goes
+
+363
+00:21:55.350 --> 00:21:57.870
+through about a thousand people
+who were on the Titanic,
+
+364
+00:21:58.110 --> 00:22:01.140
+just a CSV file and
+does all sorts of analysis
+
+365
+00:22:01.140 --> 00:22:03.480
+on it. And that made
+me realize that, you know,
+
+366
+00:22:03.480 --> 00:22:05.730
+I could have a small
+Excel sheet that had a
+
+367
+00:22:05.730 --> 00:22:07.830
+couple of hundred or a
+couple of thousand records, and
+
+368
+00:22:07.830 --> 00:22:11.490
+I may have insight into
+that or the, or machine
+
+369
+00:22:11.490 --> 00:22:13.590
+learning and algorithms may have
+insight into that, that I
+
+370
+00:22:13.590 --> 00:22:15.810
+would never have known if
+I had assumed that it
+
+371
+00:22:15.810 --> 00:22:18.120
+was only a big Data
+thing. I think that's really
+
+372
+00:22:18.120 --> 00:22:20.910
+exciting. And I think that
+a great way, if you
+
+373
+00:22:20.910 --> 00:22:22.860
+go in and get started
+with TensorFlow, a great thing
+
+374
+00:22:22.860 --> 00:22:25.200
+to do is as soon
+as you finished your tutorial,
+
+375
+00:22:25.200 --> 00:22:30.210
+try and apply those same
+ideas to an interesting problem
+
+376
+00:22:30.210 --> 00:22:32.490
+or data set that you
+have. And I think that
+
+377
+00:22:32.490 --> 00:22:38.160
+that'll give you a really
+funny, interesting experience. The, one
+
+378
+00:22:38.160 --> 00:22:40.110
+of the great things that
+is making a lot of
+
+379
+00:22:40.110 --> 00:22:43.860
+this do, making this very
+quick and easy to do
+
+380
+00:22:44.160 --> 00:22:47.910
+is this thing called transfer
+learning. And this is really
+
+381
+00:22:48.270 --> 00:22:51.570
+was it's. It's so amazing
+how fast things are moving
+
+382
+00:22:51.570 --> 00:22:54.570
+in machine learning. So transfer
+learning was state of the
+
+383
+00:22:54.570 --> 00:23:00.870
+art literally three years ago,
+and now you can download
+
+384
+00:23:00.870 --> 00:23:03.930
+TensorFlow, clone it from GitHub,
+and there is code for
+
+385
+00:23:03.930 --> 00:23:07.950
+doing transfer learning there. But
+what is it? Google has
+
+386
+00:23:07.980 --> 00:23:13.140
+created really, really large neural
+networks. So their brain simulations
+
+387
+00:23:13.380 --> 00:23:17.820
+and trained it on many,
+many gigabytes, many, many millions
+
+388
+00:23:18.030 --> 00:23:22.350
+of images, and then condensed
+all that experience into something
+
+389
+00:23:22.350 --> 00:23:25.800
+you can download. So when
+you train that, for example,
+
+390
+00:23:25.800 --> 00:23:28.170
+that tell the difference between
+cats and dogs. It doesn't
+
+391
+00:23:28.170 --> 00:23:31.950
+need to relearn everything. It
+can just learn the little
+
+392
+00:23:31.950 --> 00:23:34.080
+bit that specific to your
+problem. It doesn't have to
+
+393
+00:23:34.080 --> 00:23:36.840
+learn what is a picture,
+what is a foreground? What
+
+394
+00:23:36.840 --> 00:23:39.240
+is a background it's kind
+of being already taught that
+
+395
+00:23:39.240 --> 00:23:41.700
+by Google. So now it
+can just learn a bit
+
+396
+00:23:41.700 --> 00:23:44.460
+specific to your problem. That's
+called transfer learning. Cause it's
+
+397
+00:23:44.460 --> 00:23:48.020
+transferred experience that Google has
+given it into your problem
+
+398
+00:23:48.670 --> 00:23:52.450
+And drawing parallels between things.
+I know that there's a
+
+399
+00:23:52.450 --> 00:23:57.070
+website, that's image, hyphen net.org,
+and they'll put up a
+
+400
+00:23:57.070 --> 00:23:59.140
+bunch of random pictures and
+they'll say, what are these
+
+401
+00:23:59.140 --> 00:24:01.900
+images find, you know, have
+in common. And it's not
+
+402
+00:24:01.900 --> 00:24:04.600
+something obvious that you can
+look at as a, as
+
+403
+00:24:04.600 --> 00:24:05.950
+a human and you might
+say, Oh, well they're all
+
+404
+00:24:05.950 --> 00:24:08.560
+fish or whatever. And then
+you click on it and
+
+405
+00:24:08.560 --> 00:24:12.250
+it'll give you like 14
+or 15 things about exactly
+
+406
+00:24:12.250 --> 00:24:15.160
+what these images have in
+common from they're all in
+
+407
+00:24:15.190 --> 00:24:19.180
+vertebrates or they're all mutants
+or they're all zooplankton or
+
+408
+00:24:19.270 --> 00:24:22.180
+whatever. And it's just like,
+Oh my goodness, you realize
+
+409
+00:24:22.180 --> 00:24:25.300
+how we may be good
+at pattern matching. But the
+
+410
+00:24:25.300 --> 00:24:29.200
+idea of drawing parallels and
+coming up with, you know,
+
+411
+00:24:29.200 --> 00:24:31.990
+what's similar between large datasets
+is something where a computer
+
+412
+00:24:31.990 --> 00:24:36.430
+Excel. Absolutely. And I think
+that some of the really
+
+413
+00:24:36.430 --> 00:24:39.520
+exciting work that Geoffrey Hinton
+who's now working at Google
+
+414
+00:24:39.520 --> 00:24:44.410
+was doing was trying to
+train these models, not on
+
+415
+00:24:44.410 --> 00:24:50.710
+very fine, very coarse grain
+things like restaurant, dog, cat
+
+416
+00:24:50.830 --> 00:24:54.880
+bond, but very, very fine
+grain things. So for example,
+
+417
+00:24:54.880 --> 00:25:00.280
+very specific kinds of plants,
+very specific breeds of dogs,
+
+418
+00:25:00.280 --> 00:25:03.280
+very specific kinds of mushrooms.
+And I think that's where
+
+419
+00:25:03.280 --> 00:25:05.800
+it gets really exciting. And
+back to medical care is
+
+420
+00:25:05.800 --> 00:25:09.550
+another example where we can
+condense the knowledge of experts.
+
+421
+00:25:09.610 --> 00:25:11.950
+There might be only a
+few people in the world
+
+422
+00:25:11.950 --> 00:25:17.350
+who can reliably identify the
+10,000 different common mushrooms you
+
+423
+00:25:17.350 --> 00:25:19.630
+would see around your house
+and saying which one of
+
+424
+00:25:19.630 --> 00:25:23.080
+them is edible or not,
+but you could condense all
+
+425
+00:25:23.080 --> 00:25:25.810
+that expertise into an algorithm
+and then make it available
+
+426
+00:25:25.810 --> 00:25:29.550
+to everyone in the world
+on their smartphone immediately. And
+
+427
+00:25:29.550 --> 00:25:32.710
+I think that's really exciting,
+the condensing of expert knowledge.
+
+428
+00:25:34.000 --> 00:25:36.340
+Yeah. That's really interesting. It
+makes you realize that there's
+
+429
+00:25:36.340 --> 00:25:40.420
+a class of question that
+we ask our computer now,
+
+430
+00:25:40.540 --> 00:25:43.390
+like, you know, taking to
+the nearest Starbucks or is
+
+431
+00:25:43.390 --> 00:25:46.690
+the library closed, but there's
+a class of questions that
+
+432
+00:25:46.960 --> 00:25:50.080
+we can't really ask that
+we, we could, if what
+
+433
+00:25:50.080 --> 00:25:53.140
+you're describing as possible, we
+could say, you know, there's
+
+434
+00:25:53.180 --> 00:25:55.870
+a special kind of mushroom
+that we think might be
+
+435
+00:25:55.870 --> 00:25:59.920
+extinct. Can you scan every
+publicly available photograph in the
+
+436
+00:25:59.920 --> 00:26:03.310
+world that is geotagged and
+find anyone who may have
+
+437
+00:26:03.310 --> 00:26:05.980
+accidentally taken a picture of
+this mushroom and tell us
+
+438
+00:26:05.980 --> 00:26:09.340
+where it's located. That's absolutely
+right. And that idea is
+
+439
+00:26:09.340 --> 00:26:12.790
+incredibly exciting that we could
+take expert knowledge and then
+
+440
+00:26:12.790 --> 00:26:17.200
+stamp it out kind of
+a replicated thousands and thousands
+
+441
+00:26:17.200 --> 00:26:20.380
+of times, I'm kind of,
+you know, into every smart
+
+442
+00:26:20.380 --> 00:26:24.580
+phone or into huge banks
+of servers at Google. And
+
+443
+00:26:24.580 --> 00:26:28.060
+I think that the exciting
+thing now is, as we
+
+444
+00:26:28.060 --> 00:26:32.230
+are talking about is these
+reasonably and what I call
+
+445
+00:26:33.700 --> 00:26:38.410
+non experiential problems. So in
+that sense, you look at
+
+446
+00:26:38.440 --> 00:26:44.250
+a, a medical scan and
+you give a, a diagnosis
+
+447
+00:26:44.310 --> 00:26:46.440
+and then you look at
+the next scan and you
+
+448
+00:26:46.440 --> 00:26:49.410
+don't really have a, there's
+no dynamic environment, things aren't
+
+449
+00:26:49.410 --> 00:26:51.780
+moving or changing. You're just
+looking at one scan after
+
+450
+00:26:51.780 --> 00:26:56.070
+the other. Well, the algorithm
+is what DeepMind is working
+
+451
+00:26:56.070 --> 00:26:58.980
+on right now, which is
+now a Google owned company.
+
+452
+00:26:59.340 --> 00:27:03.030
+And a lot of other
+very intelligent researchers is this
+
+453
+00:27:03.300 --> 00:27:08.280
+reinforcement learning problem. And the
+concept of that is there
+
+454
+00:27:08.280 --> 00:27:12.510
+is a dynamic environment. The
+agent we call it, which
+
+455
+00:27:12.510 --> 00:27:16.470
+is the computer can act
+and sense. So each time
+
+456
+00:27:16.470 --> 00:27:19.020
+they act, the world will
+change and they'll send something
+
+457
+00:27:19.020 --> 00:27:21.300
+you just like a person
+does when they open a
+
+458
+00:27:21.300 --> 00:27:23.100
+door, they will then see
+what's on the other side
+
+459
+00:27:23.100 --> 00:27:27.510
+of that door and there's
+a reward. So for example,
+
+460
+00:27:27.750 --> 00:27:31.860
+I might get a reward
+when I go for a
+
+461
+00:27:31.860 --> 00:27:35.700
+run and I feel fit
+and healthy, or I might
+
+462
+00:27:35.700 --> 00:27:37.500
+get a reward when I
+write a piece of code
+
+463
+00:27:37.500 --> 00:27:40.800
+that I'm really proud of.
+So what we want to
+
+464
+00:27:40.800 --> 00:27:44.220
+do is give the computer
+rewards when it does something
+
+465
+00:27:44.220 --> 00:27:46.980
+good. For example, getting me
+to where I needed to
+
+466
+00:27:46.980 --> 00:27:49.620
+go on time or making
+the recommendation, which I liked.
+
+467
+00:27:50.220 --> 00:27:53.460
+And we want to train
+it in this way to
+
+468
+00:27:53.460 --> 00:27:57.240
+act and sense in a
+way that will maximize it's
+
+469
+00:27:57.240 --> 00:28:00.480
+reward. And if that reward
+is ultimately good for people
+
+470
+00:28:00.480 --> 00:28:02.820
+like making them happy or
+taking care of them, then
+
+471
+00:28:03.210 --> 00:28:06.750
+in a wide sense, if
+these machines are sophisticated enough,
+
+472
+00:28:06.780 --> 00:28:10.140
+they will learn to help
+us. I think that's a
+
+473
+00:28:10.140 --> 00:28:14.390
+really exciting idea. There is
+some talk about the idea
+
+474
+00:28:14.450 --> 00:28:18.170
+of there's some ethics concerns
+around when we teach these
+
+475
+00:28:18.170 --> 00:28:23.360
+things, how, how the world
+works, that sometimes the ugly
+
+476
+00:28:23.360 --> 00:28:26.030
+parts of the world can,
+can come out. Have you
+
+477
+00:28:26.030 --> 00:28:29.150
+heard about these issues? Absolutely.
+And, and I think that
+
+478
+00:28:30.560 --> 00:28:34.610
+we, there, there is an
+obvious possibility to use these
+
+479
+00:28:34.610 --> 00:28:41.900
+systems in military applications in
+very, I would say unscrupulous
+
+480
+00:28:42.560 --> 00:28:49.220
+profiteering applications. And ultimately I
+think that there are many,
+
+481
+00:28:49.220 --> 00:28:51.920
+many people who have talked
+about it in more detail
+
+482
+00:28:51.920 --> 00:28:55.640
+and said it better. But
+ultimately I think that we,
+
+483
+00:28:55.700 --> 00:29:01.370
+as a society, have to
+decide how to use these
+
+484
+00:29:01.370 --> 00:29:04.010
+things. And I think that's
+why it's very important that
+
+485
+00:29:04.280 --> 00:29:07.340
+the power to use technology
+like this doesn't end up
+
+486
+00:29:07.340 --> 00:29:10.040
+in the hands of the
+very few, the very greedy
+
+487
+00:29:10.070 --> 00:29:12.530
+or the very belligerent. It
+should end up in the
+
+488
+00:29:12.530 --> 00:29:16.610
+hands of, in some sense,
+the average citizen, the average
+
+489
+00:29:16.640 --> 00:29:22.490
+programmer, the average, even a
+high school student, so that
+
+490
+00:29:22.880 --> 00:29:26.420
+they can make sure that
+we're accountable, that they understand
+
+491
+00:29:26.420 --> 00:29:28.610
+these things and that they
+continue to question how they're
+
+492
+00:29:28.610 --> 00:29:30.860
+being used. And I think
+that's how we prevent them
+
+493
+00:29:30.860 --> 00:29:34.190
+from being used in negative
+ways in society. Yeah. There
+
+494
+00:29:34.190 --> 00:29:38.300
+was a really interesting Google
+image search recently when people
+
+495
+00:29:38.300 --> 00:29:43.060
+searched for three black teenagers
+on under images and what
+
+496
+00:29:43.060 --> 00:29:46.870
+they ended up getting was
+mugshots mostly of young black
+
+497
+00:29:47.320 --> 00:29:49.900
+men. But if you searched
+for three white teenagers, you
+
+498
+00:29:49.900 --> 00:29:54.220
+would get happy clip art
+people. And the question then
+
+499
+00:29:54.220 --> 00:29:59.020
+is, is, is Google racist?
+Is society racist? Is this
+
+500
+00:29:59.020 --> 00:30:04.060
+representative of factual issues or
+is this representative of, you
+
+501
+00:30:04.060 --> 00:30:07.600
+know, institutional racism that has
+been identified by the machine
+
+502
+00:30:07.600 --> 00:30:11.140
+learning system? And it's been
+discovered through looking at, you
+
+503
+00:30:11.140 --> 00:30:15.280
+know, news articles and how
+do we create a reflect
+
+504
+00:30:15.280 --> 00:30:19.670
+reality without reflecting the nasty
+parts of reality? It's, it's
+
+505
+00:30:19.870 --> 00:30:22.500
+funny, you had mentioned that.
+And I think that when
+
+506
+00:30:22.500 --> 00:30:26.010
+you were explaining that situation
+to me, which is just
+
+507
+00:30:26.010 --> 00:30:29.220
+awful, I something that popped
+into my head and I
+
+508
+00:30:29.230 --> 00:30:32.100
+I'm a technologist. And so
+I obviously think all the
+
+509
+00:30:32.100 --> 00:30:36.030
+solutions in the world through
+technology, but ultimately I think
+
+510
+00:30:36.030 --> 00:30:38.640
+this is an example of
+not enough machine learning. Google
+
+511
+00:30:38.640 --> 00:30:42.060
+does use machine learning to
+decide what search results should
+
+512
+00:30:42.060 --> 00:30:45.360
+show you. And clearly based
+on the statistical patterns and
+
+513
+00:30:45.360 --> 00:30:48.210
+the limited amount of daughter,
+it has, that's the response
+
+514
+00:30:48.210 --> 00:30:52.530
+it's returned, but ultimately you
+could imagine every time, or
+
+515
+00:30:52.530 --> 00:30:54.420
+if you did see that
+in the Google web page,
+
+516
+00:30:54.630 --> 00:30:57.420
+you could then open up
+a text box and chat
+
+517
+00:30:57.420 --> 00:30:59.730
+to Google, just like you
+would chat to Siri or
+
+518
+00:30:59.730 --> 00:31:03.840
+Cortana or Google now and
+say, Hey, you know, I
+
+519
+00:31:03.840 --> 00:31:07.050
+really don't think that these
+research results are appropriate. And
+
+520
+00:31:07.050 --> 00:31:10.920
+here's why, because you know,
+it is a prejudiced and
+
+521
+00:31:11.160 --> 00:31:13.320
+that would then feed back
+into the system and it
+
+522
+00:31:13.320 --> 00:31:16.680
+could learn from that as
+well. So ultimately I think
+
+523
+00:31:16.680 --> 00:31:19.590
+that I see a lot
+of exciting avenues to try
+
+524
+00:31:19.590 --> 00:31:24.210
+and control the negative impacts
+of technology by making it
+
+525
+00:31:24.780 --> 00:31:29.550
+more empathetic, more sophisticated, more
+able to understand and learn
+
+526
+00:31:29.550 --> 00:31:32.820
+from our intentions and our
+needs. And it's very interesting
+
+527
+00:31:32.820 --> 00:31:37.050
+also that the search results
+have changed since the reporting
+
+528
+00:31:37.050 --> 00:31:40.770
+of this story and have
+actually reported kind of changed
+
+529
+00:31:41.100 --> 00:31:44.670
+for the worse, because there
+are so many news reports
+
+530
+00:31:44.670 --> 00:31:47.130
+about this, which now has
+increased the number of pictures
+
+531
+00:31:47.130 --> 00:31:49.950
+and screenshots. So we find
+that the kind of the
+
+532
+00:31:49.950 --> 00:31:53.850
+zeitgeists changes from month to
+month, you know, just as
+
+533
+00:31:53.850 --> 00:31:57.690
+you've been able to fool
+Google into returning search results,
+
+534
+00:31:57.690 --> 00:32:00.750
+by having people link to
+it, machine learning algorithms can
+
+535
+00:32:00.750 --> 00:32:05.400
+be prejudiced in multiple ways,
+depending on the, for lack
+
+536
+00:32:05.400 --> 00:32:07.770
+of a better word, the
+ambient prejudice of the society
+
+537
+00:32:07.770 --> 00:32:12.150
+around it. Hmm. So I
+would say that to try
+
+538
+00:32:12.150 --> 00:32:17.760
+and tie these threads together.
+I think that I see
+
+539
+00:32:17.760 --> 00:32:23.040
+huge potential in machine learning
+in medical care because computers
+
+540
+00:32:23.040 --> 00:32:25.770
+can learn how to provide
+us with more accurate diagnosis
+
+541
+00:32:26.160 --> 00:32:30.870
+or diagnoses, I should say,
+in education because we can
+
+542
+00:32:30.870 --> 00:32:35.010
+use algorithms to choose the
+questions that we ask to
+
+543
+00:32:35.010 --> 00:32:39.060
+optimize the level of learning
+to, to optimize for engagement.
+
+544
+00:32:39.380 --> 00:32:42.320
+We can provide better services
+by making them more personalized,
+
+545
+00:32:42.320 --> 00:32:46.480
+more accurate. And ultimately I
+would say the interface and
+
+546
+00:32:46.480 --> 00:32:50.810
+the user interface fundamentally changing
+into the future as the
+
+547
+00:32:50.840 --> 00:32:53.960
+Cortana and Siri and Google
+now become really the main
+
+548
+00:32:53.960 --> 00:32:59.030
+way we interact with our
+computer. So I would say
+
+549
+00:32:59.030 --> 00:33:01.880
+that it's a really a
+really, a great time to
+
+550
+00:33:01.880 --> 00:33:04.790
+get started. It feels like
+we're on the ground floor
+
+551
+00:33:04.790 --> 00:33:08.090
+of something and there was
+a real energy to make
+
+552
+00:33:08.090 --> 00:33:10.940
+it open and to make
+it accessible. So I think
+
+553
+00:33:10.940 --> 00:33:14.420
+that we're in a surprising
+situation where something has gone
+
+554
+00:33:15.590 --> 00:33:21.260
+sort of fast tracked from
+being totally academic, totally esoteric
+
+555
+00:33:21.560 --> 00:33:26.060
+to download it and play
+with it in an afternoon.
+
+556
+00:33:26.060 --> 00:33:28.520
+And that I think is
+incredibly exciting. And that's been
+
+557
+00:33:28.520 --> 00:33:33.920
+enabled by TensorFlow. It's been
+enabled by Theano. It's been
+
+558
+00:33:33.920 --> 00:33:37.910
+able to buy these amazing
+free books and tutorials out
+
+559
+00:33:37.910 --> 00:33:41.150
+there. And that makes me
+incredibly excited. And I want
+
+560
+00:33:41.150 --> 00:33:43.900
+you to go out and
+do some machine learning. That's
+
+561
+00:33:43.900 --> 00:33:45.940
+really, that's really important to
+remember the idea that we
+
+562
+00:33:45.940 --> 00:33:48.100
+can do this, as you
+said in an afternoon or
+
+563
+00:33:48.100 --> 00:33:50.590
+on a weekend. So I
+would encourage people who are
+
+564
+00:33:50.590 --> 00:33:54.820
+listening to go and explore
+and learn about TensorFlow and
+
+565
+00:33:54.820 --> 00:33:58.330
+other machine learning offerings that
+are open and available. And
+
+566
+00:33:58.330 --> 00:34:00.520
+thanks so much, Andy kitchen
+for chatting with me today.
+
+567
+00:34:00.910 --> 00:34:04.000
+Thank you, Scott. This has
+been another episode of Hanselminutes
+
+568
+00:34:04.000 --> 00:34:05.350
+and we'll see you again
+next week.
+

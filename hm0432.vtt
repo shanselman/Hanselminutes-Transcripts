@@ -1,0 +1,2821 @@
+WEBVTT FILE
+
+1
+00:00:00.360 --> 00:00:03.450
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.450 --> 00:00:06.780
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.780 --> 00:00:11.070
+Tellerik create compelling app experiences
+across any screen with the
+
+4
+00:00:11.070 --> 00:00:15.930
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
+
+5
+00:00:15.930 --> 00:00:19.620
+leading UI tools with cloud
+services to simplify the entire
+
+6
+00:00:19.620 --> 00:00:24.090
+app development cycle Tellerik offers
+everything.net developers need to build
+
+7
+00:00:24.090 --> 00:00:33.510
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform
+
+8
+00:00:46.500 --> 00:00:52.140
+from hanselminutes.com. It's Hanselman. That's
+a weekly discussion with web
+
+9
+00:00:52.140 --> 00:00:56.130
+developer and technologist Scott Hanselman.
+This is Lawrence. Ryan are
+
+10
+00:00:56.130 --> 00:01:00.180
+announcing show number four 35.
+In this episode, Scott talks
+
+11
+00:01:00.180 --> 00:01:03.570
+with Cal Amit about his
+dog net based no SQL
+
+12
+00:01:03.570 --> 00:01:09.480
+solution called Brightstar DB. Hi,
+this is Scott Hanselman. This
+
+13
+00:01:09.480 --> 00:01:11.850
+is another episode of Hansel
+minutes, and I'm talking with
+
+14
+00:01:11.880 --> 00:01:15.480
+Cal Ahmed from the Brightstar
+DB project. Hey, how are
+
+15
+00:01:15.480 --> 00:01:18.660
+you, sir? I'm fine. How
+are you doing brilliant. Brilliant.
+
+16
+00:01:18.660 --> 00:01:24.570
+Thank you for chatting with
+me today. So Brightstar db@brightstardb.com
+
+17
+00:01:24.630 --> 00:01:28.980
+is a embeddable scalable, no
+SQL database. And it's for
+
+18
+00:01:28.980 --> 00:01:33.060
+the.net platform. No SQL has
+been a hot term for
+
+19
+00:01:33.060 --> 00:01:37.110
+a couple of years. Now.
+It's embedded in the term.
+
+20
+00:01:37.290 --> 00:01:41.700
+No SQL is, is almost
+an impugning of SQL as
+
+21
+00:01:41.700 --> 00:01:44.820
+a concept. Like what is
+this the exact opposite of
+
+22
+00:01:44.820 --> 00:01:50.750
+a SQL database? No, not
+really. Not, not, I don't
+
+23
+00:01:50.750 --> 00:01:55.550
+think the exact exact opposite.
+We still try to adhere
+
+24
+00:01:55.550 --> 00:01:59.990
+to the basic tenants of,
+of acid compliance. So we
+
+25
+00:01:59.990 --> 00:02:03.500
+still look to make sure
+that we have atomic and
+
+26
+00:02:03.770 --> 00:02:08.180
+cost systems and durable transactions.
+So we still actually have
+
+27
+00:02:08.180 --> 00:02:13.340
+the data storage guarantees of,
+of a SQL database. What
+
+28
+00:02:13.340 --> 00:02:16.010
+we've really kind of wanted
+to give away is the,
+
+29
+00:02:16.730 --> 00:02:20.930
+the necessity to define your
+schema upfront. Ah, okay. So,
+
+30
+00:02:20.930 --> 00:02:24.050
+so when someone says no
+sequel, they're really saying no
+
+31
+00:02:24.050 --> 00:02:29.120
+schema. No, I was going
+to say like that kind
+
+32
+00:02:29.120 --> 00:02:32.450
+of oppressiveness of SQL database,
+like the schema there's value
+
+33
+00:02:32.450 --> 00:02:34.820
+in that it's almost like
+strong typing versus dynamic typing
+
+34
+00:02:34.820 --> 00:02:38.030
+in languages. Isn't it For
+us? Yes. But I think
+
+35
+00:02:38.030 --> 00:02:39.890
+you'll find that as you
+look across the no SQL
+
+36
+00:02:39.890 --> 00:02:43.010
+space that no SQL means
+different things to different folk.
+
+37
+00:02:43.700 --> 00:02:46.490
+So you will find that
+there are no SQL databases
+
+38
+00:02:46.520 --> 00:02:50.810
+that do require some sort
+of a predefined schema, but
+
+39
+00:02:51.050 --> 00:02:53.570
+they may give up on
+some of the asset compliance
+
+40
+00:02:53.600 --> 00:02:56.480
+constraints in order to provide
+you with better performance or
+
+41
+00:02:56.480 --> 00:03:00.460
+better scalability. Oh, okay. So
+if no means different things
+
+42
+00:03:00.460 --> 00:03:03.580
+to different people, it isn't
+really fair for someone to
+
+43
+00:03:03.580 --> 00:03:06.310
+say I'm in the market
+for a no SQL database.
+
+44
+00:03:06.340 --> 00:03:10.080
+Cause that almost doesn't say
+enough. Exactly. Yes. I mean,
+
+45
+00:03:10.080 --> 00:03:12.480
+when you're looking around at
+the no SQL space, what
+
+46
+00:03:12.480 --> 00:03:16.590
+you really should be comparing
+the different offerings on is
+
+47
+00:03:16.800 --> 00:03:20.640
+how do they meet my
+particular applications requirements? And I
+
+48
+00:03:20.640 --> 00:03:23.220
+think this is another key
+thing is that you can't
+
+49
+00:03:23.220 --> 00:03:27.150
+really think of, I know
+sequel now I'm going to
+
+50
+00:03:27.150 --> 00:03:28.720
+go out and learn no
+SQL and I'm going to
+
+51
+00:03:28.720 --> 00:03:30.330
+be able to apply it
+to all of my projects
+
+52
+00:03:30.330 --> 00:03:34.560
+equally because the different offerings
+out there will give you
+
+53
+00:03:34.560 --> 00:03:37.950
+different benefits and different constraints
+for the different kinds of
+
+54
+00:03:37.950 --> 00:03:40.980
+projects you work on. So
+maybe you're looking for pushing
+
+55
+00:03:40.980 --> 00:03:44.640
+through high volumes of transactions
+of right transactions. You will
+
+56
+00:03:44.640 --> 00:03:48.600
+go down one choice. Maybe
+you're looking for really fast
+
+57
+00:03:48.600 --> 00:03:53.910
+query speeds and being able
+to custom define your index
+
+58
+00:03:53.910 --> 00:03:56.670
+strategies, then you're going to
+maybe go down a different
+
+59
+00:03:56.670 --> 00:03:59.460
+route. So, you know, there's
+really is a huge amount
+
+60
+00:03:59.460 --> 00:04:02.130
+of choice. And I think
+that's also one of the,
+
+61
+00:04:02.760 --> 00:04:07.350
+the things that you find
+in the no SQL community
+
+62
+00:04:07.350 --> 00:04:11.940
+is that people are building
+now data storage solutions that
+
+63
+00:04:12.240 --> 00:04:16.950
+fit a particular profile of
+application. Ah, interesting. So if
+
+64
+00:04:16.950 --> 00:04:21.150
+we think about CQL from
+the Microsoft person's perspective, there's,
+
+65
+00:04:21.150 --> 00:04:24.510
+you know, there's SQL server
+and all flavors and all
+
+66
+00:04:24.510 --> 00:04:28.470
+kinds of applications are created
+on top of that, but
+
+67
+00:04:28.470 --> 00:04:30.840
+there is still just, you
+know, SQL server. And now
+
+68
+00:04:30.840 --> 00:04:34.290
+you can certainly design a
+system that has one table
+
+69
+00:04:34.740 --> 00:04:37.650
+and does everything on one
+giant table and, or you
+
+70
+00:04:37.650 --> 00:04:40.020
+could have a big enterprise
+ones when we, I think
+
+71
+00:04:40.020 --> 00:04:45.060
+we've all been inflicted by
+SQL server databases that have
+
+72
+00:04:45.300 --> 00:04:49.320
+hundreds or thousands of tiny
+tables, but ultimately it's still
+
+73
+00:04:49.470 --> 00:04:52.170
+SQL server. It has the
+behavior characteristics of SQL server.
+
+74
+00:04:52.590 --> 00:04:54.600
+You're saying that I might
+do three or four different
+
+75
+00:04:54.600 --> 00:04:57.810
+projects and decide on a
+no SQL database, but might
+
+76
+00:04:57.810 --> 00:05:00.750
+find that one, no SQL
+database is great for the
+
+77
+00:05:00.750 --> 00:05:05.700
+profile and the, the behavior
+characteristics required of like a
+
+78
+00:05:05.700 --> 00:05:08.760
+shopping cart while another one
+might be appropriate for a
+
+79
+00:05:08.760 --> 00:05:10.710
+cache or another one might
+be appropriate for a product
+
+80
+00:05:10.710 --> 00:05:16.500
+database. Exactly. Yeah. Interesting. So
+I can, I have a
+
+81
+00:05:16.500 --> 00:05:18.840
+lot more flexibility in the
+no sequel worlds just because
+
+82
+00:05:18.840 --> 00:05:24.060
+there's so many more specialized
+databases available to me. That's
+
+83
+00:05:24.060 --> 00:05:26.160
+right. I mean, so it,
+it can be a little
+
+84
+00:05:26.160 --> 00:05:29.190
+bit of a headache because
+you really need to educate
+
+85
+00:05:29.190 --> 00:05:31.860
+yourself about all of the
+different options that are out
+
+86
+00:05:31.860 --> 00:05:35.070
+there, or you may find
+it difficult to sort of
+
+87
+00:05:35.280 --> 00:05:37.740
+zoom in on the particular
+product. That's going to meet
+
+88
+00:05:37.920 --> 00:05:42.180
+your application profile comps. You've
+got to think ahead a
+
+89
+00:05:42.180 --> 00:05:46.890
+step where, you know, perhaps
+in the more traditional approach,
+
+90
+00:05:46.890 --> 00:05:48.870
+you'll say, okay, well we've
+got sequel now what's the
+
+91
+00:05:48.870 --> 00:05:53.460
+problem. Hmm. Okay. So if
+I am, and I'm thinking
+
+92
+00:05:53.460 --> 00:05:56.040
+to myself that the solution
+to a problem that I
+
+93
+00:05:56.040 --> 00:06:00.740
+have is a no SQL
+database. Like Brightstar DB, what
+
+94
+00:06:00.800 --> 00:06:02.960
+else do I need to
+be thinking about other than
+
+95
+00:06:02.960 --> 00:06:06.590
+the term, no SQL like
+what problems space would lead
+
+96
+00:06:06.590 --> 00:06:12.700
+me to do your database?
+So I think there, again,
+
+97
+00:06:12.880 --> 00:06:17.470
+across the, across the space,
+there are probably different hotspots
+
+98
+00:06:17.470 --> 00:06:19.750
+or different problem areas that
+you're looking at in your
+
+99
+00:06:19.750 --> 00:06:23.050
+particular application that might draw
+you one way or another
+
+100
+00:06:23.050 --> 00:06:25.390
+in terms of which no
+SQL database you go for
+
+101
+00:06:26.530 --> 00:06:30.970
+our main selling point, if
+you like is, is flexibility.
+
+102
+00:06:31.720 --> 00:06:35.560
+It's the ability to essentially
+have a, a scheme of
+
+103
+00:06:35.560 --> 00:06:39.700
+free environment. One way you
+can simply add a data
+
+104
+00:06:39.700 --> 00:06:42.760
+of, of pretty much any
+shape. And I think that
+
+105
+00:06:42.760 --> 00:06:46.540
+the other key advantage key
+benefit that we have is
+
+106
+00:06:46.540 --> 00:06:49.750
+that underneath it all, we've
+actually built on top of
+
+107
+00:06:50.290 --> 00:06:55.840
+W3C RDF, beta model standard.
+So you're actually storing your
+
+108
+00:06:55.840 --> 00:06:59.830
+data as an RDF graph.
+We actually implement some of
+
+109
+00:06:59.830 --> 00:07:03.310
+the IDF interchange standards and
+the query standards. So if
+
+110
+00:07:03.310 --> 00:07:05.050
+you're kind of familiar with
+that world, or if you
+
+111
+00:07:05.050 --> 00:07:08.260
+want to learn about that
+world, and you're a.net developer,
+
+112
+00:07:08.500 --> 00:07:11.440
+I think Brightstar DB is
+a great way into the
+
+113
+00:07:11.440 --> 00:07:15.670
+whole RDF semantic web sort
+of area. Hmm. Okay. So
+
+114
+00:07:15.670 --> 00:07:20.590
+RDF is resource description framework.
+And if I remember correctly,
+
+115
+00:07:20.590 --> 00:07:23.320
+it's been around for quite
+a long, long time, but
+
+116
+00:07:23.320 --> 00:07:27.190
+it got the, the one,
+one specification was published just
+
+117
+00:07:27.190 --> 00:07:31.150
+this year. That's right. Yes.
+So it's been around since
+
+118
+00:07:31.150 --> 00:07:33.100
+right at the end of
+the nineties, I think 99
+
+119
+00:07:33.100 --> 00:07:38.050
+is when the, the one
+O spec came out and
+
+120
+00:07:38.050 --> 00:07:40.870
+it's kind of been there
+and been bubbling under and,
+
+121
+00:07:40.960 --> 00:07:44.830
+and, you know, people have
+been using it in, in
+
+122
+00:07:44.830 --> 00:07:47.080
+the search applications and so
+on for, for a while.
+
+123
+00:07:47.080 --> 00:07:51.280
+But I think over the
+past sort of maybe one
+
+124
+00:07:51.280 --> 00:07:55.210
+or two years as the
+whole move towards publishing data
+
+125
+00:07:55.210 --> 00:08:01.600
+online has really grown in
+popularity. RDF provides that, you
+
+126
+00:08:01.600 --> 00:08:07.690
+know, W3C defined a standard
+for interchange of data, of
+
+127
+00:08:07.690 --> 00:08:12.280
+all kinds of shapes. So
+it really does fulfill a
+
+128
+00:08:12.280 --> 00:08:16.420
+particular need in the, in
+the data publishing area. But
+
+129
+00:08:16.420 --> 00:08:18.340
+it does it with such
+general model that you can
+
+130
+00:08:18.340 --> 00:08:21.790
+actually apply it to much
+smaller problem spaces and get
+
+131
+00:08:21.790 --> 00:08:24.100
+some of the benefits of
+having that very flexible database.
+
+132
+00:08:24.670 --> 00:08:26.890
+Why did it see such
+a resurgence? I mean, when
+
+133
+00:08:26.890 --> 00:08:31.180
+I see examples of RDF
+descriptions of like people, it
+
+134
+00:08:31.180 --> 00:08:35.200
+reminds me of, of XML
+type thinking with like namespaces,
+
+135
+00:08:35.200 --> 00:08:38.770
+and they'll say w3c.org/ 2000,
+you know, this is a
+
+136
+00:08:39.070 --> 00:08:42.940
+15, 20 year old thing,
+but it suddenly got this
+
+137
+00:08:42.940 --> 00:08:45.940
+resurgence just in the last
+year because people are excited
+
+138
+00:08:45.940 --> 00:08:50.140
+about rest and, and the
+semantic web People are excited
+
+139
+00:08:50.140 --> 00:08:54.640
+about maybe they won't say
+semantic web semantic web is,
+
+140
+00:08:54.770 --> 00:08:56.280
+has kind of got a
+lot of baggage with it
+
+141
+00:08:57.000 --> 00:09:00.420
+from, from many years past.
+But people are excited about
+
+142
+00:09:01.140 --> 00:09:05.400
+publishing data in, in a
+way where they can interchange
+
+143
+00:09:05.400 --> 00:09:07.830
+data and where they can
+link data sets together. So
+
+144
+00:09:08.250 --> 00:09:12.060
+for example, you might be
+aware of DBP DEO, which
+
+145
+00:09:12.060 --> 00:09:16.200
+is the project that essentially
+scrapes all of the info
+
+146
+00:09:16.200 --> 00:09:20.430
+box information from, from the
+Wikipedia site and formats, it
+
+147
+00:09:20.430 --> 00:09:25.440
+uppers as huge RDF data
+set that is publicly available,
+
+148
+00:09:26.100 --> 00:09:29.670
+that you can use very
+simple restful API calls to
+
+149
+00:09:29.700 --> 00:09:33.300
+go and grab information about
+any subject that is, has
+
+150
+00:09:33.300 --> 00:09:36.990
+got a Wikipedia page. And
+that data comes back to
+
+151
+00:09:36.990 --> 00:09:42.980
+you in RDF format. So
+when people create applications, I
+
+152
+00:09:42.980 --> 00:09:45.140
+was like, I've seen a
+number of windows, eight applications
+
+153
+00:09:45.140 --> 00:09:47.870
+that are front ends on
+top of Wikipedia. They're very
+
+154
+00:09:47.870 --> 00:09:52.040
+likely scraping that from Wikipedia
+itself, which lends itself to
+
+155
+00:09:52.040 --> 00:09:54.260
+be scraped just because of
+the regularity of the, of
+
+156
+00:09:54.260 --> 00:09:58.190
+the display. But you're saying
+DB pedia is an RDF
+
+157
+00:09:58.220 --> 00:10:01.310
+representation of what's inside of
+Wikipedia. That would be the
+
+158
+00:10:01.310 --> 00:10:04.670
+more appropriate thing for me
+to pull from. Exactly. Yes.
+
+159
+00:10:04.880 --> 00:10:07.670
+And, and then, and because
+they are then using these
+
+160
+00:10:09.140 --> 00:10:14.450
+minted persistent identifiers for the
+things that they talk about,
+
+161
+00:10:15.080 --> 00:10:17.240
+it means that you can
+then publish your own data
+
+162
+00:10:17.240 --> 00:10:20.630
+set that has some additional
+information maybe about these subjects.
+
+163
+00:10:20.630 --> 00:10:24.920
+And you can hook essentially
+merge your data with DBP
+
+164
+00:10:24.920 --> 00:10:28.400
+DIA data and get a
+consistent view across all of
+
+165
+00:10:28.400 --> 00:10:32.360
+that information. So this kind
+of information integration and building
+
+166
+00:10:32.360 --> 00:10:35.810
+a web of data where
+everything is loosely linked in
+
+167
+00:10:35.810 --> 00:10:38.000
+the same way that we're
+pages are loosely linked. You
+
+168
+00:10:38.000 --> 00:10:40.280
+know, one data set may
+refer to another data, set.
+
+169
+00:10:40.610 --> 00:10:42.710
+These things don't have to
+ever know about each other.
+
+170
+00:10:43.580 --> 00:10:48.740
+So it, it is just
+a very loose loosely coupled
+
+171
+00:10:49.280 --> 00:10:51.350
+graph of data. That's spread
+out all across the web.
+
+172
+00:10:51.710 --> 00:10:54.710
+When we see examples of
+these data sets and RDF
+
+173
+00:10:54.710 --> 00:10:58.250
+datasets, they always seem to
+have classes like country or
+
+174
+00:10:58.880 --> 00:11:02.150
+album, director, you know, things,
+but there's usually like a
+
+175
+00:11:02.150 --> 00:11:06.350
+top 10 or top 20
+things, game book, movie politician,
+
+176
+00:11:06.950 --> 00:11:09.890
+but that's not something that's
+specific to RDF, right? Those
+
+177
+00:11:09.890 --> 00:11:14.690
+are just example things. Exactly.
+Yeah. So RDF doesn't predefine
+
+178
+00:11:14.690 --> 00:11:18.950
+any of these, these sort
+of types at all. So
+
+179
+00:11:18.950 --> 00:11:22.220
+it is totally free to
+the application developers or the
+
+180
+00:11:22.220 --> 00:11:28.160
+data developers to define their
+own classes and to define
+
+181
+00:11:28.160 --> 00:11:31.850
+how they're those classes may
+be equivalent or different to
+
+182
+00:11:32.140 --> 00:11:34.820
+other classes that other people
+have defined. So the, there
+
+183
+00:11:34.820 --> 00:11:39.680
+is a huge amount of
+freedom essentially to say whatever
+
+184
+00:11:39.680 --> 00:11:41.330
+you want to say in
+the way that you want
+
+185
+00:11:41.330 --> 00:11:44.660
+to say it just as
+a HTML, it gives us
+
+186
+00:11:44.810 --> 00:11:48.080
+exactly that freedom with the
+text and the images that
+
+187
+00:11:48.080 --> 00:11:51.230
+we want to convey humans.
+RDF gives us that freedom
+
+188
+00:11:51.230 --> 00:11:53.530
+with the data that we
+want to convey to machines,
+
+189
+00:11:53.730 --> 00:11:58.390
+to applications. Okay. So RDF,
+isn't a, a serialization format
+
+190
+00:11:58.390 --> 00:12:00.880
+as it is an example
+of an expression of what
+
+191
+00:12:00.880 --> 00:12:03.880
+a graph of data can
+look like in memory. And
+
+192
+00:12:03.880 --> 00:12:06.490
+then there are different serialization
+formats that one could take
+
+193
+00:12:06.490 --> 00:12:10.350
+their RDF and express it
+as Absolutely. Yes. Yeah. So
+
+194
+00:12:10.350 --> 00:12:14.800
+it's, it is a, a
+data model really. So it,
+
+195
+00:12:14.800 --> 00:12:18.330
+it finds a graph like
+data model. And then on
+
+196
+00:12:18.330 --> 00:12:21.240
+top of the RDF base,
+a whole bunch of other,
+
+197
+00:12:21.270 --> 00:12:24.150
+there's a whole stack of,
+of standards that go up
+
+198
+00:12:24.150 --> 00:12:27.360
+and give you things like
+being able to find how
+
+199
+00:12:27.360 --> 00:12:30.990
+your types exist in your,
+in your data and how
+
+200
+00:12:30.990 --> 00:12:33.150
+they're related to types of
+properties. You know, how they're
+
+201
+00:12:33.150 --> 00:12:36.510
+related the queer, there's a
+query language, then there's all
+
+202
+00:12:36.510 --> 00:12:40.050
+kinds of interchange syntaxes as
+well. Okay. So important for
+
+203
+00:12:40.050 --> 00:12:42.750
+myself and the listeners to
+remember or think about that
+
+204
+00:12:43.110 --> 00:12:45.360
+a data model and the
+description of a data model
+
+205
+00:12:45.390 --> 00:12:49.440
+doesn't necessarily describe what those
+bites look like on disc.
+
+206
+00:12:49.440 --> 00:12:51.300
+And that's kind of an
+obvious thing to say in
+
+207
+00:12:51.300 --> 00:12:55.410
+retrospect, but also maybe not
+obvious when someone is used
+
+208
+00:12:55.410 --> 00:12:59.070
+to answering questions by simply
+opening something up in notepad
+
+209
+00:12:59.070 --> 00:13:01.890
+and saying, Oh, look, there's
+the RDF. You can't really
+
+210
+00:13:01.890 --> 00:13:05.160
+do that. Right? Yeah, absolutely.
+So then what is, what
+
+211
+00:13:05.160 --> 00:13:07.830
+are things like? I hear
+N triples and I hear
+
+212
+00:13:07.830 --> 00:13:12.990
+turtle, what are these terms?
+So these are different syntaxes
+
+213
+00:13:12.990 --> 00:13:18.210
+for representing RDF data. So,
+and triples is a very
+
+214
+00:13:18.210 --> 00:13:23.720
+simple, easy to pause line
+oriented format. The RDF at
+
+215
+00:13:23.720 --> 00:13:25.860
+the core of the RDF
+data model is this idea
+
+216
+00:13:25.890 --> 00:13:29.700
+of a triple, which is
+simply a statement of subject
+
+217
+00:13:30.060 --> 00:13:32.160
+predicate object. So it's the
+thing you want to talk
+
+218
+00:13:32.160 --> 00:13:35.160
+about the property that you
+want to assign a value
+
+219
+00:13:35.160 --> 00:13:38.040
+for, and then the value
+for that property. And that,
+
+220
+00:13:38.420 --> 00:13:41.730
+that thing is that triple
+is serialized, you know, one
+
+221
+00:13:41.730 --> 00:13:44.760
+per line in an enterprise
+format. It's really easy to
+
+222
+00:13:44.940 --> 00:13:49.140
+read. It's released to pause,
+it's released to generate. And,
+
+223
+00:13:49.140 --> 00:13:52.110
+and then turtle it is
+takes essentially takes the, the
+
+224
+00:13:52.140 --> 00:13:55.950
+basics of entry, pulls that,
+and then actually adds a
+
+225
+00:13:55.950 --> 00:13:58.770
+bunch of features that makes
+it a lot more compact
+
+226
+00:13:58.980 --> 00:14:01.410
+and easier to write as
+a, as a human being.
+
+227
+00:14:01.410 --> 00:14:03.780
+It's easier to, you know,
+when you're communicating with somebody
+
+228
+00:14:03.870 --> 00:14:06.360
+about some problem that you've
+got with your IDF data,
+
+229
+00:14:06.660 --> 00:14:10.050
+you can hack up an
+example in turtle to show
+
+230
+00:14:10.050 --> 00:14:11.790
+them, Hey, look, this is
+what, you know, what I
+
+231
+00:14:11.790 --> 00:14:13.590
+want it to look like,
+or this is, this is
+
+232
+00:14:13.590 --> 00:14:16.350
+the result that I'm getting.
+And it's easier, easier for
+
+233
+00:14:16.350 --> 00:14:18.600
+humans to grok and it's
+a bit more compact than
+
+234
+00:14:18.870 --> 00:14:22.410
+and triples. Okay. Okay. So
+then Brightstar DB is an
+
+235
+00:14:22.410 --> 00:14:26.910
+implementation of the W3C CS
+data model, which is RDF.
+
+236
+00:14:27.360 --> 00:14:30.240
+And then your system says
+that it is a, has
+
+237
+00:14:30.240 --> 00:14:34.110
+a triple store, right? Yep.
+So how do you represent
+
+238
+00:14:34.110 --> 00:14:36.210
+your data like on disc
+and how do you think
+
+239
+00:14:36.210 --> 00:14:40.200
+about your data? So we
+think about our data as,
+
+240
+00:14:41.040 --> 00:14:44.610
+as a collection of, of
+if you like two levels
+
+241
+00:14:44.610 --> 00:14:47.700
+of partition. So the, the
+high level partition is, is
+
+242
+00:14:47.700 --> 00:14:50.490
+a store and that's like
+a physical partition. So that's
+
+243
+00:14:50.490 --> 00:14:54.470
+a, an individual director that
+consent contains some data files
+
+244
+00:14:54.500 --> 00:14:57.470
+that contain all of our
+indexes. And so on. Then
+
+245
+00:14:57.470 --> 00:15:00.680
+within a store, you have
+a collection of RDF graphs.
+
+246
+00:15:01.560 --> 00:15:04.640
+And so each graph is,
+is like a set of
+
+247
+00:15:04.640 --> 00:15:08.630
+triples and it's a bounded
+named set of triples. And
+
+248
+00:15:08.660 --> 00:15:11.000
+when you go into query,
+you can either query one
+
+249
+00:15:11.000 --> 00:15:13.850
+particular graph or some combination
+of graphs or all the
+
+250
+00:15:13.850 --> 00:15:18.320
+graphs together. So that's our
+basic, you know, that's our
+
+251
+00:15:18.320 --> 00:15:23.300
+kind of, if you like
+logical partitioning of the data,
+
+252
+00:15:23.850 --> 00:15:26.230
+and then when we get
+down to actually on, on
+
+253
+00:15:26.240 --> 00:15:31.850
+desk, what we're scoring is
+the basic indexing into those
+
+254
+00:15:31.910 --> 00:15:35.180
+sets of triples. So we're
+storing B tree indexes that
+
+255
+00:15:35.450 --> 00:15:39.110
+get you down through the,
+through the triple structure to
+
+256
+00:15:39.110 --> 00:15:43.610
+help you fight. You have
+to find the particular object
+
+257
+00:15:43.610 --> 00:15:47.630
+for a given subject and
+predicate or vice versa. And
+
+258
+00:15:47.630 --> 00:15:50.510
+then obviously to map those
+to the map, the identifiers
+
+259
+00:15:50.510 --> 00:15:53.890
+that we have to the
+actual values, You said, bounded
+
+260
+00:15:53.890 --> 00:15:59.340
+name, what does that mean?
+So as you already mentioned,
+
+261
+00:15:59.380 --> 00:16:05.710
+everything in RDF uses URS.
+So it uses the, the
+
+262
+00:16:05.710 --> 00:16:10.600
+uniform resource identifier schemes for,
+for identifying the thing that
+
+263
+00:16:10.600 --> 00:16:12.580
+you want to talk about.
+So a subject always has
+
+264
+00:16:12.580 --> 00:16:14.980
+a URI and the predicate
+is always defined by URI.
+
+265
+00:16:15.340 --> 00:16:17.350
+And then the value can
+either be another URI, or
+
+266
+00:16:17.350 --> 00:16:19.030
+it can be a, a
+string or an integer or
+
+267
+00:16:19.040 --> 00:16:23.260
+something like that. But the
+graph is essentially another thing
+
+268
+00:16:23.260 --> 00:16:26.290
+that also has a URI.
+And it's just a context
+
+269
+00:16:26.530 --> 00:16:29.770
+for all of the statements.
+So for example, if I'm
+
+270
+00:16:30.460 --> 00:16:35.140
+collecting information, let's say about
+movies, I might have one
+
+271
+00:16:35.140 --> 00:16:37.930
+graph that has all of
+the movies that are released
+
+272
+00:16:37.930 --> 00:16:40.390
+in 2014, and then another
+graph that is all the
+
+273
+00:16:40.390 --> 00:16:43.540
+movies that released in 2013
+and maybe create a graph
+
+274
+00:16:43.540 --> 00:16:47.170
+per year as a logical
+partition. And that enables me
+
+275
+00:16:47.170 --> 00:16:49.630
+to, you know, very quickly
+just give you current movies
+
+276
+00:16:50.350 --> 00:16:53.770
+or very quickly give you
+a set of movies over
+
+277
+00:16:53.770 --> 00:16:56.440
+a particular range just by
+selecting which graphs I want
+
+278
+00:16:56.450 --> 00:16:59.290
+to, I want to query
+against It's. So for forgive
+
+279
+00:16:59.290 --> 00:17:00.850
+my ignorance, I'm going to
+try to draw a parallel
+
+280
+00:17:00.850 --> 00:17:02.080
+here and you can tell
+me if it's a, if
+
+281
+00:17:02.080 --> 00:17:05.200
+it's a dumb question in
+a, in a, in a
+
+282
+00:17:05.200 --> 00:17:07.930
+previous life. When I worked
+on my blog system called
+
+283
+00:17:07.930 --> 00:17:11.020
+DAS blog with Clemens masters
+and a team, this is
+
+284
+00:17:11.020 --> 00:17:18.100
+around 2002. It stores all
+of the blog entries in
+
+285
+00:17:18.100 --> 00:17:21.100
+an XML files. And so
+it is a, it is
+
+286
+00:17:21.100 --> 00:17:24.460
+a poor man's database. There's
+no backend database there's simply
+
+287
+00:17:24.700 --> 00:17:29.110
+each day that someone blogged
+has a file. So if
+
+288
+00:17:29.110 --> 00:17:34.270
+I blog on July 3rd, then
+there's a July 3rd, 2014 file. And
+
+289
+00:17:34.270 --> 00:17:37.810
+if I blog 10 times
+in on July 3rd, then there's
+
+290
+00:17:37.810 --> 00:17:40.900
+10 items in that one
+file. So the maximum number
+
+291
+00:17:40.900 --> 00:17:43.690
+of XML files that I
+can end up with in
+
+292
+00:17:43.690 --> 00:17:47.950
+a year is 365. This
+means that DAS blog is
+
+293
+00:17:47.980 --> 00:17:53.160
+even now 10 later, ridiculously
+fast when someone is accessing
+
+294
+00:17:53.160 --> 00:17:56.460
+the data on a daily
+basis by, you know, giving
+
+295
+00:17:56.460 --> 00:17:59.430
+me all the blog posts
+for a day and why
+
+296
+00:17:59.430 --> 00:18:02.820
+it stands up from a
+scalability perspective against pretty much
+
+297
+00:18:02.820 --> 00:18:05.730
+any blogging system out there.
+But if I wanted to
+
+298
+00:18:05.730 --> 00:18:11.010
+ask Josh blog a, a
+question that goes across the,
+
+299
+00:18:11.040 --> 00:18:13.830
+my, my data partitioning, for
+lack of a better phrase,
+
+300
+00:18:13.830 --> 00:18:16.020
+like show me all of
+the blog posts in this
+
+301
+00:18:16.020 --> 00:18:19.710
+category. It falls over quite
+quickly, because you can imagine
+
+302
+00:18:19.710 --> 00:18:23.130
+I'm running through thousands and
+thousands of XML files trying
+
+303
+00:18:23.130 --> 00:18:26.700
+to ask a question that
+the data just isn't laid
+
+304
+00:18:26.700 --> 00:18:31.880
+out on disc correctly. Does
+that make sense? Yes. Yeah.
+
+305
+00:18:31.940 --> 00:18:35.180
+Yeah. And, and, and I
+think there's, you know, the,
+
+306
+00:18:35.240 --> 00:18:37.580
+it's a similar kind of
+trade off when you're defining
+
+307
+00:18:37.580 --> 00:18:40.490
+graphs in RDF. You, you
+have that, that sort of,
+
+308
+00:18:40.940 --> 00:18:45.800
+of tradeoff of wanting to
+have partitions that are, you
+
+309
+00:18:45.800 --> 00:18:49.760
+know, small and, and maybe
+more responsive, but at the
+
+310
+00:18:49.760 --> 00:18:51.800
+same time that you don't,
+you don't want to get
+
+311
+00:18:51.800 --> 00:18:53.660
+to the point of having
+so many that when you
+
+312
+00:18:53.660 --> 00:18:56.360
+need to do something across
+all of them, you have
+
+313
+00:18:56.700 --> 00:19:00.740
+a headache. So, and, and
+of course, you know, one
+
+314
+00:19:00.740 --> 00:19:04.490
+of the, one of the
+nice things about having a
+
+315
+00:19:04.640 --> 00:19:06.470
+very flexible data model where
+we have all of these
+
+316
+00:19:06.470 --> 00:19:09.410
+separate contexts is that there
+is absolutely no reason why
+
+317
+00:19:09.410 --> 00:19:12.260
+you can't say, Oh, Hey,
+why don't I just create
+
+318
+00:19:12.440 --> 00:19:15.770
+another graph that is the
+monthly roll up. And it
+
+319
+00:19:15.770 --> 00:19:17.900
+just has an abstract of
+what's in all of these
+
+320
+00:19:17.900 --> 00:19:22.580
+other daily graphs and from
+the monthly ones, one on
+
+321
+00:19:22.580 --> 00:19:24.920
+our generator, an annual roll
+up as well. That has
+
+322
+00:19:24.920 --> 00:19:28.160
+just some, some subset of
+the, of the monthly roll-ups.
+
+323
+00:19:29.330 --> 00:19:31.430
+So there's, yeah, there's all
+kinds of clever ways in
+
+324
+00:19:31.430 --> 00:19:34.670
+which you can, you can
+structure the graphs and graphs
+
+325
+00:19:34.670 --> 00:19:36.890
+can be, you know, connects
+to other graphs as well.
+
+326
+00:19:37.730 --> 00:19:41.210
+And you can, can build
+some, some pretty, pretty cool
+
+327
+00:19:41.210 --> 00:19:45.320
+kind of data partitioning strategies
+using just using graphs and
+
+328
+00:19:45.320 --> 00:19:48.980
+the metadata for graph. So
+does that mean that there
+
+329
+00:19:48.980 --> 00:19:51.680
+are things that I could
+potentially ask the system that
+
+330
+00:19:51.680 --> 00:19:55.250
+it would not be readily
+able to answer or does
+
+331
+00:19:55.250 --> 00:19:57.110
+it just mean it would
+be slightly slower if the
+
+332
+00:19:57.330 --> 00:19:59.120
+shape of the data isn't
+in a, in a way
+
+333
+00:19:59.120 --> 00:20:01.310
+that is queryable in a,
+in a, in a, in
+
+334
+00:20:01.310 --> 00:20:05.210
+a way that I was
+maybe stretching to ask it
+
+335
+00:20:05.210 --> 00:20:09.860
+questions like this? No, I,
+I not, well, as with
+
+336
+00:20:09.860 --> 00:20:12.920
+all data systems, there are
+things which questions are these
+
+337
+00:20:12.930 --> 00:20:15.620
+good at answering and questions
+that it we'll have to
+
+338
+00:20:15.620 --> 00:20:20.540
+think about. And, and, you
+know, we're, we're still kind
+
+339
+00:20:20.540 --> 00:20:22.520
+of early on in the
+development of Brightstar and we
+
+340
+00:20:22.520 --> 00:20:25.460
+know there are other kinds
+of queries that we definitely
+
+341
+00:20:25.460 --> 00:20:30.110
+need to optimize, but, but
+I think with, with Brightstar,
+
+342
+00:20:30.110 --> 00:20:31.670
+I mean, one of the
+things is when I'm talking
+
+343
+00:20:31.670 --> 00:20:33.560
+about all of these graphs,
+that they're really, there are
+
+344
+00:20:33.560 --> 00:20:36.470
+logical partitioning. So they're breaking
+down the data into smaller,
+
+345
+00:20:36.800 --> 00:20:41.510
+smaller chunks, but at a,
+at a physical data storage
+
+346
+00:20:41.570 --> 00:20:44.540
+level. In fact, they're all
+going into the same set
+
+347
+00:20:44.540 --> 00:20:49.000
+of indexes. So we're actually
+able to query across the,
+
+348
+00:20:49.010 --> 00:20:56.500
+these, these graphs, or if
+you like in parallel, just
+
+349
+00:20:56.530 --> 00:20:59.380
+using the same set of
+data files. So it's at
+
+350
+00:20:59.380 --> 00:21:02.170
+the physical partition level where
+you decide that I maybe
+
+351
+00:21:02.170 --> 00:21:05.740
+want to split my data
+across multiple stores that you
+
+352
+00:21:05.740 --> 00:21:08.530
+then that you will then
+hit these problems of, well,
+
+353
+00:21:08.530 --> 00:21:10.630
+actually, I can't write a
+query at the moment that
+
+354
+00:21:10.630 --> 00:21:13.210
+goes across all the stores
+though. That is actually one
+
+355
+00:21:13.210 --> 00:21:15.930
+of the things that we
+would like to address. And
+
+356
+00:21:15.930 --> 00:21:18.180
+if my data, if my
+app, the size of my
+
+357
+00:21:18.180 --> 00:21:21.090
+data is greater than the
+memory that I have a
+
+358
+00:21:21.120 --> 00:21:23.090
+Brightstar, I'll just we'll do
+the right thing and, and
+
+359
+00:21:23.090 --> 00:21:25.080
+act appropriately, and it'll keep
+it, I assume it has
+
+360
+00:21:25.080 --> 00:21:28.440
+some in-memory indexes. And then
+when it can't find something
+
+361
+00:21:28.860 --> 00:21:30.720
+easily, it needs to go
+and chew for a little
+
+362
+00:21:30.720 --> 00:21:34.440
+while. Exactly. Yeah. I mean,
+we're, we, we just implement
+
+363
+00:21:34.440 --> 00:21:38.040
+persistent bee trees. So we
+will have, you know, the
+
+364
+00:21:38.610 --> 00:21:43.020
+cash Petri pages that we,
+that we manage. We use
+
+365
+00:21:43.020 --> 00:21:45.900
+that B to B tree
+structure as well at the
+
+366
+00:21:45.900 --> 00:21:47.430
+moment, the way we've got
+it is we're just actually
+
+367
+00:21:47.430 --> 00:21:50.220
+using that beach restructure as
+the way that we handle
+
+368
+00:21:50.220 --> 00:21:53.850
+the queries as well. So
+yeah, it will absolutely do
+
+369
+00:21:53.850 --> 00:21:57.120
+that, do the right thing.
+We want it to work
+
+370
+00:21:57.210 --> 00:22:01.350
+on constrained memory devices. So
+we want it to work
+
+371
+00:22:01.440 --> 00:22:03.420
+on your tablet and we
+want it to work on
+
+372
+00:22:03.420 --> 00:22:06.240
+your phone. So that, that's
+one of the things also
+
+373
+00:22:06.240 --> 00:22:08.670
+that we're trying to address
+that, you know, maybe it's
+
+374
+00:22:08.670 --> 00:22:10.680
+a little bit makes it
+a little bit different from
+
+375
+00:22:11.460 --> 00:22:14.130
+some of the other, no
+SQL solutions. So you will
+
+376
+00:22:14.130 --> 00:22:16.920
+run on a windows phone,
+even windows phone seven. So
+
+377
+00:22:16.920 --> 00:22:20.730
+you're talking about servers or
+clients or mobile phones. So
+
+378
+00:22:20.730 --> 00:22:23.460
+if I like, for example,
+I'm working on an application
+
+379
+00:22:23.460 --> 00:22:25.260
+right now that I want
+to run on a windows
+
+380
+00:22:25.260 --> 00:22:28.140
+phone and I want it
+to run in windows eight
+
+381
+00:22:28.170 --> 00:22:30.060
+with a touch screen, but
+I might also have a
+
+382
+00:22:30.060 --> 00:22:33.930
+desktop application I could potentially
+use Brightstar DB in all
+
+383
+00:22:33.930 --> 00:22:37.860
+of those situations. Right. That's
+yeah, that's correct. So, you
+
+384
+00:22:37.860 --> 00:22:41.130
+know, we we've, we've talked
+to windows phone seven, we've
+
+385
+00:22:41.130 --> 00:22:44.520
+talked to PCL builds that
+enabled us to run on
+
+386
+00:22:44.520 --> 00:22:49.080
+windows eight and a windows
+phone eight and 8.1. We're
+
+387
+00:22:49.260 --> 00:22:54.330
+also have the Xamarin flavor
+of those PCLs. So you
+
+388
+00:22:54.330 --> 00:22:58.290
+can app, so Android and
+iOS, both on the roadmap
+
+389
+00:22:58.290 --> 00:23:00.870
+there, they're not particularly tested
+yet, and we'd welcome people
+
+390
+00:23:00.870 --> 00:23:03.090
+to come along and try
+it out and, and let
+
+391
+00:23:03.090 --> 00:23:04.980
+us know how, how they
+get on with, with Android,
+
+392
+00:23:04.980 --> 00:23:07.680
+but the nice people at,
+and gave me a, a
+
+393
+00:23:07.680 --> 00:23:11.400
+development license for, for working
+on this stuff. And I'm
+
+394
+00:23:11.550 --> 00:23:13.830
+really keen now to, to
+make sure that we can
+
+395
+00:23:13.830 --> 00:23:16.560
+run on those platforms as
+well. That's cool. One of
+
+396
+00:23:16.560 --> 00:23:18.870
+the things that is impressive
+or surprised, I wouldn't say
+
+397
+00:23:18.870 --> 00:23:21.210
+impressive, I'd say surprising and
+impressive was that I was
+
+398
+00:23:21.780 --> 00:23:24.720
+checking out all of the
+features and looking at, at
+
+399
+00:23:24.720 --> 00:23:28.260
+this project, and you actually
+have an entity framework model
+
+400
+00:23:28.710 --> 00:23:31.410
+over this. So how do
+you deal with the fact
+
+401
+00:23:31.410 --> 00:23:35.580
+that you've got very, very
+typed, very S wishes that
+
+402
+00:23:35.580 --> 00:23:38.700
+it was CQL model in
+the context of affinity framework
+
+403
+00:23:39.150 --> 00:23:43.020
+and a schema free no
+SQL framework underneath it, Right?
+
+404
+00:23:43.260 --> 00:23:47.180
+Yeah. So the way that
+we do that is essentially
+
+405
+00:23:47.930 --> 00:23:53.180
+we consider your domain model.
+So your, your strongly typed
+
+406
+00:23:53.180 --> 00:23:56.780
+model as simply being a
+view onto the data. So
+
+407
+00:23:57.020 --> 00:23:59.480
+when you set up your
+domain model and in bright
+
+408
+00:23:59.480 --> 00:24:02.050
+star, you do it as
+a, as an interface first,
+
+409
+00:24:02.060 --> 00:24:04.610
+a contract, first, a definition,
+and then we do some
+
+410
+00:24:04.610 --> 00:24:08.690
+cogeneration to build your context.
+So when you define your,
+
+411
+00:24:09.950 --> 00:24:15.590
+your domain model, you've mapped
+that domain model to types
+
+412
+00:24:15.590 --> 00:24:20.270
+and properties in your data
+model, and it's all done
+
+413
+00:24:20.270 --> 00:24:21.980
+by convention. So if you
+don't want to, you can
+
+414
+00:24:21.980 --> 00:24:24.800
+just write an interface, decorate
+it with the entity attribute,
+
+415
+00:24:24.800 --> 00:24:26.540
+and that's all you need
+to do, and Brightstar will
+
+416
+00:24:26.540 --> 00:24:28.670
+take care of the rest.
+But if you actually want
+
+417
+00:24:28.670 --> 00:24:31.580
+to map it to a
+particular audio scheme, and maybe
+
+418
+00:24:31.580 --> 00:24:34.580
+you want to use some
+standard schema, that is somebody
+
+419
+00:24:34.580 --> 00:24:37.100
+else's predefined, then, then you
+can go ahead and do
+
+420
+00:24:37.100 --> 00:24:41.540
+that too. And essentially what
+we're doing there is a,
+
+421
+00:24:41.540 --> 00:24:43.940
+when you create an instance
+of the entity, we will
+
+422
+00:24:43.940 --> 00:24:46.910
+basically, and set properties on
+it. We'll set some triples
+
+423
+00:24:46.910 --> 00:24:49.610
+in the background to go
+into a transaction. And when
+
+424
+00:24:49.610 --> 00:24:53.810
+you save changes, we send
+the transaction with inserts and
+
+425
+00:24:53.810 --> 00:24:56.300
+the deletes that you've made
+by changing properties on the,
+
+426
+00:24:56.510 --> 00:24:59.180
+on the object. The other
+nice thing that we can
+
+427
+00:24:59.180 --> 00:25:01.640
+do when we've done that
+is that we implement a,
+
+428
+00:25:01.700 --> 00:25:04.970
+a link provider as well.
+And the link provided we'll
+
+429
+00:25:04.970 --> 00:25:08.440
+take your link query across
+your domain model, actually converted
+
+430
+00:25:08.450 --> 00:25:13.490
+into a sparkle query because
+Brightstar implements the W3C sparkle
+
+431
+00:25:13.490 --> 00:25:17.690
+standard, which is a standard
+query language for IDF. So
+
+432
+00:25:17.690 --> 00:25:19.760
+we convert the LINQ query
+into a spark query and
+
+433
+00:25:19.760 --> 00:25:22.430
+execute that sparkle query, and
+then data bind the results
+
+434
+00:25:22.430 --> 00:25:25.220
+back into your, into your
+domain model. But the really
+
+435
+00:25:25.220 --> 00:25:27.890
+nice thing about doing it
+in this way is, as
+
+436
+00:25:27.890 --> 00:25:30.530
+I say, your domain model
+is actually just a view.
+
+437
+00:25:30.920 --> 00:25:34.520
+So it's not really kind
+of hard coded into the,
+
+438
+00:25:34.520 --> 00:25:38.090
+it's not tied to the
+actual shape of the data
+
+439
+00:25:38.090 --> 00:25:39.830
+that you've got in the
+data store. It's just a
+
+440
+00:25:39.830 --> 00:25:42.890
+partial view of that data.
+And you can have multiple
+
+441
+00:25:42.890 --> 00:25:45.890
+applications that are all sharing
+the same data, but actually
+
+442
+00:25:45.890 --> 00:25:49.250
+have different views on the
+way in which they use
+
+443
+00:25:49.250 --> 00:25:51.080
+their data the way in
+which they extract the data
+
+444
+00:25:51.080 --> 00:25:55.450
+from the database. If I
+want to understand more about
+
+445
+00:25:55.450 --> 00:25:57.820
+this strongly type versus not
+trolling type, if I have
+
+446
+00:25:57.820 --> 00:26:00.070
+a person and that person
+has first name and last
+
+447
+00:26:00.070 --> 00:26:03.670
+name and birthday, and then
+like height, and I know
+
+448
+00:26:03.670 --> 00:26:06.160
+that's a very trivial thing,
+and I could imagine then
+
+449
+00:26:06.160 --> 00:26:09.320
+how you project a strongly
+typed entity framework thing over
+
+450
+00:26:09.320 --> 00:26:12.850
+to that, but then how
+would I change this schema
+
+451
+00:26:12.850 --> 00:26:15.280
+in the scheme of free
+world? Like, let's say these
+
+452
+00:26:15.280 --> 00:26:19.270
+people no longer have height,
+so, but, but they do
+
+453
+00:26:19.270 --> 00:26:21.340
+because some of them are
+already in the database with
+
+454
+00:26:21.340 --> 00:26:26.080
+height. Yeah. So, so your,
+your application no longer wants
+
+455
+00:26:26.080 --> 00:26:30.400
+to know about height. You
+simply delete that, that property
+
+456
+00:26:30.400 --> 00:26:36.190
+from your applications interfaces, and
+then when your application sends
+
+457
+00:26:36.190 --> 00:26:39.160
+updates, because we're because when
+we're dealing with updates, we're
+
+458
+00:26:39.160 --> 00:26:41.890
+actually not sending an entire
+state. We're just sending the
+
+459
+00:26:41.890 --> 00:26:45.660
+triples for the properties you've
+changed. So when you send
+
+460
+00:26:45.660 --> 00:26:48.270
+the update, you won't be
+changing the height and another
+
+461
+00:26:48.270 --> 00:26:52.140
+application that still does care
+about height. We'll still be
+
+462
+00:26:52.140 --> 00:26:54.990
+able to use that property
+set that property updated in
+
+463
+00:26:54.990 --> 00:26:57.660
+whatever way it wants. So
+you have that, you know,
+
+464
+00:26:58.020 --> 00:27:03.180
+real flexibility that the data
+and your model are very
+
+465
+00:27:03.180 --> 00:27:06.890
+loose. I see. So in
+the, in the SQL world,
+
+466
+00:27:06.890 --> 00:27:10.430
+we would just delete that
+column. And then people who
+
+467
+00:27:10.430 --> 00:27:14.660
+expected it would have their
+expectations not met, or people
+
+468
+00:27:14.660 --> 00:27:17.300
+who tried to update it
+would find that that doesn't
+
+469
+00:27:17.300 --> 00:27:20.060
+exist, that didn't exist. So
+that that interface is broken
+
+470
+00:27:20.060 --> 00:27:23.360
+at the database level. The
+way that I would kind
+
+471
+00:27:23.360 --> 00:27:26.840
+of implement that in a
+SQL world would be say
+
+472
+00:27:26.840 --> 00:27:29.030
+that it was okay to
+have a nullable date time.
+
+473
+00:27:29.060 --> 00:27:31.220
+And then just don't tell
+anyone that we're not going
+
+474
+00:27:31.220 --> 00:27:33.470
+to use it anymore and
+don't choose to express it
+
+475
+00:27:33.470 --> 00:27:39.650
+to them. Right. Exactly. And
+in essence, because we're doing
+
+476
+00:27:39.650 --> 00:27:43.840
+this very loose coupling, you
+have to kind of, your,
+
+477
+00:27:43.840 --> 00:27:46.640
+your application does have to
+be aware that you may
+
+478
+00:27:46.640 --> 00:27:49.600
+define properties for which there
+is currently no value. And
+
+479
+00:27:49.610 --> 00:27:52.400
+you'll just get the default,
+unless you define that property
+
+480
+00:27:52.400 --> 00:27:54.200
+as being nullable, in which
+case you will get no.
+
+481
+00:27:55.850 --> 00:27:57.320
+So you, when you, you
+know, there is, there is
+
+482
+00:27:57.320 --> 00:28:04.040
+some application impact th that
+it will have, but it's,
+
+483
+00:28:05.480 --> 00:28:07.880
+we think it's, it's, it's
+a small price to pay
+
+484
+00:28:07.880 --> 00:28:10.460
+for the additional flexibility. We,
+one of the things that
+
+485
+00:28:10.460 --> 00:28:17.780
+I'm really keen on is
+this idea of applications migrating
+
+486
+00:28:17.780 --> 00:28:19.760
+that data over time, as
+you go from version one
+
+487
+00:28:19.760 --> 00:28:21.710
+of an application to version
+two of an application, you
+
+488
+00:28:21.710 --> 00:28:26.390
+get different data requirements and
+you always have this problem.
+
+489
+00:28:26.930 --> 00:28:28.910
+I've, I've had it in
+the past when working with
+
+490
+00:28:29.930 --> 00:28:33.290
+applications based on sequel is
+that, you know, version 1.1
+
+491
+00:28:33.290 --> 00:28:38.720
+introduces a new column version
+1.2 changes, some indexing or
+
+492
+00:28:39.060 --> 00:28:41.540
+changes the type of another
+column. And so you have
+
+493
+00:28:41.540 --> 00:28:44.120
+all of these migration scripts
+that you have to make
+
+494
+00:28:44.120 --> 00:28:45.950
+sure that you run the
+right migration scripts in the
+
+495
+00:28:45.950 --> 00:28:49.910
+right order to migrate a
+customer from version one, to
+
+496
+00:28:49.910 --> 00:28:52.520
+version two via all of
+the intermediate versions that we've
+
+497
+00:28:52.520 --> 00:28:54.830
+done. All, you have to
+create some monster roll up
+
+498
+00:28:54.830 --> 00:28:57.200
+of all of the data
+migration. So you always have
+
+499
+00:28:57.200 --> 00:29:03.920
+this data migration headache alongside
+the application, update headache, and,
+
+500
+00:29:04.320 --> 00:29:06.770
+and essentially with, with a
+store light, bright star that
+
+501
+00:29:06.770 --> 00:29:11.420
+goes away because the data
+model has no schema that
+
+502
+00:29:11.420 --> 00:29:14.120
+you need to worry about
+migrating. The data is just
+
+503
+00:29:14.120 --> 00:29:17.180
+there. And you just like
+your application to, to deal
+
+504
+00:29:17.180 --> 00:29:19.940
+with the changes that you
+know are going to happen.
+
+505
+00:29:19.940 --> 00:29:23.120
+So you can kind of
+take out that whole data
+
+506
+00:29:23.120 --> 00:29:25.880
+migration, a headache, or, or
+at least you can move
+
+507
+00:29:25.880 --> 00:29:29.210
+it into, into parts of
+the code where you just
+
+508
+00:29:29.210 --> 00:29:31.400
+need to react to, Hey,
+maybe they don't have a
+
+509
+00:29:31.400 --> 00:29:34.940
+high property because they've just
+upgraded. And that property hasn't
+
+510
+00:29:34.940 --> 00:29:38.800
+been set yet. Can you
+see how people would, would
+
+511
+00:29:38.810 --> 00:29:41.000
+look at this who have
+been in the industry and
+
+512
+00:29:41.020 --> 00:29:44.200
+the standard kind of, you
+know, SQL database industry for
+
+513
+00:29:44.200 --> 00:29:46.630
+a while, and been working
+in large enterprises that might
+
+514
+00:29:46.630 --> 00:29:49.450
+say that this all seems
+just too magical and too
+
+515
+00:29:49.450 --> 00:29:56.400
+dangerous and couldn't possibly work
+at scale. Yes. I have
+
+516
+00:29:56.400 --> 00:29:59.340
+conversations with those people. Yes.
+Wow. How do you work
+
+517
+00:29:59.340 --> 00:30:04.740
+best that? Well, I think,
+you know, there are a
+
+518
+00:30:05.640 --> 00:30:09.930
+set of applications for which
+this kind of magic is
+
+519
+00:30:10.380 --> 00:30:15.060
+totally not applicable. And, and
+it may be that they're,
+
+520
+00:30:15.120 --> 00:30:18.870
+they've got things in mind,
+which that this data, this
+
+521
+00:30:18.870 --> 00:30:21.780
+data store is not for
+them. But on the other
+
+522
+00:30:21.780 --> 00:30:25.470
+hand, actually, I would say
+that rather than being not
+
+523
+00:30:25.470 --> 00:30:29.250
+scalable, the whole thing about
+having a flexible, open approach
+
+524
+00:30:29.250 --> 00:30:30.990
+to the way in which
+you're storing and managing your
+
+525
+00:30:30.990 --> 00:30:36.990
+data ultimately makes it more
+scalable because it can adapt
+
+526
+00:30:37.020 --> 00:30:41.610
+to changing environments and to
+changing requirements much more rapidly
+
+527
+00:30:42.330 --> 00:30:45.630
+than a fixed schema that
+needs a careful migration plan
+
+528
+00:30:45.630 --> 00:30:49.420
+and a careful data migration
+plan. So, you know, when,
+
+529
+00:30:49.420 --> 00:30:53.430
+when your application wants to,
+for example, if your application
+
+530
+00:30:53.430 --> 00:30:57.000
+is all just a stovepipe
+application, you know, it's my
+
+531
+00:30:57.000 --> 00:31:02.040
+data, it's my data access
+layer. It's my presentation layer.
+
+532
+00:31:02.430 --> 00:31:05.490
+And that's it. And that's
+the whole world that I'm
+
+533
+00:31:05.490 --> 00:31:08.970
+ever going to have then
+SQL may well be exactly
+
+534
+00:31:08.970 --> 00:31:11.910
+the right way to go.
+But if you want an
+
+535
+00:31:11.910 --> 00:31:16.740
+application that is maybe can
+respond to external data sources,
+
+536
+00:31:16.770 --> 00:31:19.320
+so can merging data from
+other sources where you maybe
+
+537
+00:31:19.320 --> 00:31:22.530
+have less control over how
+those data sources changed the
+
+538
+00:31:22.530 --> 00:31:25.830
+way in which they represented
+their data over time, or
+
+539
+00:31:25.830 --> 00:31:28.350
+where you just want to
+be able to start with
+
+540
+00:31:28.380 --> 00:31:30.900
+a core set of functionality
+and then add some new
+
+541
+00:31:30.900 --> 00:31:33.540
+functionality later on that you
+have absolutely no idea right
+
+542
+00:31:33.540 --> 00:31:36.030
+now, what that is going
+to look like, or how
+
+543
+00:31:36.030 --> 00:31:38.160
+it's going to merge into
+your data model. You don't
+
+544
+00:31:38.160 --> 00:31:42.120
+have a five year plan
+for your data migration, then
+
+545
+00:31:42.120 --> 00:31:45.930
+having the flexibility of, of,
+of bright star DB and
+
+546
+00:31:45.930 --> 00:31:49.620
+the RDF graph based data
+model could really work for
+
+547
+00:31:49.620 --> 00:31:51.360
+you. And it could help
+you get over some of
+
+548
+00:31:51.360 --> 00:31:57.600
+those data hurdles that you're
+going to face. This, this
+
+549
+00:31:57.600 --> 00:31:59.940
+is pretty amazing. And this
+is all open source and
+
+550
+00:31:59.940 --> 00:32:03.450
+people can download it right
+now. There's no licensing issues
+
+551
+00:32:03.450 --> 00:32:06.540
+or anything. That's right. Yeah.
+So we chosen the MIT
+
+552
+00:32:06.540 --> 00:32:11.670
+license. So it's a, it's
+totally open people can, can
+
+553
+00:32:11.670 --> 00:32:15.180
+use it for commercial non-commercial
+applications or like, Fantastic. This
+
+554
+00:32:15.180 --> 00:32:20.430
+is really cool stuff. People
+can check this out@brightstardb.com. It's
+
+555
+00:32:20.430 --> 00:32:23.940
+on new, get, I assume
+it's up on a, on
+
+556
+00:32:23.970 --> 00:32:26.460
+a code Plex or a
+get hub. Where do you,
+
+557
+00:32:26.460 --> 00:32:29.010
+where do you, where do
+you host? So we host
+
+558
+00:32:29.010 --> 00:32:32.100
+that source on get hub.
+We host our community discussion
+
+559
+00:32:32.160 --> 00:32:34.470
+on code flex and the
+binary releases are up on
+
+560
+00:32:34.470 --> 00:32:36.510
+code Plex as well. So
+all the links are there
+
+561
+00:32:36.510 --> 00:32:39.120
+from the website. Very cool.
+Very cool. Thanks for chatting
+
+562
+00:32:39.140 --> 00:32:42.320
+with me today. No, thank
+you. This has been another
+
+563
+00:32:42.320 --> 00:32:45.020
+episode of Hansel minutes and
+we'll see you again next
+
+564
+00:32:45.020 --> 00:32:52.240
+week. <inaudible>.
+

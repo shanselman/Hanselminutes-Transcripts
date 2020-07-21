@@ -1,0 +1,3101 @@
+WEBVTT FILE
+
+1
+00:00:12.020 --> 00:00:17.300
+From hanselminutes.com. It's Hansel minutes,
+a weekly discussion with web
+
+2
+00:00:17.300 --> 00:00:22.070
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+3
+00:00:22.070 --> 00:00:28.310
+number two 94. Recorded live
+Monday, November 21st, 2011. Support for Hansel
+
+4
+00:00:28.310 --> 00:00:32.300
+minutes is provided by Telerik
+rad controls, the most comprehensive
+
+5
+00:00:32.300 --> 00:00:36.170
+suite of components for windows
+forms and asp.net web applications
+
+6
+00:00:36.470 --> 00:00:44.720
+online@wwwdottelerik.com. In this episode, Scott
+talks with Matt Florence and
+
+7
+00:00:44.780 --> 00:00:51.710
+Amir Rajon about understanding BDD
+and end spec. Hi, this
+
+8
+00:00:51.710 --> 00:00:53.690
+is Scott Hanselman and this
+is another episode of Hansel
+
+9
+00:00:53.690 --> 00:00:56.600
+minutes. And today we've got
+Matt Florence and Amir Rajon
+
+10
+00:00:56.600 --> 00:01:00.100
+from improving enterprises in Dallas,
+Texas. These are the, the
+
+11
+00:01:00.350 --> 00:01:03.980
+inspect guys. You are the
+inspect guys, spec.org. How's it
+
+12
+00:01:03.980 --> 00:01:08.660
+going, gentlemen? Not too bad,
+not too bad. So, and
+
+13
+00:01:08.660 --> 00:01:14.510
+spec.org says BDD style unit
+testing in.net. And it doesn't
+
+14
+00:01:14.510 --> 00:01:16.250
+tell me what BDD is.
+I have to click on
+
+15
+00:01:16.250 --> 00:01:18.920
+a link and it tells
+me that BDD is behavior
+
+16
+00:01:18.920 --> 00:01:25.160
+driven development. Matt, why do
+I care about BDD Behavior
+
+17
+00:01:25.160 --> 00:01:27.920
+driven is sort of an
+evolution of test driven development
+
+18
+00:01:28.640 --> 00:01:32.750
+where testing and development focused
+more well, the implementation of
+
+19
+00:01:32.750 --> 00:01:36.440
+the test was closely tied
+to the, to the implementation
+
+20
+00:01:36.440 --> 00:01:39.860
+code, your classes and your
+methods, behavior driven, kind of
+
+21
+00:01:39.860 --> 00:01:42.080
+takes a step back from
+that and tries to approach
+
+22
+00:01:42.080 --> 00:01:46.340
+the problem of expressing specifications
+in a more meaningful way.
+
+23
+00:01:47.420 --> 00:01:49.850
+And whose behavior do I
+care about? Is it a
+
+24
+00:01:49.850 --> 00:01:51.950
+person's behavior or is it
+a soft piece of software's
+
+25
+00:01:51.950 --> 00:01:54.890
+behavior or is it the
+system's behavior? Yeah, I mean,
+
+26
+00:01:54.890 --> 00:01:57.800
+it definitely depends at different
+levels in your application. You
+
+27
+00:01:57.800 --> 00:02:00.500
+can write integration tests and
+that's that answer would change,
+
+28
+00:02:00.530 --> 00:02:06.140
+but something that perhaps a
+business person or, or user
+
+29
+00:02:06.470 --> 00:02:08.990
+would actually make some sense
+of, you know, is this
+
+30
+00:02:08.990 --> 00:02:12.500
+really about writing a valuable
+test? When I, when I've
+
+31
+00:02:12.500 --> 00:02:14.660
+done unit tests in the
+past, I found that I
+
+32
+00:02:14.660 --> 00:02:17.240
+was too concerned with just
+trying to get everything isolated,
+
+33
+00:02:17.540 --> 00:02:20.780
+as opposed to solving, solving
+the real problem, which is
+
+34
+00:02:20.780 --> 00:02:24.980
+working software. So just taking
+that little spin and saying
+
+35
+00:02:24.980 --> 00:02:27.530
+that behavior driven development is
+just not writing a valuable
+
+36
+00:02:27.530 --> 00:02:31.940
+test. It's about testing how
+the, what the software is
+
+37
+00:02:31.940 --> 00:02:34.850
+doing as opposed to how
+it's doing it is probably
+
+38
+00:02:34.850 --> 00:02:38.570
+the differentiating factor for me.
+That's a really interesting thing.
+
+39
+00:02:38.570 --> 00:02:40.970
+So a lot of people
+have tried to explain this
+
+40
+00:02:40.970 --> 00:02:44.180
+to me, and I've seen
+lots of different articles and
+
+41
+00:02:44.930 --> 00:02:47.720
+papers that are more academic
+and blogs that are more
+
+42
+00:02:47.720 --> 00:02:49.850
+kind of populist everyone trying
+to explain BDD, but you're
+
+43
+00:02:49.850 --> 00:02:52.160
+saying it's about writing a
+valuable test. So if I
+
+44
+00:02:52.160 --> 00:02:54.890
+just go and get in
+unit and start writing tests
+
+45
+00:02:54.890 --> 00:02:59.590
+and doing test driven development,
+kind of classic TDD, why
+
+46
+00:02:59.590 --> 00:03:02.050
+does that have less value
+than a behavior driven tests?
+
+47
+00:03:02.080 --> 00:03:06.270
+Amir? So I guess the
+best way I like to
+
+48
+00:03:06.270 --> 00:03:08.640
+explain it is that I
+don't think of at least
+
+49
+00:03:08.640 --> 00:03:11.070
+right now, I don't think
+of tests anymore as unit
+
+50
+00:03:11.100 --> 00:03:13.620
+or integration tests. I just
+think of them as coarse
+
+51
+00:03:13.620 --> 00:03:17.520
+grain or fine grain tests.
+And what I've found is
+
+52
+00:03:17.520 --> 00:03:20.730
+that having that, getting rid
+of that delineation makes it
+
+53
+00:03:20.730 --> 00:03:24.570
+easier to write specifications like
+that. And we actually write
+
+54
+00:03:24.990 --> 00:03:29.040
+inside of the InSpec test
+suite, we have contact back
+
+55
+00:03:29.070 --> 00:03:32.490
+or BDD BDD style tests
+written in any unit. And
+
+56
+00:03:32.490 --> 00:03:35.400
+they're just really around just
+getting the behavior down and
+
+57
+00:03:35.850 --> 00:03:39.180
+not really concentrating on how
+the inner intricacies or the
+
+58
+00:03:39.180 --> 00:03:43.290
+inner workings of some component
+behaves. This is just about,
+
+59
+00:03:43.650 --> 00:03:45.390
+this is about what the
+system does as a whole.
+
+60
+00:03:46.140 --> 00:03:48.720
+That's interesting. I've usually thought
+about things in terms of
+
+61
+00:03:49.080 --> 00:03:53.340
+integration, testing, unit testing, customer
+acceptance testing, and you're saying
+
+62
+00:03:53.340 --> 00:03:55.800
+fine grain and coarse grain.
+Do you mean like testing
+
+63
+00:03:55.800 --> 00:03:59.070
+little stuff or testing larger
+how the system fits together
+
+64
+00:03:59.190 --> 00:04:03.060
+type stuff? Yeah. I mean
+a pretty much it's it's
+
+65
+00:04:03.060 --> 00:04:08.550
+about, let's take a validation.
+Maybe, maybe I do a
+
+66
+00:04:08.550 --> 00:04:12.480
+lot of testing with the
+asp.net NBC. So maybe it's
+
+67
+00:04:12.480 --> 00:04:14.610
+better to test the controller
+act and all the way
+
+68
+00:04:14.610 --> 00:04:16.590
+to the database end to
+end, because that tells a
+
+69
+00:04:16.590 --> 00:04:20.910
+better story than testing just
+a validator and I'll to
+
+70
+00:04:20.930 --> 00:04:23.590
+that does I'll choose the
+core screen test over a,
+
+71
+00:04:23.590 --> 00:04:27.960
+an isolated that's around maybe
+user validation or registration, because
+
+72
+00:04:28.300 --> 00:04:30.780
+it builds a better story,
+Even though there's a lot
+
+73
+00:04:30.780 --> 00:04:32.040
+more set up to be
+done on a test like
+
+74
+00:04:32.040 --> 00:04:35.550
+that. Yeah. And maybe Matt
+can elaborate on that. I
+
+75
+00:04:35.550 --> 00:04:37.470
+was going to change gears
+a little bit. There would
+
+76
+00:04:37.470 --> 00:04:39.510
+definitely be more set up
+in that scenario, but I
+
+77
+00:04:39.510 --> 00:04:42.150
+want to go back to
+something Amir said about what
+
+78
+00:04:42.150 --> 00:04:44.880
+versus how I think most
+of your listeners, most of
+
+79
+00:04:44.880 --> 00:04:49.860
+the.net world, you know, works
+every day in imperative paradigm.
+
+80
+00:04:50.310 --> 00:04:52.650
+And so the, how is
+so much more in our
+
+81
+00:04:52.650 --> 00:04:54.690
+face and in front of
+us instead of the what.
+
+82
+00:04:55.950 --> 00:04:58.260
+And so I think that's
+one thing that a behavior
+
+83
+00:04:58.260 --> 00:05:02.430
+driven approach makes you think
+more about. In other words,
+
+84
+00:05:02.490 --> 00:05:05.070
+one of the ideas is,
+is your specifications that are
+
+85
+00:05:05.070 --> 00:05:08.700
+expressed in sentences. And so
+just taking that step back
+
+86
+00:05:08.700 --> 00:05:12.090
+and declaring what your software
+should do, I think is
+
+87
+00:05:12.090 --> 00:05:15.450
+a very valuable step. Okay.
+So, so that's, that's interesting.
+
+88
+00:05:15.450 --> 00:05:17.640
+So you, you, you pulled
+us back to this idea
+
+89
+00:05:17.640 --> 00:05:21.180
+of what the goal is,
+as opposed to the little
+
+90
+00:05:21.390 --> 00:05:24.390
+internal details of, you know,
+how I sorted this array.
+
+91
+00:05:24.390 --> 00:05:27.900
+So some unit tests might
+be checking that some array
+
+92
+00:05:27.900 --> 00:05:31.980
+is sorted correctly, or that
+I'm doing some small detail
+
+93
+00:05:31.980 --> 00:05:34.200
+oriented bit of code correctly,
+but you're thinking that the
+
+94
+00:05:34.200 --> 00:05:38.820
+larger why and why is
+this being done? And how
+
+95
+00:05:38.820 --> 00:05:40.980
+does this move? The business
+fold for forward is how
+
+96
+00:05:40.980 --> 00:05:43.560
+I should be thinking about
+my specifications. I think it's
+
+97
+00:05:43.560 --> 00:05:47.010
+a very helpful way to
+pass on intent to the
+
+98
+00:05:47.010 --> 00:05:49.200
+future software developers that are
+going to be maintaining your
+
+99
+00:05:49.200 --> 00:05:52.470
+system. A good example is
+most recent blog entries should
+
+100
+00:05:52.470 --> 00:05:55.830
+be on top, and you
+can do that in a,
+
+101
+00:05:55.830 --> 00:05:58.310
+in an in unit style.
+And as Amir mentioned, our
+
+102
+00:05:58.310 --> 00:06:00.590
+test suite for InSpec is
+written in unit and does
+
+103
+00:06:00.590 --> 00:06:02.420
+a lot of that. But
+I wanted to come back
+
+104
+00:06:02.420 --> 00:06:05.720
+to that, that declarative and
+the what versus the how,
+
+105
+00:06:06.080 --> 00:06:08.930
+and just give an example,
+you know, the most recent
+
+106
+00:06:08.930 --> 00:06:11.840
+blogs should be on top.
+And as far as the
+
+107
+00:06:11.840 --> 00:06:13.880
+set up, when you were
+talking about, it'd be more
+
+108
+00:06:13.880 --> 00:06:17.060
+set up, sometimes the field
+that set up as necessary.
+
+109
+00:06:17.060 --> 00:06:21.260
+If, if I isolated everything
+to where I'm only testing,
+
+110
+00:06:21.260 --> 00:06:24.620
+maybe the controller, I'm only
+testing a validator and, and
+
+111
+00:06:24.620 --> 00:06:27.380
+I'm not doing this in
+10 and 10 tests. What
+
+112
+00:06:27.380 --> 00:06:30.080
+I'll find is that I've
+done these fine, or these
+
+113
+00:06:30.080 --> 00:06:33.080
+units unit tests that are
+isolated. But when I start
+
+114
+00:06:33.080 --> 00:06:35.570
+up the app and work
+on maybe the front end,
+
+115
+00:06:35.840 --> 00:06:38.510
+I find that really I
+haven't done anything. I haven't
+
+116
+00:06:38.510 --> 00:06:41.360
+actually set up my database.
+I haven't created any schemes.
+
+117
+00:06:41.990 --> 00:06:44.450
+So that's what I, that's
+what I use my test
+
+118
+00:06:44.450 --> 00:06:46.820
+for us to draw is
+to force the creation of
+
+119
+00:06:46.820 --> 00:06:51.290
+the schema or forced the
+creation of something. And having
+
+120
+00:06:51.650 --> 00:06:55.340
+testing things in isolation may
+not force force that force,
+
+121
+00:06:55.340 --> 00:06:57.410
+that database to be created
+or forced that table to
+
+122
+00:06:57.410 --> 00:07:00.350
+be created. So sometimes that's
+set up as necessary. And
+
+123
+00:07:00.350 --> 00:07:02.990
+then what I find is
+that maybe after, after I've
+
+124
+00:07:02.990 --> 00:07:06.140
+done a lot of the
+upfront course grain tests, there
+
+125
+00:07:06.140 --> 00:07:09.740
+might be some intricacies that
+I want to isolate. And
+
+126
+00:07:09.860 --> 00:07:11.540
+at that point, I'll go
+with a more fine grain
+
+127
+00:07:11.540 --> 00:07:15.050
+test and it'll be more
+of a unit unit test,
+
+128
+00:07:15.050 --> 00:07:19.930
+as opposed to the end
+to end. How often do
+
+129
+00:07:19.930 --> 00:07:23.020
+you build tests of tests?
+Like if you describe putting
+
+130
+00:07:23.020 --> 00:07:26.170
+together a larger system and
+testing something like, like he
+
+131
+00:07:26.170 --> 00:07:28.750
+just said, the latest blog
+posts should be at the
+
+132
+00:07:28.750 --> 00:07:32.020
+top, all of the setup
+and all the things underneath
+
+133
+00:07:32.020 --> 00:07:33.880
+that that might need to
+test it as well. Do
+
+134
+00:07:33.880 --> 00:07:38.110
+you make, do test drive
+other tests and kind of
+
+135
+00:07:38.110 --> 00:07:40.570
+nest, or should they all
+be peers of each other
+
+136
+00:07:40.600 --> 00:07:43.540
+and have, have a lot
+of repetition, but more isolation?
+
+137
+00:07:45.490 --> 00:07:48.460
+So that's really interesting. That's
+one thing that I think
+
+138
+00:07:48.460 --> 00:07:52.420
+inspect really excels at. And
+so the first part of
+
+139
+00:07:52.420 --> 00:07:54.550
+it is, yes, you'll find
+that when you write some
+
+140
+00:07:54.550 --> 00:07:58.420
+tests, it will drive out,
+drive out more tests to
+
+141
+00:07:58.420 --> 00:08:01.720
+be written. And it's the,
+the idea is always to
+
+142
+00:08:01.750 --> 00:08:04.840
+go with the naive implementation,
+get the simplest thing in
+
+143
+00:08:04.840 --> 00:08:08.320
+place to get the application
+working. And what you'll find
+
+144
+00:08:08.320 --> 00:08:13.240
+is that do the simplest
+thing and as developers, we
+
+145
+00:08:13.240 --> 00:08:16.750
+naturally maybe do Knoll checks
+or any many different things.
+
+146
+00:08:16.750 --> 00:08:18.760
+Like if we're working with
+the dictionary, we'll make sure
+
+147
+00:08:18.760 --> 00:08:22.000
+that the key doesn't exist
+before we entered, entered. The
+
+148
+00:08:22.000 --> 00:08:25.690
+key, those kinds of things
+will, will get flushed out
+
+149
+00:08:25.900 --> 00:08:28.360
+by the TA by the
+naive implementations that you right.
+
+150
+00:08:28.930 --> 00:08:31.750
+So it may be more
+to say that when we
+
+151
+00:08:31.750 --> 00:08:36.940
+write our contexts backwards specifications,
+they're, they're driven by naive
+
+152
+00:08:36.940 --> 00:08:41.770
+implementations of the actual working
+piece of software. And then
+
+153
+00:08:41.830 --> 00:08:43.840
+another thing that ends that
+really excels at is that
+
+154
+00:08:43.840 --> 00:08:46.390
+keeping things dry. The one
+challenge that we had with
+
+155
+00:08:46.390 --> 00:08:49.600
+any unit was we would
+have common setups that would
+
+156
+00:08:49.600 --> 00:08:54.220
+exist. And just, just the
+structure of how, how an
+
+157
+00:08:54.220 --> 00:09:08.130
+unit does. So a lot
+of people think that they're
+
+158
+00:09:08.130 --> 00:09:12.300
+doing things right. If they've
+set up automated tests, you
+
+159
+00:09:12.300 --> 00:09:14.190
+know, they they've written their
+tests and then they, maybe
+
+160
+00:09:14.190 --> 00:09:17.400
+they put some continuous integration
+together and they think I've
+
+161
+00:09:17.400 --> 00:09:21.810
+arrived. And then other people
+make a real, they make
+
+162
+00:09:21.810 --> 00:09:25.470
+a differentiation between those writing
+automated tests and writing tests
+
+163
+00:09:26.010 --> 00:09:29.010
+and test driven development. But
+they might think that, you
+
+164
+00:09:29.010 --> 00:09:31.500
+know, that's, that becomes kind
+of very woo if you
+
+165
+00:09:31.500 --> 00:09:32.820
+know what I'm saying, and
+it's like, Oh, you know,
+
+166
+00:09:32.820 --> 00:09:35.970
+test driven development, you know,
+that seems like a philosophy
+
+167
+00:09:35.970 --> 00:09:37.680
+or a religion or a
+cult of some kind I've
+
+168
+00:09:37.680 --> 00:09:41.550
+got tests. I'm fine. And
+then BDD seems like kind
+
+169
+00:09:41.550 --> 00:09:44.310
+of the next logical extension
+of test driven development, giving
+
+170
+00:09:44.310 --> 00:09:48.690
+some more thought to why
+you're testing things, but it,
+
+171
+00:09:48.890 --> 00:09:52.290
+but because it's upstream of
+this kind of larger kind
+
+172
+00:09:52.290 --> 00:09:56.070
+of whoo cult, I think
+that sometimes it's not accessible
+
+173
+00:09:56.070 --> 00:10:00.190
+to the average programmer, Matt.
+I mean, do you, do
+
+174
+00:10:00.230 --> 00:10:02.810
+you follow what I'm saying?
+Yeah, I do. I think,
+
+175
+00:10:04.220 --> 00:10:07.070
+I think what you're getting
+at is, is writing your
+
+176
+00:10:07.070 --> 00:10:11.840
+tests versus hard. And it's
+actually impossible if you already
+
+177
+00:10:11.840 --> 00:10:15.140
+have an existing applications for
+which you don't have tests.
+
+178
+00:10:15.170 --> 00:10:17.630
+Right. A lot of us
+are stuck with that in
+
+179
+00:10:17.630 --> 00:10:21.950
+our day to day coding
+lives. So, so it is
+
+180
+00:10:21.950 --> 00:10:24.170
+really hard to say, you
+must always write your test
+
+181
+00:10:24.170 --> 00:10:28.700
+first. And so, so I,
+I definitely I'm aware of
+
+182
+00:10:28.700 --> 00:10:32.120
+that perception of it being
+a sort of a purist
+
+183
+00:10:32.120 --> 00:10:38.420
+or a, an elitist, whatever
+opinion out there Assessable, I
+
+184
+00:10:38.420 --> 00:10:40.220
+think would be the better
+word rather than thinking about
+
+185
+00:10:40.220 --> 00:10:44.330
+it in terms of a
+class, a class system of
+
+186
+00:10:44.330 --> 00:10:47.060
+elites versus not elites. It's
+just, it's not the obvious
+
+187
+00:10:47.060 --> 00:10:49.010
+kind of like fall into
+it. I mean, anyone can
+
+188
+00:10:49.010 --> 00:10:51.140
+go file new project, but
+not anyone could sit down
+
+189
+00:10:51.140 --> 00:10:55.280
+and write a good test.
+I think, I think what
+
+190
+00:10:55.280 --> 00:10:58.310
+I would say too is
+I know both Amir and
+
+191
+00:10:58.310 --> 00:11:00.680
+I have gotten a lot
+of mileage out of, of
+
+192
+00:11:00.710 --> 00:11:04.670
+doing code kata and hopefully
+your listeners are familiar with
+
+193
+00:11:04.670 --> 00:11:07.070
+that. We can talk about
+that more, but I think
+
+194
+00:11:07.070 --> 00:11:09.410
+it's a valuable way to
+take a break from, you
+
+195
+00:11:09.410 --> 00:11:12.170
+know, the code that you're
+stuck with at work and
+
+196
+00:11:12.200 --> 00:11:15.320
+seeing what really happens when
+I write a specification first.
+
+197
+00:11:15.320 --> 00:11:18.380
+And I think what people
+will find is that they
+
+198
+00:11:18.380 --> 00:11:23.450
+will expect the, their implementation
+code to behave better than
+
+199
+00:11:23.450 --> 00:11:25.790
+it really does. And so
+for me, it's been a
+
+200
+00:11:25.790 --> 00:11:29.720
+real humbling and I guess
+an incredibly valuable feedback cycle
+
+201
+00:11:30.170 --> 00:11:33.320
+to write that test for,
+make it, make it pass.
+
+202
+00:11:33.500 --> 00:11:36.620
+And as Amir mentioned with
+a very naive implementation, and
+
+203
+00:11:36.620 --> 00:11:40.550
+what that forces me to
+do is elaborate my specification.
+
+204
+00:11:41.000 --> 00:11:44.060
+And I've found that, that,
+that yield designs that I
+
+205
+00:11:44.060 --> 00:11:48.110
+wouldn't have come up with
+otherwise simple, very elegant designs
+
+206
+00:11:48.110 --> 00:11:51.800
+in many cases, When you've
+brought up this concept of
+
+207
+00:11:51.800 --> 00:11:54.640
+the kata, which I think
+is not everyone I think
+
+208
+00:11:54.640 --> 00:11:57.550
+is familiar with that. The,
+the idea of, of a
+
+209
+00:11:57.550 --> 00:12:00.520
+kata comes from, from martial
+arts. It's a Japanese word
+
+210
+00:12:00.580 --> 00:12:03.760
+that means form. And these
+are the motions that you
+
+211
+00:12:03.760 --> 00:12:06.700
+see people who are practicing
+martial arts, kind of going
+
+212
+00:12:06.700 --> 00:12:11.170
+through and they'll do these
+patterns most often on their
+
+213
+00:12:11.170 --> 00:12:13.990
+own. And code CADA is
+a similar kind of a
+
+214
+00:12:13.990 --> 00:12:16.570
+thing. You might think, you
+know, a martial art, you
+
+215
+00:12:16.570 --> 00:12:19.450
+might think, you know, a
+particular skill, but still you
+
+216
+00:12:19.450 --> 00:12:22.930
+go through the motions and
+the forms and remind yourself
+
+217
+00:12:22.930 --> 00:12:26.680
+of the fundamentals and code
+kata is a really great
+
+218
+00:12:26.680 --> 00:12:29.470
+way to sit down and
+do some focused personal time
+
+219
+00:12:30.130 --> 00:12:33.580
+to make sure you know,
+what you think, you know,
+
+220
+00:12:33.700 --> 00:12:38.380
+and develop a muscle memory
+and familiarize yourself with the
+
+221
+00:12:38.380 --> 00:12:41.260
+fundamentals. You guys both think
+that that's an important thing
+
+222
+00:12:41.260 --> 00:12:45.510
+for people to do. Absolutely.
+I think, and I'm not
+
+223
+00:12:45.510 --> 00:12:48.450
+a student of martial arts.
+And I think that the,
+
+224
+00:12:49.440 --> 00:12:54.390
+the metaphor breaks down for
+one reason, software, you know,
+
+225
+00:12:54.390 --> 00:12:59.370
+it's, it's meant to be
+very malleable and very, you
+
+226
+00:12:59.370 --> 00:13:01.530
+know, you can put together
+the same, same program to
+
+227
+00:13:01.530 --> 00:13:04.140
+solve a goal, an infinite
+number of ways. So that's
+
+228
+00:13:04.140 --> 00:13:06.870
+one of the really interesting
+aspects of doing the same
+
+229
+00:13:07.740 --> 00:13:11.190
+code kata over and over
+again is you'll realize there's
+
+230
+00:13:11.190 --> 00:13:14.550
+these junctures. If I had
+done that a different way,
+
+231
+00:13:14.550 --> 00:13:17.010
+what would happen? And so
+you kind of get to
+
+232
+00:13:17.010 --> 00:13:20.250
+practice these. If I, if
+I implement this requirement before
+
+233
+00:13:20.250 --> 00:13:24.270
+that requirement, what happens and
+new Dane, a lot of
+
+234
+00:13:24.270 --> 00:13:28.530
+insight into, to building really
+simple systems in practice that,
+
+235
+00:13:30.150 --> 00:13:32.760
+And Amir, have you, have
+you found that, that, that
+
+236
+00:13:32.760 --> 00:13:34.950
+kind of clarity, that one
+gets from that kind of
+
+237
+00:13:34.950 --> 00:13:37.980
+practice goes into your test?
+I mean, you really need
+
+238
+00:13:37.980 --> 00:13:39.930
+to sit down and think
+you don't just start slapping
+
+239
+00:13:39.930 --> 00:13:43.410
+out a BDD type of
+a test you, because the
+
+240
+00:13:43.410 --> 00:13:45.960
+behaviors that you're thinking about
+and the goals are driving
+
+241
+00:13:45.960 --> 00:13:48.480
+the design of the software,
+there's a certain amount of
+
+242
+00:13:48.480 --> 00:13:51.360
+consciousness and awakeness that needs
+to be happening when one's
+
+243
+00:13:51.360 --> 00:13:54.660
+writing tests like this, wouldn't
+you say? Yeah, it gets.
+
+244
+00:13:54.870 --> 00:13:56.550
+And that's what the Cod
+has really helped with is
+
+245
+00:13:56.550 --> 00:13:59.910
+that usually the problems are
+really simple. And, you know,
+
+246
+00:14:00.240 --> 00:14:03.960
+the, the biggest criticism I
+get when, when I do
+
+247
+00:14:03.960 --> 00:14:06.270
+a code caught up with
+someone that hasn't done one
+
+248
+00:14:06.270 --> 00:14:07.830
+before, is that, Oh, this
+is so easy. I can
+
+249
+00:14:07.830 --> 00:14:10.710
+code this out without writing
+any tests at all. And
+
+250
+00:14:10.830 --> 00:14:13.440
+what the code calls have
+really helped me do is
+
+251
+00:14:13.890 --> 00:14:16.380
+keep the, keep the problem
+simple and get in, get
+
+252
+00:14:16.380 --> 00:14:19.380
+that muscle memory in place.
+So what happens is that
+
+253
+00:14:19.410 --> 00:14:21.960
+when I actually have to,
+when I go to a
+
+254
+00:14:21.960 --> 00:14:25.320
+real system and there's really
+complex problems to deal with,
+
+255
+00:14:25.890 --> 00:14:27.990
+I can think back to
+my code cottage and say,
+
+256
+00:14:27.990 --> 00:14:30.330
+well, maybe I should try
+the naive implementation. What's the
+
+257
+00:14:30.330 --> 00:14:31.920
+easiest thing I can do
+to get this thing to
+
+258
+00:14:31.920 --> 00:14:35.520
+work and then build from
+there. And that's, that's personally
+
+259
+00:14:35.520 --> 00:14:38.670
+how it's, how it's helped
+me become, become better at
+
+260
+00:14:38.670 --> 00:14:41.400
+software development. Another thing is
+that you get really addicted
+
+261
+00:14:41.400 --> 00:14:44.700
+to the feedback loop. Anytime
+you, you know, you save
+
+262
+00:14:44.700 --> 00:14:47.250
+a class, you get the
+failure, the failure come up
+
+263
+00:14:47.250 --> 00:14:49.980
+and then you go and
+make the test pass. You
+
+264
+00:14:49.980 --> 00:14:53.590
+get into this rhythm that
+gets really addicting. And, and
+
+265
+00:14:53.590 --> 00:14:56.270
+then when you go back
+to your, your everyday code,
+
+266
+00:14:56.270 --> 00:14:58.610
+you want, you want to
+have that rhythm back and
+
+267
+00:14:58.890 --> 00:15:02.780
+it helps you strive towards
+getting, getting your everyday code
+
+268
+00:15:02.780 --> 00:15:06.680
+to, to fall into that
+same, same, I guess Metro,
+
+269
+00:15:09.370 --> 00:15:11.410
+This episode of Hansel minutes
+is brought to you by
+
+270
+00:15:11.410 --> 00:15:15.520
+careers 2.0 and our friends
+at stack overflow careers, 2.0
+
+271
+00:15:15.520 --> 00:15:18.190
+is the only career site
+dedicated to matching graded offers
+
+272
+00:15:18.190 --> 00:15:21.790
+with great jobs, post your
+open depositions on careers to
+
+273
+00:15:21.790 --> 00:15:26.200
+point out today, reach the
+entire development community, all 15 million
+
+274
+00:15:26.200 --> 00:15:29.590
+monthly visitors on stack overflow.
+The best part is you'll
+
+275
+00:15:29.590 --> 00:15:33.550
+receive exceptional candidates, not just
+the massive pile unqualified resumes
+
+276
+00:15:33.550 --> 00:15:36.550
+you're used to waiting through.
+We'll save you tons of
+
+277
+00:15:36.550 --> 00:15:39.430
+time and headaches and careers.
+When you're posting your job,
+
+278
+00:15:39.440 --> 00:15:42.280
+you can even choose to
+receive or candidates careers profile
+
+279
+00:15:42.310 --> 00:15:45.400
+instead of just their resume,
+making your candidates sorting, even
+
+280
+00:15:45.400 --> 00:15:48.610
+easier. The guys at stack
+overflow believe in that product
+
+281
+00:15:48.610 --> 00:15:51.250
+so much. And if you're
+not incredibly happy, they'll refund
+
+282
+00:15:51.250 --> 00:15:54.040
+your money. No questions asked.
+And to top it off
+
+283
+00:15:54.040 --> 00:15:56.470
+as a handsome minutes listener,
+you've been a free stack
+
+284
+00:15:56.470 --> 00:15:59.500
+overflow. T-shirt when you purchase
+a job listing to get
+
+285
+00:15:59.500 --> 00:16:03.190
+your free, t-shirt use the
+code Hansel minutes and check
+
+286
+00:16:03.190 --> 00:16:07.030
+out careers dot stack overflow.com.
+Once again, that URL is
+
+287
+00:16:07.030 --> 00:16:11.950
+careers dot stack overflow.com. On
+that feedback loop that you
+
+288
+00:16:11.950 --> 00:16:14.170
+bring up is something that
+you always hear, people who
+
+289
+00:16:14.170 --> 00:16:19.300
+are really into, I would
+say blank driven development, whether
+
+290
+00:16:19.300 --> 00:16:21.160
+it be test driven or
+behavior driven or demand driven
+
+291
+00:16:21.400 --> 00:16:24.130
+is this, this loop, this
+kind of a zone that
+
+292
+00:16:24.130 --> 00:16:26.710
+they get into, whether it
+be the zone of the
+
+293
+00:16:27.040 --> 00:16:30.520
+red, green refactor, but there's
+actually loops. There's kind of
+
+294
+00:16:30.520 --> 00:16:33.250
+concentric loops loops within loops.
+There's not only the feedback
+
+295
+00:16:33.250 --> 00:16:37.120
+loop between yourself and the
+tests and the acceptance test,
+
+296
+00:16:37.120 --> 00:16:39.280
+but also the user stories.
+Cause I think this is
+
+297
+00:16:39.280 --> 00:16:40.720
+the thing that we really
+need to get down to
+
+298
+00:16:40.720 --> 00:16:44.530
+here is that it's those
+user stories that, that the
+
+299
+00:16:44.530 --> 00:16:49.660
+nontechnical person understands that is
+driving the system. You know,
+
+300
+00:16:49.900 --> 00:16:52.630
+people are writing software for
+business, people who don't write
+
+301
+00:16:52.630 --> 00:16:56.680
+code and BDD is a
+way to take those, those
+
+302
+00:16:56.680 --> 00:17:02.260
+acceptance tests, those expected behaviors
+that the person that's paying
+
+303
+00:17:02.260 --> 00:17:04.930
+the bills, whether it be
+yourself or some suit somewhere
+
+304
+00:17:05.260 --> 00:17:08.980
+is asking you to implement.
+And then there's a feedback
+
+305
+00:17:08.980 --> 00:17:11.500
+loop with that suit. With
+that business person that can
+
+306
+00:17:11.500 --> 00:17:14.890
+become extremely satisfying as well.
+They write the acceptance test,
+
+307
+00:17:14.890 --> 00:17:17.740
+you turn it into a
+specification, you write the code
+
+308
+00:17:17.740 --> 00:17:20.740
+that satisfies the specification, and
+then you come back and
+
+309
+00:17:20.740 --> 00:17:23.440
+make sure that that works
+and then they can change
+
+310
+00:17:23.440 --> 00:17:26.410
+those stories. Do you, do
+you find Matt and your
+
+311
+00:17:26.680 --> 00:17:29.770
+interactions that, that that's the
+case that there's a larger
+
+312
+00:17:29.770 --> 00:17:35.170
+feedback loop? It's also very
+satisfying. I do. I I'm
+
+313
+00:17:35.170 --> 00:17:37.720
+reminded that we're in an
+audio medium. So I dunno
+
+314
+00:17:37.960 --> 00:17:41.650
+if remembering pictures is a
+good thing, but Cory Haines,
+
+315
+00:17:41.650 --> 00:17:45.250
+once drew that, that concentric
+circle that you just talked
+
+316
+00:17:45.250 --> 00:17:48.400
+about, you know, there's feedback
+with just the developer there's
+
+317
+00:17:48.400 --> 00:17:52.740
+feedback with a QA there's
+feedback to a business analyst
+
+318
+00:17:52.770 --> 00:17:55.260
+level and all the way
+back to the user level.
+
+319
+00:17:56.880 --> 00:18:00.150
+So yeah, I mean, definitely,
+definitely on the right track.
+
+320
+00:18:00.360 --> 00:18:04.260
+Another thing I'll mention is
+behavior driven development has been
+
+321
+00:18:04.260 --> 00:18:07.950
+applied kind of at two
+different levels, if you will,
+
+322
+00:18:07.980 --> 00:18:10.770
+there's the Gherkin or the
+given when then versus the
+
+323
+00:18:10.770 --> 00:18:15.350
+context specification Let's, let's slow
+down though and take that
+
+324
+00:18:15.350 --> 00:18:18.140
+apart. Cause that's, that's a
+word that I don't think
+
+325
+00:18:18.140 --> 00:18:20.750
+everyone who speaks English as
+a second language is going
+
+326
+00:18:20.750 --> 00:18:24.890
+to follow. So you said
+Gherkin and then given when
+
+327
+00:18:24.890 --> 00:18:29.300
+then can take that apart
+for me. Well, Amir, Mike
+
+328
+00:18:29.300 --> 00:18:34.070
+can talk more about that,
+but there's several varieties of,
+
+329
+00:18:34.460 --> 00:18:37.610
+of behavior driven and implementations.
+Usually they fall into two
+
+330
+00:18:37.610 --> 00:18:42.340
+categories, one that emphasizes creating
+sentences using a given wind
+
+331
+00:18:42.340 --> 00:18:46.190
+then structure, which is called
+a Gherkin syntax. And then
+
+332
+00:18:46.190 --> 00:18:50.090
+there's the context specifications side.
+So how does that work
+
+333
+00:18:50.120 --> 00:18:54.020
+as a, given something when
+this is this case than
+
+334
+00:18:54.290 --> 00:18:59.990
+something, something, something, Yeah, it
+pretty much, it's really helpful
+
+335
+00:18:59.990 --> 00:19:02.830
+for a business to maybe
+communicate in that, in that
+
+336
+00:19:03.140 --> 00:19:08.150
+vocabulary for those requirements that
+require a request, something that
+
+337
+00:19:08.150 --> 00:19:10.850
+needs to be disambiguated. So
+if there's, if there's something
+
+338
+00:19:10.850 --> 00:19:14.930
+that's a, there's some requirement
+that's fairly complex users have
+
+339
+00:19:14.930 --> 00:19:17.000
+a tendency, maybe it's just
+saying, Oh, it just needs
+
+340
+00:19:17.000 --> 00:19:19.820
+to work. Just make it
+work. And the given when
+
+341
+00:19:19.820 --> 00:19:23.210
+then some text allows, allows
+the developer to maybe communicate
+
+342
+00:19:23.210 --> 00:19:29.900
+on that level and, and
+really, really help them specify
+
+343
+00:19:29.900 --> 00:19:32.030
+what they, what they really
+want the system to do.
+
+344
+00:19:32.600 --> 00:19:35.780
+And a one, one thing
+that's one criticism that I
+
+345
+00:19:35.780 --> 00:19:37.970
+have with given one Ben,
+is that we sometimes maybe
+
+346
+00:19:37.970 --> 00:19:41.990
+overuse it for things like,
+Oh, a registered user should
+
+347
+00:19:41.990 --> 00:19:43.940
+be able to log in.
+There's no reason to go
+
+348
+00:19:43.940 --> 00:19:47.420
+through the given when then
+syntax, you know, the requirements
+
+349
+00:19:47.450 --> 00:19:51.980
+fairly straightforward. So I don't
+think we should, we should
+
+350
+00:19:52.130 --> 00:19:57.710
+force that kind of grammar
+onto, onto our VA counterpart.
+
+351
+00:19:57.950 --> 00:20:02.150
+If it's not needed contact
+back as a it's a
+
+352
+00:20:02.150 --> 00:20:06.590
+much deeper, is this a
+different approach? Maybe, maybe not
+
+353
+00:20:06.590 --> 00:20:10.370
+can elaborate on context, like
+a little bit more. Well,
+
+354
+00:20:10.370 --> 00:20:13.940
+I think context spec is,
+is better for developers trying
+
+355
+00:20:13.940 --> 00:20:19.640
+to write VDD. I think
+Gherkin style BDD implementations give
+
+356
+00:20:19.640 --> 00:20:22.070
+a lot more prominence to
+the sentence, which is good
+
+357
+00:20:22.070 --> 00:20:26.690
+when you have business people
+writing those sentences where context
+
+358
+00:20:26.780 --> 00:20:30.680
+Beck breaks it down into
+simpler terms, really where given
+
+359
+00:20:30.680 --> 00:20:33.950
+a specific context I specify
+this should happen. So it
+
+360
+00:20:33.950 --> 00:20:38.990
+really, it kind of, it
+gives less prominence to the
+
+361
+00:20:38.990 --> 00:20:41.030
+win and you can kind
+of think of given and
+
+362
+00:20:41.030 --> 00:20:45.650
+then mapping to context and
+spec in context spec, your
+
+363
+00:20:45.650 --> 00:20:48.250
+then might happen in given
+or it might happen in
+
+364
+00:20:48.250 --> 00:20:52.300
+your then it's a little
+bit more flexible. Another primary
+
+365
+00:20:52.300 --> 00:20:56.500
+differentiator I want to talk
+about is in context back,
+
+366
+00:20:56.500 --> 00:20:59.590
+it's real easy to layer
+context, and it's just something
+
+367
+00:20:59.590 --> 00:21:01.660
+you have to be really
+careful with because you can
+
+368
+00:21:01.660 --> 00:21:05.200
+take it too far, but
+it's very simple to take
+
+369
+00:21:05.200 --> 00:21:10.540
+a login context and stage
+a stage, a slightly different
+
+370
+00:21:10.540 --> 00:21:15.160
+response from say an authentication
+provider saying that authentication failed.
+
+371
+00:21:15.670 --> 00:21:20.470
+And then you can have
+slight changes in context express
+
+372
+00:21:20.480 --> 00:21:23.620
+in a very dry, easy
+way by nesting those contacts.
+
+373
+00:21:26.010 --> 00:21:28.350
+So you're, you're saying that,
+that the given when then
+
+374
+00:21:28.350 --> 00:21:32.340
+style and context specification are
+two sides of the same
+
+375
+00:21:32.340 --> 00:21:36.930
+coin. I think so. I
+mean, both both came about
+
+376
+00:21:36.930 --> 00:21:41.280
+in a similar time era,
+David Stelz I believe. And
+
+377
+00:21:41.850 --> 00:21:46.290
+Dan North both, I guess,
+sort of agreed to disagree
+
+378
+00:21:46.290 --> 00:21:50.580
+or go different directions. Sometimes
+people have said that Gherkin
+
+379
+00:21:50.580 --> 00:21:53.730
+style or given when then
+is more appropriate for integration
+
+380
+00:21:53.730 --> 00:21:57.450
+tests. Whereas context spec is
+more appropriate for unit tests.
+
+381
+00:21:57.900 --> 00:22:01.440
+I really think you can
+do either either w to
+
+382
+00:22:01.440 --> 00:22:05.130
+solve either type of a
+testing situation. I do think
+
+383
+00:22:05.130 --> 00:22:08.700
+it's, it's very definitive to
+say that Gherkin gets more
+
+384
+00:22:08.700 --> 00:22:12.750
+prominence to the sentence. There's
+no doubt about that. And
+
+385
+00:22:12.750 --> 00:22:16.140
+Gherkin, you express your spec
+as a sentence, whereas in
+
+386
+00:22:16.140 --> 00:22:20.970
+context spec, you, you express
+your spec by declaring contexts
+
+387
+00:22:21.060 --> 00:22:25.380
+and specifications. Now we, we
+do turn those into sentences
+
+388
+00:22:25.410 --> 00:22:28.560
+that look very similar to
+gherkins interphase, but the sentence
+
+389
+00:22:28.560 --> 00:22:31.530
+itself is not first class.
+Okay. Okay. Well, this is
+
+390
+00:22:31.530 --> 00:22:33.900
+a good opportunity then to
+dig a little bit into
+
+391
+00:22:33.900 --> 00:22:38.010
+end spec itself. This is
+a, a library that is
+
+392
+00:22:38.070 --> 00:22:43.080
+built on top of, Well,
+actually that's a common misconception.
+
+393
+00:22:43.350 --> 00:22:45.450
+What we've actually done is
+just taken the assertions from
+
+394
+00:22:45.450 --> 00:22:48.060
+my unit. We didn't want
+to write our own assertions
+
+395
+00:22:48.060 --> 00:22:50.640
+for, for all this stuff,
+but it's a completely separate
+
+396
+00:22:50.640 --> 00:22:54.990
+engine from unit. Okay. So
+you use the assertion library,
+
+397
+00:22:54.990 --> 00:22:56.970
+but you've pulled that out
+and made it, brought it
+
+398
+00:22:56.970 --> 00:22:59.250
+over into your own world.
+So it is, and spec
+
+399
+00:22:59.250 --> 00:23:01.040
+is on its own. So
+I could sit down and
+
+400
+00:23:01.050 --> 00:23:04.650
+go file new project, say
+perhaps use new, get and
+
+401
+00:23:04.650 --> 00:23:07.740
+say, install, package, and spec.
+And I've got everything I
+
+402
+00:23:07.740 --> 00:23:10.440
+need. I didn't go off
+and get 15 different dependencies.
+
+403
+00:23:10.440 --> 00:23:14.610
+It's pretty self contained. Yep.
+That's it. And if you
+
+404
+00:23:14.610 --> 00:23:16.830
+want another, if you want
+to use a different assertion
+
+405
+00:23:16.830 --> 00:23:19.980
+framework, like should there's really
+no problems with that. I
+
+406
+00:23:19.980 --> 00:23:22.020
+mean, inspect the way it
+works is that when an
+
+407
+00:23:22.020 --> 00:23:25.260
+exception is raised, it's a
+failing test. So the assertions
+
+408
+00:23:25.260 --> 00:23:28.080
+that were part of that
+unit raise raises exceptions. And
+
+409
+00:23:28.080 --> 00:23:31.020
+we didn't want to go
+through and try to recreate
+
+410
+00:23:31.300 --> 00:23:34.400
+or carve those pieces out,
+which is why we took
+
+411
+00:23:34.410 --> 00:23:37.620
+on that dependency. Okay. So
+I go on, I write
+
+412
+00:23:37.620 --> 00:23:40.560
+my first class library or
+take, take an application that
+
+413
+00:23:40.560 --> 00:23:44.850
+I've already got and write
+a class that derives from
+
+414
+00:23:44.850 --> 00:23:48.470
+end and other than deriving
+from end spec and using
+
+415
+00:23:48.470 --> 00:23:51.830
+the end spec library a
+mirror, what kind of, how
+
+416
+00:23:51.830 --> 00:23:53.840
+do I start with my
+functions? I mean, if I've
+
+417
+00:23:53.840 --> 00:23:56.810
+got an idea for us,
+for a spec, what is
+
+418
+00:23:56.810 --> 00:24:02.500
+my function going to look
+like? So really that's really
+
+419
+00:24:02.500 --> 00:24:05.950
+it. If you inherit from
+InSpec, you've, you've looked into
+
+420
+00:24:06.370 --> 00:24:09.340
+the, the inspect runner. So
+when you went to advanced
+
+421
+00:24:09.340 --> 00:24:11.710
+book runner executed, it we'll
+find out classes. I didn't
+
+422
+00:24:11.710 --> 00:24:14.230
+hear from Ann speck. And
+usually the way I approach
+
+423
+00:24:14.230 --> 00:24:16.960
+it as a one thing
+is that if you notice
+
+424
+00:24:17.680 --> 00:24:20.230
+within spec, we don't use
+attributes at all, or we
+
+425
+00:24:20.260 --> 00:24:24.280
+don't use attributes for any
+of our testing landmarks. So
+
+426
+00:24:24.280 --> 00:24:26.890
+the way it works is
+usually the way it's start.
+
+427
+00:24:26.890 --> 00:24:29.080
+My inspect has to keep
+it flat. Like I would
+
+428
+00:24:29.080 --> 00:24:33.580
+work with my end unit
+specifications. So I'll do it
+
+429
+00:24:33.580 --> 00:24:37.870
+underscore, which means it's a
+Testament that, or specify underscore,
+
+430
+00:24:37.870 --> 00:24:40.690
+which means it's a test
+method. So any, any method
+
+431
+00:24:40.690 --> 00:24:44.500
+that starts with it underscore
+or specify underscore is considered
+
+432
+00:24:44.500 --> 00:24:50.470
+a test, Are you saying
+it it, so it underscore,
+
+433
+00:24:50.470 --> 00:24:52.840
+and then on your website,
+you've got given underscore and
+
+434
+00:24:52.840 --> 00:24:55.480
+you've got when underscore, what
+are the differences between those?
+
+435
+00:24:56.920 --> 00:24:59.770
+So we asked that on
+a website. So there probably
+
+436
+00:24:59.770 --> 00:25:05.170
+are, there's really no difference
+given his, as we mentioned
+
+437
+00:25:05.170 --> 00:25:09.160
+earlier, as a keyword in
+Durkin given when then to
+
+438
+00:25:09.160 --> 00:25:12.400
+specify or, or to, to
+express this as a context.
+
+439
+00:25:12.910 --> 00:25:15.850
+And so it's, it's very
+natural to, to use given,
+
+440
+00:25:15.850 --> 00:25:18.880
+to express a context. I
+don't know if a mirror
+
+441
+00:25:18.880 --> 00:25:22.450
+just mentioned, but one of
+the important things that you
+
+442
+00:25:22.450 --> 00:25:24.760
+have to decide pretty early
+when you're writing your first
+
+443
+00:25:25.000 --> 00:25:29.260
+specification is what the name
+of the class, the class
+
+444
+00:25:29.260 --> 00:25:33.790
+itself is sort of a
+super level context. So you
+
+445
+00:25:33.790 --> 00:25:37.830
+might say, I'm going to
+describe tic TAC toe and,
+
+446
+00:25:37.830 --> 00:25:41.080
+and you would use the
+underscore notation or convention there,
+
+447
+00:25:41.500 --> 00:25:44.680
+and that would be your
+top level context. So then
+
+448
+00:25:45.370 --> 00:25:47.920
+when you go into write
+a method where you would
+
+449
+00:25:47.980 --> 00:25:51.700
+actually put a specification, if
+you name your method, it
+
+450
+00:25:51.700 --> 00:25:55.360
+underscores and they are mentioned
+that will be interpreted as
+
+451
+00:25:55.420 --> 00:25:58.510
+a specification itself. So then
+somewhere inside that method, you
+
+452
+00:25:58.510 --> 00:26:02.530
+would, you would have an
+assertion. And that would most
+
+453
+00:26:02.530 --> 00:26:05.020
+closely mimic an in unit
+style where I would have
+
+454
+00:26:05.020 --> 00:26:07.870
+a method with a test
+attributes. Okay. So let me
+
+455
+00:26:07.870 --> 00:26:09.310
+see if I understand this.
+So I go and I
+
+456
+00:26:09.310 --> 00:26:14.020
+say using end spec, I'll
+say class, describe underscore tic
+
+457
+00:26:14.020 --> 00:26:17.140
+TAC, toe derives from and
+spec. And then I would
+
+458
+00:26:17.140 --> 00:26:21.670
+make a method. Maybe I
+would say void, how would
+
+459
+00:26:21.670 --> 00:26:23.380
+I try to explain that
+a new game has a
+
+460
+00:26:23.380 --> 00:26:29.110
+blank board? What I used
+to say it underscore new
+
+461
+00:26:29.110 --> 00:26:33.040
+game has a blank board
+Or, or specify underscore. I
+
+462
+00:26:33.040 --> 00:26:35.470
+usually try to start flat
+like I would with any
+
+463
+00:26:35.470 --> 00:26:39.370
+unit. So I'll start my
+specifications, floods, the specify underscore,
+
+464
+00:26:39.370 --> 00:26:45.270
+and it underscore are considered
+some things constructs that performance
+
+465
+00:26:45.270 --> 00:26:49.440
+options. So my first steps
+would be maybe specify underscore
+
+466
+00:26:50.040 --> 00:26:52.920
+tic TAC toe games starts
+with a blank board and
+
+467
+00:26:52.920 --> 00:26:55.760
+I'll write a very flat,
+I'll write a very flat
+
+468
+00:26:55.770 --> 00:26:57.270
+pest similar to what you
+would do in any unit.
+
+469
+00:26:57.740 --> 00:27:00.950
+Okay. And then, so, so
+I've got the class and
+
+470
+00:27:00.950 --> 00:27:03.470
+I've got the function. What
+kind of things would I
+
+471
+00:27:03.710 --> 00:27:06.260
+want to say within the
+function? And what's the syntax
+
+472
+00:27:06.260 --> 00:27:08.480
+that would use to make
+sure that I made a
+
+473
+00:27:08.480 --> 00:27:10.100
+board and that it was
+blank when I made it.
+
+474
+00:27:11.690 --> 00:27:13.460
+So this goes back to
+just a, what would make
+
+475
+00:27:13.460 --> 00:27:15.590
+a valuable test? I would,
+I would probably say you
+
+476
+00:27:15.590 --> 00:27:18.800
+wouldn't you up a TicTacToe
+game and assert that the
+
+477
+00:27:18.800 --> 00:27:22.490
+board is empty. Now that
+would probably be the test
+
+478
+00:27:22.490 --> 00:27:24.770
+side of it. Right. But
+where does end spec come
+
+479
+00:27:24.770 --> 00:27:26.570
+into? It is from the
+perspective of like, why did
+
+480
+00:27:26.570 --> 00:27:31.700
+I need end spec for
+that? You definitely don't Because
+
+481
+00:27:31.700 --> 00:27:33.020
+what I'm, what I'm trying
+to understand is that when
+
+482
+00:27:33.020 --> 00:27:35.890
+you read about BDD and
+you, and you, if you
+
+483
+00:27:35.930 --> 00:27:38.000
+start, you know, searching around
+for it, you can see
+
+484
+00:27:38.240 --> 00:27:40.400
+there are people who advocate
+using frameworks. And then there
+
+485
+00:27:40.400 --> 00:27:45.350
+are people who advocate using
+very basic kind of almost
+
+486
+00:27:45.350 --> 00:27:47.600
+no op type methods with,
+you know, they'll have a
+
+487
+00:27:47.600 --> 00:27:50.870
+method called when or a
+method called specify that doesn't
+
+488
+00:27:50.870 --> 00:27:53.570
+really do anything, except it
+holds onto a string and
+
+489
+00:27:53.570 --> 00:27:55.880
+provides a little bit of
+context. So I'm trying to
+
+490
+00:27:55.880 --> 00:27:59.360
+understand that without, with a
+spec runner and with the
+
+491
+00:27:59.360 --> 00:28:04.790
+formalization that as something like
+an InSpec offers me, some
+
+492
+00:28:04.790 --> 00:28:07.100
+of it is convention where
+I described the class a
+
+493
+00:28:07.100 --> 00:28:08.720
+certain way and describe the
+functions a certain way. And
+
+494
+00:28:08.720 --> 00:28:12.470
+some of it is value
+added by your assertion library
+
+495
+00:28:12.500 --> 00:28:15.410
+and some of the methods
+you have, like it, and,
+
+496
+00:28:15.440 --> 00:28:18.110
+you know, should not be
+and things like that. So
+
+497
+00:28:18.110 --> 00:28:20.810
+if I'm trying to figure
+out how to assert that
+
+498
+00:28:20.810 --> 00:28:23.030
+this is the case, that
+my board is, is empty
+
+499
+00:28:23.030 --> 00:28:26.270
+and then start building up
+a bunch of tests. What
+
+500
+00:28:26.270 --> 00:28:29.330
+are some main objects that
+I would use an inspect
+
+501
+00:28:29.330 --> 00:28:32.540
+to start building that? And
+where does inspects value get,
+
+502
+00:28:32.840 --> 00:28:37.640
+become more obvious? Okay. So
+the biggest value that inspect
+
+503
+00:28:37.640 --> 00:28:40.430
+provides you would be, have
+you ever heard of the,
+
+504
+00:28:40.910 --> 00:28:44.180
+the concept of one context
+per class and then unit?
+
+505
+00:28:46.220 --> 00:28:48.350
+So the idea there is
+that you have in your
+
+506
+00:28:48.350 --> 00:28:50.960
+setup, you have this context
+that you set up and
+
+507
+00:28:50.960 --> 00:28:53.660
+then the actual test might
+this, that you write are
+
+508
+00:28:53.960 --> 00:28:56.450
+just one liners. You have
+one line assertion, right? This
+
+509
+00:28:56.450 --> 00:28:59.180
+is kind of the idea
+of single responsibility principle, except
+
+510
+00:28:59.180 --> 00:29:01.430
+applied to tests. Your, your
+test should have one bit
+
+511
+00:29:01.430 --> 00:29:03.990
+of context that you should
+be testing. And then the
+
+512
+00:29:04.040 --> 00:29:07.640
+functions all use that context.
+And they're careful to not
+
+513
+00:29:07.640 --> 00:29:10.820
+do anything else. They don't
+manipulate it. And they just
+
+514
+00:29:10.820 --> 00:29:14.660
+assert they assert what that
+context does. So the challenge
+
+515
+00:29:14.690 --> 00:29:18.470
+comes is there's this, there's
+this concept that I, that
+
+516
+00:29:18.470 --> 00:29:22.040
+I've seen is called context
+betrayal, where you have that,
+
+517
+00:29:22.040 --> 00:29:24.590
+you've set up your context
+and your setup. You have
+
+518
+00:29:24.590 --> 00:29:28.580
+a couple of persons that
+use that context, and then
+
+519
+00:29:28.580 --> 00:29:30.890
+you've got this little thing
+that DV is just the
+
+520
+00:29:30.890 --> 00:29:33.590
+tiniest bit, but you don't
+want to spend the time
+
+521
+00:29:33.590 --> 00:29:37.280
+to make another class. So
+you'll betray that you'll betray
+
+522
+00:29:37.280 --> 00:29:40.850
+that context. You'll maybe do
+a little bit more interaction
+
+523
+00:29:40.850 --> 00:29:45.490
+there and then write an
+assertion right afterwards. So the
+
+524
+00:29:45.500 --> 00:29:48.940
+context trail, you know, it
+happens with the venue because
+
+525
+00:29:48.940 --> 00:29:51.520
+you're, you have that flat
+hierarchy and what ends that
+
+526
+00:29:51.520 --> 00:29:53.710
+gives you, the dude gives
+you the ability to do
+
+527
+00:29:54.190 --> 00:29:58.000
+is nastier context. So instead
+of having to pay the
+
+528
+00:29:58.480 --> 00:30:02.110
+tax to create another class,
+or do some inheritance hierarchy,
+
+529
+00:30:02.500 --> 00:30:05.350
+you can use Lambda expressions
+directly inside of a method
+
+530
+00:30:05.800 --> 00:30:08.430
+to elaborate on the context
+and it keeps your touch
+
+531
+00:30:08.860 --> 00:30:10.390
+and you don't have to
+pay that. You don't have
+
+532
+00:30:10.390 --> 00:30:12.220
+to pay the expense of
+actually having to create another
+
+533
+00:30:12.220 --> 00:30:14.940
+class. Ah, okay. And so
+you, now here we've come
+
+534
+00:30:14.940 --> 00:30:18.060
+full circle because we were
+talking about this earlier. When
+
+535
+00:30:18.060 --> 00:30:20.550
+I asked the question about
+when I'm creating a unit
+
+536
+00:30:20.550 --> 00:30:23.640
+test, sometimes I find that
+I want to nest test
+
+537
+00:30:23.640 --> 00:30:26.040
+within tests and things become
+a little bit more complicated,
+
+538
+00:30:26.340 --> 00:30:29.880
+but in fact, systems are
+complicated and specifications having a
+
+539
+00:30:29.880 --> 00:30:33.480
+hierarchy makes sense. So you're
+saying that, and of course,
+
+540
+00:30:33.480 --> 00:30:34.950
+what I assume when I
+run this and the spec
+
+541
+00:30:34.950 --> 00:30:38.310
+runner, I'm going to get
+a nice, a hierarchical list
+
+542
+00:30:38.310 --> 00:30:42.420
+of the things that run
+with context being expressed by
+
+543
+00:30:42.430 --> 00:30:47.040
+via an indentation level. Yes.
+And there are lots of
+
+544
+00:30:47.040 --> 00:30:50.610
+examples on the website that
+show that, that context and
+
+545
+00:30:50.780 --> 00:30:54.150
+the output when you run
+the spec. Yeah. Is there
+
+546
+00:30:54.150 --> 00:30:57.630
+a particular kind of a
+BDD Bible or a book
+
+547
+00:30:57.630 --> 00:30:59.310
+that one should read? I
+mean, we can pick our
+
+548
+00:30:59.310 --> 00:31:01.320
+tools, but is there a
+particular place that I should
+
+549
+00:31:01.320 --> 00:31:04.050
+go that is considered the
+best place to get my
+
+550
+00:31:04.050 --> 00:31:07.650
+head around? How to think
+about this kind of testing?
+
+551
+00:31:08.610 --> 00:31:11.400
+I think, I don't know
+if there's any definitive resource
+
+552
+00:31:11.400 --> 00:31:14.430
+I wish there was. I
+think if you do some
+
+553
+00:31:14.430 --> 00:31:18.390
+Googling and you look at
+Dan North's original article and
+
+554
+00:31:18.840 --> 00:31:22.620
+leave it, his name is
+pronounced David Kamenski. I think
+
+555
+00:31:22.620 --> 00:31:25.380
+it's David cells that sort
+of imagined our stack and
+
+556
+00:31:25.380 --> 00:31:29.040
+Dave who implemented a lot
+of it. If you go
+
+557
+00:31:29.040 --> 00:31:32.640
+read the introductory blog posts
+for our spec, you can,
+
+558
+00:31:33.330 --> 00:31:36.720
+he actually walks you through
+writing effect. And those are
+
+559
+00:31:36.720 --> 00:31:40.530
+two really good resources I'm
+here. Do you think that
+
+560
+00:31:40.530 --> 00:31:44.790
+the Dan Norris introducing BDD
+article from back in 2006
+
+561
+00:31:44.790 --> 00:31:47.250
+is a good place to
+start? Yeah, I think there's
+
+562
+00:31:47.250 --> 00:31:49.800
+a really helpful, and there's
+actually a couple of key
+
+563
+00:31:49.800 --> 00:31:51.900
+points that I probably would
+want to go over and
+
+564
+00:31:52.290 --> 00:31:55.560
+just having these key points,
+it helps a BDD click
+
+565
+00:31:55.560 --> 00:32:00.990
+on what it's trying to
+do. So let's think about,
+
+566
+00:32:01.090 --> 00:32:03.420
+I hate using this class,
+but let's think about a
+
+567
+00:32:03.420 --> 00:32:06.750
+car. Okay. When I re
+when you write a unit,
+
+568
+00:32:06.960 --> 00:32:09.450
+when you write a test
+against the car, we might,
+
+569
+00:32:10.140 --> 00:32:12.900
+a non BDD test would
+be a car, has four
+
+570
+00:32:12.900 --> 00:32:17.130
+wheels. It's a very simple
+test. Well, we can rewrite
+
+571
+00:32:17.130 --> 00:32:19.380
+the assertion on. Then you
+have the car verified that
+
+572
+00:32:19.380 --> 00:32:24.110
+the count for the wheels
+is four, right? So the,
+
+573
+00:32:24.420 --> 00:32:28.110
+the flight change behavior driven
+development makes is you don't
+
+574
+00:32:28.110 --> 00:32:30.780
+test structure. You don't test
+whether the car has four
+
+575
+00:32:30.780 --> 00:32:34.890
+wheels. You test what would
+happen? Why, why does the
+
+576
+00:32:34.890 --> 00:32:37.230
+car need wheels? So maybe
+the test actually needs to
+
+577
+00:32:37.230 --> 00:32:40.850
+be when driving a car.
+It, it says that it's
+
+578
+00:32:40.850 --> 00:32:44.270
+drivable if it has what
+wheels. So I imply structure
+
+579
+00:32:44.300 --> 00:32:48.020
+as opposed to testing the
+structure directly. So these are
+
+580
+00:32:48.020 --> 00:32:50.450
+the, those are just the
+subtle things about behavior and
+
+581
+00:32:50.450 --> 00:32:56.360
+development that, that, you know,
+it's tricky. And I, I
+
+582
+00:32:56.360 --> 00:32:58.550
+want to point out, I
+think this is a, this
+
+583
+00:32:58.550 --> 00:33:01.430
+was a big insight for
+me to, you know, not
+
+584
+00:33:01.430 --> 00:33:05.030
+specifying structure or, or not
+specifying just structure, but always
+
+585
+00:33:05.030 --> 00:33:08.210
+specifying some element of behavior
+and then letting the structure
+
+586
+00:33:08.270 --> 00:33:10.880
+sort of be implied. What,
+what I just thought of
+
+587
+00:33:10.880 --> 00:33:14.060
+is back to our TicTacToe
+example, if you'll remember, I
+
+588
+00:33:14.060 --> 00:33:18.170
+think the specification we discussed
+was pretty much structure only.
+
+589
+00:33:18.620 --> 00:33:21.890
+So another, another good specification
+to maybe start with that's
+
+590
+00:33:21.950 --> 00:33:26.720
+a better approach from a
+behavioral perspective is to players
+
+591
+00:33:26.720 --> 00:33:30.560
+take turns or players take
+turns. So that would introduce
+
+592
+00:33:30.560 --> 00:33:33.470
+the concept of players and
+the turn and the fact
+
+593
+00:33:33.470 --> 00:33:38.410
+that it alternated, or maybe
+another test and maybe a
+
+594
+00:33:38.420 --> 00:33:42.050
+fairly easy test would be
+a board that is completely
+
+595
+00:33:42.050 --> 00:33:46.070
+full, is considered. The game
+is concerned ended when the
+
+596
+00:33:46.070 --> 00:33:50.150
+game is won, the board
+is full, right? So you
+
+597
+00:33:50.150 --> 00:33:53.540
+can imply that it has
+nine squares by, by, by
+
+598
+00:33:53.540 --> 00:33:56.290
+verifying that the game is
+complete. Yeah. And that, I
+
+599
+00:33:56.290 --> 00:33:58.750
+think that's a really good
+place to, to end it,
+
+600
+00:33:58.750 --> 00:34:01.690
+because I think that if
+you can find that language
+
+601
+00:34:01.690 --> 00:34:04.930
+that clicks for you, that's
+where BDD starts to make
+
+602
+00:34:04.930 --> 00:34:06.760
+more sense. I mean, like
+that the example you just
+
+603
+00:34:06.760 --> 00:34:09.550
+gave there, given that the
+board is full, you know,
+
+604
+00:34:09.550 --> 00:34:11.800
+when there are no moves
+left, then the game is
+
+605
+00:34:11.800 --> 00:34:14.230
+over there. This is the
+initial context and event has
+
+606
+00:34:14.230 --> 00:34:17.770
+occurred. And then there are
+some, some outcome, and even
+
+607
+00:34:17.770 --> 00:34:22.120
+the simple idea of having
+expressive methods and expressive classes
+
+608
+00:34:23.080 --> 00:34:26.920
+and start building a sentence
+makes you realize that writing
+
+609
+00:34:26.920 --> 00:34:33.130
+tests about things like the
+board has nine little details,
+
+610
+00:34:33.130 --> 00:34:35.380
+like kind of like the
+board has nine squares. And
+
+611
+00:34:35.380 --> 00:34:38.230
+if the squares length that,
+you know, that that's almost
+
+612
+00:34:38.230 --> 00:34:39.940
+like not seeing the forest
+for the trees. And it
+
+613
+00:34:39.940 --> 00:34:42.850
+seems like BDD really is
+about focusing on the forest,
+
+614
+00:34:44.050 --> 00:34:49.000
+Right? So people can check
+out and spec@inspect.org and we'll
+
+615
+00:34:49.000 --> 00:34:51.160
+put up links to some
+of the different articles that
+
+616
+00:34:51.160 --> 00:34:53.200
+we've talked about and people
+can download that and check
+
+617
+00:34:53.200 --> 00:34:56.440
+it out. Thanks a lot,
+guys. I appreciate you talking
+
+618
+00:34:56.440 --> 00:34:59.290
+to me today. Thanks. Thanks
+for having us. It's been
+
+619
+00:34:59.290 --> 00:35:03.160
+fun. This has been another
+episode of Hansel minutes. We'll
+
+620
+00:35:03.160 --> 00:35:04.540
+see you again next week.
+

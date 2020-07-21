@@ -1,0 +1,3907 @@
+WEBVTT FILE
+
+1
+00:00:04.920 --> 00:00:17.090
+<inaudible> From Hansel minutes.com. It's
+Hansel minutes, but weekly discussion
+
+2
+00:00:17.090 --> 00:00:21.350
+with web developer and technologists.
+Scott Hanselman hosted by Carl Franklin.
+
+3
+00:00:21.920 --> 00:00:27.590
+This is Lawrence Ryan announcing show
+number 26. Recorded Monday, July 24th, 2006.
+
+4
+00:00:28.340 --> 00:00:31.490
+Support for Hanselman it's just
+provided by COVID Smith tools,
+
+5
+00:00:32.000 --> 00:00:35.810
+makers of code Smith, an
+extensible template based code generator
+
+6
+00:00:35.810 --> 00:00:39.860
+for.net and now handsome and
+its listeners get $100 off
+
+7
+00:00:39.860 --> 00:00:45.890
+COVID Smith professional with coupon
+code H M 100 online@covidsmithtools.com.
+
+8
+00:00:46.580 --> 00:00:49.430
+And don't forget to visit
+Peter bloom.com. Start with better
+
+9
+00:00:49.430 --> 00:00:59.090
+controls finish with better sites
+online@peterblum.com and.net developers journal the
+
+10
+00:00:59.090 --> 00:01:04.580
+world's leading dotnet developer magazine
+online at www dot <inaudible>
+
+11
+00:01:04.730 --> 00:01:13.250
+dot com. In this episode,
+Scott discusses internationalization. Hi, this
+
+12
+00:01:13.250 --> 00:01:16.070
+is Carl Franklin. Welcome back to
+another great episode of Hansel
+
+13
+00:01:16.070 --> 00:01:19.250
+minutes. I'm here with Scott
+Hanselman. Hi, Scott all are
+
+14
+00:01:19.250 --> 00:01:22.820
+Carl and I'm never here
+with anybody else, but you
+
+15
+00:01:22.850 --> 00:01:26.090
+it's all about Scott, the
+show in case you haven't
+
+16
+00:01:26.090 --> 00:01:33.050
+been listening today, the topic
+is internationalization. See, Carl has
+
+17
+00:01:33.050 --> 00:01:41.540
+been that <inaudible> it's the
+episode. <inaudible> Just kidding. So,
+
+18
+00:01:41.840 --> 00:01:45.740
+so what are we talking
+about today? International? Good, very
+
+19
+00:01:45.740 --> 00:01:48.830
+exciting. More exciting in Spanish,
+but still We're in a
+
+20
+00:01:48.830 --> 00:01:51.770
+little bit of a wacky
+mood. I am feeling rather
+
+21
+00:01:51.770 --> 00:01:55.100
+well, 104 degrees in Portland
+right now. Yeah. So I'm
+
+22
+00:01:55.100 --> 00:02:00.620
+looking for any opportunity to
+say <inaudible> very good until
+
+23
+00:02:00.620 --> 00:02:02.810
+that opportunity comes up. It's
+going to be an English
+
+24
+00:02:02.810 --> 00:02:05.660
+today. So are we just
+talking about websites or are
+
+25
+00:02:05.660 --> 00:02:08.690
+we talking about windows applications
+too? What's a, I know
+
+26
+00:02:08.690 --> 00:02:11.150
+you're a web guy. I'm
+a web guy, but, But
+
+27
+00:02:11.150 --> 00:02:13.190
+everything that we're talking about
+for the most part is
+
+28
+00:02:13.190 --> 00:02:15.890
+going to apply to just
+internationalization as a concept because
+
+29
+00:02:16.310 --> 00:02:18.950
+underneath all of the stuff
+that we're talking about, there
+
+30
+00:02:18.950 --> 00:02:22.040
+is the notion of the
+current threads culture and the
+
+31
+00:02:22.040 --> 00:02:25.100
+current threads Culture. So we'll
+probably talk about it. Yeah.
+
+32
+00:02:25.130 --> 00:02:28.220
+It's be.net and some of
+the general culture things, but
+
+33
+00:02:28.430 --> 00:02:30.500
+most of these things apply
+to a, to win forums
+
+34
+00:02:30.500 --> 00:02:35.210
+as well. Okay, great. Let's
+get started. So most people
+
+35
+00:02:35.210 --> 00:02:37.820
+think about internationalization as being
+just, you know, you make
+
+36
+00:02:37.820 --> 00:02:40.700
+a bunch of resources and
+you put all your strings
+
+37
+00:02:40.700 --> 00:02:42.950
+in another, in another folder
+and it's all good. Is
+
+38
+00:02:42.950 --> 00:02:44.900
+that pretty much sum it
+up for you? Yeah, that's
+
+39
+00:02:44.900 --> 00:02:47.090
+pretty much the way I
+thought about it. I haven't
+
+40
+00:02:47.090 --> 00:02:52.100
+done it. So, you know,
+so sometimes The terms, internationalization,
+
+41
+00:02:52.130 --> 00:02:56.300
+globalization and localization are all
+used interchangeably. Yes. I've noticed
+
+42
+00:02:56.300 --> 00:03:00.880
+this internationalization and globalization are
+mostly synonyms. They are preparing
+
+43
+00:03:00.880 --> 00:03:05.620
+your application to be localized
+localizing. Your application is the
+
+44
+00:03:05.620 --> 00:03:09.580
+actual converting of your application
+to use strings from a
+
+45
+00:03:09.580 --> 00:03:12.400
+particular language. So I can
+write an application in English,
+
+46
+00:03:13.060 --> 00:03:16.360
+have it globalized, but not
+yet localized. And then when
+
+47
+00:03:16.360 --> 00:03:18.470
+I translate it into Spanish,
+it might then become a
+
+48
+00:03:18.470 --> 00:03:22.380
+little Localized application. So, so
+globalization is what you do,
+
+49
+00:03:22.380 --> 00:03:26.070
+Judy or application to make
+it localized to the user
+
+50
+00:03:26.430 --> 00:03:29.730
+locally. It's a bowl localizable
+to the user. Yeah, exactly.
+
+51
+00:03:30.510 --> 00:03:33.060
+There's all Sorts of great
+places to start. When you're
+
+52
+00:03:33.060 --> 00:03:36.720
+learning about this stuff. There's
+a really great article by
+
+53
+00:03:36.720 --> 00:03:42.270
+a wing mainly@on.net, which is
+at shrink stir slash GV
+
+54
+00:03:42.360 --> 00:03:45.750
+E. And this is a
+really great article. It talks
+
+55
+00:03:45.750 --> 00:03:50.760
+about asp.net to O localization,
+but in some of the
+
+56
+00:03:50.760 --> 00:03:55.140
+improvements that they've made back
+in the day, if you
+
+57
+00:03:55.140 --> 00:03:59.160
+wanted to change the current
+thread, you know, the current
+
+58
+00:03:59.190 --> 00:04:01.770
+executing thread to a different
+culture, you had to do
+
+59
+00:04:01.980 --> 00:04:04.920
+this kind of work yourself.
+Basically it worked like this.
+
+60
+00:04:04.980 --> 00:04:08.370
+There is the, you know,
+system dot threading dot thread
+
+61
+00:04:08.370 --> 00:04:11.460
+dot current thread tells you
+all sorts of information about
+
+62
+00:04:11.460 --> 00:04:15.900
+the current executing thread with
+asp.net. You're pulling threads of
+
+63
+00:04:15.900 --> 00:04:18.300
+execution from a pool. So
+even though Carl might go
+
+64
+00:04:18.300 --> 00:04:21.000
+from page one dot ASP
+X to page two and
+
+65
+00:04:21.000 --> 00:04:24.060
+have a sense of continuity,
+that sense of continuity on
+
+66
+00:04:24.060 --> 00:04:26.820
+the service side is really
+artificial. You have things like
+
+67
+00:04:26.820 --> 00:04:30.000
+the session object to maintain
+state, and that thread of
+
+68
+00:04:30.000 --> 00:04:31.860
+execution is going to be
+different. It needs to be
+
+69
+00:04:31.860 --> 00:04:35.250
+set up for the user
+before the page starts executing.
+
+70
+00:04:35.640 --> 00:04:38.490
+So in the past, it's
+been a very common to
+
+71
+00:04:38.490 --> 00:04:41.490
+sniff the browser and say,
+well, what language does this
+
+72
+00:04:41.490 --> 00:04:46.350
+browser speak? Because if you
+go to tools, options, languages
+
+73
+00:04:46.380 --> 00:04:49.260
+in a internet Explorer and
+in a similar menu in
+
+74
+00:04:49.260 --> 00:04:52.860
+Firefox, people will set up
+a list of languages that
+
+75
+00:04:52.860 --> 00:04:55.260
+they speak in the order
+that they prefer to get
+
+76
+00:04:55.260 --> 00:04:59.280
+them. And those are returned
+in a header, an HTP
+
+77
+00:04:59.280 --> 00:05:02.520
+header that's passed in every
+time you request something from
+
+78
+00:05:02.520 --> 00:05:05.730
+your, from your server. So
+you look at this except
+
+79
+00:05:05.730 --> 00:05:09.060
+languages header, and on most
+systems it'll say Ian or
+
+80
+00:05:09.090 --> 00:05:12.300
+Ian us, or Ian UK.
+But for example, if you're
+
+81
+00:05:12.300 --> 00:05:15.750
+visiting from Morocco, they may
+want English first, French second,
+
+82
+00:05:15.750 --> 00:05:18.630
+and Arabic third, or in
+some order like that. So
+
+83
+00:05:18.630 --> 00:05:22.080
+it's really been the responsibility
+of the person on the
+
+84
+00:05:22.080 --> 00:05:25.110
+server to look at that
+except languages header. And they
+
+85
+00:05:25.110 --> 00:05:28.800
+typically use that with request
+dot user languages. And if
+
+86
+00:05:28.800 --> 00:05:30.570
+they wanted the first one,
+they would say, request out
+
+87
+00:05:30.570 --> 00:05:33.390
+user language is at zero.
+They pull off that, that
+
+88
+00:05:33.420 --> 00:05:37.230
+culture that's an ISO or
+an international standards organization, standard
+
+89
+00:05:37.920 --> 00:05:43.800
+language identifier, like E N
+U S or a Z
+
+90
+00:05:43.800 --> 00:05:47.760
+H H H H K
+would be Chinese in Hong Kong.
+
+91
+00:05:48.900 --> 00:05:51.480
+And they would take that
+and create what's called a
+
+92
+00:05:51.480 --> 00:05:54.600
+culture info object. And that
+culture info optic would get
+
+93
+00:05:54.600 --> 00:05:58.430
+stuck on the current thread.
+Now, this is very interesting.
+
+94
+00:05:58.430 --> 00:06:02.210
+I always thought that localization
+happened at the application level.
+
+95
+00:06:02.210 --> 00:06:05.980
+You're saying it happens at
+the thread level. Well, the
+
+96
+00:06:05.980 --> 00:06:08.110
+systems re the, the, the,
+all the, all of the
+
+97
+00:06:08.110 --> 00:06:12.040
+goodness in localization, as far
+as pulling strings out stems
+
+98
+00:06:12.040 --> 00:06:14.950
+from a thing called system
+dot resources and system dot
+
+99
+00:06:14.950 --> 00:06:17.530
+resources is the namespace that
+handles all of the reading
+
+100
+00:06:17.530 --> 00:06:20.470
+and writing of resources. It's
+got four major classes, resource
+
+101
+00:06:20.470 --> 00:06:24.910
+manager, reader, resource set, and
+resource writer. And you typically
+
+102
+00:06:24.910 --> 00:06:27.130
+call this function, get string.
+So you say, you know,
+
+103
+00:06:27.130 --> 00:06:29.650
+make a resource manager and
+you call get string, get
+
+104
+00:06:29.650 --> 00:06:34.810
+string looks at the current
+threads, UI culture for its
+
+105
+00:06:34.810 --> 00:06:37.780
+resource selection. So if I
+go and say system dot,
+
+106
+00:06:37.780 --> 00:06:41.170
+threading dot current thread dot
+current UI culture equals blah,
+
+107
+00:06:41.170 --> 00:06:43.900
+blah, blah, blah, blah, Ian
+U S. And when I
+
+108
+00:06:43.900 --> 00:06:46.180
+asked the resource manager later,
+it's going to go and
+
+109
+00:06:46.180 --> 00:06:50.500
+look for U S type
+stuff. Makes perfect sense. Because
+
+110
+00:06:50.530 --> 00:06:53.890
+you may be serving on
+a website. You know, every
+
+111
+00:06:54.070 --> 00:06:56.980
+thread is a different user
+and every thread can be
+
+112
+00:06:57.130 --> 00:07:00.100
+looking at a different expression
+of the site. Exactly. Yep.
+
+113
+00:07:00.130 --> 00:07:04.480
+The current UI culture is
+for resource selection. The current
+
+114
+00:07:04.480 --> 00:07:06.400
+culture is a different thing,
+and this can be a
+
+115
+00:07:06.400 --> 00:07:09.310
+little confusing. It's the thing
+that handles formatting of dates,
+
+116
+00:07:09.640 --> 00:07:13.570
+numbers, and string comparisons. So
+these can be different. You
+
+117
+00:07:13.570 --> 00:07:15.100
+could say, well, I speak
+French, but I want my
+
+118
+00:07:15.100 --> 00:07:18.850
+data numbers and stuff done
+in, in Spanish. Now with
+
+119
+00:07:18.850 --> 00:07:21.550
+a WinForms person, this has
+done automatically for you. So
+
+120
+00:07:21.550 --> 00:07:24.400
+whatever the current system is
+set up for, you'll just
+
+121
+00:07:24.400 --> 00:07:28.210
+inherit, right? You could force
+your application to work in
+
+122
+00:07:28.210 --> 00:07:30.880
+English on a French system
+by setting the culture manually
+
+123
+00:07:30.880 --> 00:07:35.290
+yourself. Now I had kept
+saying Ian U S as
+
+124
+00:07:35.290 --> 00:07:39.670
+an example, but the end
+part is the non specific
+
+125
+00:07:40.000 --> 00:07:41.920
+part of things. It's just
+saying English, right? It's not
+
+126
+00:07:41.920 --> 00:07:44.650
+making any judgments about English
+were just like I could
+
+127
+00:07:44.650 --> 00:07:48.520
+say IES. And that would
+mean Spanish. Well ESBL dash
+
+128
+00:07:48.580 --> 00:07:51.790
+MX means Spanish in Mexico
+versus E S E S,
+
+129
+00:07:51.790 --> 00:07:55.630
+which is Spanish in Spain.
+So there's a hierarchy and
+
+130
+00:07:55.630 --> 00:07:58.750
+that hierarchy can become very
+powerful. So let's say that
+
+131
+00:07:58.750 --> 00:08:02.290
+my application has a hundred
+strings and I'm going to
+
+132
+00:08:02.290 --> 00:08:05.470
+have, by default, my application
+will be in English. So
+
+133
+00:08:05.470 --> 00:08:08.260
+I might have my default
+resources, LinkedIn with my main
+
+134
+00:08:08.260 --> 00:08:11.740
+application. So I've got a
+hundred strings name, value pairs,
+
+135
+00:08:11.740 --> 00:08:16.720
+and they're all LinkedIn defaults
+English, but I want to
+
+136
+00:08:16.720 --> 00:08:19.990
+have three different strings of
+those hundred, be different for
+
+137
+00:08:19.990 --> 00:08:23.350
+people in the UK. I
+could make an Ian dash
+
+138
+00:08:23.350 --> 00:08:27.850
+UK satellite assembly, a separate
+assembly that would live underneath
+
+139
+00:08:27.850 --> 00:08:32.860
+my Ben folder with just
+those three different strings. And
+
+140
+00:08:32.860 --> 00:08:35.170
+then we'll have what's called
+resource fallback. If I request
+
+141
+00:08:35.170 --> 00:08:37.420
+a string that's in that
+assembly, I'll get it. If
+
+142
+00:08:37.420 --> 00:08:39.550
+I request a string, that's
+not in that assembly will
+
+143
+00:08:39.550 --> 00:08:44.320
+fall back using a standard
+fallback hierarchy. Scott, is there
+
+144
+00:08:44.320 --> 00:08:46.990
+a naming convention for these
+assemblies? Did you, do you
+
+145
+00:08:46.990 --> 00:08:49.960
+have to name it and
+dash UK dot DLL? Or
+
+146
+00:08:49.960 --> 00:08:52.990
+is it a, There is
+a naming convention. It typically
+
+147
+00:08:52.990 --> 00:09:00.780
+it's whatever you want, dot
+locale.dll.resources.deal. So I typically say
+
+148
+00:09:00.780 --> 00:09:03.420
+things like, you know, Constance
+dot E N U S
+
+149
+00:09:03.420 --> 00:09:08.100
+dot resources dot DLL, and
+someone like Michelle. Michelle Bustamante
+
+150
+00:09:08.130 --> 00:09:13.170
+has a really good article
+on best practices and internationalization.
+
+151
+00:09:13.410 --> 00:09:16.290
+And that is at shrinks
+or slash G V eight.
+
+152
+00:09:16.920 --> 00:09:22.050
+And she suggests things like
+a glossary, separate assembly and
+
+153
+00:09:22.050 --> 00:09:24.840
+a one for global things.
+And one for local things.
+
+154
+00:09:24.840 --> 00:09:28.170
+And one for Constance, you
+can lay this out really
+
+155
+00:09:28.170 --> 00:09:31.560
+any way that you want
+with asp.net one. Oh, it
+
+156
+00:09:31.560 --> 00:09:34.140
+was all about you. You
+got to make the decisions
+
+157
+00:09:34.140 --> 00:09:36.660
+you had to do all
+the work. Typically you would
+
+158
+00:09:37.290 --> 00:09:40.500
+in the begin request event
+before any page got loaded,
+
+159
+00:09:40.500 --> 00:09:42.840
+you'd go and look at
+their cookies. See if they
+
+160
+00:09:42.840 --> 00:09:45.990
+had overwritten something with some
+profile settings that you said
+
+161
+00:09:45.990 --> 00:09:48.750
+elected. If they didn't have
+a specific preference, you'd look
+
+162
+00:09:48.750 --> 00:09:51.570
+at their request, user languages,
+and then you'd set the
+
+163
+00:09:51.570 --> 00:09:54.540
+current threat up. So then
+later on, when the page
+
+164
+00:09:54.540 --> 00:09:57.150
+actually got around to executing,
+your thread would be prepared
+
+165
+00:09:57.150 --> 00:10:00.000
+for, you know what I'm
+saying? It wouldn't be up
+
+166
+00:10:00.000 --> 00:10:01.620
+to the page to do
+that work. It really be
+
+167
+00:10:01.620 --> 00:10:05.190
+up to the, the begin
+requests. You know, a module
+
+168
+00:10:05.310 --> 00:10:07.950
+earlier in the process. Now
+an ass be done have
+
+169
+00:10:08.010 --> 00:10:11.100
+to, Oh, all that's done
+for you because they've added
+
+170
+00:10:11.220 --> 00:10:14.400
+new stuff on the page
+at the page director where
+
+171
+00:10:14.400 --> 00:10:16.140
+you go like at page.
+And then you have all
+
+172
+00:10:16.140 --> 00:10:18.150
+that information at the very
+first line of the page,
+
+173
+00:10:18.300 --> 00:10:22.080
+right? You can say culture
+equals auto UI culture, equal
+
+174
+00:10:22.080 --> 00:10:26.670
+auto and asp.net will automatically
+map those, those except language
+
+175
+00:10:26.700 --> 00:10:30.270
+HTTP headers to a culture
+info object and put them
+
+176
+00:10:30.270 --> 00:10:33.350
+on the current thread. Now,
+Scott, here's the question for
+
+177
+00:10:33.350 --> 00:10:35.540
+you? You know, you always
+see you go to these
+
+178
+00:10:35.540 --> 00:10:38.810
+big conglomerate websites. And the
+first thing they do is
+
+179
+00:10:38.810 --> 00:10:42.020
+they ask you to pick
+a country. Is that more
+
+180
+00:10:42.050 --> 00:10:44.630
+of, you know, they have
+different content based on what
+
+181
+00:10:44.630 --> 00:10:48.770
+country you're in or is
+that language? I mean, you
+
+182
+00:10:48.770 --> 00:10:50.540
+know, I mean, why are
+they asking you to pick
+
+183
+00:10:50.540 --> 00:10:53.720
+your culture? If, if the
+browser already knows what culture
+
+184
+00:10:53.720 --> 00:10:58.670
+you're in, You have absolutely
+nailed my number one, pet
+
+185
+00:10:58.670 --> 00:11:02.180
+peeve about this. It is
+so stupid to get to
+
+186
+00:11:02.180 --> 00:11:04.100
+a site and have them
+ask me what language I
+
+187
+00:11:04.100 --> 00:11:05.990
+speak when they don't know,
+they know darn well, what
+
+188
+00:11:05.990 --> 00:11:08.060
+language I speak. Yeah. I
+also don't like it when
+
+189
+00:11:08.060 --> 00:11:10.520
+applications say, you know, if
+you have an awesome browser
+
+190
+00:11:10.520 --> 00:11:13.010
+and you have a big
+monitor, go here. Yeah. They
+
+191
+00:11:13.010 --> 00:11:17.000
+know this stuff. JavaScript knows
+your monitor size, you know,
+
+192
+00:11:17.030 --> 00:11:20.390
+your browser. It's just silly.
+If, if, if I've actually
+
+193
+00:11:20.390 --> 00:11:22.280
+gone to the effort to
+put French as my number
+
+194
+00:11:22.280 --> 00:11:26.660
+one language will for goodness
+sake, give me French. If
+
+195
+00:11:26.690 --> 00:11:30.110
+Google does a great job
+about this, not only do
+
+196
+00:11:30.110 --> 00:11:33.410
+they let you select your
+own language, you can go
+
+197
+00:11:33.410 --> 00:11:36.740
+into the preferences section of
+Google from their homepage and
+
+198
+00:11:36.740 --> 00:11:38.840
+say, you know, I really
+want my, my language to
+
+199
+00:11:38.840 --> 00:11:41.330
+be Zulu. So you can
+go in. And the very
+
+200
+00:11:41.330 --> 00:11:44.060
+first choice they have under
+preferences is select the language,
+
+201
+00:11:44.120 --> 00:11:45.860
+go all the way to
+the bottom. You hit Zulu,
+
+202
+00:11:46.430 --> 00:11:50.060
+hit, save preferences, visit a
+Google. And it actually says
+
+203
+00:11:50.060 --> 00:11:53.380
+right at the top, Google
+is Zulu. And I think
+
+204
+00:11:53.380 --> 00:11:55.840
+that's so cool. They, they,
+they know this stuff about
+
+205
+00:11:55.840 --> 00:11:59.860
+you. If you visit Google
+by going tools, options, languages,
+
+206
+00:11:59.860 --> 00:12:04.450
+and select any language, Google
+knows it that's really classy
+
+207
+00:12:04.900 --> 00:12:07.270
+of Google. It would be
+lame if they put every,
+
+208
+00:12:07.420 --> 00:12:09.640
+a flag of every country
+in the entire world up
+
+209
+00:12:09.640 --> 00:12:14.050
+on your, so personally, we
+like to make that a
+
+210
+00:12:14.080 --> 00:12:16.870
+default to the language they
+say, they speak and give
+
+211
+00:12:16.870 --> 00:12:18.610
+them the choice to override
+it. I think that's the
+
+212
+00:12:18.610 --> 00:12:22.110
+right thing to do. Wikipedia.org
+has that, but is that
+
+213
+00:12:22.110 --> 00:12:24.630
+a little bit different? Because
+they have, So that's a
+
+214
+00:12:24.630 --> 00:12:27.960
+very interesting point because Wikipedia
+has totally different amounts of
+
+215
+00:12:27.960 --> 00:12:30.540
+content, right? So they have
+much less Spanish than they
+
+216
+00:12:30.540 --> 00:12:34.140
+do in English. And The
+content seems to is cultural
+
+217
+00:12:34.140 --> 00:12:36.510
+by nature. Right? Right, Right.
+So in an instance like
+
+218
+00:12:36.510 --> 00:12:38.760
+that, it would be appropriate
+in my opinion, to sniff
+
+219
+00:12:38.760 --> 00:12:42.570
+the browser, using requests that
+use your languages and depending
+
+220
+00:12:42.570 --> 00:12:45.600
+on what content you have
+available, redirect them to that
+
+221
+00:12:45.600 --> 00:12:48.240
+separate part of your site
+And still let them choose,
+
+222
+00:12:48.240 --> 00:12:50.640
+you know, other languages. If
+they, you know, if you're
+
+223
+00:12:50.640 --> 00:12:52.980
+a French speaking English person,
+you might want to look
+
+224
+00:12:52.980 --> 00:12:57.090
+something up in French. A
+very interesting point, because as
+
+225
+00:12:57.090 --> 00:12:59.940
+a, as a person involved
+in banking, we're dealing with
+
+226
+00:13:00.000 --> 00:13:02.340
+folks that speak other languages,
+but are typically using a
+
+227
+00:13:02.340 --> 00:13:04.710
+certain kind of currency. So
+what if you're a German
+
+228
+00:13:04.710 --> 00:13:08.910
+guy banking with a Japanese
+bank, you know, ideally you'd
+
+229
+00:13:08.910 --> 00:13:11.700
+want to see in and
+see it in German. But
+
+230
+00:13:11.700 --> 00:13:13.740
+then it gets to an
+interesting question. And this is
+
+231
+00:13:13.740 --> 00:13:17.130
+one of the, the, the
+little details about internationalization. A
+
+232
+00:13:17.130 --> 00:13:20.940
+lot of people forget about
+is what about input? What
+
+233
+00:13:20.940 --> 00:13:24.900
+do the dates look like?
+What do the decimals look
+
+234
+00:13:24.900 --> 00:13:28.560
+like? Displaying a date using
+the current culture is really
+
+235
+00:13:28.560 --> 00:13:31.710
+easy. If you use a
+tool like Chris sells format
+
+236
+00:13:31.710 --> 00:13:36.030
+designer at strengthener slash G
+U Q, you can use
+
+237
+00:13:36.180 --> 00:13:38.640
+the two string features in,
+in windows. So I can
+
+238
+00:13:38.640 --> 00:13:44.520
+say daytime.now, dot two string
+quote, capital D. And that
+
+239
+00:13:44.520 --> 00:13:46.440
+capital D is a format
+string that will say, I
+
+240
+00:13:46.440 --> 00:13:48.690
+want a long date, but
+it doesn't just say, I
+
+241
+00:13:48.690 --> 00:13:50.070
+want a long date. It
+says, I want a long
+
+242
+00:13:50.070 --> 00:13:53.990
+date given the current culture.
+Now, you know, in, in
+
+243
+00:13:54.030 --> 00:13:58.860
+the States, you'll get Monday
+comma, September 25th, that duh, but
+
+244
+00:13:58.950 --> 00:14:01.590
+elsewhere, you might get an
+entirely different string. And if
+
+245
+00:14:01.590 --> 00:14:03.720
+you're speaking a language, that's
+not even close to English
+
+246
+00:14:03.750 --> 00:14:06.510
+or you're speaking Arabic or
+Hebrew or whatever, you're going
+
+247
+00:14:06.510 --> 00:14:10.470
+to get all those characters
+as well. Now it's very
+
+248
+00:14:10.470 --> 00:14:13.740
+ethnocentric of us as Americans
+to assume that month, day,
+
+249
+00:14:13.740 --> 00:14:16.260
+year is the way to
+go. I was just going
+
+250
+00:14:16.260 --> 00:14:19.530
+to say this because I
+was interview interviewing Adam Cogan.
+
+251
+00:14:19.980 --> 00:14:22.620
+And he says, do you
+know that the United States has
+
+252
+00:14:22.620 --> 00:14:25.770
+the most screwed up date
+format in the entire world?
+
+253
+00:14:25.800 --> 00:14:28.230
+It's different than everyone else
+in the world? Is this
+
+254
+00:14:28.230 --> 00:14:30.390
+what you're going to talk
+about? Yeah. I was talking
+
+255
+00:14:30.390 --> 00:14:34.110
+to a Clemens masters and
+I said, I was telling
+
+256
+00:14:34.110 --> 00:14:36.930
+him how nine 11 really
+messed me up. And he
+
+257
+00:14:36.930 --> 00:14:38.910
+said, yeah, November 9th was a
+really rough day for me
+
+258
+00:14:38.910 --> 00:14:42.600
+too. You know? And I
+was like, wow, she kind
+
+259
+00:14:42.600 --> 00:14:44.160
+of shook me for a
+second there. And I realized
+
+260
+00:14:44.160 --> 00:14:45.630
+that, you know, who, who
+are we to take over
+
+261
+00:14:45.630 --> 00:14:49.770
+an entire date? Yeah. So
+do that a lot. If
+
+262
+00:14:49.770 --> 00:14:53.570
+you set your current culture
+to a specific date format,
+
+263
+00:14:54.110 --> 00:14:57.500
+what's called a date format
+info object. You're not just
+
+264
+00:14:57.500 --> 00:15:00.410
+making a contract with the
+user that you're going to
+
+265
+00:15:00.410 --> 00:15:03.170
+show month, day, year, or
+day, month year, but that
+
+266
+00:15:03.170 --> 00:15:06.620
+you're going to also accept
+them. And this can be
+
+267
+00:15:06.620 --> 00:15:08.720
+a real problem for folks
+that don't think about that
+
+268
+00:15:08.960 --> 00:15:12.530
+within the context of JavaScript
+validation. This is one of
+
+269
+00:15:12.530 --> 00:15:15.980
+the primary reasons that I
+started using Peter blems validation
+
+270
+00:15:15.980 --> 00:15:20.630
+controls is that he actually
+detects the current, the current
+
+271
+00:15:20.630 --> 00:15:24.290
+culture on the server side
+and generates the correct JavaScript
+
+272
+00:15:24.740 --> 00:15:28.610
+to do localized JavaScript validation
+based on the date format.
+
+273
+00:15:28.790 --> 00:15:31.630
+Peter, you need to raise
+your prices. Yeah. You're giving
+
+274
+00:15:31.630 --> 00:15:33.520
+this stuff away. He does
+need to raise his prices.
+
+275
+00:15:34.780 --> 00:15:38.740
+That feature is huge. If
+you're doing internationalization, internationalization and
+
+276
+00:15:38.740 --> 00:15:41.860
+JavaScript is hard, hard, hard,
+no fun. Yeah. He really
+
+277
+00:15:41.860 --> 00:15:45.490
+made that easy. So I
+like that. Now one, a
+
+278
+00:15:45.490 --> 00:15:48.370
+little plug for myself though,
+and which calls back to
+
+279
+00:15:48.370 --> 00:15:51.430
+an article that was written
+at MSDN about internationalization and
+
+280
+00:15:51.430 --> 00:15:54.220
+the article was at shrinks
+or slash GUP. And I
+
+281
+00:15:54.220 --> 00:15:57.190
+modified it at shrink stir
+slash G U V as
+
+282
+00:15:57.190 --> 00:16:00.730
+in Victor was this notion
+of what's called pseudo internationalization.
+
+283
+00:16:01.390 --> 00:16:04.840
+Now this is really cool.
+Typically people will start out
+
+284
+00:16:04.840 --> 00:16:07.600
+with the project and they'll
+say, we really want someday
+
+285
+00:16:07.600 --> 00:16:11.860
+to translate that, translate this
+into Spanish. And they'll kind
+
+286
+00:16:11.860 --> 00:16:14.440
+of start kind of half-assed
+and they'll maybe change a
+
+287
+00:16:14.440 --> 00:16:17.140
+couple strings to OLAW and
+then they'll say, why we're
+
+288
+00:16:17.140 --> 00:16:21.430
+we're done well, pseudo internationalization,
+we'll take a Residex file
+
+289
+00:16:21.430 --> 00:16:25.060
+written in English, and it
+will convert every single character
+
+290
+00:16:25.420 --> 00:16:28.960
+to a high Latin character,
+right? A non a through
+
+291
+00:16:28.960 --> 00:16:33.340
+Z character like you with
+a new lot or Schwab
+
+292
+00:16:33.340 --> 00:16:36.070
+or just whatever, and turn
+it into a funky character,
+
+293
+00:16:36.250 --> 00:16:39.820
+but it's still readable. So
+go to shrink, stir slash
+
+294
+00:16:39.850 --> 00:16:41.860
+G UV and check this
+out. I think you'll appreciate
+
+295
+00:16:41.860 --> 00:16:45.220
+it. And it gives you
+an example of what these
+
+296
+00:16:45.220 --> 00:16:48.550
+kinds of things would look
+like. So I might have
+
+297
+00:16:48.550 --> 00:16:51.910
+a string like transaction download.
+And what I want to
+
+298
+00:16:51.910 --> 00:16:54.370
+do is not only change
+the string. So I can
+
+299
+00:16:54.400 --> 00:16:57.130
+prove that my application works
+with non-lab, you know, high,
+
+300
+00:16:57.130 --> 00:17:00.460
+high order characters, nonstandard characters.
+It doesn't, it doesn't mess
+
+301
+00:17:00.460 --> 00:17:04.540
+up the encoding, but four
+sentences of a certain length.
+
+302
+00:17:04.900 --> 00:17:07.150
+You need to expand them.
+You need to make them
+
+303
+00:17:07.150 --> 00:17:10.210
+fatter because other languages might
+make a sentence as big,
+
+304
+00:17:10.360 --> 00:17:13.840
+as big as a 30,
+40% larger. So a pseudo
+
+305
+00:17:13.840 --> 00:17:15.880
+internationalize here will not only
+take all of your English
+
+306
+00:17:16.060 --> 00:17:19.030
+and convert it into a
+funky language, a pretend language.
+
+307
+00:17:19.030 --> 00:17:21.610
+It's a, it's a pseudo
+language, but it'll also make
+
+308
+00:17:21.610 --> 00:17:25.180
+your strings longer. This allows
+you to see if I
+
+309
+00:17:25.180 --> 00:17:27.670
+translate this into German, is
+it gonna make my rapping
+
+310
+00:17:27.670 --> 00:17:31.420
+look bad? Right? If you
+put this in the context
+
+311
+00:17:31.420 --> 00:17:34.270
+of a continuous integration system
+where you're doing your builds
+
+312
+00:17:34.270 --> 00:17:40.330
+automatically, you can automatically pseudo
+internationalize your entire application and
+
+313
+00:17:40.330 --> 00:17:42.580
+know what it will look
+like in a foreign language
+
+314
+00:17:43.270 --> 00:17:46.270
+without having to have a
+really tight loop with the
+
+315
+00:17:46.390 --> 00:17:50.220
+internationalization folks. You see what
+I'm saying? Yeah. With this
+
+316
+00:17:50.220 --> 00:17:53.010
+particular format, which is so
+funky, but still very readable
+
+317
+00:17:53.490 --> 00:17:56.070
+English stands out on the
+page and that's how you
+
+318
+00:17:56.070 --> 00:17:59.730
+go. Ooh, I missed that
+label. Oh, I totally forgot
+
+319
+00:17:59.730 --> 00:18:03.540
+this button. See what I'm
+saying? It's a very, very
+
+320
+00:18:03.540 --> 00:18:06.080
+nice technique. So Scott, Let
+me ask you a question
+
+321
+00:18:06.080 --> 00:18:11.930
+about Unicode because you know,
+most Westerners and most people
+
+322
+00:18:11.930 --> 00:18:15.710
+in the United States only experience
+the ASCII internet, you know,
+
+323
+00:18:15.710 --> 00:18:18.200
+the English internet. But if
+you go to like a
+
+324
+00:18:18.200 --> 00:18:21.470
+Korean or Japanese or a
+Chinese website, you're going to
+
+325
+00:18:21.470 --> 00:18:24.590
+find all sorts of strange
+characters. And it's because their
+
+326
+00:18:24.590 --> 00:18:29.750
+alphabets are bigger than 26
+letters or 256 possible combinations
+
+327
+00:18:29.780 --> 00:18:37.310
+or characters. How does Unicode
+help us in.net? Well, I
+
+328
+00:18:37.310 --> 00:18:38.690
+can, I'll explain a little
+bit of it to you,
+
+329
+00:18:38.690 --> 00:18:41.990
+but for the, for the
+full on version checkout, Joel
+
+330
+00:18:41.990 --> 00:18:44.120
+on software, he's got a
+great article that shrinks her
+
+331
+00:18:44.120 --> 00:18:48.800
+slash V six. The article
+is entitled a modestly, the
+
+332
+00:18:48.800 --> 00:18:52.190
+absolute minimum, every software developer
+absolutely positively must know about
+
+333
+00:18:52.190 --> 00:18:55.850
+Unicode and character sets no
+excuses. It sounds like something
+
+334
+00:18:55.850 --> 00:18:57.620
+that I would have would
+have written, but he beat
+
+335
+00:18:57.620 --> 00:19:00.890
+me to it by about
+three years. And so, you
+
+336
+00:19:00.890 --> 00:19:03.140
+know, the idea is that
+back in the day, right,
+
+337
+00:19:03.800 --> 00:19:07.520
+when you know, EBC DIC,
+right. Episodic was on the
+
+338
+00:19:07.520 --> 00:19:11.090
+way out when episodic was
+on the way out, ASCII
+
+339
+00:19:11.090 --> 00:19:14.030
+was really the way things
+were happening, where letter a
+
+340
+00:19:14.030 --> 00:19:16.340
+started at 65 and, you
+know, the kind of stuff
+
+341
+00:19:16.340 --> 00:19:18.620
+that you would see in
+dos. And you'd see in
+
+342
+00:19:18.620 --> 00:19:20.450
+char map, if you look
+at the first zero to
+
+343
+00:19:20.450 --> 00:19:23.870
+two 55, And we're talking
+about the United States here, Well,
+
+344
+00:19:23.870 --> 00:19:26.030
+we're starting with United States to
+start with because we're the
+
+345
+00:19:26.030 --> 00:19:27.800
+ones that said, Oh, it's
+going to be this way.
+
+346
+00:19:27.890 --> 00:19:30.080
+Right, right. But you're varying
+bringing up a very valid
+
+347
+00:19:30.080 --> 00:19:32.390
+point because I did a
+lot of work in like
+
+348
+00:19:32.420 --> 00:19:38.410
+91, 92, we were translating
+applications like NEC machines in
+
+349
+00:19:38.450 --> 00:19:40.700
+that spoke Japanese. And you
+had to load these things
+
+350
+00:19:40.700 --> 00:19:44.630
+called code pages up into,
+into Ram and mess with
+
+351
+00:19:44.630 --> 00:19:50.690
+them basically on, on a
+one PC, one character code
+
+352
+00:19:50.690 --> 00:19:53.810
+would be an E with
+an Oxycontin goo. And on
+
+353
+00:19:53.810 --> 00:19:56.450
+another one, it would be
+a Hebrew letter, Hebrew letter,
+
+354
+00:19:56.450 --> 00:20:01.010
+this and that they would
+assign different meaning to different
+
+355
+00:20:01.010 --> 00:20:03.620
+characters. So we might think
+a was 65, but they
+
+356
+00:20:03.620 --> 00:20:06.770
+might disagree. They would have
+a code page that would
+
+357
+00:20:06.770 --> 00:20:11.720
+map those codes for their
+purposes. Right. Usually everyone would
+
+358
+00:20:11.720 --> 00:20:15.380
+leave the zero through one
+27 numbers to themselves, but
+
+359
+00:20:15.380 --> 00:20:18.110
+they figured above, you know,
+above their one 28 to
+
+360
+00:20:18.110 --> 00:20:21.200
+two 55 was pretty much
+just a playground. Yeah. So
+
+361
+00:20:21.200 --> 00:20:24.080
+then you'd have these code
+pages and there's a whole
+
+362
+00:20:24.080 --> 00:20:26.630
+pile of them. If you
+can go Google for, you
+
+363
+00:20:26.630 --> 00:20:30.200
+know, dos code pages and
+you'll find that there's lots
+
+364
+00:20:30.200 --> 00:20:33.680
+of different code pages out
+there, mostly one for different
+
+365
+00:20:33.680 --> 00:20:36.740
+country, you know, Israel had
+their own yada yada yada.
+
+366
+00:20:37.550 --> 00:20:41.150
+So this was just a
+way of putting a pair
+
+367
+00:20:41.150 --> 00:20:44.240
+of Rose colored glasses on
+top of some encoded data.
+
+368
+00:20:45.020 --> 00:20:47.410
+So sometimes you'll, you'll do
+that. Now you'll arrive at
+
+369
+00:20:47.410 --> 00:20:49.240
+a page and it'll look
+like crap. And then you'll
+
+370
+00:20:49.240 --> 00:20:52.780
+go up to the view
+menu and say encoding more.
+
+371
+00:20:52.780 --> 00:20:54.400
+And there's a whole list
+of all the different code
+
+372
+00:20:54.400 --> 00:20:56.950
+pages that could still be
+encoded out there on the
+
+373
+00:20:56.950 --> 00:20:58.720
+internet. If you do that
+now, you'd be surprised how
+
+374
+00:20:58.720 --> 00:21:01.240
+big the menu is on
+your browser. Just go view
+
+375
+00:21:01.540 --> 00:21:04.900
+and coding more. And in
+this huge thing, flies open
+
+376
+00:21:04.900 --> 00:21:07.200
+that tells you all these
+code pages that were were,
+
+377
+00:21:07.300 --> 00:21:09.990
+were out there. And we're
+still talking about mapping over
+
+378
+00:21:09.990 --> 00:21:14.460
+a single octet. Right? Exactly.
+Exactly. This is the, the,
+
+379
+00:21:14.520 --> 00:21:17.100
+the server didn't tell me
+enough information. I couldn't glean
+
+380
+00:21:17.100 --> 00:21:19.860
+it. So, you know, you
+know, better. Yeah. So then
+
+381
+00:21:19.860 --> 00:21:21.900
+we started doing the whole
+double bite character set, and
+
+382
+00:21:21.900 --> 00:21:25.110
+that's what I started doing.
+The Japanese stuff myself, where
+
+383
+00:21:25.110 --> 00:21:27.690
+some of the letters were
+stored in, in two bites.
+
+384
+00:21:28.170 --> 00:21:30.360
+And then it became really
+difficult because when someone said,
+
+385
+00:21:30.360 --> 00:21:32.730
+what is the length of
+the string? Well, what do
+
+386
+00:21:32.730 --> 00:21:35.490
+you mean by length? Right?
+Characters, do you mean mean
+
+387
+00:21:35.490 --> 00:21:38.940
+bites Gary Lang? And this is
+a, I remember adding some
+
+388
+00:21:38.940 --> 00:21:42.120
+code at Crescent software that
+we had some Japanese port
+
+389
+00:21:42.180 --> 00:21:45.240
+of some of our tools
+in, in this was a
+
+390
+00:21:45.240 --> 00:21:49.050
+problem. It was double byte
+characters, but, but it was
+
+391
+00:21:49.050 --> 00:21:54.000
+still within the context to
+ask you. Yeah. So Unicode
+
+392
+00:21:54.000 --> 00:21:57.420
+introduces this notion of being
+called a code point, which
+
+393
+00:21:57.420 --> 00:22:01.950
+is just, you know, a
+number that represents a glyphs,
+
+394
+00:22:01.980 --> 00:22:05.940
+right. A particular, a particular
+letter in, in some language,
+
+395
+00:22:06.120 --> 00:22:08.310
+but it doesn't necessarily say
+anything about how it's going
+
+396
+00:22:08.310 --> 00:22:10.980
+to be encoded. It kind
+of leaves that part up
+
+397
+00:22:10.980 --> 00:22:15.810
+to the implementers. So Unicode
+isn't saying it shall be
+
+398
+00:22:15.810 --> 00:22:18.210
+and coded like this. It's
+just a catalog of all
+
+399
+00:22:18.210 --> 00:22:21.720
+of these different code points
+that say a, is you
+
+400
+00:22:21.720 --> 00:22:26.280
+41? Why just cause and
+what a ends up looking
+
+401
+00:22:26.280 --> 00:22:28.230
+like on disc is w
+was up to some other
+
+402
+00:22:28.230 --> 00:22:31.050
+people. And then there was
+the whole issue of high
+
+403
+00:22:31.050 --> 00:22:35.010
+Indian and low Indian. Can
+you explain that again? So
+
+404
+00:22:35.220 --> 00:22:40.650
+uni code goes with assigns
+a number to every letter
+
+405
+00:22:40.650 --> 00:22:42.720
+in all the different alphabets
+and celebrities that are out
+
+406
+00:22:42.720 --> 00:22:46.110
+there. Actually, there is actually
+definition of every letter in
+
+407
+00:22:46.110 --> 00:22:49.320
+every culture in Unicode, Everyone
+that has been submitted to
+
+408
+00:22:49.320 --> 00:22:52.110
+the Unicode organization that they've
+said, yes. That's cool. I
+
+409
+00:22:52.110 --> 00:22:57.030
+see. So like if you
+go up and look@aunicode.org, I
+
+410
+00:22:57.030 --> 00:23:01.710
+think, I think Ethiopian Amharic
+got in recently uni code.org.
+
+411
+00:23:01.920 --> 00:23:03.630
+And there's a whole list
+I can cling ons in
+
+412
+00:23:03.630 --> 00:23:06.030
+there probably now. So you
+can go and say, you
+
+413
+00:23:06.030 --> 00:23:09.300
+go click on Unicode character,
+database. They just got version
+
+414
+00:23:09.300 --> 00:23:11.760
+five out. You can click
+on it. You can go
+
+415
+00:23:11.760 --> 00:23:15.510
+and say, well, what's changed.
+What's new code charts. And
+
+416
+00:23:15.510 --> 00:23:17.550
+then go in. And there's
+a whole online edition that
+
+417
+00:23:17.550 --> 00:23:22.140
+you can order and check
+out the database full of
+
+418
+00:23:22.140 --> 00:23:24.180
+all these different things. So
+if there's a particular character
+
+419
+00:23:24.180 --> 00:23:26.400
+that you're fond of, you
+know, some Tamel character or
+
+420
+00:23:26.400 --> 00:23:29.640
+whatever that has a number
+that's assigned to it, right.
+
+421
+00:23:30.150 --> 00:23:32.670
+A is 41. That's the
+only one I know. I
+
+422
+00:23:32.670 --> 00:23:34.320
+assume be as 42, I'd
+have to look it up.
+
+423
+00:23:34.650 --> 00:23:36.510
+You can find all this
+with char map, right? If
+
+424
+00:23:36.510 --> 00:23:38.490
+you just go file, you
+know, start run char map,
+
+425
+00:23:38.580 --> 00:23:41.940
+that's all up there. So
+those numbers though, don't necessarily
+
+426
+00:23:41.940 --> 00:23:45.290
+say how that will look
+on disc now a is
+
+427
+00:23:45.290 --> 00:23:48.110
+41, which means that it
+would be really nice to
+
+428
+00:23:48.110 --> 00:23:50.780
+go and say, Hey is
+going to be 41 on
+
+429
+00:23:50.780 --> 00:23:54.380
+disk. Right. Right. But if
+we go and say, well,
+
+430
+00:23:54.410 --> 00:23:56.870
+Unicode is every, everything's two
+bites. Cause we're going to
+
+431
+00:23:56.870 --> 00:23:59.930
+do UCS two and everything
+will be two bites. Then
+
+432
+00:23:59.930 --> 00:24:04.370
+a would be zero, zero
+four one. Okay. But are
+
+433
+00:24:04.370 --> 00:24:06.680
+we talking about big Indian
+or low Indian, right. Which
+
+434
+00:24:06.680 --> 00:24:09.890
+at which end is the
+most significant. Okay. Sure. So
+
+435
+00:24:09.890 --> 00:24:12.650
+then it could be zero,
+zero four, one or four
+
+436
+00:24:12.650 --> 00:24:15.050
+one zero zero. So this
+is when you see things
+
+437
+00:24:15.050 --> 00:24:18.620
+like that, refer to the
+Unicode bomb, the BOM, that's
+
+438
+00:24:18.620 --> 00:24:21.890
+the byte order. Mark. This
+is a, a, it's a
+
+439
+00:24:21.890 --> 00:24:24.230
+weird thing, but it's basically,
+we'll put two bites at
+
+440
+00:24:24.230 --> 00:24:26.750
+the beginning of any Unicode
+string. That'll tell you whether
+
+441
+00:24:26.750 --> 00:24:29.380
+or not we're big Indian
+or little Indian. It's amazing
+
+442
+00:24:29.380 --> 00:24:31.960
+to me that in 2006,
+we're still dealing with the
+
+443
+00:24:31.960 --> 00:24:35.100
+difference between big Indian and
+little again. We just, well,
+
+444
+00:24:35.110 --> 00:24:37.650
+we can't, we settle on
+this now. Come on. Do
+
+445
+00:24:37.650 --> 00:24:42.730
+you know that that, that
+Macs are big Indian and
+
+446
+00:24:42.730 --> 00:24:45.100
+the internet is big Indian.
+So max don't have to
+
+447
+00:24:45.100 --> 00:24:47.560
+do any work to translate
+stuff as they drop it
+
+448
+00:24:47.560 --> 00:24:50.830
+onto the internet because TCP
+IP at that low, low,
+
+449
+00:24:50.830 --> 00:24:53.680
+low, low level is big
+Indian, but Intel is, is
+
+450
+00:24:53.680 --> 00:24:57.700
+little Indian. So the network
+cards or the software somewhere
+
+451
+00:24:57.700 --> 00:24:59.050
+deep in the stack, I
+don't know. I think it's
+
+452
+00:24:59.050 --> 00:25:00.700
+in the, in the card
+now, but it used to
+
+453
+00:25:00.700 --> 00:25:03.100
+be in the stack where
+as things headed out, we
+
+454
+00:25:03.100 --> 00:25:04.750
+had to flip it. And
+as it came back in,
+
+455
+00:25:04.750 --> 00:25:08.230
+we flipped it back to
+like every single bite that
+
+456
+00:25:08.230 --> 00:25:11.230
+was going out was getting
+moved, flipped around because Intel
+
+457
+00:25:11.230 --> 00:25:14.440
+is not the same as
+TCP. And it looks like
+
+458
+00:25:14.470 --> 00:25:17.140
+that's not going to change
+anytime soon, You know, do
+
+459
+00:25:17.140 --> 00:25:19.870
+I care? This is right.
+And any problem in computer
+
+460
+00:25:19.870 --> 00:25:22.480
+science is solved by one
+additional layer of obstructions to
+
+461
+00:25:23.020 --> 00:25:26.380
+hide it from me, lie
+to me. And I'm cool
+
+462
+00:25:26.380 --> 00:25:28.600
+with that. So this bite
+order, Mark, that was really
+
+463
+00:25:28.600 --> 00:25:31.390
+important because sometimes you'll see
+this in the wild. Not
+
+464
+00:25:31.390 --> 00:25:34.030
+always you'll see this, but
+this is one of the
+
+465
+00:25:34.030 --> 00:25:36.070
+reasons I really like notepad
+too. Because if you run
+
+466
+00:25:36.070 --> 00:25:38.620
+notepad to at the very
+bottom of notepad, two in
+
+467
+00:25:38.620 --> 00:25:41.350
+the M in the status
+bar, it tells you whether
+
+468
+00:25:41.350 --> 00:25:43.450
+or not you're looking at
+a Unicode file or a
+
+469
+00:25:43.450 --> 00:25:46.660
+UTF file. And if you
+go file in coding with
+
+470
+00:25:46.660 --> 00:25:48.850
+a notepad two, you can
+switch back and forth between
+
+471
+00:25:48.850 --> 00:25:52.120
+these different encodings two different
+times. This week, I had
+
+472
+00:25:52.120 --> 00:25:56.740
+to debug a problem where
+someone thought, excuse me, two
+
+473
+00:25:56.740 --> 00:25:58.570
+different times this week I
+had to debug a problem
+
+474
+00:25:58.570 --> 00:26:00.610
+where someone thought a file
+was saved a certain way,
+
+475
+00:26:00.760 --> 00:26:02.770
+but it wasn't. And it
+turned out. It was because
+
+476
+00:26:02.770 --> 00:26:06.220
+their text editor wasn't advertising
+that fact, right? They could
+
+477
+00:26:06.220 --> 00:26:08.620
+go save as, and at
+the bottom of the save
+
+478
+00:26:08.620 --> 00:26:12.130
+as dialog, select utfh for
+their encoding, but it kept
+
+479
+00:26:12.130 --> 00:26:14.260
+getting encoded as antsy and
+they lost data. So they
+
+480
+00:26:14.260 --> 00:26:16.840
+opened up back again and
+they ended up getting, you
+
+481
+00:26:16.840 --> 00:26:22.720
+know, black squares. Hmm. So
+anyway, those code points, sorry,
+
+482
+00:26:22.720 --> 00:26:24.640
+you were gonna say, I
+just said, that's really lame.
+
+483
+00:26:25.630 --> 00:26:27.250
+This is life though. The
+thing is, if you stick
+
+484
+00:26:27.250 --> 00:26:31.090
+with utfh and you read
+this article by Joel and
+
+485
+00:26:31.120 --> 00:26:35.050
+you use editors that understand
+utfh nine times out of
+
+486
+00:26:35.050 --> 00:26:38.350
+10, you'll be fine. Things
+go wrong. When you don't
+
+487
+00:26:38.350 --> 00:26:42.220
+realize that a string isn't
+a certain encoding and you
+
+488
+00:26:42.220 --> 00:26:45.960
+make an assumption like you
+might do utfh everywhere, but
+
+489
+00:26:45.960 --> 00:26:48.000
+maybe you're talking to some
+old database or some old
+
+490
+00:26:48.000 --> 00:26:51.480
+backend system. And you've been
+thinking, yeah, we're internationalized. We're
+
+491
+00:26:51.480 --> 00:26:54.240
+great, but you've never done
+a test. You've never taken
+
+492
+00:26:54.240 --> 00:26:57.090
+the word Jose and sent
+it through the system, saved
+
+493
+00:26:57.090 --> 00:26:59.640
+it and brought it back.
+So you never really know.
+
+494
+00:26:59.820 --> 00:27:02.100
+And then one day you
+sent Jose in and it
+
+495
+00:27:02.100 --> 00:27:05.310
+comes back hoes, and then
+you are screwed or hosed
+
+496
+00:27:05.430 --> 00:27:08.490
+at that point because you
+never tested it. Right. So
+
+497
+00:27:08.490 --> 00:27:12.300
+always include some internationalized data
+in your testing and round
+
+498
+00:27:12.300 --> 00:27:15.420
+trip. It it's so important.
+Another really common thing people
+
+499
+00:27:15.420 --> 00:27:18.000
+do is they'll make an
+XML file to retrieve an
+
+500
+00:27:18.000 --> 00:27:20.820
+XML file from somewhere. And
+they'll look at that first
+
+501
+00:27:20.820 --> 00:27:23.400
+line, the prologue there, where
+it'll say, you know, question
+
+502
+00:27:23.400 --> 00:27:28.290
+Mark XML and coding equals
+utfh, but there's never anything
+
+503
+00:27:28.830 --> 00:27:31.770
+inside that file that is
+in fact Unicode or unit
+
+504
+00:27:31.810 --> 00:27:36.540
+utfh. So they'll never know
+that their system ultimately doesn't
+
+505
+00:27:36.540 --> 00:27:38.820
+understand it. I've worked with
+a number of mainframes that
+
+506
+00:27:39.180 --> 00:27:42.630
+we're bringing back XML data,
+but they were just strained,
+
+507
+00:27:42.630 --> 00:27:45.300
+concatenating the data. And they
+just assume that that line
+
+508
+00:27:45.300 --> 00:27:46.950
+at the top was important
+and they would just stick
+
+509
+00:27:46.950 --> 00:27:50.490
+utfh at the top, but
+they couldn't handle anything other
+
+510
+00:27:50.490 --> 00:27:53.870
+than asking. Yeah. This might
+be a kind of a
+
+511
+00:27:53.870 --> 00:27:57.200
+strange, or I don't know
+if I'm talking under or
+
+512
+00:27:57.200 --> 00:27:59.990
+over people here, but I
+want to know what, what's
+
+513
+00:27:59.990 --> 00:28:03.560
+the difference between all these
+different formats utfh ANSI ASCII,
+
+514
+00:28:03.800 --> 00:28:06.080
+give us a little primer.
+So w We can read
+
+515
+00:28:06.080 --> 00:28:09.440
+this Joel on software article.
+It's great. But ASCII was
+
+516
+00:28:10.010 --> 00:28:14.600
+basically an agreement that zero
+through two 55 would be
+
+517
+00:28:14.600 --> 00:28:18.110
+these characters, right? This did,
+that became the ANSI standard,
+
+518
+00:28:18.200 --> 00:28:20.360
+right? Everyone agrees that we're
+going to do one thing
+
+519
+00:28:21.310 --> 00:28:24.170
+up to a hundred, up
+to a one 27. And
+
+520
+00:28:24.170 --> 00:28:26.720
+then from there on, you
+know, knock yourself out, right.
+
+521
+00:28:26.900 --> 00:28:30.200
+Unicode gets together and, and
+figuring out all these different
+
+522
+00:28:30.200 --> 00:28:32.690
+code points and then comes
+up, and this is important.
+
+523
+00:28:32.690 --> 00:28:34.550
+It comes up with a
+number of ways to encode
+
+524
+00:28:34.550 --> 00:28:38.240
+the same data. So you
+can take this a Unicode
+
+525
+00:28:38.240 --> 00:28:41.330
+code point and save it
+as a file as Unicode,
+
+526
+00:28:41.750 --> 00:28:46.460
+or save it as utfh
+or UCS or whatever In
+
+527
+00:28:46.460 --> 00:28:49.610
+UTF seven, also, right. Of
+UCF seven. So there's all
+
+528
+00:28:49.610 --> 00:28:51.860
+these different ways, and you're
+not necessarily losing information. You're
+
+529
+00:28:51.860 --> 00:28:56.060
+just encoding it differently. Now,
+here's a really interesting way
+
+530
+00:28:56.060 --> 00:28:57.470
+to, if you really want
+to understand how to do
+
+531
+00:28:57.470 --> 00:29:00.310
+this, check this out, go
+into an app and like
+
+532
+00:29:00.310 --> 00:29:02.630
+a note pad or note
+pad too, and type in
+
+533
+00:29:02.630 --> 00:29:04.940
+just like ABC, I'm doing
+this right now, type in
+
+534
+00:29:04.940 --> 00:29:08.600
+ABC. You go file, save
+as, and we're going to
+
+535
+00:29:08.600 --> 00:29:11.120
+go. And I'm going to
+say that this file is
+
+536
+00:29:11.120 --> 00:29:14.930
+going to be a, a,
+a Unicode file. Okay. That
+
+537
+00:29:14.930 --> 00:29:17.840
+usually doesn't mean utfh, it
+usually means unique code with
+
+538
+00:29:17.840 --> 00:29:19.940
+a byte order. Mark, I'm
+going to save it on
+
+539
+00:29:19.940 --> 00:29:21.380
+my, and on a, save
+it with a very small
+
+540
+00:29:21.380 --> 00:29:23.300
+file name. This is very
+important. Save it with like,
+
+541
+00:29:23.600 --> 00:29:26.930
+you know, one dot text,
+then go to the dos
+
+542
+00:29:26.960 --> 00:29:29.780
+prompt, go to command exe,
+go to the directory where
+
+543
+00:29:29.780 --> 00:29:33.110
+your file is and type
+in debug, just literally debug
+
+544
+00:29:33.650 --> 00:29:37.370
+one.one dot TXT. And then
+it's going to churn for
+
+545
+00:29:37.370 --> 00:29:38.900
+a second. And you're going
+to get a little hyphen
+
+546
+00:29:38.900 --> 00:29:43.720
+that'll pop up then push
+D D for dump. And
+
+547
+00:29:43.720 --> 00:29:47.020
+you'll see the contents of
+your file by just done
+
+548
+00:29:47.020 --> 00:29:49.840
+that you'll see the actual
+hex values. Right? So I'm
+
+549
+00:29:49.840 --> 00:29:53.530
+looking at this and I
+see FF F E that's
+
+550
+00:29:53.530 --> 00:29:56.130
+the first two bites of
+two fights, Whether it's big
+
+551
+00:29:56.130 --> 00:29:58.560
+Indian or little Indian. Right.
+So I can see that
+
+552
+00:29:58.560 --> 00:30:02.010
+it says F E and
+a, and then we know
+
+553
+00:30:02.010 --> 00:30:04.950
+that we're dealing with a
+little Indian system, right. A
+
+554
+00:30:04.950 --> 00:30:08.010
+little Indian encoded at this,
+at this point. Okay. So
+
+555
+00:30:08.010 --> 00:30:11.790
+now those first two bites
+say FFE, then I see
+
+556
+00:30:11.940 --> 00:30:16.320
+61, zero, zero. Well, I
+know 61 in this case
+
+557
+00:30:16.320 --> 00:30:20.310
+is a, and I see
+zero, zero, because I explicitly
+
+558
+00:30:20.310 --> 00:30:24.060
+told my editor to save
+this as a 60 ones,
+
+559
+00:30:24.060 --> 00:30:27.000
+lowercase a, I told my
+editor to save this with
+
+560
+00:30:27.030 --> 00:30:29.910
+two bytes. So we've encoded
+a code point on the
+
+561
+00:30:29.910 --> 00:30:34.680
+disc and we're ending up
+using two, two bytes. So
+
+562
+00:30:34.680 --> 00:30:36.540
+now I'm going to take
+that exact same file. I'm
+
+563
+00:30:36.540 --> 00:30:38.460
+going to go in, in
+a notepad two, I'm gonna
+
+564
+00:30:38.460 --> 00:30:43.080
+say encoding. Utfh I'm going
+to save this exact same
+
+565
+00:30:43.080 --> 00:30:47.520
+file as to dot TXT,
+go back in, run debug
+
+566
+00:30:47.520 --> 00:30:49.770
+again, on the new thing,
+debug that takes, and you
+
+567
+00:30:49.770 --> 00:30:52.560
+can use a hex editor,
+but I like debug. So
+
+568
+00:30:52.560 --> 00:30:55.170
+now of course you do.
+Of course I do. I'm
+
+569
+00:30:55.170 --> 00:30:56.850
+just saying that it's there,
+right? Why go get a
+
+570
+00:30:56.850 --> 00:30:59.790
+hex editor and trying to
+impress somebody so debug to
+
+571
+00:30:59.790 --> 00:31:03.450
+dot TXT. And then suddenly
+I see 61 62 63
+
+572
+00:31:04.200 --> 00:31:08.310
+ABC. Now here's the big,
+here's the kind of philosophical
+
+573
+00:31:08.310 --> 00:31:10.080
+question, right? Like if a
+tree falls in the woods,
+
+574
+00:31:10.080 --> 00:31:11.580
+does, does it make a
+sound? And if no, one's
+
+575
+00:31:11.580 --> 00:31:14.340
+there to hear it. Is
+this UTF eight and coded?
+
+576
+00:31:15.240 --> 00:31:19.770
+It's just three bites. Yeah.
+It looks like ASCII. Exactly.
+
+577
+00:31:19.770 --> 00:31:23.970
+So UTF eight really is
+a way to encode stuff
+
+578
+00:31:23.970 --> 00:31:26.460
+where it says, use two
+bites if you need to.
+
+579
+00:31:27.600 --> 00:31:30.210
+But it was an evil
+thing because it was set
+
+580
+00:31:30.210 --> 00:31:34.200
+up such that English text
+is identical and utfh as
+
+581
+00:31:34.200 --> 00:31:37.110
+it was in ASCII. So
+think basically things work for
+
+582
+00:31:37.110 --> 00:31:39.990
+us. Yeah. That's a little
+weird. Yeah. So for ANSI,
+
+583
+00:31:39.990 --> 00:31:41.490
+for asking for, if, you
+know, for folks that were
+
+584
+00:31:41.490 --> 00:31:44.820
+doing stuff before, If in
+the middle of ABC, you
+
+585
+00:31:44.820 --> 00:31:49.260
+wanted to put a, you
+know, Chinese, Chinese character, would
+
+586
+00:31:49.260 --> 00:31:51.530
+you have the two byte
+header at the beginning? So,
+
+587
+00:31:51.530 --> 00:31:53.280
+so let's find out right.
+And the, and the other
+
+588
+00:31:53.280 --> 00:31:57.870
+question is if you didn't
+have those, okay, well, FF
+
+589
+00:31:57.870 --> 00:32:00.870
+and Effie will never be
+Asking, well, there's no, there's
+
+590
+00:32:00.870 --> 00:32:03.540
+no bite order Mark on
+this particular utfh file. Cause
+
+591
+00:32:03.540 --> 00:32:05.580
+it didn't, it didn't need
+it. Now, the reason that
+
+592
+00:32:05.580 --> 00:32:08.640
+they did this was because
+they didn't want it to
+
+593
+00:32:08.640 --> 00:32:13.380
+break existing code. Right. So
+what's nice about a UTF
+
+594
+00:32:13.410 --> 00:32:18.000
+eight encoded string is that
+if it's just got low
+
+595
+00:32:18.000 --> 00:32:20.610
+ASCII stuff in it, then
+existing code will work just
+
+596
+00:32:20.610 --> 00:32:24.000
+fine. So now I'm just
+going to go to china.yahoo.com.
+
+597
+00:32:24.960 --> 00:32:28.770
+And I'll just grab a,
+the little search here, text
+
+598
+00:32:28.770 --> 00:32:30.660
+that is sitting there at
+the top. Right. And I
+
+599
+00:32:30.660 --> 00:32:34.110
+just cut a little, little
+Chinese character. I'll just one
+
+600
+00:32:34.110 --> 00:32:36.660
+character. I'm just going to
+copy it into my clipboard.
+
+601
+00:32:36.930 --> 00:32:38.400
+I'm gonna go back to
+my two dot text and
+
+602
+00:32:38.400 --> 00:32:40.970
+I'll put it between and
+B. So I'm looking at
+
+603
+00:32:40.970 --> 00:32:44.390
+this, a note pad, I
+see a Chinese character BC,
+
+604
+00:32:44.420 --> 00:32:47.270
+and I'll save it and
+we'll go back and we'll
+
+605
+00:32:47.270 --> 00:32:51.110
+say debug to dot text
+D for dump. Ah, so
+
+606
+00:32:51.110 --> 00:33:00.020
+I see 61, <inaudible> 62
+63. So those that Unicode
+
+607
+00:33:00.020 --> 00:33:02.990
+code point for that particular
+Chinese character was three bytes
+
+608
+00:33:03.800 --> 00:33:08.930
+because utfh, isn't really saying
+use, you know, use, use
+
+609
+00:33:08.930 --> 00:33:10.550
+two bites when you need
+to, it's saying use more
+
+610
+00:33:10.550 --> 00:33:12.670
+than one bite when you
+need to, I don't see
+
+611
+00:33:12.670 --> 00:33:17.770
+any, ah, bite order bites.
+So markers typically, Wait, when
+
+612
+00:33:17.770 --> 00:33:19.360
+you have a string, there's
+a couple of things you
+
+613
+00:33:19.360 --> 00:33:21.940
+can do. It's a little
+complicated, but some, some systems,
+
+614
+00:33:21.940 --> 00:33:26.080
+basically guests, okay. On windows.
+We know that, you know,
+
+615
+00:33:26.110 --> 00:33:27.910
+the processors a certain way.
+So we pretty much know
+
+616
+00:33:27.910 --> 00:33:29.770
+that all windows code can
+be done a certain way.
+
+617
+00:33:29.770 --> 00:33:31.060
+So we don't, They think
+about it that they don't
+
+618
+00:33:31.060 --> 00:33:35.620
+guess they infer. Yeah. Now
+if I go into notepad
+
+619
+00:33:35.620 --> 00:33:37.360
+too, and I go to
+file and coding, I had
+
+620
+00:33:37.360 --> 00:33:41.020
+two choices. I had utfh
+and I had utfh with
+
+621
+00:33:41.020 --> 00:33:44.620
+signature. So if I go
+and switch that to utfh
+
+622
+00:33:44.650 --> 00:33:46.780
+with signature and run, debug
+to dot text again, and
+
+623
+00:33:46.780 --> 00:33:50.380
+look at it, then I
+see the ETF and the
+
+624
+00:33:50.380 --> 00:33:51.880
+different stuff. At the beginning
+of it, I have the
+
+625
+00:33:51.880 --> 00:33:54.460
+little unique code signature at
+the front, and then we
+
+626
+00:33:54.460 --> 00:33:56.980
+get into our text. So
+how many choices that I
+
+627
+00:33:56.980 --> 00:33:59.440
+have there. Right? And here's
+the trick though, if I
+
+628
+00:33:59.440 --> 00:34:02.470
+go and I say, encoding,
+antsy, I get a warning
+
+629
+00:34:03.040 --> 00:34:06.580
+switching from ANSI to non-answer
+and back will cause loss
+
+630
+00:34:06.580 --> 00:34:10.540
+of data hit. Yes. Suddenly
+my Chinese character just turned
+
+631
+00:34:10.540 --> 00:34:13.630
+into three funky characters. It
+split it apart. I lost
+
+632
+00:34:13.630 --> 00:34:15.790
+data and it turned to
+crap. Scott, do you know
+
+633
+00:34:15.790 --> 00:34:18.490
+about the bugging, a notepad
+or I don't know if
+
+634
+00:34:18.490 --> 00:34:22.900
+it's a bug or the
+behavior, this API can break
+
+635
+00:34:23.110 --> 00:34:25.420
+the, this API can break
+bug. You heard of this.
+
+636
+00:34:25.660 --> 00:34:28.300
+Yeah. This is, this is
+the one where you type
+
+637
+00:34:28.300 --> 00:34:31.300
+in a certain phrase. And
+because the phrase, you know,
+
+638
+00:34:31.300 --> 00:34:35.260
+falls a certain way, it
+confuses the system because of
+
+639
+00:34:35.260 --> 00:34:38.110
+the order of the order
+of bytes. Yeah. And I
+
+640
+00:34:38.110 --> 00:34:41.500
+believe it's like four character
+where to three characters where
+
+641
+00:34:41.500 --> 00:34:43.900
+to three characters and then
+a five character word. So
+
+642
+00:34:43.900 --> 00:34:47.590
+if you Google for quotes,
+This API can break. You'll
+
+643
+00:34:47.590 --> 00:34:50.560
+find lots of information about
+that. But if we go
+
+644
+00:34:50.560 --> 00:34:54.760
+into a notepad and we
+type in this API can
+
+645
+00:34:54.760 --> 00:34:56.770
+break, we save it in
+a file called food dot
+
+646
+00:34:56.770 --> 00:34:59.810
+text, and then we open
+it, we close it, we
+
+647
+00:34:59.810 --> 00:35:04.570
+open it again. We get
+back Chinese. Interesting. So if
+
+648
+00:35:04.570 --> 00:35:06.700
+I go out to the
+command line and I type
+
+649
+00:35:06.700 --> 00:35:09.250
+in debug food texts, the
+file that I just put
+
+650
+00:35:09.250 --> 00:35:14.680
+that into and I hit
+D I see what looks
+
+651
+00:35:14.680 --> 00:35:19.300
+to me like some pretty
+regular looking ASCII code, nothing
+
+652
+00:35:19.300 --> 00:35:23.290
+particularly interesting about that. Okay.
+So the deal is, is
+
+653
+00:35:23.290 --> 00:35:25.960
+that there's a, there's a
+function in windows that's called,
+
+654
+00:35:26.260 --> 00:35:29.440
+is text Unicode, right? So
+you basically, you pass it
+
+655
+00:35:29.440 --> 00:35:31.990
+some data and it tells
+you whether or not that
+
+656
+00:35:31.990 --> 00:35:35.020
+data is, is encoded as
+Unicode. It really tells you
+
+657
+00:35:35.020 --> 00:35:38.370
+whether it's UTF 16 or
+not. Okay. But the deal
+
+658
+00:35:38.370 --> 00:35:41.200
+is, like we mentioned before
+in the talk that it,
+
+659
+00:35:41.200 --> 00:35:46.650
+it runs some, some guesses
+basically, right? Guessing in computer
+
+660
+00:35:46.650 --> 00:35:51.450
+science is called heuristics. Right.
+And we, we guess, and
+
+661
+00:35:51.450 --> 00:35:54.570
+it looks at it and
+some short strings, if it
+
+662
+00:35:54.570 --> 00:35:58.080
+doesn't have a lot of
+information, a very short ASCII
+
+663
+00:35:58.080 --> 00:36:02.790
+strings that have an even
+number of lowercase letters, then
+
+664
+00:36:02.790 --> 00:36:05.370
+it will spit it out.
+Now, if you look at
+
+665
+00:36:05.370 --> 00:36:08.430
+the documentation, of course, it
+says that it's not foolproof.
+
+666
+00:36:08.880 --> 00:36:11.430
+And a lot of them
+are based on statistics. So
+
+667
+00:36:11.430 --> 00:36:14.640
+if you pass in not
+enough information, it doesn't get
+
+668
+00:36:14.640 --> 00:36:18.350
+enough data to build any
+kind of statistics. I've actually
+
+669
+00:36:18.350 --> 00:36:21.950
+had this bug occur to
+me during a demonstration where
+
+670
+00:36:21.950 --> 00:36:25.940
+I was using text files
+on the desktop to illustrate
+
+671
+00:36:25.940 --> 00:36:29.990
+what objects are with, you
+know, shortcuts and reference types
+
+672
+00:36:29.990 --> 00:36:33.230
+for shortcuts. And I would
+pull up the, the file
+
+673
+00:36:33.230 --> 00:36:34.760
+that I had just saved
+like a little bit of
+
+674
+00:36:34.760 --> 00:36:37.610
+text too. And I got
+four or five blocks. Oh
+
+675
+00:36:37.610 --> 00:36:39.680
+yeah, totally. Yeah. I mean,
+if you, I mean, this
+
+676
+00:36:39.800 --> 00:36:42.130
+putting in this app can
+break or whatever is, is,
+
+677
+00:36:42.150 --> 00:36:44.480
+is a funny demo. But
+if you just put in
+
+678
+00:36:44.540 --> 00:36:47.360
+the letter a, and then,
+you know, a character turn
+
+679
+00:36:47.360 --> 00:36:50.930
+line feed that will fail,
+it's three characters. It wasn't
+
+680
+00:36:50.930 --> 00:36:53.810
+nearly enough. Right now they
+do point out though, in
+
+681
+00:36:53.810 --> 00:36:57.440
+the documentation that this is
+not foolproof, it is statistical
+
+682
+00:36:57.440 --> 00:37:00.590
+analysis. They tell you that
+it could break and they
+
+683
+00:37:00.590 --> 00:37:03.110
+do point out that failure
+would have been preferable, right?
+
+684
+00:37:03.110 --> 00:37:06.230
+You'd rather to get garbage
+English back than garbage Chinese,
+
+685
+00:37:06.230 --> 00:37:09.380
+because you don't want to
+come up with some string
+
+686
+00:37:09.380 --> 00:37:12.980
+that might actually mean something
+true. Yeah. That's a, that's
+
+687
+00:37:12.980 --> 00:37:15.230
+a, definitely an example of
+this kind of stuff is
+
+688
+00:37:15.230 --> 00:37:19.010
+not easy. There's a really
+great blog. We mentioned on
+
+689
+00:37:19.010 --> 00:37:21.440
+the last show by Michael
+Kaplan, one of the internet
+
+690
+00:37:21.470 --> 00:37:26.810
+internationalization walks at Microsoft at
+shrinks your slash G U
+
+691
+00:37:26.810 --> 00:37:29.360
+w and it's his blog
+is called sorting it all
+
+692
+00:37:29.360 --> 00:37:32.930
+out really interesting stuff about
+some of the obscurity and
+
+693
+00:37:32.930 --> 00:37:38.660
+craziness that happens within internationalization
+and just general localization problems
+
+694
+00:37:38.660 --> 00:37:41.300
+on windows Scott. Before we
+wrap up, let me ask
+
+695
+00:37:41.300 --> 00:37:45.290
+about Vista. What's a, what's
+new in Vista for localization.
+
+696
+00:37:45.410 --> 00:37:48.050
+Well there's piles and piles
+of, of new stuff in
+
+697
+00:37:48.050 --> 00:37:50.090
+Vista. There's the notion of,
+of being able to have
+
+698
+00:37:50.090 --> 00:37:54.590
+a custom locale cause Vista
+supports something like 200 different
+
+699
+00:37:54.590 --> 00:37:57.170
+locales and a hundred different
+languages, but that's just a
+
+700
+00:37:57.170 --> 00:37:59.420
+tiny fraction of all the
+different languages in the world.
+
+701
+00:37:59.840 --> 00:38:01.430
+So there's a couple of
+things. One of them is
+
+702
+00:38:01.430 --> 00:38:03.290
+in beta. If you're running
+a beta Vista, you can
+
+703
+00:38:03.290 --> 00:38:06.800
+get the locale builder at
+shrinks, your slash GV one
+
+704
+00:38:06.800 --> 00:38:09.410
+to create a, a locale.
+If you live in a
+
+705
+00:38:09.410 --> 00:38:12.800
+particular Island off the coast
+of, of, I don't know,
+
+706
+00:38:12.800 --> 00:38:17.330
+Halifax somewhere, you might want
+to create your specific locale,
+
+707
+00:38:17.330 --> 00:38:19.130
+right? If, if you decide
+to start your own country,
+
+708
+00:38:19.130 --> 00:38:20.870
+Karl, you are gonna want
+to add one to the
+
+709
+00:38:20.870 --> 00:38:24.080
+system, the local builders in
+beta, you can take a
+
+710
+00:38:24.080 --> 00:38:26.720
+look at that. A couple
+of things that you can
+
+711
+00:38:26.720 --> 00:38:28.880
+use now that are really
+convenient. If you, if you
+
+712
+00:38:28.880 --> 00:38:32.540
+deal with globalization issues, which
+aren't just strings, but also
+
+713
+00:38:32.540 --> 00:38:35.000
+things like time zones, you
+know, you've personally had a
+
+714
+00:38:35.020 --> 00:38:37.690
+number of problems. We suffer
+in gospel and dealing with
+
+715
+00:38:37.690 --> 00:38:40.990
+time zones because there's, there's
+the time zone that the
+
+716
+00:38:40.990 --> 00:38:43.240
+servers in the time zone
+that the reader's in and
+
+717
+00:38:43.240 --> 00:38:45.250
+the times on that, the
+authors in, yep. There's a
+
+718
+00:38:45.250 --> 00:38:49.240
+really nice time zone utility,
+Microsoft time zone, utility shrinks
+
+719
+00:38:49.240 --> 00:38:51.850
+there slash G U X
+such in the tray and
+
+720
+00:38:51.850 --> 00:38:53.740
+let you know what the
+time is and other, other
+
+721
+00:38:53.740 --> 00:38:56.530
+time zones, without having to
+change your own times, that's
+
+722
+00:38:56.530 --> 00:38:59.620
+a really convenient tool that
+they'll stuff up at the
+
+723
+00:38:59.620 --> 00:39:03.790
+global dev site is really
+valuable. I think it's one
+
+724
+00:39:03.790 --> 00:39:07.480
+of the little known secrets
+that on MSDN there's the
+
+725
+00:39:07.480 --> 00:39:10.510
+a, the NLS information page
+is a really interesting page
+
+726
+00:39:10.510 --> 00:39:13.750
+to look at shrink slash
+GV two, which has a
+
+727
+00:39:13.750 --> 00:39:16.420
+list of all the different
+languages and locales that that
+
+728
+00:39:16.420 --> 00:39:19.870
+windows supports. And all of
+this is coming off of
+
+729
+00:39:19.870 --> 00:39:23.440
+the global development and computing
+portal at shrinks slash GV
+
+730
+00:39:23.440 --> 00:39:26.800
+three, including a number of
+glossaries that they'll give you
+
+731
+00:39:26.800 --> 00:39:30.490
+for free. It's shrink stir
+slash GV four, which are
+
+732
+00:39:30.490 --> 00:39:34.390
+basically all the different Microsoft
+terminologies pre translated into other
+
+733
+00:39:34.390 --> 00:39:37.300
+languages. So if you're a
+translator needs to know what
+
+734
+00:39:37.450 --> 00:39:42.490
+the appropriate term for file
+edit view, help, whatever is
+
+735
+00:39:42.770 --> 00:39:46.060
+in the Microsoft parlance. They've
+got glossaries that they'll give
+
+736
+00:39:46.060 --> 00:39:49.150
+you up at shrink slash
+GV for grading of all
+
+737
+00:39:49.150 --> 00:39:52.170
+the different standards. Cause everyone
+has a different feel and
+
+738
+00:39:52.210 --> 00:39:55.450
+you may not necessarily get
+a localizer. Who's familiar with
+
+739
+00:39:56.290 --> 00:40:00.720
+the, the, the terminology that
+Microsoft uses. One last thing.
+
+740
+00:40:00.720 --> 00:40:04.070
+Do you, do you use
+the Gregorian calendar object for
+
+741
+00:40:04.080 --> 00:40:07.320
+date arithmetic? Well, we do.
+We do some work in,
+
+742
+00:40:08.160 --> 00:40:10.290
+in Thailand. So we actually
+have to deal with that
+
+743
+00:40:10.290 --> 00:40:12.540
+calendar as well as the
+Thai Buddhist calendar, which is
+
+744
+00:40:12.540 --> 00:40:16.050
+a totally different calendar. It's
+a pretty awesome object. It's
+
+745
+00:40:16.050 --> 00:40:20.940
+in-system dot globalization, duck, Gregorian
+calendar, and allows you to
+
+746
+00:40:20.940 --> 00:40:25.080
+add app hocks and eras
+and, you know, serious data
+
+747
+00:40:25.080 --> 00:40:29.400
+arithmetic and globalization. All the
+globalization stuff is really, really
+
+748
+00:40:29.400 --> 00:40:33.810
+good date. You know, currency
+info, date, format info. There's
+
+749
+00:40:33.810 --> 00:40:35.370
+a lot of really cool
+stuff you can do where
+
+750
+00:40:35.370 --> 00:40:37.560
+you can say, well, I
+like everything about this culture,
+
+751
+00:40:37.560 --> 00:40:41.070
+but I want to use
+dollars or everything about their
+
+752
+00:40:41.070 --> 00:40:43.290
+current system except the date
+format. I want to be
+
+753
+00:40:43.290 --> 00:40:45.600
+this way. Yeah, you can,
+you can basically hard code
+
+754
+00:40:45.600 --> 00:40:47.100
+these things. If you want
+your app to work a
+
+755
+00:40:47.100 --> 00:40:49.980
+certain way. There's a, there's
+a lot of good stuff
+
+756
+00:40:49.980 --> 00:40:52.470
+in there. A couple of
+other things, one that hasn't
+
+757
+00:40:52.470 --> 00:40:55.560
+been updated in awhile, the
+enterprise localization toolkit by a
+
+758
+00:40:55.560 --> 00:40:58.620
+guy named Todd Abel has
+basically been dropped and forgotten
+
+759
+00:40:58.620 --> 00:41:00.600
+about, but a lot of
+people use it shrinks or
+
+760
+00:41:00.600 --> 00:41:04.050
+slash GV nine. Basically it
+is a database, a SQL
+
+761
+00:41:04.050 --> 00:41:07.230
+database that'll hold all of
+your strings and then generate
+
+762
+00:41:07.260 --> 00:41:10.920
+resources for you. Sometimes people
+find dealing with their resources
+
+763
+00:41:10.920 --> 00:41:12.870
+in a database rather than
+an XML is a lot
+
+764
+00:41:12.870 --> 00:41:16.170
+easier to deal with. Definitely
+worth checking out. And then
+
+765
+00:41:16.260 --> 00:41:17.760
+one thing I didn't get
+a chance to talk about,
+
+766
+00:41:17.760 --> 00:41:20.250
+which is something I'm really
+interested in is, is text
+
+767
+00:41:20.250 --> 00:41:24.870
+direction going left to right,
+right. To left. Oh, up
+
+768
+00:41:24.870 --> 00:41:27.540
+at stringer slash GV five.
+There's a lot of really
+
+769
+00:41:27.540 --> 00:41:29.070
+good information. And if you're
+going to do any kind
+
+770
+00:41:29.070 --> 00:41:32.160
+of HTML for middle Eastern
+content, for anything that's going
+
+771
+00:41:32.160 --> 00:41:35.720
+to be in Arabic or,
+or A Persian, take a
+
+772
+00:41:35.720 --> 00:41:39.350
+look at, you know, Farsi
+shrink stir slash GV seven,
+
+773
+00:41:39.830 --> 00:41:43.460
+there's a specific site called
+authoring HTML for middle Eastern
+
+774
+00:41:43.460 --> 00:41:47.180
+content. And that's a show,
+I guess Scott. Huh? Yeah.
+
+775
+00:41:47.180 --> 00:41:49.430
+That was a little longer
+than I thought, but it's
+
+776
+00:41:49.430 --> 00:41:51.500
+a really interesting topic I
+could go on for hours.
+
+777
+00:41:51.800 --> 00:41:53.180
+I didn't, I didn't get
+some of the stuff I
+
+778
+00:41:53.180 --> 00:41:54.830
+wanted to talk about. Maybe
+we'll do a part two
+
+779
+00:41:54.830 --> 00:41:56.900
+on day. Oh, I'll throw
+the links up there anyway.
+
+780
+00:41:56.930 --> 00:42:00.110
+So on behalf of myself
+and Scott have a great
+
+781
+00:42:00.110 --> 00:42:02.630
+week and we'll see you
+next week on handsome minutes.
+

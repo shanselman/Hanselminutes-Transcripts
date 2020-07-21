@@ -1,0 +1,4501 @@
+WEBVTT FILE
+
+1
+00:00:04.380 --> 00:00:17.810
+<inaudible> Hansel minutes.com is Hansel
+minutes. Our weekly discussion with
+
+2
+00:00:17.810 --> 00:00:22.790
+web developer and technologists, Scott
+Hanselman. This is Lawrence Ryan announcing
+
+3
+00:00:22.790 --> 00:00:29.330
+show number one 75. Recorded
+live Thursday, August 30th, 2009. Support for
+
+4
+00:00:29.330 --> 00:00:33.110
+Hansel minutes is provided by
+Tellerik rad controls, the most
+
+5
+00:00:33.110 --> 00:00:36.620
+comprehensive suite of components for
+windows forms and asp.net web
+
+6
+00:00:36.620 --> 00:00:45.920
+applications. online@wwwdottelerik.com. In this episode,
+Scott talks about stack overflow
+
+7
+00:00:45.950 --> 00:00:51.680
+with Jeff Edwards. Hi, this is
+Scott Hanselman and this is
+
+8
+00:00:51.680 --> 00:00:54.710
+another episode of Hansel minutes.
+I've got Jeff Atwood today.
+
+9
+00:00:55.130 --> 00:00:58.640
+Hey, how's it going, Jeff?
+Good. I'm going great. You've
+
+10
+00:00:58.640 --> 00:01:01.310
+been doing a lot of
+speed improvements on stack overflow.
+
+11
+00:01:02.240 --> 00:01:04.390
+Is this an ongoing thing
+or is this like the
+
+12
+00:01:04.400 --> 00:01:06.080
+weekend of speed or how
+did that, how did that
+
+13
+00:01:06.080 --> 00:01:09.410
+go down? Well, we I've
+always felt that performance is
+
+14
+00:01:09.860 --> 00:01:12.710
+kind of a feature that
+performance in and of itself
+
+15
+00:01:12.740 --> 00:01:17.090
+is desirable eat on the
+web. And there's a lot
+
+16
+00:01:17.090 --> 00:01:18.710
+of studies that sort of
+backs us up. There's one
+
+17
+00:01:18.710 --> 00:01:22.310
+that Google famously did a
+timing. They're running some kind
+
+18
+00:01:22.310 --> 00:01:25.310
+of experiment on search results
+and they didn't control for
+
+19
+00:01:25.310 --> 00:01:28.040
+speed and they fell these
+interesting results where they saw
+
+20
+00:01:28.040 --> 00:01:31.250
+this big drop off. And
+once they controlled for speed
+
+21
+00:01:31.250 --> 00:01:33.800
+of rendering, they realized that
+most of the drop off
+
+22
+00:01:34.280 --> 00:01:38.360
+was due to like extra
+a hundred plus milliseconds of
+
+23
+00:01:38.360 --> 00:01:42.230
+rendering the page. And I
+remember way back, when do
+
+24
+00:01:42.230 --> 00:01:43.940
+you remember the first time
+you used Google? Like the
+
+25
+00:01:43.940 --> 00:01:46.910
+first time you heard of
+Google for some somebody talked
+
+26
+00:01:46.910 --> 00:01:49.970
+about it for some, you
+clicked through. Sure. That's the
+
+27
+00:01:49.970 --> 00:01:51.620
+thing that struck me about
+Google at the time. And
+
+28
+00:01:51.620 --> 00:01:55.400
+I very distinctly remember this
+was that Google was just
+
+29
+00:01:55.400 --> 00:01:58.340
+incredibly fast. I mean, it
+worked too right. It was
+
+30
+00:01:58.340 --> 00:02:00.770
+very topical. It was a
+good search engine, but the
+
+31
+00:02:00.770 --> 00:02:04.550
+speed was just astonishing compared
+to what I was used
+
+32
+00:02:04.550 --> 00:02:06.440
+to, which I think was
+like Alta Vista at the
+
+33
+00:02:06.440 --> 00:02:08.660
+time. Yeah. Yeah. There should
+be a joke that Google
+
+34
+00:02:08.660 --> 00:02:11.630
+would be coming back as
+you're pushing as the, the
+
+35
+00:02:11.630 --> 00:02:15.080
+button that you just pushed
+is coming up. Yeah, it
+
+36
+00:02:15.080 --> 00:02:19.010
+was, it was almost instantaneous
+and, and that's always sort
+
+37
+00:02:19.010 --> 00:02:21.950
+of stuck with me that,
+that lesson and when it
+
+38
+00:02:21.950 --> 00:02:24.590
+comes to stack overflow, I
+think one thing that we
+
+39
+00:02:24.590 --> 00:02:27.440
+look at is even if
+we're not relevant, we want
+
+40
+00:02:27.440 --> 00:02:31.310
+to be extremely fast. I
+mean, speed is, is, as
+
+41
+00:02:31.310 --> 00:02:33.680
+I said, in and of
+itself, a goal on top
+
+42
+00:02:33.680 --> 00:02:35.870
+of all the other stuff,
+I mean, ideally we want
+
+43
+00:02:35.870 --> 00:02:38.120
+to be relevant. We want
+to provide the answer to
+
+44
+00:02:38.120 --> 00:02:41.120
+your programming question on stack
+overflow, hopefully, but if we
+
+45
+00:02:41.120 --> 00:02:43.460
+can't do that, we're going
+to be extremely fast. So
+
+46
+00:02:43.460 --> 00:02:46.490
+whenever you see a stack
+overflow search results, your search
+
+47
+00:02:46.490 --> 00:02:48.860
+pages, you have sort of
+a reassurance that if you
+
+48
+00:02:48.860 --> 00:02:50.870
+click on it, you're going
+to know if it sucks
+
+49
+00:02:51.080 --> 00:02:54.440
+immediately. Okay. So it's like
+content is King speed is
+
+50
+00:02:54.440 --> 00:02:56.990
+King, right? Which a lot
+of sites, I mean, how
+
+51
+00:02:56.990 --> 00:02:59.000
+many sites do you go
+to on the web now
+
+52
+00:02:59.020 --> 00:03:00.850
+where you click on the
+link and then you wait,
+
+53
+00:03:00.900 --> 00:03:02.470
+you wait and have to
+load the ads and it
+
+54
+00:03:02.470 --> 00:03:05.560
+has to load it just
+an excruciating process. Even figure
+
+55
+00:03:05.560 --> 00:03:08.320
+out if the content is
+what you want it or
+
+56
+00:03:08.320 --> 00:03:13.240
+not. So we're kind of
+very vocal and in favor
+
+57
+00:03:13.240 --> 00:03:17.680
+of this, be fast at
+all costs idea. And it's
+
+58
+00:03:17.680 --> 00:03:19.870
+something that we keep coming
+back to over time and
+
+59
+00:03:19.870 --> 00:03:23.200
+trying to improve our speed
+as we go along. It's
+
+60
+00:03:23.200 --> 00:03:27.180
+a process of continual And
+how many of them are,
+
+61
+00:03:27.210 --> 00:03:28.950
+how many people are you
+though? You're not a big
+
+62
+00:03:28.980 --> 00:03:32.100
+team, right? No, we're not
+a big team. It's it's
+
+63
+00:03:32.130 --> 00:03:35.730
+me and two other developers.
+And how much development are
+
+64
+00:03:35.730 --> 00:03:38.880
+you doing? Oh, so you're
+like you have three full
+
+65
+00:03:38.880 --> 00:03:43.800
+time developers. Yes. Okay. That's
+true. Although I'm a little
+
+66
+00:03:43.800 --> 00:03:45.870
+bit scatterbrained in that, you
+know, I have to do,
+
+67
+00:03:46.170 --> 00:03:48.450
+I have to wear a
+number of hats, but I,
+
+68
+00:03:48.540 --> 00:03:51.270
+I love working on stack
+overflow. And I think one
+
+69
+00:03:51.270 --> 00:03:53.130
+of the things that's fun
+for us is that we've
+
+70
+00:03:53.130 --> 00:03:55.620
+built this site. That's turned
+out to be really popular.
+
+71
+00:03:56.070 --> 00:03:58.950
+And if you think about
+your career as a developer,
+
+72
+00:03:58.950 --> 00:04:01.050
+and I think we might've
+talked about this on an
+
+73
+00:04:01.050 --> 00:04:05.120
+earlier Hanselman, it's, it's very
+satisfying to write code that
+
+74
+00:04:05.120 --> 00:04:09.060
+a lot of people are
+touching. So we get excited
+
+75
+00:04:09.150 --> 00:04:11.790
+about the prospect of waking
+up and working on stack
+
+76
+00:04:11.820 --> 00:04:15.870
+overflow because we know improvements
+the stack overflow effect, you
+
+77
+00:04:15.870 --> 00:04:18.570
+know, hundreds of thousands of
+people per day that are
+
+78
+00:04:18.570 --> 00:04:23.400
+interacting with your software on
+the open internet. So it's
+
+79
+00:04:23.400 --> 00:04:26.790
+satisfying from that perspective as
+well too, to have something
+
+80
+00:04:26.790 --> 00:04:29.970
+that's so popular is very
+gratifying. And to know that
+
+81
+00:04:29.970 --> 00:04:32.100
+every little change you make
+to it, that makes it
+
+82
+00:04:32.100 --> 00:04:34.380
+better. And even in some
+really small way, like we
+
+83
+00:04:34.380 --> 00:04:38.190
+improved the loading of the
+page, you know, 10%, well
+
+84
+00:04:38.190 --> 00:04:40.830
+that's 10% times, you know,
+we're almost up to a
+
+85
+00:04:40.830 --> 00:04:43.530
+million page views per day
+now, so that's 10% times
+
+86
+00:04:43.530 --> 00:04:46.500
+a million. So, and then
+it's also amortized across, we
+
+87
+00:04:46.500 --> 00:04:48.810
+have multiple sites. So we
+have stack overflow, which is
+
+88
+00:04:48.810 --> 00:04:51.960
+for programmers. We have server
+fault, which is for system
+
+89
+00:04:51.960 --> 00:04:55.980
+administrators. We have super user,
+which is just for, you
+
+90
+00:04:55.980 --> 00:04:59.850
+know, computer enthusiasts. And then
+we have our meta discussion
+
+91
+00:04:59.850 --> 00:05:03.030
+site. So already, if we
+improve some aspect of the
+
+92
+00:05:03.030 --> 00:05:06.690
+core engine, that that's times
+four and then on one
+
+93
+00:05:06.690 --> 00:05:10.480
+side it's times million. So
+it was interesting. I, I
+
+94
+00:05:10.530 --> 00:05:12.870
+didn't really predict that happening,
+but now every time we
+
+95
+00:05:13.050 --> 00:05:15.330
+work on the code, it's
+like we amortize the benefits
+
+96
+00:05:15.330 --> 00:05:17.790
+of that times in we're
+in is the number of
+
+97
+00:05:17.790 --> 00:05:21.000
+sites that we have running
+engine. How do you, how
+
+98
+00:05:21.000 --> 00:05:22.740
+do you roll the changes
+up? How do you deploy
+
+99
+00:05:24.780 --> 00:05:27.600
+Right now? Everything is on
+cruise control. So we have
+
+100
+00:05:27.630 --> 00:05:30.630
+cruise control set up to,
+you know, get the source
+
+101
+00:05:30.630 --> 00:05:33.840
+from source control. And we
+use subversion at the moment
+
+102
+00:05:33.840 --> 00:05:37.380
+for source control. Do the
+bill run. We have some
+
+103
+00:05:37.380 --> 00:05:41.010
+fun, very, very rudimentary unit
+testing that we do and
+
+104
+00:05:41.010 --> 00:05:44.070
+then deploy it to the
+site live. And we have
+
+105
+00:05:44.580 --> 00:05:47.760
+two tiers. We have a
+development tier and then a
+
+106
+00:05:47.760 --> 00:05:50.430
+production tier. And then of
+course we have the tiers
+
+107
+00:05:50.430 --> 00:05:52.290
+on our local machine. We
+do a lot of local
+
+108
+00:05:52.350 --> 00:05:55.200
+development. So typically the, the,
+the way this works is
+
+109
+00:05:55.200 --> 00:05:57.350
+we'd come up with some
+idea about how can make
+
+110
+00:05:57.350 --> 00:06:01.550
+things faster. We check in
+and locally benchmark it locally,
+
+111
+00:06:01.550 --> 00:06:04.970
+see if it's actually faster
+or not, or whatever metric
+
+112
+00:06:04.970 --> 00:06:08.600
+we're using, whether it's a
+clock time or page size
+
+113
+00:06:08.600 --> 00:06:11.540
+or something like that. And
+then do a build to
+
+114
+00:06:11.540 --> 00:06:17.150
+development. And that's, you know,
+dev dot, whatever. We check
+
+115
+00:06:17.150 --> 00:06:19.520
+that out on the live
+server. And then if we
+
+116
+00:06:19.520 --> 00:06:21.140
+like it, then we deploy
+it. And that's just a
+
+117
+00:06:21.140 --> 00:06:24.020
+one click operation in cruise
+control, deploy to change. And
+
+118
+00:06:24.020 --> 00:06:27.560
+we deploy on average, at
+least one time per day,
+
+119
+00:06:27.950 --> 00:06:30.380
+we try to do it
+at the L the low
+
+120
+00:06:30.380 --> 00:06:33.080
+traffic times for us, which
+ends up being around 10:00 PM.
+
+121
+00:06:33.710 --> 00:06:40.590
+Pacific standard time. Really? 10:00 PM.
+Yep. Yeah. Well, yeah, the
+
+122
+00:06:40.660 --> 00:06:42.940
+traffic cycle is really interesting
+in that. I think we
+
+123
+00:06:42.940 --> 00:06:46.570
+have a very global audience.
+So by about 11:00 PM, Pacific
+
+124
+00:06:46.570 --> 00:06:49.150
+standard traffic is already up
+again. So we have sort
+
+125
+00:06:49.150 --> 00:06:51.790
+of a limited window where
+if we want to do
+
+126
+00:06:51.790 --> 00:06:54.850
+it, the absolute, you know,
+trough lowest point of traffic,
+
+127
+00:06:54.880 --> 00:06:58.480
+that's usually 10:00 PM. Ish. And
+then what if it goes
+
+128
+00:06:58.480 --> 00:07:02.140
+bad? Oh, then we would
+take the site down. We
+
+129
+00:07:02.140 --> 00:07:07.630
+have the there's that magical
+page and asp.net that takes
+
+130
+00:07:07.630 --> 00:07:12.580
+the site down. I can't
+remember App underscore offline. Yes.
+
+131
+00:07:12.610 --> 00:07:15.340
+Thank you. Offline file. So
+we have one of those
+
+132
+00:07:15.340 --> 00:07:17.820
+for each site. So we
+would rename that file, which
+
+133
+00:07:17.830 --> 00:07:20.740
+you take the site offline
+and puts up a nice
+
+134
+00:07:20.740 --> 00:07:22.810
+little, you know, page saying,
+Hey, we're download for a
+
+135
+00:07:22.810 --> 00:07:24.850
+little bit and you can
+go to the blog if
+
+136
+00:07:24.850 --> 00:07:26.530
+you want information about that,
+if it goes on for
+
+137
+00:07:26.530 --> 00:07:29.140
+awhile and then we fix
+it, hopefully, and then fly
+
+138
+00:07:29.140 --> 00:07:31.060
+it. I mean, that does
+happen. It's not super common,
+
+139
+00:07:31.090 --> 00:07:34.420
+but it does happen. What
+about when you make changes
+
+140
+00:07:34.420 --> 00:07:36.520
+to the database that are
+not something you can back
+
+141
+00:07:36.520 --> 00:07:40.630
+out? We haven't had too
+much of a problem with
+
+142
+00:07:40.630 --> 00:07:45.460
+that. Generally we make database
+changes there. I guess it'd
+
+143
+00:07:45.460 --> 00:07:47.500
+be category of sort of
+like adding columns as one
+
+144
+00:07:47.500 --> 00:07:50.050
+of the changes. It's not
+really a breaking change. You
+
+145
+00:07:50.050 --> 00:07:53.740
+know, you add a new
+column, it doesn't necessarily affect
+
+146
+00:07:53.740 --> 00:07:55.510
+the old code because the
+code doesn't really care. If
+
+147
+00:07:55.510 --> 00:07:58.330
+there's an extra column, it
+just ignores it. Not certainly
+
+148
+00:07:58.330 --> 00:08:02.470
+we have refactored the database.
+We had a giant database
+
+149
+00:08:02.470 --> 00:08:06.790
+refactoring, gosh, about three months
+ago, but it's not super,
+
+150
+00:08:06.790 --> 00:08:10.510
+super common for us to
+do that. So that hasn't
+
+151
+00:08:10.510 --> 00:08:13.960
+come up in practice too
+much. So this, this might
+
+152
+00:08:13.960 --> 00:08:16.720
+be a weird question, but
+I think that other people
+
+153
+00:08:16.720 --> 00:08:21.010
+are thinking about it, which
+is you've got three guys.
+
+154
+00:08:21.190 --> 00:08:24.610
+Your guys are very productive.
+It's very fast, it's a
+
+155
+00:08:24.610 --> 00:08:27.580
+clean, good looking site that
+provides a great deal of
+
+156
+00:08:27.580 --> 00:08:29.590
+functionality. You know, it's a
+hell of a lot more
+
+157
+00:08:29.590 --> 00:08:33.760
+complicated than their dinner. It's
+in production. It's dramatically successful.
+
+158
+00:08:34.480 --> 00:08:38.890
+We're not seeing you seeing
+publicly, at least you suffering
+
+159
+00:08:39.940 --> 00:08:44.230
+with, you know, is the
+micro, why are you guys
+
+160
+00:08:44.230 --> 00:08:46.330
+so successful on the Microsoft
+stack? You're doing a great
+
+161
+00:08:46.330 --> 00:08:49.180
+job. Is this just because
+you're really smart? I mean,
+
+162
+00:08:49.270 --> 00:08:51.310
+do you have the same
+kind of like pounding your
+
+163
+00:08:51.310 --> 00:08:54.790
+head against the wall problems
+that everyone has when programming,
+
+164
+00:08:54.880 --> 00:08:57.330
+when get nailed, you get
+stuck and you spend three
+
+165
+00:08:57.330 --> 00:08:59.220
+days trying to figure something
+out, and then you discover
+
+166
+00:08:59.220 --> 00:09:02.670
+that it was something obvious
+and it was poor documentation
+
+167
+00:09:02.670 --> 00:09:06.080
+on our part or whatever.
+Well, I think there's, there's
+
+168
+00:09:06.080 --> 00:09:08.510
+an initial hump. You have
+to get over both in
+
+169
+00:09:08.510 --> 00:09:11.810
+terms of building something that
+people want to use and
+
+170
+00:09:11.810 --> 00:09:14.480
+are interested in and solves
+an actual problem for them.
+
+171
+00:09:15.620 --> 00:09:18.320
+And then the development problem
+of just structuring it in
+
+172
+00:09:18.320 --> 00:09:22.370
+a way that makes sense
+behind the scenes. So I
+
+173
+00:09:22.370 --> 00:09:24.920
+think we got over those
+humps really early on in
+
+174
+00:09:24.920 --> 00:09:27.710
+the process in terms of
+having a beta and sort
+
+175
+00:09:27.710 --> 00:09:30.200
+of throwing it out there
+and seeing if people were
+
+176
+00:09:30.290 --> 00:09:33.530
+responding to it. And clearly
+they were even in the
+
+177
+00:09:33.530 --> 00:09:35.150
+beta, we could see what
+we had, something that people
+
+178
+00:09:35.150 --> 00:09:39.650
+liked and enjoyed using. And
+then from a code perspective,
+
+179
+00:09:39.920 --> 00:09:42.320
+I think our philosophy has
+been to keep it as
+
+180
+00:09:42.320 --> 00:09:45.590
+simple as possible. You know,
+the classic kiss philosophy is
+
+181
+00:09:45.600 --> 00:09:48.680
+like, let's, don't have a
+lot of dependencies. We picked
+
+182
+00:09:48.680 --> 00:09:52.190
+asp.net NBC because we wanted
+this, this model of really
+
+183
+00:09:52.190 --> 00:09:55.760
+tight control over what's rendered
+to the page with a
+
+184
+00:09:55.760 --> 00:09:58.970
+minimum of complexity in terms
+of layers, getting in the
+
+185
+00:09:58.970 --> 00:10:01.820
+way of what we're doing.
+And a lot of our
+
+186
+00:10:01.820 --> 00:10:05.660
+design choices, our architecture choices
+reflect this philosophy like for
+
+187
+00:10:05.720 --> 00:10:09.080
+our object relational layer, we
+use linked to SQL, which
+
+188
+00:10:09.080 --> 00:10:12.980
+is extremely lightweight. I mean,
+that's essentially letting the database
+
+189
+00:10:12.980 --> 00:10:15.590
+be your model for the
+most part. It's a very,
+
+190
+00:10:15.590 --> 00:10:18.950
+very thin layer in front
+of you in the database,
+
+191
+00:10:19.160 --> 00:10:21.040
+but it works really well
+for us. You know, it's
+
+192
+00:10:21.050 --> 00:10:23.930
+very lightweight. It gets the
+job done. We're not using
+
+193
+00:10:23.930 --> 00:10:27.680
+hibernate or, you know, entity
+framework or anything like that.
+
+194
+00:10:27.680 --> 00:10:30.680
+That's really sort of heavyweight.
+And I think that philosophy
+
+195
+00:10:30.680 --> 00:10:33.590
+of picking the lightest thing
+that can work has served
+
+196
+00:10:33.590 --> 00:10:35.960
+as well in development. Now
+it does mean that sometimes
+
+197
+00:10:35.960 --> 00:10:39.350
+we end up writing our
+own code to solve problems
+
+198
+00:10:40.220 --> 00:10:42.680
+rather than adopting some sort
+of common off the shelf
+
+199
+00:10:42.680 --> 00:10:44.720
+thing. And sometimes we get
+criticized for that. But I
+
+200
+00:10:44.720 --> 00:10:47.690
+think in terms of solving
+the problem for our specific
+
+201
+00:10:47.690 --> 00:10:52.190
+niche, you know, the audience
+that we're trying to serve,
+
+202
+00:10:52.730 --> 00:10:54.680
+I think you end up
+doing a little bit better
+
+203
+00:10:55.280 --> 00:10:57.110
+if you, if you write
+it yourself, if you know
+
+204
+00:10:57.110 --> 00:10:59.930
+exactly what your audience, you
+think at least, you know
+
+205
+00:10:59.930 --> 00:11:03.320
+exactly what your audience needs
+and you build just that.
+
+206
+00:11:03.920 --> 00:11:05.510
+I think you can do
+a little bit better in
+
+207
+00:11:05.510 --> 00:11:08.450
+the longterm than picking a
+lot of off the shelf
+
+208
+00:11:09.020 --> 00:11:12.080
+components and sort of duct
+taping them together. That said,
+
+209
+00:11:12.080 --> 00:11:14.120
+we give some dependencies. Now
+let me actually list some
+
+210
+00:11:14.120 --> 00:11:17.030
+of our dependencies. Cause we
+have a few, one is
+
+211
+00:11:17.030 --> 00:11:20.570
+a recapture. So we use
+an off the shelf recapture
+
+212
+00:11:20.570 --> 00:11:24.290
+control for spam prevention and,
+you know, blocking bots and
+
+213
+00:11:24.290 --> 00:11:26.090
+things like that. So we
+didn't write that. That's just
+
+214
+00:11:26.090 --> 00:11:28.430
+a component we picked up
+and plugged into our code
+
+215
+00:11:28.430 --> 00:11:34.040
+base. Another thing is.net open
+ID. And I think it's
+
+216
+00:11:34.040 --> 00:11:37.550
+called.net authorization or something like
+that. Cause it also does
+
+217
+00:11:37.550 --> 00:11:40.820
+a lot. Yeah, well.it. Open
+off it's Andrew Arnott's project.
+
+218
+00:11:40.910 --> 00:11:45.320
+Yes. That we picked up
+and continued to use. So
+
+219
+00:11:45.320 --> 00:11:48.080
+we will pick up third
+party components, but only when
+
+220
+00:11:48.080 --> 00:11:50.300
+we feel like, you know,
+we have a very, very
+
+221
+00:11:50.300 --> 00:11:54.400
+strong need and a demonstrated
+case for doing that. I
+
+222
+00:11:54.400 --> 00:11:55.930
+was just talking to another
+developer who was kind of
+
+223
+00:11:55.930 --> 00:11:58.780
+complaining that he was looking
+at some project where it
+
+224
+00:11:58.780 --> 00:12:04.030
+was 10 open source things
+right off the bat that
+
+225
+00:12:04.030 --> 00:12:07.150
+were all dependencies, which, which
+isn't necessarily a problem. But
+
+226
+00:12:07.510 --> 00:12:10.300
+you know, when you're, when
+you're duct taping 10 things
+
+227
+00:12:10.300 --> 00:12:13.600
+together, it can get a
+little bit awkward in terms
+
+228
+00:12:13.600 --> 00:12:15.910
+of the number of dependencies
+you have. So we view
+
+229
+00:12:15.910 --> 00:12:18.910
+dependencies as kind of a
+negative, like we only take
+
+230
+00:12:18.910 --> 00:12:23.650
+them really, really need them,
+even something like logging, which
+
+231
+00:12:23.650 --> 00:12:25.870
+a lot of people view
+as very fundamental and it
+
+232
+00:12:25.870 --> 00:12:28.750
+is fundamental, but we had
+problems early on with log
+
+233
+00:12:28.750 --> 00:12:31.780
+for net and we weren't
+just ultimately didn't need that
+
+234
+00:12:31.780 --> 00:12:34.810
+much logging. So I decided
+to drop log for net,
+
+235
+00:12:35.140 --> 00:12:40.470
+which would be sacrilege to
+some developers. Hmm. But do
+
+236
+00:12:40.470 --> 00:12:43.950
+you, have you gotten in
+trouble, have you painted yourself
+
+237
+00:12:43.950 --> 00:12:47.850
+into a corner? You're talking
+about the architectural decisions, the
+
+238
+00:12:47.850 --> 00:12:50.400
+third party decisions. Like one
+of the things that I
+
+239
+00:12:50.400 --> 00:12:52.350
+was thinking is that, you
+know, you might go and
+
+240
+00:12:52.350 --> 00:12:54.480
+start designing your site and
+then you find that you've,
+
+241
+00:12:55.290 --> 00:12:58.560
+you didn't think out your,
+your navigational strategy so that
+
+242
+00:12:58.560 --> 00:13:00.330
+you end up when you
+hit the back button on
+
+243
+00:13:00.330 --> 00:13:03.870
+the browser, you get that,
+I need to repost this
+
+244
+00:13:05.100 --> 00:13:08.250
+because you know, the page
+has expired type stuff. So
+
+245
+00:13:08.250 --> 00:13:10.920
+you didn't use like post
+redirect get as your, as
+
+246
+00:13:10.920 --> 00:13:13.290
+your model. Have you gotten
+yourself into those kind of
+
+247
+00:13:13.290 --> 00:13:17.100
+situations or did you already
+know that and, and, and
+
+248
+00:13:17.100 --> 00:13:19.380
+think it out ahead of
+time? Well, I think with
+
+249
+00:13:19.380 --> 00:13:22.770
+any project, there's, it's hard
+to always make the right
+
+250
+00:13:22.770 --> 00:13:24.420
+decisions. So I think what
+you want to do is
+
+251
+00:13:24.420 --> 00:13:28.170
+you want to optimize for
+being like, wait again, which
+
+252
+00:13:28.170 --> 00:13:30.300
+comes back to my, the
+central point I was making
+
+253
+00:13:30.300 --> 00:13:32.790
+earlier, which is that being
+lightweight and being simple ends
+
+254
+00:13:32.790 --> 00:13:38.010
+up being the biggest positive
+on the project. And so
+
+255
+00:13:38.010 --> 00:13:40.860
+sure, absolutely. We've made tons
+of wrong decisions. Tons of
+
+256
+00:13:40.860 --> 00:13:43.620
+things that didn't make sense
+in retrospect then No, but
+
+257
+00:13:43.620 --> 00:13:45.330
+not like, not like in
+retrospect, but I'm talking about
+
+258
+00:13:45.330 --> 00:13:48.150
+like, and now suddenly the
+site was that not functional
+
+259
+00:13:48.150 --> 00:13:50.940
+in some way, or you
+got stuck or you thought
+
+260
+00:13:50.940 --> 00:13:55.650
+this was a good idea,
+but you got it. It
+
+261
+00:13:55.650 --> 00:13:57.660
+crippled one that you fixed
+something, but it crippled one
+
+262
+00:13:57.660 --> 00:13:59.790
+other aspect of the site.
+Well, I guess the way
+
+263
+00:13:59.790 --> 00:14:01.620
+to measure that is one
+thing I do look at
+
+264
+00:14:01.620 --> 00:14:05.160
+is, is how many, how
+many times do we have
+
+265
+00:14:05.160 --> 00:14:07.950
+to fix the same code?
+You know, are there any
+
+266
+00:14:07.950 --> 00:14:10.920
+problem areas in your code
+where like, you, you, you
+
+267
+00:14:10.920 --> 00:14:13.560
+keep deploying fixes over and
+over to the same area
+
+268
+00:14:13.920 --> 00:14:15.870
+and you know, it's like
+a trouble spot in your
+
+269
+00:14:15.870 --> 00:14:19.500
+code. Basically. It's like a
+bad neighborhood and your code
+
+270
+00:14:20.360 --> 00:14:22.530
+every time you drive by,
+you know, something bad happens
+
+271
+00:14:22.530 --> 00:14:27.240
+to you. And certainly that's
+symptomatic of, of a design
+
+272
+00:14:27.270 --> 00:14:31.140
+issue. And we have had
+a few areas like that.
+
+273
+00:14:31.380 --> 00:14:34.800
+Like one area that we,
+we definitely had a problem
+
+274
+00:14:34.800 --> 00:14:37.980
+with early on was with
+validation. And as you know,
+
+275
+00:14:38.010 --> 00:14:41.190
+well, anyone who's worked with
+asp.net MVC knows validation was
+
+276
+00:14:41.190 --> 00:14:43.440
+kind of one of the
+weak areas of the toolkit
+
+277
+00:14:43.680 --> 00:14:46.470
+early on. There wasn't a
+lot of stuff there, you
+
+278
+00:14:46.470 --> 00:14:48.990
+know, that was prebuilt yet
+kind of roll your own.
+
+279
+00:14:49.500 --> 00:14:54.650
+And we initially had really
+aggressive client side validation in
+
+280
+00:14:54.650 --> 00:14:58.880
+JavaScript and jQuery and things
+like that. And it seemed
+
+281
+00:14:58.880 --> 00:15:00.950
+like a good idea, but,
+but the problem with it
+
+282
+00:15:00.950 --> 00:15:04.340
+was that we'd relied so
+heavily on client validation that
+
+283
+00:15:04.340 --> 00:15:09.290
+we kind of forgotten about
+server-side validation as sort of
+
+284
+00:15:09.320 --> 00:15:11.330
+the backbone of what you're
+doing. Cause I mean, you
+
+285
+00:15:11.330 --> 00:15:12.680
+have to have both, you
+can't have one or the
+
+286
+00:15:12.680 --> 00:15:15.770
+other because you know, the
+client could send you anything.
+
+287
+00:15:15.830 --> 00:15:18.470
+Ultimately if they turn off
+JavaScript or whatever, they don't
+
+288
+00:15:18.470 --> 00:15:21.410
+have any validation. So we
+ended up having to backfill
+
+289
+00:15:21.440 --> 00:15:24.440
+tons of validation on the
+server that we probably should
+
+290
+00:15:24.440 --> 00:15:27.080
+have had there from day
+one. So it was kind
+
+291
+00:15:27.080 --> 00:15:29.690
+of a, it was an
+out of order issue and
+
+292
+00:15:29.690 --> 00:15:31.760
+it caused all kinds of
+problems later for us in
+
+293
+00:15:31.760 --> 00:15:34.700
+the code where we hadn't
+really thought through server side
+
+294
+00:15:34.700 --> 00:15:37.730
+validation to the degree that
+we really should have from
+
+295
+00:15:37.730 --> 00:15:40.250
+day one. And we didn't
+see it because our quiet
+
+296
+00:15:40.250 --> 00:15:41.960
+time validation was so good
+that we just kind of
+
+297
+00:15:41.960 --> 00:15:45.980
+forgot. And that was definitely
+painful. That was definitely an
+
+298
+00:15:45.980 --> 00:15:48.770
+architectural mistake, but I view
+it as more of just
+
+299
+00:15:48.770 --> 00:15:51.770
+an out of order issue,
+but it certainly led to
+
+300
+00:15:51.770 --> 00:15:54.530
+the phenomenon I'm describing where
+every time we touched it,
+
+301
+00:15:54.530 --> 00:15:57.290
+something would break or there
+was this new case, like
+
+302
+00:15:57.290 --> 00:16:00.530
+international characters weren't raking, right.
+And actually a good example
+
+303
+00:16:00.530 --> 00:16:01.850
+of this. And I actually
+sent you an email on
+
+304
+00:16:01.850 --> 00:16:04.880
+this guy. You may remember
+is a client side. Validation
+
+305
+00:16:05.000 --> 00:16:10.220
+of international characters is incredibly
+annoying because the JavaScript doesn't
+
+306
+00:16:10.220 --> 00:16:12.530
+do a good job of
+dealing with you. Don't have
+
+307
+00:16:12.530 --> 00:16:15.890
+this fancy Unicode support and
+JavaScript on the client that
+
+308
+00:16:15.890 --> 00:16:19.820
+you do on the server.
+So, you know, I had
+
+309
+00:16:19.820 --> 00:16:22.370
+people who I deeply respect
+to this programmers who happen
+
+310
+00:16:22.370 --> 00:16:24.700
+to have international characters in
+their names, emailing me saying,
+
+311
+00:16:24.750 --> 00:16:26.870
+I can't post on your
+site because it says my
+
+312
+00:16:26.870 --> 00:16:29.300
+name is invalid. And it
+was totally a client side
+
+313
+00:16:29.300 --> 00:16:31.610
+validation issue. It had nothing
+to do with our server
+
+314
+00:16:31.610 --> 00:16:34.820
+validation and it made us
+look really bad. So we
+
+315
+00:16:34.820 --> 00:16:36.950
+kind of ripped out a
+lot of that. And the
+
+316
+00:16:36.950 --> 00:16:40.160
+other downside was that it
+was a big dependency on
+
+317
+00:16:40.160 --> 00:16:44.060
+the quiet. It was like
+10 kilobytes of JavaScript, which
+
+318
+00:16:44.060 --> 00:16:46.190
+doesn't sound like much, but
+it was like this, this
+
+319
+00:16:46.190 --> 00:16:48.440
+huge framework for doing all
+this kind of validation on
+
+320
+00:16:48.440 --> 00:16:50.870
+the client. And we were
+using a tiny fraction of
+
+321
+00:16:50.870 --> 00:16:54.170
+it, you know, and the
+fraction we were using, wasn't
+
+322
+00:16:54.200 --> 00:16:56.420
+working that great anyway. So
+ultimately we decided to go
+
+323
+00:16:56.420 --> 00:16:59.240
+in and rip it out
+based on a variety of
+
+324
+00:16:59.240 --> 00:17:02.940
+different, you know? Yep. I
+had the, I had the
+
+325
+00:17:02.940 --> 00:17:04.900
+exact same problem. On the
+other side I was working
+
+326
+00:17:04.900 --> 00:17:08.320
+on where suddenly people named
+Jose couldn't log in, if
+
+327
+00:17:08.320 --> 00:17:10.570
+they really liked to have
+the accent over their name.
+
+328
+00:17:11.260 --> 00:17:14.110
+Yeah. It was shocking how
+weird client side validation got
+
+329
+00:17:14.110 --> 00:17:16.360
+to be and how heavy
+it was because we had
+
+330
+00:17:16.360 --> 00:17:19.810
+to serve it up on
+every single page, every body
+
+331
+00:17:19.810 --> 00:17:23.380
+who visits the site because
+we allow anonymous participation. So
+
+332
+00:17:23.920 --> 00:17:26.830
+any random user hitting us
+from Google had to have
+
+333
+00:17:26.830 --> 00:17:29.350
+their client site input validated,
+which meant they had to
+
+334
+00:17:29.350 --> 00:17:33.400
+pull down this 10 kilobyte
+dependency. So to P to
+
+335
+00:17:33.400 --> 00:17:36.280
+performance, have you put things
+like that on like content
+
+336
+00:17:36.280 --> 00:17:38.590
+delivery networks yet? Have you
+started to spread out your
+
+337
+00:17:38.590 --> 00:17:42.550
+static dependencies like that? Well,
+you know, it's God, you
+
+338
+00:17:42.550 --> 00:17:44.110
+know what, the thing that's
+been amazing to me is
+
+339
+00:17:44.110 --> 00:17:47.650
+how fractal the performance problem
+is. I mean, we've spent
+
+340
+00:17:47.650 --> 00:17:50.700
+a year over year net
+in this code base. So
+
+341
+00:17:51.660 --> 00:17:53.280
+not that we know what
+we're doing, cause we don't
+
+342
+00:17:53.310 --> 00:17:55.680
+necessarily always know what we're
+doing, but we know this
+
+343
+00:17:55.680 --> 00:17:59.100
+code backwards and forwards, right?
+I mean, that's the challenge
+
+344
+00:17:59.100 --> 00:18:01.020
+is we've gotten to the
+point now where we're sharing
+
+345
+00:18:01.020 --> 00:18:04.050
+code with the developers at
+fog Creek because they're working
+
+346
+00:18:04.050 --> 00:18:07.140
+on this thing called stack
+exchange, which is a hosted
+
+347
+00:18:07.140 --> 00:18:09.870
+for pay version of stack
+overflow, where you could say,
+
+348
+00:18:10.080 --> 00:18:11.970
+Hey, stack overflow is awesome.
+I want to do a
+
+349
+00:18:11.970 --> 00:18:16.620
+stack overflow for librarians, you
+know, so you would then
+
+350
+00:18:16.620 --> 00:18:18.630
+call it, plug Greek and
+send them your credit card.
+
+351
+00:18:18.630 --> 00:18:22.560
+And you would start, you
+know, library exchange, you know,
+
+352
+00:18:22.740 --> 00:18:26.460
+that could change the stack
+overflow for librarians. So we
+
+353
+00:18:26.460 --> 00:18:29.880
+have developers from fog Creek
+looking at our code, and
+
+354
+00:18:29.880 --> 00:18:32.010
+this was significant for us
+because this is really the
+
+355
+00:18:32.010 --> 00:18:35.190
+first people that from the
+outside, if you will, that
+
+356
+00:18:35.190 --> 00:18:38.190
+have had the chance to
+actually look at our code.
+
+357
+00:18:38.610 --> 00:18:40.500
+And you forget when you've
+been in a code base
+
+358
+00:18:40.500 --> 00:18:43.440
+for a year, you forget
+how intuitive stuff is to
+
+359
+00:18:43.440 --> 00:18:45.210
+you because you've been working
+on it for a year.
+
+360
+00:18:45.630 --> 00:18:47.490
+And people from the outside
+are like, what, what, what
+
+361
+00:18:47.490 --> 00:18:49.590
+is this right there? What
+is this alien planet I've
+
+362
+00:18:49.590 --> 00:18:52.020
+landed on with no atmosphere
+and you know, where all
+
+363
+00:18:52.020 --> 00:18:55.620
+the trees are shaped funny
+and you know, luckily we
+
+364
+00:18:55.620 --> 00:18:58.320
+haven't gotten any seriously negative
+feedback. I don't think fog
+
+365
+00:18:58.320 --> 00:18:59.760
+Creek is trying to be
+nice to us. I think
+
+366
+00:18:59.760 --> 00:19:01.650
+they would tell us the
+truth if they thought our
+
+367
+00:19:01.650 --> 00:19:06.450
+code sucked. But at the
+same time, you know, it's
+
+368
+00:19:06.450 --> 00:19:08.610
+really a challenge to get
+into an alien code base
+
+369
+00:19:08.610 --> 00:19:11.250
+and figure out how it
+works and troubleshoot performance and
+
+370
+00:19:11.250 --> 00:19:12.810
+things like that. It takes
+a long time to get
+
+371
+00:19:12.810 --> 00:19:15.150
+up to speed. So even
+with us being totally up
+
+372
+00:19:15.150 --> 00:19:20.100
+to speed, this performance problem
+is so fractal. Like every
+
+373
+00:19:20.100 --> 00:19:22.200
+month we come up with
+new ways to make things
+
+374
+00:19:22.200 --> 00:19:25.140
+faster that we hadn't even
+thought of before. And we're
+
+375
+00:19:25.170 --> 00:19:30.030
+intimately familiar with the code.
+It's almost like, you know,
+
+376
+00:19:30.030 --> 00:19:33.120
+they always used to joke
+that, you know, particularly with
+
+377
+00:19:33.150 --> 00:19:35.970
+Oracle, which is well known
+for being incredibly difficult to
+
+378
+00:19:35.970 --> 00:19:39.240
+optimize and having all these
+special like priests that magically
+
+379
+00:19:39.240 --> 00:19:42.360
+make things go faster. But
+even in a very sane
+
+380
+00:19:42.360 --> 00:19:46.620
+system, the, the, the upside
+for performances, it's just shocking.
+
+381
+00:19:46.710 --> 00:19:51.090
+It's almost like you could
+double triple, quadruple performance if
+
+382
+00:19:51.090 --> 00:19:53.400
+you really rolled up your
+sleeves and, and got down
+
+383
+00:19:53.400 --> 00:19:57.470
+to it. So we, we
+like to continually revisit this
+
+384
+00:19:57.870 --> 00:20:00.300
+every few months and it's
+got, I don't know how
+
+385
+00:20:00.300 --> 00:20:03.120
+you do it, but one
+way we do it is
+
+386
+00:20:03.120 --> 00:20:07.830
+that tool Y slow from,
+from Yahoo and also Google
+
+387
+00:20:07.830 --> 00:20:10.830
+page speed, which is intimately
+related. So you can run
+
+388
+00:20:10.830 --> 00:20:14.460
+these reports. They're all based
+on Firebug they'll layer on
+
+389
+00:20:14.460 --> 00:20:16.380
+top of Firebug that sort
+of gives you a bunch
+
+390
+00:20:16.380 --> 00:20:20.340
+of information about your, your
+webpage, how it's loading, where
+
+391
+00:20:20.340 --> 00:20:22.560
+it's loading, things like that.
+And I'll give you a
+
+392
+00:20:22.560 --> 00:20:25.620
+bunch of recommendations about how
+to speed things up, how
+
+393
+00:20:25.620 --> 00:20:29.010
+to, how to arrange your,
+your dependencies so that the
+
+394
+00:20:29.010 --> 00:20:31.800
+page actually comes down faster
+or appears to come down
+
+395
+00:20:31.800 --> 00:20:35.630
+faster. Hey everybody, this is
+Scott coming at you from
+
+396
+00:20:35.630 --> 00:20:38.300
+another place in time. No
+doubt. You probably bumped into
+
+397
+00:20:38.300 --> 00:20:41.210
+testing tasks now, and then,
+and your work and, you
+
+398
+00:20:41.210 --> 00:20:43.730
+know, writing functional tests is
+probably not your favorite thing.
+
+399
+00:20:43.730 --> 00:20:45.800
+It's kind of difficult. It
+takes time and the results
+
+400
+00:20:45.800 --> 00:20:48.730
+can be dubious. Well, get
+ready to start liking tests.
+
+401
+00:20:48.940 --> 00:20:52.720
+Thanks to Tellerik with the,
+the new web testing framework.
+
+402
+00:20:52.840 --> 00:20:56.020
+Building web automation test is
+a breeze. You've got code
+
+403
+00:20:56.020 --> 00:20:59.350
+automation with advanced asp.net, Ajax
+and server wide applications. You
+
+404
+00:20:59.350 --> 00:21:02.380
+can write a single test,
+have it executed against multiple
+
+405
+00:21:02.380 --> 00:21:05.530
+browsers at once. You'd benefit
+from a rich API there's
+
+406
+00:21:05.530 --> 00:21:09.070
+link support integration with visual
+studio, unit testing, also end
+
+407
+00:21:09.070 --> 00:21:12.310
+unit X unit and MBA
+unit, not to mention the
+
+408
+00:21:12.310 --> 00:21:15.520
+free rappers for Telerik rad
+controls for ESPN and Ajax,
+
+409
+00:21:15.520 --> 00:21:18.940
+and several light, all shipping
+with Telerik's new testing tool.
+
+410
+00:21:19.570 --> 00:21:22.420
+One of the best features,
+the webinar testing framework, which
+
+411
+00:21:22.420 --> 00:21:25.360
+is developed by art of
+test is it's absolutely free
+
+412
+00:21:26.230 --> 00:21:29.140
+Friday got hooked on web
+testing framework, start using it
+
+413
+00:21:29.140 --> 00:21:32.650
+right away, go to tellerik.com
+for more info. Thanks a
+
+414
+00:21:32.650 --> 00:21:37.420
+lot. So you've just recently
+done a bunch of performance
+
+415
+00:21:37.420 --> 00:21:42.160
+improvements. You've upped things like
+the Jesus compression level, you
+
+416
+00:21:42.160 --> 00:21:45.550
+minified, JavaScript and CSS. And
+there was an interesting thread
+
+417
+00:21:45.610 --> 00:21:49.450
+on, on stack overflow where
+you were talking about, you
+
+418
+00:21:49.450 --> 00:21:53.260
+were explaining the different kinds
+of magnification, like someone was
+
+419
+00:21:53.260 --> 00:21:55.240
+saying, well, is this packed?
+Well, it's not really packed.
+
+420
+00:21:55.240 --> 00:21:58.360
+That's different than identification. Can
+you talk a little bit
+
+421
+00:21:58.360 --> 00:22:02.490
+about the different ways you
+can squish text? Well, you
+
+422
+00:22:02.490 --> 00:22:04.140
+know, one thing that's interesting
+is a lot of stuff
+
+423
+00:22:04.140 --> 00:22:06.540
+we're doing is related to
+the bill. We do a
+
+424
+00:22:06.540 --> 00:22:09.000
+lot of magic in the
+build process, which our build
+
+425
+00:22:09.000 --> 00:22:14.610
+process over time has gotten
+pretty hairy because in addition
+
+426
+00:22:14.610 --> 00:22:16.650
+to the normal, like having,
+you know, a development here
+
+427
+00:22:16.650 --> 00:22:21.330
+in a production tier and
+all that stuff, the build
+
+428
+00:22:21.330 --> 00:22:23.220
+script has to be cognizant
+of, of, of a number
+
+429
+00:22:23.220 --> 00:22:26.070
+of things. One is the
+minification process. So we actually
+
+430
+00:22:26.070 --> 00:22:30.840
+shell out to Java to
+run the Yahoo magnification program.
+
+431
+00:22:32.100 --> 00:22:33.450
+I can't remember the name
+of that off the top
+
+432
+00:22:33.450 --> 00:22:34.770
+of my head, but if
+you look up Yahoo and
+
+433
+00:22:34.770 --> 00:22:37.320
+minify, so what this does,
+and when I say minify,
+
+434
+00:22:37.350 --> 00:22:40.620
+what I mean is you
+take your JavaScript and CSS
+
+435
+00:22:41.280 --> 00:22:45.870
+and you remove all the
+white space from it. You
+
+436
+00:22:45.870 --> 00:22:48.090
+rename well, in the case
+of JavaScript, you rename all
+
+437
+00:22:48.090 --> 00:22:51.780
+the variables like ABC D
+you know, something really short,
+
+438
+00:22:51.840 --> 00:22:55.050
+right? And you just compact
+it down to the smallest
+
+439
+00:22:55.050 --> 00:22:58.560
+possible space. So it becomes
+sort of unreadable. It's almost
+
+440
+00:22:58.560 --> 00:23:02.130
+like obfuscating, not really, but
+it ends up being defacto
+
+441
+00:23:02.160 --> 00:23:05.160
+obfuscation of your JavaScript. Now
+that's not really the goal
+
+442
+00:23:05.160 --> 00:23:06.990
+for us. The goal is
+just to, cause we have
+
+443
+00:23:07.020 --> 00:23:11.280
+a fairly heavy JavaScript payload
+on the site, and we
+
+444
+00:23:11.280 --> 00:23:14.400
+want to make that load
+as rapidly as possible. So
+
+445
+00:23:14.430 --> 00:23:16.740
+the build script will shell
+out to this Java program,
+
+446
+00:23:17.100 --> 00:23:20.190
+which takes the JavaScript, which
+is it down, takes the
+
+447
+00:23:20.190 --> 00:23:23.190
+CSS, which is it down
+and then rewrites it on
+
+448
+00:23:23.190 --> 00:23:25.950
+the disc to the development
+and production tier. So from
+
+449
+00:23:25.980 --> 00:23:29.970
+our development machines perspective, the,
+the files are full size,
+
+450
+00:23:30.210 --> 00:23:32.100
+but when they get rolled
+out to the development or
+
+451
+00:23:32.100 --> 00:23:35.640
+production tier, they're actually much,
+much smaller. Now the civic
+
+452
+00:23:35.640 --> 00:23:38.280
+question that, that you're referring
+to was that there's this
+
+453
+00:23:38.280 --> 00:23:44.160
+crazy thing called packer, which
+actually implements compression in JavaScript,
+
+454
+00:23:45.020 --> 00:23:48.440
+which is weird. So somebody
+has literally written like a
+
+455
+00:23:48.440 --> 00:23:52.640
+zip algorithm, a zip like
+algorithm in JavaScript that would
+
+456
+00:23:52.640 --> 00:23:55.490
+actually take a JavaScript file
+and unzip it in memory,
+
+457
+00:23:55.760 --> 00:23:58.760
+which is very, very clever,
+but like just, there's so
+
+458
+00:23:58.760 --> 00:24:00.440
+many things that can go
+wrong with this, right? I
+
+459
+00:24:00.440 --> 00:24:02.810
+mean, and plus you're paying
+the penalty of JavaScript having
+
+460
+00:24:02.810 --> 00:24:06.380
+to be your unzip engine.
+So that's a really severe
+
+461
+00:24:06.380 --> 00:24:10.010
+cost. It's almost never worth
+it. So that packer ends
+
+462
+00:24:10.010 --> 00:24:12.920
+up being sort of one
+of those things. That's, that's
+
+463
+00:24:12.920 --> 00:24:15.560
+clever from a programming perspective,
+but just not very, very
+
+464
+00:24:15.560 --> 00:24:21.200
+practical, but the minification is
+when, when totally. And you'll
+
+465
+00:24:21.200 --> 00:24:22.970
+notice that sites like Google
+and Yahoo and all the
+
+466
+00:24:22.970 --> 00:24:25.070
+big sites do this, even
+a file, all their stuff
+
+467
+00:24:25.100 --> 00:24:27.740
+they send down. It's just,
+it's very logical to do
+
+468
+00:24:27.740 --> 00:24:29.950
+that. This is it. This
+is the part I never
+
+469
+00:24:29.950 --> 00:24:34.090
+quite understood is that I
+remember people were telling me
+
+470
+00:24:34.120 --> 00:24:36.430
+10, well, gosh, how many
+years ago, 20 years ago
+
+471
+00:24:36.760 --> 00:24:39.910
+to when I was doing
+my antsy art to kind
+
+472
+00:24:39.910 --> 00:24:43.420
+of optimize my, my text
+files and other people were
+
+473
+00:24:43.420 --> 00:24:46.480
+saying, no, no, no. You
+know, the 9,600 baud modems
+
+474
+00:24:46.480 --> 00:24:49.540
+got hardware compression built in.
+It's not that big of
+
+475
+00:24:49.540 --> 00:24:51.400
+a deal. You know, you're
+gonna spend all this time
+
+476
+00:24:51.400 --> 00:24:54.520
+moving things around. So you're
+saying that even now on
+
+477
+00:24:54.520 --> 00:24:57.970
+a quad core machine with
+a 20 megabit connection, if
+
+478
+00:24:57.970 --> 00:25:00.700
+I take, you know, VAR
+foo and make it VAR
+
+479
+00:25:00.700 --> 00:25:05.770
+F enough times, it will
+actually have a perceptible difference
+
+480
+00:25:05.770 --> 00:25:09.550
+to my experience on the
+web. Well, if you have
+
+481
+00:25:09.550 --> 00:25:12.070
+hundreds of variables, I mean,
+this is a numbers game.
+
+482
+00:25:12.190 --> 00:25:14.860
+No, I get that. But
+I'm surprised that it takes
+
+483
+00:25:14.860 --> 00:25:18.370
+hundreds. Like why, why not
+millions? Well, I, I think
+
+484
+00:25:18.370 --> 00:25:19.840
+it's, you have to go
+back to, it's a numbers
+
+485
+00:25:19.840 --> 00:25:21.910
+game, you know, and there's
+a lot of sites on
+
+486
+00:25:21.910 --> 00:25:23.890
+the internet. And our goal
+is to be, you know,
+
+487
+00:25:23.950 --> 00:25:25.840
+we have to be competitive,
+right? We have to provide
+
+488
+00:25:25.840 --> 00:25:28.330
+a better experience than other
+sites. And one of the
+
+489
+00:25:28.330 --> 00:25:29.740
+ways we decided we want
+to do this is by
+
+490
+00:25:29.740 --> 00:25:32.950
+being extremely fast or as
+fast as we can make
+
+491
+00:25:32.950 --> 00:25:35.830
+it. And so we're already
+gonna have a leg up
+
+492
+00:25:35.830 --> 00:25:38.230
+over sites that don't do
+this. So sites that don't
+
+493
+00:25:38.710 --> 00:25:41.800
+use compression or don't minify
+are going to look bad
+
+494
+00:25:41.950 --> 00:25:44.410
+compared to stack overflow. We
+want to look really, really
+
+495
+00:25:44.410 --> 00:25:47.980
+good. So it's a competitive
+advantage to do it. And
+
+496
+00:25:47.980 --> 00:25:52.750
+plus from a geek perspective,
+what you're really doing is
+
+497
+00:25:52.750 --> 00:25:56.140
+you're optimizing for the expensive
+resource, which is bandwidth. Even
+
+498
+00:25:56.140 --> 00:25:59.200
+if you have, you know,
+a quad core blazing machine,
+
+499
+00:25:59.530 --> 00:26:03.250
+very few people have, you
+know, the world's fastest connection
+
+500
+00:26:03.250 --> 00:26:06.040
+to the internet. Most people
+have cable modem or DSL
+
+501
+00:26:06.040 --> 00:26:09.250
+or something like that. So
+the precious resource is really
+
+502
+00:26:09.280 --> 00:26:12.820
+the bandwidth and you have
+tons of CPU. So why
+
+503
+00:26:12.820 --> 00:26:15.880
+not optimize for CPU, which
+is exactly what compression is
+
+504
+00:26:15.880 --> 00:26:18.850
+about. It's about making the
+thing that sent over the
+
+505
+00:26:18.850 --> 00:26:20.830
+wire really small, and then
+spending a little bit of
+
+506
+00:26:20.830 --> 00:26:22.930
+CPU time, not a lot,
+cause there is a trade
+
+507
+00:26:22.930 --> 00:26:24.760
+off there, like with the
+packer dot JS that I
+
+508
+00:26:24.760 --> 00:26:27.220
+talked about and make it
+bigger on the other side.
+
+509
+00:26:27.670 --> 00:26:30.760
+So that was also the
+reason we tweaked Jesus and
+
+510
+00:26:30.760 --> 00:26:34.180
+sort of turned up the
+fundamental Jesus levels. And that's
+
+511
+00:26:34.180 --> 00:26:37.120
+kind of an important optimization
+actually, there's this fantastic article
+
+512
+00:26:37.680 --> 00:26:39.670
+that I found that where
+somebody had gone through and
+
+513
+00:26:39.670 --> 00:26:43.240
+documented in exhaustive detail, all
+the different levels of Jesus
+
+514
+00:26:43.650 --> 00:26:46.650
+and where the tradeoff was
+because I asked it defaults
+
+515
+00:26:46.660 --> 00:26:53.340
+these really non-aggressive minimalistic compression
+levels and you can immediately
+
+516
+00:26:53.340 --> 00:26:56.070
+do 10% better at almost
+no cost just by tweaking
+
+517
+00:26:56.070 --> 00:26:58.410
+these numbers. So it's kind
+of a fun tweak to
+
+518
+00:26:58.410 --> 00:27:01.290
+make, just cause out of
+the box, you're not really
+
+519
+00:27:01.290 --> 00:27:04.260
+optimal and it's very easy
+to become optimal by turning
+
+520
+00:27:04.260 --> 00:27:07.730
+up the GC of compression
+to level four. Why is
+
+521
+00:27:07.730 --> 00:27:09.560
+it though that this isn't
+built in? I mean, it's
+
+522
+00:27:09.560 --> 00:27:12.500
+just the kind of thing
+you'd like to see Microsoft
+
+523
+00:27:12.500 --> 00:27:15.950
+or visual studio built in.
+I mean, you've got a
+
+524
+00:27:15.950 --> 00:27:19.310
+whole kind of litany of
+this is optimal. This something
+
+525
+00:27:19.310 --> 00:27:21.680
+like, for example, the jesus'
+compression level, you said like
+
+526
+00:27:22.010 --> 00:27:25.760
+clearly the sweet spot is
+for, you have said, if
+
+527
+00:27:25.760 --> 00:27:27.500
+it's the sweet spot of
+spore, why, why is it
+
+528
+00:27:27.510 --> 00:27:30.170
+that, that the default is
+almost always the opposite of
+
+529
+00:27:30.170 --> 00:27:33.440
+the sweet spot? Well, I
+think what happens is, you
+
+530
+00:27:33.440 --> 00:27:36.290
+know, a company like Microsoft
+is, is building products for
+
+531
+00:27:36.380 --> 00:27:40.010
+a huge audience and everybody's
+doing different things. You know,
+
+532
+00:27:40.040 --> 00:27:43.430
+there's no one thing that
+everybody's doing. So you have
+
+533
+00:27:43.430 --> 00:27:47.660
+to build in settings that
+are optimal for everyone. And
+
+534
+00:27:47.660 --> 00:27:50.150
+that means sort of watering
+it down to some degree.
+
+535
+00:27:50.510 --> 00:27:51.980
+And we actually ran into
+this. I think you may
+
+536
+00:27:51.980 --> 00:27:54.620
+remember with SQL server where
+we had a huge problem
+
+537
+00:27:54.620 --> 00:27:57.620
+with locking in SQL server
+because out of the box
+
+538
+00:27:58.010 --> 00:28:01.580
+SQL server defaults to this
+fairly aggressive walking level, you
+
+539
+00:28:01.580 --> 00:28:04.070
+know, that leads to a
+lot of contention in the
+
+540
+00:28:04.070 --> 00:28:06.230
+database because you end up
+with all these read locks
+
+541
+00:28:06.260 --> 00:28:07.640
+and I was like read
+blocks. So I was like,
+
+542
+00:28:07.640 --> 00:28:09.650
+why are you locking data
+that I'm just reading? I
+
+543
+00:28:09.650 --> 00:28:12.950
+don't even care. You know,
+don't lock that data. So
+
+544
+00:28:12.950 --> 00:28:14.810
+we had an out of
+the box immediately switch SQL
+
+545
+00:28:14.810 --> 00:28:18.350
+server to a much less
+aggressive locking level and all
+
+546
+00:28:18.350 --> 00:28:22.100
+our contention problems went away.
+But I understand why Microsoft
+
+547
+00:28:22.100 --> 00:28:24.980
+chips it that way because
+you know, you might be
+
+548
+00:28:24.980 --> 00:28:27.170
+a bank or you might
+have these integrity issues or,
+
+549
+00:28:27.170 --> 00:28:29.180
+you know what performance, you
+may not have the performance
+
+550
+00:28:29.180 --> 00:28:31.730
+problems that we have, you
+know, because we're becoming this
+
+551
+00:28:31.730 --> 00:28:35.030
+fairly major website with a
+lot of traffic. So why
+
+552
+00:28:35.030 --> 00:28:39.740
+not trade performance for reliability?
+Right? That'd be the example.
+
+553
+00:28:39.980 --> 00:28:43.130
+And the compression example, one
+thing that happens with compression
+
+554
+00:28:43.130 --> 00:28:45.950
+is you fall off a
+cliff with size. Like if
+
+555
+00:28:45.950 --> 00:28:49.640
+you're serving up 800 kilobyte
+documents, which, okay, that's weird,
+
+556
+00:28:49.640 --> 00:28:51.650
+right? But people might do
+it. They might serve up
+
+557
+00:28:52.010 --> 00:28:55.850
+800 kilobytes worth of dynamic
+data per page. And if
+
+558
+00:28:55.850 --> 00:28:58.880
+you have compression level four
+on that's starting to get
+
+559
+00:28:58.880 --> 00:29:02.090
+really painful, even at compression
+level four. So, but a
+
+560
+00:29:02.090 --> 00:29:05.480
+compression level one, which is
+Microsoft ships with a, that
+
+561
+00:29:05.480 --> 00:29:08.150
+will be less painful. The
+drop off is less severe.
+
+562
+00:29:08.150 --> 00:29:12.770
+So they're optimizing for the
+every case. Okay. What, what's
+
+563
+00:29:12.770 --> 00:29:15.230
+an average page size. Like
+what's a, what's an edge
+
+564
+00:29:15.260 --> 00:29:17.960
+actually. What's an edge case,
+interestingly, on stack overflow. Cause
+
+565
+00:29:17.960 --> 00:29:19.580
+you get some really popular
+questions every once in a
+
+566
+00:29:19.580 --> 00:29:22.160
+while, you'll have a question
+where someone asks something off
+
+567
+00:29:22.160 --> 00:29:25.190
+topic and those are always
+the most interesting questions. And
+
+568
+00:29:25.190 --> 00:29:27.710
+then you've got, you know,
+hundreds of comments and stuff.
+
+569
+00:29:27.760 --> 00:29:30.110
+What's the maximum size of
+page can be on stack
+
+570
+00:29:30.110 --> 00:29:34.490
+overflow. Well, we, we kept
+the number of questions or
+
+571
+00:29:34.670 --> 00:29:38.150
+answers per page at 30.
+And that was a change
+
+572
+00:29:38.150 --> 00:29:40.550
+we made really early on
+because we didn't predict these
+
+573
+00:29:40.930 --> 00:29:44.980
+long discussion type questions would
+occur. That's just, you know,
+
+574
+00:29:44.980 --> 00:29:47.320
+people having fun chiming in,
+and there's nothing wrong with
+
+575
+00:29:47.320 --> 00:29:49.840
+having fun as long as
+it's relatively on topic. But
+
+576
+00:29:49.840 --> 00:29:52.630
+we, we that's a de
+facto cap on the size
+
+577
+00:29:52.630 --> 00:29:55.270
+of the page when only
+30 answers can appear at
+
+578
+00:29:55.270 --> 00:29:57.550
+any given time. So I
+would say our largest pages
+
+579
+00:29:57.550 --> 00:30:00.970
+are probably like, I dunno,
+a hundred kilobytes at most,
+
+580
+00:30:02.680 --> 00:30:06.580
+and that that's not problematic
+for compression. Cause that article
+
+581
+00:30:06.580 --> 00:30:10.030
+I referred to did a
+really good job of benchmarking.
+
+582
+00:30:10.030 --> 00:30:12.400
+Like what happens when you
+have a one kilobyte page,
+
+583
+00:30:12.400 --> 00:30:15.190
+a 28 kilobyte page, a
+hundred kilobyte page, you know,
+
+584
+00:30:15.200 --> 00:30:18.130
+200, 400, 800. And once
+you get to the 400,
+
+585
+00:30:18.130 --> 00:30:20.590
+800 level, that's when the
+bad things start happening with
+
+586
+00:30:20.590 --> 00:30:23.170
+compression where you would maybe
+even want to turn compression
+
+587
+00:30:23.170 --> 00:30:25.960
+off, which it sounds crazy
+to me, but if you're
+
+588
+00:30:25.960 --> 00:30:29.590
+dynamically compressing 800 kilobytes or
+400 kilobytes of data on
+
+589
+00:30:29.620 --> 00:30:33.220
+every single page requests, it
+starts to be a serious
+
+590
+00:30:33.220 --> 00:30:35.830
+problem. I mean, everybody has
+different issues. That's why when
+
+591
+00:30:35.830 --> 00:30:40.060
+you look at performance, it's
+all about, you know, profiling,
+
+592
+00:30:40.240 --> 00:30:43.540
+looking at the data and
+understanding exactly what your site
+
+593
+00:30:43.600 --> 00:30:46.570
+is doing and how it's
+doing it and optimizing for
+
+594
+00:30:46.570 --> 00:30:50.050
+those specific conditions, right? Like
+we've written our code a
+
+595
+00:30:50.050 --> 00:30:53.050
+certain way and, and you
+know, we may have performance
+
+596
+00:30:53.050 --> 00:30:55.450
+problems that other people don't
+have. So it's hard to
+
+597
+00:30:55.450 --> 00:30:59.620
+make blanket recommendations. Although those
+tools why flow and Google
+
+598
+00:30:59.620 --> 00:31:04.180
+page speed are mostly on
+target for most sites. But
+
+599
+00:31:04.180 --> 00:31:07.210
+even then it'll give you
+recommendations that are insane. Like
+
+600
+00:31:07.390 --> 00:31:10.150
+if you run a small
+blog, like Y flow will
+
+601
+00:31:10.150 --> 00:31:12.430
+tell you, Oh, you need
+to use a content distribution
+
+602
+00:31:12.430 --> 00:31:15.930
+network. Right. Which is ridiculous.
+Why not? Let's see that's
+
+603
+00:31:15.930 --> 00:31:17.550
+that was my question earlier.
+I didn't get answered was
+
+604
+00:31:17.550 --> 00:31:20.520
+like, why is a CDN
+ridiculous It's well, Hey, it's
+
+605
+00:31:20.850 --> 00:31:23.940
+massive overkill nuclear. It's like
+the nuclear option. I mean,
+
+606
+00:31:24.340 --> 00:31:27.870
+content distribution network means you're
+taking some piece of content
+
+607
+00:31:27.870 --> 00:31:30.120
+like your JavaScript. And you're
+saying, I want to distribute
+
+608
+00:31:30.120 --> 00:31:33.390
+this worldwide to everybody as
+fast as possible. So you
+
+609
+00:31:33.390 --> 00:31:36.840
+would contract with some company
+that servers on every continent
+
+610
+00:31:36.840 --> 00:31:39.420
+on the planet. Right. And
+they're going to serve up
+
+611
+00:31:39.420 --> 00:31:42.600
+your JavaScript as fast as
+possible for somebody in Zimbabwe.
+
+612
+00:31:42.660 --> 00:31:45.990
+Yes, please. Right, Exactly. That's
+right. Why was that a
+
+613
+00:31:45.990 --> 00:31:50.430
+bad thing? It'll work, but
+it's very expensive, very expensive
+
+614
+00:31:50.700 --> 00:31:53.490
+financially, financially. And also like
+how many users do you
+
+615
+00:31:53.490 --> 00:31:55.830
+really have in Zimbabwe? I
+mean, like you're solving a
+
+616
+00:31:55.830 --> 00:31:57.960
+problem. Hang on a second.
+This isn't about Zimbabwe. I've
+
+617
+00:31:57.960 --> 00:31:59.820
+got a lot of people
+who listen to my podcast
+
+618
+00:31:59.820 --> 00:32:02.310
+in Europe and I've got
+a German guy who's getting
+
+619
+00:32:02.310 --> 00:32:05.820
+30 K a second because
+he's having to bring a
+
+620
+00:32:05.910 --> 00:32:09.600
+podcasts over from God. I
+don't know where our servers
+
+621
+00:32:09.600 --> 00:32:12.150
+are in Boston or something
+like that. It makes sense
+
+622
+00:32:12.150 --> 00:32:14.850
+to have my content be
+on another continent. That way
+
+623
+00:32:14.850 --> 00:32:16.890
+it doesn't have to go
+across a tiny pipe underneath
+
+624
+00:32:16.890 --> 00:32:19.170
+the ocean. Right? No, actually
+that I agree with. And
+
+625
+00:32:19.200 --> 00:32:22.920
+on a recent podcast, I
+kind of lamented the fact
+
+626
+00:32:22.920 --> 00:32:25.110
+that we have this really
+worldwide audience and it's very
+
+627
+00:32:25.110 --> 00:32:28.200
+hard to, but I think
+you wouldn't, in that case,
+
+628
+00:32:28.200 --> 00:32:31.290
+you wouldn't want, that's really
+a giant, worldwide concentrated distribution
+
+629
+00:32:31.290 --> 00:32:34.530
+network. You would really want
+just a mini distribution network
+
+630
+00:32:34.530 --> 00:32:36.360
+of just two servers, one
+in the U S and
+
+631
+00:32:36.360 --> 00:32:38.130
+one in Europe. I mean,
+you really want to optimize
+
+632
+00:32:38.130 --> 00:32:40.610
+again for your, you know,
+and, and I know where
+
+633
+00:32:40.610 --> 00:32:44.060
+my audience is coming from
+on a stack overflow. And
+
+634
+00:32:44.060 --> 00:32:46.160
+certainly having one in Europe
+would be huge because it's
+
+635
+00:32:46.160 --> 00:32:48.680
+a big, big percentage of
+our audience. So yeah, that's
+
+636
+00:32:48.680 --> 00:32:50.030
+something I would like to
+do. That's sort of the
+
+637
+00:32:50.030 --> 00:32:52.670
+next step, but I, it's
+going to be tough to
+
+638
+00:32:52.670 --> 00:32:54.590
+get there because then you
+start to have data replication
+
+639
+00:32:54.590 --> 00:32:57.880
+problems where get multiple server
+farms and Well, but see,
+
+640
+00:32:57.880 --> 00:33:00.760
+we're talking, I'm talking about
+static content. Yeah. And in
+
+641
+00:33:00.760 --> 00:33:03.290
+case of static content, it
+becomes very easy. And a
+
+642
+00:33:03.330 --> 00:33:06.040
+and a site at our
+scale is starting to get
+
+643
+00:33:06.040 --> 00:33:08.530
+to the point where we've
+maybe should be paying somebody
+
+644
+00:33:08.530 --> 00:33:13.240
+to do, you know, static
+content distribution, these things that
+
+645
+00:33:13.240 --> 00:33:15.790
+would be crazy for a
+small blog, even a very
+
+646
+00:33:15.790 --> 00:33:18.550
+popular blog, like your blog
+or my blog still doesn't
+
+647
+00:33:18.550 --> 00:33:22.090
+make any sense. Start to
+make sense for us. It's
+
+648
+00:33:22.090 --> 00:33:26.200
+so commoditized. Now we have,
+it's not, I kind of
+
+649
+00:33:26.200 --> 00:33:28.690
+pushed back a little bit
+because you were saying, I
+
+650
+00:33:28.690 --> 00:33:30.790
+felt you were using words
+like, you know, big, giant,
+
+651
+00:33:31.090 --> 00:33:34.060
+complicated worldwide. It's really not
+that big of a deal.
+
+652
+00:33:34.060 --> 00:33:36.040
+I mean, the Ruby on
+rails guys, even on tiny
+
+653
+00:33:36.040 --> 00:33:38.650
+sites will push the CDN
+button quickly. And there's a
+
+654
+00:33:38.650 --> 00:33:41.020
+whole series of plugins where
+you just say, I'm going
+
+655
+00:33:41.020 --> 00:33:42.970
+to use this CDN and
+they'll push a button and
+
+656
+00:33:42.970 --> 00:33:45.910
+then suddenly all the images
+will show up elsewhere. And
+
+657
+00:33:45.910 --> 00:33:47.650
+then why slow will tell
+you, that's great because you
+
+658
+00:33:47.650 --> 00:33:51.910
+have fewer DNS lookups, Right?
+Well, there's an aspect of,
+
+659
+00:33:51.910 --> 00:33:53.290
+you're not going to need
+it. I mean, I think
+
+660
+00:33:53.290 --> 00:33:56.050
+you need to get to
+a certain, I think you
+
+661
+00:33:56.050 --> 00:33:57.880
+need to get to a
+certain scale before it makes
+
+662
+00:33:57.880 --> 00:34:00.400
+sense at all. It's just
+complexity. You know, this, this
+
+663
+00:34:00.400 --> 00:34:03.040
+goes back to keeping it
+simple, right? And the simple
+
+664
+00:34:03.060 --> 00:34:06.820
+thing is to have one
+server where everything lives. Yeah.
+
+665
+00:34:06.820 --> 00:34:09.130
+But you're using this now
+though, you're doing this. Now
+
+666
+00:34:09.130 --> 00:34:11.860
+you have ajax.google APIs where
+your J query comes up.
+
+667
+00:34:12.220 --> 00:34:15.460
+You have S static where
+you're bringing the JavaScript in
+
+668
+00:34:15.460 --> 00:34:19.120
+from. Right. Well, I guess
+my fear is that people,
+
+669
+00:34:19.810 --> 00:34:22.480
+programmers being programmers will hear,
+Oh wow, you have all
+
+670
+00:34:22.480 --> 00:34:27.010
+these, you know, you're using,
+you know, content distribution networks
+
+671
+00:34:27.010 --> 00:34:29.890
+and your problems are my
+problems. Like I should do
+
+672
+00:34:29.890 --> 00:34:32.350
+what you're doing. And I
+feel like they're going to
+
+673
+00:34:32.350 --> 00:34:35.260
+do things that aren't going
+to help them. Ultimately, you
+
+674
+00:34:35.260 --> 00:34:36.580
+know what I mean? I
+think you have to scale
+
+675
+00:34:36.580 --> 00:34:39.550
+the advice to your particular
+set of problems. If you
+
+676
+00:34:39.550 --> 00:34:43.240
+feel like, Hey, stack Overflow's
+problems are my problems. I
+
+677
+00:34:43.240 --> 00:34:46.300
+have the same problems then
+sure do that. But bear
+
+678
+00:34:46.300 --> 00:34:48.190
+in mind that, you know,
+there's no real one size
+
+679
+00:34:48.190 --> 00:34:50.440
+fits all for this advice.
+I mean, you have to
+
+680
+00:34:50.440 --> 00:34:53.860
+look at your specific site,
+your six scenario, otherwise you
+
+681
+00:34:53.860 --> 00:34:55.900
+end up sort of optimizing
+for things to kind of
+
+682
+00:34:55.900 --> 00:34:59.070
+make your life a little
+bit more difficult. So that's
+
+683
+00:34:59.080 --> 00:35:01.090
+what I'm saying is, you
+know, use your judgment and
+
+684
+00:35:01.120 --> 00:35:03.940
+make sure that the things
+that apply to stack overflow
+
+685
+00:35:03.940 --> 00:35:07.420
+apply to you. Yeah. That's
+awesome. Well, so I have
+
+686
+00:35:07.420 --> 00:35:12.160
+one, one question tip idea
+about performance on your site.
+
+687
+00:35:12.220 --> 00:35:14.680
+I noticed that you guys
+use Gravatar is everyone uses
+
+688
+00:35:14.680 --> 00:35:17.440
+Gravatar. They're great. It's that
+free service that we always
+
+689
+00:35:18.490 --> 00:35:21.010
+count on. It just is
+magical. And one day it
+
+690
+00:35:21.010 --> 00:35:24.040
+goes down and then suddenly
+my site will hang halfway
+
+691
+00:35:24.040 --> 00:35:27.070
+through rendering because we're trying
+to go get the picture
+
+692
+00:35:27.070 --> 00:35:31.690
+of some someone's email address.
+Most blog engines have instituted
+
+693
+00:35:32.470 --> 00:35:36.460
+some fairly straightforward handlers where
+they do Gravatar caching. Have
+
+694
+00:35:36.460 --> 00:35:39.150
+you thought about doing that?
+You Know, there was a
+
+695
+00:35:39.150 --> 00:35:43.500
+period where Gravatar was, had
+a really bad, bad, bad
+
+696
+00:35:43.500 --> 00:35:46.410
+performance profile. I remember this,
+this was like two years
+
+697
+00:35:46.410 --> 00:35:48.470
+ago, three years. Yeah. There
+were some really bad times.
+
+698
+00:35:48.470 --> 00:35:50.510
+There were months there where
+I just shut it off
+
+699
+00:35:50.660 --> 00:35:54.650
+For bad now to their
+credit. I have not, since
+
+700
+00:35:54.650 --> 00:35:56.990
+we launched that overflow, I
+have yet to see I've
+
+701
+00:35:56.990 --> 00:35:59.180
+seen every now and then
+I've seen, Gravatar slow down
+
+702
+00:35:59.180 --> 00:36:00.680
+a little bit, but I
+haven't seen any kind of
+
+703
+00:36:00.680 --> 00:36:05.330
+problems like the battle days.
+And I I'm a little,
+
+704
+00:36:05.930 --> 00:36:08.450
+although what you're describing, which
+is basically go out and
+
+705
+00:36:08.450 --> 00:36:10.640
+get the stuff from Gavin,
+Gravatar cash it locally and
+
+706
+00:36:10.640 --> 00:36:14.090
+serve it up is a
+nice idea. I haven't really
+
+707
+00:36:14.090 --> 00:36:18.170
+seen it become a problem
+for us yet. And it
+
+708
+00:36:18.350 --> 00:36:21.050
+definitely would be additional complexity.
+So I'm, I'm kind of
+
+709
+00:36:21.050 --> 00:36:23.480
+loath to do it. Although,
+like you said, Gravatar is
+
+710
+00:36:23.480 --> 00:36:25.910
+kind of magical, you know,
+it's, it's just thing we
+
+711
+00:36:25.910 --> 00:36:27.920
+just assume is always going
+to be out there. And
+
+712
+00:36:27.920 --> 00:36:29.570
+then on the other hand,
+like I don't think our
+
+713
+00:36:29.570 --> 00:36:36.980
+current rendering strategy blocks on
+Gravatar image source equals, which
+
+714
+00:36:36.980 --> 00:36:39.050
+the browser does an outstanding
+job of saying, Hey, I
+
+715
+00:36:39.050 --> 00:36:43.100
+can't load this image, whatever.
+Right. It's going to show
+
+716
+00:36:43.100 --> 00:36:47.150
+up, but the browser has
+X number of threads, a
+
+717
+00:36:47.150 --> 00:36:49.700
+what is it now? 10
+on newer browsers and two
+
+718
+00:36:49.700 --> 00:36:54.410
+on simpler ones. And basically
+if something's on a different
+
+719
+00:36:54.500 --> 00:36:57.140
+domain than that, you'll go
+get another thread and fire
+
+720
+00:36:57.140 --> 00:36:59.500
+that off. So I guess
+that would mean all Gravatar
+
+721
+00:36:59.510 --> 00:37:03.080
+is, would block on one
+thread. But my, my, I
+
+722
+00:37:03.080 --> 00:37:05.750
+think what I'm thinking is
+that if the Gravatar stuff
+
+723
+00:37:05.750 --> 00:37:08.750
+was down, that thread not
+being used to, to other
+
+724
+00:37:08.750 --> 00:37:11.650
+stuff, it could be using,
+it could be doing so
+
+725
+00:37:12.080 --> 00:37:14.660
+you're right. Well, if you
+had it locally and you
+
+726
+00:37:14.660 --> 00:37:17.150
+have, I'm going to guess
+that you you're big into
+
+727
+00:37:17.150 --> 00:37:19.910
+statistics and you do a
+lot of stats to figure
+
+728
+00:37:19.910 --> 00:37:24.740
+out who who's, what's your
+relationship between new people versus
+
+729
+00:37:24.740 --> 00:37:26.510
+folks that show up to
+stack overflow all the time.
+
+730
+00:37:26.780 --> 00:37:28.550
+You probably have a nice
+big meaty part of the
+
+731
+00:37:28.550 --> 00:37:31.580
+bell curve where it's the
+same several thousand guys that
+
+732
+00:37:31.580 --> 00:37:35.840
+show up why keep telling
+Gravatar to serve those graphics
+
+733
+00:37:36.740 --> 00:37:40.370
+as the same several thousand
+guys wander around and know
+
+734
+00:37:40.370 --> 00:37:43.940
+that it's an extra piece
+of complexity, but the idea
+
+735
+00:37:43.940 --> 00:37:46.370
+of get this, put it
+on disc and check here
+
+736
+00:37:46.370 --> 00:37:49.250
+first and give it an
+expiration is a pretty understood
+
+737
+00:37:50.180 --> 00:37:51.920
+thing. It'd be interesting at
+least to do the, to
+
+738
+00:37:51.920 --> 00:37:53.690
+do the math, to find
+out if you're coming back
+
+739
+00:37:53.690 --> 00:37:57.020
+in X number of milliseconds,
+Gravatar could be the slowest
+
+740
+00:37:57.020 --> 00:37:59.690
+thing on your, in your
+rendering. Right? And I think
+
+741
+00:37:59.690 --> 00:38:01.280
+you've brought up a couple
+of really interesting points, which
+
+742
+00:38:01.280 --> 00:38:03.770
+is one is that the
+performance profiling of a browser
+
+743
+00:38:03.980 --> 00:38:07.310
+has become an art. I
+mean, there's all these crazy
+
+744
+00:38:07.310 --> 00:38:10.280
+little rules that the browser
+uses to determine when it's
+
+745
+00:38:10.280 --> 00:38:12.560
+going to render things, how
+it's going to render things.
+
+746
+00:38:13.160 --> 00:38:15.080
+This is why you're told
+we'll put the CSS like
+
+747
+00:38:15.080 --> 00:38:18.470
+the very first line, the
+earliest possible line should be
+
+748
+00:38:18.470 --> 00:38:22.820
+the CSS import, you know,
+bringing in that CSS file
+
+749
+00:38:23.360 --> 00:38:25.700
+because that blocks like tons
+of stuff. And then you're
+
+750
+00:38:25.700 --> 00:38:27.740
+supposed to also put all
+your scripts at the very
+
+751
+00:38:27.740 --> 00:38:30.830
+bottom of the file for
+similar reasons. And then of
+
+752
+00:38:30.830 --> 00:38:33.530
+course this varies somewhat per
+browser, different browsers do things
+
+753
+00:38:33.530 --> 00:38:36.730
+slightly differently. Then just the
+way you lay out the
+
+754
+00:38:36.730 --> 00:38:41.560
+page with the dibs, the
+complexity of your CSS, you
+
+755
+00:38:41.560 --> 00:38:44.770
+know, the way you're referring
+to the hierarchy of CSS
+
+756
+00:38:44.770 --> 00:38:48.280
+can become a performance problem.
+It's almost like, like performance
+
+757
+00:38:48.280 --> 00:38:51.250
+profiling. The browser has become
+an art in and of
+
+758
+00:38:51.250 --> 00:38:54.370
+itself. And this is what's
+so great about tools like
+
+759
+00:38:54.370 --> 00:38:57.190
+Y flow and Google page
+speed is they've started to
+
+760
+00:38:57.190 --> 00:39:01.060
+codify these browser performance rules
+in a way that people
+
+761
+00:39:01.060 --> 00:39:04.390
+can understand and actually start
+to build faster sites because
+
+762
+00:39:04.840 --> 00:39:07.060
+the browser is kind of
+an awkward platform, right? I
+
+763
+00:39:07.060 --> 00:39:08.770
+mean, it's great. It works
+great. I mean, apps in
+
+764
+00:39:08.770 --> 00:39:11.380
+the browser, believe me, I'm
+not complaining because we're basically
+
+765
+00:39:11.380 --> 00:39:14.530
+one of these apps in
+the browser, but it's not
+
+766
+00:39:14.530 --> 00:39:17.950
+exactly the world's most optimal
+platform as you're pointing out.
+
+767
+00:39:17.950 --> 00:39:19.900
+Like the thing with Gravatar,
+there's all this room for
+
+768
+00:39:19.900 --> 00:39:23.500
+optimization. And this is where
+optimization becomes that fractal problem
+
+769
+00:39:23.500 --> 00:39:25.420
+of like, you can just
+continually go back to the
+
+770
+00:39:25.420 --> 00:39:27.790
+well and come up with
+ways to make things faster.
+
+771
+00:39:27.790 --> 00:39:30.820
+And these clever hacks, I
+mean, I know in 1999,
+
+772
+00:39:30.820 --> 00:39:34.930
+I never imagined that Google
+maps would be faster than
+
+773
+00:39:34.930 --> 00:39:37.810
+running a mapping application locally
+on my PC that continues
+
+774
+00:39:37.810 --> 00:39:39.790
+to blow my mind that
+I can go to Google
+
+775
+00:39:39.790 --> 00:39:43.720
+maps and have a faster
+startup experience, a faster mapping
+
+776
+00:39:43.720 --> 00:39:47.740
+experience than like Microsoft streets
+and trips, which is a
+
+777
+00:39:47.740 --> 00:39:53.440
+local app on my hard
+drive. It was a great
+
+778
+00:39:53.440 --> 00:39:56.470
+application, but it's completely obsolete.
+Totally. Because when I go
+
+779
+00:39:56.500 --> 00:39:59.320
+to Google maps, it loads
+almost instantly. And like everywhere,
+
+780
+00:39:59.350 --> 00:40:02.500
+zoom, everything, it doesn't make
+any sense at all. The
+
+781
+00:40:02.500 --> 00:40:04.540
+whole thing, just still, like
+I said, blows my mind.
+
+782
+00:40:05.250 --> 00:40:08.430
+It's just a big VT,
+100 terminal emulator, right? Yeah.
+
+783
+00:40:09.450 --> 00:40:11.640
+That you can have a
+mapping app in the browser
+
+784
+00:40:11.700 --> 00:40:15.810
+running that fast. That's crazy.
+Right. I would, if you
+
+785
+00:40:15.810 --> 00:40:17.730
+had told me that in
+1999, I would literally probably
+
+786
+00:40:17.730 --> 00:40:19.860
+laughed you out of the
+room. You're ridiculous. You're a
+
+787
+00:40:19.860 --> 00:40:22.590
+bozo get out of the
+room, but that's the world
+
+788
+00:40:22.590 --> 00:40:25.720
+we live in. And so
+the speed to get to
+
+789
+00:40:25.720 --> 00:40:28.320
+the specific case that you
+outlined. Yes. You could totally
+
+790
+00:40:28.320 --> 00:40:32.490
+do that. I mean, you
+could intermediates yourself between your
+
+791
+00:40:32.490 --> 00:40:34.860
+website and Gravatar and do
+all this clever catching and
+
+792
+00:40:34.860 --> 00:40:38.460
+stuff. And it would definitely
+work. My concern is that
+
+793
+00:40:38.460 --> 00:40:41.040
+I would like to see
+the Gravatar service get better.
+
+794
+00:40:41.070 --> 00:40:43.500
+Like I, they already do
+a very, very good job.
+
+795
+00:40:43.530 --> 00:40:45.570
+I mean, we think continual
+improvement. We haven't seen these
+
+796
+00:40:45.570 --> 00:40:48.390
+performance problems that we saw
+early on, but on the
+
+797
+00:40:48.390 --> 00:40:51.420
+other side, it behooves you
+as a site owner to
+
+798
+00:40:51.420 --> 00:40:54.300
+test your site as if
+your dependencies are down, because
+
+799
+00:40:54.300 --> 00:40:57.030
+what happens, right? Like what
+happens in stack overflow if
+
+800
+00:40:57.060 --> 00:41:00.030
+Google is down? Well, right
+now you're pretty host because
+
+801
+00:41:00.630 --> 00:41:03.270
+that jQuery dependency is a
+really important one. But even
+
+802
+00:41:03.270 --> 00:41:06.930
+then if jQuery was down,
+Google was down. If they
+
+803
+00:41:06.930 --> 00:41:09.990
+say you could still post
+questions, you could still answer
+
+804
+00:41:09.990 --> 00:41:12.960
+questions. You just wouldn't get
+the fancy editor experience. You
+
+805
+00:41:12.960 --> 00:41:16.110
+wouldn't be able to vote
+because that requires JavaScript. So
+
+806
+00:41:16.110 --> 00:41:19.140
+you need to think about
+if your dependencies are unavailable,
+
+807
+00:41:19.140 --> 00:41:21.540
+what happens now in the
+case of Gravatar, it really
+
+808
+00:41:21.540 --> 00:41:24.000
+doesn't matter that much because
+the images are not really
+
+809
+00:41:24.000 --> 00:41:27.780
+blocking anything of significance. And
+if they weren't there, the
+
+810
+00:41:27.780 --> 00:41:31.740
+experience wouldn't be affected that
+profoundly. But in the case
+
+811
+00:41:31.740 --> 00:41:35.390
+of jQuery, it would be
+a fairly effect. And the
+
+812
+00:41:35.390 --> 00:41:38.360
+problem we have in recovering
+from failure to load jQuery
+
+813
+00:41:38.630 --> 00:41:41.030
+is really kind of a
+hard problem because you can't
+
+814
+00:41:41.030 --> 00:41:43.400
+rely on a lot of
+the startup events in jQuery
+
+815
+00:41:43.400 --> 00:41:45.590
+that use all over the
+place, like ready, the ready
+
+816
+00:41:45.590 --> 00:41:49.340
+event, which is like core
+use all the time stops
+
+817
+00:41:49.400 --> 00:41:53.660
+being available, which means you
+have to basically rearchitect your
+
+818
+00:41:53.660 --> 00:41:55.850
+code to not rely on.
+You have to, you know,
+
+819
+00:41:55.880 --> 00:41:58.160
+insert another layer, kinda like
+what you're talking about. The
+
+820
+00:41:58.160 --> 00:42:00.440
+Gravatar is like, you have
+another layer of this onion.
+
+821
+00:42:00.680 --> 00:42:04.520
+You're peeling back all these
+layers to, to figure out
+
+822
+00:42:04.520 --> 00:42:07.280
+how your dependencies fit in
+and how you deal with
+
+823
+00:42:07.280 --> 00:42:09.920
+them not being available. But
+it's a fun problem. I
+
+824
+00:42:09.920 --> 00:42:11.750
+mean, and that's what we
+love so much about stack
+
+825
+00:42:11.750 --> 00:42:14.900
+overflow is again, we get
+such traffic. So it's, it's,
+
+826
+00:42:14.930 --> 00:42:17.060
+you're working on something that
+touches a lot of people
+
+827
+00:42:17.060 --> 00:42:19.850
+in some way. And then
+it's such a fascinating performance
+
+828
+00:42:19.850 --> 00:42:22.130
+problem. I mean, every day
+we're able to come at
+
+829
+00:42:22.130 --> 00:42:25.100
+it and figure out new
+things and not just, okay,
+
+830
+00:42:25.100 --> 00:42:27.200
+so that's the web, that's
+the browser part of the
+
+831
+00:42:27.200 --> 00:42:31.400
+porous equation, which is huge,
+huge. Then on top of
+
+832
+00:42:31.400 --> 00:42:34.850
+that, we have the server
+side performance problem, right? And
+
+833
+00:42:34.940 --> 00:42:38.510
+that is essentially for us
+all about optimizing SQL queries,
+
+834
+00:42:39.200 --> 00:42:43.010
+which is a totally different
+art, right. Entirely, but it's
+
+835
+00:42:43.010 --> 00:42:44.870
+a fun one. Like it's
+fun to bust out the,
+
+836
+00:42:45.200 --> 00:42:48.080
+the SQL server profiler and
+look at all the queries
+
+837
+00:42:48.080 --> 00:42:50.840
+you're doing and actually figure
+out why they're slow, why
+
+838
+00:42:50.840 --> 00:42:54.050
+they're fast, what you're doing
+wrong, what indexes you need,
+
+839
+00:42:54.260 --> 00:42:57.950
+how should you structure your
+tables? This is a problem
+
+840
+00:42:57.950 --> 00:43:01.700
+that, again, it's very fractal
+in nature. We're even now
+
+841
+00:43:01.730 --> 00:43:04.310
+just last night we deployed
+two or three major fixes.
+
+842
+00:43:05.150 --> 00:43:07.730
+One was they fixed the
+optimizations to the way we're
+
+843
+00:43:07.730 --> 00:43:10.460
+querying for stuff. And some
+of the queries that you
+
+844
+00:43:10.460 --> 00:43:13.430
+come up with are just,
+non-intuitive like, you would not
+
+845
+00:43:13.430 --> 00:43:16.820
+believe that query a would
+be faster than query B.
+
+846
+00:43:17.150 --> 00:43:18.710
+Like they don't, if you
+look at them on the
+
+847
+00:43:18.710 --> 00:43:20.630
+page, it doesn't make sense
+why one is faster than
+
+848
+00:43:20.630 --> 00:43:22.610
+the other. So it's all
+very subtle. It has to
+
+849
+00:43:22.610 --> 00:43:24.890
+do with how the data
+is stored, how SQL servers
+
+850
+00:43:24.920 --> 00:43:29.060
+processing query so on and
+so forth. But it's all
+
+851
+00:43:29.060 --> 00:43:32.720
+about profiling. Like we use
+ants profiler, which is a
+
+852
+00:43:32.720 --> 00:43:35.360
+great, great tool, and we
+run our code through it
+
+853
+00:43:35.450 --> 00:43:37.730
+and it sort of shows
+us the hotspots. The hotspots
+
+854
+00:43:37.730 --> 00:43:40.310
+are nine times out of
+10 queries. You know, there
+
+855
+00:43:40.310 --> 00:43:42.140
+are places in the code
+where you're hitting the database.
+
+856
+00:43:42.140 --> 00:43:44.900
+That's almost always the slow
+stuff in your code. Although
+
+857
+00:43:44.900 --> 00:43:46.790
+occasionally we screw up and
+we'll have our own code
+
+858
+00:43:46.790 --> 00:43:49.670
+be slow, which means it's
+really bad to be slower
+
+859
+00:43:49.670 --> 00:43:51.230
+than the database. You have
+to be pretty bad, but
+
+860
+00:43:51.230 --> 00:43:53.600
+it does happen. But most
+of the time it's these
+
+861
+00:43:53.600 --> 00:43:55.610
+queries. And then it's just
+a matter of figuring out,
+
+862
+00:43:55.640 --> 00:43:57.950
+Hey, do we have to
+do this query? Like, why
+
+863
+00:43:57.950 --> 00:43:59.600
+is this query out there?
+Like, do we need this
+
+864
+00:43:59.600 --> 00:44:02.990
+data at this point in
+time and be like, how
+
+865
+00:44:02.990 --> 00:44:05.780
+can we make this query
+go faster? Can we query
+
+866
+00:44:05.780 --> 00:44:10.340
+less columns? Can we scope
+it tighter to only specific
+
+867
+00:44:10.340 --> 00:44:14.120
+subclasses of users, all that
+stuff, because we want to
+
+868
+00:44:14.120 --> 00:44:16.910
+optimize for the anonymous user
+experience as much as possible
+
+869
+00:44:16.910 --> 00:44:20.450
+because that's 90% of our
+traffic is people that have
+
+870
+00:44:20.450 --> 00:44:23.720
+no account on stack overflow
+hitting us, you know, maybe
+
+871
+00:44:23.720 --> 00:44:26.630
+for the first time ever.
+So optimizing for that anonymous
+
+872
+00:44:26.630 --> 00:44:29.510
+user case ends up being
+one of the more important
+
+873
+00:44:29.510 --> 00:44:32.490
+things that you'll do. And
+you have these users that
+
+874
+00:44:32.490 --> 00:44:35.400
+love your site that are
+very adamant that they need
+
+875
+00:44:35.400 --> 00:44:37.230
+these certain features. They need
+things to be a certain
+
+876
+00:44:37.230 --> 00:44:41.040
+way, but they're only, you
+know, 10% of your audience
+
+877
+00:44:41.040 --> 00:44:44.130
+in terms of percentages right
+now, they may be generating
+
+878
+00:44:44.130 --> 00:44:46.290
+tons of the content. So
+that's another reason that they're
+
+879
+00:44:46.290 --> 00:44:49.740
+important, obviously, but in terms
+of the, the random user
+
+880
+00:44:49.740 --> 00:44:52.680
+experience on your site, making
+things better for your logged
+
+881
+00:44:52.680 --> 00:44:55.290
+in users is a very
+small part of the equation.
+
+882
+00:44:55.650 --> 00:44:58.160
+So, you know, this all
+feeds into the problem. And
+
+883
+00:44:58.200 --> 00:44:59.670
+like I said, it's a,
+it's a fun one to
+
+884
+00:44:59.670 --> 00:45:02.610
+have. It's just, it's fascinating
+problem to work on performance.
+
+885
+00:45:03.020 --> 00:45:04.280
+Cool. Well, it sounds like
+you guys are having a
+
+886
+00:45:04.280 --> 00:45:06.200
+hell of a lot of
+fun. I appreciate you sitting
+
+887
+00:45:06.200 --> 00:45:07.970
+down with me today and
+giving us a little bit
+
+888
+00:45:07.970 --> 00:45:11.720
+of insight into what, what
+a three programmers can do.
+
+889
+00:45:11.720 --> 00:45:15.290
+It's pretty amazing. It's fantastic.
+I mean, I, I feel
+
+890
+00:45:15.290 --> 00:45:17.030
+like we were very fortunate
+to be in the position
+
+891
+00:45:17.030 --> 00:45:21.020
+that we're in and we
+w we really believe very
+
+892
+00:45:21.020 --> 00:45:23.750
+seriously and sort of serving
+our audience and then making
+
+893
+00:45:23.750 --> 00:45:25.730
+the site, you know, a
+resource that we would want
+
+894
+00:45:25.730 --> 00:45:27.740
+to use as well as
+everybody else. It's nice to
+
+895
+00:45:27.740 --> 00:45:29.450
+be in the audience as
+well as be one of
+
+896
+00:45:29.450 --> 00:45:32.540
+the developers. Cool. Well, thanks
+so much, Jeff Atwood for
+
+897
+00:45:32.540 --> 00:45:34.190
+talking to me about stack
+overflow and some of the
+
+898
+00:45:34.190 --> 00:45:37.280
+performance optimizations that you have
+been doing. This has been
+
+899
+00:45:37.280 --> 00:45:39.800
+another episode of Hansel minutes,
+and we'll see you again
+
+900
+00:45:39.800 --> 00:45:40.250
+next week.
+

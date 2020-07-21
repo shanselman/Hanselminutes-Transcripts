@@ -1,0 +1,2851 @@
+WEBVTT FILE
+
+1
+00:00:04.920 --> 00:00:16.910
+<inaudible> From hanselman.com. It's Hansel
+minutes or weekly discussion with
+
+2
+00:00:16.910 --> 00:00:21.530
+web developer and technologist Scott
+Hanselman hosted by Carl Franklin. This
+
+3
+00:00:21.530 --> 00:00:28.040
+is Lawrence Ryan announcing show number
+13 recorded Monday, April 10th, 2006. Support
+
+4
+00:00:28.040 --> 00:00:31.490
+for Hanselman. This is provided
+by COVID Smith tools, makers
+
+5
+00:00:31.490 --> 00:00:35.600
+of code Smith and extensible
+template based code generator for.net.
+
+6
+00:00:36.110 --> 00:00:38.660
+And you can get a
+hundred bucks off with coupon
+
+7
+00:00:38.660 --> 00:00:41.900
+code H M 100, just
+for listening to Hansel minutes
+
+8
+00:00:42.410 --> 00:00:48.860
+online@covidsmithtools.com. Support is also provided
+by Peter bloom.com. Start with
+
+9
+00:00:48.860 --> 00:00:58.100
+better controls finish with better
+sites online@peterblumdotcomandby.net developers journal the
+
+10
+00:00:58.100 --> 00:01:03.800
+world's leading dotnet developer magazine
+online at www dot <inaudible>
+
+11
+00:01:04.100 --> 00:01:07.430
+dot com. In this episode,
+Scott talks about the tools
+
+12
+00:01:07.430 --> 00:01:09.860
+and techniques. He used to
+discover a Trojan that had
+
+13
+00:01:09.860 --> 00:01:17.930
+infected his website. <inaudible> Hi,
+this is Carl Franklin, and welcome
+
+14
+00:01:17.930 --> 00:01:20.390
+back to Hansel minutes and
+here with Scott Hanselman, of
+
+15
+00:01:20.390 --> 00:01:23.600
+course. Hi Scott, how are
+you, sir? The topic this
+
+16
+00:01:23.600 --> 00:01:28.610
+week, CSI your computer forever
+Basic analysis on your machine
+
+17
+00:01:28.670 --> 00:01:32.090
+Quincy for the PC, for
+our international crowd, of course,
+
+18
+00:01:32.180 --> 00:01:34.370
+Jack Klugman and the reference
+to Quincy MD was a
+
+19
+00:01:34.460 --> 00:01:38.300
+medical detective show about a,
+he worked in a more
+
+20
+00:01:38.300 --> 00:01:40.460
+grooves in medical examiner And
+he always went over the
+
+21
+00:01:40.460 --> 00:01:44.210
+boss's head. Yep. So these,
+this is about tools that
+
+22
+00:01:44.210 --> 00:01:47.390
+you can use to diagnose
+problems with you PC, not
+
+23
+00:01:47.390 --> 00:01:52.280
+necessarily code problems, but just
+everyday problems. This was a
+
+24
+00:01:52.280 --> 00:01:54.440
+really weird week for me.
+When it came to a
+
+25
+00:01:54.440 --> 00:01:57.020
+debugging and odd behavior on
+my system, we had a
+
+26
+00:01:57.410 --> 00:02:01.610
+asp.net worker process running at
+a hundred percent for no
+
+27
+00:02:01.610 --> 00:02:05.180
+particular reason at all. We
+had a Trojan horse kind
+
+28
+00:02:05.180 --> 00:02:11.000
+of evil malware virus blogged
+about the Trojan at shrinks.com/dvx
+
+29
+00:02:11.630 --> 00:02:15.590
+and the debugging, the asp.net
+worker process at <inaudible> dot
+
+30
+00:02:15.590 --> 00:02:20.300
+com slash D VV. Both
+of them involved going into
+
+31
+00:02:20.300 --> 00:02:24.980
+the toolbox. And interestingly, the
+toolbox consists more and more
+
+32
+00:02:25.010 --> 00:02:29.660
+of anything that's just internals
+has ever done. I used
+
+33
+00:02:29.660 --> 00:02:31.700
+to have a whole pile
+of utilities and more and
+
+34
+00:02:31.700 --> 00:02:33.830
+more, I just keep coming
+back to those guys because
+
+35
+00:02:35.150 --> 00:02:37.340
+they get you're right down
+to what's happening underneath your
+
+36
+00:02:37.340 --> 00:02:42.530
+system. I used to say
+that with.net, everyone said, Oh,
+
+37
+00:02:42.530 --> 00:02:44.870
+it's taking you to a
+new layer of abstraction, right?
+
+38
+00:02:44.870 --> 00:02:47.150
+It's a whole new level
+of abstraction, right? I always
+
+39
+00:02:47.150 --> 00:02:50.660
+joke that it's really just
+managed spackle over the underlying
+
+40
+00:02:50.690 --> 00:02:53.930
+O S a and I
+say that, you know, somebody
+
+41
+00:02:53.930 --> 00:02:55.820
+somewhere has to call a
+load library. You know, it
+
+42
+00:02:55.820 --> 00:02:58.280
+doesn't matter whether you use
+Java or whether using.net, somebody
+
+43
+00:02:58.280 --> 00:03:00.850
+had to load that and
+such a DLL into such
+
+44
+00:03:00.850 --> 00:03:05.590
+and such exe. Yeah. And
+inevitably the level of debugging
+
+45
+00:03:05.590 --> 00:03:08.560
+that I ended up getting
+to is the ports and
+
+46
+00:03:08.560 --> 00:03:12.190
+processes, DLLs, and which DLL
+got loaded kind of level.
+
+47
+00:03:13.300 --> 00:03:15.040
+I think there's kind of
+two levels of debugging out
+
+48
+00:03:15.040 --> 00:03:17.020
+there. Maybe you would agree.
+There's like, you know, your
+
+49
+00:03:17.020 --> 00:03:21.820
+hardcore debugger, you know, hardware,
+debugger, soft ice kind of
+
+50
+00:03:21.820 --> 00:03:24.910
+attached to it, find out
+what entry points were relocated
+
+51
+00:03:24.910 --> 00:03:27.660
+at what point in memory
+symbol, like surfer path. I
+
+52
+00:03:27.660 --> 00:03:31.290
+used to read the CPU
+registers. Oh yeah. I mean,
+
+53
+00:03:31.710 --> 00:03:34.170
+we all learned that in
+school and you know, there
+
+54
+00:03:34.170 --> 00:03:35.850
+was a time when I,
+when I could say, Oh
+
+55
+00:03:35.850 --> 00:03:38.520
+man, dude, he was moving,
+he was moving zero into
+
+56
+00:03:38.520 --> 00:03:42.450
+AIX. That's totally. And he
+jumped, you know, and he
+
+57
+00:03:42.450 --> 00:03:45.630
+went off into the weeds
+and, you know, frankly, I
+
+58
+00:03:45.630 --> 00:03:48.030
+think it's difficult to be
+a really awesome Colonel level
+
+59
+00:03:48.030 --> 00:03:51.630
+debugger Pencil. You're debugging if
+you're debugging the Colonel. Correct.
+
+60
+00:03:52.050 --> 00:03:54.480
+Yeah. And you know, I,
+I've always said be a
+
+61
+00:03:54.480 --> 00:03:55.950
+Swiss army knife, do it
+and do as much as
+
+62
+00:03:55.950 --> 00:03:59.730
+you can. But I, I
+reached my limit when I
+
+63
+00:03:59.730 --> 00:04:01.830
+get into this kind of
+stuff. And I, I do
+
+64
+00:04:01.830 --> 00:04:03.780
+not claim to know this.
+Like I used to back
+
+65
+00:04:03.780 --> 00:04:05.700
+in the day, man, I
+could funk with the best
+
+66
+00:04:05.700 --> 00:04:08.660
+of them, you know, windows
+16 bit. But nowadays I
+
+67
+00:04:08.820 --> 00:04:11.940
+defer to the experts and
+you know, the experts right
+
+68
+00:04:11.940 --> 00:04:15.510
+now really keeps coming back
+to Mark Russinovich at sysinternals.
+
+69
+00:04:15.990 --> 00:04:20.910
+He's actually speaking at tech
+ed at a pre-con at
+
+70
+00:04:20.910 --> 00:04:27.420
+shrinker.com/dvi. And he's going to
+be doing a pre-con on
+
+71
+00:04:27.930 --> 00:04:32.910
+debugging and fighting malware with
+advanced detection and removal techniques.
+
+72
+00:04:33.330 --> 00:04:35.940
+Wow, cool. Which is going
+to be rock and sweet.
+
+73
+00:04:36.090 --> 00:04:38.880
+He's going to talk about
+I'm sure. His root kit
+
+74
+00:04:39.150 --> 00:04:42.240
+stuff that he did with
+that Sony CD recently and
+
+75
+00:04:42.240 --> 00:04:46.770
+different kinds of malware. So
+my very cursory writeup of
+
+76
+00:04:46.860 --> 00:04:51.810
+fighting that Trojan at trench.com/dvx,
+not nearly as interesting as
+
+77
+00:04:51.810 --> 00:04:54.390
+the stuff that he's going
+to talk about, but even
+
+78
+00:04:54.390 --> 00:04:58.530
+though his exploits are awesome,
+I like reading them and
+
+79
+00:04:58.530 --> 00:05:00.840
+I struggled to understand them
+all. I still think that
+
+80
+00:05:00.840 --> 00:05:03.030
+there's a basic level of
+understanding that I think we
+
+81
+00:05:03.030 --> 00:05:06.480
+can all use to debug,
+you know, 80%, 90% of
+
+82
+00:05:06.480 --> 00:05:10.270
+what goes wrong in the
+average dotnet developers life. And
+
+83
+00:05:10.380 --> 00:05:14.070
+Is this knowledge that will
+transfer over to non programmer
+
+84
+00:05:14.070 --> 00:05:16.080
+types? Or do you really
+sort of have to be
+
+85
+00:05:16.080 --> 00:05:19.020
+a geek to get this
+week show? Well, right there,
+
+86
+00:05:19.020 --> 00:05:20.940
+you imply that a non
+programmer type can't be a
+
+87
+00:05:20.940 --> 00:05:24.360
+geek. And certainly there are
+lots of folks that don't
+
+88
+00:05:24.360 --> 00:05:26.850
+program, you know, it guys
+that may listen to this
+
+89
+00:05:27.420 --> 00:05:30.270
+podcast and others that are
+not necessarily dotnet programmers, but
+
+90
+00:05:30.270 --> 00:05:32.880
+yeah, I think that this
+is a geek person type
+
+91
+00:05:32.880 --> 00:05:34.380
+of a thing. You know,
+if you like the task
+
+92
+00:05:34.380 --> 00:05:36.660
+manager, if you leave the
+task manager running all the
+
+93
+00:05:36.660 --> 00:05:39.720
+time, you might be a
+geek, right. And if you
+
+94
+00:05:39.720 --> 00:05:42.450
+sort by CPU, if you
+sort by virtual memory size,
+
+95
+00:05:42.450 --> 00:05:44.370
+you might be a geek.
+I think there's a comedy
+
+96
+00:05:44.370 --> 00:05:48.030
+routine in this somewhere. Very,
+very likely, well, okay, what's
+
+97
+00:05:48.030 --> 00:05:52.890
+next? So in the comments
+of, of my recent posts
+
+98
+00:05:53.850 --> 00:05:59.600
+at stringer.com/dvp, a debugger better
+than I, whose name I
+
+99
+00:05:59.620 --> 00:06:04.100
+cannot quite pronounce, it looks
+like Mateus Vander. Flutent made
+
+100
+00:06:04.100 --> 00:06:07.070
+a comment. And some of
+my screenshots that the function
+
+101
+00:06:07.070 --> 00:06:10.700
+that I thought was causing
+trouble in this particular issue
+
+102
+00:06:10.700 --> 00:06:14.150
+with asp.net worker process, going
+to a hundred percent was
+
+103
+00:06:14.150 --> 00:06:18.170
+not in fact, the function.
+I thought it was, he
+
+104
+00:06:18.170 --> 00:06:20.780
+looked at the offset and
+said, well, I don't think
+
+105
+00:06:20.780 --> 00:06:22.880
+the function is that large.
+And I think what's happening
+
+106
+00:06:22.880 --> 00:06:27.320
+is that you're seeing the
+nearest exported function and you
+
+107
+00:06:27.320 --> 00:06:29.840
+need to load the symbols.
+And I had completely forgotten
+
+108
+00:06:29.840 --> 00:06:34.760
+about symbol servers. When you
+use a tool like process
+
+109
+00:06:34.760 --> 00:06:39.920
+Explorer, process Explorer from sysinternals,
+it is the task manager
+
+110
+00:06:39.920 --> 00:06:43.580
+on steroids. You can get
+that at <inaudible> dot com
+
+111
+00:06:43.580 --> 00:06:47.630
+slash DVM. You can right
+click on a process and
+
+112
+00:06:47.630 --> 00:06:52.220
+hit properties. And then from
+the properties dialog box, you'll
+
+113
+00:06:52.550 --> 00:06:54.950
+see things like the path,
+like where did that process
+
+114
+00:06:54.950 --> 00:06:57.540
+get loaded from? Because just,
+just because you see food
+
+115
+00:06:57.540 --> 00:06:59.930
+dot exe doesn't mean it's
+the one you think it
+
+116
+00:06:59.930 --> 00:07:01.460
+is, it could have been
+loaded from a different directory,
+
+117
+00:07:01.880 --> 00:07:04.760
+but you can click on
+the threads tab and you
+
+118
+00:07:04.760 --> 00:07:07.190
+can see the functions that
+are doing the work. Cool.
+
+119
+00:07:07.760 --> 00:07:11.300
+And it turned out that
+I was just looking at
+
+120
+00:07:11.300 --> 00:07:14.600
+kind of the raw information
+there and not seeing truly
+
+121
+00:07:14.600 --> 00:07:16.940
+what was going on. So
+I made some assumptions. So
+
+122
+00:07:16.940 --> 00:07:21.590
+he pointed out, well, you
+can download the Microsoft debugger
+
+123
+00:07:21.590 --> 00:07:26.900
+tools and you can get
+details on this@shrinkstir.com slash DV
+
+124
+00:07:26.990 --> 00:07:32.780
+w. And this is a
+really interesting support article@microsoft.com and
+
+125
+00:07:32.780 --> 00:07:35.600
+the only support article I've
+ever seen that includes embedded
+
+126
+00:07:35.600 --> 00:07:38.300
+video. So it gives you
+an idea of how complicated
+
+127
+00:07:38.300 --> 00:07:42.590
+this is actually a KB
+article@support.microsoft with an embedded streaming
+
+128
+00:07:42.590 --> 00:07:45.770
+media demonstration of how to
+do this. This is setting
+
+129
+00:07:45.770 --> 00:07:53.540
+up a symbol server. Microsoft
+has got a global server@microsoft.com
+
+130
+00:07:53.750 --> 00:07:57.020
+that you can set up
+a path and environment, variable
+
+131
+00:07:57.770 --> 00:08:00.230
+machine wide on your system,
+and point it to a
+
+132
+00:08:00.230 --> 00:08:02.300
+local folder. And you'll see
+all the details there when
+
+133
+00:08:02.300 --> 00:08:04.610
+you visit the link. So
+I've set this up and
+
+134
+00:08:04.610 --> 00:08:06.770
+I just made a folder
+on my system called C
+
+135
+00:08:06.770 --> 00:08:10.040
+backslash symbols. So then when
+a debugger, whether it be
+
+136
+00:08:10.040 --> 00:08:14.090
+visual studio, whether it be
+wind debug when DBG that
+
+137
+00:08:14.090 --> 00:08:18.560
+comes with visual studio tools
+and the, the SDK or
+
+138
+00:08:18.620 --> 00:08:23.810
+process Explorer itself decides to
+get more information about a
+
+139
+00:08:23.830 --> 00:08:28.670
+Microsoft executable that you're trying
+to debug, they'll automatically download
+
+140
+00:08:28.970 --> 00:08:32.230
+the symbols. Now You, that
+means that you have to
+
+141
+00:08:32.230 --> 00:08:34.150
+be plugged into that server.
+I mean, it doesn't work
+
+142
+00:08:34.150 --> 00:08:37.810
+for everything, right? So this
+particular symbol server works for
+
+143
+00:08:37.810 --> 00:08:42.580
+Microsoft symbols. So Anything that's
+that comes with windows, anything
+
+144
+00:08:42.580 --> 00:08:45.820
+that's part of the S
+We'll we'll we'll be available
+
+145
+00:08:45.820 --> 00:08:48.130
+there. So I've set that
+up and I'm looking at
+
+146
+00:08:48.130 --> 00:08:50.290
+my cymbals folder right now,
+and I see a directory
+
+147
+00:08:50.290 --> 00:08:55.320
+called ASP net worker process
+dot PDB that is, and
+
+148
+00:08:55.320 --> 00:08:59.100
+inside that is the PDBs
+for asp.net. So you actually
+
+149
+00:08:59.430 --> 00:09:01.700
+will Be able to pull
+those up in visual studio
+
+150
+00:09:01.700 --> 00:09:03.740
+and walk through the code.
+You can't walk through the
+
+151
+00:09:03.740 --> 00:09:05.780
+code, we're talking about symbols,
+so this will help you
+
+152
+00:09:05.790 --> 00:09:09.710
+get call stacks where you
+couldn't see call stacks before.
+
+153
+00:09:09.740 --> 00:09:12.650
+Okay. It'll give you, you
+know, for the most part,
+
+154
+00:09:12.650 --> 00:09:15.320
+not quite a line number,
+but it'll tell you where
+
+155
+00:09:15.320 --> 00:09:19.310
+functions are, are blowing up.
+Okay. I'll post about this
+
+156
+00:09:19.880 --> 00:09:23.750
+in the future. I thought
+the PDB files contained enough
+
+157
+00:09:23.750 --> 00:09:28.010
+information to reconstruct the source
+code for, for.net applications. Anyway,
+
+158
+00:09:29.360 --> 00:09:33.560
+They, they contain information about
+up to, and sometimes not
+
+159
+00:09:33.560 --> 00:09:35.690
+including line numbering, but I'm
+sure one of our listeners
+
+160
+00:09:35.690 --> 00:09:38.570
+will correct me and give
+me the exact details. Okay.
+
+161
+00:09:38.950 --> 00:09:41.690
+I I'll show I'll put
+up a before and after
+
+162
+00:09:41.690 --> 00:09:45.830
+screenshot of debugging, the ESPN
+networker process with the symbols
+
+163
+00:09:45.830 --> 00:09:48.890
+and without them sweet and,
+and we'll see how much
+
+164
+00:09:48.890 --> 00:09:52.340
+more information that you can,
+you can see, okay. It
+
+165
+00:09:52.340 --> 00:09:55.160
+also will allow you to
+take, like when you get
+
+166
+00:09:55.160 --> 00:09:58.220
+a dump file, like a
+DMP, when your system is
+
+167
+00:09:58.220 --> 00:10:01.640
+blue screen, you can load
+that into process Explorer, debug
+
+168
+00:10:01.670 --> 00:10:03.710
+view, and you might be
+able to get some information
+
+169
+00:10:03.710 --> 00:10:07.400
+about whereabouts that happened. That
+might be as simple as
+
+170
+00:10:07.400 --> 00:10:10.010
+getting the information about a
+driver that you couldn't see
+
+171
+00:10:10.010 --> 00:10:13.130
+before. Yeah, That's, that's been
+a big problem for me.
+
+172
+00:10:13.730 --> 00:10:16.190
+Now, you can set this
+up machine wide. There's an
+
+173
+00:10:16.190 --> 00:10:18.650
+environment variable called NT symbol
+path that you can learn
+
+174
+00:10:18.650 --> 00:10:22.280
+about it, that, that Earl
+shrinks.com/dvw, you can set it
+
+175
+00:10:22.280 --> 00:10:25.070
+up at a solution by
+solution basis inside of visual
+
+176
+00:10:25.070 --> 00:10:29.270
+studio. There's a debug symbol
+files search these paths, and
+
+177
+00:10:29.270 --> 00:10:32.000
+then enterprises can set up
+symbol servers for themselves. Like
+
+178
+00:10:32.000 --> 00:10:35.810
+we have a very large
+application called Voyager here at
+
+179
+00:10:35.810 --> 00:10:38.300
+Kirlian, and there's a number
+of different versions. So we
+
+180
+00:10:38.300 --> 00:10:41.330
+have an internal symbol server
+so that when someone's running
+
+181
+00:10:41.330 --> 00:10:44.150
+a particular version of Voyager,
+they can set their environment
+
+182
+00:10:44.150 --> 00:10:46.460
+variable to our main symbol
+server. And it will find
+
+183
+00:10:46.460 --> 00:10:49.430
+the right versions of the
+PDBs for that particular version
+
+184
+00:10:49.430 --> 00:10:53.750
+of a Voyager. Cool. That's
+very cool. Yeah, there's so
+
+185
+00:10:53.750 --> 00:10:56.510
+much more there than, than
+I even claim to understand
+
+186
+00:10:56.510 --> 00:11:01.700
+now that we're in such
+a mixed unmanaged managed kind
+
+187
+00:11:01.700 --> 00:11:05.660
+of world, but dealing with
+PDBs, like this is a
+
+188
+00:11:05.660 --> 00:11:09.280
+particularly complicated issue and having
+a symbol server as a,
+
+189
+00:11:09.280 --> 00:11:11.810
+as Mateus pointed out to
+me would have given me
+
+190
+00:11:11.810 --> 00:11:14.180
+even more information. And even
+though I solved the problem,
+
+191
+00:11:14.180 --> 00:11:16.490
+I didn't truly understand what
+was going on until I
+
+192
+00:11:16.490 --> 00:11:18.370
+started digging into that. You
+know, I think one thing
+
+193
+00:11:18.440 --> 00:11:20.720
+This is prompting me to
+do is to set up
+
+194
+00:11:20.720 --> 00:11:23.600
+the symbol server and just
+write some code and throw
+
+195
+00:11:23.600 --> 00:11:27.200
+some exceptions and see, you
+know, just mess around with
+
+196
+00:11:27.200 --> 00:11:29.330
+it, grab some, grab a
+stiff cup of coffee and
+
+197
+00:11:29.330 --> 00:11:32.480
+just start playing with, You
+know, and another thing about
+
+198
+00:11:32.480 --> 00:11:35.300
+PDBs that has always caused
+me a lot of trouble
+
+199
+00:11:35.300 --> 00:11:38.870
+is this issue with PDBs
+in and the GAC, you
+
+200
+00:11:38.870 --> 00:11:42.020
+know, loading stuff into the
+gap. You know, let's pause
+
+201
+00:11:42.020 --> 00:11:44.000
+there for just a second.
+And let me ask you
+
+202
+00:11:44.420 --> 00:11:49.130
+now you're a web developer
+and you obviously talk have
+
+203
+00:11:49.130 --> 00:11:52.100
+talked about putting things in
+the gap before I've always
+
+204
+00:11:52.100 --> 00:11:54.400
+been under the impression and
+maybe, maybe it's just because
+
+205
+00:11:54.400 --> 00:11:56.470
+it's, I'm more of a
+windows developer than a web
+
+206
+00:11:56.470 --> 00:11:59.590
+developer, but that, you know,
+loading things into the GAC
+
+207
+00:11:59.680 --> 00:12:04.320
+can, you know, Just cause
+cause more problems I guess,
+
+208
+00:12:04.320 --> 00:12:07.380
+because of versioning and stuff
+and updating well For, for
+
+209
+00:12:07.380 --> 00:12:09.780
+us, it's not about the
+copying round of the files.
+
+210
+00:12:09.780 --> 00:12:11.880
+There is something to be
+said for having an X
+
+211
+00:12:11.880 --> 00:12:14.250
+copy deployment, being able to
+just take an entire bin
+
+212
+00:12:14.250 --> 00:12:16.650
+folder of your asp.net application
+and just dump stuff over
+
+213
+00:12:16.650 --> 00:12:19.710
+there for us, it became
+an issue around, around interrupt.
+
+214
+00:12:20.820 --> 00:12:24.180
+We have a bunch of
+comm DLLs that get used.
+
+215
+00:12:24.570 --> 00:12:28.320
+And if you just go
+into visual studio and say,
+
+216
+00:12:28.320 --> 00:12:30.720
+add reference, and then pick
+a calm DLL, if you've
+
+217
+00:12:30.720 --> 00:12:32.760
+got food at DLL to
+calm DLL and you pick
+
+218
+00:12:32.760 --> 00:12:36.270
+it out of the add
+reference, you'll automatically get an
+
+219
+00:12:36.270 --> 00:12:40.560
+interrupt assembly generated for you.
+They'll automatically run that TLB
+
+220
+00:12:40.860 --> 00:12:43.620
+amp and they'll make an
+interrupt for you. But if
+
+221
+00:12:43.620 --> 00:12:47.220
+you're doing anything funky with
+comm marshaling of custom types
+
+222
+00:12:47.220 --> 00:12:50.970
+or arrays or variants, sometimes
+you want to write these
+
+223
+00:12:51.450 --> 00:12:55.740
+inter-op assemblies yourself. And if
+you do that, you want
+
+224
+00:12:55.740 --> 00:12:57.750
+to Mark them as being
+a what's called a Pia
+
+225
+00:12:57.750 --> 00:13:01.110
+or a primary inter-op assembly.
+And when you do that,
+
+226
+00:13:01.110 --> 00:13:05.130
+you need to strongly strongly
+name that. And those often
+
+227
+00:13:05.130 --> 00:13:08.490
+become shared because calm DLLs
+are registered system wide they're
+
+228
+00:13:08.500 --> 00:13:11.880
+shared, right? So then the
+associated dotnet interrupt DLL. It's
+
+229
+00:13:11.880 --> 00:13:14.190
+nice to Mark that as
+being shared. And those often
+
+230
+00:13:14.190 --> 00:13:16.860
+go into the gag, I
+guess that makes sense. So
+
+231
+00:13:16.860 --> 00:13:18.750
+I think of the GAC
+as being the place where
+
+232
+00:13:18.780 --> 00:13:22.800
+system wide things go, right?
+Things that are shared amongst
+
+233
+00:13:22.800 --> 00:13:27.150
+many, many web Webster websites
+on a single web server,
+
+234
+00:13:28.800 --> 00:13:34.080
+secret management, things like that,
+maybe a database access layer
+
+235
+00:13:34.080 --> 00:13:37.530
+that a number of different
+applications are gonna use. Once
+
+236
+00:13:37.530 --> 00:13:39.330
+you get things in the
+GAC that people feel that
+
+237
+00:13:39.330 --> 00:13:41.760
+the GAC is the strange
+place. And like we talked
+
+238
+00:13:41.760 --> 00:13:44.670
+about last week, you can,
+you know, subs to drive
+
+239
+00:13:44.670 --> 00:13:46.770
+to the, to the GAC
+and see what's really going
+
+240
+00:13:46.770 --> 00:13:48.930
+on in there. Right? One
+of the things that people
+
+241
+00:13:48.930 --> 00:13:51.210
+forget though, is that if
+you have the DLL in
+
+242
+00:13:51.210 --> 00:13:54.660
+your local directory and in
+the GAC, it'll get loaded
+
+243
+00:13:54.660 --> 00:13:57.030
+out of that local directory.
+And that can be confusing
+
+244
+00:13:57.660 --> 00:14:00.510
+about where things get loaded
+from. And often you want
+
+245
+00:14:00.510 --> 00:14:04.020
+to put the PDB files
+in the gap. All right,
+
+246
+00:14:04.050 --> 00:14:06.390
+now I may be remembering
+this wrong, but it was
+
+247
+00:14:06.390 --> 00:14:09.750
+my assumption that at least
+in dotnet one Oh, the,
+
+248
+00:14:09.880 --> 00:14:15.210
+that the, the loader looks
+in the gap first before
+
+249
+00:14:15.210 --> 00:14:17.400
+looking in the local directory.
+And then we'll look at
+
+250
+00:14:17.400 --> 00:14:20.280
+your config file to see
+if you've redirected it. But,
+
+251
+00:14:20.580 --> 00:14:23.130
+but I thought the GAC
+took precedence over being local.
+
+252
+00:14:23.190 --> 00:14:25.290
+So it's a little tricky
+and you can take a
+
+253
+00:14:25.290 --> 00:14:30.750
+look at a Richard Grimes, excellent
+discussion of the gap that
+
+254
+00:14:30.750 --> 00:14:36.930
+he's got up@shrinkstir.com slash DW
+zero. And it depends on
+
+255
+00:14:36.930 --> 00:14:39.150
+how you loaded the assembly.
+If you asked for a
+
+256
+00:14:39.150 --> 00:14:42.270
+fully qualified assembly name, if
+you said, I want this
+
+257
+00:14:42.270 --> 00:14:45.330
+assembly with this public key
+token in this version, it'll
+
+258
+00:14:45.330 --> 00:14:48.390
+come out of the GAC.
+Okay. If you ask for
+
+259
+00:14:48.390 --> 00:14:51.230
+it by the short name,
+then, then it'll come out
+
+260
+00:14:51.230 --> 00:14:55.550
+of the local director because
+the GAC doesn't know. And
+
+261
+00:14:55.770 --> 00:14:58.220
+just saying, I want the
+Fu you know, suddenly that
+
+262
+00:14:58.220 --> 00:15:01.810
+load food isn't enough information.
+It's true. You could have
+
+263
+00:15:01.810 --> 00:15:04.660
+multiple versions in the gap.
+That's true. And he's got
+
+264
+00:15:04.660 --> 00:15:06.220
+it. Yeah. So which one
+would it pick? Right. If
+
+265
+00:15:06.220 --> 00:15:08.620
+it finds it local, it
+it'll pick the, the local
+
+266
+00:15:08.620 --> 00:15:12.190
+one. Okay. Good point now.
+And all this is very
+
+267
+00:15:12.190 --> 00:15:16.840
+complicated stuff. Phew. Fusion debugging
+is, is a huge hassle,
+
+268
+00:15:17.500 --> 00:15:20.260
+but understanding the fusion debug
+stuff is actually a big
+
+269
+00:15:20.290 --> 00:15:24.190
+part of, of whom is
+basic debugging that we're talking
+
+270
+00:15:24.190 --> 00:15:26.560
+about. I like to keep
+fusion running all the time
+
+271
+00:15:26.560 --> 00:15:29.320
+on my system. I've got
+a C colon backslash fusion
+
+272
+00:15:29.320 --> 00:15:32.350
+logs. Travis Illig has got
+a great fusion log viewer
+
+273
+00:15:32.350 --> 00:15:35.800
+settings changer that you can
+get, it shrinks your.com/dw one
+
+274
+00:15:36.750 --> 00:15:40.330
+in the pre dotnet two
+Oh world. It's pretty complicated
+
+275
+00:15:40.330 --> 00:15:42.370
+to set this kind of
+stuff up. He'll edit the
+
+276
+00:15:42.370 --> 00:15:45.550
+registry. And what happens is
+you'll get in your fusion
+
+277
+00:15:45.610 --> 00:15:49.780
+logs folder, a list of
+all of the different attempts
+
+278
+00:15:49.780 --> 00:15:53.890
+to load a.net assembly and
+those failures. So if you're
+
+279
+00:15:53.890 --> 00:15:56.200
+feeling like a DLL isn't
+getting loaded or the right
+
+280
+00:15:56.200 --> 00:15:58.960
+version, isn't getting loaded, you
+can go there and check
+
+281
+00:15:58.960 --> 00:16:02.800
+that out. But I'm kind
+of back to the point
+
+282
+00:16:02.800 --> 00:16:07.000
+of these sysinternals tools as
+it relates to what got
+
+283
+00:16:07.000 --> 00:16:10.390
+loaded. We've talked in the
+past about dotnet to O
+
+284
+00:16:10.390 --> 00:16:15.070
+applications loading up the wrong
+version of DLLs. When I
+
+285
+00:16:15.070 --> 00:16:18.010
+loaded dotnet to outlook had
+some add ins that were
+
+286
+00:16:18.010 --> 00:16:20.890
+dotnet managed admins, and suddenly
+I was getting too old
+
+287
+00:16:20.890 --> 00:16:22.930
+loaded instead of one. Oh.
+And things were breaking. Yeah.
+
+288
+00:16:23.230 --> 00:16:25.210
+I talked about that at
+<inaudible> dot com slash DV
+
+289
+00:16:25.210 --> 00:16:29.200
+K process Explorer, again is
+a great tool where you
+
+290
+00:16:29.200 --> 00:16:32.650
+can load a process Explorer,
+look in the lower view,
+
+291
+00:16:32.650 --> 00:16:35.920
+you say view lower pane
+view and say what DLLs
+
+292
+00:16:35.920 --> 00:16:39.550
+are being loaded and from
+where, and if you take
+
+293
+00:16:39.550 --> 00:16:41.590
+a look at that shrinks
+to Earl, I said about
+
+294
+00:16:41.590 --> 00:16:46.690
+DIA stringer.com/dk, you can say,
+well, I insist that this
+
+295
+00:16:46.690 --> 00:16:49.960
+particular version of the SDK
+be loaded in memory, the
+
+296
+00:16:49.960 --> 00:16:53.290
+CLR, rather we've talked about
+that a little bit. Yeah.
+
+297
+00:16:53.320 --> 00:16:56.800
+Last week when we were
+mentioning shell extensions, only one
+
+298
+00:16:56.800 --> 00:16:59.320
+version of the CLR per
+process. So what's going to
+
+299
+00:16:59.320 --> 00:17:01.510
+happen in the shell extension
+world. When there's two, three
+
+300
+00:17:01.510 --> 00:17:04.360
+versions of the CLR out
+there, it's become a real
+
+301
+00:17:04.360 --> 00:17:10.930
+problem. Okay. File on both
+file Mon and regimen and
+
+302
+00:17:11.020 --> 00:17:14.590
+TCP view, those kind of
+three together, I'm finding more
+
+303
+00:17:14.590 --> 00:17:18.820
+and more useful when I'm
+having a situation where what
+
+304
+00:17:18.820 --> 00:17:21.700
+exactly is this application doing?
+What is it? Is it
+
+305
+00:17:21.700 --> 00:17:23.650
+writing to the disc? Is
+it looking in the registry
+
+306
+00:17:24.130 --> 00:17:31.150
+and both file Mon and
+regimen at shrink.com/dvg and stricture.com/dvt,
+
+307
+00:17:31.420 --> 00:17:35.020
+respectively will allow filtering. So
+I can say, well, I
+
+308
+00:17:35.020 --> 00:17:38.710
+want to see what the
+Carl Franklin dot exe is doing
+
+309
+00:17:38.860 --> 00:17:42.550
+in both the registry and
+to the file system at
+
+310
+00:17:42.550 --> 00:17:46.330
+runtime. So while this might
+not be something you'd want
+
+311
+00:17:46.330 --> 00:17:49.200
+to use to debug what
+DLLs are getting loaded, although
+
+312
+00:17:49.200 --> 00:17:51.720
+they would show up as
+being accessed on the file
+
+313
+00:17:51.720 --> 00:17:54.840
+system, it'll show you, is
+this application looking for a
+
+314
+00:17:54.840 --> 00:17:58.230
+particular key in the registry?
+And last week, when I
+
+315
+00:17:58.230 --> 00:18:00.900
+was having a heck of
+a time debugging, my, my
+
+316
+00:18:00.900 --> 00:18:03.990
+ThinkPads wireless card, I had
+the feeling that there was
+
+317
+00:18:03.990 --> 00:18:06.660
+an application that was going
+into some of the wireless
+
+318
+00:18:06.780 --> 00:18:10.110
+registry settings and changing them.
+And I use <inaudible> to
+
+319
+00:18:10.110 --> 00:18:13.110
+take a look at them.
+We don't, you just have
+
+320
+00:18:13.110 --> 00:18:14.880
+a gut where it's like,
+well, where could it be
+
+321
+00:18:14.880 --> 00:18:16.380
+getting this information? And this
+is a thing I was
+
+322
+00:18:16.380 --> 00:18:18.480
+talking about. A lot of
+this kind of root cause
+
+323
+00:18:18.480 --> 00:18:21.810
+analysis. When you, when you're
+not interested in going at
+
+324
+00:18:21.810 --> 00:18:25.830
+that really deep level of
+debugging, like that Russinovich level
+
+325
+00:18:25.830 --> 00:18:29.970
+of debugging is there's only
+so many places that these
+
+326
+00:18:29.970 --> 00:18:32.220
+things can be finding their
+information from. Right? Sometimes I
+
+327
+00:18:32.220 --> 00:18:35.580
+feel like people are debugging
+an application and they go,
+
+328
+00:18:35.700 --> 00:18:39.540
+and then a miracle happens
+and you know, and it's
+
+329
+00:18:39.540 --> 00:18:45.060
+like Gary, Gary Larson methodology. Right?
+Exactly. Someone says, well, I
+
+330
+00:18:45.060 --> 00:18:48.000
+click here. And then all
+this stuff that I'm completely
+
+331
+00:18:48.000 --> 00:18:50.790
+glossing over happens. Right. We
+talked about that when we
+
+332
+00:18:50.790 --> 00:18:54.570
+were talking about debugging, the
+XML serializer, correct? Yeah. It's
+
+333
+00:18:54.600 --> 00:18:57.240
+windows is not that much
+of a big, a black
+
+334
+00:18:57.240 --> 00:19:00.360
+box. You can see inside
+the processes, you can see
+
+335
+00:19:00.360 --> 00:19:02.760
+what threads are running and
+what DLLs. And we started,
+
+336
+00:19:02.760 --> 00:19:05.730
+what process you can see
+with symbol servers, a little
+
+337
+00:19:05.730 --> 00:19:08.460
+bit more insight of what's
+going on. There are, there
+
+338
+00:19:08.460 --> 00:19:10.260
+are debuggers that provide you
+this value, but even the
+
+339
+00:19:10.260 --> 00:19:13.200
+most basic stuff like, like
+this Trojan issue I had
+
+340
+00:19:13.440 --> 00:19:16.620
+where I needed to find
+out which process was talking
+
+341
+00:19:16.620 --> 00:19:20.130
+to this particular server. I
+found that there was a
+
+342
+00:19:20.340 --> 00:19:23.820
+wind log on process, had
+a DLL loaded inside it.
+
+343
+00:19:23.820 --> 00:19:25.890
+And it was trying to
+send email from a Russian
+
+344
+00:19:25.890 --> 00:19:30.450
+website, no kin, well, we
+had a theorial the opensource
+
+345
+00:19:30.450 --> 00:19:34.290
+packets differ on the wire.
+We could see that someone's
+
+346
+00:19:34.290 --> 00:19:38.490
+trying to talk SMTP off
+to this Russian machine. But
+
+347
+00:19:39.090 --> 00:19:41.100
+the guys that were doing
+this debugging forgot that you
+
+348
+00:19:41.100 --> 00:19:45.360
+want to resolve that connection
+to a particular executable. So
+
+349
+00:19:45.360 --> 00:19:48.480
+we just followed the path.
+We said, TCP view from
+
+350
+00:19:48.480 --> 00:19:53.190
+a again, TCP view is
+shrink.com/dvs. You can say resolve
+
+351
+00:19:53.190 --> 00:19:56.460
+endpoints. We could see that
+some mail dot R U
+
+352
+00:19:56.460 --> 00:19:58.560
+was being opened by wind
+log on. We said, well,
+
+353
+00:19:58.560 --> 00:20:01.020
+when log on, that seems
+like a reasonable thing that
+
+354
+00:20:01.020 --> 00:20:03.090
+doesn't sound evil. We know
+that we need, when log
+
+355
+00:20:03.090 --> 00:20:05.490
+on, that's the anti login
+manager, right? So then we
+
+356
+00:20:05.490 --> 00:20:09.090
+load it up, process Explorer.
+We sorted by company name
+
+357
+00:20:09.090 --> 00:20:12.390
+in this particular case. And
+we said, wow, that's not,
+
+358
+00:20:12.680 --> 00:20:15.360
+that's a blank company name.
+It was a random eight
+
+359
+00:20:15.480 --> 00:20:19.550
+character generated DLL. Okay. That
+doesn't look right. Nope. So
+
+360
+00:20:19.560 --> 00:20:21.570
+then we went into the
+windows folder and found that
+
+361
+00:20:21.570 --> 00:20:23.820
+DLL, we saw that it
+had been updated a few
+
+362
+00:20:23.820 --> 00:20:26.880
+days before, so that DLL
+has appeared out of nowhere.
+
+363
+00:20:27.060 --> 00:20:30.420
+A couple of days ago,
+we looked inside the thing
+
+364
+00:20:30.420 --> 00:20:33.390
+with a hex viewer. We
+didn't see any nasty strings,
+
+365
+00:20:34.860 --> 00:20:37.950
+but it clearly didn't look
+right. Searched for it on
+
+366
+00:20:37.950 --> 00:20:42.060
+Google didn't find any which
+meant eight character random generated
+
+367
+00:20:42.060 --> 00:20:45.540
+thing. Right. Did a search
+on Google for eight generated,
+
+368
+00:20:45.570 --> 00:20:48.970
+eight character generated, you know,
+DLL when log on and
+
+369
+00:20:48.970 --> 00:20:51.520
+then found a bunch of
+malware applications that like to
+
+370
+00:20:51.520 --> 00:20:54.070
+do that. So how does
+this deal all get loaded
+
+371
+00:20:54.070 --> 00:20:56.830
+in memory? Well, where else
+could you look? So we
+
+372
+00:20:56.830 --> 00:20:59.140
+look on the registry. We
+look in the registry, we
+
+373
+00:20:59.140 --> 00:21:00.940
+searched for the name of
+that DLL. We can see
+
+374
+00:21:01.270 --> 00:21:03.850
+in the registry under the
+wind log on section deep
+
+375
+00:21:03.850 --> 00:21:06.670
+in the bowels. There's a
+place where all the different
+
+376
+00:21:06.670 --> 00:21:09.760
+things that want to load
+in to when log-on put
+
+377
+00:21:09.760 --> 00:21:12.940
+themselves, we could have seen
+that had we used auto
+
+378
+00:21:12.940 --> 00:21:15.010
+runs the tool that lets
+you see all of the
+
+379
+00:21:15.010 --> 00:21:18.400
+things that happen at startup
+at, at citizen turtles. But
+
+380
+00:21:18.430 --> 00:21:22.300
+I just poked around on
+the registry removed that poked
+
+381
+00:21:22.300 --> 00:21:23.590
+around. I mean the whole
+thing is listed up on
+
+382
+00:21:23.590 --> 00:21:25.600
+my blog. The point is
+though that you have to
+
+383
+00:21:25.600 --> 00:21:28.060
+be able to follow that,
+you know, one of the
+
+384
+00:21:28.060 --> 00:21:30.760
+path follow the path from
+the connection that was opened
+
+385
+00:21:30.760 --> 00:21:32.680
+back to the process and
+the process to the DLL,
+
+386
+00:21:32.830 --> 00:21:37.330
+because there are places that
+you can hide things. People
+
+387
+00:21:37.330 --> 00:21:39.880
+have said my blog and
+have informed me that, you
+
+388
+00:21:39.880 --> 00:21:44.050
+know, there are now kernel
+mode, evil malware applications that,
+
+389
+00:21:44.320 --> 00:21:46.870
+that don't show up in
+task manager at all. Those
+
+390
+00:21:46.870 --> 00:21:49.720
+that don't show up inside
+of things like process Explorer.
+
+391
+00:21:50.170 --> 00:21:52.180
+And I think that we'll
+see at the tech ed
+
+392
+00:21:52.540 --> 00:21:54.760
+presentation that Mark will talk
+a lot about that kind
+
+393
+00:21:54.760 --> 00:21:57.670
+of stuff. But for the
+most part, it's hard to
+
+394
+00:21:57.670 --> 00:22:01.480
+hide stuff. If you know
+where to look, you know,
+
+395
+00:22:02.190 --> 00:22:04.350
+Just going to make that
+much easier, of course, with
+
+396
+00:22:05.100 --> 00:22:09.810
+security being enforced at the
+kernel level, theoretically, although We've
+
+397
+00:22:09.810 --> 00:22:13.320
+ran the recent builds a
+Vista, it constantly prompts you,
+
+398
+00:22:13.320 --> 00:22:14.640
+is it okay to do
+this? Is it okay to
+
+399
+00:22:14.640 --> 00:22:16.170
+do that? You're going to
+control panels. Is it okay
+
+400
+00:22:16.170 --> 00:22:19.260
+to do that? Right. We
+found a really great website.
+
+401
+00:22:19.260 --> 00:22:21.660
+A lot of people recommended
+by a woman named tests
+
+402
+00:22:21.660 --> 00:22:26.730
+who works for microsoft@trickster.com slash
+DVQ. She's an expert debugger.
+
+403
+00:22:26.730 --> 00:22:29.700
+And she works for the
+PSS product support services group
+
+404
+00:22:29.700 --> 00:22:33.780
+at Microsoft. And she posts
+the most interesting, got this
+
+405
+00:22:33.780 --> 00:22:36.690
+crazy dump file and got,
+and found out that it
+
+406
+00:22:36.690 --> 00:22:39.690
+was this, you know, it
+was the garbage collector or
+
+407
+00:22:39.690 --> 00:22:45.210
+it was a block thread
+or whatever, shrink, stir.com/dvq The,
+
+408
+00:22:45.780 --> 00:22:47.880
+the name of our blog
+if broken it is fixed.
+
+409
+00:22:49.110 --> 00:22:52.740
+Yeah, that's great. I mean
+a perfect professional debugger. It's
+
+410
+00:22:52.920 --> 00:22:55.650
+definitely kind of tales from
+the debugger side and I'm
+
+411
+00:22:55.710 --> 00:22:57.810
+enjoying that and I'm, I'm
+going to need to take
+
+412
+00:22:57.810 --> 00:23:00.510
+a debugger class because the
+last time I did this
+
+413
+00:23:00.510 --> 00:23:03.240
+kind of lower level debugging
+was really back in the
+
+414
+00:23:03.240 --> 00:23:06.240
+soft ice kind of a,
+just when we were switching
+
+415
+00:23:06.240 --> 00:23:10.200
+into protected mode. So I'm
+out of practice. Wow. There's,
+
+416
+00:23:10.200 --> 00:23:13.410
+there's a number of tools
+that you can use. Sysinternals
+
+417
+00:23:13.410 --> 00:23:16.200
+are just kind of, some
+of them, the same thing
+
+418
+00:23:16.200 --> 00:23:19.440
+applies to asp.net kind of
+level debugging. We've talked before
+
+419
+00:23:19.440 --> 00:23:25.710
+about tools like Fiddler shrinks
+your.com/dvf and I E HTTP
+
+420
+00:23:25.710 --> 00:23:29.280
+headers at strengthened.com/dve. These are
+all tools that let you
+
+421
+00:23:29.280 --> 00:23:32.250
+see what's going on at
+the HTTP level. Frankly, I
+
+422
+00:23:32.250 --> 00:23:35.760
+find that asp.net kind of
+debugging to be the easiest,
+
+423
+00:23:35.760 --> 00:23:38.790
+because you can really see
+what's going on. I mean,
+
+424
+00:23:38.790 --> 00:23:42.060
+there's no secret discussion happening
+between your browser and the
+
+425
+00:23:42.060 --> 00:23:45.320
+server, right? It's all right
+there, whether it be Ajax
+
+426
+00:23:45.320 --> 00:23:48.670
+or cookies, you can see
+all that traffic. So is
+
+427
+00:23:48.670 --> 00:23:52.150
+there an end to your
+Trojan horse story or, you
+
+428
+00:23:52.150 --> 00:23:53.830
+know, how did, how did
+it end? Well, we, we
+
+429
+00:23:53.830 --> 00:23:55.930
+dug around a little bit
+more and there also was
+
+430
+00:23:55.930 --> 00:23:59.170
+a browser helper object, like
+a toolbar that was hiding
+
+431
+00:23:59.170 --> 00:24:02.140
+inside of IIE. And it
+would go back and forth
+
+432
+00:24:02.140 --> 00:24:05.080
+with this wind log on.
+And apparently it was, it
+
+433
+00:24:05.080 --> 00:24:08.170
+was emailing itself around. So
+the wind log on stuff
+
+434
+00:24:08.170 --> 00:24:11.560
+was the, the bit of
+the Trojan that would email
+
+435
+00:24:11.560 --> 00:24:15.520
+itself to other people via
+these, these Russian mail relaters.
+
+436
+00:24:15.940 --> 00:24:19.150
+And then the browser helper
+optic would listen to it
+
+437
+00:24:19.160 --> 00:24:23.260
+and then occasionally pop up
+porn ads while surfing. We
+
+438
+00:24:23.260 --> 00:24:26.590
+think it was a Trojan
+viendo V U N D
+
+439
+00:24:26.590 --> 00:24:29.920
+O variant, but not, not
+quite sure. I tried a
+
+440
+00:24:29.920 --> 00:24:32.230
+number of different malware tools
+and no one would detect
+
+441
+00:24:32.230 --> 00:24:35.380
+it. So there probably is
+one that would detect it.
+
+442
+00:24:35.380 --> 00:24:37.000
+But I think that it,
+it just was a, some
+
+443
+00:24:37.000 --> 00:24:40.060
+variant that this stuff, the
+new stuff hadn't figured out.
+
+444
+00:24:40.210 --> 00:24:43.930
+Okay. A number of good
+comments happen though on the,
+
+445
+00:24:44.110 --> 00:24:48.010
+on that particular post folks
+recommended tools like spyware doctor
+
+446
+00:24:48.010 --> 00:24:49.450
+to try to look at
+it. But you know, you
+
+447
+00:24:49.450 --> 00:24:52.660
+can't even trust the spyware
+tools anymore. Cause sometimes they
+
+448
+00:24:52.660 --> 00:24:55.720
+themselves are spyware myself. I
+use spy bot. I trust
+
+449
+00:24:55.720 --> 00:24:59.260
+them. Yep. Interestingly windows defender.
+I don't think found this
+
+450
+00:24:59.260 --> 00:25:01.060
+one and I'm not quite
+sure what I'm thinking about.
+
+451
+00:25:01.060 --> 00:25:06.340
+The windows defender tool, A
+Microsoft anti spyware, the SQL
+
+452
+00:25:06.590 --> 00:25:10.120
+right Windows defender is the,
+the, the next generation of
+
+453
+00:25:10.120 --> 00:25:13.210
+windows, anti spyware, the stuff
+that they bought from the
+
+454
+00:25:13.210 --> 00:25:16.540
+giant corporation and windows defender
+will be also built into
+
+455
+00:25:16.540 --> 00:25:20.350
+Vista. Okay, good. And actually
+speaking of, kind of defending
+
+456
+00:25:20.350 --> 00:25:22.420
+type things, you know that
+the good, the Google toolbar
+
+457
+00:25:22.420 --> 00:25:25.120
+was revved this week. No,
+I didn't know that. Interestingly,
+
+458
+00:25:25.120 --> 00:25:27.280
+if you go to tools,
+extensions and say, find updates
+
+459
+00:25:27.280 --> 00:25:29.230
+for some reason, it's not
+showing up yet as an
+
+460
+00:25:29.230 --> 00:25:32.860
+official update on Firefox. But
+if you go to toolbar.google.com
+
+461
+00:25:33.250 --> 00:25:37.930
+or shrinker.com/dvl, it includes anti-phishing,
+which is very cool. Cause
+
+462
+00:25:37.930 --> 00:25:40.480
+I've got my parents using
+Firefox as I'm sure all
+
+463
+00:25:40.480 --> 00:25:43.210
+of the listeners have their
+family and friends using Firefox,
+
+464
+00:25:43.480 --> 00:25:45.550
+but I still worry about
+fishing. And this will actually
+
+465
+00:25:45.550 --> 00:25:47.920
+bring up a nice fat
+up saying that, you know,
+
+466
+00:25:47.920 --> 00:25:51.070
+I am suspicious of this
+website, think twice before giving
+
+467
+00:25:51.070 --> 00:25:54.430
+your PayPal password away. And
+then you had seen something,
+
+468
+00:25:54.430 --> 00:25:59.770
+it was@projectip.com. Yeah. Project, ip.com.
+This isn't really fishing or
+
+469
+00:25:59.770 --> 00:26:03.360
+anything, but it's just opened
+my eyes to, to something
+
+470
+00:26:03.360 --> 00:26:06.670
+we knew was there, but
+it can be exploited. This
+
+471
+00:26:06.670 --> 00:26:10.660
+is a, the clipboard can
+be read the default setting.
+
+472
+00:26:10.660 --> 00:26:13.210
+And <inaudible> is that a
+server can read the contents
+
+473
+00:26:13.210 --> 00:26:16.060
+of your clipboard. And usually,
+you know, you don't really
+
+474
+00:26:16.060 --> 00:26:18.190
+think about that too much,
+but a lot of people
+
+475
+00:26:18.460 --> 00:26:22.330
+copy their credit card numbers
+from some file. They have
+
+476
+00:26:22.330 --> 00:26:26.200
+somewhere safe and sound on
+their computer and then paste
+
+477
+00:26:26.200 --> 00:26:30.160
+it into, you know, amazon.com
+or wherever they're ordering stuff
+
+478
+00:26:30.160 --> 00:26:32.410
+from when they need to
+order. I, you know, I'm
+
+479
+00:26:32.410 --> 00:26:34.210
+not one of those people
+who has my credit card
+
+480
+00:26:34.210 --> 00:26:37.600
+memorized. So, and you know,
+if you do that and
+
+481
+00:26:37.600 --> 00:26:41.920
+then you don't immediately copy
+something else into the clipboard,
+
+482
+00:26:41.920 --> 00:26:45.090
+there's a chance that looking
+at your, you know, whoever's
+
+483
+00:26:45.090 --> 00:26:49.200
+processing your order can or
+something else or not, not
+
+484
+00:26:49.200 --> 00:26:52.110
+just that cross site script,
+for example, some JavaScript code
+
+485
+00:26:52.770 --> 00:26:55.950
+could read the contents of
+your clipboard. So, you know,
+
+486
+00:26:55.980 --> 00:26:58.200
+you go to another site
+after that, it's still in
+
+487
+00:26:58.200 --> 00:27:00.680
+your clipboard. They can read
+it. Yeah. That's definitely something
+
+488
+00:27:00.680 --> 00:27:03.530
+to watch out for. And
+actually speaking of security, you
+
+489
+00:27:03.530 --> 00:27:06.620
+were talking about some people
+keep information in text files,
+
+490
+00:27:06.620 --> 00:27:08.630
+maybe they shouldn't. One thing
+you might want to take
+
+491
+00:27:08.630 --> 00:27:11.000
+a look at is if
+you are running a tool
+
+492
+00:27:11.000 --> 00:27:16.010
+like windows, server, desktop search,
+or Google desktop type in
+
+493
+00:27:16.010 --> 00:27:18.950
+your social security number and
+your desktop search type in
+
+494
+00:27:18.950 --> 00:27:22.190
+your credit card number, see
+if that exists somewhere on
+
+495
+00:27:22.190 --> 00:27:24.470
+your system and you maybe
+have forgotten about, Oh, that's
+
+496
+00:27:24.470 --> 00:27:28.070
+a great idea. I found
+a, our social security numbers
+
+497
+00:27:28.070 --> 00:27:30.380
+in a, in a, in
+a PDF that I had
+
+498
+00:27:30.380 --> 00:27:35.480
+created of our taxes years
+ago and forgotten about, and
+
+499
+00:27:35.480 --> 00:27:38.000
+then use the search tool
+to find that bit of
+
+500
+00:27:38.000 --> 00:27:42.830
+text and basically wiped our
+system of social security numbers,
+
+501
+00:27:43.640 --> 00:27:45.890
+credit card numbers, things like
+that. You, if you're going
+
+502
+00:27:45.890 --> 00:27:48.110
+to upgrade a computer and
+toss out a hard drive,
+
+503
+00:27:48.140 --> 00:27:49.550
+right? Well, if you're going
+to toss out a hard
+
+504
+00:27:49.550 --> 00:27:51.470
+drive, you need to burn
+the hard drive. Yeah. I
+
+505
+00:27:51.470 --> 00:27:53.900
+mean, nobody does that. Of
+course. And I have all
+
+506
+00:27:53.900 --> 00:27:55.310
+my old hard drives. I
+don't know what to do
+
+507
+00:27:55.310 --> 00:27:59.760
+with them, but other than
+subjecting them to severe electromagnetic
+
+508
+00:28:00.650 --> 00:28:03.410
+impulses, I'm not sure what
+the, how to do that.
+
+509
+00:28:03.890 --> 00:28:06.230
+So, I mean, there are
+companies out there that make
+
+510
+00:28:06.230 --> 00:28:09.110
+these hard drives shredders. We've
+talked about them on Mondays,
+
+511
+00:28:09.110 --> 00:28:11.630
+sort of as a gag
+because you know, they're 40,
+
+512
+00:28:11.630 --> 00:28:14.570
+$50,000. Some of them are
+just nothing more than magnets,
+
+513
+00:28:14.570 --> 00:28:17.690
+but there are also things
+machines that will turn your
+
+514
+00:28:17.690 --> 00:28:20.210
+hard drives into a pile
+of gravel. Well, if you're
+
+515
+00:28:20.210 --> 00:28:22.160
+going to be donating your
+hard drive or giving it
+
+516
+00:28:22.160 --> 00:28:23.750
+to a friend, or if
+you've just got hard drives
+
+517
+00:28:23.750 --> 00:28:26.900
+lying around now that it's
+so easy to plug a
+
+518
+00:28:26.900 --> 00:28:28.550
+hard drive into a system
+or plug it into a
+
+519
+00:28:28.550 --> 00:28:33.650
+USB disc temporarily, there's a
+tool called Derek's boot and
+
+520
+00:28:33.650 --> 00:28:37.790
+nuke at <inaudible> dot com
+slash D w three. You
+
+521
+00:28:37.790 --> 00:28:39.920
+can get a floppy version
+for older systems and a
+
+522
+00:28:39.920 --> 00:28:43.460
+CDR version for newer ones.
+It's, it's very dangerous, but
+
+523
+00:28:43.460 --> 00:28:46.280
+it's a self contained boot
+system that wipes the hard
+
+524
+00:28:46.280 --> 00:28:49.250
+drive of your machine. Wow.
+That's great. So you just,
+
+525
+00:28:49.310 --> 00:28:51.500
+you just boot off of
+it. There's even one for
+
+526
+00:28:51.500 --> 00:28:55.700
+the Mac. It'll do SJTA
+drives. If you're tossing a
+
+527
+00:28:55.700 --> 00:28:58.640
+disc, just make one of
+these CDs label. It very
+
+528
+00:28:58.640 --> 00:29:00.620
+clearly because you would hate
+to have someone boot office
+
+529
+00:29:00.620 --> 00:29:03.680
+and make a mistake. Is
+it, does this go down
+
+530
+00:29:03.740 --> 00:29:07.580
+as far as the sectors
+and remove the binary information
+
+531
+00:29:07.580 --> 00:29:09.260
+from the sectors of the
+drive? Cause I know that's
+
+532
+00:29:09.260 --> 00:29:12.320
+the pro you can use
+on track software and that
+
+533
+00:29:12.320 --> 00:29:15.200
+kind of stuff to retrieve
+files that have been lost
+
+534
+00:29:15.650 --> 00:29:18.200
+by reading the underlying data.
+You can look at the
+
+535
+00:29:18.200 --> 00:29:21.590
+FAQ on Derek's boot and
+nuke site. He talks about
+
+536
+00:29:21.590 --> 00:29:26.030
+secure deletion of data from
+magnetic memory, talking about, you
+
+537
+00:29:26.030 --> 00:29:27.980
+know, what they have to
+do to flip the bits,
+
+538
+00:29:27.980 --> 00:29:30.680
+the different methods. You know,
+you can read the FAQ
+
+539
+00:29:30.690 --> 00:29:33.110
+and defy it, decide whether
+you think that this is
+
+540
+00:29:33.530 --> 00:29:35.660
+something that you'd want to
+do. So he's doing some
+
+541
+00:29:35.660 --> 00:29:38.730
+smart things messing around with
+a fat table. No, he's
+
+542
+00:29:38.810 --> 00:29:41.560
+wiping it. He's actually going
+all right, let's lay down
+
+543
+00:29:41.560 --> 00:29:43.570
+ones and let's lay down
+zero and we'll do it.
+
+544
+00:29:43.870 --> 00:29:46.030
+We'll do it a hundred
+times. But he says in
+
+545
+00:29:46.030 --> 00:29:49.390
+there, are you sure it
+works great? No, but it
+
+546
+00:29:49.420 --> 00:29:51.730
+is very well thought of,
+and it's certainly cheaper than
+
+547
+00:29:51.730 --> 00:29:54.970
+buying one. Okay, good deal.
+You know, I think we
+
+548
+00:29:54.970 --> 00:29:57.880
+may not have an offshoot
+of this maybe with Camtasia
+
+549
+00:29:57.880 --> 00:30:01.990
+called stump, Scott, you know,
+try to where you could
+
+550
+00:30:02.080 --> 00:30:06.730
+sort of remote assist into
+somebody's computer and, and try
+
+551
+00:30:06.730 --> 00:30:10.210
+to uncover, we could do
+live debugging of someone's problem.
+
+552
+00:30:10.270 --> 00:30:12.400
+Try to uncover a problem
+and see how long it
+
+553
+00:30:12.400 --> 00:30:14.230
+takes you, you know, and
+if you can be stumped
+
+554
+00:30:14.260 --> 00:30:16.570
+well, I'm, I'm very sure
+I can be stumped. I
+
+555
+00:30:16.570 --> 00:30:18.640
+am only as I am
+only as smart as the,
+
+556
+00:30:18.640 --> 00:30:23.650
+some of my blog readers.
+And I consistently am impressed
+
+557
+00:30:23.650 --> 00:30:26.710
+with the level of folks
+that are goodly enough to
+
+558
+00:30:26.710 --> 00:30:30.940
+read my blog. And I
+consistently learn from the commenters,
+
+559
+00:30:30.940 --> 00:30:33.880
+particularly whoever comments first, you
+know, whoever the first guy
+
+560
+00:30:33.880 --> 00:30:36.850
+is to stand up and
+go BS. Yeah, it works
+
+561
+00:30:36.850 --> 00:30:39.500
+like this. Right. And I
+appreciate that. Just like in
+
+562
+00:30:39.500 --> 00:30:43.000
+this, in this debugging issue,
+I had completely forgotten about
+
+563
+00:30:43.420 --> 00:30:47.470
+symbol servers and was I've
+immediately configured my system and
+
+564
+00:30:47.470 --> 00:30:48.940
+that'll be the first thing
+I'll do now when I
+
+565
+00:30:48.940 --> 00:30:50.950
+start using a dev system
+is get that symbol server
+
+566
+00:30:50.950 --> 00:30:54.370
+started up. Absolutely. Your ego
+is not your friend, folks,
+
+567
+00:30:55.030 --> 00:30:57.640
+destroy Eagle. This programming is
+the way to go. Exactly.
+
+568
+00:30:58.090 --> 00:31:01.180
+All right. Until next week,
+Scott, thanks for sharing your
+
+569
+00:31:01.180 --> 00:31:04.630
+thoughts and your expertise. We'll
+see you next week on
+
+570
+00:31:04.630 --> 00:31:05.170
+Hanselman's.
+

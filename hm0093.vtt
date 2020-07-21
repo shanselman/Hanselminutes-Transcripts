@@ -1,0 +1,2362 @@
+WEBVTT FILE
+
+1
+00:00:03.390 --> 00:00:14.330
+<inaudible> From Hanselman it's dot
+com. It's Hanselman. It's a
+
+2
+00:00:14.330 --> 00:00:18.680
+weekly discussion with web developer
+and technologists. Scott Hanselman hosted
+
+3
+00:00:18.680 --> 00:00:23.990
+by Carl Franklin. This is Lawrence Ryan
+announcing show number 93. Recorded
+
+4
+00:00:23.990 --> 00:00:29.810
+live Monday, December 10th, 2007. Support for
+Hansel minutes is provided by
+
+5
+00:00:29.990 --> 00:00:33.950
+Tellerik already controls the most
+comprehensive suite of components for
+
+6
+00:00:33.950 --> 00:00:44.630
+windows forms and asp.net web
+applications. online@wwwdottelerik.com. Support is also
+
+7
+00:00:44.630 --> 00:00:49.490
+provided by dotnet developers journal.
+The world's leading.net developer magazine
+
+8
+00:00:49.730 --> 00:00:55.850
+online at www dot <inaudible>
+dot com. In this episode,
+
+9
+00:00:55.850 --> 00:01:00.170
+Scott discusses the test generation
+tool pecks with Microsoft researchers
+
+10
+00:01:00.440 --> 00:01:07.220
+Pele do a loop and
+Nikolai tape. Hi, this is
+
+11
+00:01:07.220 --> 00:01:09.170
+Scott Hansel, and this is
+another episode of Hansel minutes,
+
+12
+00:01:09.170 --> 00:01:12.010
+and I'm sitting here in
+Microsoft research on campus and
+
+13
+00:01:12.010 --> 00:01:14.030
+I'm talking to Pelli and
+Nicola, and I'm not even
+
+14
+00:01:14.030 --> 00:01:16.010
+gonna try to pronounce your
+last name, spell your last
+
+15
+00:01:16.010 --> 00:01:20.960
+name is K. And your
+last name, sir. Two-man so
+
+16
+00:01:20.960 --> 00:01:22.790
+Peli and Nikolai are going
+to be talking to me
+
+17
+00:01:22.790 --> 00:01:26.930
+today about pecs. And this
+is something that we were
+
+18
+00:01:26.930 --> 00:01:28.400
+a little concerned. We wouldn't
+be able to do a
+
+19
+00:01:28.400 --> 00:01:30.800
+podcast about because it's a,
+it's kind of a visual
+
+20
+00:01:30.800 --> 00:01:33.170
+thing, but I try to
+bring you the latest stuff
+
+21
+00:01:33.170 --> 00:01:34.670
+here on the show. And
+I just thought this is
+
+22
+00:01:34.670 --> 00:01:37.280
+something we need to, we
+need to hear about. I've
+
+23
+00:01:37.280 --> 00:01:40.130
+been pushing test driven development
+and things like code coverage
+
+24
+00:01:40.160 --> 00:01:42.140
+for a very long time
+on the show. I think
+
+25
+00:01:42.140 --> 00:01:45.470
+it's so important. We did
+a show on software metrics
+
+26
+00:01:45.470 --> 00:01:48.740
+and the importance of things
+like cyclometic complexity, maintenance, complexity,
+
+27
+00:01:48.980 --> 00:01:52.280
+to get an understanding of
+how complicated your code is.
+
+28
+00:01:52.640 --> 00:01:55.460
+But while I thought I
+was getting an understanding that
+
+29
+00:01:56.270 --> 00:01:58.340
+I think I'm testing my
+code and all the different
+
+30
+00:01:58.340 --> 00:02:01.670
+branches, I realized that I
+wasn't even getting close. So
+
+31
+00:02:01.700 --> 00:02:03.530
+palliate, tell me about PEX
+and how this is going
+
+32
+00:02:03.530 --> 00:02:05.900
+to make it even easier
+to test my code and
+
+33
+00:02:05.900 --> 00:02:08.990
+have an understanding of what
+I've intended to do versus
+
+34
+00:02:08.990 --> 00:02:13.460
+what reality. So it's another
+magic white box test generation
+
+35
+00:02:13.460 --> 00:02:19.820
+tool. Okay. What does this
+mean? We automatically generate a
+
+36
+00:02:19.880 --> 00:02:23.840
+test case that will exercise
+the code and we figure
+
+37
+00:02:23.840 --> 00:02:28.010
+out what to do by
+monitoring the code that is
+
+38
+00:02:28.010 --> 00:02:30.410
+being run. So we are
+actually doing some kind of
+
+39
+00:02:30.410 --> 00:02:33.950
+stetting analysis on the fly.
+Okay. So I think that
+
+40
+00:02:33.950 --> 00:02:36.800
+our, our readership might understand
+static analysis in the sense
+
+41
+00:02:36.800 --> 00:02:39.320
+that there's like the, the
+basic example that you've got
+
+42
+00:02:39.320 --> 00:02:43.160
+a method that returns avoid
+and takes a Boolean. How
+
+43
+00:02:43.160 --> 00:02:45.680
+many ways are there through
+this? Perhaps there are two
+
+44
+00:02:45.980 --> 00:02:48.980
+pass in true pass and
+false, assuming that there's no
+
+45
+00:02:49.310 --> 00:02:52.280
+branches and that you act
+on that parameter, you can
+
+46
+00:02:52.280 --> 00:02:54.080
+look at that statically and
+make a judgment call, right?
+
+47
+00:02:54.080 --> 00:02:56.270
+You could say you could
+apply a value. This has
+
+48
+00:02:56.270 --> 00:02:59.830
+a complexity of two or
+three, right? That's static, that's
+
+49
+00:02:59.830 --> 00:03:05.710
+static Analysis. Okay. What we
+do, which is what our
+
+50
+00:03:05.710 --> 00:03:09.310
+analysis does, is it monitors
+all the instructions that are
+
+51
+00:03:09.310 --> 00:03:13.090
+being executed by.net. And at
+some point you will have
+
+52
+00:03:13.090 --> 00:03:15.880
+a branching instruction. So you
+will, you will load that
+
+53
+00:03:15.880 --> 00:03:18.730
+parameter on the stack, and
+then you will decide whether
+
+54
+00:03:18.730 --> 00:03:21.400
+or not to jump right
+to the, to the L
+
+55
+00:03:21.400 --> 00:03:26.350
+statement or not. So we
+record that. So we record
+
+56
+00:03:26.350 --> 00:03:29.920
+that based on the parameter,
+you took a branch and
+
+57
+00:03:29.920 --> 00:03:32.830
+not the other one. And
+we record the precise expression
+
+58
+00:03:32.950 --> 00:03:36.000
+at that point. Ah, so
+rather than looking at the
+
+59
+00:03:36.000 --> 00:03:39.660
+code, parsing it and making
+a static judgment about here
+
+60
+00:03:39.660 --> 00:03:41.820
+are all the things that
+I think could happen. You're
+
+61
+00:03:41.820 --> 00:03:45.480
+doing static analysis dynamically. So
+the farther you get into
+
+62
+00:03:45.480 --> 00:03:49.350
+the application, the more you
+can see the branches ahead.
+
+63
+00:03:50.280 --> 00:03:52.710
+Yeah. So it's a, it's
+an iterative process. And the
+
+64
+00:03:52.710 --> 00:03:56.850
+first time you will start
+with simple values and you
+
+65
+00:03:56.850 --> 00:04:01.620
+will probably stop at the
+first brunch. And then you
+
+66
+00:04:01.620 --> 00:04:05.070
+will try to create new
+inputs to take the other
+
+67
+00:04:05.070 --> 00:04:08.490
+behavior. And then you might
+uncover more branches down the
+
+68
+00:04:08.490 --> 00:04:11.310
+road on that path. And
+so far, so the more
+
+69
+00:04:11.310 --> 00:04:13.470
+you iterate, the deeper you
+go into the system and
+
+70
+00:04:13.470 --> 00:04:15.900
+the more you discover about
+what it's supposed to do.
+
+71
+00:04:16.410 --> 00:04:18.270
+So if I had a
+method that takes an integer,
+
+72
+00:04:18.270 --> 00:04:21.150
+and then I had an,
+if I is smaller than
+
+73
+00:04:21.150 --> 00:04:24.870
+five, do you just go
+one, two, three, four, five,
+
+74
+00:04:24.870 --> 00:04:27.060
+six? How do you know
+at what point you're going
+
+75
+00:04:27.060 --> 00:04:29.010
+to switch, you know, take
+the left fork of the
+
+76
+00:04:29.010 --> 00:04:33.150
+road or the right forest.
+So thanks would start with
+
+77
+00:04:33.150 --> 00:04:36.510
+zero, right? And we would
+have zero smaller than five
+
+78
+00:04:36.510 --> 00:04:38.970
+is, is true. So we
+would take the true branch
+
+79
+00:04:39.330 --> 00:04:40.890
+and we'd go on. And
+at the end of the
+
+80
+00:04:40.890 --> 00:04:44.130
+run, we would remember that
+our meter is smaller than
+
+81
+00:04:44.130 --> 00:04:46.860
+five was true. So now
+what we're going to do
+
+82
+00:04:46.860 --> 00:04:50.850
+is flip that condition. So
+we want that the parameter
+
+83
+00:04:50.880 --> 00:04:53.670
+is greater or equal to
+five. And then we send
+
+84
+00:04:53.670 --> 00:04:56.640
+that. So we build a
+constraint system and we send
+
+85
+00:04:56.640 --> 00:05:00.990
+that to a gnotobiotic automated
+theory, improver, which is called
+
+86
+00:05:01.020 --> 00:05:04.680
+<inaudible>, which is developed here
+at research. <inaudible> the theorem,
+
+87
+00:05:04.680 --> 00:05:07.350
+prover is another thing is
+another component written by different.
+
+88
+00:05:07.500 --> 00:05:09.810
+Okay. And you can check
+it out on the web
+
+89
+00:05:09.810 --> 00:05:12.660
+day. You can even download
+it and play with it.
+
+90
+00:05:12.750 --> 00:05:16.200
+It's very interesting. So the,
+the tier improver is going
+
+91
+00:05:16.200 --> 00:05:19.170
+to give us a solution
+and it might be anything
+
+92
+00:05:19.440 --> 00:05:22.290
+it could give us. Five
+is if it's nice, but
+
+93
+00:05:22.290 --> 00:05:25.020
+it probably would give us
+a million. Oh, so it
+
+94
+00:05:25.020 --> 00:05:27.750
+doesn't look at that and
+give you six. No, it
+
+95
+00:05:27.750 --> 00:05:29.760
+goes to the Tylee different
+direction, almost like a binary
+
+96
+00:05:29.760 --> 00:05:31.620
+search. It's going back and
+forth. It's probably, You're going
+
+97
+00:05:31.620 --> 00:05:35.250
+to flip a bit and
+check, check if the condition
+
+98
+00:05:35.340 --> 00:05:40.170
+I'm not sure Nicola knows
+more about the internals of
+
+99
+00:05:40.170 --> 00:05:42.330
+the, Does it, does it
+matter? I mean, ultimately if
+
+100
+00:05:42.330 --> 00:05:43.830
+you're just trying to take
+the other fork in the
+
+101
+00:05:43.830 --> 00:05:46.140
+road, doesn't matter. It doesn't
+matter. Okay. If down the
+
+102
+00:05:46.140 --> 00:05:48.990
+road you check, whether it's
+smaller than 10, then we'll
+
+103
+00:05:48.990 --> 00:05:51.960
+do yet another run and
+we'll have one more constraint
+
+104
+00:05:51.960 --> 00:05:54.510
+in our system. And then
+the constraint solver will actually
+
+105
+00:05:54.510 --> 00:05:57.000
+give us the correct number.
+So this is about getting
+
+106
+00:05:57.020 --> 00:05:59.780
+coverage. It's not about Covering
+every single input. I mean,
+
+107
+00:05:59.780 --> 00:06:02.600
+certainly testing one, if one
+is less than five, we
+
+108
+00:06:02.600 --> 00:06:04.570
+don't need to test two,
+three, and four, Or you
+
+109
+00:06:04.570 --> 00:06:08.260
+don't actually you don't. And
+that saves time a number
+
+110
+00:06:08.260 --> 00:06:11.220
+of ways, doesn't it? Well,
+heck States awhile. You'd rather
+
+111
+00:06:11.230 --> 00:06:14.830
+get this thing run all
+day. If you could. Well,
+
+112
+00:06:15.820 --> 00:06:18.820
+when you look at random
+approach or, you know, our
+
+113
+00:06:18.820 --> 00:06:23.200
+approaches where the user has
+to provide ranges, random would
+
+114
+00:06:23.920 --> 00:06:26.290
+if, if you have a
+condition, like I equals one,
+
+115
+00:06:26.290 --> 00:06:30.250
+two, three, right. Rhonda would
+never find it. I see,
+
+116
+00:06:30.400 --> 00:06:33.910
+right. It has one over
+two over three, two possibilities.
+
+117
+00:06:33.910 --> 00:06:37.630
+It will never find it.
+If, if the number is
+
+118
+00:06:37.630 --> 00:06:40.240
+sufficiently high and it's out,
+out outside of the ranch
+
+119
+00:06:40.240 --> 00:06:42.100
+that you gave it, you
+will also not find it.
+
+120
+00:06:42.340 --> 00:06:44.920
+So brute force is just
+not appropriate in many case
+
+121
+00:06:44.920 --> 00:06:49.690
+numbers, In many cases, brute
+force doesn't scale to real
+
+122
+00:06:49.690 --> 00:06:56.350
+problems. So yeah, So you
+generate tests. So actual C-sharp
+
+123
+00:06:56.350 --> 00:06:58.000
+is popping out of the
+results of this. So I
+
+124
+00:06:58.000 --> 00:07:01.210
+write something, I annotate it
+with a, a Peck specific
+
+125
+00:07:01.240 --> 00:07:03.160
+attribute to indicate that this
+is something that I want
+
+126
+00:07:03.160 --> 00:07:06.280
+PEX to attack. When you
+write, when you write a
+
+127
+00:07:06.280 --> 00:07:09.520
+unit test, you don't give
+parameters usually. So the only
+
+128
+00:07:09.520 --> 00:07:12.220
+difference now is that you
+can actually give parameters to
+
+129
+00:07:12.220 --> 00:07:15.670
+your method. And PEX is
+going to use that to
+
+130
+00:07:16.210 --> 00:07:19.390
+inject values into the system.
+And at the end of
+
+131
+00:07:19.390 --> 00:07:23.530
+the generation, we code gen.
+So it's, C-sharp code that
+
+132
+00:07:23.530 --> 00:07:27.490
+actually calls back the original
+method and that's it. And
+
+133
+00:07:27.820 --> 00:07:30.130
+once you have that, you
+don't need PEX anymore. You
+
+134
+00:07:30.130 --> 00:07:33.370
+can actually run it with
+your favorite test framework and,
+
+135
+00:07:34.210 --> 00:07:37.420
+and just to go on.
+So this is not coded
+
+136
+00:07:37.450 --> 00:07:40.960
+necessarily dynamically generated every single
+time I might run pecs
+
+137
+00:07:41.140 --> 00:07:43.750
+once a day, but my
+tests may be running within
+
+138
+00:07:43.750 --> 00:07:46.900
+my continuous integration many, many
+times a day. Yeah. So
+
+139
+00:07:47.980 --> 00:07:51.130
+there are many different scenarios,
+but you might be developing
+
+140
+00:07:51.130 --> 00:07:53.740
+code on your home, on
+your dev box. And then
+
+141
+00:07:54.010 --> 00:07:58.060
+once you feel it's ready
+and pegs generated 50 tests,
+
+142
+00:07:58.090 --> 00:08:00.400
+you can actually check them
+in, into your depo, right,
+
+143
+00:08:01.060 --> 00:08:03.820
+as unit test and have
+them run by your continuation,
+
+144
+00:08:04.030 --> 00:08:07.960
+continuous integration as unit tests.
+And you don't need, you
+
+145
+00:08:07.960 --> 00:08:10.480
+don't even need PEX on
+that machine at that point.
+
+146
+00:08:11.020 --> 00:08:13.330
+Now, if you want to
+be more aggressive, you could
+
+147
+00:08:13.330 --> 00:08:17.590
+actually have max run on
+the continuous continuous integration server.
+
+148
+00:08:18.220 --> 00:08:21.280
+So the interesting points here
+is that, you know, two
+
+149
+00:08:21.280 --> 00:08:23.830
+weeks down the road, the
+guy next to you changes
+
+150
+00:08:23.830 --> 00:08:25.900
+your code, you know, fixes
+a bug and then totally
+
+151
+00:08:25.900 --> 00:08:29.380
+screws up your logic, right?
+And your unit tests are
+
+152
+00:08:29.380 --> 00:08:33.040
+not covering that. They don't,
+they don't capture that, that
+
+153
+00:08:33.040 --> 00:08:36.340
+change of behavior, but that's
+because it has this parameterized
+
+154
+00:08:36.340 --> 00:08:40.120
+test. We'll start exploring the
+new code, generate new test
+
+155
+00:08:40.120 --> 00:08:44.500
+cases and my generate new
+failures. And, you know, So
+
+156
+00:08:44.500 --> 00:08:47.020
+in that case, not running
+texts, not running packs would
+
+157
+00:08:47.020 --> 00:08:49.060
+be a bad thing. I
+want to keep it exploring
+
+158
+00:08:49.060 --> 00:08:51.130
+this new code as the
+code of law. You, you
+
+159
+00:08:51.130 --> 00:08:54.430
+probably want to have it
+explore, you know, forever the
+
+160
+00:08:54.430 --> 00:08:56.970
+more time, give it the
+Deeper it's going to go
+
+161
+00:08:56.970 --> 00:09:00.720
+into the code. If it's
+a large code base complex,
+
+162
+00:09:01.020 --> 00:09:03.840
+you know, it will need
+a lot of times, hours,
+
+163
+00:09:04.830 --> 00:09:08.580
+days to really go into
+those very, very, very deep
+
+164
+00:09:09.030 --> 00:09:11.040
+corner cases. So this sounds
+like something I might want
+
+165
+00:09:11.040 --> 00:09:13.050
+to even dedicate a machine
+to and just have PAX
+
+166
+00:09:13.050 --> 00:09:17.700
+running 24 hours a day.
+Yes. You're looking, you're looking
+
+167
+00:09:17.700 --> 00:09:21.350
+at Nikolai like, well, I
+guess why not 10 machines
+
+168
+00:09:21.630 --> 00:09:25.560
+also? I thought I was
+being controversial by suggesting one.
+
+169
+00:09:25.860 --> 00:09:29.580
+You're thinking, you're thinking a
+pecs farm, Nicole, you had
+
+170
+00:09:29.580 --> 00:09:32.550
+a comment. I mean, think
+of it as your personal
+
+171
+00:09:32.600 --> 00:09:36.860
+Testa. And instead of paying
+a person, a big salary,
+
+172
+00:09:36.860 --> 00:09:38.960
+you know, you can have
+this huge farm of machines.
+
+173
+00:09:38.990 --> 00:09:43.730
+Certainly I fired a person
+now, but so if you
+
+174
+00:09:43.730 --> 00:09:46.040
+really writing a lot of
+software, it's still a good
+
+175
+00:09:46.040 --> 00:09:49.220
+idea to have dedicated tests.
+I've switched to integration testing,
+
+176
+00:09:49.640 --> 00:09:54.950
+but a lot of tasks
+that can be automated. That's
+
+177
+00:09:54.950 --> 00:09:57.290
+exactly what PEX is good
+for. So instead of having
+
+178
+00:09:57.290 --> 00:10:00.890
+a Perth menu, looking at
+other parts of your code
+
+179
+00:10:00.890 --> 00:10:02.930
+that are covered or not
+covered, a lot of that
+
+180
+00:10:02.930 --> 00:10:06.470
+can be automated by pecs.
+So we're talking about theory,
+
+181
+00:10:06.640 --> 00:10:09.050
+theoretical things and computational things.
+And of course, these are
+
+182
+00:10:09.320 --> 00:10:11.900
+difficult concepts to, to visualize
+when you're talking in an
+
+183
+00:10:11.900 --> 00:10:13.970
+audio only format like we
+are in the podcast, but
+
+184
+00:10:14.480 --> 00:10:18.680
+I can understand in a
+complicated computational environment doing lots
+
+185
+00:10:18.680 --> 00:10:20.720
+of ifs and branches and
+four loops. But what if
+
+186
+00:10:20.720 --> 00:10:24.110
+I started in involving the
+environment, looking in the file
+
+187
+00:10:24.110 --> 00:10:26.900
+system, talking to the database,
+what kinds of things can
+
+188
+00:10:26.900 --> 00:10:30.080
+PEX help there? Or in
+what ways is that not
+
+189
+00:10:30.080 --> 00:10:32.000
+a valid thing? You know,
+when does unit testing become
+
+190
+00:10:32.000 --> 00:10:37.130
+integration testing? So PEX will
+definitely help you detect that
+
+191
+00:10:37.250 --> 00:10:40.460
+you are not testable. So
+it will detect that you
+
+192
+00:10:40.460 --> 00:10:43.910
+are actually reading a file
+or you're actually hitting a
+
+193
+00:10:43.910 --> 00:10:48.590
+database or, and you haven't
+marketed, right? Because banks will
+
+194
+00:10:48.590 --> 00:10:53.120
+not understand the file system
+banks understands manage code. It
+
+195
+00:10:53.120 --> 00:10:56.210
+can, it can monitor, manage
+code. If you call a
+
+196
+00:10:56.210 --> 00:10:59.390
+web service and go through,
+you know, through the web
+
+197
+00:10:59.390 --> 00:11:02.570
+or something, we don't understand
+the logic in there. So
+
+198
+00:11:02.570 --> 00:11:05.630
+if you called file exists
+and you pass in a
+
+199
+00:11:05.630 --> 00:11:09.710
+string, we cannot figure out
+which file name you do
+
+200
+00:11:09.710 --> 00:11:13.280
+to make it true. So
+at that point, what happens?
+
+201
+00:11:13.310 --> 00:11:15.500
+You get a bad coverage.
+So there's a branch that
+
+202
+00:11:15.500 --> 00:11:17.660
+we cannot cover, and you
+will see that in the
+
+203
+00:11:17.660 --> 00:11:20.360
+reports. So what does it
+tell you? He tell you
+
+204
+00:11:20.360 --> 00:11:24.710
+that PEX couldn't, couldn't solve
+that's little constraint system, right?
+
+205
+00:11:25.310 --> 00:11:29.570
+But it really tells you
+that for us it's you
+
+206
+00:11:29.570 --> 00:11:32.240
+should have mocked this. So
+you should have put a
+
+207
+00:11:32.240 --> 00:11:35.090
+layer of abstraction between you
+and the file system so
+
+208
+00:11:35.090 --> 00:11:39.440
+that you could actually simulate
+a return true solution. Right.
+
+209
+00:11:39.470 --> 00:11:42.080
+That's very interesting because we
+had done a show before
+
+210
+00:11:42.080 --> 00:11:44.960
+on mocking and I didn't
+think I quite understood it.
+
+211
+00:11:45.260 --> 00:11:47.600
+And now I'm starting to
+realize that in order to
+
+212
+00:11:47.600 --> 00:11:50.810
+really get full coverage of
+your code, that, that marketing
+
+213
+00:11:50.810 --> 00:11:55.420
+in this instance, marking out
+the environment, physical things, abstracting
+
+214
+00:11:55.420 --> 00:11:58.560
+away so that the logical
+intent is being tested is
+
+215
+00:11:58.560 --> 00:12:01.320
+it's so important. And actually
+it's very easy to shoot
+
+216
+00:12:01.320 --> 00:12:03.420
+in your foot. When you
+do unit tests, it's very
+
+217
+00:12:03.420 --> 00:12:06.570
+easy to call to, you
+know, call, I mean, file
+
+218
+00:12:06.570 --> 00:12:09.360
+open. Everybody does that all
+the time. And it's actually
+
+219
+00:12:09.360 --> 00:12:14.250
+painful to, to have pure
+code that is fully marked,
+
+220
+00:12:14.280 --> 00:12:17.790
+you know, fully, you know,
+inversion of control. And so
+
+221
+00:12:17.790 --> 00:12:20.910
+it's actually a lot of
+work. Now, techs will help
+
+222
+00:12:20.910 --> 00:12:23.250
+you because it will not
+work as, as well as
+
+223
+00:12:23.250 --> 00:12:26.310
+it should should do. If
+you start calling, you know,
+
+224
+00:12:27.120 --> 00:12:31.260
+another example, HTTP context, you
+know, how do, how do
+
+225
+00:12:31.260 --> 00:12:33.660
+you handle this guy? Of
+course now in the new
+
+226
+00:12:33.660 --> 00:12:36.840
+MVC framework, that'll be an
+interface. Yes, that's great. If
+
+227
+00:12:36.840 --> 00:12:39.060
+I can mock all these
+things away I could do
+
+228
+00:12:39.090 --> 00:12:41.100
+so pecs with the MVC
+framework would be a really
+
+229
+00:12:41.100 --> 00:12:43.680
+good thing. I could get
+really good code coverage on
+
+230
+00:12:43.680 --> 00:12:47.160
+my controllers. Wouldn't I? Yes.
+So PEX com comes with
+
+231
+00:12:47.160 --> 00:12:52.380
+its own mock framework. So
+it doesn't, it's, it's similar
+
+232
+00:12:52.380 --> 00:12:55.920
+in some aspect and it's
+radically different in from all
+
+233
+00:12:55.980 --> 00:12:58.830
+existing mock frameworks. So the,
+the, the big difference is
+
+234
+00:12:58.830 --> 00:13:02.280
+that it's basically a source
+of choices. So when you
+
+235
+00:13:02.280 --> 00:13:05.220
+call an API and say,
+give me a bullion, you
+
+236
+00:13:05.220 --> 00:13:10.200
+bet you're basically asking techs,
+choose between true and false.
+
+237
+00:13:10.470 --> 00:13:14.310
+Right? So you don't set
+the expectations we do. And
+
+238
+00:13:14.310 --> 00:13:17.310
+then we record that in
+the generated test. Wow. Okay.
+
+239
+00:13:17.310 --> 00:13:20.820
+My, my brain just exploded.
+So with mocking frameworks, you
+
+240
+00:13:20.820 --> 00:13:23.040
+usually set up the expectation
+ahead of time, and you
+
+241
+00:13:23.040 --> 00:13:26.880
+say in a non parameterized
+test, alright, this in this
+
+242
+00:13:26.880 --> 00:13:29.310
+case will return false. If
+I was going to return
+
+243
+00:13:29.310 --> 00:13:32.070
+true, I would have an
+entirely different test. And then
+
+244
+00:13:32.070 --> 00:13:34.620
+I would Mark that and
+it would return false. So
+
+245
+00:13:34.620 --> 00:13:36.960
+you're saying that I set
+up the domain. So it's
+
+246
+00:13:36.960 --> 00:13:40.050
+a domain based marketing system.
+I said, here's the, let
+
+247
+00:13:40.050 --> 00:13:41.970
+me, the domain is not
+range. Rather. I say, here's
+
+248
+00:13:41.970 --> 00:13:43.730
+the range of things that
+could come back. Yeah. You,
+
+249
+00:13:43.730 --> 00:13:47.940
+you, you said a small
+behavior, it's a domain. So
+
+250
+00:13:47.940 --> 00:13:50.430
+I mean, a bullying can
+be true or false, but
+
+251
+00:13:50.760 --> 00:13:52.950
+you can have behavior in
+that. You could say you
+
+252
+00:13:52.950 --> 00:13:56.850
+could also, bullying is kind
+of not a good example.
+
+253
+00:13:57.470 --> 00:14:01.500
+What's a good example then.
+Let's see. What about The
+
+254
+00:14:01.500 --> 00:14:03.600
+visa card you had as
+an example earlier where you
+
+255
+00:14:03.600 --> 00:14:05.070
+were doing something with visa
+cards? I thought it was
+
+256
+00:14:05.070 --> 00:14:08.310
+interesting. Yeah, We okay. We
+can mock the visa card.
+
+257
+00:14:08.310 --> 00:14:11.100
+So we have a service.
+You give it a string.
+
+258
+00:14:11.100 --> 00:14:13.830
+That's supposed to contain a
+visa number and returns, whether
+
+259
+00:14:13.830 --> 00:14:19.530
+it's valid, invalid, or whether
+it's valid or invalid. Now
+
+260
+00:14:19.530 --> 00:14:22.140
+the logic that handles that
+couldn't care less, whether it's
+
+261
+00:14:22.140 --> 00:14:24.960
+a valid number, it queries
+a service, which gives an
+
+262
+00:14:24.960 --> 00:14:28.860
+answer. So the mock in
+written the back's way will
+
+263
+00:14:28.860 --> 00:14:33.090
+say, give me a bullion.
+And based on what you
+
+264
+00:14:33.090 --> 00:14:35.010
+do with this bullying, it
+will make it true or
+
+265
+00:14:35.010 --> 00:14:39.000
+false. Okay. So you're giving
+PEX the context that it
+
+266
+00:14:39.000 --> 00:14:42.900
+needs around that MOC to
+make the different kind of
+
+267
+00:14:42.900 --> 00:14:45.600
+branching decisions, it would need
+to get full coverage. Yeah.
+
+268
+00:14:45.630 --> 00:14:48.510
+So the visa, the visa
+example, this is Great example
+
+269
+00:14:48.510 --> 00:14:54.680
+to talk about test assumptions.
+Okay. So, because If you
+
+270
+00:14:54.680 --> 00:14:57.590
+look at your pocket, you
+notice all the visa cards
+
+271
+00:14:58.070 --> 00:15:01.850
+starts, this number four that's
+from, from other companies, they
+
+272
+00:15:01.850 --> 00:15:04.430
+may start with a five
+or whatever. So when you
+
+273
+00:15:04.430 --> 00:15:07.700
+want to check a credit
+card validation algorithms that checks
+
+274
+00:15:07.730 --> 00:15:11.810
+whether all the numbers make
+up, <inaudible> dynamo, you should
+
+275
+00:15:11.810 --> 00:15:14.600
+stop looking at the first
+digit, make sure it's the
+
+276
+00:15:14.600 --> 00:15:17.300
+fourth only under the assumption.
+That's the first digit is
+
+277
+00:15:17.300 --> 00:15:20.720
+a four. All the other
+digits have to be in
+
+278
+00:15:20.720 --> 00:15:24.080
+a certain way for a
+visa card, right? So this
+
+279
+00:15:24.470 --> 00:15:27.260
+is a test that has
+assumptions and Ananda, these assumptions.
+
+280
+00:15:27.260 --> 00:15:30.500
+It makes a statement about
+the other digits, right? And
+
+281
+00:15:30.500 --> 00:15:36.470
+when you write mock service
+packs, that's similar. So if
+
+282
+00:15:36.470 --> 00:15:39.890
+you don't fight assumptions on
+the mocks, PEX is free
+
+283
+00:15:39.890 --> 00:15:42.170
+to choose arbitrary value. So
+if you have an API
+
+284
+00:15:42.170 --> 00:15:45.170
+that you Mark that, an
+integer Paxil, the truth and
+
+285
+00:15:45.170 --> 00:15:48.380
+the entertainer, no restriction on
+the domain whatsoever only then
+
+286
+00:15:48.380 --> 00:15:52.100
+if you go in and
+make a statement about legal
+
+287
+00:15:52.280 --> 00:15:55.430
+domains, or if you make,
+if you have assumptions about
+
+288
+00:15:55.430 --> 00:15:57.440
+what the return value really
+should be, and you don't
+
+289
+00:15:57.440 --> 00:16:02.210
+care about others, then pecs
+list ticks the different things
+
+290
+00:16:02.210 --> 00:16:04.640
+that can be returned. So
+in that sense, it's radically
+
+291
+00:16:04.640 --> 00:16:06.350
+different from other mock frameworks.
+So you have to say
+
+292
+00:16:06.350 --> 00:16:10.130
+precisely, what is returned this
+pecs by default, anything goes,
+
+293
+00:16:10.430 --> 00:16:13.130
+and only if you add
+assumptions, if you write them
+
+294
+00:16:13.130 --> 00:16:16.300
+down, pecs will be more
+specific. This is starting to
+
+295
+00:16:16.300 --> 00:16:17.890
+get me to think that
+PEX is a lot like
+
+296
+00:16:17.920 --> 00:16:21.070
+a, a chest solver. There
+are rules of the game,
+
+297
+00:16:21.070 --> 00:16:23.050
+and you need to give
+PEX as much context as
+
+298
+00:16:23.050 --> 00:16:25.750
+possible for it to make
+the right decisions. Otherwise, you're
+
+299
+00:16:25.750 --> 00:16:29.650
+going to be generating tests
+that aren't useful. Otherwise it
+
+300
+00:16:29.650 --> 00:16:33.040
+would try to kill the
+King with, you know, 16,
+
+301
+00:16:33.150 --> 00:16:34.720
+Just take the pawn and
+then just smack the King
+
+302
+00:16:34.720 --> 00:16:37.420
+on the house. And this
+is really interesting because from
+
+303
+00:16:37.420 --> 00:16:39.520
+a point of view of,
+of static analysis, let's just
+
+304
+00:16:39.520 --> 00:16:42.530
+use a, you know, the
+human brain looks at a
+
+305
+00:16:42.990 --> 00:16:46.600
+couple of line long application
+and says, it looks like
+
+306
+00:16:46.600 --> 00:16:49.960
+there's two or three branches
+there just by looking at
+
+307
+00:16:49.960 --> 00:16:52.690
+it. We do static analysis
+with our heads, but you're
+
+308
+00:16:52.690 --> 00:16:55.510
+doing static analysis in a,
+in a dynamic way, in
+
+309
+00:16:55.510 --> 00:16:57.820
+the sense that you're going
+to move that chess piece
+
+310
+00:16:57.820 --> 00:17:00.730
+and then reevaluate the entire
+board and then move another
+
+311
+00:17:00.730 --> 00:17:03.100
+branch and another branch, another
+branch. And in each step,
+
+312
+00:17:03.370 --> 00:17:07.030
+you are discovering new things
+by virtue of the fact
+
+313
+00:17:07.030 --> 00:17:09.640
+that you've kind of gone
+into the future. So earlier
+
+314
+00:17:09.640 --> 00:17:10.780
+I asked you if a
+lot of this could be
+
+315
+00:17:10.780 --> 00:17:13.420
+parallelized that's when I was
+thinking that there was a
+
+316
+00:17:13.420 --> 00:17:16.720
+body of work that was
+known and understood, it sounds
+
+317
+00:17:16.720 --> 00:17:19.810
+like you're discovering longer. You
+run the more and more
+
+318
+00:17:19.810 --> 00:17:23.140
+that you're going to discover.
+There are opportunities to prior
+
+319
+00:17:23.140 --> 00:17:27.760
+allies. We can dig into
+the details, but sure, basically
+
+320
+00:17:27.760 --> 00:17:29.890
+when you, when you have
+a trace, so when you've
+
+321
+00:17:29.890 --> 00:17:33.250
+run through the program, you
+might have gone through a
+
+322
+00:17:33.250 --> 00:17:37.120
+large number of branches that
+you haven't taken. And for
+
+323
+00:17:37.120 --> 00:17:40.240
+each of those branches, you
+need to solve a constraint
+
+324
+00:17:40.240 --> 00:17:44.560
+system. So we might decide
+to prioritize, But not the
+
+325
+00:17:44.560 --> 00:17:48.610
+branching, not the discovery of
+the branches though. Right? Well,
+
+326
+00:17:48.610 --> 00:17:51.630
+you're in our approach. You'll
+always need to pick the
+
+327
+00:17:51.630 --> 00:17:55.530
+next branch yeah. And solve
+the constraint system and then
+
+328
+00:17:55.530 --> 00:18:00.720
+run it and then go
+on. So, so one idea
+
+329
+00:18:00.720 --> 00:18:03.330
+here. So we couldn't probably
+do a lot of this
+
+330
+00:18:03.330 --> 00:18:06.990
+analysis in Parlier. So right
+now we are doing it's
+
+331
+00:18:06.990 --> 00:18:09.300
+essentially because that kind of
+guarantees you, that you get
+
+332
+00:18:09.300 --> 00:18:13.320
+minimal test feedback from pecs.
+So on even Peck step
+
+333
+00:18:13.620 --> 00:18:18.690
+after step can increase coverage,
+your tests, which gets bigger
+
+334
+00:18:18.690 --> 00:18:21.810
+and bigger. So every new
+test increases coverage. Whereas if
+
+335
+00:18:21.810 --> 00:18:24.420
+you will do things in
+Parlier, it might be that
+
+336
+00:18:24.690 --> 00:18:28.320
+things are more redundant. So
+it's kind of a research
+
+337
+00:18:28.320 --> 00:18:30.420
+problem to figure out how
+to really make it efficient.
+
+338
+00:18:30.420 --> 00:18:34.920
+And partly, ultimately we are
+running code. So we are
+
+339
+00:18:34.920 --> 00:18:38.790
+actually running your code. And
+if you don't expect that,
+
+340
+00:18:38.790 --> 00:18:41.940
+and we started running in
+parallel, we might start finding
+
+341
+00:18:41.940 --> 00:18:45.870
+false positives, which is something
+that PEX doesn't have all
+
+342
+00:18:45.870 --> 00:18:50.000
+the failures that PEX will
+find our actual failures. So
+
+343
+00:18:50.000 --> 00:18:53.570
+how does PEX know when
+it's done? I mean, when,
+
+344
+00:18:53.570 --> 00:18:56.540
+w w w can you
+test, can you, can you
+
+345
+00:18:56.540 --> 00:18:59.750
+truly look at a method
+and test it completely For
+
+346
+00:18:59.750 --> 00:19:03.080
+certain methods? Yes. But as
+soon as you have a
+
+347
+00:19:03.080 --> 00:19:06.830
+loop, or if the cousin
+and the function, it's an
+
+348
+00:19:07.220 --> 00:19:11.090
+theoretically undecidable problem, then you
+can really stop PEX, doesn't
+
+349
+00:19:11.090 --> 00:19:13.400
+know eyes. If you go
+around to the loop one
+
+350
+00:19:13.400 --> 00:19:17.930
+more time, maybe then something
+new happens. So whenever you
+
+351
+00:19:17.930 --> 00:19:21.440
+have loop or recursion, basically
+you tell a time-bound, you
+
+352
+00:19:21.440 --> 00:19:24.020
+have three minutes time, and
+then PEX, TEDS, you will,
+
+353
+00:19:24.020 --> 00:19:26.000
+all the things it could
+find visit at that time.
+
+354
+00:19:26.700 --> 00:19:28.490
+Why the mocking is so
+important, because as soon as
+
+355
+00:19:28.490 --> 00:19:30.530
+you reach out to the
+theoretical end of the physical
+
+356
+00:19:30.770 --> 00:19:33.620
+touch, the file system and
+touch the network, anything could
+
+357
+00:19:33.620 --> 00:19:36.680
+happen, unexpected things can happen.
+And then the number of
+
+358
+00:19:36.860 --> 00:19:39.500
+things that the, the, the
+size of what could be
+
+359
+00:19:39.500 --> 00:19:43.520
+tested is infinite, Right? So
+it gets infinite very quickly.
+
+360
+00:19:44.000 --> 00:19:46.100
+And that's also why we
+had this idea of having
+
+361
+00:19:46.100 --> 00:19:48.890
+a machine, which just let
+PEX run forever, because he
+
+362
+00:19:48.890 --> 00:19:51.440
+really can let pecs run
+forever when you have a
+
+363
+00:19:51.440 --> 00:19:53.870
+loop. And every interesting program
+has a loop. Think, I
+
+364
+00:19:53.870 --> 00:19:56.060
+think we should make a
+screensaver that runs PEX when
+
+365
+00:19:56.060 --> 00:20:00.170
+the screensaver is going, You
+might want to have a
+
+366
+00:20:00.170 --> 00:20:03.680
+quad core for that. Alright.
+So let me get my
+
+367
+00:20:03.680 --> 00:20:06.710
+brain around this. I'm just
+having trouble getting a visualization
+
+368
+00:20:06.710 --> 00:20:09.080
+here. Traditionally, when I write
+unit tests, they don't have
+
+369
+00:20:09.080 --> 00:20:12.110
+parameters at all. The first
+time I saw parameter tests
+
+370
+00:20:12.200 --> 00:20:15.350
+were when I was first
+introduced to MB unit, right.
+
+371
+00:20:15.860 --> 00:20:17.780
+A and B unit. Oh,
+I happened to have written
+
+372
+00:20:17.780 --> 00:20:21.140
+that You did. I think
+that if I wrote MBA
+
+373
+00:20:21.140 --> 00:20:22.880
+unit, I would probably make
+t-shirts and I would just
+
+374
+00:20:22.880 --> 00:20:25.310
+have it say, I wrote
+MBA unit, buy me a
+
+375
+00:20:25.310 --> 00:20:31.130
+beer. Unfortunately, nobody in my
+entourage, especially my wife really
+
+376
+00:20:31.130 --> 00:20:34.310
+appreciate my, this kind of,
+That is a shame because
+
+377
+00:20:34.310 --> 00:20:37.250
+that is a, an amazing
+piece of work. So the
+
+378
+00:20:37.250 --> 00:20:39.200
+road test stuff in NBA
+unit is really kind of
+
+379
+00:20:39.200 --> 00:20:42.110
+its most famous feature. The
+ability to call a test
+
+380
+00:20:42.170 --> 00:20:44.990
+and pass in parameters, iterate
+over a single test. Yeah.
+
+381
+00:20:44.990 --> 00:20:47.500
+I was a bit surprised
+by this one. People really
+
+382
+00:20:47.500 --> 00:20:51.400
+like, I think the conciseness
+of, of the, of this
+
+383
+00:20:51.400 --> 00:20:55.510
+little micro language and, and
+definitely parameterized tests is something
+
+384
+00:20:55.510 --> 00:20:59.200
+useful in many, in many
+cases, not all cases, but
+
+385
+00:20:59.200 --> 00:21:02.010
+people just happen to like
+it. Now, when you showed
+
+386
+00:21:02.010 --> 00:21:05.760
+me the demo earlier, where
+we did a test of
+
+387
+00:21:05.760 --> 00:21:10.080
+the credit card, you ran
+through thousands, a at least
+
+388
+00:21:10.080 --> 00:21:13.050
+a thousand tests within just
+a few seconds. So we
+
+389
+00:21:13.050 --> 00:21:18.810
+actually executed a thousand times
+the, the actual tests, we
+
+390
+00:21:18.810 --> 00:21:22.500
+did a thousand different inputs,
+but we emitted seven tests
+
+391
+00:21:22.560 --> 00:21:26.490
+that actually yielded two different
+coverage. So rather than generating
+
+392
+00:21:26.520 --> 00:21:30.210
+a mess of C-sharp with
+a thousand tests, which would
+
+393
+00:21:30.210 --> 00:21:32.670
+be the brute force method,
+which we decided earlier would
+
+394
+00:21:32.670 --> 00:21:34.290
+not be a good idea.
+How did it come up
+
+395
+00:21:34.290 --> 00:21:38.280
+with seven Actually? So the
+brute force mess would be
+
+396
+00:21:38.280 --> 00:21:41.970
+much, much more because every
+number can be from zero
+
+397
+00:21:41.970 --> 00:21:44.250
+to 10 and they are
+like 60 numbers in each.
+
+398
+00:21:44.460 --> 00:21:48.450
+So already the tow, this
+housing was very cleverly chosen,
+
+399
+00:21:48.810 --> 00:21:52.830
+and only seven of them
+actually increased coverage. So the
+
+400
+00:21:52.830 --> 00:21:55.470
+seven number wasn't set as
+a parameter. It wasn't anything
+
+401
+00:21:55.470 --> 00:21:56.730
+that I had to say.
+Or you had to say
+
+402
+00:21:56.940 --> 00:22:00.030
+PEX determined that that was
+the correct number of tests
+
+403
+00:22:00.390 --> 00:22:03.300
+for the kind of coverage
+that we needed. No, it
+
+404
+00:22:03.300 --> 00:22:05.940
+still, There is a bound
+on the number of runs.
+
+405
+00:22:06.120 --> 00:22:09.270
+The default value is a
+thousand brands. Okay. So say
+
+406
+00:22:09.300 --> 00:22:12.690
+it discovered seven tests that
+were correct tests that increased
+
+407
+00:22:12.690 --> 00:22:17.820
+coverage given the present the,
+the limit of 1000. Yes.
+
+408
+00:22:18.030 --> 00:22:21.300
+So there is a loop
+in the code that validates
+
+409
+00:22:21.300 --> 00:22:25.320
+to the credit card number.
+So it could go. So
+
+410
+00:22:25.320 --> 00:22:26.790
+if I gave it run,
+if I let it run
+
+411
+00:22:26.790 --> 00:22:30.300
+all day long, it wouldn't
+discover thousands of tests. It
+
+412
+00:22:30.300 --> 00:22:32.460
+would only discover as many
+tests as there were branches,
+
+413
+00:22:34.320 --> 00:22:38.190
+each test increases coverage. Okay.
+And is a credit card
+
+414
+00:22:38.190 --> 00:22:40.140
+and a good example of
+one where I could test
+
+415
+00:22:40.140 --> 00:22:43.770
+it until it's done. I
+mean, I know that maybe
+
+416
+00:22:43.770 --> 00:22:45.150
+I, maybe this is silly
+for me to think that
+
+417
+00:22:45.150 --> 00:22:46.890
+I could actually have a
+hundred percent coverage, but I
+
+418
+00:22:46.890 --> 00:22:48.810
+want to know how far
+I can squeeze this, Not
+
+419
+00:22:48.810 --> 00:22:51.570
+a terribly good example, but
+in some sense, who, who
+
+420
+00:22:51.570 --> 00:22:53.880
+says that all the credit
+card numbers have to be
+
+421
+00:22:53.880 --> 00:22:57.300
+off a reasonable length? What
+if we have a credit
+
+422
+00:22:57.300 --> 00:23:00.450
+card number that is 1000
+characters long, maybe your code
+
+423
+00:23:00.450 --> 00:23:03.360
+breaks, then we don't know,
+and PEX would have to
+
+424
+00:23:03.360 --> 00:23:07.680
+find out that texts Sometimes.
+So then this is where
+
+425
+00:23:07.680 --> 00:23:09.990
+the assumptions come into to
+point of view, right? This
+
+426
+00:23:09.990 --> 00:23:12.690
+is where you tell pecs
+stay in this area. Is
+
+427
+00:23:12.690 --> 00:23:18.330
+that correct? The assumption will
+definitely restraint PEX from trying,
+
+428
+00:23:19.050 --> 00:23:21.960
+you know, to, to explore
+the entire state space. Okay.
+
+429
+00:23:22.350 --> 00:23:24.210
+And you can just write
+an assumption. Let's assume the
+
+430
+00:23:24.210 --> 00:23:27.510
+number is less than 100
+index. Okay. Or in the
+
+431
+00:23:27.510 --> 00:23:29.340
+instance of a, kind of
+the typical credit card, but
+
+432
+00:23:29.340 --> 00:23:32.460
+it's 13 or at 16
+and stay in that space.
+
+433
+00:23:32.910 --> 00:23:36.090
+Yeah, definitely. Or that something
+that you would probably want
+
+434
+00:23:36.090 --> 00:23:38.700
+to write as an assertion.
+Right. So if it's checked,
+
+435
+00:23:38.730 --> 00:23:41.370
+then it would be off
+the length, but what numbers
+
+436
+00:23:41.370 --> 00:23:43.170
+do we even want to
+try to check? Well, they
+
+437
+00:23:43.180 --> 00:23:45.650
+should be between the rent
+a hundred. So what kind
+
+438
+00:23:45.650 --> 00:23:48.080
+of, when would, I want
+to use a, a PEX
+
+439
+00:23:48.260 --> 00:23:52.010
+assumption to say PEX that
+we're assuming these, this case
+
+440
+00:23:52.580 --> 00:23:55.760
+versus an assertion in a
+test. So in, in the
+
+441
+00:23:55.760 --> 00:23:57.620
+case of the credit card,
+you would assume that the
+
+442
+00:23:57.620 --> 00:24:00.500
+first character, the first number
+is four. Okay. Which is
+
+443
+00:24:00.500 --> 00:24:03.350
+the w which is for
+visa visa. And then you
+
+444
+00:24:03.350 --> 00:24:06.920
+could actually try to validate
+it and then assume that
+
+445
+00:24:06.920 --> 00:24:10.040
+it's valid. Okay. And then
+if it's a valid though,
+
+446
+00:24:10.040 --> 00:24:12.710
+so your code at validates
+should have discovered that it's
+
+447
+00:24:12.710 --> 00:24:15.440
+actually the right length for
+a visa card number, and
+
+448
+00:24:15.440 --> 00:24:18.200
+then you can actually assert
+on the length. So you
+
+449
+00:24:18.200 --> 00:24:20.690
+can assert that the length
+should be 13 or 16,
+
+450
+00:24:20.990 --> 00:24:23.550
+if it means, if it
+met those previous assumptions, if
+
+451
+00:24:23.900 --> 00:24:25.730
+the first number was a
+four and it was a
+
+452
+00:24:25.730 --> 00:24:29.480
+valid number, then you can,
+so you can actually kind
+
+453
+00:24:29.480 --> 00:24:33.410
+of split your, your, your
+respect there. So there might
+
+454
+00:24:33.410 --> 00:24:37.760
+giving PEX that additional bit
+of context, it stays in
+
+455
+00:24:37.760 --> 00:24:39.320
+the, in the domain that
+it needs to be playing
+
+456
+00:24:39.320 --> 00:24:42.290
+in and then provides the
+most value. And it becomes
+
+457
+00:24:42.290 --> 00:24:45.530
+more meaningful to you. Cool.
+So we'll put links to
+
+458
+00:24:45.800 --> 00:24:49.070
+your blogs and then the
+research project up on the
+
+459
+00:24:49.070 --> 00:24:51.260
+show site to make sure
+that when people can go
+
+460
+00:24:51.260 --> 00:24:53.060
+up and learn more about
+this, I know you've got
+
+461
+00:24:53.060 --> 00:24:55.220
+lots of samples and articles
+that you've been writing about
+
+462
+00:24:55.550 --> 00:24:58.850
+hex recently, and we'll hopefully
+we'll see PEX real soon
+
+463
+00:24:58.850 --> 00:25:00.410
+and people will be able
+to, to play with this
+
+464
+00:25:00.410 --> 00:25:03.560
+project from Microsoft research. I
+appreciate both of your time
+
+465
+00:25:03.560 --> 00:25:05.810
+Pelly and Nikolai for taking
+time out of your day
+
+466
+00:25:05.810 --> 00:25:08.480
+to sit down and explain
+to me about how the
+
+467
+00:25:08.480 --> 00:25:11.870
+huge brains in Microsoft research
+work. I really appreciate it.
+
+468
+00:25:11.870 --> 00:25:14.240
+And that we'll probably do
+maybe some, some screencasts in
+
+469
+00:25:14.240 --> 00:25:16.670
+the future so we can
+see some of what's going
+
+470
+00:25:16.670 --> 00:25:19.130
+on with pecs. You're always
+welcome. Oh, well, thank you
+
+471
+00:25:19.130 --> 00:25:21.620
+very much. And this has
+been another episode of Hansel
+
+472
+00:25:21.620 --> 00:25:23.390
+minutes. We'll see you again
+next week.
+

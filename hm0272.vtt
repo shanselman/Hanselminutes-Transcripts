@@ -1,0 +1,2972 @@
+WEBVTT FILE
+
+1
+00:00:12.090 --> 00:00:17.520
+From hanselminutes.com. It's Hansel minutes,
+a weekly discussion with web
+
+2
+00:00:17.520 --> 00:00:22.110
+developer and technologists. Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+3
+00:00:22.110 --> 00:00:28.440
+number two 72 recorded live
+Thursday, June 23rd, 2011. Support for Hansel
+
+4
+00:00:28.440 --> 00:00:32.370
+minutes is provided by Telerik
+rad controls, the most comprehensive
+
+5
+00:00:32.370 --> 00:00:36.270
+suite of components for windows
+forms and asp.net web applications
+
+6
+00:00:36.780 --> 00:00:45.060
+online@wwwdottelerik.com. In this episode, Scott
+talks with Microsoft security engineer,
+
+7
+00:00:45.060 --> 00:00:50.280
+Barry Darren's about the current
+state of web security. Hi,
+
+8
+00:00:50.280 --> 00:00:52.050
+this is Scott Hanselman, and
+this is another episode of
+
+9
+00:00:52.050 --> 00:00:54.810
+Hansel minutes. And today I
+am talking to Barry Dorrance,
+
+10
+00:00:54.810 --> 00:00:59.400
+who is a security engineer
+on the information security team.
+
+11
+00:00:59.520 --> 00:01:03.650
+Is that what that's called?
+Information security tools team. So
+
+12
+00:01:03.680 --> 00:01:07.250
+where are the people responsible
+for making sure people like
+
+13
+00:01:07.250 --> 00:01:11.540
+you don't do naughty things
+on the Microsoft internal network,
+
+14
+00:01:12.130 --> 00:01:17.720
+A team of tools and
+information security. Thank you very
+
+15
+00:01:17.720 --> 00:01:21.080
+much. You know, those, those,
+those little annoying dialogues that
+
+16
+00:01:21.080 --> 00:01:23.600
+pop up and tell you,
+you haven't BitLocker your machine
+
+17
+00:01:23.600 --> 00:01:25.310
+yet and we're going to
+force you to do it.
+
+18
+00:01:25.340 --> 00:01:29.330
+Yeah. That's the sort of
+thing. Oh, that's irritating. Yeah.
+
+19
+00:01:29.660 --> 00:01:31.790
+Oh, it's great. You know,
+I tell people what team
+
+20
+00:01:31.790 --> 00:01:34.170
+I, I work in and
+then you get, you get,
+
+21
+00:01:34.240 --> 00:01:39.320
+you get glares from everybody.
+And that really is the
+
+22
+00:01:40.010 --> 00:01:42.920
+thing I wanted to talk
+about is that, do you
+
+23
+00:01:42.920 --> 00:01:46.250
+think that security is not
+a culture that is kind
+
+24
+00:01:46.250 --> 00:01:52.790
+of held by everyone because
+it's just not fun. That's
+
+25
+00:01:52.940 --> 00:01:56.960
+the cultural aspect of it
+is, is strange. So as
+
+26
+00:01:56.960 --> 00:02:02.240
+you know, Microsoft have been
+rolling out the security development
+
+27
+00:02:02.240 --> 00:02:07.490
+lifecycle internally, so that has
+built some sort of culture
+
+28
+00:02:07.910 --> 00:02:10.790
+within the development process. But
+at the end of the
+
+29
+00:02:10.790 --> 00:02:14.750
+day, a lot of people
+find security, irritating. I mean,
+
+30
+00:02:14.810 --> 00:02:17.420
+I get irritated every time
+I have to change my
+
+31
+00:02:17.540 --> 00:02:20.420
+demand password because I have
+to come up with another
+
+32
+00:02:20.420 --> 00:02:22.850
+one. I've already had the
+muscle memory for the previous
+
+33
+00:02:22.850 --> 00:02:25.550
+one. And it has to
+have loads of the, you
+
+34
+00:02:25.550 --> 00:02:30.530
+know, like upper case, lower
+case numbers, punctuation marks. And
+
+35
+00:02:30.530 --> 00:02:32.690
+I understand the need for
+it, but I still find
+
+36
+00:02:32.690 --> 00:02:35.720
+it irritating. So I don't
+know if it's, it's certainly
+
+37
+00:02:35.720 --> 00:02:37.970
+no fun, but then a
+lot of things in development,
+
+38
+00:02:38.210 --> 00:02:41.570
+aren't fun, you know, grinding
+out your, your business layers.
+
+39
+00:02:41.570 --> 00:02:43.880
+Isn't fun for a lot
+of people, but it's necessary,
+
+40
+00:02:44.270 --> 00:02:47.030
+but security is more of
+an irritant because it gets
+
+41
+00:02:47.390 --> 00:02:49.760
+in the way and it's
+supposed to get in the
+
+42
+00:02:49.760 --> 00:02:52.340
+way, that's what it does,
+but people don't like things
+
+43
+00:02:52.340 --> 00:02:54.500
+to get in the way
+they sort of expect stuff
+
+44
+00:02:54.500 --> 00:02:58.010
+to work. And I think
+the other problem is that
+
+45
+00:02:58.250 --> 00:03:00.730
+you don't see the value
+of it until something's gone
+
+46
+00:03:00.730 --> 00:03:04.060
+horribly wrong and it's to
+lead in the same way
+
+47
+00:03:04.060 --> 00:03:07.180
+that people didn't particularly see
+the value of unit testing
+
+48
+00:03:07.180 --> 00:03:10.060
+for a long time. But
+as they, you know, as
+
+49
+00:03:10.060 --> 00:03:13.270
+they were forced to do
+it, they started seeing the
+
+50
+00:03:13.270 --> 00:03:15.070
+value of it. And then
+suddenly they all became big
+
+51
+00:03:15.070 --> 00:03:18.760
+unit testing funds. I hope,
+you know, I hope that
+
+52
+00:03:18.760 --> 00:03:21.580
+eventually security will, will sort
+of push that way, but
+
+53
+00:03:21.580 --> 00:03:24.850
+everyone views it as a
+tax rather than an investment.
+
+54
+00:03:26.720 --> 00:03:30.780
+See that this is the
+thing it's, it's delayed gratification.
+
+55
+00:03:30.840 --> 00:03:33.030
+It's, it's the same thing
+that they say, you know,
+
+56
+00:03:33.060 --> 00:03:36.780
+eat well and exercise. And
+in 30 years, you'll know
+
+57
+00:03:36.780 --> 00:03:39.150
+if you did a good
+job and in security, it's
+
+58
+00:03:39.150 --> 00:03:43.500
+the same thing. Yes. Which
+is interesting. Cause I got
+
+59
+00:03:43.500 --> 00:03:48.650
+my, my cholesterol results last
+month and yeah, it's, it's
+
+60
+00:03:48.660 --> 00:03:51.210
+strange. And th th th
+the even worse thing about
+
+61
+00:03:51.210 --> 00:03:53.130
+security is if you do
+a good job, you never
+
+62
+00:03:53.130 --> 00:03:57.270
+see results. Your results are
+negatives. You don't get hacked,
+
+63
+00:03:57.300 --> 00:04:02.190
+you don't leak information, you
+don't get embarrassed. So for
+
+64
+00:04:02.190 --> 00:04:07.290
+your customers, they don't see
+something that's been delivered. They
+
+65
+00:04:07.290 --> 00:04:10.650
+see a lack of something,
+which is a hard thing
+
+66
+00:04:10.650 --> 00:04:13.140
+for some people to get
+their heads around, although hopefully
+
+67
+00:04:13.140 --> 00:04:18.330
+with the current rampant running
+of, of lulls sec and
+
+68
+00:04:18.420 --> 00:04:21.330
+Citibank and all the rest
+of the big high profile
+
+69
+00:04:21.600 --> 00:04:27.120
+hacking cases, recently, maybe companies
+and developers will start to
+
+70
+00:04:27.120 --> 00:04:30.450
+think about it a little
+bit more. I can only
+
+71
+00:04:30.450 --> 00:04:33.000
+hope Let's use this as
+an opportunity to back up.
+
+72
+00:04:33.030 --> 00:04:35.790
+Cause you've just brought up
+two things LOLs sec, and
+
+73
+00:04:35.790 --> 00:04:38.430
+you've brought up Citibank. So
+start with low sec. What
+
+74
+00:04:38.430 --> 00:04:40.170
+is, what is that and
+why would people who are
+
+75
+00:04:40.170 --> 00:04:43.830
+listening to the show care?
+Well, I don't know if
+
+76
+00:04:43.830 --> 00:04:48.750
+they care, but they're the
+people who are claiming responsibility
+
+77
+00:04:48.750 --> 00:04:52.110
+for hacking Sony and an
+awful lot of other things
+
+78
+00:04:52.110 --> 00:04:56.490
+as well, knocking the CIA
+website off the web. I
+
+79
+00:04:56.490 --> 00:04:59.340
+think they claimed a few
+days ago. There's some argument
+
+80
+00:04:59.340 --> 00:05:01.680
+over what they have and
+haven't done it. It's part
+
+81
+00:05:01.680 --> 00:05:05.010
+of the whole anonymous movement
+that seems to have grown.
+
+82
+00:05:05.010 --> 00:05:07.860
+I know of four fortune
+and a bunch of other
+
+83
+00:05:09.060 --> 00:05:14.010
+interesting sites on the internet.
+And these guys are not
+
+84
+00:05:14.040 --> 00:05:17.490
+just organizing hacks on high
+profile companies just to do
+
+85
+00:05:17.490 --> 00:05:21.540
+it for do it for
+the laugh basically. So they're
+
+86
+00:05:21.540 --> 00:05:26.100
+claiming responsibility for all of
+the Sony leaks and the
+
+87
+00:05:26.100 --> 00:05:29.640
+interesting information that has leaked
+out of that. Things like
+
+88
+00:05:29.670 --> 00:05:33.630
+passwords, not actually being treated
+properly, being stored in plain
+
+89
+00:05:33.630 --> 00:05:36.960
+text. So they're there. They
+just seem to be running
+
+90
+00:05:36.960 --> 00:05:41.520
+rampant right now. All of
+our lots of rather interesting
+
+91
+00:05:41.550 --> 00:05:45.780
+corporate and government sites, What
+did you, you said something,
+
+92
+00:05:45.780 --> 00:05:48.930
+you said the anonymous movement,
+what is the anonymous movement?
+
+93
+00:05:48.930 --> 00:05:51.630
+Because when someone goes and
+takes a word on the
+
+94
+00:05:51.630 --> 00:05:54.120
+internet and decides to co-op
+the word and make the
+
+95
+00:05:54.120 --> 00:05:58.100
+word mean something that it
+doesn't you're when you say
+
+96
+00:05:58.100 --> 00:05:59.930
+anonymous, you're not just saying
+that no one knows who
+
+97
+00:05:59.940 --> 00:06:02.720
+they are, but they've actually
+taken that, that word and
+
+98
+00:06:02.720 --> 00:06:05.860
+made it mean their, the
+name of their group. Okay.
+
+99
+00:06:05.860 --> 00:06:09.400
+So the, I think, well,
+it's kind of hard to
+
+100
+00:06:09.400 --> 00:06:12.580
+tell because they're very disorganized,
+although they're starting to put
+
+101
+00:06:12.580 --> 00:06:17.140
+out press releases now, which
+is quite amusing, anonymous is
+
+102
+00:06:17.230 --> 00:06:20.980
+a term that seems to
+have grown out of the
+
+103
+00:06:20.980 --> 00:06:27.220
+fortune website. So for Chinese,
+that kind of, I wouldn't
+
+104
+00:06:27.220 --> 00:06:31.570
+say anarchist, but, but, but
+let's say unmoderated and rather
+
+105
+00:06:31.570 --> 00:06:37.210
+strange a bulletin board on
+the web. So people can't
+
+106
+00:06:37.210 --> 00:06:39.700
+find out who you are
+and that, unless you give
+
+107
+00:06:39.700 --> 00:06:42.280
+it away, obviously by putting
+your full name and there's,
+
+108
+00:06:42.280 --> 00:06:45.070
+there's no moderation, there's no
+logs, there's nothing. And people
+
+109
+00:06:45.070 --> 00:06:49.930
+just go on and start
+posting things. It can, it,
+
+110
+00:06:49.930 --> 00:06:54.160
+it sort of varies from
+the, the, the slightly CDRN
+
+111
+00:06:54.220 --> 00:07:01.120
+of pictures through to packs
+exploits, generally strange stories, humor,
+
+112
+00:07:01.150 --> 00:07:06.670
+jokes, whatever, but everyone in
+the board is anonymous. And
+
+113
+00:07:06.850 --> 00:07:10.090
+what seems to have grown
+on of that was first
+
+114
+00:07:10.090 --> 00:07:16.030
+off protests towards Scientology of
+all things. So there are
+
+115
+00:07:16.750 --> 00:07:21.190
+actual physical protests of people
+wearing the guy Fox mask
+
+116
+00:07:21.190 --> 00:07:26.350
+from V for vendetta, protesting
+Scientology. And also what seems
+
+117
+00:07:26.350 --> 00:07:28.750
+to have happen is we
+have this anonymous group of
+
+118
+00:07:28.750 --> 00:07:32.470
+people that seem to have
+gotten together some high that
+
+119
+00:07:32.470 --> 00:07:35.890
+are now starting to attack,
+you know, Sony and the
+
+120
+00:07:35.890 --> 00:07:38.680
+rest of people. It seems
+to be because they, you
+
+121
+00:07:38.680 --> 00:07:43.840
+know, they were annoyed at
+people getting prosecuted for doing
+
+122
+00:07:43.840 --> 00:07:46.390
+strange things, to play stations
+and stuff like that. That
+
+123
+00:07:46.390 --> 00:07:49.360
+seems to be the motivation
+behind the Sony attack. But
+
+124
+00:07:49.870 --> 00:07:52.450
+I'm just assuming here, because
+you can't really tell because
+
+125
+00:07:52.450 --> 00:07:55.990
+no one knows who they
+are. And why is that?
+
+126
+00:07:55.990 --> 00:07:58.510
+Why if, if you're doing
+something insecurity and you're doing
+
+127
+00:07:58.510 --> 00:08:01.540
+hacks like this, but, but
+the hacks are for some
+
+128
+00:08:01.540 --> 00:08:04.570
+kind of good. I mean,
+you think hackers do things
+
+129
+00:08:04.570 --> 00:08:07.870
+for two reasons. One, because
+it's, it's fun and interesting,
+
+130
+00:08:07.870 --> 00:08:10.240
+and it's kind of badass
+to do those things, but
+
+131
+00:08:10.240 --> 00:08:14.110
+also because they feel that
+they're bringing some new awareness
+
+132
+00:08:14.560 --> 00:08:19.540
+to something that was not,
+not respected like security, but
+
+133
+00:08:19.540 --> 00:08:21.100
+why do they have to
+be anonymous? I mean, will
+
+134
+00:08:21.100 --> 00:08:24.220
+they be arrested immediately? Is
+this some kind of, Yes,
+
+135
+00:08:24.390 --> 00:08:29.080
+they will. I mean, at
+the minute, apparently yesterday, someone
+
+136
+00:08:29.080 --> 00:08:33.070
+got arrested in the UK
+for being part of this
+
+137
+00:08:33.070 --> 00:08:36.130
+group, but the group is
+saying, no, he's not actually
+
+138
+00:08:36.130 --> 00:08:39.730
+part of us. And whilst
+what they're doing you can
+
+139
+00:08:39.730 --> 00:08:43.300
+argue is, is not particularly
+destructive and it's pointing out
+
+140
+00:08:43.300 --> 00:08:48.190
+flaws, there are still laws
+against it. So yeah, they're,
+
+141
+00:08:48.250 --> 00:08:52.870
+they're protecting their identity because
+they'll get prosecuted simple as
+
+142
+00:08:52.870 --> 00:08:55.680
+that. And when they start
+going dying and trying to
+
+143
+00:08:55.680 --> 00:09:00.510
+take dine Senate websites or
+the CIA or the FBI
+
+144
+00:09:00.510 --> 00:09:03.510
+websites, yes. It's probably a
+good idea to be anonymous.
+
+145
+00:09:06.290 --> 00:09:09.320
+Do you have any sense
+if these are like 15
+
+146
+00:09:09.320 --> 00:09:11.330
+year old or region high
+school students, or are they
+
+147
+00:09:11.330 --> 00:09:13.850
+40 year old Microsoft engineers
+or all of the above?
+
+148
+00:09:15.380 --> 00:09:18.590
+I would. I, well, I
+would guess probably that it's
+
+149
+00:09:18.590 --> 00:09:22.550
+all of the above. I
+believe it was a 19
+
+150
+00:09:22.550 --> 00:09:26.420
+year old that was arrested
+in the UK yesterday, but
+
+151
+00:09:26.450 --> 00:09:28.370
+it's one of those things
+where we'll never know until
+
+152
+00:09:28.370 --> 00:09:31.670
+someone gets exposed, but I
+don't think sometimes, you know,
+
+153
+00:09:31.670 --> 00:09:34.430
+once you get, get the
+whole hacking thing into your
+
+154
+00:09:34.430 --> 00:09:38.000
+blood, it doesn't go away.
+As you get older, you're,
+
+155
+00:09:38.000 --> 00:09:40.520
+you're aware of this yourself.
+You know, you don't ever
+
+156
+00:09:40.520 --> 00:09:43.160
+want to stop developing. If
+you find something that you
+
+157
+00:09:43.160 --> 00:09:45.020
+enjoy, you keep at it
+for all of your life.
+
+158
+00:09:45.890 --> 00:09:49.130
+Well, it's, it's certainly a
+bit of a hobby to,
+
+159
+00:09:49.270 --> 00:09:52.880
+to some folks. And it's
+something that people, once they
+
+160
+00:09:52.880 --> 00:09:54.800
+start that particular hobby, that
+becomes the thing that they
+
+161
+00:09:54.800 --> 00:09:56.180
+do and they spend a
+lot of time doing it,
+
+162
+00:09:56.810 --> 00:10:03.980
+but yeah, exactly. So what
+about those of us who
+
+163
+00:10:03.980 --> 00:10:06.950
+aren't involved in any of
+this? How do we, you
+
+164
+00:10:06.950 --> 00:10:09.620
+know, protect ourselves from something
+like this? What are, what
+
+165
+00:10:09.620 --> 00:10:11.420
+are some of the things
+that are the, the new
+
+166
+00:10:11.420 --> 00:10:15.320
+generation of, of hacks that
+people are using, they classified
+
+167
+00:10:15.320 --> 00:10:17.900
+in a certain way. And
+is there, are, are these
+
+168
+00:10:17.900 --> 00:10:21.290
+obvious things, or are these
+things that you wouldn't think
+
+169
+00:10:21.290 --> 00:10:22.970
+are obvious that it's just
+kind of coming to the
+
+170
+00:10:22.970 --> 00:10:27.140
+light In, from my point
+of view, they're all obvious.
+
+171
+00:10:27.140 --> 00:10:32.240
+Now I realize I'm not
+coming at this from a
+
+172
+00:10:32.270 --> 00:10:34.550
+point of view where I
+haven't thought about these things
+
+173
+00:10:34.550 --> 00:10:38.120
+before. Certainly all of the
+recent hacks that the Sony
+
+174
+00:10:38.120 --> 00:10:41.780
+hack Citibank and everyone else
+seemed to have been using
+
+175
+00:10:41.780 --> 00:10:47.810
+things like SQL injection or
+cross-site request forgery or direct
+
+176
+00:10:47.820 --> 00:10:51.140
+objects access, which are vulnerabilities
+that have been known about
+
+177
+00:10:51.140 --> 00:10:57.830
+for years. Indeed. The way
+of hacking websites doesn't seem
+
+178
+00:10:57.830 --> 00:11:01.070
+to have moved on a
+lot. It's we use one
+
+179
+00:11:01.070 --> 00:11:03.770
+of about three or four
+common exploits and lo and
+
+180
+00:11:03.770 --> 00:11:07.190
+behold, eventually one of them
+will work on a site
+
+181
+00:11:07.190 --> 00:11:10.250
+that you're, you're trying to
+attack. And that may be
+
+182
+00:11:10.250 --> 00:11:12.560
+just due to the fact
+that the developers that had
+
+183
+00:11:12.560 --> 00:11:14.750
+written the site had no
+awareness of these things. So
+
+184
+00:11:14.750 --> 00:11:17.360
+they didn't code around for
+them or code checks for
+
+185
+00:11:17.360 --> 00:11:23.030
+them. But there's, there's nothing
+new. There's a, there's a
+
+186
+00:11:23.030 --> 00:11:26.540
+website called well, there's a
+security group called Oh West.
+
+187
+00:11:27.440 --> 00:11:30.890
+And what they have is
+every few years, they, they
+
+188
+00:11:30.890 --> 00:11:35.180
+produce a list of the
+top 10 vulnerabilities on the
+
+189
+00:11:35.930 --> 00:11:40.340
+Oh, w a S P
+Oh, Oh no. Oh, w
+
+190
+00:11:40.340 --> 00:11:46.400
+ASP. Yes. And I think
+it's own asp.org. I will
+
+191
+00:11:46.400 --> 00:11:48.530
+check this as I'm talking.
+I should know this off
+
+192
+00:11:48.530 --> 00:11:50.810
+hand because I'm a member.
+Yes. It's O w a
+
+193
+00:11:50.810 --> 00:11:54.220
+S p.org. And so every
+of years they produce this
+
+194
+00:11:54.220 --> 00:11:57.010
+nice document and they have
+a Wiki and a website
+
+195
+00:11:57.730 --> 00:12:01.720
+that tries to educate developers
+about how to actually stop
+
+196
+00:12:01.720 --> 00:12:05.470
+these vulnerabilities. They also have
+local chapters in various cities.
+
+197
+00:12:05.470 --> 00:12:07.420
+So I know there's one
+in Seattle. There's one in
+
+198
+00:12:07.420 --> 00:12:10.030
+London. I don't know if
+there's one on your way
+
+199
+00:12:10.030 --> 00:12:12.250
+or not, to be honest,
+but you can turn off
+
+200
+00:12:12.250 --> 00:12:14.500
+when you can go for
+free and listen to people.
+
+201
+00:12:14.500 --> 00:12:19.300
+Talk about various various security
+hacks. I know the Norwegian
+
+202
+00:12:19.300 --> 00:12:22.990
+one last week actually talked
+about cold boot attacks on
+
+203
+00:12:22.990 --> 00:12:25.150
+things like driving encryption. So
+I've got a photograph of
+
+204
+00:12:25.150 --> 00:12:27.910
+someone that I met in
+Norway, holding a laptop while
+
+205
+00:12:27.910 --> 00:12:31.210
+someone pours liquid nitrogen onto
+it. So it's not necessarily
+
+206
+00:12:31.450 --> 00:12:34.960
+web security topics, but it's
+general security topics and it's
+
+207
+00:12:34.960 --> 00:12:39.580
+all free. Okay. So what
+are the classes of, of
+
+208
+00:12:39.630 --> 00:12:42.000
+hacks the typical kind of
+the top five that people
+
+209
+00:12:42.000 --> 00:12:48.690
+are, are getting nailed with
+SQL injection still, which is
+
+210
+00:12:48.750 --> 00:12:52.560
+kind of strange. So we've
+known about SQL injection for
+
+211
+00:12:52.560 --> 00:12:57.120
+years, we have various ways
+to mitigate against it, but
+
+212
+00:12:57.150 --> 00:13:02.280
+SQL injection is still the
+main way to exploit websites.
+
+213
+00:13:05.010 --> 00:13:07.440
+It's kind of strange in
+that, you know, are we
+
+214
+00:13:07.440 --> 00:13:14.250
+doing a really bad job
+of educating people or is
+
+215
+00:13:14.250 --> 00:13:16.470
+it just that people don't
+want to be educated or
+
+216
+00:13:16.470 --> 00:13:19.680
+they don't know? It's, it's
+kind of strange. So that,
+
+217
+00:13:19.710 --> 00:13:24.180
+I mean, SQL injection is
+where you are. Can you
+
+218
+00:13:24.180 --> 00:13:28.560
+are concocting a SQL command
+string directly from untrusted input
+
+219
+00:13:28.950 --> 00:13:31.950
+and then running that and
+with various use of apostrophes
+
+220
+00:13:31.950 --> 00:13:36.510
+and semi-colons, you can change
+Walt. The SQL command that
+
+221
+00:13:36.510 --> 00:13:43.260
+you've created actually does anything
+from just bypassing logging information
+
+222
+00:13:43.290 --> 00:13:46.170
+and always returning true. When
+you run a command to
+
+223
+00:13:46.170 --> 00:13:49.170
+check whether a login is
+valid to actually dropping tables,
+
+224
+00:13:50.370 --> 00:13:52.440
+which is great fun when
+you do it in a
+
+225
+00:13:52.440 --> 00:13:55.320
+demo. And then you realize
+that you probably shouldn't have
+
+226
+00:13:55.320 --> 00:13:58.110
+dropped the table as an
+example of sequel injection. Cause
+
+227
+00:13:58.110 --> 00:14:00.600
+you wanted to use that
+table to do some more
+
+228
+00:14:00.600 --> 00:14:04.260
+demos. I've done that. And
+the classic example of this
+
+229
+00:14:04.260 --> 00:14:06.870
+is what we all did
+in the mid nineties, which
+
+230
+00:14:06.870 --> 00:14:10.350
+was, you know, select star
+from books where title equals
+
+231
+00:14:11.190 --> 00:14:14.790
+something from a text box,
+and you're effectively letting anyone
+
+232
+00:14:14.790 --> 00:14:17.670
+at all go and take
+something from the web, from
+
+233
+00:14:17.670 --> 00:14:20.670
+the text box and concatenate
+it into the string. And
+
+234
+00:14:20.790 --> 00:14:22.470
+at that point they're often
+they're doing what they want
+
+235
+00:14:22.470 --> 00:14:26.570
+to do. Exactly. And yet
+it's still, you know, and,
+
+236
+00:14:26.570 --> 00:14:29.790
+and in 2010, 2011, that's
+still the number one flow.
+
+237
+00:14:30.690 --> 00:14:34.080
+Interesting, interesting. Now, is that
+something that we see less
+
+238
+00:14:34.080 --> 00:14:37.680
+when we use things like
+ORMs object, relational mappers and
+
+239
+00:14:37.680 --> 00:14:43.170
+in hibernate and entity framework?
+I, yes. And it's certainly
+
+240
+00:14:43.530 --> 00:14:47.490
+as long as the ORMs
+are properly coded, of course,
+
+241
+00:14:48.310 --> 00:14:51.980
+you're passing off responsibility for
+being safe to the ORM
+
+242
+00:14:51.980 --> 00:14:56.060
+at that point. So if
+the ORM is doing things
+
+243
+00:14:56.060 --> 00:14:58.070
+in the right way, and
+I would hazard a guess
+
+244
+00:14:58.070 --> 00:15:00.080
+that most of them, you
+know, most, if not all
+
+245
+00:15:00.080 --> 00:15:02.420
+of the major ones are
+otherwise, we'd have heard about
+
+246
+00:15:02.420 --> 00:15:05.570
+it by nine, then you're
+going to be recently protected.
+
+247
+00:15:07.180 --> 00:15:09.760
+And does that mean when
+I say reasonably protected? Why
+
+248
+00:15:09.820 --> 00:15:13.300
+do I not have to
+think about it anymore? Certain
+
+249
+00:15:13.300 --> 00:15:17.080
+circumstances you do? It depends.
+So one of the, one
+
+250
+00:15:17.080 --> 00:15:20.020
+of the ways of mitigating
+against SQL injection is to
+
+251
+00:15:20.020 --> 00:15:23.560
+use stored procedures. But if
+you have a, there's a
+
+252
+00:15:23.560 --> 00:15:26.350
+classic way of actually getting
+an injection within store procedures,
+
+253
+00:15:26.380 --> 00:15:30.370
+because when people want to
+run a search, for example,
+
+254
+00:15:31.720 --> 00:15:35.380
+they tend to concatenate a
+SQL string within the stored
+
+255
+00:15:35.380 --> 00:15:39.940
+procedure. And so you're still
+vulnerable to concatenation errors there,
+
+256
+00:15:40.330 --> 00:15:42.550
+unless you can struck the
+string in the white the
+
+257
+00:15:42.550 --> 00:15:47.560
+right way and parameterize the,
+the search bits that are
+
+258
+00:15:47.560 --> 00:15:49.720
+going into the string. So
+it's possible to write a
+
+259
+00:15:49.720 --> 00:15:54.460
+store procedure that is fundable
+SQL injection. So it, it
+
+260
+00:15:54.460 --> 00:15:57.340
+depends on the RM. I
+know that a lot of
+
+261
+00:15:57.340 --> 00:16:00.460
+people these days are now
+just using databases as a
+
+262
+00:16:00.460 --> 00:16:04.300
+backing store and all the
+logic for things like search
+
+263
+00:16:04.300 --> 00:16:08.890
+and so on is done
+within Neal RM. So you
+
+264
+00:16:08.890 --> 00:16:11.230
+may be less vulnerable there,
+but if you're, if you've
+
+265
+00:16:11.230 --> 00:16:13.930
+linked your ORM up to
+your store procedures, because you
+
+266
+00:16:13.930 --> 00:16:17.260
+have a database administrator that
+doesn't allow you to run
+
+267
+00:16:17.260 --> 00:16:21.700
+wild on tables, then sometimes
+store procedures. If vulnerable to
+
+268
+00:16:21.880 --> 00:16:26.800
+injection, This episode of Hansel
+minutes is brought to you
+
+269
+00:16:26.800 --> 00:16:31.030
+by careers. 2.0 careers, 2.0
+is a new service by
+
+270
+00:16:31.030 --> 00:16:34.240
+our friends at stack overflow.
+You're probably all familiar with
+
+271
+00:16:34.240 --> 00:16:38.410
+stack overflow. The online culinary
+resource dedicated specifically to programmers
+
+272
+00:16:38.920 --> 00:16:42.640
+and programming related topics. Well,
+the team at stack overflow
+
+273
+00:16:42.850 --> 00:16:45.910
+created careers 2.0 to provide
+you with access to great
+
+274
+00:16:45.910 --> 00:16:48.610
+jobs and introduce you to
+a bunch of great companies
+
+275
+00:16:48.610 --> 00:16:51.130
+that you might consider working
+for, even if you're not
+
+276
+00:16:51.130 --> 00:16:54.250
+currently looking for a job,
+think of careers. 2.0 is
+
+277
+00:16:54.250 --> 00:16:57.610
+a programmer profile, gives you
+a platform to show that
+
+278
+00:16:57.610 --> 00:17:01.570
+you're awesome by featuring your
+proudest contributions to stack overflow,
+
+279
+00:17:01.810 --> 00:17:06.250
+GitHub SourceForge Bitbucket, anything programming
+related, you can even add
+
+280
+00:17:06.250 --> 00:17:10.900
+your favorite programming books from
+amazon.com profiles on careers. 2.0
+
+281
+00:17:10.900 --> 00:17:14.050
+are free. They're easy to
+get started, especially by importing
+
+282
+00:17:14.050 --> 00:17:19.210
+your LinkedIn profile. However, there's
+one catch profiles and career
+
+283
+00:17:19.210 --> 00:17:22.960
+2.0 invite only. They did
+this to keep out the
+
+284
+00:17:22.960 --> 00:17:27.160
+spam and have a high
+quality environment. Fortunately, for you
+
+285
+00:17:27.160 --> 00:17:30.400
+as a Hansel minutes listener,
+I've got your back head
+
+286
+00:17:30.400 --> 00:17:36.070
+on over to careers dot
+stack overflow.com/h M to accept
+
+287
+00:17:36.070 --> 00:17:42.310
+your invitation today, once again,
+that's careers dot stack, overflow.com/hm.
+
+288
+00:17:43.000 --> 00:17:46.150
+I hope you like it.
+So where do I mean,
+
+289
+00:17:46.150 --> 00:17:47.950
+where do I start if
+I want to make sure
+
+290
+00:17:47.950 --> 00:17:50.130
+that my do I don't
+have the story, a latent
+
+291
+00:17:50.130 --> 00:17:55.580
+stored procedure or, or SQL
+injection issue? Well, if you
+
+292
+00:17:55.580 --> 00:17:57.710
+have led and store procedures,
+it's just a matter of
+
+293
+00:17:57.710 --> 00:18:01.460
+code review time. Unfortunately, I
+don't think I've seen any
+
+294
+00:18:01.460 --> 00:18:05.060
+scanning tools that will look
+at stored procedures. There are
+
+295
+00:18:05.060 --> 00:18:08.720
+a bunch of automated scanning
+tools. Aren't there for attacking
+
+296
+00:18:08.720 --> 00:18:13.580
+various websites, which we'll go
+through a bunch of attacks
+
+297
+00:18:13.580 --> 00:18:15.740
+and you may or may
+not get useful results of
+
+298
+00:18:15.750 --> 00:18:18.260
+them. It depends on the
+way your website works. It
+
+299
+00:18:18.260 --> 00:18:21.470
+depends on the tool. Some
+are expensive, some are cheap.
+
+300
+00:18:21.890 --> 00:18:24.980
+It's kind of hard to
+produce a generic solution to
+
+301
+00:18:24.980 --> 00:18:28.370
+this. And I've not seen
+anything that scans SQL at
+
+302
+00:18:28.370 --> 00:18:31.100
+all. Unfortunately they may well
+exist and I'm sure we'll
+
+303
+00:18:31.100 --> 00:18:34.280
+probably be here by email
+or comments if someone knows
+
+304
+00:18:34.280 --> 00:18:38.870
+of one. Okay. Okay. So
+that's one category SQL injection.
+
+305
+00:18:38.870 --> 00:18:42.770
+What's another, The next one.
+Cause I've got the top
+
+306
+00:18:42.770 --> 00:18:45.500
+10 list in front of
+me now is the second,
+
+307
+00:18:45.500 --> 00:18:50.150
+most popular is cross site
+scripting. Alright. So this is
+
+308
+00:18:50.150 --> 00:18:54.650
+where we take in again
+on trusted input. So things
+
+309
+00:18:54.650 --> 00:18:58.370
+from tax boxes or for
+parameters, query string parameters or
+
+310
+00:18:58.730 --> 00:19:01.730
+HTTP headers, or all sorts
+of other stuff. And we
+
+311
+00:19:01.730 --> 00:19:05.540
+directly, I put it without
+sanitizing. It, so that varies
+
+312
+00:19:05.540 --> 00:19:07.910
+from things like just popping
+up out an alert box
+
+313
+00:19:07.910 --> 00:19:12.290
+with a root message to
+redirecting the browser to offensive
+
+314
+00:19:12.290 --> 00:19:15.680
+websites, like say, you know,
+Justin Bieber's homepage or something
+
+315
+00:19:15.680 --> 00:19:19.550
+like that to full-blown well,
+we have complete access to
+
+316
+00:19:19.550 --> 00:19:22.130
+the dome on the website.
+So let's change some of
+
+317
+00:19:22.130 --> 00:19:25.790
+the texts subtly. So a
+stock price would be manipulated
+
+318
+00:19:25.790 --> 00:19:29.540
+on screen or we steal
+frogs or cookies, which may
+
+319
+00:19:29.540 --> 00:19:33.890
+allow session hijacking. So if
+the, if the bad person
+
+320
+00:19:33.890 --> 00:19:37.970
+gets the cookies, they recreate
+them on their machine. And
+
+321
+00:19:37.970 --> 00:19:41.450
+then maybe if they're lucky,
+they will be authenticated as
+
+322
+00:19:41.450 --> 00:19:45.920
+you. So this is such
+an hijacking is literally you
+
+323
+00:19:45.920 --> 00:19:48.320
+become them. And for the
+moment you're logged in as
+
+324
+00:19:48.320 --> 00:19:50.300
+them, you may or may
+not know their password, but
+
+325
+00:19:50.750 --> 00:19:53.240
+it doesn't really matter. It
+depends a lot on how
+
+326
+00:19:53.240 --> 00:19:58.190
+you websites implement sessions, but
+some websites implement session with
+
+327
+00:19:58.190 --> 00:20:00.740
+a simple cookie that is
+not protected. So if you
+
+328
+00:20:00.740 --> 00:20:04.010
+just recreate that cookie and
+probably to the same website,
+
+329
+00:20:04.040 --> 00:20:10.160
+then suddenly you're that person.
+Okay. And they can, you
+
+330
+00:20:10.160 --> 00:20:12.230
+can solve that in a
+number of ways. Like, for
+
+331
+00:20:12.230 --> 00:20:16.190
+example, I've seen when I
+worked in banking that, you
+
+332
+00:20:16.190 --> 00:20:17.720
+know, you can do the
+best you can to mitigate,
+
+333
+00:20:17.720 --> 00:20:21.200
+people's doing session hijacking, but
+you, you can eat one
+
+334
+00:20:21.350 --> 00:20:23.330
+perspective and I'm interested in
+what you think is that
+
+335
+00:20:23.510 --> 00:20:26.120
+assume that they will get
+your senior year, you know,
+
+336
+00:20:26.120 --> 00:20:29.450
+hijack your session, assume that
+no matter what you do,
+
+337
+00:20:29.480 --> 00:20:32.300
+they're still going to get
+in and then think about
+
+338
+00:20:32.300 --> 00:20:34.100
+things like, well, if they
+are in, if I have
+
+339
+00:20:34.100 --> 00:20:36.080
+a stranger looking at my
+stuff, if I'm looking at
+
+340
+00:20:36.080 --> 00:20:40.070
+my banking, have I exed
+out social security numbers, have
+
+341
+00:20:40.070 --> 00:20:44.060
+I exed out account numbers?
+And by that, I mean
+
+342
+00:20:44.600 --> 00:20:46.790
+not exiting them out once
+they get to the client,
+
+343
+00:20:46.820 --> 00:20:49.660
+but mean literally they never
+showed up at the client
+
+344
+00:20:49.660 --> 00:20:52.930
+complete. And if I try
+to go and transfer money
+
+345
+00:20:53.290 --> 00:20:55.600
+that I would authenticate them
+again. So we actually had
+
+346
+00:20:55.600 --> 00:20:58.840
+levels of authentication where you
+were kind of lightly or
+
+347
+00:20:58.840 --> 00:21:03.520
+typically authenticated. And then when
+it comes time to transfer
+
+348
+00:21:03.520 --> 00:21:05.500
+money from one account to
+another, you authenticate them one
+
+349
+00:21:05.500 --> 00:21:07.840
+more time by asking them
+their mother's maiden name or
+
+350
+00:21:07.850 --> 00:21:11.490
+things like that. Yeah. And
+that's, that's currently the way
+
+351
+00:21:11.490 --> 00:21:13.680
+my, my U S bank
+seems to do things that
+
+352
+00:21:13.740 --> 00:21:17.670
+the actual asking for authentication
+again, is another interesting one.
+
+353
+00:21:17.670 --> 00:21:23.190
+Because if that stops some
+cross site request, forgery attacks,
+
+354
+00:21:23.580 --> 00:21:27.630
+which is where a, an
+attacker can create a form
+
+355
+00:21:28.260 --> 00:21:31.710
+that basically mirrors waltzing your
+bank form and submit it
+
+356
+00:21:31.710 --> 00:21:35.910
+on your behalf. So there
+have being, there'll be a
+
+357
+00:21:35.910 --> 00:21:38.820
+bunch of interesting, well known
+attacks. A bunch of guys
+
+358
+00:21:38.820 --> 00:21:43.380
+from Princeton did it on
+some banking websites a few
+
+359
+00:21:43.380 --> 00:21:46.530
+years ago, as a research
+project and discovered that certain
+
+360
+00:21:46.530 --> 00:21:49.020
+banks would allow you to
+just basically submit a form.
+
+361
+00:21:49.620 --> 00:21:53.070
+And because you were because
+the attacker would create the
+
+362
+00:21:53.070 --> 00:21:57.270
+form, get a user to
+Bryce to that form because
+
+363
+00:21:57.270 --> 00:21:59.040
+the user was already a
+sent to candidate at the
+
+364
+00:21:59.040 --> 00:22:03.030
+bank. When the form was
+submitted, it redirects the project
+
+365
+00:22:03.030 --> 00:22:05.630
+to the bank website. The
+bank website goes, Oh, you're
+
+366
+00:22:05.640 --> 00:22:08.400
+already authenticated. So I'll do
+what you want. And you
+
+367
+00:22:08.400 --> 00:22:11.850
+could transfer money from one
+account to another, but by
+
+368
+00:22:11.850 --> 00:22:16.050
+adding an extra step saying,
+no, you must type in
+
+369
+00:22:16.050 --> 00:22:20.310
+another password. That is one
+mitigation against the cross site
+
+370
+00:22:20.310 --> 00:22:24.360
+request for it. So is,
+is that bad to assume
+
+371
+00:22:24.360 --> 00:22:27.720
+that you're going to get
+nailed anyway? I don't believe
+
+372
+00:22:27.720 --> 00:22:31.110
+so. Of course it makes
+you horrendously paranoid, but that's
+
+373
+00:22:31.110 --> 00:22:35.880
+my natural state. I think
+it's probably a good idea.
+
+374
+00:22:36.510 --> 00:22:39.750
+So I know when we
+develop things internally, you have
+
+375
+00:22:39.750 --> 00:22:42.990
+the whole threat modeling process
+where you look at all
+
+376
+00:22:42.990 --> 00:22:46.590
+your flows, you look at
+the concept of trust. Binderies
+
+377
+00:22:46.590 --> 00:22:50.070
+where untrusted input goes into
+your system and how you
+
+378
+00:22:50.070 --> 00:22:53.070
+make it trusted and part,
+you know, you're, you're looking
+
+379
+00:22:53.070 --> 00:22:57.750
+at possible attacks on your
+software, on the process, and
+
+380
+00:22:57.750 --> 00:23:00.030
+then you, you muddle those
+attacks and then you take
+
+381
+00:23:00.030 --> 00:23:03.660
+mitigation steps. So people should
+be assuming that something is
+
+382
+00:23:03.660 --> 00:23:06.150
+going to go horribly wrong
+at some point. And it's
+
+383
+00:23:06.150 --> 00:23:09.480
+not just a matter of
+threat mitigation and trying to
+
+384
+00:23:09.870 --> 00:23:12.330
+try and defend everybody off.
+There's also a, what do
+
+385
+00:23:12.330 --> 00:23:15.540
+you do if that doesn't
+work? How do you, how
+
+386
+00:23:15.540 --> 00:23:19.860
+do you cope with it?
+When things go wrong? Talk
+
+387
+00:23:19.860 --> 00:23:23.730
+a little bit about the
+idea of threat modeling and
+
+388
+00:23:23.790 --> 00:23:25.740
+then threat mitigation is kind
+of what we just described,
+
+389
+00:23:25.740 --> 00:23:27.600
+which is the you're going
+to get nailed. What are
+
+390
+00:23:27.600 --> 00:23:31.770
+you going to do about
+it? Yes. So probably the
+
+391
+00:23:31.770 --> 00:23:35.850
+best resource for, for the
+concept of threat modeling is
+
+392
+00:23:37.230 --> 00:23:39.900
+Michael Howard and Steve Litton there's
+book, which I'm reaching out
+
+393
+00:23:39.900 --> 00:23:43.530
+to my bookshelf again, which
+is called, Oh, no, that's
+
+394
+00:23:43.530 --> 00:23:46.610
+the wrong one. Hold on
+next here. You're The first
+
+395
+00:23:46.610 --> 00:23:49.370
+guest who's actually like, I
+can hear you moving around
+
+396
+00:23:49.370 --> 00:23:53.710
+in the background and walking
+around during the I'm like
+
+397
+00:23:54.020 --> 00:23:55.930
+I'm not walking around, I'm
+sliding around in my chair.
+
+398
+00:23:56.890 --> 00:23:58.600
+So I have threatened modeling
+book in front of me,
+
+399
+00:23:58.600 --> 00:24:02.260
+which is by Microsoft press
+on is by a window
+
+400
+00:24:02.260 --> 00:24:05.590
+Snyder who now I believe
+works for Apple. I'm Frank.
+
+401
+00:24:06.200 --> 00:24:10.660
+Oh, Oh, I can't pronounce
+his surname. That's bad. Swiderski
+
+402
+00:24:11.680 --> 00:24:14.890
+I'm not entirely sure. This
+sort of takes you through
+
+403
+00:24:15.250 --> 00:24:17.710
+the threat modeling process, which
+again is part of the
+
+404
+00:24:17.710 --> 00:24:21.250
+Microsoft SDL. So if you
+go to the Microsoft SDL
+
+405
+00:24:21.250 --> 00:24:25.270
+website, you can actually download
+a threat modeling tool, which
+
+406
+00:24:25.360 --> 00:24:28.750
+allows you to draw diagrams
+of your systems in Vizio
+
+407
+00:24:29.440 --> 00:24:33.400
+and then drill the trust
+boundaries where untrusted input comes
+
+408
+00:24:33.400 --> 00:24:36.640
+in. And then it will
+prompt you for various threats
+
+409
+00:24:37.510 --> 00:24:39.040
+and you can fill in
+the threats and you can
+
+410
+00:24:39.040 --> 00:24:41.440
+brainstorm how these things could
+be exploited, and then you
+
+411
+00:24:41.440 --> 00:24:45.010
+can create mitigations against them.
+And then you shove those
+
+412
+00:24:45.070 --> 00:24:49.720
+in your, in TFS or
+what, whatever your, your bug
+
+413
+00:24:49.720 --> 00:24:51.490
+reporting system is going to
+be. And you keep them
+
+414
+00:24:51.490 --> 00:24:54.100
+as bugs until you've mitigated
+them. So you don't forget
+
+415
+00:24:54.100 --> 00:25:00.250
+it. There's another interesting thing,
+which is escalation of privilege,
+
+416
+00:25:01.240 --> 00:25:04.450
+which is a card game
+that Adam show stock came
+
+417
+00:25:04.450 --> 00:25:07.690
+up with because that modeling
+can be hard. You don't
+
+418
+00:25:07.690 --> 00:25:10.210
+necessarily think about all the
+things, or if you don't
+
+419
+00:25:10.210 --> 00:25:12.070
+have experience with it, it
+can take a long time.
+
+420
+00:25:12.070 --> 00:25:15.280
+So there's a card game
+where you just basically play
+
+421
+00:25:15.280 --> 00:25:18.130
+it like trumps and you
+throw it on all the
+
+422
+00:25:18.130 --> 00:25:21.010
+threats as you throw them
+the, as you throw the
+
+423
+00:25:21.010 --> 00:25:24.940
+cards, dine they're described. So
+you can look at the
+
+424
+00:25:24.940 --> 00:25:28.690
+description and you can think
+about it and muddle around
+
+425
+00:25:28.690 --> 00:25:32.200
+it like that. And the
+car deck again, is available
+
+426
+00:25:32.590 --> 00:25:35.710
+for free as a download
+on the Microsoft SDL site.
+
+427
+00:25:36.010 --> 00:25:37.720
+And you can print out
+the cards and cut them
+
+428
+00:25:37.720 --> 00:25:39.160
+up and then have a
+bit of fun doing it
+
+429
+00:25:39.160 --> 00:25:42.010
+that way. Yeah. It's interesting
+that, that you bring that
+
+430
+00:25:42.010 --> 00:25:44.950
+up because that might sound
+silly to a number of
+
+431
+00:25:44.950 --> 00:25:46.720
+people they might think, Oh
+really? Okay. I'm going to
+
+432
+00:25:46.720 --> 00:25:49.810
+solve security problems with, with
+card decks, but it sounds
+
+433
+00:25:49.810 --> 00:25:53.260
+a lot like planning poker,
+which is a popular kind
+
+434
+00:25:53.260 --> 00:25:55.900
+of agile way to get
+a large group of people
+
+435
+00:25:55.900 --> 00:25:58.660
+and to collect their kind
+of their, their, their larger
+
+436
+00:25:58.660 --> 00:26:02.380
+knowledge take, take advantage of
+group think and get people
+
+437
+00:26:02.380 --> 00:26:05.260
+thinking about in the case
+of planning, poker, thinking about
+
+438
+00:26:05.260 --> 00:26:07.330
+planning, but it sounds like
+you can do similar things
+
+439
+00:26:07.330 --> 00:26:10.930
+with security. Yeah. I mean,
+I guess it signs a
+
+440
+00:26:10.930 --> 00:26:13.960
+little, a little bit strange
+to people, but the SDL
+
+441
+00:26:13.960 --> 00:26:17.140
+team actually printed dog physical
+boxes of cards and took
+
+442
+00:26:17.140 --> 00:26:20.140
+them to RSA last year.
+So they had an awful
+
+443
+00:26:20.140 --> 00:26:22.240
+lot of them and our
+size, a big security conference.
+
+444
+00:26:22.270 --> 00:26:24.730
+And I think within the
+first day, all the packs
+
+445
+00:26:24.730 --> 00:26:28.480
+of cards gone. So people
+who are doing security in
+
+446
+00:26:28.480 --> 00:26:31.300
+a professional basis actually thought
+it was really useful. And
+
+447
+00:26:31.630 --> 00:26:34.300
+then took the physical cards.
+I didn't get a pack.
+
+448
+00:26:35.010 --> 00:26:36.670
+I was kind of hoping
+that Adam would have some
+
+449
+00:26:36.670 --> 00:26:40.090
+left, but no, So not,
+not a solution, but certainly
+
+450
+00:26:40.090 --> 00:26:43.830
+an interesting, an interesting tool.
+What I'm only solution you
+
+451
+00:26:43.830 --> 00:26:48.240
+have Is experience and this
+sort of thing. Unfortunately, the
+
+452
+00:26:48.240 --> 00:26:51.660
+more you do it, the
+more you start thinking of
+
+453
+00:26:51.660 --> 00:26:56.280
+various ways that your system
+may be insecure. I'm not
+
+454
+00:26:56.280 --> 00:26:57.990
+saying that you will ever
+learn to think like an
+
+455
+00:26:57.990 --> 00:27:01.350
+attacker, which is a common
+phrase. It's not a phrase
+
+456
+00:27:01.350 --> 00:27:04.470
+that I like because that's
+like giving someone a set
+
+457
+00:27:04.470 --> 00:27:06.870
+of professional chef's knives and
+saying, I think like a
+
+458
+00:27:06.870 --> 00:27:11.760
+chef, that's not high people
+work, but it will give
+
+459
+00:27:11.760 --> 00:27:15.350
+you, it will give you
+knowledge of all the, the
+
+460
+00:27:15.420 --> 00:27:19.560
+common flaws and a framework
+with which to describe them
+
+461
+00:27:19.620 --> 00:27:23.280
+and classify them. And then
+you can look at taking
+
+462
+00:27:23.280 --> 00:27:27.800
+mitigations towards them. Okay. What,
+what tools are available that
+
+463
+00:27:27.800 --> 00:27:30.680
+are external, that, that people
+who are working in the
+
+464
+00:27:30.680 --> 00:27:33.080
+Microsoft space can take advantage
+of today. What kind of
+
+465
+00:27:33.410 --> 00:27:37.730
+scanning tools, tools that will
+attack, whether they be Microsoft
+
+466
+00:27:37.730 --> 00:27:40.310
+tools or free tools that
+we can use to see,
+
+467
+00:27:41.030 --> 00:27:43.100
+like we could run after
+this podcast to see if
+
+468
+00:27:43.100 --> 00:27:46.580
+one of my websites is
+in trouble. I, we do
+
+469
+00:27:46.580 --> 00:27:49.760
+not. We, as in Microsoft
+do not produce a web
+
+470
+00:27:49.760 --> 00:27:52.700
+scanning tool. We have a
+bunch of partners that do,
+
+471
+00:27:53.240 --> 00:27:56.060
+and now I'm trying to
+remember who they are and
+
+472
+00:27:56.060 --> 00:28:00.380
+which ones we actually use
+internally. It's very hard for
+
+473
+00:28:00.380 --> 00:28:03.830
+me to make recommendations on
+this because they all have
+
+474
+00:28:03.830 --> 00:28:09.080
+costs associated with them. And
+it's, it's quite different depending
+
+475
+00:28:09.080 --> 00:28:12.590
+on your circumstances. I know
+one of the, the more
+
+476
+00:28:12.590 --> 00:28:17.360
+popular ones is something called
+burp suite. And I can't
+
+477
+00:28:17.360 --> 00:28:20.720
+remember who it's by, unfortunately,
+and that does a bunch
+
+478
+00:28:20.720 --> 00:28:23.960
+of automated scanning bits and
+pieces against websites. The problem
+
+479
+00:28:23.970 --> 00:28:27.080
+you have with automated scanning
+tools is that either a,
+
+480
+00:28:27.500 --> 00:28:30.710
+they give a lot of
+false positives and then developers
+
+481
+00:28:30.710 --> 00:28:35.630
+don't trust the results or
+B. They don't detect something.
+
+482
+00:28:35.840 --> 00:28:40.610
+And developers do trust the
+results. There's nothing that's 100%
+
+483
+00:28:40.670 --> 00:28:43.880
+accurate. Nothing will ever promise
+to be 100% accurate. If
+
+484
+00:28:43.880 --> 00:28:45.950
+you are looking at tools
+online and they say, we
+
+485
+00:28:45.950 --> 00:28:49.340
+have no false positives and
+we're 100% accurate, I would
+
+486
+00:28:49.340 --> 00:28:54.260
+be very suspicious of that
+tool. So they're, they're interesting.
+
+487
+00:28:54.290 --> 00:28:58.730
+And I think they're useful,
+but they're not something that
+
+488
+00:28:58.730 --> 00:29:03.050
+can be relied upon as
+your only way of trying
+
+489
+00:29:03.050 --> 00:29:07.610
+to detect security flows. You
+have to code review, you
+
+490
+00:29:07.610 --> 00:29:09.920
+have to, you have to
+threaten model. You have to
+
+491
+00:29:09.920 --> 00:29:14.750
+look at the boundaries between
+untrusted input into your system
+
+492
+00:29:14.780 --> 00:29:18.590
+and take appropriate steps there.
+And code review at the
+
+493
+00:29:18.590 --> 00:29:20.480
+end of the day is
+pretty much the only way
+
+494
+00:29:20.480 --> 00:29:22.310
+to do it even then,
+of course, as you know,
+
+495
+00:29:22.310 --> 00:29:25.070
+you can overlook things in
+code review. So nothing's ever
+
+496
+00:29:25.070 --> 00:29:29.030
+going to be 100% accurate
+or make you 100% safe,
+
+497
+00:29:29.480 --> 00:29:33.500
+except for unplugging your web
+server from the internet. What
+
+498
+00:29:33.500 --> 00:29:35.780
+about the, the Microsoft code
+analysis tool? They call it
+
+499
+00:29:35.810 --> 00:29:40.910
+cat.net. It was very popular
+around 1920, 2008, 2009. And
+
+500
+00:29:40.910 --> 00:29:45.120
+we heard a lot since.
+So cat.net does detect it
+
+501
+00:29:45.120 --> 00:29:48.930
+actually does detect some SQL
+injection stuff on code analysis
+
+502
+00:29:48.990 --> 00:29:52.920
+is interesting. There's also some
+security rules that are plugins
+
+503
+00:29:52.920 --> 00:29:59.880
+for FX FX cop that
+someone did internally, Sasha forced
+
+504
+00:30:00.090 --> 00:30:04.770
+F a U S T.
+And I believe they're either
+
+505
+00:30:04.770 --> 00:30:07.560
+OncoPLEX or on his blog.
+And you can plug those
+
+506
+00:30:07.560 --> 00:30:09.390
+into FX comp and run
+them as part of your
+
+507
+00:30:09.420 --> 00:30:14.850
+code in office stuff. Capital
+net, again, does look for
+
+508
+00:30:14.970 --> 00:30:18.180
+flow between untrusted input into
+things where it shouldn't be
+
+509
+00:30:18.780 --> 00:30:22.620
+attacking it and like everything
+else, it will have false
+
+510
+00:30:22.620 --> 00:30:26.640
+positives, or it may indeed
+miss stuff because cut analysis
+
+511
+00:30:26.640 --> 00:30:30.270
+is hard. Ethics comp is
+take Texas slightly simpler approach,
+
+512
+00:30:30.270 --> 00:30:37.770
+and it looks@methodsandclassesthatareisolatedcat.net tries to
+follow the flow of input
+
+513
+00:30:37.800 --> 00:30:41.100
+all the way dying, and
+then back up again, which
+
+514
+00:30:41.100 --> 00:30:45.210
+is a difficult problem to
+solve. It used some technology
+
+515
+00:30:45.210 --> 00:30:48.090
+firm that came out of
+Microsoft research, which gives you
+
+516
+00:30:48.090 --> 00:30:52.260
+an idea of how incredibly
+difficult problem to solve because
+
+517
+00:30:52.260 --> 00:30:56.550
+the Microsoft research people have
+great, big, huge throbbing brands
+
+518
+00:30:56.550 --> 00:30:59.430
+with which they can move
+coffee cups on their desks.
+
+519
+00:31:00.060 --> 00:31:02.490
+So if we have to
+take type take technology from
+
+520
+00:31:02.490 --> 00:31:05.790
+them, then it's cause we
+can work it out herself.
+
+521
+00:31:06.570 --> 00:31:09.690
+But that, that, that problem,
+the idea of following the
+
+522
+00:31:09.690 --> 00:31:13.050
+inputs all the way and
+then will following the output
+
+523
+00:31:13.050 --> 00:31:15.090
+all the way back. That
+is the kind of things
+
+524
+00:31:15.090 --> 00:31:16.890
+that you do in a
+code review. And when you
+
+525
+00:31:16.890 --> 00:31:19.110
+say COVID, you're literally talking
+about, get a bunch of
+
+526
+00:31:19.110 --> 00:31:23.550
+smart people in a room
+and moderate the process and
+
+527
+00:31:23.550 --> 00:31:26.580
+have them step through the
+code at all of the
+
+528
+00:31:26.580 --> 00:31:30.240
+points of danger. So you,
+you model the threats, you
+
+529
+00:31:30.240 --> 00:31:33.180
+stack rank the threats, and
+then you try to get
+
+530
+00:31:33.180 --> 00:31:34.950
+as many people as you
+can just look at that
+
+531
+00:31:34.950 --> 00:31:38.340
+code and then formally walk
+through and say, all right,
+
+532
+00:31:38.370 --> 00:31:40.320
+the text box comes in
+here. What is the state
+
+533
+00:31:40.320 --> 00:31:41.970
+of the data at this
+point? Has it been in
+
+534
+00:31:41.970 --> 00:31:44.580
+coded or not? What form
+has it been encoded? What
+
+535
+00:31:44.580 --> 00:31:46.470
+do we know about the
+encoding process? And you just
+
+536
+00:31:46.470 --> 00:31:50.070
+go up, up, up, up
+through the whole thing. Yeah.
+
+537
+00:31:50.310 --> 00:31:52.710
+And that's basically what you're
+going to have to do.
+
+538
+00:31:52.710 --> 00:31:55.050
+If you want to reassure
+yourself that things are safe
+
+539
+00:31:56.580 --> 00:32:02.370
+Or you wait until you're
+a male And they may
+
+540
+00:32:02.370 --> 00:32:07.320
+highlight some things that are
+low hanging fruit or any
+
+541
+00:32:07.320 --> 00:32:10.350
+of the other phrases that
+you character use, but they
+
+542
+00:32:10.350 --> 00:32:14.670
+may not catch everything over
+reliance on tools as opposed
+
+543
+00:32:14.730 --> 00:32:18.660
+to proper code reviews and
+examining your code is probably
+
+544
+00:32:18.660 --> 00:32:23.760
+dangerous. Cool. Cool. Do you
+have a in, in kind
+
+545
+00:32:23.760 --> 00:32:27.900
+of in conclusion, do you
+have a suggested, I don't
+
+546
+00:32:27.900 --> 00:32:30.840
+know, what's the Slashdot of
+security. What's the place that
+
+547
+00:32:30.840 --> 00:32:33.900
+the one website to visit
+or the one or two
+
+548
+00:32:33.900 --> 00:32:36.060
+websites I should visit each
+day, if I'm interested in
+
+549
+00:32:36.060 --> 00:32:42.170
+security. What I find interesting
+right now is Twitter is
+
+550
+00:32:42.170 --> 00:32:46.280
+probably a good resource. So
+you follow various security folks
+
+551
+00:32:46.280 --> 00:32:51.410
+on Twitter. It's hard, so
+security. It can be quite
+
+552
+00:32:51.410 --> 00:32:54.080
+platform specific. If you're interested
+in one thing, you may
+
+553
+00:32:54.080 --> 00:32:56.870
+not be interested in another,
+you may not have smart
+
+554
+00:32:56.870 --> 00:32:58.820
+carts in your environments. You
+don't care about smart cards
+
+555
+00:32:58.820 --> 00:33:02.660
+getting hacked. You may not
+worry about cold boot tacks
+
+556
+00:33:02.660 --> 00:33:06.560
+on TPM, encrypted laptops, that
+sort of thing. I think
+
+557
+00:33:06.680 --> 00:33:11.000
+trying to find an expert
+and following that, Bruce Schneider's
+
+558
+00:33:11.000 --> 00:33:15.380
+blog is interesting sometimes very,
+very low level, sometimes very,
+
+559
+00:33:15.380 --> 00:33:20.150
+very high level. The left
+side is obviously useful, but
+
+560
+00:33:20.170 --> 00:33:22.550
+it's more of a reference
+in the same way that
+
+561
+00:33:22.550 --> 00:33:25.310
+the SDL blogs from people
+like Adam show stack and
+
+562
+00:33:25.310 --> 00:33:29.780
+so on are more of
+a reference. I don't think
+
+563
+00:33:29.780 --> 00:33:31.370
+I could give you an
+easy answer to that one.
+
+564
+00:33:31.380 --> 00:33:34.520
+I'd have to go think
+I don't check that many.
+
+565
+00:33:34.850 --> 00:33:36.530
+I just follow people on
+Twitter and they point out
+
+566
+00:33:36.530 --> 00:33:39.940
+interesting things. Hmm. That's an
+interesting thing about Twitter. You're
+
+567
+00:33:39.940 --> 00:33:45.880
+basically leaning on the, the
+collective to do the work
+
+568
+00:33:45.880 --> 00:33:48.520
+of finding these things of
+aggregating this stuff for you.
+
+569
+00:33:49.690 --> 00:33:52.420
+Well, you get individuals that
+will point on something that
+
+570
+00:33:52.420 --> 00:33:55.240
+is interesting. And then you
+Agra, you're doing the aggregation
+
+571
+00:33:55.240 --> 00:33:59.270
+work because you're following those
+interesting individuals. I find I
+
+572
+00:33:59.270 --> 00:34:01.690
+don't actually read a lot
+of blogs anymore since I've
+
+573
+00:34:01.690 --> 00:34:04.990
+got more and more active
+on Twitter. Hmm. All alright,
+
+574
+00:34:05.410 --> 00:34:08.740
+well the, where can folks
+follow you on Twitter? Oh,
+
+575
+00:34:08.740 --> 00:34:11.290
+really? You want to recommend
+my Twitter? You've seen my
+
+576
+00:34:11.290 --> 00:34:15.670
+Twitter account. It's generally me
+insulting people. However, if that's
+
+577
+00:34:15.670 --> 00:34:17.470
+what you want to hear
+and there may be the
+
+578
+00:34:17.470 --> 00:34:20.260
+odd, interesting security nugget. You
+can follow me on Twitter
+
+579
+00:34:20.260 --> 00:34:23.770
+at blow dart. I just,
+I so knew that this
+
+580
+00:34:23.770 --> 00:34:28.420
+was a mistake. That's that?
+That's probably not why my,
+
+581
+00:34:28.420 --> 00:34:31.300
+my blog is whilst quiet
+every now and again, I
+
+582
+00:34:31.300 --> 00:34:34.600
+will pop up and I
+will actually do something interesting
+
+583
+00:34:34.720 --> 00:34:39.220
+and useful about security. And
+that's it. I dunno, dot
+
+584
+00:34:39.220 --> 00:34:42.220
+org. So that's probably a
+better resource if you don't
+
+585
+00:34:42.220 --> 00:34:45.940
+want to deal with the
+noise of me interacting with
+
+586
+00:34:46.330 --> 00:34:48.820
+all the folks in the
+UK that I left behind
+
+587
+00:34:49.330 --> 00:34:51.220
+a year and a half
+ago, which is generally what
+
+588
+00:34:51.220 --> 00:34:54.310
+my Twitter feed consistent. Alright,
+well, we'll hear it from
+
+589
+00:34:54.310 --> 00:34:56.620
+the, from the audience or
+whether or not they thought
+
+590
+00:34:56.620 --> 00:35:00.880
+this was a valuable thing
+or not. Yeah. I'm not
+
+591
+00:35:00.880 --> 00:35:03.730
+entirely sure. I want to
+know. All right. Cool. Thanks
+
+592
+00:35:03.730 --> 00:35:05.560
+so much, Barry, for talking
+to us today. Get it.
+
+593
+00:35:05.830 --> 00:35:09.400
+No problem. Thanks, Scott. This
+has been another episode of
+
+594
+00:35:09.400 --> 00:35:11.890
+Hanselminutes and we'll see you
+again next week.
+

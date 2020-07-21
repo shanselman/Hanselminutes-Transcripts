@@ -1,0 +1,2346 @@
+WEBVTT FILE
+
+1
+00:00:12.570 --> 00:00:18.390
+From Hansel minutes.com it's Hansel
+minutes or weekly discussion with
+
+2
+00:00:18.390 --> 00:00:23.520
+web developer and technologists. Scott
+Hanselman posted by Carl Franklin. This
+
+3
+00:00:23.520 --> 00:00:29.160
+is lawns Ryan announcing show
+number 54 recorded Tuesday, March 6th, 2007.
+
+4
+00:00:30.360 --> 00:00:33.600
+Support for Hanselman it's is
+provided by Tellerik R a
+
+5
+00:00:33.600 --> 00:00:37.410
+D controls the most comprehensive
+suite of components for windows
+
+6
+00:00:37.410 --> 00:00:48.510
+forms and asp.net web application.
+online@wwwdottlerik.com. Support is also provided
+
+7
+00:00:48.510 --> 00:00:52.920
+by slash end software red
+carpet subscriptions. The most comprehensive
+
+8
+00:00:52.920 --> 00:00:58.230
+solution for adding connectivity to
+your.net asp.net application with components
+
+9
+00:00:58.230 --> 00:01:08.490
+for every major internet protocol
+online@wwwdotnsoftwaredotcomandby.net developers journal the world's
+
+10
+00:01:08.490 --> 00:01:14.700
+leading dotnet developer magazine online
+at www dot <inaudible> dot
+
+11
+00:01:14.700 --> 00:01:18.470
+com in this episodes got
+talks with Jay flowers about
+
+12
+00:01:18.490 --> 00:01:24.960
+continuous integration. Hi, this is
+Scott Hanselman, and this is
+
+13
+00:01:24.960 --> 00:01:28.830
+another episode of Hansel minutes
+on this episode. Carl's going
+
+14
+00:01:28.830 --> 00:01:30.420
+to step out for a
+second and I'm going to
+
+15
+00:01:30.420 --> 00:01:33.870
+talk to Jay flowers. This
+is the second part of
+
+16
+00:01:33.870 --> 00:01:38.670
+our a year long two
+part series on continuous integration.
+
+17
+00:01:39.060 --> 00:01:41.220
+We did a show on
+continuous integration a long time
+
+18
+00:01:41.220 --> 00:01:42.930
+ago. I think it was
+our first or second show,
+
+19
+00:01:43.410 --> 00:01:47.460
+and we talked about the
+basics of continuous integration. And
+
+20
+00:01:47.460 --> 00:01:49.320
+then I realized that we
+really need to start talking
+
+21
+00:01:49.320 --> 00:01:52.200
+about squeezing continuous integration. So
+the title of this show
+
+22
+00:01:52.200 --> 00:01:55.350
+is squeezing continuous integration. And
+what better person to talk
+
+23
+00:01:55.350 --> 00:01:58.860
+about that than a than
+Jay flowers, the creator of
+
+24
+00:01:58.890 --> 00:02:02.430
+CEI factory and a general
+continuous integration fan. How's it
+
+25
+00:02:02.430 --> 00:02:06.240
+going, Jay? Oh, it's going
+great. Thanks Scott. So you
+
+26
+00:02:06.240 --> 00:02:09.360
+work on continuous integration stuff
+all day, right? You, you
+
+27
+00:02:09.360 --> 00:02:11.940
+run the bill that your
+company. I do. I live,
+
+28
+00:02:11.940 --> 00:02:16.170
+eat and breathe it. I'd
+probably say that I'm not
+
+29
+00:02:16.200 --> 00:02:19.710
+actually a build master. I
+am the building masters developer.
+
+30
+00:02:19.710 --> 00:02:23.310
+So they're my client. Oh,
+really? So you, you, you
+
+31
+00:02:23.310 --> 00:02:26.460
+don't have a dedicated bill
+Meister at your company. I
+
+32
+00:02:26.460 --> 00:02:29.940
+do. I do his that's
+my boss. Your boss is
+
+33
+00:02:29.940 --> 00:02:34.350
+to build Meister. Yes, we
+have a team and he
+
+34
+00:02:34.350 --> 00:02:35.970
+just tells you what to
+do as far as does
+
+35
+00:02:35.970 --> 00:02:39.180
+he do the continuous integration
+set up? No, actually that
+
+36
+00:02:39.180 --> 00:02:41.550
+was one of those things
+that I did in the
+
+37
+00:02:41.550 --> 00:02:44.550
+company and, you know, had
+to, was worried that I
+
+38
+00:02:44.550 --> 00:02:49.530
+might have to apologize later.
+Okay. So like we use
+
+39
+00:02:49.620 --> 00:02:52.890
+cruise control for our continuous
+integration build at my company
+
+40
+00:02:52.890 --> 00:02:57.240
+and, you know, someone checks
+something in and we noticed
+
+41
+00:02:57.240 --> 00:02:59.740
+that the source control system
+has changed kick off a
+
+42
+00:02:59.740 --> 00:03:04.270
+build. We kick off the
+testing, setting up these continuous
+
+43
+00:03:04.270 --> 00:03:08.640
+integration servers is pretty straightforward.
+It's pretty easy. Yes. Well,
+
+44
+00:03:09.180 --> 00:03:12.390
+I mean, it is now,
+but you know, I've been
+
+45
+00:03:12.390 --> 00:03:15.510
+using CIA factory for a
+few years now, so I'm,
+
+46
+00:03:16.740 --> 00:03:20.310
+I've really gotten used to
+it. And I, I would
+
+47
+00:03:20.310 --> 00:03:22.470
+like to share that with
+other people at this point.
+
+48
+00:03:22.800 --> 00:03:25.920
+Okay. So w what is
+the process without CIA factory
+
+49
+00:03:25.920 --> 00:03:29.190
+in CIA factory is an
+open source program that you,
+
+50
+00:03:29.430 --> 00:03:30.840
+that you worked on. Did
+you work on with anyone
+
+51
+00:03:30.840 --> 00:03:34.830
+else? Some people on projects
+that I've worked with, but
+
+52
+00:03:35.100 --> 00:03:39.690
+never really anybody out in
+the open source community, And
+
+53
+00:03:39.690 --> 00:03:42.510
+it is open source though.
+It is. It is. Okay.
+
+54
+00:03:42.720 --> 00:03:44.670
+So what's the difference between
+me wanting to set up
+
+55
+00:03:44.700 --> 00:03:49.530
+cruise control, straightforward by myself
+versus using an assister, like
+
+56
+00:03:49.590 --> 00:03:53.430
+a sci factory? Well, you're
+going to have to understand
+
+57
+00:03:53.760 --> 00:03:55.830
+cruise control and how to
+set it up. And you're
+
+58
+00:03:55.950 --> 00:03:58.650
+given contacts. You're going to
+have to make decisions about,
+
+59
+00:03:58.650 --> 00:03:59.850
+you know, whether or not
+to do it this way,
+
+60
+00:03:59.850 --> 00:04:03.060
+that way or the other
+way. Whereas with CEI factory,
+
+61
+00:04:03.060 --> 00:04:05.880
+all that stuff is just
+taken care of for you.
+
+62
+00:04:06.150 --> 00:04:09.240
+It, it just works out
+of the box. So, so
+
+63
+00:04:09.240 --> 00:04:11.610
+talk me through the, the
+experience briefly where I know
+
+64
+00:04:11.610 --> 00:04:14.580
+we're going to do a,
+a dominant rocks TV soon.
+
+65
+00:04:14.580 --> 00:04:16.050
+So people are going to
+be able to actually see
+
+66
+00:04:16.050 --> 00:04:20.070
+this, but I downloaded CIA
+factory. And then what, So
+
+67
+00:04:20.490 --> 00:04:24.060
+you would open up the
+CII factory solution file in
+
+68
+00:04:24.060 --> 00:04:28.260
+the root of the, what
+you unzip, and that will
+
+69
+00:04:28.830 --> 00:04:31.500
+have all the configuration files
+that you might want to
+
+70
+00:04:31.500 --> 00:04:33.300
+touch. Cause there's a lot
+of files, you know, that,
+
+71
+00:04:33.340 --> 00:04:34.680
+that go with this and
+you don't want to be
+
+72
+00:04:34.680 --> 00:04:37.170
+hunting pecking around for, is
+this the file that I
+
+73
+00:04:37.170 --> 00:04:38.670
+need to touch? Or is
+that the file? So I
+
+74
+00:04:38.670 --> 00:04:41.340
+just kind of have them
+all loaded up in the
+
+75
+00:04:41.350 --> 00:04:43.870
+solution. So then you can,
+you can go to the
+
+76
+00:04:43.890 --> 00:04:48.300
+main arguments file and customize
+any of the pieces that
+
+77
+00:04:48.300 --> 00:04:50.730
+you need to, to be
+concerned about that are going
+
+78
+00:04:50.730 --> 00:04:54.120
+to be different for your
+particular situation. And then you
+
+79
+00:04:54.120 --> 00:04:57.060
+are loading this individual studio
+in visual studio. You can
+
+80
+00:04:57.060 --> 00:05:01.770
+do it in a text
+as well. Yes. Okay. The
+
+81
+00:05:01.770 --> 00:05:03.690
+reason I did that again
+is just cause there's, you
+
+82
+00:05:03.690 --> 00:05:05.430
+know, there's a lot of
+files all over the place
+
+83
+00:05:05.430 --> 00:05:10.890
+and, and you don't know,
+you know, it's, if you
+
+84
+00:05:10.890 --> 00:05:13.200
+were looking around and explore
+for which file you need
+
+85
+00:05:13.200 --> 00:05:14.730
+to add it and which
+file you don't need to
+
+86
+00:05:14.730 --> 00:05:17.160
+add it. You've, you know,
+you're having to figure that
+
+87
+00:05:17.160 --> 00:05:20.790
+out on your own or
+remember it, and this way
+
+88
+00:05:20.790 --> 00:05:23.280
+with the solution, it just
+shows you it's just a
+
+89
+00:05:23.280 --> 00:05:26.130
+window into what you care
+about. So it kinda adds
+
+90
+00:05:26.130 --> 00:05:29.400
+all this stuff, The visual
+studio, as the input into
+
+91
+00:05:29.790 --> 00:05:32.970
+either basically a code generator,
+your code generating your continuous
+
+92
+00:05:32.970 --> 00:05:36.540
+integrations. Yes, yes. Actually, I'm
+using Nant to, to write
+
+93
+00:05:36.540 --> 00:05:38.370
+everything out. So this is,
+Oh, so you're actually using
+
+94
+00:05:38.400 --> 00:05:40.740
+visual studio to automate Nat.
+And then on the other
+
+95
+00:05:40.740 --> 00:05:43.920
+side, pops out all the
+dot config files that one
+
+96
+00:05:43.920 --> 00:05:46.410
+would need to have a
+working cruise control. Yeah. It
+
+97
+00:05:46.410 --> 00:05:49.920
+even generates ant script as
+well. Oh, so it generates
+
+98
+00:05:49.920 --> 00:05:51.990
+an ant as well. Yes.
+So I have Nan generating
+
+99
+00:05:51.990 --> 00:05:56.760
+Nat. Oh, okay. Now generating
+that. Okay. So then within
+
+100
+00:05:56.760 --> 00:06:01.340
+the, of the CIA factory,
+what is a package? Cause
+
+101
+00:06:01.350 --> 00:06:02.900
+I know that you use
+this term a lot, you
+
+102
+00:06:02.900 --> 00:06:06.520
+have these packages, what does
+that mean? Well, so generally
+
+103
+00:06:06.520 --> 00:06:10.330
+when you're going about doing
+your, your build there's activities
+
+104
+00:06:10.330 --> 00:06:12.580
+that happen, you know, we're
+gonna, we're gonna work with
+
+105
+00:06:12.580 --> 00:06:15.280
+source control and we're gonna
+get, you know, the latest
+
+106
+00:06:15.640 --> 00:06:17.980
+or we're going to get
+from the label. Then we're
+
+107
+00:06:17.980 --> 00:06:20.800
+going to do things like
+maybe you do some versioning,
+
+108
+00:06:20.830 --> 00:06:23.860
+you know, increment the version
+numbers, that type of thing,
+
+109
+00:06:23.860 --> 00:06:28.330
+where we'll do some compiles,
+we might do some unit
+
+110
+00:06:28.330 --> 00:06:31.600
+testing or FX cops. So
+we, we have these actions.
+
+111
+00:06:31.630 --> 00:06:33.610
+So this is, this is
+getting into the squeezing part
+
+112
+00:06:33.610 --> 00:06:36.040
+of it. You can, you
+can make a pretty straightforward
+
+113
+00:06:36.040 --> 00:06:39.970
+CGI, a continuous integration experience
+where you, you run Nat
+
+114
+00:06:40.030 --> 00:06:42.580
+or you run ms. Build,
+then you run end unit.
+
+115
+00:06:43.750 --> 00:06:46.840
+But beyond that is where
+we're talking about taking continuous
+
+116
+00:06:46.840 --> 00:06:50.350
+integration. Right. So you mentioned
+FX cop. We talked a
+
+117
+00:06:50.350 --> 00:06:53.350
+little bit about an depend
+an episode or two ago
+
+118
+00:06:54.340 --> 00:06:58.990
+coverage. I know that you've
+used ms. Test before and
+
+119
+00:06:58.990 --> 00:07:02.080
+you don't like Good. No,
+no. I, I, If I
+
+120
+00:07:02.080 --> 00:07:04.330
+wanted to do this by
+myself, if I wanted to
+
+121
+00:07:04.450 --> 00:07:08.020
+take an existing continuous integration
+build that maybe I've already
+
+122
+00:07:08.020 --> 00:07:10.810
+got going, maybe a listener
+has gotten at already working.
+
+123
+00:07:11.530 --> 00:07:14.580
+Would they still want to
+use continuous integration factory to,
+
+124
+00:07:14.580 --> 00:07:18.730
+to add things to that?
+Well, I guess it comes
+
+125
+00:07:18.730 --> 00:07:23.200
+down to, if you, if
+you maintain the scripts yourself,
+
+126
+00:07:23.320 --> 00:07:25.030
+the only way it's ever
+gonna get any better is
+
+127
+00:07:25.030 --> 00:07:29.050
+because you make it better.
+If you were using something
+
+128
+00:07:29.050 --> 00:07:33.670
+like CEI factory, then you
+have, you can add packages
+
+129
+00:07:33.670 --> 00:07:36.190
+yourself or you can customize
+things, but I'm also going
+
+130
+00:07:36.190 --> 00:07:39.070
+to be continuing to do
+this. So you'll gain the
+
+131
+00:07:39.070 --> 00:07:42.520
+benefit of whatever I produce
+as well. So any new
+
+132
+00:07:42.520 --> 00:07:46.030
+factor that comes out like,
+like Simeon is a, is
+
+133
+00:07:46.030 --> 00:07:49.150
+a product I'm a fan
+of for similarity analysis. I've
+
+134
+00:07:49.150 --> 00:07:52.480
+always wanted to add semi
+into my, my continuous integration
+
+135
+00:07:52.480 --> 00:07:54.610
+build, but it's just, it's
+a hassle. And I want
+
+136
+00:07:54.610 --> 00:07:56.320
+to go in there and
+figure out what batch files
+
+137
+00:07:56.650 --> 00:07:59.140
+to hook up or whatever.
+Right. I would just hook
+
+138
+00:07:59.140 --> 00:08:02.890
+up a package of CI
+packet Exactly at the, with
+
+139
+00:08:02.890 --> 00:08:08.200
+the current release. It doesn't
+support installing just one package
+
+140
+00:08:08.230 --> 00:08:11.290
+to an existing, but that's,
+I actually have that working
+
+141
+00:08:11.290 --> 00:08:13.360
+on, on my box and
+just haven't checked it in
+
+142
+00:08:13.360 --> 00:08:18.610
+yet. So with, with the
+RTM of this release, you
+
+143
+00:08:18.610 --> 00:08:22.810
+will have that ability to,
+to upgrade packages as well
+
+144
+00:08:22.810 --> 00:08:25.330
+as piece mail add, you
+know, I want to add
+
+145
+00:08:25.330 --> 00:08:27.640
+one more package or this,
+this other package just got
+
+146
+00:08:27.640 --> 00:08:30.550
+released. That type of thing.
+So folks that are doing
+
+147
+00:08:30.580 --> 00:08:34.300
+builds themselves that are maybe
+listening have probably used Nant
+
+148
+00:08:34.300 --> 00:08:36.340
+or they've used ms. Build.
+And they know that each
+
+149
+00:08:36.340 --> 00:08:39.490
+of those tools has the
+notion of a task there's
+
+150
+00:08:39.490 --> 00:08:42.370
+nap, tasks for this, and
+then there's CC net tasks.
+
+151
+00:08:42.370 --> 00:08:44.890
+But it sounds like you've
+raised kind of the layer
+
+152
+00:08:44.890 --> 00:08:48.040
+of abstraction, a little higher
+than task in a package
+
+153
+00:08:48.820 --> 00:08:51.310
+while it's close to a
+CC net task. It's maybe
+
+154
+00:08:51.310 --> 00:08:52.810
+a little bit bigger. It's
+a little bit, it has
+
+155
+00:08:52.810 --> 00:08:55.710
+a little bit larger scope.
+Is that true? Oh yeah.
+
+156
+00:08:55.740 --> 00:08:59.790
+It is A, it is
+a bigger thing. So there
+
+157
+00:08:59.790 --> 00:09:04.590
+can be this, this interplay
+between packages let's take coverage
+
+158
+00:09:04.620 --> 00:09:08.340
+packages for, for example, I
+have a coverage I package
+
+159
+00:09:08.340 --> 00:09:13.440
+and there's also a in
+cover package and these packages
+
+160
+00:09:13.680 --> 00:09:16.800
+don't, I don't want them
+to have any real concept
+
+161
+00:09:16.800 --> 00:09:19.470
+of whether or not we're
+talking, we're using ms. Test
+
+162
+00:09:19.500 --> 00:09:22.710
+or MBE unit or in
+unit or anything like that.
+
+163
+00:09:22.710 --> 00:09:25.340
+So, So let me take
+a second. So we're talking
+
+164
+00:09:25.340 --> 00:09:28.970
+about maybe someone has a,
+a bill that has multiple
+
+165
+00:09:29.150 --> 00:09:31.670
+test packages. Like I know
+we use M B unit
+
+166
+00:09:31.700 --> 00:09:35.660
+and, and unit in the
+same project sometimes. And then
+
+167
+00:09:35.660 --> 00:09:38.240
+there's an cover, which lets
+you see code coverage over
+
+168
+00:09:38.240 --> 00:09:42.080
+those tests. Right. You're saying
+you want to hide that
+
+169
+00:09:42.080 --> 00:09:45.260
+fact. Yes. I want, I
+want in the end cover
+
+170
+00:09:45.260 --> 00:09:47.900
+package just to know about
+that, there is a unit
+
+171
+00:09:47.900 --> 00:09:51.350
+testing package and so all
+unit testing packages kind of
+
+172
+00:09:51.410 --> 00:09:55.460
+adhere to a, well, we'll
+say an interface for lack
+
+173
+00:09:55.460 --> 00:09:57.140
+of a better term. Not
+that there is such a
+
+174
+00:09:57.140 --> 00:10:02.150
+thing in, in Nant, but
+you know, the, the packages
+
+175
+00:10:02.180 --> 00:10:05.630
+each have a target called,
+you know, unit tests dot
+
+176
+00:10:05.630 --> 00:10:08.810
+set up and unit tests
+that tear down and unit
+
+177
+00:10:08.810 --> 00:10:15.710
+tests that run tests. So
+the, the coverage package will
+
+178
+00:10:16.190 --> 00:10:19.070
+be able to run any
+one of the unit test
+
+179
+00:10:19.070 --> 00:10:22.250
+packages. So the only difference
+is he, you know, I
+
+180
+00:10:22.250 --> 00:10:24.560
+just kinda need to have
+a class factory at that
+
+181
+00:10:24.560 --> 00:10:27.290
+point that knows, you know,
+this is the target file.
+
+182
+00:10:27.500 --> 00:10:32.120
+This is the properties file
+for that particular unit test
+
+183
+00:10:32.120 --> 00:10:35.870
+package. So what do you
+use the term interplay, the
+
+184
+00:10:35.870 --> 00:10:38.900
+interplay between these XMLs passing
+back and forth between these
+
+185
+00:10:38.900 --> 00:10:42.500
+different things? Right. I mean,
+CEI is the act of
+
+186
+00:10:42.500 --> 00:10:44.720
+automating, but in the context
+of what we're talking about,
+
+187
+00:10:44.930 --> 00:10:49.280
+cruise control is just a
+process that watches source control
+
+188
+00:10:49.520 --> 00:10:53.150
+and kicks off these it's
+a glorified batch scheduler, right?
+
+189
+00:10:53.210 --> 00:10:57.800
+Absolutely. And each task spits
+out XML. Right, right, Right.
+
+190
+00:10:58.100 --> 00:11:01.280
+So we, we really have,
+for the most part, just
+
+191
+00:11:01.280 --> 00:11:05.120
+one task in CI factory,
+it, it kicks off the
+
+192
+00:11:05.630 --> 00:11:08.540
+Nance script. So it, it
+goes to like basically a
+
+193
+00:11:08.540 --> 00:11:12.140
+sub domain in, in there.
+And then from there we
+
+194
+00:11:12.140 --> 00:11:15.830
+fan out into, well, what,
+what's the first order of
+
+195
+00:11:15.830 --> 00:11:19.160
+operations, you know, source control,
+second order of operations, you
+
+196
+00:11:19.160 --> 00:11:23.900
+know, and on down the
+line. So that, that main
+
+197
+00:11:24.020 --> 00:11:26.720
+there's, there's a file main
+dot builds dot XML. That's
+
+198
+00:11:26.720 --> 00:11:32.720
+your, your main XML Nat
+script. Okay. And are you
+
+199
+00:11:32.720 --> 00:11:34.940
+saying that you only have
+one CC at tasks that
+
+200
+00:11:34.940 --> 00:11:37.640
+you've kind of neutered the
+task concept within cruise control
+
+201
+00:11:37.640 --> 00:11:40.650
+and you're using your own?
+Yes. And that's because there's,
+
+202
+00:11:40.650 --> 00:11:42.950
+it's just not flexible enough
+when it comes to dependencies
+
+203
+00:11:42.950 --> 00:11:46.430
+and asynchrony and things like
+that. Absolutely. I understand that
+
+204
+00:11:46.460 --> 00:11:48.770
+asynchrony is a big part
+of what, what your stuff
+
+205
+00:11:48.770 --> 00:11:50.840
+can offer that the CC
+net doesn't offer out of
+
+206
+00:11:50.840 --> 00:11:55.360
+the box. Is that true?
+Yes. Yeah. I, So with
+
+207
+00:11:55.360 --> 00:11:57.820
+one of the projects that
+I'm working on, they have
+
+208
+00:11:57.820 --> 00:12:02.920
+a, a huge amount of
+a vb.net codes. They have
+
+209
+00:12:02.920 --> 00:12:05.590
+like a, I think it's
+up to like 600,000 lines
+
+210
+00:12:05.590 --> 00:12:08.590
+of code and that can
+take a while to compile.
+
+211
+00:12:08.890 --> 00:12:10.750
+And then we're, you know,
+we want to run all
+
+212
+00:12:10.750 --> 00:12:13.570
+these other things on there
+besides unit tests like Simeon
+
+213
+00:12:13.570 --> 00:12:17.760
+and, and code coverage and
+independence and you know, and,
+
+214
+00:12:17.760 --> 00:12:21.070
+and more, and it just
+takes a long time to
+
+215
+00:12:21.070 --> 00:12:24.220
+do that build. So then
+people don't want to submit
+
+216
+00:12:24.220 --> 00:12:27.310
+to the build because it
+takes so long. Okay. So
+
+217
+00:12:29.050 --> 00:12:33.010
+we can use this asynchronicity
+at, after we've done the
+
+218
+00:12:33.010 --> 00:12:35.980
+compile, let's say we can
+run unit tasks at the
+
+219
+00:12:35.980 --> 00:12:39.310
+same time that we run
+a independ at the same
+
+220
+00:12:39.310 --> 00:12:41.500
+time that we run Simeon,
+all those types of things.
+
+221
+00:12:41.500 --> 00:12:43.660
+So we can get things
+done faster, as well as
+
+222
+00:12:43.660 --> 00:12:48.130
+some of these things, aren't
+really germane to the result
+
+223
+00:12:48.160 --> 00:12:52.180
+of the build being good
+or bad. So we can
+
+224
+00:12:52.180 --> 00:12:55.240
+also kick off some of
+these processes to, to run
+
+225
+00:12:55.690 --> 00:12:58.600
+even after the build has
+returned a result back to
+
+226
+00:12:58.600 --> 00:13:02.500
+the developer. So that's one
+of the ways we can
+
+227
+00:13:02.500 --> 00:13:05.790
+really squeeze out some more
+time. So if someone has
+
+228
+00:13:05.790 --> 00:13:08.760
+an existing bill, they've got
+Nat, they've got an unit
+
+229
+00:13:09.730 --> 00:13:13.020
+and this is kind of
+a typical vanilla cruise control
+
+230
+00:13:13.020 --> 00:13:14.790
+bill. I mean, most people
+they've got, at least the
+
+231
+00:13:14.790 --> 00:13:18.990
+automatic build part working. You
+think that the next step
+
+232
+00:13:18.990 --> 00:13:21.720
+is going to be to
+add something like coverage or
+
+233
+00:13:21.730 --> 00:13:23.880
+using that they're using an
+unit or they're using Nat
+
+234
+00:13:23.880 --> 00:13:26.430
+and B unit or Emma's
+test that adding coverage is
+
+235
+00:13:26.430 --> 00:13:28.560
+a good thing to add
+that that provides a value
+
+236
+00:13:28.560 --> 00:13:31.410
+to the team because these
+continuous integration builds are creating
+
+237
+00:13:31.800 --> 00:13:35.310
+vast amounts of information. They're
+creating reports, they're potentially emailing
+
+238
+00:13:35.310 --> 00:13:38.970
+out reports. It is, it
+is, it isn't useful that
+
+239
+00:13:38.970 --> 00:13:41.880
+it just builds the thing.
+It's got to provide some
+
+240
+00:13:41.880 --> 00:13:44.880
+feedback loop, right. To let
+the team change things and
+
+241
+00:13:44.880 --> 00:13:48.750
+improve the software while it's
+being built. Right. Right. And
+
+242
+00:13:49.560 --> 00:13:52.680
+so with, as we start
+adding all these different packages,
+
+243
+00:13:52.710 --> 00:13:56.970
+the risk becomes that we're
+spamming them. You know, we're,
+
+244
+00:13:57.000 --> 00:14:00.630
+we're, it's easy to give
+them too much information even.
+
+245
+00:14:02.280 --> 00:14:06.150
+So we need some type
+of way to point out.
+
+246
+00:14:06.150 --> 00:14:09.690
+Well, which information is the
+most important? What, what's the
+
+247
+00:14:09.690 --> 00:14:11.730
+most important thing out of
+this bill that you need
+
+248
+00:14:11.730 --> 00:14:13.740
+to be aware of, that
+you need to take action
+
+249
+00:14:13.740 --> 00:14:17.100
+on. That's the key part
+what's going to trigger you
+
+250
+00:14:17.100 --> 00:14:21.210
+to take some action generally
+that the, there, the basic
+
+251
+00:14:21.210 --> 00:14:25.260
+means so far has been
+failing the belt, failing the
+
+252
+00:14:25.260 --> 00:14:27.360
+bill, gets your attention, failing
+the bill gets you to
+
+253
+00:14:27.360 --> 00:14:29.790
+take some type of action,
+but that, that can be
+
+254
+00:14:29.790 --> 00:14:33.720
+kind of drastic. So what
+are the packages that come
+
+255
+00:14:33.720 --> 00:14:35.820
+out of the box with
+CEI factory that can take
+
+256
+00:14:36.090 --> 00:14:37.830
+this to the next level?
+I see that it's going
+
+257
+00:14:37.830 --> 00:14:41.370
+to make things easier to
+build, easier to maintain. I
+
+258
+00:14:41.370 --> 00:14:45.090
+can add and remove packages,
+but we know what's the
+
+259
+00:14:45.090 --> 00:14:48.390
+hello world, SEI factory going
+to give me, cause there's
+
+260
+00:14:48.390 --> 00:14:50.220
+quite a few packages I
+understand. And we're going to
+
+261
+00:14:50.220 --> 00:14:52.460
+do a, a DNR TV,
+I think maybe one or
+
+262
+00:14:52.460 --> 00:14:55.580
+two on this. And we'll
+actually show screencasts of, of
+
+263
+00:14:55.580 --> 00:15:02.930
+how this works. You can
+take a look@shrinksor.com slash M
+
+264
+00:15:02.930 --> 00:15:05.930
+M B M as in
+mom. And then there's a
+
+265
+00:15:05.930 --> 00:15:10.310
+screen capture of the analytics
+package@shrinkstir.com slash M M eight,
+
+266
+00:15:11.330 --> 00:15:15.140
+to explain how the process
+works, how to jumpstart your,
+
+267
+00:15:15.740 --> 00:15:19.310
+your continuous integration. It appears
+to me and maybe Jay,
+
+268
+00:15:19.430 --> 00:15:22.520
+you can agree with me
+or not, but CEI factory
+
+269
+00:15:22.520 --> 00:15:27.250
+is kind of like file
+new continuous integration. Yeah. Yes.
+
+270
+00:15:27.250 --> 00:15:28.870
+I I'm trying to make
+it that way. I mean,
+
+271
+00:15:29.200 --> 00:15:32.650
+when, when I first started
+out with this stuff, I
+
+272
+00:15:32.650 --> 00:15:35.560
+was, I was actually kind
+of disappointed about how difficult
+
+273
+00:15:35.560 --> 00:15:38.170
+it was, took me, you
+know, over three weeks to
+
+274
+00:15:38.170 --> 00:15:40.570
+really get something up solid
+that I felt like I
+
+275
+00:15:40.570 --> 00:15:44.050
+could share with other people
+in the, in the company.
+
+276
+00:15:44.050 --> 00:15:45.970
+And I wasn't, you know,
+I was gonna be like,
+
+277
+00:15:45.970 --> 00:15:48.010
+well, or the response that
+I was going to get
+
+278
+00:15:48.010 --> 00:15:51.820
+was, well, all right, we'll
+use that. You know, I
+
+279
+00:15:51.820 --> 00:15:54.400
+wasn't going to get in
+trouble for doing it. So
+
+280
+00:15:54.460 --> 00:15:57.460
+that just seemed to me
+to take an extraordinary amount
+
+281
+00:15:57.460 --> 00:16:01.870
+of time and resources. And
+I don't know, it seems
+
+282
+00:16:01.870 --> 00:16:03.910
+just kind of ironic for
+some of this stuff that
+
+283
+00:16:04.270 --> 00:16:07.720
+we're developers and we're supposed
+to make things easier for
+
+284
+00:16:07.720 --> 00:16:09.700
+our users yet. We can't
+seem to do that for
+
+285
+00:16:09.700 --> 00:16:15.430
+ourselves. Yeah. So I really
+felt like I also noticed,
+
+286
+00:16:15.430 --> 00:16:17.020
+you know, as I had
+to make more and more
+
+287
+00:16:17.020 --> 00:16:18.820
+of these, I was just
+doing the same thing over
+
+288
+00:16:18.820 --> 00:16:20.590
+and over again. So I
+didn't see that there was
+
+289
+00:16:20.590 --> 00:16:23.470
+any need for, for it
+to be this way. And,
+
+290
+00:16:24.010 --> 00:16:26.680
+and it could just, you
+know, if, if we decided
+
+291
+00:16:26.680 --> 00:16:29.620
+on some naming conventions where
+things go, you know, all
+
+292
+00:16:29.620 --> 00:16:33.580
+these, these things would be
+easy to do. Isn't that
+
+293
+00:16:33.580 --> 00:16:36.880
+funny? How little things like
+deciding where and what is
+
+294
+00:16:36.880 --> 00:16:41.320
+going to go where and
+stopping, moving stuff around, just
+
+295
+00:16:41.320 --> 00:16:42.940
+coming up with some kind
+of convention. This is why
+
+296
+00:16:42.940 --> 00:16:46.150
+the rails guys and the
+Ruby guys are so excited
+
+297
+00:16:46.150 --> 00:16:49.600
+about their productivity levels. It's
+because it's convention over configuration.
+
+298
+00:16:49.600 --> 00:16:52.380
+If we can just all
+agree on how things are
+
+299
+00:16:52.420 --> 00:16:55.150
+laid out, right. Then we
+can start getting things done.
+
+300
+00:16:56.980 --> 00:17:03.100
+Let's see tree surgeon by
+Mike over at, at CDC.
+
+301
+00:17:03.130 --> 00:17:05.350
+Yeah. Thought works tree surgeon
+from ThoughtWorks. Yeah. That was
+
+302
+00:17:05.350 --> 00:17:07.720
+the first time I saw
+the concept of, and I
+
+303
+00:17:07.720 --> 00:17:10.840
+call it file new continuous
+build, you know, file new
+
+304
+00:17:10.840 --> 00:17:14.290
+CGI, right. It just, jumpstarts
+your, you know, it's one
+
+305
+00:17:14.290 --> 00:17:16.180
+thing to go and say,
+here's a hello world, but
+
+306
+00:17:16.810 --> 00:17:19.480
+really when you need a
+project, you need continuous integration.
+
+307
+00:17:19.480 --> 00:17:21.580
+You need a test framework,
+you need all that stuff.
+
+308
+00:17:21.790 --> 00:17:23.350
+Right. I was talking with
+a friend of mine, who's
+
+309
+00:17:23.350 --> 00:17:26.350
+setting up a startup and
+he hasn't got a continuous
+
+310
+00:17:26.350 --> 00:17:28.840
+integration build server yet. And
+he's like, yeah, it's on
+
+311
+00:17:28.840 --> 00:17:31.390
+my list of things to
+do. When am I going
+
+312
+00:17:31.390 --> 00:17:33.250
+to get around to it?
+But you know, the sooner
+
+313
+00:17:33.250 --> 00:17:35.800
+you do it, the sooner
+it's done That, that's true.
+
+314
+00:17:35.860 --> 00:17:38.860
+We have that very issue.
+And in our company where
+
+315
+00:17:38.860 --> 00:17:43.090
+it's like, the developers just
+want to, I mean, this
+
+316
+00:17:43.090 --> 00:17:45.400
+is normal for them. It's
+not anything bad, but they,
+
+317
+00:17:45.400 --> 00:17:47.650
+you know, they just want
+to get going. They don't
+
+318
+00:17:47.650 --> 00:17:49.060
+want to have to set
+up any of this other,
+
+319
+00:17:49.320 --> 00:17:50.790
+think about it. They just
+want to start writing some,
+
+320
+00:17:51.210 --> 00:17:55.320
+some code. So it, it
+can take a little bit
+
+321
+00:17:55.320 --> 00:17:57.480
+of a forethought, you know,
+to say, all right, well,
+
+322
+00:17:57.480 --> 00:18:00.540
+hold on, I'm going to,
+I'm gonna set this up.
+
+323
+00:18:00.750 --> 00:18:03.570
+So if it's easy to
+set up, you're more likely
+
+324
+00:18:03.570 --> 00:18:05.040
+to do it. If it's,
+if it is a pain
+
+325
+00:18:05.040 --> 00:18:06.450
+in the butt, like it
+appears to be for a
+
+326
+00:18:06.450 --> 00:18:08.490
+lot of people, will, it
+gets put on the back
+
+327
+00:18:08.490 --> 00:18:11.190
+burner. You know, it doesn't,
+it doesn't appear to, to
+
+328
+00:18:11.340 --> 00:18:15.200
+show any productivity right away,
+you know, Right away. But
+
+329
+00:18:15.230 --> 00:18:18.350
+Oh, after the fact we've
+got a project here where
+
+330
+00:18:18.560 --> 00:18:22.250
+one of our guys has
+not just building, you know,
+
+331
+00:18:22.250 --> 00:18:24.410
+binaries and throwing them into
+a bin folder, which is
+
+332
+00:18:24.410 --> 00:18:27.650
+the basics, right? I mean,
+the very, the most basic
+
+333
+00:18:27.800 --> 00:18:29.930
+build would just give you
+a bunch of DLLs or
+
+334
+00:18:29.930 --> 00:18:32.240
+a bunch of <inaudible>. The
+next step of course, is
+
+335
+00:18:32.240 --> 00:18:35.750
+building an installer saying, here's
+my MSI. So that's, that's,
+
+336
+00:18:35.780 --> 00:18:38.240
+you know, that's a, an
+improvement on continuous integration that
+
+337
+00:18:38.240 --> 00:18:41.480
+squeezes CIA a little bit,
+but they started actually spitting
+
+338
+00:18:41.480 --> 00:18:45.560
+out virtual machines with a
+complete integrated and built system.
+
+339
+00:18:46.280 --> 00:18:49.190
+So not only do they
+spit out the MSI, they
+
+340
+00:18:49.190 --> 00:18:52.760
+actually use the calm API
+APIs inside a virtual server.
+
+341
+00:18:53.750 --> 00:18:56.270
+And they bring up a
+fresh VM, wait for the
+
+342
+00:18:56.270 --> 00:19:00.290
+VM to come up, log
+in, all automated, go into
+
+343
+00:19:00.290 --> 00:19:04.100
+that box, install the software,
+configure it, and then save
+
+344
+00:19:04.100 --> 00:19:06.590
+it off somewhere so that
+the sales guy can grab
+
+345
+00:19:06.590 --> 00:19:09.680
+that, that demonstration VM and
+go running with it. So
+
+346
+00:19:10.190 --> 00:19:12.560
+from our point of view,
+from, from, from my point
+
+347
+00:19:12.560 --> 00:19:16.190
+of view, as someone who
+does technical sales picking up,
+
+348
+00:19:16.190 --> 00:19:18.950
+the latest bill is actually
+just copying a VM that's
+
+349
+00:19:18.950 --> 00:19:22.670
+complete down as opposed to
+grabbing that MSI while someone
+
+350
+00:19:22.670 --> 00:19:25.190
+else might think of picking
+up the latest bill is
+
+351
+00:19:25.190 --> 00:19:29.060
+grabbing some DLLs or picking
+up a NMSI. Do you
+
+352
+00:19:29.060 --> 00:19:31.130
+have anything around virtual machines
+that you, that you do
+
+353
+00:19:31.130 --> 00:19:35.240
+at your company or in
+the product? Well, we, we
+
+354
+00:19:35.240 --> 00:19:40.040
+use one manually for comm
+builds where we'll roll back
+
+355
+00:19:40.040 --> 00:19:44.300
+to, you know, the Virgin
+snapshot and, and then begin
+
+356
+00:19:44.300 --> 00:19:46.550
+building from there on a,
+you know, a clean, fresh
+
+357
+00:19:46.550 --> 00:19:49.310
+registry so that we don't
+end up with corrupt registries,
+
+358
+00:19:49.310 --> 00:19:52.250
+you know, over time, you
+know, after several months of,
+
+359
+00:19:52.610 --> 00:19:56.660
+of, you know, heavy, calm,
+builds, the machine can start
+
+360
+00:19:56.660 --> 00:19:59.630
+to act, act a bit
+flaky. So this, you know,
+
+361
+00:20:00.740 --> 00:20:03.710
+we're, we're always in a,
+in a good known state
+
+362
+00:20:03.710 --> 00:20:07.340
+where we really trust what's
+coming out of the build.
+
+363
+00:20:08.780 --> 00:20:11.570
+Well, another example that wouldn't
+be virtual machines, but would
+
+364
+00:20:11.570 --> 00:20:14.660
+be the idea of what
+is your build artifact actually
+
+365
+00:20:14.660 --> 00:20:17.720
+declaring to yourself and agreeing
+as a company and as
+
+366
+00:20:17.720 --> 00:20:20.360
+a project, what is the
+thing that pops out at
+
+367
+00:20:20.360 --> 00:20:24.860
+the end of this, this
+assembly line, like, like a
+
+368
+00:20:24.860 --> 00:20:28.010
+CD or even better an
+ISO image? What about that?
+
+369
+00:20:28.250 --> 00:20:30.560
+I've one of the last
+project that I worked on,
+
+370
+00:20:30.660 --> 00:20:33.890
+we actually did that. We
+had a, we delivered 20
+
+371
+00:20:33.890 --> 00:20:37.160
+CDs to the, for this
+government project. So we had
+
+372
+00:20:37.460 --> 00:20:43.130
+20 different build processes up
+building ISO images, so that
+
+373
+00:20:43.370 --> 00:20:48.280
+nice, that included documentation, everything,
+you know, that was the
+
+374
+00:20:48.280 --> 00:20:52.390
+final. That was what we
+handed to the customer. So
+
+375
+00:20:52.720 --> 00:20:55.420
+if, and that's what tests
+took. So it wasn't like
+
+376
+00:20:55.420 --> 00:20:58.720
+test was taking an intermediary
+and then somebody else was
+
+377
+00:20:58.720 --> 00:21:00.370
+going to have to take
+this bit and that bit
+
+378
+00:21:00.370 --> 00:21:01.690
+and the other bit and
+put them in the right
+
+379
+00:21:01.690 --> 00:21:04.090
+spot, on the CD for
+everything to work. And, you
+
+380
+00:21:04.090 --> 00:21:06.070
+know, and by the time
+you get to that point,
+
+381
+00:21:06.070 --> 00:21:08.590
+you know, test is like
+worn out and they might
+
+382
+00:21:08.590 --> 00:21:11.980
+not do the, the, you
+know, the most aggressive tests
+
+383
+00:21:11.980 --> 00:21:14.500
+on that, that final product
+then, because they did their
+
+384
+00:21:14.500 --> 00:21:18.100
+work on the intermediate stuff.
+So this, this prevents you
+
+385
+00:21:18.100 --> 00:21:22.260
+from having those last minute
+errors. Yeah, exactly. Why does
+
+386
+00:21:22.260 --> 00:21:25.050
+there have to be a
+manual, push a button at
+
+387
+00:21:25.050 --> 00:21:27.660
+the end of it all
+where the CD, you know,
+
+388
+00:21:27.690 --> 00:21:30.330
+pops out, right? Yeah. I
+think that's, that's really the
+
+389
+00:21:30.330 --> 00:21:33.030
+essence of, of kind of
+squeezing continuous integration is that
+
+390
+00:21:33.300 --> 00:21:35.160
+if your build process, no.
+I mean, no matter how
+
+391
+00:21:35.160 --> 00:21:37.740
+nice your, your CC net
+server is no matter how
+
+392
+00:21:37.740 --> 00:21:39.990
+nice it is that someone
+can check your code out
+
+393
+00:21:39.990 --> 00:21:44.130
+and say, bill dot bat,
+if deploying your code involves
+
+394
+00:21:44.130 --> 00:21:48.510
+opening to Explorer, windows, and
+dragging something, that's probably a
+
+395
+00:21:48.510 --> 00:21:52.020
+bad, that's a good, that's
+a good idea that you
+
+396
+00:21:52.020 --> 00:21:53.640
+have a good idea that
+you're maybe doing something wrong.
+
+397
+00:21:53.640 --> 00:21:56.910
+Wouldn't you say? Yeah. As
+a matter of fact, my,
+
+398
+00:21:56.970 --> 00:21:59.940
+my released this beta release
+for CII factory, when I
+
+399
+00:21:59.940 --> 00:22:04.350
+first published the zip up
+on Google, I forgot to
+
+400
+00:22:04.350 --> 00:22:08.970
+include something in it. Cause
+there was, I use Google
+
+401
+00:22:09.030 --> 00:22:12.360
+docs for some of the
+install, instructions and whatnot. So
+
+402
+00:22:12.360 --> 00:22:14.790
+I was right. And they
+don't have an API for
+
+403
+00:22:14.790 --> 00:22:19.230
+that yet. So to include
+those docs in the CII
+
+404
+00:22:19.250 --> 00:22:21.090
+factory reset, that's a manual
+step that I have to
+
+405
+00:22:21.090 --> 00:22:24.210
+do. And I, I forgot
+something and I had to
+
+406
+00:22:24.210 --> 00:22:28.360
+republish the, the, the beta.
+I can't wait for there
+
+407
+00:22:28.710 --> 00:22:32.850
+being another thing. Yep. The
+one thing that wasn't automated.
+
+408
+00:22:33.120 --> 00:22:37.290
+Yep. Yeah. We're actually managing
+the, the outline for this
+
+409
+00:22:37.290 --> 00:22:40.350
+show and the, the links
+there. So all of this
+
+410
+00:22:40.350 --> 00:22:42.600
+sounds like something that, that,
+that I'm interested in looking
+
+411
+00:22:42.600 --> 00:22:45.360
+at and spending more time
+with CCI factory. I know
+
+412
+00:22:45.360 --> 00:22:48.360
+that we've got a pretty
+sophisticated cruise control build here.
+
+413
+00:22:48.720 --> 00:22:51.180
+We're not currently using CA
+factory at our company. We
+
+414
+00:22:51.180 --> 00:22:54.930
+basically based our build on,
+on sweat and tears. And
+
+415
+00:22:55.320 --> 00:22:57.900
+before we got buy off
+from the bosses, you know,
+
+416
+00:22:57.900 --> 00:23:00.240
+we just did it. We
+just didn't tell anybody. We
+
+417
+00:23:00.240 --> 00:23:02.940
+just found whatever hardware we
+could. I mean, how do
+
+418
+00:23:02.940 --> 00:23:05.010
+you sell this to your
+boss? A lot of them
+
+419
+00:23:05.010 --> 00:23:07.290
+wouldn't think it was a,
+unless they're sophisticated about this
+
+420
+00:23:07.290 --> 00:23:10.650
+kind of stuff would think
+you're wasting your time. Well,
+
+421
+00:23:10.890 --> 00:23:13.080
+that's where I hope, you
+know, CIA factory can make
+
+422
+00:23:13.080 --> 00:23:16.770
+that easy for you. I've
+either with a screencast or,
+
+423
+00:23:17.040 --> 00:23:19.080
+you know, you can show
+on the screen cast, it's
+
+424
+00:23:19.080 --> 00:23:22.380
+up on my blog right
+now. Or you can just
+
+425
+00:23:22.380 --> 00:23:25.860
+download it and do it
+and then show them the
+
+426
+00:23:25.860 --> 00:23:30.330
+final results. And it shouldn't
+take you, you know, more
+
+427
+00:23:30.330 --> 00:23:35.910
+than, than five minutes to
+get a, a working CII
+
+428
+00:23:35.910 --> 00:23:38.250
+factory up now, how long
+it takes to get your
+
+429
+00:23:38.250 --> 00:23:42.000
+particular product worked into CII
+factory will depend on your
+
+430
+00:23:42.000 --> 00:23:44.160
+product, but basically, you know,
+it's, it's going to be
+
+431
+00:23:44.160 --> 00:23:46.670
+doing a reference. You know,
+you put your, your third
+
+432
+00:23:46.670 --> 00:23:49.370
+party pieces over here and
+you put your, your coat
+
+433
+00:23:49.370 --> 00:23:51.410
+over there and then you
+get that stuff straightened out.
+
+434
+00:23:51.410 --> 00:23:53.720
+And there you go. So
+I imagine it might take
+
+435
+00:23:53.720 --> 00:23:56.540
+most people around 20 minutes.
+And so after 20 minutes
+
+436
+00:23:56.540 --> 00:24:00.950
+you have a working factory
+up and running. And I
+
+437
+00:24:00.950 --> 00:24:03.440
+think that's a, probably a
+pretty powerful thing to be
+
+438
+00:24:03.440 --> 00:24:05.540
+able to show your boss
+that we have this right
+
+439
+00:24:05.540 --> 00:24:08.030
+here in house working right
+now. You don't have to
+
+440
+00:24:08.030 --> 00:24:11.410
+worry about it anymore. That's
+very slick. That's very slick.
+
+441
+00:24:11.950 --> 00:24:16.450
+So J flowers is it
+J flowers.com and the new
+
+442
+00:24:16.450 --> 00:24:21.190
+CIO factory beta is version
+0.8. And there's, I'm looking
+
+443
+00:24:21.190 --> 00:24:24.310
+here in your blog, 22
+new net tasks, 13 new
+
+444
+00:24:24.310 --> 00:24:27.820
+net functions, nine new CC
+net plugins, and 10 CII
+
+445
+00:24:27.820 --> 00:24:33.130
+factory packages, backup lines of
+code EMIS, spill, and cover,
+
+446
+00:24:33.130 --> 00:24:37.210
+and depend tracking changes to
+source code. This will work
+
+447
+00:24:37.210 --> 00:24:40.840
+with anything source it'll work
+with continuous integration. Isn't something
+
+448
+00:24:40.840 --> 00:24:45.280
+that has to be subversion
+and, and CVS. I mean,
+
+449
+00:24:45.280 --> 00:24:49.360
+you could be ms. Build
+ms. Test. You could be
+
+450
+00:24:49.360 --> 00:24:53.350
+using team system. I mean,
+we being enthusiastic about cruise
+
+451
+00:24:53.350 --> 00:24:57.520
+control and, and continuous integration
+doesn't necessarily indicate that you're
+
+452
+00:24:57.790 --> 00:25:00.910
+open source or not, or
+team system or not. Right.
+
+453
+00:25:00.910 --> 00:25:03.970
+I mean, this can work
+no matter how hybrid your,
+
+454
+00:25:04.150 --> 00:25:08.200
+your product is, right. Oh,
+absolutely. No, I, that was
+
+455
+00:25:08.200 --> 00:25:10.120
+one of the things with
+CIA factories. I just want
+
+456
+00:25:10.120 --> 00:25:12.760
+to make, I want to
+abstract that away. So whatever
+
+457
+00:25:12.760 --> 00:25:17.620
+package, whatever a third party
+products are using it, we've
+
+458
+00:25:17.620 --> 00:25:21.760
+abstracted that it's just continuous
+integration. That's all there is.
+
+459
+00:25:23.530 --> 00:25:27.130
+That's just continuous integration. That's
+all there is fantastic. Jay,
+
+460
+00:25:27.130 --> 00:25:29.050
+I really appreciate you taking
+time out of your day
+
+461
+00:25:29.050 --> 00:25:31.570
+to talk about this. I
+really encourage folks that are
+
+462
+00:25:31.570 --> 00:25:35.110
+listening to take a look@jflowers.com.
+There's always going to be
+
+463
+00:25:35.110 --> 00:25:38.320
+a number of links up
+on the show site. And
+
+464
+00:25:38.620 --> 00:25:40.150
+I think in the next
+week or two, we'll probably
+
+465
+00:25:40.150 --> 00:25:42.010
+do a DNR TV. So
+you can see some of
+
+466
+00:25:42.010 --> 00:25:45.070
+this the way it's meant
+to be seen visually and
+
+467
+00:25:45.070 --> 00:25:48.040
+not on a podcast. And
+this has been another episode
+
+468
+00:25:48.040 --> 00:25:49.660
+of Hansel minutes. Thanks a
+lot. And I hope we
+
+469
+00:25:49.660 --> 00:25:50.500
+didn't waste your time.
+

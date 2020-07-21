@@ -1,0 +1,2362 @@
+WEBVTT FILE
+
+1
+00:00:00.210 --> 00:00:03.930
+Today's podcast is sponsored by
+Datadog a monitoring platform for
+
+2
+00:00:03.930 --> 00:00:09.810
+cloud scale infrastructure and applications.
+Datadog provides dashboarding, alerting application
+
+3
+00:00:09.810 --> 00:00:14.250
+performance monitoring, and log management
+in one tightly integrated platform.
+
+4
+00:00:14.250 --> 00:00:17.520
+So you can get end
+to end visibility quickly, and
+
+5
+00:00:17.520 --> 00:00:21.930
+it integrates with more than
+350 technologies, including AWS, Postgres,
+
+6
+00:00:21.930 --> 00:00:26.610
+SQL, Kubernetes, and Docker. You
+can visualize key metrics, set
+
+7
+00:00:26.610 --> 00:00:29.670
+alerts to identify anomalies and
+collaborate with your team to
+
+8
+00:00:29.670 --> 00:00:33.630
+troubleshoot and fix issues fast.
+Try it yourself by starting
+
+9
+00:00:33.630 --> 00:00:38.040
+a free 14 day trial
+today, listeners of this podcast
+
+10
+00:00:38.040 --> 00:00:44.790
+will also receive a free
+Datadog t-shirt visit bitly.com/data dog
+
+11
+00:00:44.820 --> 00:01:04.050
+shirt. That's bitly.com/datadog shirt to
+get started. Hi, this is
+
+12
+00:01:04.050 --> 00:01:07.320
+Scott Hanselman. This is Hansel
+minutes today. I'm talking with
+
+13
+00:01:07.320 --> 00:01:09.810
+dr. Selema on their sheet
+for Microsoft research. How are
+
+14
+00:01:09.810 --> 00:01:13.290
+you? How are you? I
+am pretty excited to talk
+
+15
+00:01:13.290 --> 00:01:16.920
+to you because I am
+actually got some guidelines for
+
+16
+00:01:16.920 --> 00:01:20.370
+human AI interactions open in
+my browser here. And I've
+
+17
+00:01:20.370 --> 00:01:23.400
+been reading this paper that
+you and your team worked
+
+18
+00:01:23.400 --> 00:01:25.770
+on, and there was a
+medium post. And I guess
+
+19
+00:01:25.770 --> 00:01:29.630
+this was presented at a,
+at a conference recently. Yes.
+
+20
+00:01:29.930 --> 00:01:34.550
+At the Chi conference, which
+is our conference on human
+
+21
+00:01:34.550 --> 00:01:38.000
+computer interaction was recently presented
+there a couple of weeks
+
+22
+00:01:38.000 --> 00:01:43.220
+ago in Glasgow Is C
+H I yes. Computer human
+
+23
+00:01:43.220 --> 00:01:48.050
+interaction. It's computer. Jeez. It's
+our human computer interaction conference.
+
+24
+00:01:49.040 --> 00:01:53.030
+I think that the original
+acronym is computing factors for
+
+25
+00:01:53.030 --> 00:01:56.930
+human interaction. Hmm. That doesn't
+seem like it's very human
+
+26
+00:01:56.930 --> 00:02:02.180
+friendly as an applicant. No,
+no. I feel like you
+
+27
+00:02:02.180 --> 00:02:06.950
+got me already. Human factors
+and computing systems somehow came,
+
+28
+00:02:07.010 --> 00:02:10.070
+turned into Chi. Yeah. I
+think it's more important that
+
+29
+00:02:10.070 --> 00:02:12.710
+you be an expert on
+machine learning and not obscure
+
+30
+00:02:12.710 --> 00:02:18.110
+acronyms of computer conferences. It's
+totally cool. But this paper
+
+31
+00:02:18.110 --> 00:02:20.180
+here, I know we'll, we'll
+have links up in the
+
+32
+00:02:20.180 --> 00:02:22.610
+show notes to both the
+blog and the PDF and
+
+33
+00:02:22.610 --> 00:02:26.810
+the paper it's in multiple
+different formats. It's basically, I
+
+34
+00:02:26.810 --> 00:02:30.620
+wouldn't say commandments it's guidelines.
+It's it's it's 18 general
+
+35
+00:02:30.620 --> 00:02:33.620
+rule. I don't know why
+it's 18 about if you're
+
+36
+00:02:33.620 --> 00:02:36.260
+developing an interaction where a
+human and AI are gonna
+
+37
+00:02:36.260 --> 00:02:39.440
+work together on something, what
+are the guidelines? Why did
+
+38
+00:02:39.440 --> 00:02:44.430
+we need guidelines? Oh, so
+many reasons we found we,
+
+39
+00:02:44.510 --> 00:02:46.640
+when we were working with
+our product teams or product
+
+40
+00:02:46.640 --> 00:02:50.360
+teams were struggling to design
+for AI. And that's partly
+
+41
+00:02:50.360 --> 00:02:55.610
+because AI systems are different
+than traditional computing systems. They're
+
+42
+00:02:55.610 --> 00:02:59.500
+probably cystic, they make errors.
+And so a of our
+
+43
+00:02:59.500 --> 00:03:04.690
+sort of established design principles
+don't necessarily apply. And at
+
+44
+00:03:04.690 --> 00:03:07.240
+the same time, we had
+a lot of knowledge about
+
+45
+00:03:07.240 --> 00:03:10.150
+how to design for AI.
+But a lot of the
+
+46
+00:03:10.150 --> 00:03:13.090
+guidance that we knew about
+was presented at all different
+
+47
+00:03:13.090 --> 00:03:16.210
+levels, very high level, like
+established trust, but you know,
+
+48
+00:03:16.210 --> 00:03:18.820
+how do you actually do
+that to really low level?
+
+49
+00:03:18.820 --> 00:03:21.820
+Like here's how you design
+for this specific scenario, but
+
+50
+00:03:21.820 --> 00:03:24.580
+we needed something sort of
+in the middle that could
+
+51
+00:03:24.580 --> 00:03:30.580
+help our design practitioners create
+new interfaces and you interaction
+
+52
+00:03:30.580 --> 00:03:35.670
+techniques. When you say that
+our existing guidelines don't apply,
+
+53
+00:03:35.700 --> 00:03:38.160
+is it because they are
+incorrect guidelines or because they
+
+54
+00:03:38.160 --> 00:03:40.230
+simply don't exist because this
+is a new world that
+
+55
+00:03:40.230 --> 00:03:44.820
+we're entering, They exist and
+they're not incorrect. In fact,
+
+56
+00:03:44.820 --> 00:03:48.450
+we think of the human
+AI interaction guidelines as complimentary
+
+57
+00:03:48.450 --> 00:03:54.870
+to traditional guidelines. It's just
+that there are some characteristics
+
+58
+00:03:54.870 --> 00:04:00.330
+of AI systems that make
+it challenging to adhere to
+
+59
+00:04:00.330 --> 00:04:06.540
+traditional guidelines. So for example,
+a traditional user experience guideline
+
+60
+00:04:06.540 --> 00:04:12.330
+is to make our interfaces
+consistent and predictable, but AI
+
+61
+00:04:12.330 --> 00:04:17.610
+systems are probabilistic. They operate
+under uncertainty. And so that
+
+62
+00:04:17.610 --> 00:04:22.740
+means that they might behave
+differently in subtly different contexts,
+
+63
+00:04:23.100 --> 00:04:28.230
+or they might behave differently
+after a model updates. And
+
+64
+00:04:28.230 --> 00:04:32.130
+so that unpredictability can make
+it hard for end users
+
+65
+00:04:32.130 --> 00:04:37.410
+to understand how to, how
+to interact and use an
+
+66
+00:04:37.410 --> 00:04:40.980
+AI system effectively. It's a
+really neat sort of new
+
+67
+00:04:40.980 --> 00:04:44.100
+guidelines to, to deal with
+those sort of properties of
+
+68
+00:04:44.100 --> 00:04:49.080
+AI systems that don't exist
+with traditional computer. I feel
+
+69
+00:04:49.080 --> 00:04:52.890
+like there's, there are people
+who are somewhat technical like
+
+70
+00:04:52.890 --> 00:04:55.830
+myself, and then somewhat non
+technical. Like my, like my
+
+71
+00:04:55.830 --> 00:05:00.540
+spouse, the more nontechnical people
+are, they seem to ascribe
+
+72
+00:05:00.660 --> 00:05:05.040
+intent to an AI. If
+it does something unexpected, if
+
+73
+00:05:05.040 --> 00:05:07.560
+it makes a mistake, or
+if it a recently we
+
+74
+00:05:07.560 --> 00:05:09.780
+were doing a thing with
+a, with a competitive photos
+
+75
+00:05:10.050 --> 00:05:14.490
+album and it identified two
+people as being the same
+
+76
+00:05:14.490 --> 00:05:16.800
+person. Right. And they're not
+the same person. They're not
+
+77
+00:05:16.800 --> 00:05:18.600
+even the same gender. They're
+I even not close to
+
+78
+00:05:18.600 --> 00:05:22.360
+the same person. And someone
+said, well, that's, that's, that's
+
+79
+00:05:22.380 --> 00:05:25.210
+that AI is, is racist.
+Right. I was like, Whoa,
+
+80
+00:05:25.290 --> 00:05:28.320
+like, I mean, yeah, there's
+all like, that's such a,
+
+81
+00:05:28.750 --> 00:05:32.610
+that's such a conversation that
+right there, like you, you
+
+82
+00:05:32.610 --> 00:05:36.900
+just ascribed intent to this
+thing and there's 50 reasons
+
+83
+00:05:36.900 --> 00:05:40.050
+why it could, it still
+might be racist, but why
+
+84
+00:05:40.050 --> 00:05:42.300
+that thing could have happened,
+but then you don't want
+
+85
+00:05:42.300 --> 00:05:46.260
+to, as a technical person,
+well, actually the person that
+
+86
+00:05:46.260 --> 00:05:48.450
+you're hanging out with at
+Thanksgiving dinner, who now says
+
+87
+00:05:48.450 --> 00:05:50.250
+that this AI has racist
+and they don't want to
+
+88
+00:05:50.250 --> 00:05:53.550
+use the photo album anymore.
+Yes. You know, I definitely
+
+89
+00:05:53.910 --> 00:05:59.780
+don't think companies are trying
+to create racist, AIS. I
+
+90
+00:05:59.780 --> 00:06:03.560
+think that's sort of a
+product of how AIS are
+
+91
+00:06:03.770 --> 00:06:08.540
+built. You know, they're based
+on data that's collected and
+
+92
+00:06:09.200 --> 00:06:13.010
+it's hard to get really
+diverse data sets. Just, just
+
+93
+00:06:13.010 --> 00:06:19.490
+collecting data is, is, is
+very difficult. And so part
+
+94
+00:06:19.490 --> 00:06:22.820
+of the, what happens is
+that when, when you don't
+
+95
+00:06:22.820 --> 00:06:25.910
+have really diverse, broad data
+sets, you can get these
+
+96
+00:06:25.910 --> 00:06:33.410
+properties of AI sort of
+behaving inappropriately for certain scenarios.
+
+97
+00:06:33.830 --> 00:06:36.320
+And that's, that's where the
+problems occur. And I think
+
+98
+00:06:36.320 --> 00:06:40.490
+the, where the guidelines can
+help is in recognizing that
+
+99
+00:06:40.550 --> 00:06:44.480
+AIS will make mistakes. You
+know, it's like, I think
+
+100
+00:06:44.480 --> 00:06:47.540
+it's very rare that an
+AI will be perfect and
+
+101
+00:06:47.540 --> 00:06:50.840
+we need to sort of
+stop, stop thinking about them
+
+102
+00:06:50.840 --> 00:06:54.980
+as trying to be perfect
+and recognize that they will
+
+103
+00:06:54.980 --> 00:07:00.530
+make mistakes and then give
+users tools to mitigate those
+
+104
+00:07:00.530 --> 00:07:04.180
+mistakes when they happen. Exactly.
+And that brings us to
+
+105
+00:07:04.180 --> 00:07:07.000
+the first two rules of
+your guidelines for human AI
+
+106
+00:07:07.000 --> 00:07:10.420
+interaction, make it clear what
+the system can do and
+
+107
+00:07:10.420 --> 00:07:12.010
+make it clear how well
+it can do what it
+
+108
+00:07:12.010 --> 00:07:15.220
+does. And honestly, we're only
+two rules in, and I
+
+109
+00:07:15.220 --> 00:07:17.380
+don't think I've ever seen
+anything ever do that in
+
+110
+00:07:17.380 --> 00:07:19.600
+my interaction with AI, whether
+it be the photos app,
+
+111
+00:07:20.080 --> 00:07:22.630
+it's never like, hi, welcome
+to the photos app. We're
+
+112
+00:07:22.630 --> 00:07:25.000
+probably going to think that
+your aunt is your dog
+
+113
+00:07:25.030 --> 00:07:28.120
+and that your dog is
+your neighbor. And we're sorry.
+
+114
+00:07:28.150 --> 00:07:30.610
+And click here. When that
+happens. That's never happened to
+
+115
+00:07:30.610 --> 00:07:35.860
+me. Yes. I think there,
+there, there are some products
+
+116
+00:07:35.860 --> 00:07:39.520
+that do this, but we're
+still learning like there's many
+
+117
+00:07:39.520 --> 00:07:42.580
+ways you can implement any
+of these guidelines. So some
+
+118
+00:07:42.580 --> 00:07:47.080
+ways that I've seen this
+being done are like, so
+
+119
+00:07:47.080 --> 00:07:49.900
+for the first guideline, making
+clear what the system can
+
+120
+00:07:49.900 --> 00:07:54.520
+do, some of our applications
+will give examples of what
+
+121
+00:07:54.520 --> 00:07:58.270
+it can handle. So Cortana,
+for example, can suggest, here
+
+122
+00:07:58.270 --> 00:08:01.420
+are some of the commands
+that I understand, right. That
+
+123
+00:08:01.420 --> 00:08:04.360
+can give the user some
+understanding of what the AI
+
+124
+00:08:04.360 --> 00:08:08.290
+can do well, but there
+are other ways that we
+
+125
+00:08:08.290 --> 00:08:13.720
+might design implement that guideline.
+And I think that's where
+
+126
+00:08:13.870 --> 00:08:16.270
+new re we need new
+research or like, what are,
+
+127
+00:08:16.270 --> 00:08:19.060
+what are the multiple different
+ways that we can possibly
+
+128
+00:08:19.060 --> 00:08:22.870
+implement that in any other
+guidelines? You say new research,
+
+129
+00:08:23.410 --> 00:08:26.590
+forgive me, because I'm not
+a researcher, I'm a, I'm
+
+130
+00:08:26.590 --> 00:08:30.430
+a more of a dev,
+what is the difference between
+
+131
+00:08:30.520 --> 00:08:34.630
+a researcher like, and someone
+just coming up with these
+
+132
+00:08:34.630 --> 00:08:37.210
+guidelines on their own, like,
+why are your 18 guidelines
+
+133
+00:08:37.210 --> 00:08:40.120
+better than one that I
+might just make up? So
+
+134
+00:08:40.120 --> 00:08:45.310
+ours are really a synthesis
+of AI design guidance that
+
+135
+00:08:45.310 --> 00:08:48.760
+was coming out of the
+community for the past 20
+
+136
+00:08:48.760 --> 00:08:52.510
+years. So, you know, I
+wouldn't even say, it's not
+
+137
+00:08:52.510 --> 00:08:57.990
+like we made these up.
+We wanted to consolidate all
+
+138
+00:08:57.990 --> 00:09:01.110
+sort of the guidance that
+was coming out of both
+
+139
+00:09:01.110 --> 00:09:04.650
+like the practitioner community, as
+well as the research community.
+
+140
+00:09:05.350 --> 00:09:07.110
+And part of the issue
+was that a lot of
+
+141
+00:09:07.110 --> 00:09:12.540
+guidance was, was being produced,
+but it was very scattered
+
+142
+00:09:12.900 --> 00:09:16.440
+and it was hard to
+find guidance was presented at
+
+143
+00:09:16.440 --> 00:09:20.940
+different altitudes. And so even
+though we sort of have
+
+144
+00:09:20.940 --> 00:09:23.700
+a lot of knowledge about
+how to design human AI
+
+145
+00:09:23.760 --> 00:09:27.450
+interaction, we were seeing a
+lot of like sort of
+
+146
+00:09:27.450 --> 00:09:31.110
+redundancy and people trying to
+figure out the same things
+
+147
+00:09:31.620 --> 00:09:35.910
+that we, we sort of
+discovered sometimes many years ago.
+
+148
+00:09:36.240 --> 00:09:38.700
+And so really this is
+like a consolidation of all
+
+149
+00:09:38.700 --> 00:09:42.420
+of that. And in the
+process of consolidating, we also
+
+150
+00:09:43.020 --> 00:09:48.240
+iterated on the guidelines multiple
+times and validated them. So
+
+151
+00:09:48.240 --> 00:09:53.010
+we could ensure that they
+were clear and that they
+
+152
+00:09:53.010 --> 00:09:57.020
+were applicable to a broad
+range of AI product. Hmm.
+
+153
+00:09:57.050 --> 00:09:59.510
+That's a good point. Yeah.
+Yeah. I feel like that's
+
+154
+00:09:59.510 --> 00:10:01.460
+sort of the difference. I
+think a lot of the
+
+155
+00:10:01.460 --> 00:10:05.810
+guidance that's coming out are
+sort of hypotheses that people
+
+156
+00:10:05.810 --> 00:10:08.000
+have that maybe were only
+tested in one or two
+
+157
+00:10:08.000 --> 00:10:12.020
+scenarios. These we know are
+relevant to a wide range
+
+158
+00:10:12.020 --> 00:10:15.170
+of scenarios. So in that
+sense they can, they're trustworthy.
+
+159
+00:10:16.790 --> 00:10:19.340
+I noticed that there's nothing,
+like I thought when we
+
+160
+00:10:19.340 --> 00:10:20.600
+were, when I was reading
+this, it was going to
+
+161
+00:10:20.600 --> 00:10:22.850
+be application specific. And then
+I got halfway through and
+
+162
+00:10:22.850 --> 00:10:25.760
+then I thought it'd be
+Alexa or Cortana specific or
+
+163
+00:10:25.760 --> 00:10:29.180
+a voice assistant, but it's
+not it's it's anything, it
+
+164
+00:10:29.180 --> 00:10:31.340
+could be AI in a
+GPS app. It could be
+
+165
+00:10:31.340 --> 00:10:33.920
+AI where something interrupts you.
+It could be just a
+
+166
+00:10:33.920 --> 00:10:37.070
+dialogue box that pops up
+is this, these are guidelines
+
+167
+00:10:37.070 --> 00:10:40.010
+that are really about the
+interaction, but not specific to
+
+168
+00:10:40.010 --> 00:10:44.090
+the interaction model. Yes. Yeah.
+And we were intentional about
+
+169
+00:10:44.090 --> 00:10:46.790
+that. We wanted them to
+be broadly applicable to a
+
+170
+00:10:46.790 --> 00:10:50.300
+range of scenarios. And so
+in our process of consolidating,
+
+171
+00:10:50.540 --> 00:10:55.670
+we, we actually collected over
+150 design recommendations about AI.
+
+172
+00:10:55.940 --> 00:10:59.180
+So there is a lot
+of guidance around this, but
+
+173
+00:10:59.900 --> 00:11:05.420
+we filtered out guidance that
+was very specific to particular
+
+174
+00:11:05.420 --> 00:11:08.360
+applications. Cause we, we wanted
+to, we wanted a set
+
+175
+00:11:08.360 --> 00:11:12.140
+that could apply to a
+range of them. So that's,
+
+176
+00:11:12.140 --> 00:11:15.560
+that's how we came up
+with these. But we imagine
+
+177
+00:11:15.560 --> 00:11:20.510
+that there could be application,
+additional application, specific guidance that
+
+178
+00:11:20.510 --> 00:11:24.710
+also might help in certain
+scenarios for bots, for example,
+
+179
+00:11:24.890 --> 00:11:28.100
+you might need additional guidance
+to support that specific scenario.
+
+180
+00:11:28.790 --> 00:11:31.550
+I see. So someone could
+theoretically take these and go
+
+181
+00:11:31.550 --> 00:11:36.320
+off and make the best
+guidance for music recommenders or
+
+182
+00:11:36.320 --> 00:11:41.750
+for e-commerce systems that are
+a, a more specific version
+
+183
+00:11:41.750 --> 00:11:46.520
+of this with examples. Yeah.
+I believe you could. I
+
+184
+00:11:46.520 --> 00:11:52.190
+would just caution against try,
+starting from scratch. Like I
+
+185
+00:11:52.190 --> 00:11:54.100
+would think about like, what
+do you need to do
+
+186
+00:11:54.100 --> 00:11:57.610
+for a music recommender and
+go back to these and
+
+187
+00:11:57.610 --> 00:12:02.080
+other guidance available and see
+if they're covered in this.
+
+188
+00:12:02.200 --> 00:12:04.000
+Because I think part of
+what we want to do
+
+189
+00:12:04.000 --> 00:12:07.330
+is we want to accelerate
+our progress in how to
+
+190
+00:12:07.330 --> 00:12:11.560
+design human AI interaction. And
+I think creating clarity about
+
+191
+00:12:11.560 --> 00:12:16.660
+what do we know already
+can help and that also
+
+192
+00:12:16.660 --> 00:12:18.880
+can help us know what
+we don't know, so that
+
+193
+00:12:18.880 --> 00:12:24.310
+we can create guidance in,
+in that specific, you know,
+
+194
+00:12:24.310 --> 00:12:27.990
+gap in our knowledge. And
+you went and you validated
+
+195
+00:12:27.990 --> 00:12:30.630
+these guidelines. So when you
+say research, you're talking about
+
+196
+00:12:30.720 --> 00:12:35.430
+multiple rounds of validation with
+both human computer interaction, experts,
+
+197
+00:12:35.430 --> 00:12:39.270
+UX people, basically until those
+experts agreed that these are
+
+198
+00:12:39.300 --> 00:12:43.680
+clear and specific and of
+high quality. Exactly. Yeah. We
+
+199
+00:12:43.680 --> 00:12:48.660
+had a 49 user experience
+practitioners from across Microsoft. We
+
+200
+00:12:48.660 --> 00:12:51.150
+had them, you know, we
+train them about the guidelines.
+
+201
+00:12:51.150 --> 00:12:56.190
+We had them tests about
+20 different products and, you
+
+202
+00:12:56.190 --> 00:12:58.350
+know, they, they gave us
+feedback, they collect it, they
+
+203
+00:12:58.350 --> 00:13:01.500
+gave us examples. So we
+actually collected like over 700
+
+204
+00:13:01.500 --> 00:13:05.850
+examples of how to apply
+the diff the guidelines and
+
+205
+00:13:05.880 --> 00:13:10.030
+those itself actually are, are
+really valuable just cause they,
+
+206
+00:13:10.030 --> 00:13:12.930
+they make it concrete. You
+know? Like how, how do
+
+207
+00:13:12.930 --> 00:13:15.030
+you make clear what the
+system can do? You know,
+
+208
+00:13:15.030 --> 00:13:19.860
+how do, how do you
+support efficient invocation? We found
+
+209
+00:13:19.860 --> 00:13:23.850
+that the, the examples themselves
+can, can really help practitioners
+
+210
+00:13:23.910 --> 00:13:28.470
+understand how to implement these.
+Yeah. Even the papers only
+
+211
+00:13:28.470 --> 00:13:31.440
+the one I'm reading is
+only a 20 pages long
+
+212
+00:13:31.440 --> 00:13:33.480
+and it's definitely worth reading
+and people should check it
+
+213
+00:13:33.480 --> 00:13:35.550
+out. I'll make sure to
+have a link in the
+
+214
+00:13:35.550 --> 00:13:37.830
+show notes. One of the
+things that I appreciated the
+
+215
+00:13:37.830 --> 00:13:39.600
+most about this, and I
+don't spend a whole lot
+
+216
+00:13:39.600 --> 00:13:43.230
+of time reading papers of
+this kind of, you know,
+
+217
+00:13:43.260 --> 00:13:46.050
+academic or erudite kind of
+style. But I found it
+
+218
+00:13:46.050 --> 00:13:49.680
+really useful because it was
+organized in, it was organized
+
+219
+00:13:49.740 --> 00:13:53.340
+temporarily. Like they're not just
+in order, like you just
+
+220
+00:13:53.340 --> 00:13:57.120
+didn't number them. You've got
+initially when you start interacting
+
+221
+00:13:57.120 --> 00:14:00.480
+with an AI, then during
+the interaction, when the interaction
+
+222
+00:14:00.750 --> 00:14:04.590
+goes wrong. And then as
+you build a relationship for
+
+223
+00:14:04.590 --> 00:14:07.230
+lack of a better word
+with the AI in ordering
+
+224
+00:14:07.230 --> 00:14:09.660
+them in that way, it
+felt, it felt really natural
+
+225
+00:14:09.810 --> 00:14:12.180
+for, for me as I
+would go out and kind
+
+226
+00:14:12.180 --> 00:14:15.630
+of think about how my
+applications behave. Great. Yeah. We,
+
+227
+00:14:15.640 --> 00:14:18.000
+I mean, we had, we
+ended up with 18 of
+
+228
+00:14:18.000 --> 00:14:19.440
+them at the end and
+you know, it was a
+
+229
+00:14:19.440 --> 00:14:22.380
+lot to digest. And so
+I would call these rough
+
+230
+00:14:22.410 --> 00:14:27.750
+rough groupings to sort of
+make it more digestible. But
+
+231
+00:14:27.750 --> 00:14:30.900
+in some sense, you know,
+the, when wrong category that
+
+232
+00:14:30.900 --> 00:14:34.360
+happens during interaction as well,
+but at least this way,
+
+233
+00:14:34.360 --> 00:14:37.590
+it's, it can make them
+somewhat memorable and help our
+
+234
+00:14:37.590 --> 00:14:40.920
+practitioners understand that, Hey, there
+are these different stages of
+
+235
+00:14:40.920 --> 00:14:44.430
+people interacting with our AI
+systems and we have to
+
+236
+00:14:44.430 --> 00:14:48.990
+sort of design for all
+of them. Hey, friends, as
+
+237
+00:14:48.990 --> 00:14:53.120
+a software engineer, chances are
+you've paths with Mongo DB.
+
+238
+00:14:53.120 --> 00:14:55.580
+At some point, whether you're
+building an app for millions
+
+239
+00:14:55.580 --> 00:14:58.730
+of users, or just figuring
+out your side hustle as
+
+240
+00:14:58.730 --> 00:15:02.810
+the most popular non-relational database,
+Mongo DB is intuitive and
+
+241
+00:15:02.810 --> 00:15:06.650
+incredibly easy for development teams
+to use. Now with Mongo
+
+242
+00:15:06.650 --> 00:15:10.370
+DB Atlas, you can take
+advantage of Mongo DBS, flexible
+
+243
+00:15:10.370 --> 00:15:14.750
+document data model as a
+fully automated cloud service. Mongo
+
+244
+00:15:14.750 --> 00:15:18.470
+DB Atlas handles all the
+costly database operations and admin
+
+245
+00:15:18.470 --> 00:15:21.710
+tasks that you'd rather not
+spend time on like security,
+
+246
+00:15:21.740 --> 00:15:26.900
+high availability, data, recovery monitoring,
+and elastic scaling. Try Mongo
+
+247
+00:15:26.900 --> 00:15:34.820
+DB Atlas for free today.
+Visit Mongo db.com/cloud that's Mongo
+
+248
+00:15:34.820 --> 00:15:39.920
+db.com/cloud to learn more. One
+of the things that I
+
+249
+00:15:39.920 --> 00:15:44.000
+thought was interesting was match
+relevant, social norms. That's number,
+
+250
+00:15:44.150 --> 00:15:48.680
+number five. Does, does Cortana
+or Siri or Alexa behave
+
+251
+00:15:48.710 --> 00:15:51.080
+very different. I've never heard
+it in another language or
+
+252
+00:15:51.080 --> 00:15:54.440
+in another country. Are there
+social norms about how I'm
+
+253
+00:15:54.440 --> 00:15:57.320
+supposed to interact with my,
+I don't know if I
+
+254
+00:15:57.320 --> 00:16:00.380
+think of Alexa as my
+Butler or my secretary or
+
+255
+00:16:00.380 --> 00:16:03.230
+my, my man Friday. Like,
+I'm not sure who this
+
+256
+00:16:03.230 --> 00:16:05.600
+person is or what my
+social norms is. And I
+
+257
+00:16:05.600 --> 00:16:08.390
+wonder if, if Alexa in
+Japan is very different than
+
+258
+00:16:08.390 --> 00:16:13.900
+Cortana in China. That is
+a great question. I I'm
+
+259
+00:16:13.900 --> 00:16:17.650
+not, and I don't know
+the answer. I think there
+
+260
+00:16:17.650 --> 00:16:21.220
+are cultural differences that need
+to be taken into consideration.
+
+261
+00:16:21.220 --> 00:16:24.670
+And in fact, this was
+one of the hardest guidelines
+
+262
+00:16:24.670 --> 00:16:30.010
+for our practitioners to test.
+It's sort of, it depends
+
+263
+00:16:30.010 --> 00:16:35.740
+on who your target users
+are and, and, and whether
+
+264
+00:16:35.740 --> 00:16:39.190
+you're trying to appeal to
+a specific user or a
+
+265
+00:16:39.190 --> 00:16:42.070
+broad range of users, but
+even, you know, just like
+
+266
+00:16:42.070 --> 00:16:46.420
+the think about like the
+voice, you know, are you
+
+267
+00:16:46.420 --> 00:16:49.510
+using a male or female
+voice, you know, is that
+
+268
+00:16:49.580 --> 00:16:54.760
+appropriate for the cultural context?
+And, you know, having giving
+
+269
+00:16:54.760 --> 00:17:00.190
+people choices about like changing
+the voice, what is another
+
+270
+00:17:00.190 --> 00:17:02.230
+thing that we've seen as
+an example of how to
+
+271
+00:17:02.230 --> 00:17:05.620
+match relevant social norms? It's
+not just like making Alexa
+
+272
+00:17:05.620 --> 00:17:11.410
+or Cortana talk in, in
+one voice, allowing people to,
+
+273
+00:17:12.580 --> 00:17:16.900
+to change that. So they,
+it can, it can better
+
+274
+00:17:16.900 --> 00:17:21.010
+match their, their cultural norms.
+And it also affects our
+
+275
+00:17:21.010 --> 00:17:22.990
+kind of our cultural norms.
+My wife was telling me
+
+276
+00:17:22.990 --> 00:17:24.730
+just a couple of days
+ago that she didn't understand
+
+277
+00:17:24.730 --> 00:17:27.250
+why Alexa was a woman.
+And if that was kind
+
+278
+00:17:27.250 --> 00:17:31.450
+of getting to the women
+as, as secretary or assistant
+
+279
+00:17:31.450 --> 00:17:34.330
+thing, and it was like,
+it's 2019 here, we have
+
+280
+00:17:34.330 --> 00:17:36.670
+these amazing AI's that are
+ever present and we can
+
+281
+00:17:36.670 --> 00:17:38.980
+always ask them questions, but
+it happens to be a
+
+282
+00:17:38.980 --> 00:17:41.200
+woman's voice. Could it be
+gender Newt and a gender,
+
+283
+00:17:41.280 --> 00:17:44.500
+non gender specific voice? Is
+there a such thing, Right?
+
+284
+00:17:44.740 --> 00:17:47.710
+Yes. And I think those
+are questions. We, we want
+
+285
+00:17:47.710 --> 00:17:51.720
+answered some of what we,
+when we, when we studied
+
+286
+00:17:51.720 --> 00:17:55.470
+these, we had our participants
+give us examples of what,
+
+287
+00:17:55.470 --> 00:18:00.030
+how they were being applied
+or violated, but we still
+
+288
+00:18:00.030 --> 00:18:03.330
+don't really know what is
+the best way to achieve
+
+289
+00:18:03.330 --> 00:18:05.730
+any of the guidelines. Like
+I said, there are multiple
+
+290
+00:18:05.730 --> 00:18:08.070
+ways to achieve it. And
+I think that sort of
+
+291
+00:18:08.730 --> 00:18:11.100
+goes back to, you know,
+what is a research question
+
+292
+00:18:11.100 --> 00:18:14.610
+that, that we can, you
+know, try to address? Like
+
+293
+00:18:14.610 --> 00:18:18.240
+what, what, what our research
+questions that these guidelines are
+
+294
+00:18:18.240 --> 00:18:20.790
+reveal. And one of them
+is that, you know, like
+
+295
+00:18:20.790 --> 00:18:25.080
+what are good ways of
+implementing how to match relevant
+
+296
+00:18:25.080 --> 00:18:29.940
+social norms, such that, you
+know, people are such, that
+
+297
+00:18:29.940 --> 00:18:32.880
+people are, you know, happy
+and find that their AI's
+
+298
+00:18:32.880 --> 00:18:37.250
+are intuitive and, and, you
+know, responsible and ethical. Yeah.
+
+299
+00:18:37.250 --> 00:18:38.990
+And how, how would you
+test that? And if you
+
+300
+00:18:38.990 --> 00:18:41.240
+tested it now, or then
+in five years, or in
+
+301
+00:18:41.240 --> 00:18:44.420
+10 years, would the test
+change? I mean, these AI's
+
+302
+00:18:44.420 --> 00:18:47.870
+and our interactions with them,
+how I would interact with
+
+303
+00:18:47.870 --> 00:18:51.170
+an Alexa today would be
+different than how one of
+
+304
+00:18:51.170 --> 00:18:54.050
+the characters on mad men
+would interact with their theoretical
+
+305
+00:18:54.050 --> 00:18:57.350
+AI in the past. Right?
+And I think one of
+
+306
+00:18:57.350 --> 00:19:00.020
+the ways that we can
+actually try to test for
+
+307
+00:19:00.020 --> 00:19:04.430
+these, particularly that guideline and
+mitigating social biases is to
+
+308
+00:19:04.430 --> 00:19:09.560
+get a diverse set of
+testers. So one example that
+
+309
+00:19:09.560 --> 00:19:13.310
+comes to mind that came
+out of our study was
+
+310
+00:19:13.700 --> 00:19:17.120
+we had one of our
+participants. We had a couple
+
+311
+00:19:17.120 --> 00:19:20.780
+of tough participants testing navigation
+systems, and one of the
+
+312
+00:19:20.780 --> 00:19:26.600
+participants said, you know, Hey,
+this navigation system, it can't
+
+313
+00:19:26.600 --> 00:19:29.660
+be biased. There's nothing it
+can do. That's that's biasing.
+
+314
+00:19:30.020 --> 00:19:36.770
+Whereas another participant said, Hey,
+this navigation system assumes that
+
+315
+00:19:36.800 --> 00:19:41.030
+I'm a healthy individual. When
+it's giving me walking times
+
+316
+00:19:41.510 --> 00:19:44.270
+to get to where I'm
+going. And I thought that
+
+317
+00:19:44.270 --> 00:19:49.310
+was really interesting because, you
+know, it demonstrates that having
+
+318
+00:19:49.310 --> 00:19:54.860
+a diverse set of people
+helps to reveal when there
+
+319
+00:19:54.860 --> 00:19:57.740
+are biases in a system
+or when an AI is
+
+320
+00:19:57.770 --> 00:20:01.760
+violating social norms. It's hard
+for people to sort of
+
+321
+00:20:02.840 --> 00:20:11.030
+assess an AI system for,
+for, you know, cultures and
+
+322
+00:20:11.030 --> 00:20:15.080
+social contexts that they're not
+part of. And so diverse
+
+323
+00:20:15.080 --> 00:20:18.980
+sets of testers can help
+there. That is a really
+
+324
+00:20:18.980 --> 00:20:22.700
+good one. I like to
+think of myself as, at,
+
+325
+00:20:22.700 --> 00:20:26.030
+at the very least waking
+up and I would not
+
+326
+00:20:26.390 --> 00:20:28.730
+have even thought about that.
+And now I'm going to
+
+327
+00:20:28.730 --> 00:20:31.190
+think about it every time
+I go to a GPS
+
+328
+00:20:31.190 --> 00:20:32.900
+and it says, yeah, you
+can walk that in, in
+
+329
+00:20:32.990 --> 00:20:36.020
+10 minutes, because if you're
+in a wheelchair, I don't
+
+330
+00:20:36.020 --> 00:20:39.290
+even know if there's stairs
+or if the GPS knows
+
+331
+00:20:39.290 --> 00:20:41.960
+that there's stairs. I was
+making my way through a,
+
+332
+00:20:41.960 --> 00:20:46.010
+a subway system in Europe
+recently. And I was working
+
+333
+00:20:46.010 --> 00:20:48.670
+at a pretty quick, I
+was walking pretty fast, but
+
+334
+00:20:48.670 --> 00:20:51.490
+even with my bags, I
+missed a couple of trains,
+
+335
+00:20:52.750 --> 00:20:54.820
+if you could, and you
+could solve that by going
+
+336
+00:20:54.820 --> 00:20:57.520
+and putting a waiting, like
+I walk half speed, or
+
+337
+00:20:57.520 --> 00:21:01.510
+I have a Walker or
+whatever, and you could improve
+
+338
+00:21:01.510 --> 00:21:04.390
+the experience for everyone. Not
+just people who are differently
+
+339
+00:21:04.390 --> 00:21:07.510
+abled. Exactly. One of the
+other ones that I really
+
+340
+00:21:07.510 --> 00:21:11.530
+liked was this, make it
+clear why the system did
+
+341
+00:21:11.530 --> 00:21:13.990
+what it did. I can't
+remember the time when my
+
+342
+00:21:13.990 --> 00:21:17.440
+GPS told me why it
+picked the fastest route. It
+
+343
+00:21:17.440 --> 00:21:20.850
+just told me go this
+way. Yeah. So that's, that's
+
+344
+00:21:20.850 --> 00:21:25.350
+an interesting one in our
+studies. That was actually one
+
+345
+00:21:25.350 --> 00:21:28.950
+of the guidelines that was
+probably violated the most in
+
+346
+00:21:28.950 --> 00:21:31.050
+the sense that, so when
+I say violation, I mean,
+
+347
+00:21:31.320 --> 00:21:36.390
+people are participants thought it
+should apply, but it wasn't
+
+348
+00:21:37.590 --> 00:21:40.320
+enabled in the systems that
+they were testing. And I
+
+349
+00:21:40.320 --> 00:21:42.540
+think part of the reason
+for that is that we
+
+350
+00:21:42.540 --> 00:21:45.810
+just don't know how to
+do this very well yet.
+
+351
+00:21:46.170 --> 00:21:50.670
+You know, AI systems are,
+are complex and they're hard
+
+352
+00:21:50.790 --> 00:21:55.170
+to, to describe. And that's
+why there's like a whole
+
+353
+00:21:55.200 --> 00:22:00.660
+communities now around interpretable AI
+and machine learning in order
+
+354
+00:22:00.660 --> 00:22:05.250
+to come up with ways
+of explaining these complex systems
+
+355
+00:22:05.250 --> 00:22:07.950
+to people. So there's a
+lot of research going on
+
+356
+00:22:07.950 --> 00:22:12.630
+to try to enable this
+guideline. Do we understand how
+
+357
+00:22:12.630 --> 00:22:14.280
+they do what they do?
+Like I hear about deep
+
+358
+00:22:14.280 --> 00:22:16.650
+learning and different kinds of
+machine learning algorithms. And sometimes
+
+359
+00:22:16.650 --> 00:22:18.330
+people say, well, I don't
+know, like we trained it.
+
+360
+00:22:18.360 --> 00:22:21.030
+And this is why, you
+know, it just, this is
+
+361
+00:22:21.030 --> 00:22:23.580
+what it does. How much
+insight do we have into
+
+362
+00:22:23.580 --> 00:22:25.710
+the leaps of logic that
+these systems make, where we
+
+363
+00:22:25.710 --> 00:22:28.050
+could even tell it, tell
+the user why in a,
+
+364
+00:22:28.410 --> 00:22:30.810
+in a way that would
+be understandable by the lay
+
+365
+00:22:30.810 --> 00:22:35.190
+person? I think it's, I
+think it's depends on the
+
+366
+00:22:35.190 --> 00:22:40.650
+model. Some models are more
+sort of interpretable than others.
+
+367
+00:22:41.010 --> 00:22:44.010
+You know, like decision trees,
+for example, might be more
+
+368
+00:22:44.010 --> 00:22:49.710
+interpretable than deep learning, deep
+learning models. So it depends
+
+369
+00:22:49.710 --> 00:22:53.160
+on the models you use.
+A lot of the AIS
+
+370
+00:22:53.160 --> 00:22:57.720
+we have now are using
+sort of more complex modeling
+
+371
+00:22:57.750 --> 00:23:02.760
+models and algorithms, and that's,
+what's making it difficult. Really
+
+372
+00:23:02.760 --> 00:23:05.790
+those models are, you can
+think of like an AI
+
+373
+00:23:05.790 --> 00:23:09.810
+system as our machine learning
+model as a combination of
+
+374
+00:23:09.840 --> 00:23:14.970
+data and an algorithm. And
+so what's resulting in that
+
+375
+00:23:14.970 --> 00:23:20.820
+model is the data that
+you've trained the algorithm to
+
+376
+00:23:20.850 --> 00:23:26.700
+recognize patterns within. So in
+that sense, it's often hard
+
+377
+00:23:26.700 --> 00:23:30.030
+to explain why a predict
+a system, a model is
+
+378
+00:23:30.030 --> 00:23:34.770
+making a prediction, you know,
+is it because the data
+
+379
+00:23:34.800 --> 00:23:39.450
+that was trained on was
+inadequate, maybe the features that
+
+380
+00:23:39.540 --> 00:23:43.590
+were representing the data's inadequate?
+Is it something about the
+
+381
+00:23:43.650 --> 00:23:49.010
+algorithm? You, it's hard to
+sort of pinpoint why I'm
+
+382
+00:23:49.010 --> 00:23:51.200
+an AI will make a
+decision that it did, and
+
+383
+00:23:51.200 --> 00:23:53.440
+that there's a lot of
+research now help try to
+
+384
+00:23:53.450 --> 00:23:56.870
+help people debug AI systems
+for that reason as well.
+
+385
+00:23:57.170 --> 00:23:59.450
+So I think it's just
+an open problem. I think
+
+386
+00:23:59.450 --> 00:24:01.730
+people are trying to get
+there, but we're just not
+
+387
+00:24:01.730 --> 00:24:05.440
+there yet. Yeah. And if
+you want to abide by
+
+388
+00:24:05.440 --> 00:24:07.990
+these guidelines and follow them,
+there's other ones like, you
+
+389
+00:24:07.990 --> 00:24:11.860
+know, farther into the, into
+the paper here, like convey
+
+390
+00:24:11.860 --> 00:24:15.580
+the consequences of user actions.
+You know, I may or
+
+391
+00:24:15.580 --> 00:24:17.500
+may not be able to
+really effectively do that if
+
+392
+00:24:17.500 --> 00:24:20.140
+I'm not a hundred percent
+sure how my system works,
+
+393
+00:24:20.290 --> 00:24:22.720
+because I don't know what
+the check box that you
+
+394
+00:24:22.720 --> 00:24:24.280
+just checked or the button
+you just pressed is going
+
+395
+00:24:24.280 --> 00:24:27.160
+to do in the future.
+Yes. So that one, that
+
+396
+00:24:27.160 --> 00:24:30.310
+one really bugs me as
+someone who's sort of familiar
+
+397
+00:24:30.310 --> 00:24:35.230
+with like AI systems. I,
+I don't really trust like
+
+398
+00:24:35.260 --> 00:24:37.690
+that. They will learn what
+I want. So I don't
+
+399
+00:24:37.690 --> 00:24:40.150
+provide a lot of ratings
+to on my, you know,
+
+400
+00:24:40.150 --> 00:24:43.540
+in Netflix or Pandora. I'm
+sorry. I sort of hesitant,
+
+401
+00:24:43.540 --> 00:24:46.540
+I'm hesitant to, you know,
+give thumbs up or thumbs
+
+402
+00:24:46.540 --> 00:24:49.780
+down in those scenarios because
+I'm not sure what it's
+
+403
+00:24:49.780 --> 00:24:53.410
+gonna learn from me. And
+so that's part of partly
+
+404
+00:24:53.410 --> 00:24:56.620
+because yeah, I'm not sure
+what the model is. What
+
+405
+00:24:56.620 --> 00:24:59.770
+features are, is it monitoring?
+What signals is it monitoring?
+
+406
+00:24:59.770 --> 00:25:01.960
+Like what is going to
+happen to the model? What
+
+407
+00:25:01.960 --> 00:25:05.560
+are what's, what are my
+new recommendations going to be
+
+408
+00:25:05.560 --> 00:25:07.930
+if I like this, versus
+if I not like this.
+
+409
+00:25:08.380 --> 00:25:12.070
+And so giving people some
+insight into the consequences of
+
+410
+00:25:12.070 --> 00:25:16.750
+their actions could help with
+helped me in that sense,
+
+411
+00:25:17.380 --> 00:25:19.450
+That's a challenging one, because
+one of your guidelines is
+
+412
+00:25:19.450 --> 00:25:22.570
+learn from user behavior. Right.
+But, but then you get
+
+413
+00:25:22.570 --> 00:25:25.180
+into things like one of
+the controversies around Netflix right
+
+414
+00:25:25.180 --> 00:25:29.140
+now is they have been
+trying, they've been auto generating
+
+415
+00:25:29.350 --> 00:25:31.840
+the titles, like the, the,
+what do you call it?
+
+416
+00:25:31.840 --> 00:25:35.620
+Like the, the video tape
+boxes, right? The little thumbnails
+
+417
+00:25:35.620 --> 00:25:39.190
+that say, this is a
+show and they're putting different
+
+418
+00:25:39.190 --> 00:25:42.190
+faces on the, on the
+things to me to see
+
+419
+00:25:42.190 --> 00:25:46.090
+if you click on them
+and you see where this
+
+420
+00:25:46.090 --> 00:25:48.400
+is going. Right. So one
+of the, one of the
+
+421
+00:25:48.400 --> 00:25:51.490
+things that happened recently is
+they've been putting a number
+
+422
+00:25:51.490 --> 00:25:54.400
+of black folks on Twitter,
+felt upset because they saw
+
+423
+00:25:54.520 --> 00:25:56.950
+a new show that they'd
+never heard of with a
+
+424
+00:25:56.950 --> 00:25:58.600
+black person on the front
+and they click on it.
+
+425
+00:25:59.110 --> 00:26:01.630
+And that person has a
+secondary, or maybe even just
+
+426
+00:26:01.630 --> 00:26:05.410
+a single scene. And the,
+it feels like you've been
+
+427
+00:26:05.410 --> 00:26:08.110
+like, told that your favorite
+character actor, isn't a show,
+
+428
+00:26:08.140 --> 00:26:10.390
+but they're really not. They're
+like in one scene in
+
+429
+00:26:10.390 --> 00:26:13.690
+one episode of the show
+and it's because, Oh, we
+
+430
+00:26:13.690 --> 00:26:17.590
+have learned that you like
+watching shows with black stars.
+
+431
+00:26:17.620 --> 00:26:19.840
+Therefore there's a black person
+in this. So we'll dig
+
+432
+00:26:19.840 --> 00:26:23.470
+them up out of IMD
+DB, auto-generate a title screen,
+
+433
+00:26:23.530 --> 00:26:25.270
+and then you'll click on
+it and watch that show,
+
+434
+00:26:26.170 --> 00:26:30.460
+Right? Yes. So I think
+learning, you have, do you
+
+435
+00:26:30.460 --> 00:26:33.460
+have to, you have to
+implement these guidelines very carefully
+
+436
+00:26:33.610 --> 00:26:37.300
+and think about your specific
+scenario. I think learning the
+
+437
+00:26:37.330 --> 00:26:41.620
+guidelines 13 learning from user
+behavior often goes hand in
+
+438
+00:26:41.620 --> 00:26:45.810
+hand with number, which is
+what we call encouraging granular
+
+439
+00:26:45.810 --> 00:26:49.980
+feedback, which is basically saying,
+allow the user to steer
+
+440
+00:26:49.980 --> 00:26:52.440
+the AI. So if you're
+going to learn, still allow
+
+441
+00:26:52.440 --> 00:26:56.100
+the user to steer it
+in the right direction so
+
+442
+00:26:56.100 --> 00:26:59.160
+that they can have more
+control about how, what the
+
+443
+00:26:59.160 --> 00:27:03.480
+AI, the behaviors of the
+AI system. And that also
+
+444
+00:27:03.480 --> 00:27:07.380
+like gets me to another
+thing I'd want to emphasize
+
+445
+00:27:07.380 --> 00:27:12.000
+is that the guidelines aren't
+a checklist. Like we, some
+
+446
+00:27:12.280 --> 00:27:14.850
+they're not all going to
+apply to every scenario. And
+
+447
+00:27:14.850 --> 00:27:17.010
+so there's going to need
+to, you're going to have
+
+448
+00:27:17.010 --> 00:27:19.350
+to make trade offs if
+you're going to implement them.
+
+449
+00:27:20.100 --> 00:27:22.770
+And it's very scenario dependent.
+So really we want people
+
+450
+00:27:22.770 --> 00:27:28.110
+to look at the guidelines
+and think about them intentionally
+
+451
+00:27:28.110 --> 00:27:30.690
+and make decisions about whether
+or not to apply them
+
+452
+00:27:31.650 --> 00:27:35.510
+in any given scenario. Yeah.
+It's definitely not a checklist
+
+453
+00:27:35.510 --> 00:27:38.210
+because even in thinking of
+this Netflix one, we're going
+
+454
+00:27:38.210 --> 00:27:39.980
+well, but then make it
+clear why the system did
+
+455
+00:27:39.980 --> 00:27:42.140
+what it did. But I
+also want to remember recent
+
+456
+00:27:42.140 --> 00:27:45.920
+interactions mitigate social biases, and
+you're going to find yourself
+
+457
+00:27:46.760 --> 00:27:50.570
+going around and around, but
+it certainly inspires discussion. And
+
+458
+00:27:50.570 --> 00:27:52.760
+it's a great place to
+start if you're building any
+
+459
+00:27:52.760 --> 00:27:56.390
+kind of an interaction system
+using AI. Exactly. And that
+
+460
+00:27:56.420 --> 00:27:59.270
+we're, we're really interested in
+that going forwards. You know,
+
+461
+00:27:59.270 --> 00:28:03.560
+how can the guidelines be
+used at, you know, the,
+
+462
+00:28:04.070 --> 00:28:07.100
+the initially when you're starting
+to build an AI product,
+
+463
+00:28:07.340 --> 00:28:12.560
+can it like, you know,
+encourage design teams and modeling
+
+464
+00:28:12.560 --> 00:28:16.370
+teams to come together and
+discuss how they should design
+
+465
+00:28:16.370 --> 00:28:19.790
+AI systems and what their
+AI should support, you know,
+
+466
+00:28:19.790 --> 00:28:22.670
+kind of facilitate that discussion.
+So you can sort of
+
+467
+00:28:22.700 --> 00:28:28.010
+avoid some common pitfalls and
+create intuitive experiences. Fantastic. Thank
+
+468
+00:28:28.010 --> 00:28:30.410
+you so much for chatting
+with me. No problem. Thanks
+
+469
+00:28:30.410 --> 00:28:33.800
+for having me. I've been
+talking with dr. Shaleema omarisha,
+
+470
+00:28:33.830 --> 00:28:36.530
+she's a researcher in the
+adaptive systems and interaction group
+
+471
+00:28:36.530 --> 00:28:39.800
+at Microsoft research. And this
+has been another episode of
+
+472
+00:28:39.800 --> 00:29:02.270
+Hansel minutes, and we'll see
+you again next week. <inaudible>.
+

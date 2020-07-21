@@ -1,0 +1,2921 @@
+WEBVTT FILE
+
+1
+00:00:00.030 --> 00:00:03.960
+Today's sponsor is Datadog a
+monitoring and analytics platform for
+
+2
+00:00:03.960 --> 00:00:08.760
+cloud scale infrastructure and applications.
+Datadog provides seamless integrations with
+
+3
+00:00:08.760 --> 00:00:13.680
+more than 400 technologies, including
+AWS Postgres sequel, my sequel
+
+4
+00:00:14.190 --> 00:00:17.490
+Docker. So you can start
+collecting and visualizing performance metrics,
+
+5
+00:00:17.490 --> 00:00:20.970
+quickly distributed, tracing, and APM.
+Give you end to end
+
+6
+00:00:20.970 --> 00:00:24.720
+visibility into requests wherever they
+go across hosts across containers,
+
+7
+00:00:24.720 --> 00:00:29.790
+across service boundaries. With rich
+dashboards, algorithmic alerts and collaboration
+
+8
+00:00:29.790 --> 00:00:33.060
+tools. Datadog will give your
+team the tools they need
+
+9
+00:00:33.090 --> 00:00:37.260
+to quickly troubleshoot and optimize
+modern applications. See for yourself.
+
+10
+00:00:37.350 --> 00:00:41.370
+Start a 14 day free
+trial today by visiting Datadog
+
+11
+00:00:41.400 --> 00:00:46.050
+hq.com/hansel minutes. And they'll send
+you a free tee shirt.
+
+12
+00:00:46.590 --> 00:01:05.150
+That's Datadog hq.com/hansel minutes. Alright,
+This is Scott Hanselman. This
+
+13
+00:01:05.150 --> 00:01:07.220
+is another episode of Hansel
+minutes today. I'm talking to
+
+14
+00:01:07.220 --> 00:01:10.550
+Lauren Gray. Who's on the Azure
+red team at Microsoft. How
+
+15
+00:01:10.550 --> 00:01:14.030
+are you, sir? I'm doing
+all right. Yeah. Doing pretty
+
+16
+00:01:14.030 --> 00:01:19.730
+well. So red team, what
+is that? So the red
+
+17
+00:01:19.730 --> 00:01:22.790
+team is, or a red
+team in general is a
+
+18
+00:01:22.790 --> 00:01:26.780
+team that performs a adversary
+emulation. So our job is
+
+19
+00:01:26.840 --> 00:01:29.750
+to pretend to be the
+bad guys and tackle all
+
+20
+00:01:29.750 --> 00:01:35.450
+your stuff Seriously, like adversary
+emulation. That is a pretty
+
+21
+00:01:35.450 --> 00:01:38.270
+awesome way to phrase it.
+That's that's the, like the
+
+22
+00:01:38.270 --> 00:01:43.070
+official, like a formal terminology
+for it. People were just
+
+23
+00:01:43.070 --> 00:01:45.260
+like, Oh yeah, you're hackers.
+And they kind of just
+
+24
+00:01:45.260 --> 00:01:48.770
+put everybody in the same,
+the same bubble red teaming
+
+25
+00:01:48.770 --> 00:01:51.950
+is like a very specific
+form of it, right? So
+
+26
+00:01:51.950 --> 00:01:53.960
+you have like pen testers
+and you have red teamers
+
+27
+00:01:53.960 --> 00:01:58.250
+and vulnerability assessment assessors, and
+everyone does a really different
+
+28
+00:01:58.250 --> 00:02:01.610
+job. But our job is
+to pretend to be act
+
+29
+00:02:01.700 --> 00:02:04.670
+or act as real attackers.
+Is there a blue team
+
+30
+00:02:04.670 --> 00:02:06.530
+I've heard that term as
+well? Yeah. So the blue
+
+31
+00:02:06.530 --> 00:02:11.150
+team, our counterparts and they're
+the ones defending, right? So
+
+32
+00:02:11.360 --> 00:02:15.890
+their job is to being
+able to detect and evict
+
+33
+00:02:16.700 --> 00:02:21.650
+red teamers or even sometimes
+real attackers. Okay. So hang
+
+34
+00:02:21.650 --> 00:02:24.680
+on. You're the adversary emulator.
+You are pretending to be
+
+35
+00:02:24.680 --> 00:02:28.940
+evil. You're the red team,
+the blue team is like
+
+36
+00:02:28.970 --> 00:02:30.830
+maybe he's sitting in the
+same building and they're on
+
+37
+00:02:30.830 --> 00:02:33.620
+the other side trying to
+keep you out. Figuratively speaking,
+
+38
+00:02:34.400 --> 00:02:36.680
+figuratively speaking, everything we're saying
+is fairly speaking. I don't
+
+39
+00:02:36.680 --> 00:02:39.710
+mean there, like legitimately in
+the next cubicle over, but
+
+40
+00:02:39.890 --> 00:02:43.460
+like from a boxes and
+lines perspective, do you all
+
+41
+00:02:43.460 --> 00:02:45.260
+have lunch together? Do you
+even know who they are?
+
+42
+00:02:45.260 --> 00:02:47.240
+Like the teams are, they
+separated and hidden from each
+
+43
+00:02:47.240 --> 00:02:51.050
+other? So at Microsoft there's
+a bunch of red teams
+
+44
+00:02:51.050 --> 00:02:53.810
+and there's a bunch of
+blue teams. And not everybody
+
+45
+00:02:53.840 --> 00:02:56.060
+who you may not know
+who everybody is, right. So
+
+46
+00:02:56.060 --> 00:02:59.710
+if we're performing an operation
+against one service, right, they
+
+47
+00:02:59.710 --> 00:03:01.450
+may have a specific blue
+team that they need to
+
+48
+00:03:01.450 --> 00:03:04.360
+go to in order to
+resolve issues. It may not
+
+49
+00:03:04.360 --> 00:03:07.180
+be the same blue team
+as another service from a
+
+50
+00:03:07.180 --> 00:03:10.750
+different organization. So like they
+have to know who their
+
+51
+00:03:10.750 --> 00:03:14.080
+blue teams are, but we,
+as the Azure red team
+
+52
+00:03:14.320 --> 00:03:18.550
+have like this oversight or
+scope rather than like all
+
+53
+00:03:19.300 --> 00:03:23.140
+of, all of Azure. So
+we come across different blue
+
+54
+00:03:23.140 --> 00:03:25.650
+teams. So if I were
+going to make a thing,
+
+55
+00:03:25.650 --> 00:03:27.720
+let's say I was going
+to make a new service.
+
+56
+00:03:27.720 --> 00:03:30.150
+Like, I don't know Scott
+as a service and it's
+
+57
+00:03:30.150 --> 00:03:31.890
+going to be an, I
+proposed to the bosses and
+
+58
+00:03:31.890 --> 00:03:33.060
+I've done all this kind
+of stuff and we've done
+
+59
+00:03:33.060 --> 00:03:34.440
+the work and we're going
+to put it live in
+
+60
+00:03:34.440 --> 00:03:36.270
+Azure. And we're going to
+start doing that. I assume
+
+61
+00:03:36.270 --> 00:03:39.150
+that there's a series of
+security checkpoints. That one has
+
+62
+00:03:39.150 --> 00:03:44.170
+to go through and surviving
+regular, multiple red team attacks.
+
+63
+00:03:44.180 --> 00:03:45.570
+Seems like a thing that
+I would put on my
+
+64
+00:03:45.570 --> 00:03:49.860
+checklist. Yeah, for sure. There's
+definitely a, like a security
+
+65
+00:03:49.860 --> 00:03:56.940
+assurance kind of deal that
+happens. I'm not really knowledgeable
+
+66
+00:03:56.940 --> 00:04:00.120
+about that aspect of it.
+Sure. But your job is
+
+67
+00:04:00.120 --> 00:04:03.630
+to basically, when I suppose
+is this is the red
+
+68
+00:04:03.630 --> 00:04:05.580
+team's job to say, Hey,
+we tried as hard as
+
+69
+00:04:05.580 --> 00:04:07.350
+we could and we couldn't
+get in. Or is it
+
+70
+00:04:07.350 --> 00:04:09.510
+more successful to say, Hey,
+we got in and here's
+
+71
+00:04:09.510 --> 00:04:12.210
+how we mitigate that Either
+is fine. Right? So a
+
+72
+00:04:12.210 --> 00:04:15.870
+red team is, or offensive
+security in general, the point
+
+73
+00:04:15.870 --> 00:04:18.300
+isn't to like be successful
+all the time. Like be
+
+74
+00:04:18.390 --> 00:04:21.930
+social feels good, but the
+whole point is to assess
+
+75
+00:04:21.930 --> 00:04:25.220
+the security posture. So if
+we can't get in and
+
+76
+00:04:25.230 --> 00:04:28.050
+you like, we are being
+stopped and blocked completely, it's
+
+77
+00:04:28.050 --> 00:04:30.990
+a good thing overall for
+security, it may hurt our
+
+78
+00:04:30.990 --> 00:04:34.350
+feelings, but like our feelings
+don't matter in the overall
+
+79
+00:04:34.380 --> 00:04:38.550
+scheme of, of making sure
+things are secure. And is
+
+80
+00:04:38.550 --> 00:04:41.640
+it, you said operations, that
+term operations is interesting because
+
+81
+00:04:41.640 --> 00:04:44.280
+it implies like kind of
+a finite, like you're not
+
+82
+00:04:44.280 --> 00:04:46.590
+just sitting around thinking of
+crazy stuff that you can
+
+83
+00:04:46.590 --> 00:04:48.780
+do to break into a
+system. You'll be, you might
+
+84
+00:04:48.780 --> 00:04:50.670
+be saying, Hey, we're going
+to focus on, you know,
+
+85
+00:04:50.790 --> 00:04:53.700
+service a or, or project
+B right now. And for
+
+86
+00:04:53.700 --> 00:04:56.400
+the next month, we're going
+to go through this list
+
+87
+00:04:56.430 --> 00:04:58.110
+to try to deal with
+this. You are kind of
+
+88
+00:04:58.110 --> 00:05:02.630
+like hired as mercenaries effectively
+digital mercenaries to, to, to
+
+89
+00:05:03.180 --> 00:05:05.040
+like, like in the movies
+when someone says, Hey, can
+
+90
+00:05:05.040 --> 00:05:07.680
+you break into my safe
+here? You know, here's the
+
+91
+00:05:07.680 --> 00:05:09.330
+parameters you have three days
+to get into my safe.
+
+92
+00:05:10.070 --> 00:05:12.810
+It's kind of, it's kind
+of both like, we'll, we'll
+
+93
+00:05:12.810 --> 00:05:16.260
+do like our regular operations
+against a specific service. And
+
+94
+00:05:16.260 --> 00:05:18.360
+that's how, that's how our
+operations are broken out into,
+
+95
+00:05:19.920 --> 00:05:21.390
+at the same time. We're
+always trying to come up
+
+96
+00:05:21.390 --> 00:05:24.090
+with new techniques for things,
+right. To try something that
+
+97
+00:05:24.480 --> 00:05:27.870
+we may have, we may
+not have seen before, but
+
+98
+00:05:28.110 --> 00:05:30.720
+we kind of assume that,
+and the general assumption is
+
+99
+00:05:30.720 --> 00:05:32.460
+that if you can do
+it, then somebody else can
+
+100
+00:05:32.460 --> 00:05:35.220
+do it. Whereas somebody else
+might have thought of it
+
+101
+00:05:35.220 --> 00:05:38.430
+first, if you have that
+mindset, then anything like any
+
+102
+00:05:38.430 --> 00:05:41.940
+new technique that we create,
+we just assume that somebody
+
+103
+00:05:41.940 --> 00:05:44.730
+else has done it before.
+And we go to verify
+
+104
+00:05:44.940 --> 00:05:46.980
+that it's not like a
+systemic issue and that no
+
+105
+00:05:46.980 --> 00:05:49.980
+one else has been affected
+by this. So it's kind
+
+106
+00:05:49.980 --> 00:05:51.240
+of, it's kind of both
+like, we will do a
+
+107
+00:05:51.240 --> 00:05:53.430
+normal operations against the service,
+but at the same time,
+
+108
+00:05:53.610 --> 00:05:58.550
+we're trying to find new
+tactics that our team may
+
+109
+00:05:58.550 --> 00:06:01.400
+not have seen, or may
+have not, may not have
+
+110
+00:06:01.400 --> 00:06:06.470
+been, you know, detected by
+the blue teams or, you
+
+111
+00:06:06.470 --> 00:06:11.570
+know, the security operation centers
+and say, Nope, has this
+
+112
+00:06:11.570 --> 00:06:14.710
+been done before? So I
+understand that there's all kinds
+
+113
+00:06:14.710 --> 00:06:17.500
+of kits that one can
+download. Like I might have
+
+114
+00:06:17.500 --> 00:06:20.050
+a WordPress site or a
+blog or whatever, some custom
+
+115
+00:06:20.650 --> 00:06:25.570
+CMS, there's all kinds of
+like Swiss army knife, security,
+
+116
+00:06:25.570 --> 00:06:27.610
+things that I can say,
+Hey, go attack that. And
+
+117
+00:06:27.610 --> 00:06:31.750
+it kind of runs through
+the obvious stuff. Those are
+
+118
+00:06:31.750 --> 00:06:34.000
+those tools that you use.
+Do you use the obvious
+
+119
+00:06:34.000 --> 00:06:36.850
+things just to make sure
+nothing's regressed or gone backwards?
+
+120
+00:06:37.870 --> 00:06:40.210
+So our team was a
+little bit different. Yeah. So
+
+121
+00:06:40.240 --> 00:06:42.550
+in general, like for red
+teaming, there are a lot
+
+122
+00:06:42.550 --> 00:06:45.400
+of tools that you can
+use a lot of C
+
+123
+00:06:45.400 --> 00:06:47.380
+two systems, which is like
+a, you know, you have
+
+124
+00:06:47.380 --> 00:06:49.720
+a server and then you
+have like an agent on
+
+125
+00:06:49.720 --> 00:06:53.110
+someone's computer and then you're
+interacting with their computer that,
+
+126
+00:06:53.110 --> 00:06:57.160
+you know, that you've hacked.
+But our team's a little
+
+127
+00:06:57.160 --> 00:07:01.780
+bit different in Azure and
+that's because a significant portion
+
+128
+00:07:01.840 --> 00:07:07.000
+of, of enterprises or, or
+even like security professionals are
+
+129
+00:07:07.000 --> 00:07:09.400
+just learning Azure and for
+the last year or so,
+
+130
+00:07:09.460 --> 00:07:13.930
+as it comes more relevant
+and more prevalent rather like
+
+131
+00:07:13.930 --> 00:07:17.140
+in the field. So there
+aren't a lot of Azure
+
+132
+00:07:17.140 --> 00:07:21.220
+tools that are public. I
+think within the last six
+
+133
+00:07:21.220 --> 00:07:26.020
+months, I can name three
+that are pretty prominent and
+
+134
+00:07:26.020 --> 00:07:30.280
+sure, like we can, we
+can run those and check
+
+135
+00:07:30.280 --> 00:07:33.160
+them out. But our perspective
+is different because we are
+
+136
+00:07:33.160 --> 00:07:36.520
+internal as opposed to someone
+who is externally trying to
+
+137
+00:07:36.990 --> 00:07:40.300
+attack. So we always go
+with a, like an assumed
+
+138
+00:07:40.300 --> 00:07:44.110
+breach methodology and it's in
+breached means that, okay, we
+
+139
+00:07:44.110 --> 00:07:46.570
+are an attacker who was
+in the environment already, what
+
+140
+00:07:46.570 --> 00:07:51.160
+can we do from that
+perspective? I want to dig
+
+141
+00:07:51.160 --> 00:07:53.230
+into that. But before we
+do, you made the comment
+
+142
+00:07:53.260 --> 00:07:55.870
+a C to the letter
+C the number two command
+
+143
+00:07:55.870 --> 00:07:57.400
+and control. Maybe you could
+just say a little bit
+
+144
+00:07:57.400 --> 00:07:59.620
+about that for folks who
+aren't familiar with that acronym.
+
+145
+00:08:00.280 --> 00:08:03.520
+So C two systems are,
+or is it sort of
+
+146
+00:08:03.520 --> 00:08:05.830
+a, a tool that an
+attacker will use in order
+
+147
+00:08:05.830 --> 00:08:09.640
+to control a remote system?
+Right. So if I make
+
+148
+00:08:09.640 --> 00:08:12.760
+you ask you to download
+this executable and you click
+
+149
+00:08:12.760 --> 00:08:15.340
+it, right, or you open
+up this word document, right.
+
+150
+00:08:15.460 --> 00:08:18.940
+I may install a <inaudible>
+on your device, right. To
+
+151
+00:08:18.940 --> 00:08:21.490
+be able to control it
+remotely. Okay. So then at
+
+152
+00:08:21.490 --> 00:08:25.360
+that point, your own, your
+poned, and you, that's the
+
+153
+00:08:25.360 --> 00:08:28.120
+assumption that you should just
+act as, as everything that
+
+154
+00:08:28.120 --> 00:08:30.610
+you're doing is on a
+machine that is already compromised,
+
+155
+00:08:31.150 --> 00:08:33.730
+Right? So we'll, we'll still
+do all that initial free
+
+156
+00:08:33.730 --> 00:08:35.800
+con phase for a lot
+of our operations where we
+
+157
+00:08:35.800 --> 00:08:39.490
+know maybe we go find
+the credential, but because we
+
+158
+00:08:39.490 --> 00:08:43.390
+do mostly internal or all,
+I should say, mostly all
+
+159
+00:08:43.390 --> 00:08:47.440
+of our operations are internal
+assessments with Microsoft teams. We
+
+160
+00:08:47.440 --> 00:08:51.580
+are already inside Microsoft from
+most angles. Whereas an attacker
+
+161
+00:08:51.580 --> 00:08:53.080
+has to figure out a
+way how to get in
+
+162
+00:08:53.080 --> 00:08:57.000
+first. We just assume that
+they've already gotten in and
+
+163
+00:08:57.510 --> 00:09:00.300
+we have some level of
+access from that service that
+
+164
+00:09:00.300 --> 00:09:03.200
+we're operating against in order
+to do things. Is that
+
+165
+00:09:03.200 --> 00:09:06.620
+really important to just assume
+that you're owned already? Like,
+
+166
+00:09:06.800 --> 00:09:08.690
+you know, the call is
+coming from inside the house.
+
+167
+00:09:08.990 --> 00:09:11.420
+I hear that more and
+more in the last, maybe
+
+168
+00:09:11.420 --> 00:09:14.810
+10 years of, of computer
+science, you just assume that
+
+169
+00:09:14.840 --> 00:09:17.240
+they're already on a compromised
+system. And then the question
+
+170
+00:09:17.240 --> 00:09:19.740
+is, once they're in, can
+you keep them in the
+
+171
+00:09:19.760 --> 00:09:22.070
+<inaudible> affair effectively? Or can
+you keep them in the
+
+172
+00:09:22.070 --> 00:09:24.710
+man cage at the front
+of the house they've breached
+
+173
+00:09:24.710 --> 00:09:27.200
+the front door. But once
+they're in, in the old
+
+174
+00:09:27.200 --> 00:09:28.850
+days, we would assume that
+they just, they have the
+
+175
+00:09:28.850 --> 00:09:30.950
+keys to the castle and
+they can do everything. But
+
+176
+00:09:30.950 --> 00:09:32.780
+in the, in the modern
+times, it's like, well, they
+
+177
+00:09:32.840 --> 00:09:34.370
+got into the mode, but
+they can't get out of
+
+178
+00:09:34.370 --> 00:09:36.770
+the mode. And that's okay.
+So the reason why I
+
+179
+00:09:36.770 --> 00:09:42.140
+assume breach is such a
+common methodology is because you
+
+180
+00:09:42.140 --> 00:09:46.280
+can always assume that phishing
+is going to work, right?
+
+181
+00:09:46.280 --> 00:09:48.770
+So that whole act of,
+of getting initial access is
+
+182
+00:09:48.770 --> 00:09:51.950
+generally more of a, just
+a time consuming manner, because
+
+183
+00:09:52.100 --> 00:09:54.320
+it's eventually going to work.
+Someone's going to open something
+
+184
+00:09:54.710 --> 00:09:58.070
+or click something that they're
+not supposed to, and an
+
+185
+00:09:58.070 --> 00:10:02.180
+attacker will have access. And
+so that's generally the mindset
+
+186
+00:10:02.180 --> 00:10:03.860
+behind it is that you
+are going to get initial
+
+187
+00:10:03.860 --> 00:10:10.460
+access. Somehow it's going to
+happen regardless of, of, of
+
+188
+00:10:10.460 --> 00:10:12.860
+how, how much, how many
+systems you try to have
+
+189
+00:10:12.860 --> 00:10:17.270
+in place to, you know,
+prevent it. But we, when
+
+190
+00:10:17.270 --> 00:10:20.630
+we go that route, we
+can just say, instead of
+
+191
+00:10:20.630 --> 00:10:22.670
+having to waste our time,
+Oh, not really invest the
+
+192
+00:10:22.670 --> 00:10:27.830
+time into getting that initial
+access is it's, it's more
+
+193
+00:10:27.830 --> 00:10:31.250
+logical to assume that the
+access already exists. Right. And
+
+194
+00:10:31.250 --> 00:10:33.800
+then I understand that the
+access that they have should
+
+195
+00:10:33.800 --> 00:10:35.300
+be limited, right? This is
+why we don't want to
+
+196
+00:10:35.300 --> 00:10:37.670
+have super users. You have
+role based access security. It's
+
+197
+00:10:37.670 --> 00:10:40.040
+like, well, they got in,
+but they have read access
+
+198
+00:10:40.040 --> 00:10:42.860
+to data that is limited
+in scope, as opposed to
+
+199
+00:10:42.860 --> 00:10:46.280
+the old days of they
+have the essay password. Right?
+
+200
+00:10:46.280 --> 00:10:48.560
+So like in traditional red
+teaming, w w what you
+
+201
+00:10:48.560 --> 00:10:51.800
+might normally get is like
+a user level account, right?
+
+202
+00:10:52.940 --> 00:10:57.470
+And a lot of companies
+will ask or give a
+
+203
+00:10:57.470 --> 00:11:00.620
+lot of consulting. Companies will
+give like their, their organizations,
+
+204
+00:11:00.620 --> 00:11:04.580
+target organizations, a computer or
+laptop or something, and just
+
+205
+00:11:04.580 --> 00:11:07.700
+say, put this in your,
+your network, and then give
+
+206
+00:11:07.700 --> 00:11:10.460
+us a, the credentials for
+a, a user, just a
+
+207
+00:11:10.460 --> 00:11:13.790
+normal user. And we'll see
+what we can do for
+
+208
+00:11:13.790 --> 00:11:17.300
+Azure. It's a little bit
+different because, or at least
+
+209
+00:11:17.300 --> 00:11:22.670
+internally, because we don't, we,
+we already work at Microsoft.
+
+210
+00:11:23.300 --> 00:11:26.390
+We were not trying to
+pretend to be, you know,
+
+211
+00:11:26.540 --> 00:11:28.880
+we don't need that level
+of access. So our assumed
+
+212
+00:11:28.880 --> 00:11:34.100
+breaches is always from our
+perspective. Oh, no, it is
+
+213
+00:11:34.100 --> 00:11:37.670
+generally from our perspective as
+employees of Microsoft. Interesting. So
+
+214
+00:11:37.670 --> 00:11:39.920
+that was my next question.
+So it's like, I'm imagining
+
+215
+00:11:39.950 --> 00:11:42.200
+my job. I'm imagining I
+work on the red team
+
+216
+00:11:42.470 --> 00:11:45.410
+and I'm thinking to myself,
+how does this work? Do
+
+217
+00:11:45.410 --> 00:11:47.720
+I pretend that I don't
+work for the company? Do
+
+218
+00:11:47.720 --> 00:11:49.490
+I pretend that I work
+with the company? And I'm
+
+219
+00:11:49.490 --> 00:11:53.650
+just evil, you know, who,
+what's my role that playing
+
+220
+00:11:53.650 --> 00:11:56.650
+for the particular operation that
+I'm about to do. And
+
+221
+00:11:56.650 --> 00:11:59.640
+sometimes it changes. So you
+may have different operations with
+
+222
+00:11:59.640 --> 00:12:02.520
+different perspectives and requests that
+are asked of us. And
+
+223
+00:12:02.520 --> 00:12:06.840
+so the question may be
+can an external person get
+
+224
+00:12:06.840 --> 00:12:10.200
+directly to this resource? And
+we have to sometimes answer
+
+225
+00:12:10.200 --> 00:12:14.220
+that question, but generally speaking,
+we're coming from we're. We
+
+226
+00:12:14.220 --> 00:12:18.120
+are coming from the inside.
+And we are assuming that
+
+227
+00:12:18.120 --> 00:12:21.720
+if a user had, or
+if an attacker had somehow
+
+228
+00:12:21.750 --> 00:12:25.680
+compromised corporate credentials, right, what
+could they do with this?
+
+229
+00:12:25.740 --> 00:12:29.040
+From the perspective of that
+particular service team? Now, you
+
+230
+00:12:29.400 --> 00:12:31.950
+you're, you have a background
+in cyber operations. This has
+
+231
+00:12:31.950 --> 00:12:34.620
+been your whole thing for
+a very long time. And
+
+232
+00:12:34.620 --> 00:12:36.330
+I noticed that one of
+the things that you did
+
+233
+00:12:36.330 --> 00:12:38.670
+was you worked on penetration
+testing and you get a
+
+234
+00:12:38.670 --> 00:12:41.790
+certificate in ethical hacking. Why
+is that word ethical so
+
+235
+00:12:41.790 --> 00:12:45.690
+important in front of hacking?
+What is ethical hacking? Depends
+
+236
+00:12:45.690 --> 00:12:48.300
+who you ask. So I'm
+asking you, and that's why
+
+237
+00:12:48.300 --> 00:12:51.930
+I want to understand. All
+right. So that, that particular
+
+238
+00:12:51.930 --> 00:12:57.240
+certificate ch has, which is
+what is most commonly known
+
+239
+00:12:57.240 --> 00:13:02.520
+as to be one of
+the most baseline certificates you
+
+240
+00:13:02.520 --> 00:13:06.210
+can get. And it, they,
+they try to stress it
+
+241
+00:13:06.780 --> 00:13:10.410
+ethical it's because the word
+hacker has been thrown around
+
+242
+00:13:10.410 --> 00:13:14.970
+as a negative thing for
+so long. They'll put ethical
+
+243
+00:13:14.970 --> 00:13:17.240
+in front of it in
+order to say, no, this
+
+244
+00:13:17.310 --> 00:13:21.360
+we're not teaching people how
+to do bad things for
+
+245
+00:13:21.360 --> 00:13:23.760
+the purpose of doing bad
+things. We're teaching people, the
+
+246
+00:13:23.760 --> 00:13:26.490
+techniques and the tools that
+are used to bad thing
+
+247
+00:13:26.550 --> 00:13:29.910
+to do bad things in
+order to help your security
+
+248
+00:13:30.780 --> 00:13:34.110
+team. So a lot of
+things will get advertised as
+
+249
+00:13:34.110 --> 00:13:37.650
+ethical hacking just from the
+mindset of knowing that the
+
+250
+00:13:37.650 --> 00:13:40.680
+average person is when they
+hear hacker, always thinks like,
+
+251
+00:13:40.710 --> 00:13:45.300
+you know, anonymous or, or
+some bad entity doing something.
+
+252
+00:13:45.780 --> 00:13:47.580
+Okay. And this is just
+where they hear that term
+
+253
+00:13:47.580 --> 00:13:51.120
+white hat versus black, Right?
+So like a lot of
+
+254
+00:13:51.120 --> 00:13:53.760
+people aren't familiar with that,
+right? So white hat, black
+
+255
+00:13:53.760 --> 00:13:56.310
+hat, gray hat. There's like
+what? There's a gray hat.
+
+256
+00:13:56.580 --> 00:13:58.980
+Tell me about the hats.
+All right. So now white
+
+257
+00:13:58.980 --> 00:14:03.300
+hats are, are people who
+considered to do hacking for
+
+258
+00:14:03.690 --> 00:14:06.360
+legitimate purposes, right there. They
+may work on a security
+
+259
+00:14:06.360 --> 00:14:10.680
+team or some assessment team,
+and they are hacking something,
+
+260
+00:14:10.780 --> 00:14:13.050
+an organization because they have
+been authorized to do it.
+
+261
+00:14:13.650 --> 00:14:17.970
+And they're trying to improve
+that security posture, black hats
+
+262
+00:14:17.970 --> 00:14:20.820
+are the people who do
+things for profit, right? For,
+
+263
+00:14:21.270 --> 00:14:24.030
+cause they, they want to
+hack things because through cool
+
+264
+00:14:24.030 --> 00:14:29.970
+or whatever, and they have
+malicious intent generally. And then
+
+265
+00:14:29.970 --> 00:14:33.930
+there's great hats who are
+somewhere in the middle and
+
+266
+00:14:34.230 --> 00:14:38.370
+they may, let's say they
+may hack something for, because
+
+267
+00:14:38.370 --> 00:14:39.870
+they want to, you know,
+they're just curious about it.
+
+268
+00:14:40.200 --> 00:14:42.300
+But then they say, Hey,
+you know, if you want
+
+269
+00:14:42.300 --> 00:14:45.930
+the, they'll tell an organization
+we've hacked this, but no,
+
+270
+00:14:45.930 --> 00:14:48.510
+we'll fix it for you.
+Quote or, or we'll tell
+
+271
+00:14:48.510 --> 00:14:50.070
+you how it was done.
+If you pay us or
+
+272
+00:14:50.070 --> 00:14:56.240
+something like that is there's
+a pretty thin line with
+
+273
+00:14:56.240 --> 00:14:59.900
+what is known as gray
+hat hacking. Generally speaking, the
+
+274
+00:14:59.900 --> 00:15:03.320
+majority of people will fall
+into white or black hat
+
+275
+00:15:03.320 --> 00:15:07.930
+hacking. No one wants to
+manage databases. If they can
+
+276
+00:15:07.930 --> 00:15:12.640
+avoid it. That's why Mongo
+DB made Mongo DB Atlas,
+
+277
+00:15:12.970 --> 00:15:17.080
+a global cloud database service
+that runs on AWS, GCP
+
+278
+00:15:17.080 --> 00:15:20.830
+and Azure. You can deploy
+a fully managed Mongo DB
+
+279
+00:15:20.830 --> 00:15:23.890
+database in minutes with just
+a few clicks or a
+
+280
+00:15:23.890 --> 00:15:29.140
+few API calls, Mongo DB,
+Atlas, automates deployment, automates updates,
+
+281
+00:15:29.170 --> 00:15:31.930
+handles scaling, and more so
+that you can focus on
+
+282
+00:15:31.930 --> 00:15:35.740
+your application instead of taking
+care of your database, you
+
+283
+00:15:35.740 --> 00:15:41.830
+can get started free@mongodb.com slash
+Atlas. Now, if you're already
+
+284
+00:15:41.830 --> 00:15:45.490
+managing a Mongo DB deployment,
+Atlas has a live migration
+
+285
+00:15:45.490 --> 00:15:49.120
+service, so you can migrate
+it easily with minimal downtime
+
+286
+00:15:49.120 --> 00:15:51.670
+and then get back to
+what matters. Stop managing your
+
+287
+00:15:51.670 --> 00:15:57.940
+database and start using Mongo
+DB Atlas. When then forgive
+
+288
+00:15:57.940 --> 00:15:59.980
+me for asking ignorant questions.
+That's kind of my super
+
+289
+00:15:59.980 --> 00:16:03.820
+power is asking dumb questions,
+but as a developer who
+
+290
+00:16:03.820 --> 00:16:06.220
+has a good understanding of
+programming, a good understanding of
+
+291
+00:16:06.220 --> 00:16:11.680
+computer architecture, somewhat good understanding
+of networking. My, but I'm
+
+292
+00:16:11.680 --> 00:16:13.870
+not a surely I'm not
+a hacker. I'm not a
+
+293
+00:16:13.870 --> 00:16:16.720
+cyber cybersecurity expert. I have
+only the basic understandings of
+
+294
+00:16:16.720 --> 00:16:20.440
+like, yeah, you know, ports
+and the TCP IP and
+
+295
+00:16:20.440 --> 00:16:25.540
+blah, blah, blah, are our
+most, you know, cyber professionals
+
+296
+00:16:25.540 --> 00:16:29.290
+more, most, you know, hackers
+or red team penetration, testers
+
+297
+00:16:29.290 --> 00:16:32.320
+like yourself. Are you a
+super set? Are you all
+
+298
+00:16:32.710 --> 00:16:35.470
+really great developers that can
+write really great code and
+
+299
+00:16:35.470 --> 00:16:38.170
+Python and C and C
+plus plus, or are there
+
+300
+00:16:38.170 --> 00:16:41.110
+different levels? What's the skill
+set? Cause I'm imagining that
+
+301
+00:16:41.110 --> 00:16:43.540
+someone is listening to this
+and wondering what your job
+
+302
+00:16:43.570 --> 00:16:46.240
+is. Do you do everything
+that a developer does? Plus
+
+303
+00:16:46.240 --> 00:16:50.200
+you have deep knowledge of
+security and network architecture. Like
+
+304
+00:16:50.200 --> 00:16:51.490
+it seems like you have
+to be really good at
+
+305
+00:16:51.490 --> 00:16:53.590
+a lot of stuff to
+be able to do this
+
+306
+00:16:53.590 --> 00:16:56.590
+job. So that's a sensitive
+question for a lot of
+
+307
+00:16:56.590 --> 00:17:00.310
+people in the community. A
+lot of people will tell
+
+308
+00:17:00.310 --> 00:17:02.920
+you that you don't need
+to understand programming at all
+
+309
+00:17:03.130 --> 00:17:06.430
+right. In order to be
+accurate, or I should say,
+
+310
+00:17:06.910 --> 00:17:09.310
+Through a penetration test or
+security professional. Yeah. A lot
+
+311
+00:17:09.310 --> 00:17:12.580
+of people will say that,
+but it's generally accepted that
+
+312
+00:17:12.640 --> 00:17:14.500
+you should have some programming
+knowledge. You should be able
+
+313
+00:17:14.500 --> 00:17:16.870
+to read something, right. You
+should know if you're using
+
+314
+00:17:16.870 --> 00:17:19.060
+the tool, what that tool
+does, and you should read
+
+315
+00:17:19.090 --> 00:17:21.790
+the code of that tool
+and say, yup, I can
+
+316
+00:17:21.790 --> 00:17:24.400
+modify this. If I, if
+I need to do something,
+
+317
+00:17:25.210 --> 00:17:29.200
+it's a beneficial skill to
+have. A lot of people
+
+318
+00:17:29.200 --> 00:17:32.020
+will say, it's not required
+because, because you know, pen
+
+319
+00:17:32.020 --> 00:17:34.720
+testing and red teaming covers
+such a variety of fields
+
+320
+00:17:35.170 --> 00:17:38.290
+that not every fields needs
+to, to know how to
+
+321
+00:17:38.290 --> 00:17:41.890
+do something like that. Right?
+So for example, the ICS
+
+322
+00:17:41.890 --> 00:17:44.970
+industry may have a different
+set of expectations for this
+
+323
+00:17:44.970 --> 00:17:48.670
+skill sets might be then,
+you know, the traditional on
+
+324
+00:17:48.670 --> 00:17:52.410
+premises, red teaming or pen
+testing. And even that skill
+
+325
+00:17:52.410 --> 00:17:54.780
+set may be different from
+a lot of the cloud
+
+326
+00:17:55.050 --> 00:17:59.670
+pen testing. So I wouldn't
+say that everyone's a subset
+
+327
+00:17:59.730 --> 00:18:03.090
+of development or everyone has
+the skills that a developer
+
+328
+00:18:03.090 --> 00:18:06.500
+has. Like I can't write
+front end frameworks, like from
+
+329
+00:18:06.500 --> 00:18:09.120
+my life. Right. I'm terrible
+at it. If you ask
+
+330
+00:18:09.120 --> 00:18:12.900
+me to look@somethingand.net, I'll be
+like, okay, I guess like,
+
+331
+00:18:12.900 --> 00:18:14.430
+I know what I'm looking
+at because I'm familiar with
+
+332
+00:18:14.430 --> 00:18:19.890
+like object oriented code, but
+generally speaking, there's no real
+
+333
+00:18:19.890 --> 00:18:23.130
+requirement to be able to
+understand that that level of,
+
+334
+00:18:23.190 --> 00:18:27.810
+of developer life cycle kind
+of deal and the majority
+
+335
+00:18:27.810 --> 00:18:30.810
+of things that they think,
+you know, but it's, it's
+
+336
+00:18:30.810 --> 00:18:34.100
+highly recommended skill to have.
+Right. And I assume that
+
+337
+00:18:34.100 --> 00:18:36.350
+there's different kinds of folks.
+I mean, there's network penetration
+
+338
+00:18:36.350 --> 00:18:39.320
+testing. There's working on, you
+know, various cloud, whether it
+
+339
+00:18:39.320 --> 00:18:42.050
+be the Azure cloud or
+other, other third party clouds,
+
+340
+00:18:42.230 --> 00:18:45.230
+which is different work than,
+than like local fuzz testing
+
+341
+00:18:45.230 --> 00:18:48.500
+or trying to break out
+of a security sandbox within
+
+342
+00:18:48.500 --> 00:18:50.750
+the context of an operating
+system, which are all different
+
+343
+00:18:50.750 --> 00:18:53.630
+skills that may or may
+not require different levels of
+
+344
+00:18:53.630 --> 00:18:57.650
+expertise. For sure. So like
+you would expect that, and
+
+345
+00:18:57.650 --> 00:19:00.470
+maybe this is just from
+my experience saying this, but
+
+346
+00:19:00.470 --> 00:19:02.900
+like a web app pen
+tester is going to have
+
+347
+00:19:02.900 --> 00:19:05.810
+a completely different skillset than
+a network pen tester. And
+
+348
+00:19:05.840 --> 00:19:08.870
+the web app pen tester
+may have, may need to
+
+349
+00:19:08.870 --> 00:19:14.240
+have a better knowledge of,
+of web technologies, PHP, asp.net
+
+350
+00:19:14.240 --> 00:19:16.760
+core or whatever it's called.
+See, I don't remember. Yeah.
+
+351
+00:19:16.760 --> 00:19:18.410
+But it's, you don't need
+to because that's not the
+
+352
+00:19:18.410 --> 00:19:23.240
+point. Right? Exactly. So everyone
+will have their, there's some
+
+353
+00:19:23.240 --> 00:19:28.190
+level of quote development skillset
+as it pertains to their
+
+354
+00:19:28.190 --> 00:19:31.250
+job. But there's no overall
+thing that says you need
+
+355
+00:19:31.280 --> 00:19:34.070
+to have this, but you
+should be able to read
+
+356
+00:19:34.160 --> 00:19:37.310
+stuff at a minimum. They
+can write something in a
+
+357
+00:19:37.310 --> 00:19:38.990
+language. That's cool. I can't
+write in Java, but I
+
+358
+00:19:38.990 --> 00:19:41.630
+can read through Java. Well,
+that's interesting. So if you
+
+359
+00:19:41.630 --> 00:19:45.620
+joined the asp.net core team,
+you've got the, the base
+
+360
+00:19:45.620 --> 00:19:47.990
+of the pyramid of the
+stuff that you need to
+
+361
+00:19:47.990 --> 00:19:50.360
+know. Right. And then it
+would be expected that you
+
+362
+00:19:50.360 --> 00:19:52.310
+would then apply the things
+that you already know and
+
+363
+00:19:52.310 --> 00:19:55.970
+the professional skills that you
+have with an internal knowledge
+
+364
+00:19:55.970 --> 00:19:59.510
+of, of asp.net, just as,
+when you joined the Azure
+
+365
+00:19:59.510 --> 00:20:01.490
+web team, I assume you,
+weren't an Azure expert, you
+
+366
+00:20:01.490 --> 00:20:04.070
+were a pen testing expert,
+and then you gain that
+
+367
+00:20:04.070 --> 00:20:06.860
+knowledge. Right? So like when
+I, when I got this
+
+368
+00:20:06.860 --> 00:20:10.310
+shot by little to no
+knowledge of Azure, like someone
+
+369
+00:20:10.310 --> 00:20:12.020
+mentioned blob storage to me,
+I was like, what's that
+
+370
+00:20:12.440 --> 00:20:16.430
+right? But my experience with
+the network side of things
+
+371
+00:20:16.430 --> 00:20:19.730
+and like on premises stuff,
+kind of put me in
+
+372
+00:20:19.730 --> 00:20:23.210
+a position where I can
+easily adjust to the things
+
+373
+00:20:23.210 --> 00:20:27.980
+that were required for Azure
+or red teaming. Hmm. That
+
+374
+00:20:27.980 --> 00:20:29.120
+makes sense. And if I
+were going to go and
+
+375
+00:20:29.120 --> 00:20:30.980
+work for WordPress and to
+your job, then I would
+
+376
+00:20:30.980 --> 00:20:35.270
+be expected to become a
+WordPress expert, I think a
+
+377
+00:20:35.590 --> 00:20:39.080
+fairly good understanding. Right. So
+in your, your example that
+
+378
+00:20:39.080 --> 00:20:41.420
+you just gave with asp.net
+core, right. If you were
+
+379
+00:20:41.420 --> 00:20:44.030
+a developer who worked on
+that and you wanted to
+
+380
+00:20:44.030 --> 00:20:47.440
+move in the security portion,
+well, maybe you, well, you
+
+381
+00:20:47.440 --> 00:20:51.100
+should have an understanding of
+like the do's and don'ts
+
+382
+00:20:51.160 --> 00:20:54.610
+of, of programming in that
+language. Right. Right. And being
+
+383
+00:20:54.610 --> 00:20:57.580
+able to understand that if
+you do certain things, or
+
+384
+00:20:57.580 --> 00:21:00.160
+if you configure things certain
+way, here's how we're gonna
+
+385
+00:21:00.160 --> 00:21:03.300
+attack it. Maybe able to
+get to it. So if
+
+386
+00:21:03.300 --> 00:21:06.900
+someone wants to get to
+get your job and work
+
+387
+00:21:06.900 --> 00:21:08.760
+in this space that you're
+working in, I noticed that
+
+388
+00:21:08.760 --> 00:21:12.120
+you spent over a decade
+in the Navy. Did that
+
+389
+00:21:12.150 --> 00:21:14.370
+set you up for success
+in this kind of work?
+
+390
+00:21:14.370 --> 00:21:15.810
+Or is that a coincidence
+or is it just that
+
+391
+00:21:15.810 --> 00:21:18.780
+the Navy has a very
+strong cryptology community? I would
+
+392
+00:21:18.780 --> 00:21:21.690
+definitely say that I would
+not be here if it
+
+393
+00:21:21.690 --> 00:21:23.760
+were not for that time
+that I spent in the
+
+394
+00:21:23.760 --> 00:21:26.550
+Navy, before I joined the
+Navy, I was gonna do
+
+395
+00:21:26.550 --> 00:21:28.830
+like a, I want it
+to be like a video
+
+396
+00:21:28.830 --> 00:21:32.670
+game composer, you know, that
+was my goal. Right. That
+
+397
+00:21:32.670 --> 00:21:34.530
+is a different job than
+you have right now. Yeah.
+
+398
+00:21:34.530 --> 00:21:37.440
+I still do both though,
+I guess. Yeah, I could,
+
+399
+00:21:38.130 --> 00:21:42.180
+but it's it like that,
+that was my high school,
+
+400
+00:21:42.180 --> 00:21:44.910
+my goal coming out of
+high school. Right. I didn't
+
+401
+00:21:44.910 --> 00:21:47.190
+really have good grades, so
+I couldn't really go to
+
+402
+00:21:47.190 --> 00:21:50.790
+college that easy. So I
+joined the Navy and then
+
+403
+00:21:50.790 --> 00:21:54.090
+I was doing electronics and
+I was like, I was
+
+404
+00:21:54.090 --> 00:21:56.220
+going to get out at
+my six year Mark. I
+
+405
+00:21:56.220 --> 00:21:58.110
+was going to go to
+college and get like a
+
+406
+00:21:58.110 --> 00:22:02.730
+degree in, in biometric engineering
+and something like that. And
+
+407
+00:22:02.730 --> 00:22:05.190
+I was like, this opportunity
+came up to like move
+
+408
+00:22:05.190 --> 00:22:07.860
+to like the cryptologic field.
+And I was like, all
+
+409
+00:22:07.860 --> 00:22:11.610
+right, well, I'll give it
+a chance. And then if
+
+410
+00:22:11.610 --> 00:22:14.070
+I don't like it, or
+if some other thing comes
+
+411
+00:22:14.070 --> 00:22:15.420
+up, then I'll just get
+out. And my 10 year
+
+412
+00:22:15.420 --> 00:22:18.420
+Mark, and that's what I
+did. So I moved over
+
+413
+00:22:18.420 --> 00:22:22.800
+to cryptologic field for four
+years and then I got
+
+414
+00:22:22.800 --> 00:22:25.890
+out and I was like,
+I really want to be
+
+415
+00:22:25.890 --> 00:22:29.100
+a pen tester or a
+teamer. It took me that
+
+416
+00:22:29.100 --> 00:22:30.660
+long to figure out what
+I really wanted to do,
+
+417
+00:22:30.660 --> 00:22:35.190
+but for sure, I am
+glad that I am here
+
+418
+00:22:36.750 --> 00:22:39.360
+When someone wants to get
+started. I see a lot
+
+419
+00:22:39.360 --> 00:22:41.400
+of certificates. Right? You said
+that there's like one of
+
+420
+00:22:41.400 --> 00:22:43.170
+the certificates that I pointed
+out was a very basic
+
+421
+00:22:43.170 --> 00:22:45.810
+certificate. It's like the base
+of the pyramid should show
+
+422
+00:22:45.870 --> 00:22:48.720
+people who are interested in
+security as a professional career,
+
+423
+00:22:48.720 --> 00:22:51.120
+collect all their certificates. Or
+is there one that is
+
+424
+00:22:51.120 --> 00:22:54.060
+more important than another or
+one degree or one background?
+
+425
+00:22:54.270 --> 00:22:56.040
+Like how does one prove
+themselves and put it on
+
+426
+00:22:56.040 --> 00:22:58.680
+a resume other than saying,
+I'm the one that broke
+
+427
+00:22:58.680 --> 00:23:02.640
+into whatever, you know, That
+is also a matter of
+
+428
+00:23:02.640 --> 00:23:07.410
+perspective. I really like controversial
+topic. Some people will say
+
+429
+00:23:07.530 --> 00:23:09.810
+you don't need any certs
+at all. And they'll talk
+
+430
+00:23:09.810 --> 00:23:12.510
+about their experience coming out
+of high school and now
+
+431
+00:23:12.510 --> 00:23:17.370
+being a prominent individual in
+the community with no degree
+
+432
+00:23:17.670 --> 00:23:22.740
+and no certs, but everyone
+experiences varies. I know that
+
+433
+00:23:22.740 --> 00:23:24.840
+I had a difficult time
+getting a job when I
+
+434
+00:23:24.840 --> 00:23:27.480
+was getting out, even with
+all, all those certs listed.
+
+435
+00:23:27.930 --> 00:23:30.690
+And it was a combination
+of things really, but everyone's
+
+436
+00:23:30.900 --> 00:23:34.560
+experience is different. So I
+would say that, sir, certainly
+
+437
+00:23:34.560 --> 00:23:37.230
+generally seen, as you might
+have the knowledge to do
+
+438
+00:23:37.230 --> 00:23:41.430
+something, you might, but you
+have the potential to learn.
+
+439
+00:23:42.120 --> 00:23:45.770
+So I, I would never
+like say don't get, and
+
+440
+00:23:45.770 --> 00:23:48.290
+I think everyone should have
+certs, particularly if you're trying
+
+441
+00:23:48.290 --> 00:23:51.560
+to be like marketable, but
+a lot of people out
+
+442
+00:23:51.560 --> 00:23:54.350
+there will say that none
+are required and more power
+
+443
+00:23:54.350 --> 00:23:57.260
+to them. If I were
+looking for a job now,
+
+444
+00:23:57.290 --> 00:24:00.140
+I'd, I'd probably try to
+find certs that were relevant
+
+445
+00:24:00.200 --> 00:24:03.640
+to that position just to
+make them okay. So it
+
+446
+00:24:03.640 --> 00:24:05.500
+sounds like search, aren't the
+magic thing that one needs
+
+447
+00:24:05.500 --> 00:24:07.060
+to get where it's like,
+Oh yeah, well, you know,
+
+448
+00:24:07.070 --> 00:24:09.760
+he's got the cert, so
+we'll hire this person. It's,
+
+449
+00:24:09.790 --> 00:24:11.170
+it's not, it's not like
+that. Any of the cert
+
+450
+00:24:11.590 --> 00:24:13.450
+it's something to study for
+it, something to focus on.
+
+451
+00:24:13.450 --> 00:24:15.100
+It's a goal. It might
+be a hurdle that they
+
+452
+00:24:15.100 --> 00:24:17.610
+want you to get, but
+it's not the a, the
+
+453
+00:24:17.680 --> 00:24:20.560
+necessarily of the stamp book
+to fill. Yeah. The biggest
+
+454
+00:24:20.560 --> 00:24:22.900
+problem is, is that like
+HR departments will put out,
+
+455
+00:24:23.020 --> 00:24:25.390
+we want these particular circuits.
+And even if you are
+
+456
+00:24:25.390 --> 00:24:28.450
+qualified without those certs, it
+may be difficult to get
+
+457
+00:24:28.450 --> 00:24:32.920
+past that HR wall. But
+if you were to network
+
+458
+00:24:33.430 --> 00:24:36.580
+with people directly and talk
+to people, then you probably
+
+459
+00:24:36.580 --> 00:24:39.400
+have a better chance getting
+a position by networking with
+
+460
+00:24:39.400 --> 00:24:42.340
+people than you would just
+having a certificate and trying
+
+461
+00:24:42.340 --> 00:24:47.380
+to send me your resume.
+Interesting. Is there a, a
+
+462
+00:24:47.380 --> 00:24:50.560
+degree or a, a badge
+or a thing that one
+
+463
+00:24:50.560 --> 00:24:52.780
+gets where you go, Oh
+wow. This person means business.
+
+464
+00:24:52.780 --> 00:24:54.430
+They work for the Navy
+or they got that cert
+
+465
+00:24:54.430 --> 00:24:56.380
+or they got that degree,
+or this is the school,
+
+466
+00:24:56.830 --> 00:24:59.380
+or is it really just
+a very diverse community with
+
+467
+00:24:59.410 --> 00:25:02.800
+lots of different things that
+one could potentially do? I
+
+468
+00:25:02.800 --> 00:25:05.680
+would like to say that
+there isn't, but typically what
+
+469
+00:25:05.680 --> 00:25:09.610
+you find is that people
+value OCP to a degree,
+
+470
+00:25:10.990 --> 00:25:15.340
+the offensive security certified professional.
+I remember when Scott There's
+
+471
+00:25:15.340 --> 00:25:17.800
+like, Oh, C O S
+C O S C P
+
+472
+00:25:17.800 --> 00:25:19.660
+and O S WP. There's
+a bunch of those, but
+
+473
+00:25:19.660 --> 00:25:23.980
+they're all offensive security, something,
+something, Right. And some, and
+
+474
+00:25:23.980 --> 00:25:26.650
+people will take that as
+a indication of, you know,
+
+475
+00:25:26.650 --> 00:25:29.530
+OCP is really hard. If
+you were able to pass
+
+476
+00:25:29.530 --> 00:25:31.840
+it, then it shows that
+you have a certain aptitude
+
+477
+00:25:32.590 --> 00:25:35.560
+level and the ability to
+study for yourself and, and
+
+478
+00:25:35.560 --> 00:25:39.130
+all that stuff. And so
+like, that's generally how that
+
+479
+00:25:39.130 --> 00:25:42.790
+certificate is viewed. But honestly,
+the other side of that
+
+480
+00:25:42.790 --> 00:25:46.030
+is that OCP is also
+sort of viewed as a
+
+481
+00:25:46.600 --> 00:25:49.120
+beginner pen tester cert, right.
+Or be in a red
+
+482
+00:25:49.120 --> 00:25:51.580
+team or insert because there's
+so much that it doesn't
+
+483
+00:25:51.580 --> 00:25:56.140
+cover. That's modern now where
+a lot of companies like
+
+484
+00:25:56.140 --> 00:25:58.900
+moving to cloud environments, for
+example, right. That is uncovered.
+
+485
+00:25:59.230 --> 00:26:03.550
+And so like while OCP
+may be that, that thing
+
+486
+00:26:03.550 --> 00:26:05.230
+that people are like, yeah,
+I'm going to get that
+
+487
+00:26:05.230 --> 00:26:07.990
+and put that on my
+resume. It's not really indication
+
+488
+00:26:07.990 --> 00:26:10.720
+of skill, but more of
+indication of you were able
+
+489
+00:26:10.720 --> 00:26:13.480
+to accomplish something by putting
+the time into it. That's
+
+490
+00:26:13.480 --> 00:26:15.670
+how I view it. I
+know people would disagree with
+
+491
+00:26:15.670 --> 00:26:17.020
+me. I can think of
+names off the top of
+
+492
+00:26:17.020 --> 00:26:20.200
+my head. People would have
+issue with me saying that,
+
+493
+00:26:20.200 --> 00:26:24.460
+but that's how I view.
+So it's like that. Well,
+
+494
+00:26:24.460 --> 00:26:27.220
+it seems reasonable. I think
+certs certs are definitely a,
+
+495
+00:26:27.460 --> 00:26:29.890
+a, a point of contention
+because they can be used
+
+496
+00:26:29.900 --> 00:26:33.670
+to really mean something and
+really say something. But, and
+
+497
+00:26:34.000 --> 00:26:35.920
+to others, they just seem
+like an arbitrary hurdle that
+
+498
+00:26:35.920 --> 00:26:37.960
+someone puts in front of
+someone in order to, you
+
+499
+00:26:37.960 --> 00:26:39.550
+know, say this is a
+thing we value, here's a
+
+500
+00:26:39.550 --> 00:26:43.090
+gatekeeping bit of motion that
+we're doing, but it sounds
+
+501
+00:26:43.110 --> 00:26:45.030
+like there is a lot
+of value in some of
+
+502
+00:26:45.030 --> 00:26:47.250
+them and they are the
+standards. So they certainly can't
+
+503
+00:26:47.250 --> 00:26:50.060
+hurt to have a surgeon.
+Right. Yeah, exactly. So if
+
+504
+00:26:50.060 --> 00:26:53.450
+you have the ability or
+the money to get one,
+
+505
+00:26:53.510 --> 00:26:56.390
+I would for sure get
+one, there are some really
+
+506
+00:26:56.390 --> 00:26:59.120
+expensive certs out there, but
+That's a good point too.
+
+507
+00:26:59.120 --> 00:27:02.500
+Sometimes they're a racket because
+they cost so much. Yeah.
+
+508
+00:27:02.510 --> 00:27:05.870
+I, I, I would say
+that there are definitely some
+
+509
+00:27:05.870 --> 00:27:09.830
+certs that have training that
+could be provided at alternatively
+
+510
+00:27:10.790 --> 00:27:12.740
+and, and a lot of
+those are seen as, you
+
+511
+00:27:12.740 --> 00:27:17.330
+know, major, major certifications, but
+you can definitely get the
+
+512
+00:27:17.330 --> 00:27:20.480
+knowledge for those certs at
+a cheaper price without, but
+
+513
+00:27:20.480 --> 00:27:23.000
+you probably wouldn't get the
+recognition from like HR, for
+
+514
+00:27:23.000 --> 00:27:25.700
+example. Okay. All right. So
+let me pivot a little
+
+515
+00:27:25.700 --> 00:27:27.260
+bit and ask a dumb
+question that I've always wanted
+
+516
+00:27:27.260 --> 00:27:30.350
+to ask somebody when you're
+watching, you know, how as
+
+517
+00:27:30.350 --> 00:27:32.180
+a programmer, when I watch
+a TV show and they
+
+518
+00:27:32.180 --> 00:27:35.660
+do something super dumb where
+it's like four people on
+
+519
+00:27:35.660 --> 00:27:38.930
+one keyboard, or like the
+person's got like a nine
+
+520
+00:27:39.410 --> 00:27:42.050
+on a grid of nine
+monitors and he's like, you
+
+521
+00:27:42.050 --> 00:27:46.580
+know, minority report or whatever,
+have you ever watched a
+
+522
+00:27:46.580 --> 00:27:49.610
+show and seen a real
+security moment and gone like,
+
+523
+00:27:49.640 --> 00:27:51.890
+Oh yeah. I felt like
+that once. That was exactly
+
+524
+00:27:51.890 --> 00:27:56.210
+when I broke into whatever,
+I can't say that I've
+
+525
+00:27:56.210 --> 00:27:58.790
+seen, like, I haven't fully
+watched dr. Robot, for example,
+
+526
+00:27:59.720 --> 00:28:02.390
+mr. Robot, Oh, you missed
+the robot yet. I saw
+
+527
+00:28:02.390 --> 00:28:05.570
+the first season and I
+haven't watched the other seasons.
+
+528
+00:28:06.140 --> 00:28:09.440
+Generally. What I'll see are
+things like don't make sense.
+
+529
+00:28:09.770 --> 00:28:12.170
+And I think that that's
+just the nature of people
+
+530
+00:28:12.560 --> 00:28:14.240
+or whatever job you work.
+When you see something on
+
+531
+00:28:14.240 --> 00:28:16.670
+TV, that's not right. Or
+it's not consistent with what
+
+532
+00:28:16.670 --> 00:28:18.680
+you do. Like, you kind
+of put that out more
+
+533
+00:28:18.680 --> 00:28:21.830
+than, Oh, man, this is
+actually like the legitimate, a
+
+534
+00:28:21.830 --> 00:28:24.440
+legitimate thing that you can
+do. So when it comes
+
+535
+00:28:24.440 --> 00:28:26.960
+to it, security stuff, most
+people get it wrong. And
+
+536
+00:28:26.960 --> 00:28:28.520
+that's because they want to
+keep things at such like
+
+537
+00:28:28.530 --> 00:28:32.930
+a, either a dramatic feel
+or like a layman's terms
+
+538
+00:28:32.960 --> 00:28:36.230
+that, you know, the, the
+ACARS don't know theirs. They're
+
+539
+00:28:36.230 --> 00:28:39.530
+saying they're just repeating words.
+And they're like, they may
+
+540
+00:28:39.530 --> 00:28:42.170
+sound somewhere. Yeah. It's like
+my wife's a nurse. And
+
+541
+00:28:42.170 --> 00:28:44.540
+she's just like, somebody like
+give me a CBC chem
+
+542
+00:28:44.540 --> 00:28:46.130
+seven and dip a urine
+stat. And she's like, what
+
+543
+00:28:46.130 --> 00:28:50.810
+are they? Even thing it
+is memorize that. And always,
+
+544
+00:28:51.020 --> 00:28:53.000
+somebody always ends up stabbing
+somebody in the neck with
+
+545
+00:28:53.000 --> 00:28:55.280
+a pen to do something.
+I don't know why they're
+
+546
+00:28:55.280 --> 00:28:57.380
+choking or they can't breathe.
+Stab them in the neck
+
+547
+00:28:57.380 --> 00:28:59.900
+with a pen. I'm always
+ready to do that at
+
+548
+00:28:59.900 --> 00:29:05.030
+any moment. If anybody needs
+pen next step, make sure
+
+549
+00:29:05.030 --> 00:29:07.550
+to stay far away, watch
+out for me. Have you
+
+550
+00:29:07.550 --> 00:29:09.980
+ever, well, let me ask
+you this. Have you ever
+
+551
+00:29:09.980 --> 00:29:13.190
+had a moment where you
+did succeed, where you broke
+
+552
+00:29:13.190 --> 00:29:14.960
+in, where you did something
+you're just at the command
+
+553
+00:29:14.960 --> 00:29:18.380
+line it's whatever. And you'd
+like, just put your hands
+
+554
+00:29:18.380 --> 00:29:20.030
+up in the air. You're
+like, I got it. I
+
+555
+00:29:20.030 --> 00:29:21.680
+did it. I had that.
+You had that moment. I
+
+556
+00:29:21.690 --> 00:29:23.900
+may not necessarily be cinematic,
+but it was a hands
+
+557
+00:29:23.900 --> 00:29:26.450
+up in the air pen
+testing moment. Oh yeah, that
+
+558
+00:29:26.450 --> 00:29:29.810
+happened yesterday. Real. Okay. Give
+me that. That's our, that's
+
+559
+00:29:29.810 --> 00:29:31.880
+our closing moment for the
+podcast. Tell me about that.
+
+560
+00:29:32.000 --> 00:29:35.660
+In generic terms, I spent
+the last week doing things
+
+561
+00:29:35.660 --> 00:29:39.440
+that I've never done before.
+Nice. And trying out a
+
+562
+00:29:39.440 --> 00:29:45.970
+different approach to gaining access.
+And when it worked, I
+
+563
+00:29:45.970 --> 00:29:47.560
+just kind of sat there,
+like I got out of
+
+564
+00:29:47.560 --> 00:29:49.240
+my seat and like, I,
+nobody else is in my
+
+565
+00:29:49.240 --> 00:29:54.640
+apartment. Right. Yeah. I have
+totally done that. I have
+
+566
+00:29:54.640 --> 00:29:57.850
+literally like stood up, turned
+around and be like, and
+
+567
+00:29:57.850 --> 00:30:00.100
+then like, no one else
+is around me. And like,
+
+568
+00:30:00.130 --> 00:30:03.160
+no one cares that I
+did that. There's absolutely those,
+
+569
+00:30:03.190 --> 00:30:05.110
+especially when you've been working
+at it, like all day
+
+570
+00:30:05.110 --> 00:30:07.150
+and trying to figure things
+out there, there's always that
+
+571
+00:30:07.150 --> 00:30:11.290
+moment of yes. And then
+either the immediate reaction is,
+
+572
+00:30:11.980 --> 00:30:13.960
+all right, let me keep
+going. Or let me go,
+
+573
+00:30:14.230 --> 00:30:18.850
+go take a nap. I'm
+imagining, I want to see
+
+574
+00:30:18.850 --> 00:30:21.490
+the movie that about your
+life, where you like jump
+
+575
+00:30:21.490 --> 00:30:22.990
+up in the middle of
+the night in your apartment.
+
+576
+00:30:22.990 --> 00:30:25.330
+And you're like, all right.
+And now for snacks, you
+
+577
+00:30:25.330 --> 00:30:27.310
+know, I've just broken into
+the thing and now I'm
+
+578
+00:30:27.310 --> 00:30:29.740
+going to take a nap
+and that's on the price
+
+579
+00:30:29.740 --> 00:30:34.360
+of turnips. Literally what happens
+right afterwards? That was my
+
+580
+00:30:34.360 --> 00:30:37.810
+fantastic, well, thank you so
+much for chatting with me
+
+581
+00:30:37.810 --> 00:30:40.900
+today, for sure. I appreciate
+you having me. I've been
+
+582
+00:30:40.900 --> 00:30:43.540
+chatting with Lauren Gray from the
+Azure red team at Microsoft.
+
+583
+00:30:43.840 --> 00:30:46.450
+And this has been another
+episode of Hansel minutes. We'll
+
+584
+00:30:46.450 --> 00:30:47.650
+see you again next week.
+

@@ -1,0 +1,2952 @@
+WEBVTT FILE
+
+1
+00:00:12.090 --> 00:00:17.220
+From hanselminutes.com. It's Hanselman. It's
+a weekly discussion with web
+
+2
+00:00:17.220 --> 00:00:21.930
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+3
+00:00:21.930 --> 00:00:27.810
+number two 96, three courted
+live Thursday, December 8th, 2011. Support for
+
+4
+00:00:27.810 --> 00:00:31.020
+Hansel minutes and is provided
+by Telerik rad controls. The
+
+5
+00:00:31.020 --> 00:00:34.710
+most comprehensive suite of components
+for windows forums and asp.net
+
+6
+00:00:34.710 --> 00:00:43.380
+web applications online@wwwdottelerik.com. In this
+episode of the framework series,
+
+7
+00:00:43.410 --> 00:00:47.610
+Scott talks with Steve Smith
+from nimble pros about anti-patterns.
+
+8
+00:00:51.200 --> 00:00:53.210
+Hi, this is Scott Hanselman.
+This is another episode of
+
+9
+00:00:53.210 --> 00:00:56.150
+Hansel minutes, and we're continuing
+the framework series today. We're
+
+10
+00:00:56.150 --> 00:00:59.150
+going to be talking to
+Steve Smith from nimble pros.
+
+11
+00:00:59.180 --> 00:01:01.730
+How's it going, Steve? Hey
+Scott, it's going real well.
+
+12
+00:01:01.730 --> 00:01:04.130
+How are you? Very, very
+well. And I wanted to
+
+13
+00:01:04.130 --> 00:01:06.380
+thank you for the lovely
+gift. You sent me in
+
+14
+00:01:06.380 --> 00:01:11.510
+the mail, the software craftsmanship,
+2012 anti-patterns calendar. You've been
+
+15
+00:01:11.510 --> 00:01:13.280
+so kind to send me
+this calendar. I think now
+
+16
+00:01:13.370 --> 00:01:16.130
+has it been three years
+running This the second year?
+
+17
+00:01:16.130 --> 00:01:19.790
+Actually we did the first
+one in 2011, Huh? And
+
+18
+00:01:19.820 --> 00:01:22.520
+this year it's anti-patterns and
+Lee, what was last year's
+
+19
+00:01:22.520 --> 00:01:25.610
+theme Last year was the
+opposite. It was sort of
+
+20
+00:01:25.610 --> 00:01:28.190
+a best practices, you know,
+principles that you should follow
+
+21
+00:01:28.340 --> 00:01:29.810
+this year. We just kind
+of turned that on its
+
+22
+00:01:29.810 --> 00:01:32.630
+head. Exactly. And this is
+why I wanted to have
+
+23
+00:01:32.630 --> 00:01:35.960
+you on the show because
+patterns are fun, but anti-fat
+
+24
+00:01:36.260 --> 00:01:38.960
+anti-patterns patterns are lots of
+fun. So I thought we
+
+25
+00:01:38.960 --> 00:01:43.280
+would talk about some of
+these anti-patterns and ones that
+
+26
+00:01:43.280 --> 00:01:45.740
+people might not be familiar
+with and what they mean
+
+27
+00:01:45.740 --> 00:01:49.040
+to, to the dotnet program
+or the programmers in general.
+
+28
+00:01:49.580 --> 00:01:52.250
+And any thoughts we have
+about when you're creating any
+
+29
+00:01:52.250 --> 00:01:54.170
+kind of a framework. Cause
+I know I've worked on,
+
+30
+00:01:54.860 --> 00:01:57.080
+on STKs for the companies
+that I've worked for and
+
+31
+00:01:57.080 --> 00:01:59.990
+I've worked on software frameworks
+that are consumed by other
+
+32
+00:01:59.990 --> 00:02:03.260
+people and what are some,
+some best practices. And of
+
+33
+00:02:03.260 --> 00:02:05.840
+course, an anti best practices
+that people need to deal
+
+34
+00:02:05.840 --> 00:02:11.360
+with looking at the calendar
+here, the iceberg class, and
+
+35
+00:02:11.360 --> 00:02:13.220
+there's a giant picture of
+an iceberg. What is the
+
+36
+00:02:13.220 --> 00:02:18.830
+iceberg class? So the iceberg
+class is an idea that
+
+37
+00:02:18.830 --> 00:02:22.460
+Michael feathers blogged about a
+few years ago. And I
+
+38
+00:02:22.460 --> 00:02:23.870
+don't think very many people
+have heard of it. And
+
+39
+00:02:23.870 --> 00:02:25.310
+that's one of the reasons
+why I wanted to include
+
+40
+00:02:25.310 --> 00:02:28.880
+it in the calendar for
+this coming year. Basically he's
+
+41
+00:02:28.880 --> 00:02:31.640
+got a blog post where
+he talks about it and
+
+42
+00:02:31.850 --> 00:02:33.770
+he notes that, you know,
+a lot of people think
+
+43
+00:02:33.770 --> 00:02:37.550
+that encapsulation in object oriented
+programming means that you should
+
+44
+00:02:37.550 --> 00:02:41.300
+hide as much functionality as
+possible in your class. And
+
+45
+00:02:41.300 --> 00:02:43.280
+that means maybe you should
+have just one or two
+
+46
+00:02:43.280 --> 00:02:47.270
+public methods and 15 or
+20 private methods. So he
+
+47
+00:02:47.420 --> 00:02:49.560
+he's questioning, you know, whether
+or not that's good. And,
+
+48
+00:02:49.560 --> 00:02:51.830
+and the idea is that
+your class, then it's like
+
+49
+00:02:51.830 --> 00:02:54.770
+an iceberg with only the
+tip of the functionality visible.
+
+50
+00:02:56.420 --> 00:02:58.010
+Yeah, that's a really good
+point. I know that there
+
+51
+00:02:58.010 --> 00:03:02.140
+have been times in.net and
+the base class libraries and
+
+52
+00:03:02.500 --> 00:03:05.680
+parts of.net that I wished
+were not hidden. You know?
+
+53
+00:03:05.680 --> 00:03:07.990
+I mean, how many times
+have we opened up reflector
+
+54
+00:03:07.990 --> 00:03:10.060
+and said, Oh, that's perfect.
+Oh, it's not virtual or,
+
+55
+00:03:10.090 --> 00:03:12.640
+Oh, that's perfect. But it's
+marked private. Is that an
+
+56
+00:03:12.640 --> 00:03:16.170
+example of an iceberg class?
+Yeah, exactly. And in the
+
+57
+00:03:16.170 --> 00:03:18.360
+diamond framework, there are just
+tons of those that people
+
+58
+00:03:18.810 --> 00:03:22.860
+I think love to complain
+about. And then in practice
+
+59
+00:03:23.050 --> 00:03:27.690
+you can still achieve encapsulation
+by having another class that
+
+60
+00:03:27.750 --> 00:03:30.810
+does the work and then
+just, you know, including they're
+
+61
+00:03:30.810 --> 00:03:34.350
+referencing that class, but in
+this other class that's actually
+
+62
+00:03:34.350 --> 00:03:37.080
+doing the work. It will
+now have a public interface.
+
+63
+00:03:37.590 --> 00:03:39.750
+And you know, ideally it's
+set up in such a
+
+64
+00:03:39.750 --> 00:03:42.450
+way that if you're consuming
+a framework, you could swap
+
+65
+00:03:42.450 --> 00:03:44.670
+out that class with one
+of your own, or you
+
+66
+00:03:44.670 --> 00:03:46.650
+could choose to use that
+class if you needed that
+
+67
+00:03:46.650 --> 00:03:49.950
+functionality yourself. Hi there, code
+like this, where, where we
+
+68
+00:03:49.950 --> 00:03:52.590
+taught to, or was there
+some way about the way
+
+69
+00:03:52.590 --> 00:03:55.410
+we were taught software in
+the nineties that made people
+
+70
+00:03:55.410 --> 00:03:58.470
+intuitively want to hide things?
+I mean, I remember being
+
+71
+00:03:58.470 --> 00:04:01.650
+told, you know, don't make
+things public if you don't
+
+72
+00:04:01.650 --> 00:04:04.830
+want to support them. Right.
+And I remember learning in
+
+73
+00:04:04.830 --> 00:04:09.540
+a, basically an encapsulation class
+in my comp side degree,
+
+74
+00:04:09.930 --> 00:04:12.930
+that hiding stuff that, you
+know, the user didn't need
+
+75
+00:04:12.930 --> 00:04:15.330
+to know about was always
+a good thing. And I
+
+76
+00:04:15.330 --> 00:04:17.880
+think for frameworks, there's a,
+there's a notion of a
+
+77
+00:04:17.880 --> 00:04:20.730
+surface area that they want
+to support that that comes
+
+78
+00:04:20.730 --> 00:04:24.120
+into play from both a
+security standpoint, perhaps, and also
+
+79
+00:04:24.120 --> 00:04:26.730
+just from a, you know,
+limit the number of things
+
+80
+00:04:26.730 --> 00:04:30.060
+that might change would break
+other people's code. Cause if
+
+81
+00:04:30.060 --> 00:04:32.490
+I use reflector to you
+get to some private method
+
+82
+00:04:32.490 --> 00:04:35.670
+in the.net framework and it
+breaks and I complained to
+
+83
+00:04:35.670 --> 00:04:37.470
+Microsoft, they're going to say
+shame on me. They're not
+
+84
+00:04:37.470 --> 00:04:40.860
+going to say that they
+support the private functionality. Right?
+
+85
+00:04:41.340 --> 00:04:45.000
+Exactly. So there's plausible deniability
+with an iceberg. So when
+
+86
+00:04:45.000 --> 00:04:47.190
+it hits your iceberg, you're
+like, Hey man, now I
+
+87
+00:04:47.190 --> 00:04:51.810
+only saw the top part
+That's right. The Titanic wasn't
+
+88
+00:04:51.810 --> 00:04:55.260
+the icebergs fault. Right? That's
+a good point. That's a
+
+89
+00:04:55.260 --> 00:04:57.330
+good point. It was the
+designer of the iceberg, apparently
+
+90
+00:04:58.830 --> 00:05:04.740
+February designed by committee designed
+by committee. I know that
+
+91
+00:05:04.740 --> 00:05:06.510
+I've spent a lot of
+time with a lot of
+
+92
+00:05:06.510 --> 00:05:08.940
+smart people in a room
+and come up with frameworks
+
+93
+00:05:08.940 --> 00:05:11.940
+and ideas. And I've had
+as many smart people as
+
+94
+00:05:11.940 --> 00:05:15.090
+I could put into a
+room, thinking that if you
+
+95
+00:05:15.090 --> 00:05:16.650
+have a bunch of smart
+people and you add them
+
+96
+00:05:16.650 --> 00:05:20.640
+all up, they may equal
+a smarter person, but inevitably
+
+97
+00:05:20.640 --> 00:05:23.940
+that's not the case. Yeah.
+The biggest problem I think
+
+98
+00:05:23.940 --> 00:05:26.280
+with designed by committee is
+you end up with a
+
+99
+00:05:26.310 --> 00:05:30.540
+compromise solution that tries to
+please everyone and ends up
+
+100
+00:05:30.540 --> 00:05:34.830
+with oftentimes something that doesn't
+please anyone and you can
+
+101
+00:05:34.830 --> 00:05:37.680
+have, you know, you certainly
+can get value by, by
+
+102
+00:05:38.220 --> 00:05:41.400
+running things through a committee
+and having meetings and stuff
+
+103
+00:05:41.550 --> 00:05:43.350
+to generate ideas and things.
+But at the end of
+
+104
+00:05:43.350 --> 00:05:46.380
+the day, it's best. If
+you've got some strong leadership
+
+105
+00:05:46.410 --> 00:05:49.800
+or strong vision that that
+says, you know, here is
+
+106
+00:05:50.220 --> 00:05:52.890
+what this product does, here's
+the persona that we're trying
+
+107
+00:05:52.890 --> 00:05:57.380
+to, to serve the needs
+of and make sure your
+
+108
+00:05:57.380 --> 00:06:02.150
+API or your product fits
+those needs very, very closely.
+
+109
+00:06:02.800 --> 00:06:06.350
+I, I often think when
+I see this particular this
+
+110
+00:06:06.350 --> 00:06:10.190
+month picture, I think of
+that video that went around
+
+111
+00:06:10.190 --> 00:06:13.280
+a few years ago on
+a YouTube of what if
+
+112
+00:06:13.280 --> 00:06:17.090
+Microsoft designed the iPad iPod
+box? Have you seen that
+
+113
+00:06:17.090 --> 00:06:20.080
+video? Yeah. Yeah. It's this
+great video is actually, it
+
+114
+00:06:20.080 --> 00:06:24.190
+was a real internal videos
+done for education and it
+
+115
+00:06:24.460 --> 00:06:28.060
+took part the original iPod
+box and said, we'll hear
+
+116
+00:06:28.060 --> 00:06:30.460
+that Mike, the Microsoft things
+that we value and you
+
+117
+00:06:30.460 --> 00:06:34.630
+know, how Microsoft hardware boxes
+and software boxes have badges
+
+118
+00:06:34.630 --> 00:06:38.140
+and awards and extra information
+and Pete, you know, flip
+
+119
+00:06:38.140 --> 00:06:41.320
+out pages and by the
+end of it, they developed
+
+120
+00:06:41.320 --> 00:06:44.230
+a box that looked exactly
+like the kind of box
+
+121
+00:06:44.230 --> 00:06:47.230
+you'd see, on the older
+kind of the nineties versions
+
+122
+00:06:47.230 --> 00:06:49.210
+of the Microsoft keyboard or
+the Microsoft mouse. I mean,
+
+123
+00:06:49.210 --> 00:06:52.120
+they really captured the essence
+of it, but it was
+
+124
+00:06:52.570 --> 00:06:55.360
+absolutely an example of design
+by committee. A bunch of
+
+125
+00:06:55.360 --> 00:06:57.070
+people said, Oh, we need
+this. And what about that?
+
+126
+00:06:57.070 --> 00:06:59.620
+And what about this checkbox?
+And by the time it
+
+127
+00:06:59.620 --> 00:07:03.880
+was over, it looked like
+a Jackson Pollock painting. Exactly.
+
+128
+00:07:04.480 --> 00:07:06.910
+And that happens with your,
+your products and your API
+
+129
+00:07:06.910 --> 00:07:09.910
+too, if you're not careful.
+And I think a lot
+
+130
+00:07:09.910 --> 00:07:13.060
+of really successful companies do
+a good job of keeping
+
+131
+00:07:13.060 --> 00:07:15.790
+a really tight focus on
+what the problem is they're
+
+132
+00:07:15.790 --> 00:07:18.070
+trying to solve. And they
+don't let themselves get distracted
+
+133
+00:07:18.070 --> 00:07:19.810
+with, well, what if we
+had this? And wouldn't it
+
+134
+00:07:19.810 --> 00:07:23.110
+be cool if we had
+that, It's such a difficult
+
+135
+00:07:23.110 --> 00:07:26.290
+balance though, such a difficult
+balance. I mean, if the
+
+136
+00:07:26.290 --> 00:07:28.420
+committee is a couple people
+share, but I know that
+
+137
+00:07:28.420 --> 00:07:30.310
+after five or 10 folks,
+it ends up being a
+
+138
+00:07:30.310 --> 00:07:34.060
+mess, but at the same
+time to design in a,
+
+139
+00:07:34.090 --> 00:07:36.280
+an ivory tower and assume
+that, you know, what people
+
+140
+00:07:36.280 --> 00:07:41.650
+need is also anti-pattern. Oh,
+certainly I think one of
+
+141
+00:07:41.650 --> 00:07:44.620
+the things that you definitely
+need a is early feedback
+
+142
+00:07:44.620 --> 00:07:46.930
+from real users. And I
+think, you know, a lot
+
+143
+00:07:46.930 --> 00:07:51.730
+of startups and things these
+days are releasing way earlier
+
+144
+00:07:51.730 --> 00:07:54.430
+than they ever would have
+10 years ago. And I
+
+145
+00:07:54.430 --> 00:07:56.770
+think that helps a lot.
+Oh, wait, it's almost a
+
+146
+00:07:56.770 --> 00:08:00.460
+design by crowdsourcing or design
+by iteration with what's being
+
+147
+00:08:00.460 --> 00:08:07.450
+done now. Yeah. So reinventing
+the wheel, reinventing the wheel.
+
+148
+00:08:07.450 --> 00:08:10.990
+This is the not invented
+here. Anti-pattern isn't it? Yeah,
+
+149
+00:08:10.990 --> 00:08:17.530
+exactly. The, you know, a
+lot of organizations don't trust
+
+150
+00:08:17.530 --> 00:08:20.110
+anything that, that they didn't
+build themselves or they always
+
+151
+00:08:20.110 --> 00:08:22.420
+believe they can build it
+better. And so, you know,
+
+152
+00:08:22.420 --> 00:08:26.740
+just reinventing the wheel is
+a super common anti-pattern, you
+
+153
+00:08:26.740 --> 00:08:29.200
+know, everybody wants to write
+their own logging framework or
+
+154
+00:08:29.200 --> 00:08:32.410
+their own, you know, way
+to do authentication, used to
+
+155
+00:08:32.410 --> 00:08:34.300
+be a huge one. Although
+a lot of people now
+
+156
+00:08:34.480 --> 00:08:37.590
+are, are using open ID
+or open authentication or, or
+
+157
+00:08:37.660 --> 00:08:41.110
+the asp.net membership system. But
+it used to be every
+
+158
+00:08:41.410 --> 00:08:43.150
+project he worked on. The
+first thing you did was
+
+159
+00:08:43.180 --> 00:08:44.950
+okay, well we need a
+login page. Let's build a
+
+160
+00:08:44.950 --> 00:08:48.520
+membership system. All right, great.
+Now let's build a logging
+
+161
+00:08:48.520 --> 00:08:52.180
+framework for it. But I'm
+wondering though that aren't there
+
+162
+00:08:52.180 --> 00:08:55.030
+more complicated things in play.
+I've been, I've been talking
+
+163
+00:08:55.140 --> 00:08:57.810
+a company recently about some
+of the different things that
+
+164
+00:08:57.810 --> 00:09:00.270
+they need and they, you
+know, they, they describe what
+
+165
+00:09:00.270 --> 00:09:02.250
+they want. And it's almost
+exactly like your picture here.
+
+166
+00:09:02.250 --> 00:09:07.350
+You've got like, they're crossing
+out roller axial, rotator ultimate
+
+167
+00:09:07.350 --> 00:09:10.170
+edition spinner for movement professionals.
+These are all just funny,
+
+168
+00:09:10.170 --> 00:09:13.530
+you know, different synonyms for
+the wheel. The company that
+
+169
+00:09:13.530 --> 00:09:14.880
+I've been talking to will
+say, well, you know, we
+
+170
+00:09:14.880 --> 00:09:17.490
+need this, you know, this
+messaging system by which we
+
+171
+00:09:17.490 --> 00:09:20.100
+could publish and subscribe that.
+And it's like, Oh, you
+
+172
+00:09:20.100 --> 00:09:22.080
+need a service bus. Yeah,
+I guess so are there
+
+173
+00:09:22.080 --> 00:09:23.850
+any, are there any of
+those, and then I'll, I'll
+
+174
+00:09:23.850 --> 00:09:26.280
+bring out a service bus
+or an opensource service bus,
+
+175
+00:09:26.280 --> 00:09:28.830
+maybe like answer as bus.
+And I'll say, you should
+
+176
+00:09:28.830 --> 00:09:32.010
+use that and say, well,
+it's not made by Microsoft
+
+177
+00:09:32.040 --> 00:09:34.440
+and it's not made by
+us. So we don't really
+
+178
+00:09:34.440 --> 00:09:36.810
+want to do that. And
+it's a, there's a fear
+
+179
+00:09:36.810 --> 00:09:39.090
+of open source, but there's
+also a, this is a
+
+180
+00:09:39.090 --> 00:09:41.970
+new one for me, a
+fear of using a product
+
+181
+00:09:41.970 --> 00:09:44.970
+that they'll have to justify
+if, and when someone buys
+
+182
+00:09:44.970 --> 00:09:49.220
+them, I have heard that
+exact same thing. And I've
+
+183
+00:09:49.220 --> 00:09:54.080
+heard concern with, with certain
+clients about, well, if we
+
+184
+00:09:54.080 --> 00:09:55.880
+get bought, we'll have to
+be able to show that
+
+185
+00:09:55.880 --> 00:09:57.560
+we have a good license
+for this. And I don't
+
+186
+00:09:57.560 --> 00:10:00.050
+know about the license for
+this open source product or,
+
+187
+00:10:00.500 --> 00:10:04.850
+or, you know, whatever know
+there's IP issues related to
+
+188
+00:10:04.850 --> 00:10:07.100
+that. And it just seems
+to me like, that's, that's
+
+189
+00:10:07.100 --> 00:10:09.620
+another anti-pattern of Gagne. You
+know, you're not going to
+
+190
+00:10:09.620 --> 00:10:14.690
+need it where you're worrying
+about the possible future of
+
+191
+00:10:14.720 --> 00:10:16.820
+an acquisition. And you know,
+what, if somebody is going
+
+192
+00:10:16.820 --> 00:10:19.370
+to acquire you, they're going
+to acquire you, not because
+
+193
+00:10:19.370 --> 00:10:22.400
+of your service post implementation.
+And it's not going to
+
+194
+00:10:22.400 --> 00:10:25.040
+break the deal. If you
+happen to use a particular
+
+195
+00:10:25.040 --> 00:10:27.620
+service bus versus another one,
+like, Oh my God, you
+
+196
+00:10:27.620 --> 00:10:29.930
+use lots for net. The
+deal's off. We can't buy
+
+197
+00:10:29.930 --> 00:10:33.830
+it for $10 million. Yeah. But
+there's, I've also heard concern
+
+198
+00:10:33.830 --> 00:10:37.300
+about people hosting open source.
+So the, the, the fear,
+
+199
+00:10:37.310 --> 00:10:39.170
+it goes all the way
+downhill. So you sell a
+
+200
+00:10:39.170 --> 00:10:42.470
+product rather than running it
+as a service. And then
+
+201
+00:10:42.470 --> 00:10:44.840
+they're saying, well, I've never
+used opensource before we're going
+
+202
+00:10:44.840 --> 00:10:47.210
+to be installing it in
+our data center. What does
+
+203
+00:10:47.210 --> 00:10:49.670
+it mean that we've brought
+this little, this little outbreak
+
+204
+00:10:49.670 --> 00:10:53.060
+monkey into our, our data
+center now that this DLL
+
+205
+00:10:53.060 --> 00:10:55.730
+from an unknown source is
+here and I've had this
+
+206
+00:10:55.730 --> 00:10:58.760
+issue at banks. I mean,
+having to do very detailed
+
+207
+00:10:58.850 --> 00:11:01.940
+security analysis, which is an
+important part of, of any
+
+208
+00:11:01.940 --> 00:11:06.140
+software system, particularly when it's
+being used in financial transactions.
+
+209
+00:11:07.520 --> 00:11:10.460
+There's the sense that, you
+know, things like new get
+
+210
+00:11:10.460 --> 00:11:12.830
+or gems make it really,
+really easy to just reach
+
+211
+00:11:12.830 --> 00:11:16.760
+out into the world and
+pull up functionality of unknown
+
+212
+00:11:16.820 --> 00:11:20.480
+origin. You know, wheels from
+people who've invented it before,
+
+213
+00:11:20.480 --> 00:11:22.850
+but we don't know those
+people and then integrate them
+
+214
+00:11:22.850 --> 00:11:26.600
+into our systems without even
+telling a boss. There was
+
+215
+00:11:26.600 --> 00:11:32.030
+concern about engineers implementing new
+features and using opensource software
+
+216
+00:11:32.030 --> 00:11:35.390
+without mentioning it to the
+bosses and giving them an
+
+217
+00:11:35.390 --> 00:11:37.310
+opportunity to even know that
+it was, it was there.
+
+218
+00:11:39.350 --> 00:11:41.990
+Well, I think that's a
+valid concern in some organizations.
+
+219
+00:11:42.050 --> 00:11:45.170
+I mean, if you're in
+the banking industry or you're
+
+220
+00:11:45.170 --> 00:11:47.690
+dealing with, you know, life
+and death and things like
+
+221
+00:11:47.690 --> 00:11:51.530
+that, if you're not selling
+widgets at a small store
+
+222
+00:11:51.530 --> 00:11:54.760
+or building an internal, I
+mean, there's, there's different levels
+
+223
+00:11:54.760 --> 00:11:57.880
+of risk. Right? What you
+were just saying, it reminds
+
+224
+00:11:57.880 --> 00:12:01.200
+me, have you read Russinovich
+his book zero day? Yeah,
+
+225
+00:12:02.160 --> 00:12:05.130
+it's on my Kindle. So
+one of the premises of
+
+226
+00:12:05.130 --> 00:12:08.910
+that is that, you know,
+people release viruses just into
+
+227
+00:12:08.910 --> 00:12:13.960
+the wild, but the viruses
+on a particular system are
+
+228
+00:12:13.980 --> 00:12:17.520
+programmed to do something. And
+I could totally imagine somebody,
+
+229
+00:12:17.580 --> 00:12:20.340
+you know, releasing something into
+you, get that org as
+
+230
+00:12:20.340 --> 00:12:23.640
+a, as an open source
+project that got popular, but
+
+231
+00:12:23.640 --> 00:12:26.580
+it was, you know, insidiously
+said, well, if I happen
+
+232
+00:12:26.580 --> 00:12:28.950
+to be running it, this
+particular bank, you know, do
+
+233
+00:12:28.950 --> 00:12:32.850
+something nefarious. And if somebody
+doesn't, you know, go through
+
+234
+00:12:32.850 --> 00:12:35.880
+that DLL and look for
+that exact code, it's going
+
+235
+00:12:35.880 --> 00:12:37.350
+to be really hard to
+find. So I could see
+
+236
+00:12:37.350 --> 00:12:39.810
+if you were a bank
+that you'd want to have
+
+237
+00:12:39.810 --> 00:12:43.200
+a higher bar for vetting,
+that, that kind of thing.
+
+238
+00:12:43.740 --> 00:12:45.930
+But I think by and
+large, you know, I don't
+
+239
+00:12:45.930 --> 00:12:48.750
+know that that's ever been
+done. You know, maybe I'm
+
+240
+00:12:48.750 --> 00:12:51.180
+giving somebody an idea now.
+And if so, maybe I'm
+
+241
+00:12:51.300 --> 00:12:54.360
+giving the good guys ideas
+to fix things. But I
+
+242
+00:12:54.360 --> 00:12:56.580
+think that would be a
+valid concern in, in high
+
+243
+00:12:56.580 --> 00:13:00.510
+security environments. But in most
+typical, I don't know that
+
+244
+00:13:00.510 --> 00:13:04.110
+it's worrying too much. I
+think, I think that everyone's
+
+245
+00:13:04.110 --> 00:13:06.270
+had that idea that it
+could be done. I mean,
+
+246
+00:13:06.990 --> 00:13:10.230
+PowerShell it's, you know, and
+everyone goes and opens up
+
+247
+00:13:10.230 --> 00:13:13.890
+PowerShell and then immediately allows
+it to run scripts. So,
+
+248
+00:13:13.890 --> 00:13:16.710
+you know, is PowerShell a
+virus delivery system? Well, no,
+
+249
+00:13:16.730 --> 00:13:18.720
+no more than a batch
+file. Right? I mean, if
+
+250
+00:13:18.720 --> 00:13:21.270
+I, I could certainly send
+you a batch file and
+
+251
+00:13:21.270 --> 00:13:23.580
+tell you to run it
+and there'd be various things
+
+252
+00:13:23.580 --> 00:13:25.680
+that you could in fact
+turn off. Right. I mean,
+
+253
+00:13:25.680 --> 00:13:30.240
+safety's are there for a
+reason, but that's why hopefully
+
+254
+00:13:30.240 --> 00:13:33.480
+if someone puts something evil
+into a repository, like nougat
+
+255
+00:13:33.480 --> 00:13:36.540
+or gems, the community would
+find that and spit it
+
+256
+00:13:36.540 --> 00:13:39.510
+out. But yeah, I'm sure
+that one day it will
+
+257
+00:13:39.510 --> 00:13:43.560
+happen and then everything will
+change, but certainly not invented
+
+258
+00:13:43.560 --> 00:13:46.420
+here is still an anti-pattern.
+We should be open to,
+
+259
+00:13:46.420 --> 00:13:48.660
+to using software that we
+didn't write, especially when that
+
+260
+00:13:48.660 --> 00:13:54.840
+software is not our, not
+our expertise. Yeah, exactly. And
+
+261
+00:13:54.840 --> 00:13:57.960
+I think that's, that's another
+key point is if, if
+
+262
+00:13:58.030 --> 00:14:01.050
+you have a business in
+which you have a competitive
+
+263
+00:14:01.050 --> 00:14:04.140
+advantage, you know, something you
+do, that's unique to your
+
+264
+00:14:04.140 --> 00:14:07.950
+business. That is one of
+the things you definitely don't
+
+265
+00:14:07.950 --> 00:14:10.830
+want to outsource. But if
+you have things that totally
+
+266
+00:14:10.830 --> 00:14:14.610
+aren't, you know, your, your
+value add, then there's no
+
+267
+00:14:14.610 --> 00:14:16.860
+reason why you should spend
+your time and your energy
+
+268
+00:14:16.920 --> 00:14:19.140
+on that. If there's someone
+else out there that that's
+
+269
+00:14:19.140 --> 00:14:20.760
+all they do and they
+do it better than you
+
+270
+00:14:20.760 --> 00:14:26.970
+do Exactly. You're next you're
+next month here has a
+
+271
+00:14:26.970 --> 00:14:29.910
+death March. And this is
+a bunch of people basically
+
+272
+00:14:29.940 --> 00:14:32.580
+like lemmings walking off a
+cliff, are these your employees?
+
+273
+00:14:32.580 --> 00:14:34.110
+Or do I recognize some
+of these people here are
+
+274
+00:14:34.110 --> 00:14:36.960
+these clip art people. Those
+are real people. Is there
+
+275
+00:14:36.960 --> 00:14:40.620
+a nimble pros? People is
+Brendan, Caitlin, Scott and Craig,
+
+276
+00:14:43.020 --> 00:14:47.220
+a real photo shoot that,
+that they do. So these
+
+277
+00:14:47.220 --> 00:14:49.800
+photos you made a lot
+of these are most of
+
+278
+00:14:49.800 --> 00:14:53.780
+them. Well, I mean personally,
+but The nipple froze gene,
+
+279
+00:14:54.500 --> 00:14:57.020
+mostly our designers, Caitlin and
+Craig that you see there,
+
+280
+00:14:58.130 --> 00:15:01.660
+they did the graphics for
+the calendar. Yeah. There's I
+
+281
+00:15:01.660 --> 00:15:04.520
+think one or two are
+stock photos. Like the iceberg
+
+282
+00:15:04.520 --> 00:15:08.300
+is a, is a stock
+photo that we licensed, but
+
+283
+00:15:08.300 --> 00:15:10.640
+most of the other ones
+are, are ones that they
+
+284
+00:15:10.640 --> 00:15:13.990
+actually did all the photography
+for. Yeah. When I, when
+
+285
+00:15:13.990 --> 00:15:15.790
+I first saw it, I
+said to myself, I want
+
+286
+00:15:15.790 --> 00:15:17.950
+a clever idea. I wonder
+if he just did this
+
+287
+00:15:17.950 --> 00:15:20.710
+whole thing with, with Google
+images, but if you go
+
+288
+00:15:20.710 --> 00:15:25.480
+through it, these are really
+very high quality, very tailored,
+
+289
+00:15:25.630 --> 00:15:29.470
+thoughtful images. They, it looks
+like a, like a motivational
+
+290
+00:15:29.470 --> 00:15:32.920
+calendar that you'd see it's
+got the same style, but
+
+291
+00:15:32.920 --> 00:15:36.850
+the photography is really is
+really high quality. So in
+
+292
+00:15:36.850 --> 00:15:40.720
+this, in this death, this
+is death March. We've all
+
+293
+00:15:40.720 --> 00:15:42.310
+been on a death March.
+I actually did. I did
+
+294
+00:15:42.310 --> 00:15:44.920
+a show with Rob Connery
+about the death March on,
+
+295
+00:15:45.520 --> 00:15:48.730
+on this developer's life. We've
+all been on those. Yeah.
+
+296
+00:15:48.730 --> 00:15:51.760
+And it's certainly an anti-pattern
+because I mean, a lot
+
+297
+00:15:51.760 --> 00:15:53.080
+of times there's not a
+whole lot, the team can
+
+298
+00:15:53.080 --> 00:15:55.360
+do about it, but you
+know, management just needs to
+
+299
+00:15:55.360 --> 00:15:58.150
+recognize that, you know, this
+is, if this project is
+
+300
+00:15:58.150 --> 00:16:00.970
+going to fail, you know,
+just working harder, isn't going
+
+301
+00:16:00.970 --> 00:16:03.940
+to turn it around and,
+or adding more hours, isn't
+
+302
+00:16:03.940 --> 00:16:07.630
+going to turn it around.
+There's that, there's always that
+
+303
+00:16:07.630 --> 00:16:11.440
+joke that if you, if
+you want to make sure
+
+304
+00:16:11.440 --> 00:16:13.330
+that a project will fail
+and become a death March,
+
+305
+00:16:13.330 --> 00:16:16.210
+it just add more people.
+And I remember them S
+
+306
+00:16:16.770 --> 00:16:20.380
+what's the old saying that
+a management seems to think
+
+307
+00:16:20.380 --> 00:16:22.930
+that a nine women can
+have a baby in a
+
+308
+00:16:22.930 --> 00:16:27.610
+month. Maybe you start feeling
+like that. You know that
+
+309
+00:16:27.610 --> 00:16:29.800
+you're in trouble and you're
+on a death March right
+
+310
+00:16:30.550 --> 00:16:33.850
+now, this, this one photograph
+on the next month called
+
+311
+00:16:33.880 --> 00:16:39.400
+copy folder. Versioning is really
+a beautiful photograph of some,
+
+312
+00:16:39.670 --> 00:16:42.100
+some kind of vanilla folders
+file folders, all in a
+
+313
+00:16:42.100 --> 00:16:46.000
+drawer where the person has
+got my project version five
+
+314
+00:16:46.360 --> 00:16:50.290
+on this day in my
+project version 1.2, we've all
+
+315
+00:16:50.290 --> 00:16:52.690
+done that before, you know,
+just sip it up and
+
+316
+00:16:52.720 --> 00:16:57.010
+rename the folder and that's
+source control. And inevitably people
+
+317
+00:16:57.010 --> 00:17:00.550
+will do that well into
+the development of their company
+
+318
+00:17:00.550 --> 00:17:03.580
+before they eventually switch over
+to an actual software versioning
+
+319
+00:17:03.580 --> 00:17:07.390
+system. Yeah. I've seen clients
+that this is still how
+
+320
+00:17:07.390 --> 00:17:10.600
+they manage projects and, you
+know, it's just scary cause
+
+321
+00:17:10.600 --> 00:17:13.090
+it doesn't scale at all.
+And even for one person,
+
+322
+00:17:13.250 --> 00:17:16.150
+it's often really hard to
+figure out where the latest
+
+323
+00:17:16.150 --> 00:17:18.490
+version is, or, you know,
+the branch where you were
+
+324
+00:17:18.580 --> 00:17:22.870
+playing with this particular experiment
+and the source control software
+
+325
+00:17:22.870 --> 00:17:26.440
+is it's so readily available
+and so good these days,
+
+326
+00:17:26.440 --> 00:17:28.690
+especially with a lot of
+the distributed ones that you
+
+327
+00:17:28.690 --> 00:17:31.960
+can just run everything on
+your local machine. I there's
+
+328
+00:17:31.960 --> 00:17:34.240
+just not too much of
+an excuse anymore, not to
+
+329
+00:17:34.240 --> 00:17:37.900
+use a real source control
+system. Why is this so
+
+330
+00:17:37.900 --> 00:17:41.110
+common? I mean, the thing
+that's so funny about anti-patterns
+
+331
+00:17:41.110 --> 00:17:45.430
+is that we've all seen
+them before and that's awful
+
+332
+00:17:45.430 --> 00:17:50.190
+because they're anti-patterns, but you
+know, copy folder versioning. We're
+
+333
+00:17:50.190 --> 00:17:52.530
+seeing it companies where, you
+know, when you're sitting down
+
+334
+00:17:52.530 --> 00:17:54.720
+with, with engineers and teaching
+them source control for the
+
+335
+00:17:54.720 --> 00:17:57.780
+first time, why is that
+where they never taught source
+
+336
+00:17:57.780 --> 00:18:00.240
+control or that they never
+had a mentor or are
+
+337
+00:18:00.240 --> 00:18:03.140
+people not using source control
+in college? Well, I think
+
+338
+00:18:03.140 --> 00:18:06.020
+they are using it in
+college today. And I think
+
+339
+00:18:06.050 --> 00:18:08.900
+this might just be a,
+a matter of how long
+
+340
+00:18:08.900 --> 00:18:10.940
+they've been in the industry
+versus, you know, when they
+
+341
+00:18:10.940 --> 00:18:13.700
+first got in. Cause I
+mean, 20 years ago, source
+
+342
+00:18:13.700 --> 00:18:16.910
+control, certainly wasn't ubiquitous and
+you know, 10 years ago
+
+343
+00:18:16.970 --> 00:18:20.150
+there were not as many
+good options as there are
+
+344
+00:18:20.150 --> 00:18:23.780
+today. So I think I,
+or I hope anyway that
+
+345
+00:18:23.780 --> 00:18:27.620
+anybody coming out of college
+today knows what source control
+
+346
+00:18:27.620 --> 00:18:30.170
+is and has used it.
+And hopefully they recognize the
+
+347
+00:18:30.170 --> 00:18:33.620
+value of it. But I
+think there's, there's certainly folks
+
+348
+00:18:33.620 --> 00:18:35.140
+that have been around for
+a long time or, or
+
+349
+00:18:35.140 --> 00:18:38.030
+maybe they came up through
+another path. I never went
+
+350
+00:18:38.030 --> 00:18:41.420
+to a actual, you know,
+topside degree, but you know,
+
+351
+00:18:41.450 --> 00:18:43.820
+maybe they got a different
+degree or they came up
+
+352
+00:18:44.630 --> 00:18:46.910
+through just through business or
+whatever. And you know, a
+
+353
+00:18:46.910 --> 00:18:50.260
+lot of developers don't come
+through academics. And, you know,
+
+354
+00:18:50.260 --> 00:18:53.690
+if you came from writing
+Excel, macros or SharePoint scripts
+
+355
+00:18:53.690 --> 00:18:56.120
+or something, the idea of
+storing that in some kind
+
+356
+00:18:56.120 --> 00:18:58.580
+of source code repository, and
+they never have entered into
+
+357
+00:18:58.580 --> 00:19:03.470
+your thoughts. And it's important
+that we treat folks like
+
+358
+00:19:03.470 --> 00:19:06.230
+that with kindness, you don't
+want to make a, a
+
+359
+00:19:06.230 --> 00:19:09.590
+new person or an old
+new person for lack of
+
+360
+00:19:09.590 --> 00:19:12.440
+a better way of phrasing.
+It feel bad because they
+
+361
+00:19:12.440 --> 00:19:16.190
+just may never have been,
+you know, maybe been made
+
+362
+00:19:16.190 --> 00:19:19.670
+familiar about these particular techniques.
+So while an anti-pattern might
+
+363
+00:19:19.670 --> 00:19:22.550
+be funny and something, we
+can kind of point out
+
+364
+00:19:22.550 --> 00:19:24.830
+and say, wow, that is,
+that is awful. I'm sure
+
+365
+00:19:24.830 --> 00:19:27.800
+no one does that. Instead
+we should have a more
+
+366
+00:19:27.800 --> 00:19:30.020
+kind of open attitude of
+like, yeah, these are anti
+
+367
+00:19:30.020 --> 00:19:32.810
+patterns. And when you see
+them, let's educate people and
+
+368
+00:19:32.900 --> 00:19:36.320
+let them know that this
+is not okay, but show
+
+369
+00:19:36.320 --> 00:19:37.910
+them the light in a,
+in a, in a kind
+
+370
+00:19:37.910 --> 00:19:40.340
+way that doesn't turn them
+off for the entire industry.
+
+371
+00:19:42.020 --> 00:19:43.830
+Right. Exactly. And, and, and
+like you said, these are
+
+372
+00:19:43.830 --> 00:19:46.910
+the things that we've all
+done, even, even professional developers.
+
+373
+00:19:46.910 --> 00:19:48.800
+I mean, it's still something
+that when I'm going to
+
+374
+00:19:48.800 --> 00:19:52.210
+deploy something to production and
+I'm just, you know, I
+
+375
+00:19:52.210 --> 00:19:54.350
+have a little bit of
+uncertainty about whether or not
+
+376
+00:19:54.350 --> 00:19:56.900
+everything's going to work just
+right. I'll take a copy
+
+377
+00:19:56.900 --> 00:19:59.660
+of the bin folder or
+a copy of the website
+
+378
+00:19:59.780 --> 00:20:02.270
+and just control C control
+V. And now I know
+
+379
+00:20:02.270 --> 00:20:04.250
+I can roll back easily
+if I screw something up,
+
+380
+00:20:04.430 --> 00:20:07.610
+you know, I think that
+should be a feature of
+
+381
+00:20:07.610 --> 00:20:10.850
+the operating system. Yeah. In
+fact it is. Yeah. But
+
+382
+00:20:10.850 --> 00:20:12.440
+I think you bring up
+a really good point that
+
+383
+00:20:12.830 --> 00:20:16.730
+they are anti-patterns that we
+have all done, you know,
+
+384
+00:20:16.790 --> 00:20:20.510
+everyone, Michael feathers or uncle
+Bob or bill Gates, or
+
+385
+00:20:20.570 --> 00:20:23.810
+whoever's Steve jobs, a copy
+folder once instead of using
+
+386
+00:20:23.810 --> 00:20:26.360
+Schwartz control. Although I don't
+think he wrote that much
+
+387
+00:20:26.360 --> 00:20:30.530
+code, but the point is
+no one gets to look
+
+388
+00:20:30.530 --> 00:20:32.810
+at a list like this
+and say, yes, I'm above
+
+389
+00:20:32.810 --> 00:20:34.640
+all of those. I've never
+done those things. Even the
+
+390
+00:20:34.640 --> 00:20:36.800
+best of us has done
+every single one of these,
+
+391
+00:20:37.400 --> 00:20:39.380
+which brings us to a
+year next month, which is
+
+392
+00:20:39.380 --> 00:20:42.710
+a wonderful one, the duct
+tape coder. I'm not sure
+
+393
+00:20:42.710 --> 00:20:45.320
+it is duct tape. Do
+you see T is that
+
+394
+00:20:45.320 --> 00:20:48.250
+something that is a universal
+thing? Is there duct tape
+
+395
+00:20:48.250 --> 00:20:50.790
+everywhere in the world? I
+don't know. That's a good
+
+396
+00:20:50.790 --> 00:20:53.970
+question. Good question for your
+readers to tell us about
+
+397
+00:20:53.970 --> 00:20:55.800
+it. They're not sure what
+it is. I know it's
+
+398
+00:20:55.890 --> 00:20:59.400
+pretty universal in North America,
+at least, although oddly enough,
+
+399
+00:20:59.400 --> 00:21:03.150
+I understand it's not very
+good at actually taping up
+
+400
+00:21:03.180 --> 00:21:07.710
+the talks I've been, even
+though that's what it's called.
+
+401
+00:21:07.710 --> 00:21:10.800
+If you work in a,
+you know, the HVAC industry
+
+402
+00:21:12.360 --> 00:21:15.000
+I've heard, and maybe this
+is a myth that duct
+
+403
+00:21:15.000 --> 00:21:18.450
+tape is actually really poor
+at holding together ducts. So,
+
+404
+00:21:19.440 --> 00:21:23.070
+Wow. That's funny. I did
+not even realize that. I
+
+405
+00:21:23.070 --> 00:21:26.550
+think I'm looking here at
+the, the I can has
+
+406
+00:21:26.550 --> 00:21:29.730
+Cheezburger site and I believe
+they have a website that's
+
+407
+00:21:29.730 --> 00:21:34.970
+called there. I fixed it.
+There it is. It's it's.
+
+408
+00:21:35.160 --> 00:21:37.530
+I just go and search
+for there. I fixed it.
+
+409
+00:21:37.560 --> 00:21:41.130
+And it's there. I fixed
+the.fail blog.com and it's effectively
+
+410
+00:21:41.130 --> 00:21:44.910
+actual pictures of people using
+duct tape to, to fix
+
+411
+00:21:44.910 --> 00:21:48.390
+things like they used it
+to fix mud flaps on
+
+412
+00:21:48.390 --> 00:21:52.050
+the moon Lander or a
+banister on stairs. And just
+
+413
+00:21:52.050 --> 00:21:56.550
+some unbelievable hacks. It's kind
+of like the daily WTF
+
+414
+00:21:57.090 --> 00:22:00.180
+for real people. So you
+can find instances of this
+
+415
+00:22:00.180 --> 00:22:02.850
+in the real world, certainly
+where people are taping doors
+
+416
+00:22:02.850 --> 00:22:05.820
+onto cars, but what are
+some examples of doing this
+
+417
+00:22:05.820 --> 00:22:10.650
+in software where you've just
+taped something together that shouldn't
+
+418
+00:22:10.650 --> 00:22:12.750
+never have been done that
+way? Well, a lot of
+
+419
+00:22:12.750 --> 00:22:16.710
+times in software, we are
+given a, a feature or
+
+420
+00:22:16.710 --> 00:22:19.590
+a bug that we need
+to implement or fix. And
+
+421
+00:22:19.920 --> 00:22:22.950
+we immediately see, like, I
+can fix this in this
+
+422
+00:22:22.950 --> 00:22:26.940
+spot and, and I could
+be done. Right. But you
+
+423
+00:22:26.940 --> 00:22:29.550
+just feel dirty about it
+because you know that, you
+
+424
+00:22:29.550 --> 00:22:32.370
+know, you're, you're putting the
+design of the code in
+
+425
+00:22:32.370 --> 00:22:34.710
+some way, you know, maybe
+you just added a simple
+
+426
+00:22:34.710 --> 00:22:37.980
+if check to something that,
+you know, maybe you needed
+
+427
+00:22:37.980 --> 00:22:39.780
+to also add that if
+check three of their places,
+
+428
+00:22:39.780 --> 00:22:42.180
+but nobody's reported those bugs
+yet. So you don't bother
+
+429
+00:22:42.510 --> 00:22:44.610
+or you hard code something
+that, you know, should really
+
+430
+00:22:44.610 --> 00:22:47.340
+be in the config file
+or, or you copy something
+
+431
+00:22:47.340 --> 00:22:49.170
+and paste it somewhere else,
+which we'll talk about as
+
+432
+00:22:49.170 --> 00:22:52.620
+another anti-pattern and, and that
+fixes it, but now you've
+
+433
+00:22:52.620 --> 00:22:55.380
+got duplication, but you're in
+a hurry. So you don't
+
+434
+00:22:55.380 --> 00:22:56.820
+fix it right then. So
+a lot of the time
+
+435
+00:22:56.820 --> 00:23:01.530
+it's, you know, doing stuff
+that's expedient and results in
+
+436
+00:23:01.530 --> 00:23:05.640
+working software and the client
+doesn't necessarily see it, right?
+
+437
+00:23:05.640 --> 00:23:07.140
+This is like, you know,
+if you don't pull up
+
+438
+00:23:07.140 --> 00:23:08.670
+the hood of the engine,
+you don't see that it's
+
+439
+00:23:08.670 --> 00:23:11.370
+all held together with duct
+tape and bailing wire because
+
+440
+00:23:11.370 --> 00:23:14.250
+the car is still running
+and depending on what it
+
+441
+00:23:14.250 --> 00:23:16.670
+is, you're building you. And
+that can be just fine.
+
+442
+00:23:17.070 --> 00:23:19.260
+You know, if you're in
+a situation where you're, you
+
+443
+00:23:19.260 --> 00:23:21.000
+know, you're trying to get
+a prototype out the door
+
+444
+00:23:21.000 --> 00:23:23.520
+for a conference, or you're
+a startup, and you've got,
+
+445
+00:23:23.850 --> 00:23:25.740
+you know, just so much
+funding to go, and you've
+
+446
+00:23:25.740 --> 00:23:28.740
+got to have something out
+there in a certain timeframe,
+
+447
+00:23:29.220 --> 00:23:30.870
+then you probably don't need
+to worry too much about
+
+448
+00:23:30.960 --> 00:23:34.140
+the technical debt that you're
+creating. But if you're building
+
+449
+00:23:34.140 --> 00:23:36.270
+software to last and that
+you're going to maintain for
+
+450
+00:23:36.270 --> 00:23:39.540
+a long time, it's better
+typically to, to build it
+
+451
+00:23:39.780 --> 00:23:41.700
+the right way as you
+go so that it doesn't
+
+452
+00:23:41.700 --> 00:23:44.070
+become a big ball of
+mud and fall over under
+
+453
+00:23:44.070 --> 00:23:46.640
+its own weight. Exactly. And
+of course, The dangerous thing
+
+454
+00:23:46.640 --> 00:23:49.250
+about duct tape coding is
+that it looks like it
+
+455
+00:23:49.250 --> 00:23:51.230
+works. So you're not going
+to look under the hood
+
+456
+00:23:51.230 --> 00:23:53.570
+or you're not going to
+poke around. And when it
+
+457
+00:23:53.570 --> 00:23:57.860
+does eventually break, it inevitably
+breaks in a spectacular way.
+
+458
+00:23:58.330 --> 00:24:00.100
+Yeah. Or a very hard
+to find a way, which
+
+459
+00:24:00.130 --> 00:24:02.500
+is the same thing in
+our industry. Yeah. Even worse
+
+460
+00:24:02.500 --> 00:24:06.910
+anymore. Feature creep. This is
+a risk is a really
+
+461
+00:24:06.910 --> 00:24:10.090
+great one. You've got a,
+a tricycle and it's got
+
+462
+00:24:10.090 --> 00:24:13.750
+a GPS on it and
+it's got a trailer hitch
+
+463
+00:24:13.780 --> 00:24:17.560
+and an umbrella. This looks
+exactly like software that I
+
+464
+00:24:17.560 --> 00:24:21.370
+have created before. I love
+the GPS. That's very nicely
+
+465
+00:24:21.370 --> 00:24:25.470
+bolted onto the tricycle here.
+The children's tiny bicycle. Yeah.
+
+466
+00:24:25.480 --> 00:24:28.960
+It's got a trailer hitch
+and a water bottle and
+
+467
+00:24:28.960 --> 00:24:31.510
+a dog that's, they, they
+added as many things as
+
+468
+00:24:31.510 --> 00:24:35.710
+they could to this, this
+truck. And then the tagline
+
+469
+00:24:35.710 --> 00:24:38.620
+is just one more feature.
+And then it's done. And,
+
+470
+00:24:39.490 --> 00:24:42.250
+you know, adding, adding features
+and feature creep is often
+
+471
+00:24:42.250 --> 00:24:46.060
+something that causes delays in
+shipping and delays in shipping,
+
+472
+00:24:46.060 --> 00:24:50.830
+or are a key form
+of waste in software development.
+
+473
+00:24:50.980 --> 00:24:52.510
+You know, if you, if
+you read some of the
+
+474
+00:24:52.510 --> 00:24:57.190
+lean software development books by
+Mary Poppins and others in
+
+475
+00:24:57.190 --> 00:24:59.530
+that space, you know, the
+thing you want to do
+
+476
+00:24:59.530 --> 00:25:02.650
+is ship the software as
+quickly as you can. And
+
+477
+00:25:02.650 --> 00:25:05.800
+feature creep just keeps you
+from doing that. So When
+
+478
+00:25:05.800 --> 00:25:09.430
+though is feature, I mean,
+is feature creep preventing you
+
+479
+00:25:09.430 --> 00:25:12.100
+from shipping and iteration and,
+and how do you, I
+
+480
+00:25:12.100 --> 00:25:13.840
+mean, if you're want to
+be agile and you want
+
+481
+00:25:13.840 --> 00:25:17.710
+to react to customer needs,
+you're going to be adding
+
+482
+00:25:17.710 --> 00:25:20.920
+features here and there. So
+if you look at particularly
+
+483
+00:25:20.920 --> 00:25:23.740
+like software as a service
+and websites as a service,
+
+484
+00:25:24.040 --> 00:25:27.040
+they're always adding something each
+month, how is that different
+
+485
+00:25:27.040 --> 00:25:30.580
+from feature creep? Well, I'll
+see there, if they're adding
+
+486
+00:25:30.580 --> 00:25:34.270
+something each month there they're
+still shipping at a regular
+
+487
+00:25:34.270 --> 00:25:40.000
+cadence. It's when the feature
+creep results in either shipping
+
+488
+00:25:40.720 --> 00:25:44.590
+schedule overruns or costs, overruns
+that it becomes a problem.
+
+489
+00:25:44.590 --> 00:25:46.930
+And an anti-pattern, you know,
+if you've committed that you're
+
+490
+00:25:46.930 --> 00:25:50.440
+going to ship every month
+and then someone says, Oh,
+
+491
+00:25:50.440 --> 00:25:52.120
+no, but it has to
+have this feature. That's a
+
+492
+00:25:52.120 --> 00:25:54.460
+favorite of mine. And there's
+no way that can happen
+
+493
+00:25:54.460 --> 00:25:58.570
+without either pushing back your
+release date or doubling the
+
+494
+00:25:58.570 --> 00:26:01.180
+size of your dev team.
+Well, then that's an example
+
+495
+00:26:01.180 --> 00:26:03.910
+of a feature creepy and
+a problem, right? The better
+
+496
+00:26:03.910 --> 00:26:07.630
+solution probably is to cut
+some feature, ship the thing,
+
+497
+00:26:07.990 --> 00:26:09.580
+and then let the next
+feature go into the next
+
+498
+00:26:09.580 --> 00:26:13.210
+month release. Right. I see.
+All right. That makes sense.
+
+499
+00:26:14.260 --> 00:26:16.810
+Yeah. Simply simply adding a
+feature is not feature creep,
+
+500
+00:26:16.840 --> 00:26:20.440
+but letting the direction of
+the company and the cadence
+
+501
+00:26:20.440 --> 00:26:23.260
+at which you're shipping be
+effected by feet. You know,
+
+502
+00:26:23.260 --> 00:26:25.330
+features being added at the
+last minute is the adding
+
+503
+00:26:25.360 --> 00:26:31.750
+pattern. And you talk about,
+you're talking about waterfall. We
+
+504
+00:26:31.750 --> 00:26:35.110
+talk about copy paste programming.
+There's a great one on
+
+505
+00:26:35.110 --> 00:26:38.170
+spaghetti code. The one that
+I like the best though,
+
+506
+00:26:38.170 --> 00:26:41.170
+that kind of smacked me
+in the face towards the
+
+507
+00:26:41.170 --> 00:26:45.360
+end is the calendar coder
+blindly following tips from calendars
+
+508
+00:26:45.360 --> 00:26:49.610
+as a best practice. That
+was brilliant. That one is
+
+509
+00:26:49.610 --> 00:26:52.130
+sort of a take on
+the cargo cult programmer, which
+
+510
+00:26:52.130 --> 00:26:56.540
+is, or just, you know,
+cargo called programming. The idea
+
+511
+00:26:56.540 --> 00:26:59.630
+of there being, you know,
+you're just following the example
+
+512
+00:26:59.630 --> 00:27:02.310
+that you heard because you
+know, someone on Twitter said
+
+513
+00:27:02.360 --> 00:27:04.880
+it or, or somebody's blog
+that your sex said it.
+
+514
+00:27:05.360 --> 00:27:07.760
+And just, you know, the,
+the general idea there, the
+
+515
+00:27:07.760 --> 00:27:09.530
+reason why that's an anti-pattern
+is you just really want
+
+516
+00:27:09.530 --> 00:27:15.230
+to understand the concept before
+you blindly implemented. Yeah, actually,
+
+517
+00:27:15.230 --> 00:27:17.510
+it's funny. I put in
+disclaimers on my blog every
+
+518
+00:27:17.510 --> 00:27:19.370
+once in a while, when
+I do things where I
+
+519
+00:27:19.370 --> 00:27:22.400
+know that someone is going
+to copy paste it and
+
+520
+00:27:22.760 --> 00:27:26.000
+take it as gospel, and
+I'll put in these silly
+
+521
+00:27:26.000 --> 00:27:29.540
+disclaimers to make it really,
+really clear, you know, you
+
+522
+00:27:29.540 --> 00:27:32.780
+got this on the internet,
+like you didn't, you didn't
+
+523
+00:27:32.780 --> 00:27:34.850
+come here. Cause I know
+anything you came here because
+
+524
+00:27:34.850 --> 00:27:37.430
+Google sent you here. And
+that does not mean that
+
+525
+00:27:37.430 --> 00:27:39.860
+this is the right, the
+right solution or the right
+
+526
+00:27:39.860 --> 00:27:43.580
+place. So this, this solution
+might, you know, might kill
+
+527
+00:27:43.580 --> 00:27:46.460
+your entire software development team
+and don't come crying to
+
+528
+00:27:46.460 --> 00:27:48.740
+me when it actually does
+happen. Right? Yeah. I've seen
+
+529
+00:27:48.740 --> 00:27:50.510
+your disclaimers. They're often a
+lot of fun to read.
+
+530
+00:27:51.830 --> 00:27:54.050
+No, I actually, I wrote
+a blog, a blog post
+
+531
+00:27:54.050 --> 00:27:58.220
+on cargo cult programming, gosh,
+I want to say seven
+
+532
+00:27:58.220 --> 00:28:01.400
+or eight years ago. And
+as I remember the idea
+
+533
+00:28:01.430 --> 00:28:04.970
+of this term cargo cult
+was that during world war
+
+534
+00:28:05.030 --> 00:28:07.880
+II, there would be these
+airstrips on all the islands
+
+535
+00:28:07.880 --> 00:28:10.970
+in the Pacific ocean. And
+then when the war was
+
+536
+00:28:10.970 --> 00:28:15.010
+over and all the Americans
+went home that the, the,
+
+537
+00:28:15.010 --> 00:28:17.570
+the natives that were on
+the islands where these airships
+
+538
+00:28:17.570 --> 00:28:21.140
+were, would basically dress up
+as ground traffic controllers, get
+
+539
+00:28:21.140 --> 00:28:25.160
+sticks and wave those sticks.
+And which seems like a
+
+540
+00:28:25.160 --> 00:28:27.650
+totally reasonable thing to do.
+They're standing on a, you
+
+541
+00:28:27.650 --> 00:28:30.890
+know, they shot the Americans
+and the sitting on a,
+
+542
+00:28:30.920 --> 00:28:33.800
+with these sticks waving, and
+then airplanes would come in
+
+543
+00:28:33.800 --> 00:28:37.400
+and drop cargo. I mean,
+a supplies would appear. So
+
+544
+00:28:37.430 --> 00:28:41.000
+they were misunderstanding the cause
+and effect. And I think
+
+545
+00:28:41.000 --> 00:28:45.740
+that that applies to, you
+know, blogs and, and copy
+
+546
+00:28:45.740 --> 00:28:48.800
+pasting software from around or
+falling tips from a calendar.
+
+547
+00:28:48.800 --> 00:28:52.880
+The idea that, well, if
+I just start copying software
+
+548
+00:28:52.880 --> 00:28:54.950
+from Steve Smith, he's a
+smart guy. That's going to
+
+549
+00:28:54.950 --> 00:28:59.210
+make my software really, really
+awesome software. Right? Yeah, exactly.
+
+550
+00:28:59.270 --> 00:29:01.850
+And there's, there's a great
+Wikipedia thing on cargo. Call
+
+551
+00:29:02.090 --> 00:29:05.000
+that a toxic exactly about
+what you're, what you're mentioning.
+
+552
+00:29:06.560 --> 00:29:09.290
+And that's, that's the thing
+with, with software development or
+
+553
+00:29:09.290 --> 00:29:12.410
+in any industry I'm sure
+is blindly implementing things that
+
+554
+00:29:12.410 --> 00:29:15.080
+you think are, are good
+practices or that somebody else
+
+555
+00:29:15.320 --> 00:29:17.480
+is telling you, Hey, these
+are best practices. You should
+
+556
+00:29:17.480 --> 00:29:19.970
+be doing them, you know,
+without doing the research to
+
+557
+00:29:19.970 --> 00:29:23.600
+really understand why they work
+is, is a, an anti-pattern,
+
+558
+00:29:23.600 --> 00:29:27.230
+you know, it's a recipe
+for disaster. Yes, definitely. Like
+
+559
+00:29:27.470 --> 00:29:29.510
+I know, I remember we're
+learning all of the, the
+
+560
+00:29:29.510 --> 00:29:34.700
+uncle Bob solid principles, implementing
+those solid principles and making
+
+561
+00:29:34.700 --> 00:29:37.280
+sure that my application is
+in kind of quote, unquote
+
+562
+00:29:37.280 --> 00:29:40.190
+compliance with them without really
+understanding why I would do
+
+563
+00:29:40.190 --> 00:29:43.840
+that is, is an extremely
+dangerous thing to do. Blindly
+
+564
+00:29:43.840 --> 00:29:47.800
+doing anything is, is always
+a problem. Yes. So folks
+
+565
+00:29:47.800 --> 00:29:53.470
+can get the, the calendar,
+the 2012 software craftsmanship, motivational
+
+566
+00:29:53.470 --> 00:29:56.700
+calendar they can get at
+nimble pros. And I M
+
+567
+00:29:56.700 --> 00:30:00.460
+B L E pros.com/calendar. And
+that'll take you to the
+
+568
+00:30:00.460 --> 00:30:03.940
+right site, but Steve's got
+a really cool deal for
+
+569
+00:30:03.940 --> 00:30:07.810
+us here. If you guys
+tweet first, first five people
+
+570
+00:30:07.930 --> 00:30:12.340
+who tweet at nimble pros
+with the hashtag Hansel minutes,
+
+571
+00:30:12.670 --> 00:30:16.600
+we'll get a, a free
+software craftsmanship, motivational calendar. So
+
+572
+00:30:16.600 --> 00:30:19.930
+this is we're at now
+30 minutes and 12 seconds
+
+573
+00:30:19.930 --> 00:30:23.410
+into the podcast, Steve, for
+the five people who make
+
+574
+00:30:23.410 --> 00:30:26.110
+it this far into the
+weekly show, they will be
+
+575
+00:30:26.110 --> 00:30:28.690
+very happy because they're going
+to get a free motivational
+
+576
+00:30:28.690 --> 00:30:32.190
+calendar. And I appreciate that
+from you. Oh, no problem.
+
+577
+00:30:32.790 --> 00:30:35.280
+Appreciate you taking the time
+to talk to me about
+
+578
+00:30:35.280 --> 00:30:37.230
+this today. And hopefully we'll
+be able to get through
+
+579
+00:30:37.230 --> 00:30:38.490
+the rest of the calendar
+and the time that we
+
+580
+00:30:38.490 --> 00:30:41.700
+have, I'm afraid the time
+is over Three minutes and
+
+581
+00:30:41.700 --> 00:30:44.940
+that was all the time
+we've got Calendar code or
+
+582
+00:30:44.940 --> 00:30:48.450
+my friend. All right, well,
+that's fine. We'll let the
+
+583
+00:30:48.660 --> 00:30:51.180
+month's in 30 minutes. What
+about the folks pick up
+
+584
+00:30:51.180 --> 00:30:53.100
+the last few months that
+we didn't cover when they,
+
+585
+00:30:53.220 --> 00:30:55.890
+when they get the calendar
+themselves? Exactly. So they can
+
+586
+00:30:55.890 --> 00:31:00.510
+get that a nimble pros.com/calendar,
+or they can tweet at
+
+587
+00:31:00.510 --> 00:31:03.090
+nimble pros with the hashtag
+Hansel minutes. And the first
+
+588
+00:31:03.090 --> 00:31:06.900
+five people that Steve sees
+will get a copy of
+
+589
+00:31:06.900 --> 00:31:09.900
+the calendar. And this has
+been another episode of Hanselminutes
+
+590
+00:31:10.380 --> 00:31:11.820
+and we'll see you again
+next week.
+

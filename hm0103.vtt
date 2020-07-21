@@ -1,0 +1,2851 @@
+WEBVTT FILE
+
+1
+00:00:12.020 --> 00:00:17.510
+From Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+2
+00:00:17.510 --> 00:00:22.610
+web developer and technologist Scott
+Hanselman posted by Carl Franklin. This
+
+3
+00:00:22.610 --> 00:00:26.630
+is Lawrence Ryan announcing show number
+one Oh three. Recorded live
+
+4
+00:00:26.630 --> 00:00:33.050
+Wednesday, March 5th, 2008. Support for Hanselman
+it's just provided by Tellerik
+
+5
+00:00:33.110 --> 00:00:37.010
+rad controls, but most comprehensive
+suite of components for windows
+
+6
+00:00:37.010 --> 00:00:47.090
+forms and asp.net web applications.
+online@wwwdottelerik.com. Support is also provided
+
+7
+00:00:47.090 --> 00:00:52.400
+by.net developers journal the world's
+leading.net developer magazine online at
+
+8
+00:00:52.820 --> 00:00:58.160
+www dot <inaudible> dot com.
+In this episode, Scott talks
+
+9
+00:00:58.160 --> 00:01:01.850
+with keto Bradley on Microsoft
+developer on the connected systems
+
+10
+00:01:01.850 --> 00:01:09.230
+architecture team about testing after
+unit tests. Hi, this is
+
+11
+00:01:09.230 --> 00:01:11.300
+Scott Hanselman and this is
+another episode of Hansel minutes
+
+12
+00:01:11.300 --> 00:01:13.490
+and I'm sitting here in
+building 42 on the Microsoft
+
+13
+00:01:13.490 --> 00:01:16.670
+campus. And I'm sitting down
+with Kitchell Bradley a developer
+
+14
+00:01:17.150 --> 00:01:20.540
+on the connected systems architecture
+team. Hello, thanks for taking
+
+15
+00:01:20.540 --> 00:01:23.480
+the time. I was given
+your name by Chris cells
+
+16
+00:01:23.480 --> 00:01:25.940
+who just raved about some
+of the stuff that you
+
+17
+00:01:25.940 --> 00:01:28.820
+were doing internally and said
+that you gave a presentation
+
+18
+00:01:29.480 --> 00:01:32.510
+on testing after unit tests.
+And I saw this and
+
+19
+00:01:32.510 --> 00:01:34.040
+immediately said, okay, I've got
+to come and hang out
+
+20
+00:01:34.040 --> 00:01:36.290
+with this guy. So now
+that I'm up visiting in
+
+21
+00:01:36.290 --> 00:01:38.220
+Redmond, I'm happy to be
+able to sit down and
+
+22
+00:01:38.240 --> 00:01:40.730
+chat with you. Now I've
+worked on systems that have
+
+23
+00:01:40.730 --> 00:01:43.430
+done testing and unit testing
+and code coverage. So I
+
+24
+00:01:43.430 --> 00:01:45.830
+thought I pretty much had
+a handle on that, but
+
+25
+00:01:45.830 --> 00:01:47.870
+you've got some ideas that
+indicate that maybe I'm not
+
+26
+00:01:47.870 --> 00:01:50.870
+as prepared as I thought
+I was. Well, yes, I
+
+27
+00:01:50.870 --> 00:01:55.040
+guess most people are familiar
+with a unit testing and
+
+28
+00:01:55.040 --> 00:01:57.590
+a common metric when you
+are writing unit tests to
+
+29
+00:01:57.590 --> 00:02:01.010
+know that you have sufficient
+tests is code coverage. And
+
+30
+00:02:01.010 --> 00:02:05.720
+so oftentimes a goal will
+be 80% code coverage that
+
+31
+00:02:05.720 --> 00:02:09.860
+says that your tests hit
+80% of the lines of
+
+32
+00:02:09.860 --> 00:02:14.210
+code, you know, essentially in
+your product. And ideally of
+
+33
+00:02:14.210 --> 00:02:16.400
+course you would hope to
+get a hundred percent, but
+
+34
+00:02:16.400 --> 00:02:19.430
+if you have a hundred
+percent code coverage, does this
+
+35
+00:02:19.430 --> 00:02:22.460
+mean that you're done testing,
+you can ship your product
+
+36
+00:02:22.490 --> 00:02:25.670
+and your customers and your
+customers will be delighted. And
+
+37
+00:02:25.700 --> 00:02:28.640
+I think the answer typically
+is no. So then the
+
+38
+00:02:28.640 --> 00:02:31.490
+question becomes, when are you
+done testing and how much
+
+39
+00:02:31.490 --> 00:02:32.750
+testing do you need to
+do and how do you
+
+40
+00:02:32.750 --> 00:02:35.600
+know what tests you should
+do and whether they're sufficient.
+
+41
+00:02:35.810 --> 00:02:37.850
+So if I had a,
+a method that, you know,
+
+42
+00:02:37.850 --> 00:02:39.830
+took a Boolean and I
+have an if statement inside
+
+43
+00:02:39.830 --> 00:02:42.860
+it, if this else that
+I've got two branches and
+
+44
+00:02:42.860 --> 00:02:45.620
+I might run a, a
+complexity analysis and do a
+
+45
+00:02:45.620 --> 00:02:47.900
+cyclometic complexion, and it would
+tell me that there's two
+
+46
+00:02:47.900 --> 00:02:51.200
+ways to get through that
+method. I then maybe write
+
+47
+00:02:51.200 --> 00:02:53.630
+two tests. I'd say that
+I had a hundred percent
+
+48
+00:02:53.630 --> 00:02:56.210
+code coverage. And I'm feeling
+at this point, pretty good
+
+49
+00:02:56.210 --> 00:03:00.700
+about my code, right? But
+maybe you shouldn't be. One
+
+50
+00:03:00.700 --> 00:03:04.330
+of the things is, is
+that code coverage can't measure
+
+51
+00:03:04.360 --> 00:03:07.030
+the coverage of code that's
+not there. And so for
+
+52
+00:03:07.030 --> 00:03:09.850
+example, your function may be
+missing error checking. If you
+
+53
+00:03:09.850 --> 00:03:14.110
+pass an old parameter to
+there, and that is the
+
+54
+00:03:14.110 --> 00:03:17.080
+reference, you're gonna get a
+crash. You're a hundred percent
+
+55
+00:03:17.080 --> 00:03:19.960
+code coverage. Won't detect that
+kind of condition. Even if
+
+56
+00:03:19.960 --> 00:03:22.090
+you do have all of
+your error checking and all
+
+57
+00:03:22.090 --> 00:03:24.220
+of the code is in
+fact present, and you still
+
+58
+00:03:24.220 --> 00:03:27.160
+have a hundred percent code
+coverage. Th the data itself
+
+59
+00:03:27.310 --> 00:03:29.170
+is what is going to
+determine the behavior of the
+
+60
+00:03:29.170 --> 00:03:32.350
+function and that isn't measured
+by code coverage. But code
+
+61
+00:03:32.350 --> 00:03:35.620
+coverage does tell you something
+really important code coverage tells
+
+62
+00:03:35.620 --> 00:03:39.160
+you what code you have
+not tested is a negative
+
+63
+00:03:39.160 --> 00:03:40.630
+metric, but we tend to
+think of it as a
+
+64
+00:03:40.630 --> 00:03:43.810
+positive metric. So if you
+have code coverage, it tells
+
+65
+00:03:43.810 --> 00:03:46.660
+you that it's possible for
+that code to execute correctly,
+
+66
+00:03:46.660 --> 00:03:48.700
+at least in your test.
+But it doesn't mean it's
+
+67
+00:03:48.700 --> 00:03:50.830
+going to work correctly for
+a customer. On the other
+
+68
+00:03:50.830 --> 00:03:53.380
+hand, if there's a bit
+of code that has no
+
+69
+00:03:53.380 --> 00:03:56.440
+code coverage, you know, that
+you haven't tested it. And
+
+70
+00:03:56.440 --> 00:03:58.270
+so, you know that you
+don't know whether it works
+
+71
+00:03:58.270 --> 00:04:00.620
+or not. Okay. So you
+decided to say this again
+
+72
+00:04:00.630 --> 00:04:02.220
+and to make sure that
+this got, cause I'm drilling
+
+73
+00:04:02.220 --> 00:04:03.630
+this into my own brain
+at the same time, as
+
+74
+00:04:03.630 --> 00:04:06.270
+we're drilling it into the
+listeners. Yes. By doing code
+
+75
+00:04:06.270 --> 00:04:10.080
+coverage, I determined that it
+is possible for that code
+
+76
+00:04:10.080 --> 00:04:13.590
+that I've covered to run
+properly. It's possible. It's not
+
+77
+00:04:13.590 --> 00:04:16.470
+that it ran properly. It
+ran properly in this instance.
+
+78
+00:04:16.500 --> 00:04:20.220
+Right. But there is other
+parallel universes that it very,
+
+79
+00:04:20.220 --> 00:04:22.860
+very likely will. Well, yeah,
+I think I can give
+
+80
+00:04:22.950 --> 00:04:25.620
+another example, maybe an analogy
+that would make it easier
+
+81
+00:04:25.620 --> 00:04:28.230
+to understand, and which is
+suppose that you are going
+
+82
+00:04:28.230 --> 00:04:32.100
+to test the, the road
+system in the state. Right.
+
+83
+00:04:32.190 --> 00:04:34.890
+And so you know about
+all the roads, there's little
+
+84
+00:04:34.890 --> 00:04:38.340
+roads, there's driveways, there's freeways,
+there's highways, and you take
+
+85
+00:04:38.340 --> 00:04:41.070
+your little three cylinder hatchback
+and you drive it down.
+
+86
+00:04:41.070 --> 00:04:44.340
+Every single road, take a
+small car drive everywhere. Absolutely.
+
+87
+00:04:44.550 --> 00:04:47.160
+And you may find that
+you're successful, or maybe you
+
+88
+00:04:47.160 --> 00:04:49.050
+run into a power line
+over the road. You need
+
+89
+00:04:49.050 --> 00:04:50.610
+to know what you need
+to remove that. Or maybe
+
+90
+00:04:50.610 --> 00:04:53.130
+there's a bridge that hasn't
+been built yet. So you
+
+91
+00:04:53.130 --> 00:04:54.990
+discover those things. You fix
+them, you've got a hundred
+
+92
+00:04:54.990 --> 00:04:59.160
+percent road coverage and you
+feel pretty satisfied. Then you
+
+93
+00:04:59.310 --> 00:05:01.470
+say you open up the
+roads and you let people
+
+94
+00:05:01.470 --> 00:05:04.260
+go and drive on them.
+And maybe the first thing
+
+95
+00:05:04.260 --> 00:05:07.590
+that happens is that a
+double Decker bus gets onto
+
+96
+00:05:07.590 --> 00:05:10.320
+the freeway and runs into
+an overpass crashes into it.
+
+97
+00:05:10.800 --> 00:05:14.580
+And so I think that
+it wasn't really sufficient to
+
+98
+00:05:14.890 --> 00:05:18.570
+test every road. You also
+needed to know what kind
+
+99
+00:05:18.570 --> 00:05:21.210
+of vehicles were going to
+be traveling on them. Maybe
+
+100
+00:05:21.210 --> 00:05:25.170
+your three cylinder vehicle was
+always going slow. And when
+
+101
+00:05:25.200 --> 00:05:29.880
+a, you know, an eight
+cylinder Jaguar turns the corner,
+
+102
+00:05:30.180 --> 00:05:31.770
+it goes flying off the
+road, cause it's going a
+
+103
+00:05:31.770 --> 00:05:34.230
+hundred miles an hour. And,
+and the speed limit sign
+
+104
+00:05:34.230 --> 00:05:37.500
+was 120, maybe even. So
+if we wanted to test
+
+105
+00:05:37.740 --> 00:05:41.160
+the highway system very effectively,
+it may be that we
+
+106
+00:05:41.160 --> 00:05:43.230
+do want to sand a
+slow car and a small
+
+107
+00:05:43.230 --> 00:05:46.470
+vehicle down every single road
+find the roads aren't finished,
+
+108
+00:05:46.470 --> 00:05:50.280
+et cetera. But the way
+to get the most effective
+
+109
+00:05:50.820 --> 00:05:53.940
+results would be to take
+a large variety of vehicles
+
+110
+00:05:54.240 --> 00:05:57.440
+with different capabilities and sizes
+and shapes as speeds, perhaps
+
+111
+00:05:57.440 --> 00:06:00.650
+drivers and send them down
+every road. But the problem
+
+112
+00:06:00.650 --> 00:06:03.170
+then is it may be
+that we don't have the
+
+113
+00:06:03.170 --> 00:06:05.840
+time or the resources to
+send so many vehicles down
+
+114
+00:06:05.870 --> 00:06:07.610
+every single road in the
+state. You could imagine that
+
+115
+00:06:07.610 --> 00:06:10.580
+might even take years to
+complete. So we need to
+
+116
+00:06:10.580 --> 00:06:14.030
+prioritize, right. And this was
+about mapping requirements to testing.
+
+117
+00:06:14.120 --> 00:06:19.040
+Absolutely. So the not every
+road is equally important. You
+
+118
+00:06:19.040 --> 00:06:21.530
+know, so if the freeway
+is used by the, by
+
+119
+00:06:21.590 --> 00:06:24.590
+much more people than my
+driveway. And so a flaw
+
+120
+00:06:24.620 --> 00:06:26.720
+in my driveway is going
+to inconvenience me and my
+
+121
+00:06:26.720 --> 00:06:29.360
+immediate neighbors, a flaw on
+the freeway is can, you
+
+122
+00:06:29.360 --> 00:06:32.800
+know, cripple the transportation system
+for the entire state. And
+
+123
+00:06:32.840 --> 00:06:35.240
+a similar thing comes up
+in software. Although we might
+
+124
+00:06:35.240 --> 00:06:37.010
+not think about it. You
+know, I had this experience
+
+125
+00:06:37.010 --> 00:06:39.290
+with a piece of code
+that I was writing some
+
+126
+00:06:39.290 --> 00:06:41.060
+tests for. It didn't have
+any tests yet. So at
+
+127
+00:06:41.060 --> 00:06:43.970
+0% code coverage, and I
+wrote one test case, not
+
+128
+00:06:43.970 --> 00:06:46.160
+even a test, but just
+a test case. And then
+
+129
+00:06:46.160 --> 00:06:48.530
+I measured the code coverage
+and I had 37% or
+
+130
+00:06:48.530 --> 00:06:50.270
+something like that. And I
+was pretty pleased. That's a
+
+131
+00:06:50.270 --> 00:06:52.610
+lot of code coverage from
+one single test. Right. It
+
+132
+00:06:52.610 --> 00:06:54.890
+was just a small bit
+of code. No, it wasn't
+
+133
+00:06:54.890 --> 00:06:57.050
+that big. So a driver
+actually. Okay. So you went
+
+134
+00:06:57.050 --> 00:06:59.420
+through a lot, you bounced
+around inside that driver for
+
+135
+00:06:59.420 --> 00:07:01.700
+quite a while, by that
+one test case. Absolutely. I
+
+136
+00:07:01.700 --> 00:07:05.180
+sent an IO request to
+a driver and the, you
+
+137
+00:07:05.180 --> 00:07:07.850
+know, the, it was handled
+by the entry point and
+
+138
+00:07:07.850 --> 00:07:09.680
+then it was passed to
+another function and another function
+
+139
+00:07:09.680 --> 00:07:11.660
+that was that, you know,
+it's, the air checking was
+
+140
+00:07:11.660 --> 00:07:13.130
+invoked and et cetera. And
+it went all the way
+
+141
+00:07:13.130 --> 00:07:15.350
+down to the bottom and
+then came back up. So
+
+142
+00:07:15.380 --> 00:07:17.840
+it actually hit quite a
+bit of code. And so
+
+143
+00:07:17.840 --> 00:07:20.090
+I then wrote a second
+test case and the second
+
+144
+00:07:20.090 --> 00:07:23.030
+test case now my code
+coverage is like 45%. It's
+
+145
+00:07:23.030 --> 00:07:25.550
+like great. A third test
+case. My code coverage is
+
+146
+00:07:25.550 --> 00:07:29.870
+like 50%. Okay. Fourth test
+case. It was 51% kind
+
+147
+00:07:29.870 --> 00:07:32.630
+of asked them topically approach.
+Exactly. And then 51 and
+
+148
+00:07:32.630 --> 00:07:35.810
+a half percent then, you
+know, so getting to 50%
+
+149
+00:07:35.810 --> 00:07:40.700
+was incredibly easy, but getting
+to 70% is very hard.
+
+150
+00:07:40.760 --> 00:07:43.460
+But the part that really
+surprised me is that I
+
+151
+00:07:43.460 --> 00:07:46.790
+ran my second test case
+by itself measured the code
+
+152
+00:07:46.790 --> 00:07:50.630
+coverage. And it was about
+37 or 38% interesting. In
+
+153
+00:07:50.630 --> 00:07:53.720
+other words, every test case
+was hitting a whole bunch
+
+154
+00:07:53.720 --> 00:07:57.110
+of the code. Exactly the
+same code every time. Right.
+
+155
+00:07:57.140 --> 00:07:59.240
+And then there was a
+little bit of, of, you
+
+156
+00:07:59.240 --> 00:08:01.250
+know, sort of the, the
+side paths. So you've got
+
+157
+00:08:01.250 --> 00:08:03.470
+a lot of, you know,
+imagining this Venn diagram of
+
+158
+00:08:03.470 --> 00:08:05.420
+all the code that you're
+covering and I'm seeing huge
+
+159
+00:08:05.420 --> 00:08:08.690
+chunks of intersection. Yes. And
+then you're getting little bits
+
+160
+00:08:08.690 --> 00:08:11.120
+that are specific to a
+test case that are letting
+
+161
+00:08:11.120 --> 00:08:13.550
+you get that extra percent
+or too sure. I think
+
+162
+00:08:13.550 --> 00:08:15.860
+I'd go back to the
+highway analogy and there's part
+
+163
+00:08:15.860 --> 00:08:18.230
+of your code. This is
+like the freeway. And if
+
+164
+00:08:18.230 --> 00:08:19.850
+you're going to go anywhere,
+you pretty much have to
+
+165
+00:08:19.850 --> 00:08:22.550
+get on the freeway, get
+to close to your destination.
+
+166
+00:08:22.580 --> 00:08:24.530
+Then you get off and
+go on some side roads.
+
+167
+00:08:24.830 --> 00:08:27.410
+If you have a different
+destination, say different test case,
+
+168
+00:08:27.410 --> 00:08:29.120
+you're still going to get
+on the freeway and drive
+
+169
+00:08:29.120 --> 00:08:31.100
+down all of that freeway
+road, but then you'll take
+
+170
+00:08:31.100 --> 00:08:32.690
+a different exit and there'll
+be a little bit that
+
+171
+00:08:32.690 --> 00:08:36.260
+is different. Right, right. And
+so that freeway is the
+
+172
+00:08:36.260 --> 00:08:39.800
+easiest code to hit, but
+it's also the most important
+
+173
+00:08:39.800 --> 00:08:43.160
+code because any flaw there
+is going to be impactful
+
+174
+00:08:43.160 --> 00:08:46.190
+to your customers. The, the
+there's some little corner of
+
+175
+00:08:46.190 --> 00:08:48.080
+the code that takes a
+real special test case to
+
+176
+00:08:48.080 --> 00:08:52.580
+get to it. It may
+be that very few people
+
+177
+00:08:52.580 --> 00:08:54.590
+will be impacted by flaws
+there. So even if you
+
+178
+00:08:54.590 --> 00:08:56.940
+do miss it, it's going
+to have the least cost.
+
+179
+00:08:57.360 --> 00:08:59.910
+And so if you have
+a set amount of time
+
+180
+00:08:59.910 --> 00:09:02.490
+in order to do your
+testing now, absolutely you would
+
+181
+00:09:02.490 --> 00:09:05.160
+like to have breadth coverage,
+which is make sure that
+
+182
+00:09:05.160 --> 00:09:07.950
+all the parts of your
+code can function. But when
+
+183
+00:09:07.950 --> 00:09:10.050
+you're putting the extra effort
+in, you would want to
+
+184
+00:09:10.050 --> 00:09:13.290
+have a more diversity of
+data and more scenarios around
+
+185
+00:09:13.290 --> 00:09:16.820
+that highway, which is the
+most impactful. Right. So how
+
+186
+00:09:16.820 --> 00:09:18.170
+do you figure that out?
+I mean, is that about
+
+187
+00:09:18.170 --> 00:09:21.710
+using a profiler and then
+spending time seeing where we're
+
+188
+00:09:21.710 --> 00:09:24.440
+heading through our, basically running
+a test case with coverage
+
+189
+00:09:24.690 --> 00:09:27.230
+and using coverage, not as
+a number to make you
+
+190
+00:09:27.230 --> 00:09:29.540
+feel better about your testing,
+but rather as a number
+
+191
+00:09:29.540 --> 00:09:33.440
+to know where in your
+code you're exploring. Yeah. You
+
+192
+00:09:33.440 --> 00:09:37.070
+can use the coverage to
+know in terms of breadth,
+
+193
+00:09:37.250 --> 00:09:39.650
+what parts of the code
+you haven't touched yet, but
+
+194
+00:09:39.650 --> 00:09:41.900
+it doesn't give you any
+information about depth now about
+
+195
+00:09:41.900 --> 00:09:44.510
+knowing where the highway is.
+Well, the answer is, however,
+
+196
+00:09:44.510 --> 00:09:47.150
+your customers are gonna use
+the code. That's the important
+
+197
+00:09:47.150 --> 00:09:50.030
+code and that's the important
+paths. So this is where
+
+198
+00:09:50.030 --> 00:09:53.870
+it does come back to
+requirements. And so one of
+
+199
+00:09:53.870 --> 00:09:56.840
+the, it is a little
+bit harder because sometimes people
+
+200
+00:09:56.840 --> 00:09:59.930
+use the code in ways
+that we don't necessarily anticipate,
+
+201
+00:10:00.230 --> 00:10:03.230
+but it to the degree
+that we can emulate the
+
+202
+00:10:03.230 --> 00:10:05.990
+customers when we're testing, that's
+where we can go beyond
+
+203
+00:10:05.990 --> 00:10:08.060
+unit testing and create tests
+that are going to be
+
+204
+00:10:08.060 --> 00:10:11.240
+more effective. So for example,
+I've worked on a lot
+
+205
+00:10:11.240 --> 00:10:15.470
+of frameworks and with frameworks,
+customers are developers, the developers
+
+206
+00:10:15.470 --> 00:10:16.640
+is going to write a
+program and he's going to
+
+207
+00:10:16.640 --> 00:10:19.730
+use the framework and excellent,
+excellent way to test this
+
+208
+00:10:19.730 --> 00:10:23.570
+is to create a sample.
+A sample is the process
+
+209
+00:10:23.570 --> 00:10:26.120
+of writing a program, exactly
+like the customer's going to
+
+210
+00:10:26.120 --> 00:10:29.870
+do it and you'll run
+into issues, usability or awkwardness
+
+211
+00:10:29.870 --> 00:10:33.170
+or discoverability. That's kind of
+nice. But in addition, when
+
+212
+00:10:33.170 --> 00:10:35.090
+your sample is done, you
+should execute it as part
+
+213
+00:10:35.090 --> 00:10:38.510
+of your test passes, because
+any flaws that are uncovered
+
+214
+00:10:38.510 --> 00:10:40.520
+as a result of running
+the sample are very likely
+
+215
+00:10:40.520 --> 00:10:42.650
+to be exactly the flaws
+that the customers are likely
+
+216
+00:10:42.650 --> 00:10:45.110
+to run. In. First, in
+other words, there's most serious
+
+217
+00:10:45.110 --> 00:10:47.030
+day, one kind of bug,
+You know, and it seems
+
+218
+00:10:47.030 --> 00:10:49.310
+obvious that if you're writing
+a framework, you need to
+
+219
+00:10:49.310 --> 00:10:51.860
+use it. And I've written
+frameworks before, and I've worked
+
+220
+00:10:51.860 --> 00:10:53.750
+at companies where we've written
+frameworks and some of the
+
+221
+00:10:53.750 --> 00:10:57.800
+early versions where basically things
+went horribly wrong. We're when
+
+222
+00:10:57.890 --> 00:11:00.080
+we didn't come at it
+from the outside in, we
+
+223
+00:11:00.080 --> 00:11:03.170
+didn't put ourselves in the
+shoes of the, of the
+
+224
+00:11:03.170 --> 00:11:05.180
+developer who would be using
+it. So we didn't write
+
+225
+00:11:05.180 --> 00:11:08.180
+samples. And more importantly, our
+test cases didn't look like
+
+226
+00:11:08.180 --> 00:11:11.180
+samples. They didn't reflect the
+reality of the use of
+
+227
+00:11:11.180 --> 00:11:14.390
+that framework. So I can
+definitely relate to having code
+
+228
+00:11:14.390 --> 00:11:17.690
+coverage numbers. That look right.
+But in reality, I wasn't
+
+229
+00:11:17.690 --> 00:11:21.470
+protected. Yes. And so again,
+the unit tests don't look
+
+230
+00:11:21.470 --> 00:11:24.230
+like samples, but they're important
+for the purpose. Cause they
+
+231
+00:11:24.230 --> 00:11:26.810
+give you that breadth to
+get to 80% code coverage,
+
+232
+00:11:26.810 --> 00:11:29.390
+just with samples would be
+really difficult because again, like
+
+233
+00:11:29.420 --> 00:11:31.670
+each additional sample, which is
+costly is going to give
+
+234
+00:11:31.670 --> 00:11:35.030
+you an additional 0.1%, maybe.
+So you have your unit
+
+235
+00:11:35.030 --> 00:11:37.370
+test for the breath. Then
+you create samples for the
+
+236
+00:11:37.370 --> 00:11:39.440
+depth and the, and the
+samples. Aren't going to go
+
+237
+00:11:39.440 --> 00:11:41.180
+on every byway they're going
+to be going down that
+
+238
+00:11:41.180 --> 00:11:43.340
+main highway of the code
+right now, if you're not
+
+239
+00:11:43.340 --> 00:11:46.100
+creating a framework, there's still
+approaches that you can take.
+
+240
+00:11:46.160 --> 00:11:49.730
+And the general and mentality
+is a route as around
+
+241
+00:11:50.750 --> 00:11:53.320
+the same code. I'm executing
+over and over again with
+
+242
+00:11:53.350 --> 00:11:56.410
+variations, of course, but mostly
+the same code, but it's
+
+243
+00:11:56.410 --> 00:12:00.070
+the diversity of data. That's
+what, that's what customers bring
+
+244
+00:12:00.070 --> 00:12:02.920
+to software that we don't
+have when we're executing an
+
+245
+00:12:02.920 --> 00:12:05.380
+owner. Developer machines is they
+have their own data. It's
+
+246
+00:12:05.380 --> 00:12:09.010
+bigger, it's stranger is less
+consistent. They create it in
+
+247
+00:12:09.010 --> 00:12:11.920
+ways we didn't anticipate their
+environments. Aren't exactly the same
+
+248
+00:12:11.920 --> 00:12:14.320
+or developer machines can be
+top notch. Maybe they have
+
+249
+00:12:14.320 --> 00:12:17.020
+our short on memory and
+Ram on their computer and
+
+250
+00:12:17.020 --> 00:12:19.870
+that can have an impact.
+So it's all of those
+
+251
+00:12:20.140 --> 00:12:23.050
+differences that make it likely
+they'll run into issues that
+
+252
+00:12:23.050 --> 00:12:25.930
+we we don't know about
+in advance. So to create
+
+253
+00:12:26.440 --> 00:12:30.550
+a really interesting test, maybe
+it's a very simple test,
+
+254
+00:12:30.580 --> 00:12:34.720
+but maybe it has a
+huge variety of data. And
+
+255
+00:12:34.720 --> 00:12:37.270
+you can, that you can
+put into it. You can
+
+256
+00:12:37.270 --> 00:12:40.570
+write tests that generate data
+on the fly, or maybe
+
+257
+00:12:40.570 --> 00:12:43.380
+you have a pile of
+it lying around. So it
+
+258
+00:12:43.380 --> 00:12:46.770
+seems like that when I'm
+thinking about terms of generating
+
+259
+00:12:46.770 --> 00:12:50.160
+data, there's generating data from
+the customer yes. Where you
+
+260
+00:12:50.160 --> 00:12:53.460
+can basically make your application
+phone home, kind of the
+
+261
+00:12:53.460 --> 00:12:55.950
+windows error recovery, dr. Watson
+way of doing things. I
+
+262
+00:12:55.950 --> 00:12:58.050
+mean, that's, that's free data.
+If someone's going to hit
+
+263
+00:12:58.050 --> 00:13:01.800
+send information, that's good stuff.
+We can use that. Absolutely.
+
+264
+00:13:01.800 --> 00:13:04.740
+You should use that. And
+certainly if you have such
+
+265
+00:13:04.740 --> 00:13:08.220
+data, you should use it
+to find out what is
+
+266
+00:13:08.220 --> 00:13:11.280
+the kind of problems that
+are occurring and find out
+
+267
+00:13:11.280 --> 00:13:14.700
+why your testing isn't discovering
+that. And that'll inform about
+
+268
+00:13:14.700 --> 00:13:16.170
+what kind of tests you
+need that you might not
+
+269
+00:13:16.170 --> 00:13:20.940
+have. And well, one way
+to get data for putting
+
+270
+00:13:20.940 --> 00:13:23.160
+in your test cases is
+depending on your relationship with
+
+271
+00:13:23.160 --> 00:13:25.320
+your customers is maybe they
+can give it to you.
+
+272
+00:13:25.700 --> 00:13:28.030
+You know, if they have
+a share full of, of
+
+273
+00:13:28.170 --> 00:13:33.240
+input, fi files have accumulated
+take that and use that
+
+274
+00:13:33.240 --> 00:13:35.040
+that's going to be the
+best kind of data you
+
+275
+00:13:35.040 --> 00:13:38.300
+could have, because it really
+is customers from customers That
+
+276
+00:13:38.300 --> 00:13:39.990
+you had given an example
+to me while we were
+
+277
+00:13:39.990 --> 00:13:42.750
+walking in the hall earlier
+about a situation where you
+
+278
+00:13:42.750 --> 00:13:45.180
+had had some, some faults
+that had occurred in some
+
+279
+00:13:45.180 --> 00:13:48.750
+software that you'd been involved
+in, that was indicating there
+
+280
+00:13:48.750 --> 00:13:51.420
+was a problem. Basically something
+went wrong and something went
+
+281
+00:13:51.420 --> 00:13:53.430
+fall, something phoned home, right?
+So you went to the
+
+282
+00:13:53.430 --> 00:13:55.890
+code to find out what
+was going on. Right? This
+
+283
+00:13:55.890 --> 00:14:00.750
+was an investigation of just
+like I said, and an
+
+284
+00:14:00.750 --> 00:14:04.770
+investigation of what kind of
+flaws were being discovered by
+
+285
+00:14:04.770 --> 00:14:07.620
+customers impacting them, that we
+didn't discover and testing this
+
+286
+00:14:07.620 --> 00:14:11.250
+particular component was not well
+tested internally. It had 50%
+
+287
+00:14:11.250 --> 00:14:13.530
+code coverage, which doesn't mean
+it was 50% tested. It
+
+288
+00:14:13.530 --> 00:14:16.860
+means it was 50% untested.
+So we would expect that
+
+289
+00:14:17.550 --> 00:14:20.610
+the problems would be lurking
+in that untested code. And
+
+290
+00:14:20.680 --> 00:14:23.010
+I mean, isn't that what
+you Expect that, that was
+
+291
+00:14:23.010 --> 00:14:24.540
+the thing that you said
+earlier that really has changed.
+
+292
+00:14:24.540 --> 00:14:27.240
+My perspective is that code
+coverage is an inverse number.
+
+293
+00:14:27.240 --> 00:14:29.460
+It's something that I want
+to say. I know what's
+
+294
+00:14:30.300 --> 00:14:34.050
+well, actually that's funny. There
+was a, there was a
+
+295
+00:14:34.050 --> 00:14:37.230
+movie with Hugh grant where
+they had a, they had
+
+296
+00:14:37.230 --> 00:14:40.320
+a baby and he was
+an unexpected baby. And he
+
+297
+00:14:40.320 --> 00:14:43.230
+said, well, you know, I
+don't know what happened. The
+
+298
+00:14:43.230 --> 00:14:47.970
+protection I was using was
+nine 99% effective. And the
+
+299
+00:14:47.970 --> 00:14:50.840
+answer was well, that makes
+it 1% completely ineffective. Right?
+
+300
+00:14:50.870 --> 00:14:55.250
+Exactly. Yes. Well, personally I
+expected to find the flaws
+
+301
+00:14:55.280 --> 00:14:58.670
+in the uncovered code because
+we hadn't tested it at
+
+302
+00:14:58.670 --> 00:15:02.360
+all. Internally, at least not
+formally with formal unit tests
+
+303
+00:15:02.360 --> 00:15:06.350
+that got measured by code
+coverage. So in actual fact
+
+304
+00:15:06.350 --> 00:15:08.540
+that of the three parts
+of the code that were
+
+305
+00:15:08.540 --> 00:15:11.390
+being hit by customers with
+crashes causing a serious problem,
+
+306
+00:15:11.690 --> 00:15:14.240
+all three of them were
+in the covered code in
+
+307
+00:15:14.240 --> 00:15:17.540
+the covered blocks. And so
+now I think I have
+
+308
+00:15:17.540 --> 00:15:20.120
+an understanding about why that
+would be that 50% that
+
+309
+00:15:20.120 --> 00:15:22.790
+was covered by tests was
+the highway. It was the
+
+310
+00:15:22.790 --> 00:15:25.910
+highway through the code that
+everybody hits naturally. That's where
+
+311
+00:15:25.910 --> 00:15:29.540
+the flaws were found that
+were hit by customers. It
+
+312
+00:15:29.540 --> 00:15:31.580
+may very well be that
+there were flaws in the
+
+313
+00:15:31.580 --> 00:15:34.520
+uncovered code that we didn't
+cover in testing. And it,
+
+314
+00:15:34.610 --> 00:15:36.740
+as it turns out, that's
+the same code that the
+
+315
+00:15:36.740 --> 00:15:39.770
+customers weren't running. And so
+they weren't discovering those flaws.
+
+316
+00:15:40.420 --> 00:15:42.220
+What kind of metrics can
+I apply? I mean, I
+
+317
+00:15:42.220 --> 00:15:45.280
+mean, it sounds like you
+mean you've shaken my confidence
+
+318
+00:15:45.280 --> 00:15:46.810
+in code coverage as a
+number that I can use
+
+319
+00:15:46.810 --> 00:15:49.720
+for, for confidence. I mean,
+now it's just code coverage
+
+320
+00:15:49.780 --> 00:15:51.640
+has become just another data
+point that I can use,
+
+321
+00:15:52.120 --> 00:15:54.850
+but what I feel like
+I need another dimension. Yes.
+
+322
+00:15:54.880 --> 00:15:59.170
+Yes. Well, in a perfect
+world, you would use state
+
+323
+00:15:59.170 --> 00:16:01.420
+coverage and state coverage is
+all of the States that
+
+324
+00:16:01.420 --> 00:16:04.900
+my software can be in.
+Unfortunately, state coverage is typically
+
+325
+00:16:04.900 --> 00:16:09.040
+infinite, but please don't despair
+because I'm sorry, it's too
+
+326
+00:16:09.040 --> 00:16:12.520
+late. I've already begun to
+despair. Sorry, Not all the
+
+327
+00:16:12.520 --> 00:16:15.730
+States are equally important, right?
+So a state, again, the
+
+328
+00:16:15.730 --> 00:16:18.490
+States that the customers are
+going to get the software
+
+329
+00:16:18.490 --> 00:16:21.730
+into are the most important
+ones. I think that there
+
+330
+00:16:21.730 --> 00:16:24.820
+are efforts maybe in research
+and other places where people
+
+331
+00:16:24.820 --> 00:16:28.090
+are trying to tackle this
+problem, but practically speaking, you
+
+332
+00:16:28.090 --> 00:16:30.340
+know, in every day to
+day life here, we have
+
+333
+00:16:30.340 --> 00:16:33.250
+to do something more practical.
+And that what that really
+
+334
+00:16:33.250 --> 00:16:37.390
+comes down to is getting
+feedback and iteration. So once
+
+335
+00:16:37.390 --> 00:16:41.080
+you have your high unit
+tests coverage, and your code
+
+336
+00:16:41.080 --> 00:16:43.240
+coverage is high. So you
+know that there's not much
+
+337
+00:16:43.240 --> 00:16:45.280
+code that you're never looking
+at at all. That's a
+
+338
+00:16:45.280 --> 00:16:47.800
+good starting point. Then you
+want to do samples or
+
+339
+00:16:47.800 --> 00:16:53.260
+customer oriented testing, stress testing,
+especially with the functional testing,
+
+340
+00:16:53.290 --> 00:16:55.840
+a diversity of data, that's
+likely to cover the things
+
+341
+00:16:55.840 --> 00:16:58.570
+that you haven't even thought
+about with data generators or
+
+342
+00:16:58.570 --> 00:17:01.570
+data from customers or approaches
+like that. Once you've done
+
+343
+00:17:01.570 --> 00:17:03.910
+that you should think to
+yourself, well, at least I've
+
+344
+00:17:03.910 --> 00:17:05.950
+covered the basics. Now there's
+some hope that this is
+
+345
+00:17:05.950 --> 00:17:08.290
+pretty good quality. That's where
+you need feedback. And the
+
+346
+00:17:08.290 --> 00:17:12.340
+feedback is get people to
+try. It is looking at
+
+347
+00:17:12.340 --> 00:17:14.740
+what is your bug find
+rate from your internal deployment
+
+348
+00:17:14.740 --> 00:17:17.080
+or from manual testing. One
+of the things that can
+
+349
+00:17:17.080 --> 00:17:19.690
+be very effective as directed
+ad hoc testing, where you
+
+350
+00:17:19.690 --> 00:17:22.540
+take people and you say,
+here's an area to look
+
+351
+00:17:22.540 --> 00:17:24.850
+at, just try it out
+as if you were a
+
+352
+00:17:24.850 --> 00:17:27.580
+customer and see what kinds
+of things you run into.
+
+353
+00:17:28.060 --> 00:17:30.490
+And a lot of times
+that will uncover things that
+
+354
+00:17:30.760 --> 00:17:35.080
+your test automation just never
+even thinks about. We had
+
+355
+00:17:35.080 --> 00:17:37.810
+a podcast a couple of
+times, a couple of episodes
+
+356
+00:17:37.810 --> 00:17:41.110
+ago, where we spoke with
+Patty Del Deleu from Microsoft
+
+357
+00:17:41.110 --> 00:17:44.140
+research and his PEX project,
+which uses a kind of
+
+358
+00:17:44.140 --> 00:17:47.350
+a, you know, some mathematical
+modeling to, to look at
+
+359
+00:17:47.770 --> 00:17:51.600
+a method and say, here
+is the domain in which
+
+360
+00:17:51.600 --> 00:17:55.440
+I want to explore. So
+it takes code coverage, almost
+
+361
+00:17:55.440 --> 00:17:57.300
+like chess. You know, you
+put your finger on the
+
+362
+00:17:57.300 --> 00:17:59.580
+chess piece and there's so
+many moves that you could
+
+363
+00:17:59.580 --> 00:18:02.760
+make and humans can only
+make so many moves, but
+
+364
+00:18:02.760 --> 00:18:04.860
+a computer can go farther
+and farther and farther down
+
+365
+00:18:04.860 --> 00:18:07.500
+the decision tree. And, you
+know, it's, hopefully we'll see
+
+366
+00:18:07.500 --> 00:18:11.490
+something like that soon from,
+from Microsoft research, but they
+
+367
+00:18:11.500 --> 00:18:13.170
+know that's more of a
+brute force way of trying
+
+368
+00:18:13.170 --> 00:18:16.350
+to, to stumble on these
+kinds of issues where understanding
+
+369
+00:18:16.350 --> 00:18:19.950
+more of the behavior driven
+aspects of things like behavior
+
+370
+00:18:19.950 --> 00:18:22.530
+driven design would be a
+better way to find these,
+
+371
+00:18:22.770 --> 00:18:25.940
+these highways. Yes, that's very
+interesting. And there's two big
+
+372
+00:18:25.970 --> 00:18:28.160
+kind of approaches you can
+take there, essentially. This is
+
+373
+00:18:28.160 --> 00:18:31.100
+forms of model based testing.
+And so I believe with
+
+374
+00:18:31.100 --> 00:18:34.160
+PEX, from what I understand,
+it looks at your code
+
+375
+00:18:34.160 --> 00:18:36.500
+and in firs usage patterns
+from the code in order
+
+376
+00:18:36.500 --> 00:18:39.410
+to drive test cases through
+it. And that's very interesting.
+
+377
+00:18:39.440 --> 00:18:41.360
+It does suffer from the
+flaw again, that if the
+
+378
+00:18:41.360 --> 00:18:45.620
+code itself is missing functionality
+or is wrong, is inferences
+
+379
+00:18:45.620 --> 00:18:47.450
+will be based on what
+has been written rather than
+
+380
+00:18:47.450 --> 00:18:50.780
+what was intended. So that
+leads still could be a
+
+381
+00:18:50.780 --> 00:18:54.980
+very valuable way of getting
+effective code coverage for your
+
+382
+00:18:54.980 --> 00:18:57.740
+breath testing, I believe. And,
+and the other potential as
+
+383
+00:18:57.740 --> 00:19:00.260
+well, especially as we can
+add more metadata about our
+
+384
+00:19:00.260 --> 00:19:02.900
+intentions, that, that, that a
+tool like that could use
+
+385
+00:19:03.370 --> 00:19:06.140
+another approach is where you
+have your code, but you
+
+386
+00:19:06.140 --> 00:19:09.680
+create a model completely separately,
+which is based on my
+
+387
+00:19:09.680 --> 00:19:12.620
+way of saying, this is
+what I intended now. Obviously
+
+388
+00:19:12.620 --> 00:19:15.170
+the model has to be
+simpler than the code itself.
+
+389
+00:19:15.410 --> 00:19:18.440
+Otherwise you've just written the
+program twice, right? Once in
+
+390
+00:19:18.440 --> 00:19:21.710
+a modeling language and once
+in the actual implementation. So,
+
+391
+00:19:22.250 --> 00:19:24.920
+and, and I've, I have
+seen this happen where people
+
+392
+00:19:24.920 --> 00:19:27.110
+have gone to the lengths
+of trying to create a
+
+393
+00:19:27.110 --> 00:19:30.800
+model, which completely represented their
+entire functionality of their software.
+
+394
+00:19:31.070 --> 00:19:34.010
+And that tends to not
+be very successful, but where
+
+395
+00:19:34.010 --> 00:19:36.860
+I have seen tremendous success
+with model based testing is
+
+396
+00:19:36.860 --> 00:19:40.250
+creating a model. This very
+simple, because it's only focusing
+
+397
+00:19:40.250 --> 00:19:44.090
+on one aspect of the
+functionality that's expected. And so,
+
+398
+00:19:44.090 --> 00:19:47.390
+for example, in a frame
+and a framework, maybe the
+
+399
+00:19:47.390 --> 00:19:50.000
+object lifetime of your framework
+objects, you know, if you
+
+400
+00:19:50.000 --> 00:19:53.510
+have a complicated rules around
+when they can be destroyed,
+
+401
+00:19:53.510 --> 00:19:55.250
+when they can be cleaned
+up and the relationship between
+
+402
+00:19:55.250 --> 00:19:57.500
+parent and child objects, you
+can create a model just
+
+403
+00:19:57.500 --> 00:20:00.410
+around that and get a
+lot of value without trying
+
+404
+00:20:00.410 --> 00:20:02.510
+to create something so complicated
+that you can't even understand
+
+405
+00:20:02.510 --> 00:20:05.090
+the results of what is
+creating. The thing that models
+
+406
+00:20:05.090 --> 00:20:06.980
+give you, which are really
+great is they give you
+
+407
+00:20:06.980 --> 00:20:09.740
+a test Oracle, a test.
+Oracle is the code that
+
+408
+00:20:09.740 --> 00:20:12.290
+knows when a test runs,
+whether it's right or wrong,
+
+409
+00:20:12.320 --> 00:20:14.840
+the result that you got,
+that's actually the hardest part
+
+410
+00:20:14.840 --> 00:20:18.050
+of creating any kind of
+test writing code to execute
+
+411
+00:20:18.050 --> 00:20:21.980
+into your software, pretty straightforward,
+right. But then, well, did
+
+412
+00:20:21.980 --> 00:20:24.470
+the test pass or fail
+in the simplest naive case?
+
+413
+00:20:24.470 --> 00:20:26.930
+You say, well, it didn't
+throw any exception. It must've
+
+414
+00:20:26.930 --> 00:20:29.930
+been what is my assertion?
+Yes, exactly. One of the
+
+415
+00:20:29.930 --> 00:20:32.420
+things that a boss of
+mine really drove into my
+
+416
+00:20:32.420 --> 00:20:35.060
+head a lot in my
+last job was he said,
+
+417
+00:20:35.270 --> 00:20:37.730
+if the system gets in,
+we're speaking about.net code here.
+
+418
+00:20:37.760 --> 00:20:40.430
+If the system gets into
+a state that it shouldn't
+
+419
+00:20:40.430 --> 00:20:42.410
+be, this is not the
+time to be throwing an
+
+420
+00:20:42.410 --> 00:20:47.240
+exception. He says, debug dot
+assert. He says, stop panic,
+
+421
+00:20:47.290 --> 00:20:49.180
+freak out. He says, debug,
+that assert is as like
+
+422
+00:20:49.180 --> 00:20:52.840
+the least, the least, the
+most underused thing he could
+
+423
+00:20:52.840 --> 00:20:57.190
+think of in the framework,
+because there's exceptional cases at
+
+424
+00:20:57.190 --> 00:20:59.740
+a time when a data
+coming in should, should throw
+
+425
+00:20:59.740 --> 00:21:02.500
+an exception and you could
+handle that and graciously. But
+
+426
+00:21:02.500 --> 00:21:05.080
+if there is a state
+system can get in that,
+
+427
+00:21:05.080 --> 00:21:09.010
+it has absolutely no business
+getting into like, this should
+
+428
+00:21:09.010 --> 00:21:12.310
+never happen. You know, it,
+I know the guy who's
+
+429
+00:21:12.310 --> 00:21:14.440
+working with you on the
+program knows it, but if
+
+430
+00:21:14.440 --> 00:21:17.440
+you don't say it to
+the code, debugged out, assert
+
+431
+00:21:17.830 --> 00:21:21.490
+X is know if X
+is never supposed to be
+
+432
+00:21:21.490 --> 00:21:24.640
+no, then do that. And
+this says nothing will make
+
+433
+00:21:24.640 --> 00:21:28.480
+someone fix a bug like
+a big debug assert in
+
+434
+00:21:28.480 --> 00:21:32.020
+the middle of a, the
+running of an application. Well,
+
+435
+00:21:32.130 --> 00:21:37.110
+That's a fact. Absolutely. Now
+it's interesting. It seems to
+
+436
+00:21:37.110 --> 00:21:38.610
+me, I'm trying to put
+this in the context of
+
+437
+00:21:38.640 --> 00:21:40.950
+maybe a smaller ISV or
+maybe some of our listeners
+
+438
+00:21:40.950 --> 00:21:44.760
+may have small kind of
+two pizza teams, a smaller
+
+439
+00:21:44.760 --> 00:21:47.040
+teams. I like to say
+two pizza teams. That's what
+
+440
+00:21:47.040 --> 00:21:49.680
+Amazon says. The size of
+a project should always be
+
+441
+00:21:49.680 --> 00:21:52.140
+the number of people that
+you could feed comfortably with
+
+442
+00:21:52.170 --> 00:21:56.010
+two pizzas. Sounds reasonable, anything
+bigger. It's unruly that the
+
+443
+00:21:56.010 --> 00:21:58.770
+best way for a smaller
+organization to get this data
+
+444
+00:21:58.770 --> 00:22:02.820
+is to instrument their code,
+to phone, home, to quote
+
+445
+00:22:02.820 --> 00:22:05.910
+unquote, phone home, like a
+tool like, like smart assembly.
+
+446
+00:22:06.390 --> 00:22:09.270
+Microsoft has dr. Watson, can
+we plug, can I make
+
+447
+00:22:09.270 --> 00:22:12.900
+my code instrumented with Watson?
+Can you make your code
+
+448
+00:22:12.900 --> 00:22:15.120
+instrumented with Watson? I'm not
+a hundred percent sure on
+
+449
+00:22:15.120 --> 00:22:19.530
+that myself. I do know
+that you, it is possible
+
+450
+00:22:19.530 --> 00:22:22.650
+from Microsoft to get that
+data on your products. So
+
+451
+00:22:22.650 --> 00:22:26.100
+if you're blowing up majorly
+and you hit send information,
+
+452
+00:22:26.370 --> 00:22:28.140
+that's being held out there,
+I'll have to dig those
+
+453
+00:22:28.140 --> 00:22:30.630
+people down and find out
+how I can find out
+
+454
+00:22:30.660 --> 00:22:33.330
+if my applications are sending
+those. But I'm always impressed
+
+455
+00:22:33.330 --> 00:22:35.550
+with applications and smart assembly
+is the product that comes
+
+456
+00:22:35.550 --> 00:22:37.950
+to mind, which is a,
+you know, an an, an,
+
+457
+00:22:38.340 --> 00:22:42.210
+a, an aspect oriented thing
+that weaves into your assembly
+
+458
+00:22:42.210 --> 00:22:45.270
+after the fact. And when
+an exception occurs, we'll phone,
+
+459
+00:22:45.270 --> 00:22:49.050
+home, and speak to a,
+what will speak to an
+
+460
+00:22:49.050 --> 00:22:52.170
+end point? I think that's
+an excellent idea because despite
+
+461
+00:22:52.170 --> 00:22:55.260
+our best efforts, it may
+be that where we thought
+
+462
+00:22:55.260 --> 00:22:57.300
+the highway was and where
+it actually is. Aren't the
+
+463
+00:22:57.300 --> 00:22:59.550
+same. And phoning home is
+the way that we're going
+
+464
+00:22:59.550 --> 00:23:03.090
+to be able to discover
+that Well, cause ultimately what,
+
+465
+00:23:03.150 --> 00:23:06.690
+what happens in reality, no
+matter how lofty your ideas
+
+466
+00:23:06.690 --> 00:23:08.940
+were, no matter how much
+planning and putting into the
+
+467
+00:23:08.940 --> 00:23:12.180
+model, you may think they
+use it this way, but
+
+468
+00:23:12.180 --> 00:23:14.640
+the fact is they do
+use it that way. Right?
+
+469
+00:23:14.700 --> 00:23:18.180
+Exactly. I guess one other
+thing I would want to
+
+470
+00:23:18.180 --> 00:23:20.880
+say is that these days
+there's a lot of focus
+
+471
+00:23:20.880 --> 00:23:24.810
+and effort on automated testing
+and automation. And the thing
+
+472
+00:23:24.840 --> 00:23:28.320
+that I really noticed about
+that is that is really
+
+473
+00:23:28.320 --> 00:23:30.660
+a trade off. And it's
+not always the right thing
+
+474
+00:23:30.750 --> 00:23:33.570
+to automate all of your
+tests, because what happens if
+
+475
+00:23:33.570 --> 00:23:36.180
+you focus on a hundred
+percent test automation is you
+
+476
+00:23:36.180 --> 00:23:38.100
+just don't write the tests
+that are too hard to
+
+477
+00:23:38.100 --> 00:23:41.760
+automate. And then very important
+things don't get covered. This,
+
+478
+00:23:41.760 --> 00:23:44.490
+this is the reality of
+what happens. So an example
+
+479
+00:23:44.490 --> 00:23:46.790
+is of things that are
+extremely hard to automate are
+
+480
+00:23:47.270 --> 00:23:49.430
+what does your test measure
+when it's running? If your,
+
+481
+00:23:49.430 --> 00:23:53.090
+if your product has a
+user interface and the user
+
+482
+00:23:53.090 --> 00:23:55.580
+interacts with it, maybe you
+use UI automation to press
+
+483
+00:23:55.580 --> 00:23:58.340
+some buttons. Of course, that's
+a high cost to maintain
+
+484
+00:23:58.340 --> 00:24:01.370
+kind of a of test
+drive it, and also to
+
+485
+00:24:01.370 --> 00:24:04.370
+keep it working as the
+UI changes. But let's say
+
+486
+00:24:04.370 --> 00:24:07.040
+you've done that what the
+test doesn't know is it
+
+487
+00:24:07.040 --> 00:24:09.440
+doesn't see that the color
+is strange or that the
+
+488
+00:24:09.440 --> 00:24:12.590
+screen flickers, or maybe you
+have timing to make sure
+
+489
+00:24:12.590 --> 00:24:15.290
+that when you click the
+button, something reasonable happens within
+
+490
+00:24:15.290 --> 00:24:18.230
+30 seconds. But maybe the
+fact that it's taking one
+
+491
+00:24:18.230 --> 00:24:20.450
+second to the user, it
+makes the application feel like
+
+492
+00:24:20.450 --> 00:24:24.680
+it's sluggish. So that is
+a flaws in those kinds
+
+493
+00:24:24.680 --> 00:24:28.820
+of automation that makes their
+value less, not zero value,
+
+494
+00:24:29.180 --> 00:24:31.640
+but just less. And the
+cost high because of the
+
+495
+00:24:31.640 --> 00:24:34.820
+continual changing you have to
+do. On the other hand,
+
+496
+00:24:34.820 --> 00:24:37.910
+especially when the UI is
+under frequent change, suppose you
+
+497
+00:24:37.910 --> 00:24:40.550
+have a manual test. Well,
+the problem is, is boring
+
+498
+00:24:40.550 --> 00:24:42.200
+to do a manual testing.
+Well, for a lot of
+
+499
+00:24:42.200 --> 00:24:45.140
+people is boring, but there
+are people actually who do
+
+500
+00:24:45.140 --> 00:24:47.450
+enjoy that. And so it
+would be interesting to find
+
+501
+00:24:47.450 --> 00:24:48.560
+some of them and see
+if they would like to
+
+502
+00:24:48.560 --> 00:24:51.260
+help you out. But in
+any case, if you're going
+
+503
+00:24:51.260 --> 00:24:52.820
+to do this yourself, you're
+two piece of team. You're
+
+504
+00:24:52.820 --> 00:24:54.650
+not going to pick someone
+else up. You don't have
+
+505
+00:24:54.650 --> 00:24:56.990
+to do it a lot.
+If everybody sat down for
+
+506
+00:24:56.990 --> 00:24:58.730
+30 minutes at the end
+of the weekend and went
+
+507
+00:24:58.910 --> 00:25:02.480
+and went through it, that
+would be quite satisfactory to
+
+508
+00:25:02.480 --> 00:25:05.140
+catch these kinds of issues.
+Most likely, You know, for
+
+509
+00:25:05.140 --> 00:25:07.450
+applications that have a user
+interface. One of the neat
+
+510
+00:25:07.450 --> 00:25:11.620
+ideas that I saw when
+office 2007 was being worked
+
+511
+00:25:11.620 --> 00:25:14.890
+on was this little smiley
+face that would sit on
+
+512
+00:25:14.890 --> 00:25:17.320
+the dialogue box. It was
+a happy face and a
+
+513
+00:25:17.320 --> 00:25:20.050
+sad face. And if you
+saw something that you liked,
+
+514
+00:25:20.050 --> 00:25:21.850
+you click the happy face
+and it would take a
+
+515
+00:25:21.850 --> 00:25:24.910
+screenshot and allow you to
+annotate it and then send
+
+516
+00:25:24.910 --> 00:25:27.520
+it directly to the team.
+And we actually wrote a
+
+517
+00:25:27.520 --> 00:25:30.460
+little thing up and a
+number of people made libraries
+
+518
+00:25:30.460 --> 00:25:33.040
+for wind forms that you
+can just add in. And
+
+519
+00:25:33.040 --> 00:25:35.650
+then while you're in your
+testing phase, someone can go
+
+520
+00:25:35.710 --> 00:25:37.870
+at any point in any
+dialogue and say, I like
+
+521
+00:25:37.870 --> 00:25:40.630
+this, or I don't like
+this, and it'll do a
+
+522
+00:25:40.870 --> 00:25:44.020
+screenshot. And then you get
+all this fantastic data going
+
+523
+00:25:44.020 --> 00:25:46.870
+directly into your bug database
+with pictures of real people's
+
+524
+00:25:47.320 --> 00:25:49.870
+screens, doing whatever it was
+or was not supposed to
+
+525
+00:25:49.870 --> 00:25:52.750
+do. And you get both
+negative and positive feedback because
+
+526
+00:25:52.750 --> 00:25:57.000
+it's presented in such a
+pleasant way, just simply a
+
+527
+00:25:57.010 --> 00:25:59.790
+button in the title bar
+with a happy face or
+
+528
+00:25:59.800 --> 00:26:03.100
+sad face. Everyone understood it.
+And everyone's excited to give,
+
+529
+00:26:03.160 --> 00:26:06.280
+give that feedback. And that's
+another way to collect data
+
+530
+00:26:06.520 --> 00:26:08.830
+that I'm starting to realize
+there's more and more important.
+
+531
+00:26:09.400 --> 00:26:12.220
+Absolutely. I think that's a
+really interesting idea now, suppose
+
+532
+00:26:12.220 --> 00:26:14.800
+you've clicked that a frowny
+face a few times and
+
+533
+00:26:14.800 --> 00:26:17.440
+some of us, some others.
+And so the in development,
+
+534
+00:26:17.440 --> 00:26:20.200
+the product now has changed.
+And that interface changes if
+
+535
+00:26:20.200 --> 00:26:23.350
+you're using a low cost
+script with manual testing, to
+
+536
+00:26:23.350 --> 00:26:26.110
+keep that area covered. When
+a human comes to that
+
+537
+00:26:26.110 --> 00:26:27.910
+and sees the difference, they're
+not going to fall over
+
+538
+00:26:27.910 --> 00:26:30.400
+and say, test pass failed,
+go spend half an hour
+
+539
+00:26:30.400 --> 00:26:32.590
+investigating to try and find
+out why this test case
+
+540
+00:26:32.590 --> 00:26:34.930
+failed and then fix it.
+They'll just go right past.
+
+541
+00:26:35.080 --> 00:26:37.480
+That's where the efficiency comes
+from. Now, of course, once
+
+542
+00:26:37.480 --> 00:26:39.970
+you've shipped and you're in
+maintenance mode, it may make
+
+543
+00:26:40.000 --> 00:26:42.700
+a lot of sense to
+do UI automation in order
+
+544
+00:26:42.700 --> 00:26:45.180
+to catch, especially Because you're
+not going to look at
+
+545
+00:26:45.180 --> 00:26:47.340
+it frequently. And when the
+occasional bug fix comes in.
+
+546
+00:26:47.550 --> 00:26:50.790
+So the point there is
+that automation is not a
+
+547
+00:26:50.790 --> 00:26:53.400
+panacea. You should try and
+make that trade off is
+
+548
+00:26:53.400 --> 00:26:55.800
+the time that I invest
+in creating this automation, don't
+
+549
+00:26:55.800 --> 00:26:58.920
+forget to count the maintenance
+cost. I'm going to give
+
+550
+00:26:58.920 --> 00:27:02.280
+me a return versus the
+doing the manual testing at
+
+551
+00:27:02.280 --> 00:27:05.210
+this point in my project
+versus another project. So I
+
+552
+00:27:05.210 --> 00:27:07.830
+am very happy about all
+the automation people are doing,
+
+553
+00:27:08.070 --> 00:27:10.170
+but sometimes I worry that
+people get carried away too
+
+554
+00:27:10.170 --> 00:27:12.270
+far. Yeah. Yeah. When I
+think you bring up a
+
+555
+00:27:12.270 --> 00:27:16.410
+really important point about progression
+testing, one just can't remind
+
+556
+00:27:16.410 --> 00:27:19.500
+oneself too much about how
+important it is when a
+
+557
+00:27:19.500 --> 00:27:22.320
+bug comes in to write
+a test that causes that
+
+558
+00:27:22.320 --> 00:27:25.620
+bug to happen, and then
+watch it fail. I have
+
+559
+00:27:25.620 --> 00:27:27.960
+to say, I understand why
+the spike happened and then
+
+560
+00:27:27.960 --> 00:27:32.250
+to fix it. That is,
+I mean, red green unit
+
+561
+00:27:32.250 --> 00:27:35.280
+testing is important, but it's
+so much more important within
+
+562
+00:27:35.280 --> 00:27:38.130
+the context of regression. Cause
+there have been a million
+
+563
+00:27:38.130 --> 00:27:41.520
+times where I fixed something,
+thought it was great, but
+
+564
+00:27:41.520 --> 00:27:44.040
+just didn't back it up
+again. This is the notion
+
+565
+00:27:44.040 --> 00:27:47.520
+of making an assertion in
+your head versus backing it
+
+566
+00:27:47.520 --> 00:27:50.940
+up with an assertion in
+the code. So important. Absolutely.
+
+567
+00:27:51.450 --> 00:27:53.070
+Well, I really appreciate you
+taking the time to sit
+
+568
+00:27:53.070 --> 00:27:55.860
+down with me today. This
+has been really interesting. And
+
+569
+00:27:56.280 --> 00:27:58.170
+this has been another episode
+of Hansel minutes. We'll see
+
+570
+00:27:58.170 --> 00:27:59.040
+you again next week.
+

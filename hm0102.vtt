@@ -1,0 +1,3841 @@
+WEBVTT FILE
+
+1
+00:00:04.890 --> 00:00:17.060
+<inaudible> Hansel minutes.com. It's Hanselman.
+It's a weekly discussion with
+
+2
+00:00:17.060 --> 00:00:22.160
+web developer and technologists. Scott
+Hanselman posted by Carl Franklin. This
+
+3
+00:00:22.160 --> 00:00:25.580
+is Lawrence Ryan announced some show
+number one Oh two courted
+
+4
+00:00:25.580 --> 00:00:31.820
+live Tuesday, February 12th, 2008. Support for
+Hanselman it's just provided by
+
+5
+00:00:32.030 --> 00:00:35.720
+teller. It already controls the
+most comprehensive suite of components
+
+6
+00:00:35.720 --> 00:00:45.170
+for windows forms and asp.net
+web applications. online@wwwdottelerik.com. Support is
+
+7
+00:00:45.170 --> 00:00:49.790
+also provided by.net developers journal.
+The world's leading.net developer magazine
+
+8
+00:00:50.330 --> 00:00:55.940
+online at www dot <inaudible>
+dot com. In this episode,
+
+9
+00:00:55.940 --> 00:01:00.050
+Scott discusses the entity framework
+with Microsoft developer, Mike Pizo.
+
+10
+00:01:04.430 --> 00:01:06.260
+Hi, this is Scott Hanselman
+and this is another episode
+
+11
+00:01:06.260 --> 00:01:08.060
+of Hansel minutes, and I'm
+fortunate enough to be sitting
+
+12
+00:01:08.060 --> 00:01:11.090
+here with Mike Pizo, a
+principal architect in the data
+
+13
+00:01:11.090 --> 00:01:13.190
+program ability team here at
+Microsoft, and we were in
+
+14
+00:01:13.190 --> 00:01:15.230
+building 35. Thanks for taking
+time out of your busy
+
+15
+00:01:15.230 --> 00:01:16.850
+day to talk to me,
+Mike. Well, thanks for coming.
+
+16
+00:01:17.270 --> 00:01:19.910
+So you work on the
+team that produces the entity
+
+17
+00:01:19.910 --> 00:01:23.270
+framework. That's correct. And I
+have personally felt a lot
+
+18
+00:01:23.270 --> 00:01:26.600
+of confusion about which data
+strategy that I should do
+
+19
+00:01:26.600 --> 00:01:28.130
+my applications, you know, when
+I sit down and I
+
+20
+00:01:28.130 --> 00:01:29.600
+go file new and I
+get ready to make a
+
+21
+00:01:29.600 --> 00:01:33.470
+decision, I've got linked to
+SQL, I've got ado.net classic
+
+22
+00:01:33.470 --> 00:01:35.960
+record sets. I've got these
+kind of things that I
+
+23
+00:01:35.960 --> 00:01:38.360
+know, new things that are
+coming out and I've got
+
+24
+00:01:38.360 --> 00:01:40.670
+the entity framework to choose
+from. And I think that
+
+25
+00:01:40.670 --> 00:01:43.130
+some people may have felt
+that linked to SQL and
+
+26
+00:01:43.130 --> 00:01:45.560
+entity framework were not really
+complimentary and that they were
+
+27
+00:01:46.040 --> 00:01:48.680
+competing ends. But, but I
+understand from talking to some
+
+28
+00:01:48.680 --> 00:01:51.230
+friends and building 35, but
+that's not the case. Am
+
+29
+00:01:51.230 --> 00:01:53.870
+I, am I correct in
+that? Right. Right. And there's
+
+30
+00:01:53.870 --> 00:01:56.260
+certainly a lot of similarities
+between linked to sequel and
+
+31
+00:01:56.270 --> 00:01:59.540
+linked entities or the entity
+framework in general. And those
+
+32
+00:01:59.540 --> 00:02:04.400
+similarities become very confusing before
+we talk too much about
+
+33
+00:02:04.400 --> 00:02:07.160
+the similarities and differences between
+the two. It's probably helpful
+
+34
+00:02:07.160 --> 00:02:10.280
+to define what linked to
+SQLs and linked to entities
+
+35
+00:02:10.340 --> 00:02:11.840
+are. Yeah, I think that
+would be helpful. And I
+
+36
+00:02:11.840 --> 00:02:14.090
+think it would also be
+helpful to understand too, to
+
+37
+00:02:14.090 --> 00:02:16.190
+enable these technologies, what it
+needs to be installed is
+
+38
+00:02:16.190 --> 00:02:18.530
+this just put a DLL
+in a bin folder or
+
+39
+00:02:18.530 --> 00:02:21.350
+these downloads, how does this
+get on my system as
+
+40
+00:02:21.350 --> 00:02:24.140
+well? Sure. So the short
+answer to your second question,
+
+41
+00:02:24.440 --> 00:02:26.990
+how do these get installed?
+Both linked to SQL and
+
+42
+00:02:26.990 --> 00:02:30.170
+linked to entities install as
+part of the.net framework. So
+
+43
+00:02:30.170 --> 00:02:32.270
+I'm linking to SQL ships
+today as part of visual
+
+44
+00:02:32.270 --> 00:02:35.030
+studio 2008. And it was
+installed when you install visual
+
+45
+00:02:35.030 --> 00:02:39.080
+studio, the entity framework will
+be part of an update
+
+46
+00:02:39.080 --> 00:02:41.510
+to the.net framework that will
+ship in the middle of
+
+47
+00:02:41.510 --> 00:02:44.420
+this year. Okay. And so
+in both cases, the bits
+
+48
+00:02:44.420 --> 00:02:47.120
+will be, there It be
+a service pack or web
+
+49
+00:02:47.120 --> 00:02:49.220
+Dell or some format, but
+it's part of the framework.
+
+50
+00:02:49.250 --> 00:02:51.920
+Correct. Okay. So it's baked
+in. So at that point
+
+51
+00:02:51.920 --> 00:02:54.680
+I can choose either, either
+one, correct. And these will
+
+52
+00:02:54.680 --> 00:02:57.200
+be system-wide services. There'll be
+in the gap. So I
+
+53
+00:02:57.200 --> 00:02:58.790
+won't have to put anything
+in my bin folder. This
+
+54
+00:02:58.790 --> 00:03:00.730
+is an add reference kind
+of a thing that's right.
+
+55
+00:03:01.500 --> 00:03:04.780
+And these aren't involved other
+than the compiler changes involved
+
+56
+00:03:04.780 --> 00:03:07.180
+with link. These don't involve
+any changes to the C
+
+57
+00:03:07.180 --> 00:03:10.320
+sharp or VB component. No,
+there's no specific code in
+
+58
+00:03:10.350 --> 00:03:13.170
+C sharp VB or any
+of the languages or CLR
+
+59
+00:03:13.170 --> 00:03:16.530
+specifically for either linked to
+sequel linked entities. Well, I
+
+60
+00:03:16.530 --> 00:03:19.830
+know with linked to SQL,
+I can visual studio. My
+
+61
+00:03:19.830 --> 00:03:22.440
+experience is such that I
+can go into a, the
+
+62
+00:03:22.440 --> 00:03:25.020
+server Explorer. I can drag
+tables and relationships over into
+
+63
+00:03:25.020 --> 00:03:28.110
+a designer surface. And that
+designer surface is a, there's
+
+64
+00:03:28.110 --> 00:03:30.060
+a pair of Rose colored
+glasses on top of some
+
+65
+00:03:30.060 --> 00:03:32.310
+generated stuff. So if I
+have a products table, I'll
+
+66
+00:03:32.310 --> 00:03:36.450
+get a products object. So
+there's a often when people
+
+67
+00:03:36.450 --> 00:03:38.100
+are doing linked to SQL,
+not always, but often there's
+
+68
+00:03:38.100 --> 00:03:41.340
+a very straight link between
+the physical aspects of the
+
+69
+00:03:41.340 --> 00:03:44.130
+database and in the physical
+aspects of my data, access
+
+70
+00:03:44.130 --> 00:03:47.400
+layer products to products. And
+like that is, is that
+
+71
+00:03:47.400 --> 00:03:50.310
+the way it works in
+India framework? The entity framework
+
+72
+00:03:50.310 --> 00:03:54.570
+is very similar as a
+starting point. And actually walking
+
+73
+00:03:54.570 --> 00:03:56.460
+through that experience as a
+good way to talk about
+
+74
+00:03:56.460 --> 00:04:00.090
+what similar and then how
+the entity framework extends that
+
+75
+00:04:00.090 --> 00:04:02.190
+and goes beyond that. Okay.
+So to back up and
+
+76
+00:04:02.190 --> 00:04:04.170
+define some of our terms,
+the first term that we'll
+
+77
+00:04:04.170 --> 00:04:06.510
+be using a lot is
+link, which stands for language
+
+78
+00:04:06.510 --> 00:04:09.900
+integrated query and is basically
+the ability to build your
+
+79
+00:04:09.900 --> 00:04:13.650
+queries into the programming language.
+So historically when you've programmed
+
+80
+00:04:13.650 --> 00:04:19.080
+against a database, we have
+interoperable API APIs for passing
+
+81
+00:04:19.080 --> 00:04:22.710
+the connection information for passing
+the query and retrieving results
+
+82
+00:04:22.710 --> 00:04:25.260
+from the database. But the
+actual query itself was in
+
+83
+00:04:25.260 --> 00:04:28.500
+the form of an opaque
+string opaque because the client
+
+84
+00:04:28.500 --> 00:04:30.600
+knew nothing about the contents
+of that string, right? We
+
+85
+00:04:30.600 --> 00:04:33.720
+were tunneling language within a
+string. Exactly. And it is
+
+86
+00:04:33.720 --> 00:04:36.450
+a language it's a full
+syntax language. It's, it's almost
+
+87
+00:04:36.450 --> 00:04:40.230
+a full program, but the
+compiler that you're using to
+
+88
+00:04:40.230 --> 00:04:42.690
+write your application has no
+knowledge of the contents of
+
+89
+00:04:42.690 --> 00:04:45.540
+that string. So you don't
+get statement completion. You don't
+
+90
+00:04:45.540 --> 00:04:48.870
+get IntelliSense, you don't get
+any compile time type checking
+
+91
+00:04:48.870 --> 00:04:51.360
+for the strings that you're
+passing. And what that means
+
+92
+00:04:51.360 --> 00:04:53.970
+is that you can basically
+write your entire application. It
+
+93
+00:04:53.970 --> 00:04:56.430
+will compile, and it's not
+until you execute it, that
+
+94
+00:04:56.430 --> 00:04:59.100
+you find syntax errors in
+your string, that you find
+
+95
+00:04:59.100 --> 00:05:01.560
+you mistyped the name that
+you, you did a type
+
+96
+00:05:01.560 --> 00:05:03.990
+or whatever. So no matter
+how good of a SQL
+
+97
+00:05:03.990 --> 00:05:07.260
+programmer you are, there's always
+going to be errors in
+
+98
+00:05:07.260 --> 00:05:10.020
+those strings. I make them
+all the time and it's
+
+99
+00:05:10.020 --> 00:05:13.230
+difficult to debug those. So
+what link provides is the
+
+100
+00:05:13.230 --> 00:05:19.620
+ability to use objects as
+the metadata describing the metadata
+
+101
+00:05:19.620 --> 00:05:23.850
+you're using when you're querying
+your database or well link
+
+102
+00:05:23.850 --> 00:05:26.610
+is not tied to relational.
+Databases. Link is a general
+
+103
+00:05:26.610 --> 00:05:30.330
+feature, which allows you to
+program a strongly typed schema
+
+104
+00:05:30.630 --> 00:05:33.720
+where the metadata for that
+schema comes from objects themselves.
+
+105
+00:05:34.020 --> 00:05:36.690
+So there's a couple of
+different technologies for link in
+
+106
+00:05:36.690 --> 00:05:38.490
+the framework. The first is
+what we call linked to
+
+107
+00:05:38.490 --> 00:05:41.370
+objects, which is simply the
+ability to build link queries
+
+108
+00:05:41.370 --> 00:05:45.030
+over any type collection. So
+any of your eye enumerables
+
+109
+00:05:45.030 --> 00:05:48.210
+or eye collections, any list
+in your program is now
+
+110
+00:05:48.240 --> 00:05:52.230
+queryable with visual studio, 2008.
+We also have implementations of
+
+111
+00:05:52.230 --> 00:05:55.110
+link against XML, which allows
+you to write strongly type
+
+112
+00:05:55.110 --> 00:05:58.010
+queries against XML. Right. I
+love that stuff. And now
+
+113
+00:05:58.010 --> 00:06:01.190
+we're introducing linked to SQL
+and linked to entities and
+
+114
+00:06:01.190 --> 00:06:03.910
+as well as linked to
+dataset. Yeah. Oh, okay. So
+
+115
+00:06:03.910 --> 00:06:06.010
+there's three things to understand
+that there's linked to SQL
+
+116
+00:06:06.010 --> 00:06:08.230
+from a data perspective, there's
+linked to entities and then
+
+117
+00:06:08.230 --> 00:06:11.560
+there's linked to data. Correct.
+Okay. So we'll, we'll try
+
+118
+00:06:11.560 --> 00:06:15.010
+to touch off a good
+deal. Historically, the greater confusion
+
+119
+00:06:15.010 --> 00:06:18.250
+has been between linked to
+sequencing to entities, but LinkedIn
+
+120
+00:06:18.310 --> 00:06:20.050
+data set certainly comes into
+there. So we'll try to
+
+121
+00:06:20.140 --> 00:06:25.240
+cover that as well. Okay.
+So link provides this programming
+
+122
+00:06:25.240 --> 00:06:30.340
+experience for building strongly typed
+queries against any I credible
+
+123
+00:06:30.340 --> 00:06:33.310
+provider. So there's an interface
+called I queryable, which is
+
+124
+00:06:33.310 --> 00:06:37.330
+similar in nature to innumerable
+innumerable as an API that
+
+125
+00:06:37.660 --> 00:06:40.870
+a collection can implement. And
+it gives a common way
+
+126
+00:06:40.870 --> 00:06:44.230
+for applications to iterate over
+that collection. And in fact,
+
+127
+00:06:44.230 --> 00:06:47.440
+the language is built on
+top of those language syntax,
+
+128
+00:06:47.440 --> 00:06:50.080
+such as the, for each
+statement and both VB and
+
+129
+00:06:50.080 --> 00:06:53.950
+C sharp are basically just
+sugar over calling that IEnumerable
+
+130
+00:06:53.950 --> 00:06:56.860
+and looping through those results.
+And a very similar way
+
+131
+00:06:56.860 --> 00:07:00.610
+I queryable sets defines a
+set of query operations. And
+
+132
+00:07:00.610 --> 00:07:03.100
+then in VB and C
+sharp there's syntax sugar, that
+
+133
+00:07:03.100 --> 00:07:07.390
+allows you to have very
+nice query syntax for building
+
+134
+00:07:07.390 --> 00:07:09.940
+queries that ended up calling
+that an underlying I quibble
+
+135
+00:07:09.940 --> 00:07:13.540
+implementation. Okay. So when we
+talk about different implementations of
+
+136
+00:07:13.570 --> 00:07:16.000
+link, what we're talking about
+is different implementations of I
+
+137
+00:07:16.000 --> 00:07:18.820
+queryable. Ah, okay. So when
+I think about things like
+
+138
+00:07:18.820 --> 00:07:21.910
+people have released a link
+to Amazon web services or
+
+139
+00:07:22.270 --> 00:07:25.990
+linked to flicker, they're converting
+those, I queryable Lambdas and
+
+140
+00:07:25.990 --> 00:07:28.120
+turning them into something that
+is appropriate to that underlying
+
+141
+00:07:28.120 --> 00:07:31.120
+data source. Correct. CRA, okay.
+So that makes sense. So
+
+142
+00:07:31.120 --> 00:07:32.860
+getting back to the link
+to sequel, what is linked
+
+143
+00:07:32.860 --> 00:07:35.560
+to SQL linked to SQL
+is an implementation of that.
+
+144
+00:07:35.560 --> 00:07:40.120
+I quibble interface over a
+SQL server schema and the
+
+145
+00:07:40.120 --> 00:07:42.910
+design experience becomes very nice.
+As you say, if you're
+
+146
+00:07:42.910 --> 00:07:45.580
+trying to query against the
+SQL server schema, you can
+
+147
+00:07:45.580 --> 00:07:49.750
+start up visual studio, select
+a link to SQL project,
+
+148
+00:07:49.990 --> 00:07:52.000
+and you get a nice
+design experience where you can
+
+149
+00:07:52.000 --> 00:07:55.360
+drag on tables and dragging
+on tables allows you to
+
+150
+00:07:55.360 --> 00:07:59.380
+generate classes for those specific
+tables, right? So they're pretty
+
+151
+00:07:59.380 --> 00:08:02.800
+much one-to-one. You can change
+the naming. So if you've
+
+152
+00:08:02.800 --> 00:08:06.460
+got some obscure column name,
+you can provide a more
+
+153
+00:08:06.460 --> 00:08:10.840
+friendly name. You can, if
+you have the one things
+
+154
+00:08:10.870 --> 00:08:16.480
+that relational databases don't do
+well is describe inheritance hierarchies.
+
+155
+00:08:16.900 --> 00:08:19.420
+And so that's often modeled
+in a relational database by
+
+156
+00:08:19.420 --> 00:08:22.630
+having a single table, which
+has discriminator columns, where the
+
+157
+00:08:22.630 --> 00:08:26.800
+discriminator specifies this particular row
+represents this subtype or this
+
+158
+00:08:26.800 --> 00:08:30.010
+other subtype. So linked to
+SQL does let you map
+
+159
+00:08:30.040 --> 00:08:34.000
+an inheritance hierarchy to that
+single table with a discriminary
+
+160
+00:08:34.000 --> 00:08:36.400
+column. The other thing it
+does is it allows you
+
+161
+00:08:36.400 --> 00:08:39.670
+to map relationships to foreign
+key columns, but for the
+
+162
+00:08:39.670 --> 00:08:42.160
+most part, it's a pretty
+direct one-to-one mapping. What you
+
+163
+00:08:42.160 --> 00:08:44.920
+drag onto the design surface
+is pretty much the set
+
+164
+00:08:44.920 --> 00:08:47.050
+of entities that you have
+to program again. Okay. So
+
+165
+00:08:47.050 --> 00:08:49.210
+does that mean that it
+provides a layer of abstraction,
+
+166
+00:08:49.210 --> 00:08:52.600
+but not necessarily a strong
+layer of indirection? Yes. Yes.
+
+167
+00:08:52.690 --> 00:08:56.130
+Okay. So you really are
+generating queries directly against the
+
+168
+00:08:56.130 --> 00:09:01.020
+underlying schema when you're using
+linked to SQL, but it
+
+169
+00:09:01.020 --> 00:09:02.910
+gives you a very nice
+experience that not only allows
+
+170
+00:09:02.910 --> 00:09:05.280
+you to query in terms
+of strongly typed objects, but
+
+171
+00:09:05.280 --> 00:09:08.700
+also those objects are returned
+as CLR objects that you
+
+172
+00:09:08.700 --> 00:09:12.090
+can then make changes to
+those changes or are change
+
+173
+00:09:12.100 --> 00:09:14.580
+tracked. And then later you
+can call save changes and
+
+174
+00:09:14.580 --> 00:09:19.470
+it'll generate the right DML
+statements or call store procedures,
+
+175
+00:09:19.470 --> 00:09:22.430
+depending on how you've configured
+DML being the markup language
+
+176
+00:09:22.430 --> 00:09:27.320
+that is describing the database
+underlying DML, being the data
+
+177
+00:09:27.320 --> 00:09:31.310
+manipulation language, which is the
+inserts updates and delete statements
+
+178
+00:09:31.310 --> 00:09:33.590
+that you use in order
+to modify relational. Oh, so
+
+179
+00:09:33.590 --> 00:09:37.400
+there's DBML yes. Which is
+describing that diagram. It's the
+
+180
+00:09:37.400 --> 00:09:39.620
+XML file that looks at
+diagram look like that. Right.
+
+181
+00:09:39.800 --> 00:09:42.170
+And then there's DML, right.
+Which is what you just
+
+182
+00:09:42.170 --> 00:09:44.300
+discussed. Yes. We have far
+too many, three letter and
+
+183
+00:09:44.300 --> 00:09:46.160
+four letter acronyms. Well, you
+know, this is one of
+
+184
+00:09:46.160 --> 00:09:48.290
+the things, I mean, visual
+studio is, is a pair
+
+185
+00:09:48.290 --> 00:09:50.330
+of Rose colored glasses, and
+there's nothing wrong with wearing
+
+186
+00:09:50.330 --> 00:09:52.310
+those glasses. I kinda like
+looking at the world that
+
+187
+00:09:52.310 --> 00:09:54.350
+way, but every once in
+a while, you want to
+
+188
+00:09:54.350 --> 00:09:56.660
+just open that guy up
+and solution Explorer and see
+
+189
+00:09:56.660 --> 00:09:59.810
+what's happening. Just so you
+know that no, one's trying
+
+190
+00:09:59.810 --> 00:10:03.050
+to fool you. It's the
+same as the power of,
+
+191
+00:10:03.110 --> 00:10:06.860
+of HTTP. I mean, HDTV
+is great. You generally don't
+
+192
+00:10:06.860 --> 00:10:11.060
+need to look at the
+HTML and understand everything, but
+
+193
+00:10:11.060 --> 00:10:12.560
+it's nice to have there.
+And it's nice to look
+
+194
+00:10:12.560 --> 00:10:13.850
+at it now and then
+Exactly. And that's the kind
+
+195
+00:10:13.850 --> 00:10:15.500
+of stuff that I want
+to understand. So when we
+
+196
+00:10:15.500 --> 00:10:18.680
+start talking about LinkedIn entities,
+there's magic happening and I
+
+197
+00:10:18.680 --> 00:10:22.010
+choose to, to, you know,
+live in that matrix, but
+
+198
+00:10:22.010 --> 00:10:23.330
+I wanna be able to
+peek underneath and see what's
+
+199
+00:10:23.330 --> 00:10:27.020
+happening. So, So that's sort
+of the link to SQL
+
+200
+00:10:27.020 --> 00:10:30.560
+experience and it can best
+be summarized as a strongly
+
+201
+00:10:30.560 --> 00:10:34.790
+typed experience over a SQL
+server schema. So it gives
+
+202
+00:10:34.790 --> 00:10:36.650
+you the ability to query
+in terms of link, bring
+
+203
+00:10:36.650 --> 00:10:39.200
+back objects, modify those objects
+and save changes to those
+
+204
+00:10:39.200 --> 00:10:41.000
+objects. And as you said
+before, this is using the
+
+205
+00:10:41.000 --> 00:10:43.190
+Meda data in the SQL
+server that was already there.
+
+206
+00:10:43.190 --> 00:10:44.480
+And we're just kind of
+bringing it up into a
+
+207
+00:10:44.480 --> 00:10:46.670
+more consumable format. This is
+the kind of stuff that
+
+208
+00:10:46.670 --> 00:10:49.250
+a lot of progressive people
+in the early two thousands
+
+209
+00:10:49.250 --> 00:10:52.040
+were doing with cogeneration. Yep.
+Taking a look at a
+
+210
+00:10:52.040 --> 00:10:55.130
+database saying, Hey, that looks
+like information. I already have.
+
+211
+00:10:55.700 --> 00:10:58.380
+Let's flow that up towards,
+into a CLR object. And
+
+212
+00:10:58.430 --> 00:11:02.390
+specifically the design experience within
+visual studio does generate classes.
+
+213
+00:11:02.660 --> 00:11:05.420
+And as I alluded to
+before those classes provide the
+
+214
+00:11:05.420 --> 00:11:09.050
+metadata that link uses in
+order to do the strong
+
+215
+00:11:09.260 --> 00:11:11.600
+type checking of your query
+as you build it. Cool.
+
+216
+00:11:12.200 --> 00:11:15.740
+So the link to entities
+experience is very similar to
+
+217
+00:11:15.740 --> 00:11:17.420
+start with, and that's one
+of the reasons for the
+
+218
+00:11:17.420 --> 00:11:21.230
+confusion. Okay. Once you install
+the entity framework, we also
+
+219
+00:11:21.230 --> 00:11:24.200
+have a design surface and
+you'll be able to select
+
+220
+00:11:24.200 --> 00:11:28.100
+from the add new item
+templates, a ado.net data model.
+
+221
+00:11:28.370 --> 00:11:30.290
+And when you select that,
+you'll have a wizard that
+
+222
+00:11:30.290 --> 00:11:33.050
+allows you to select the
+tables and the views and
+
+223
+00:11:33.050 --> 00:11:35.330
+the store procedures that you
+want to bring into your
+
+224
+00:11:35.330 --> 00:11:39.050
+project. And again, you'll have
+a design surface that design
+
+225
+00:11:39.050 --> 00:11:42.740
+surface by default will generate
+entities, which are one-to-one with
+
+226
+00:11:42.740 --> 00:11:46.340
+the tables, views are stored
+procedures that you've selected, but
+
+227
+00:11:46.790 --> 00:11:49.430
+that's sort of where the
+similarities. And unfortunately, this is
+
+228
+00:11:49.430 --> 00:11:51.410
+where I think a lot
+of people stop themselves. They
+
+229
+00:11:51.410 --> 00:11:54.600
+go, ah, what the, what
+is this? Right? So The
+
+230
+00:11:54.640 --> 00:11:56.680
+next step that you can
+do is you can view
+
+231
+00:11:56.680 --> 00:11:59.620
+the mapping details and the
+entity framework. And here's where
+
+232
+00:11:59.620 --> 00:12:01.750
+you really have a lot
+of control over how you
+
+233
+00:12:01.750 --> 00:12:07.300
+map your entities or your
+objects as they're instantiated within
+
+234
+00:12:07.300 --> 00:12:11.500
+the.net framework, using LinkedIn entities,
+how you can modify how
+
+235
+00:12:11.500 --> 00:12:15.040
+those mapped to your underlying
+relational schema. Okay. So to
+
+236
+00:12:15.040 --> 00:12:18.490
+back up a step linked
+to entities is link over
+
+237
+00:12:18.490 --> 00:12:21.790
+the entity framework. And the
+entity framework is all about
+
+238
+00:12:22.000 --> 00:12:24.670
+something we call the entity
+data model and the entity
+
+239
+00:12:24.670 --> 00:12:28.840
+data model is a conceptual
+model that allows you to
+
+240
+00:12:28.840 --> 00:12:33.700
+think in terms of entities
+and relationships, that more closely
+
+241
+00:12:34.540 --> 00:12:38.350
+reflect the real rule concepts
+that you typically deal with
+
+242
+00:12:38.350 --> 00:12:43.720
+in an application. So a
+relational database has tables and
+
+243
+00:12:43.720 --> 00:12:47.860
+it has constraints. And that's
+really about all it doesn't
+
+244
+00:12:47.860 --> 00:12:50.860
+have the concept of a
+relationship. It has foreign keys,
+
+245
+00:12:50.860 --> 00:12:53.230
+which are constraints, and they're
+a little bit different. They're
+
+246
+00:12:53.230 --> 00:12:55.390
+not exposed to the query
+language. So there's no easy
+
+247
+00:12:55.390 --> 00:12:57.340
+way to navigate a foreign
+key. You have to create
+
+248
+00:12:57.340 --> 00:13:01.780
+a join. It doesn't have
+higher level modeling concepts such
+
+249
+00:13:01.780 --> 00:13:05.470
+as inheritance. It doesn't have
+some of the other things
+
+250
+00:13:05.470 --> 00:13:09.340
+that you would typically have
+in a higher level programming
+
+251
+00:13:09.340 --> 00:13:13.060
+model. So the entity data
+model is an entity relationship
+
+252
+00:13:13.060 --> 00:13:16.990
+model that allows you to
+define entities that are, that
+
+253
+00:13:16.990 --> 00:13:21.250
+is types that have a
+specific identity. Those types can
+
+254
+00:13:21.250 --> 00:13:25.750
+have inheritance. They can be
+mapped, or you can have
+
+255
+00:13:25.750 --> 00:13:30.850
+relationships between your types. And
+those are strongly defined relationships
+
+256
+00:13:30.850 --> 00:13:34.090
+that is, we understand characteristics
+of the relationships such as
+
+257
+00:13:34.090 --> 00:13:38.230
+cardinality. They're not just CLR
+references that have no meaning
+
+258
+00:13:38.230 --> 00:13:41.140
+in the model. And then
+you can have other higher
+
+259
+00:13:41.140 --> 00:13:44.650
+level concepts like complex types.
+That is a member that
+
+260
+00:13:44.650 --> 00:13:49.330
+has like address field, which
+may have multiple members itself.
+
+261
+00:13:49.360 --> 00:13:52.000
+First name, last name, city,
+state, and zip, for example,
+
+262
+00:13:52.740 --> 00:13:56.830
+these are also called composite
+types sometimes. Okay. And then
+
+263
+00:13:56.830 --> 00:13:59.950
+you also have things like
+many to many relationships. So
+
+264
+00:14:00.040 --> 00:14:02.470
+the first part of the
+entity data model is defining
+
+265
+00:14:02.470 --> 00:14:05.230
+this conceptual model. And that's
+what you can do in
+
+266
+00:14:05.230 --> 00:14:09.010
+the design surface. In fact,
+with the entity framework, ado.net
+
+267
+00:14:09.010 --> 00:14:12.430
+data model designer, you can
+either choose to start with
+
+268
+00:14:12.430 --> 00:14:15.220
+a database and generate a
+default model from that database.
+
+269
+00:14:15.370 --> 00:14:17.770
+Or you can start with
+a clean slate and just
+
+270
+00:14:17.770 --> 00:14:20.860
+design your entities from scratch
+to have the entities and
+
+271
+00:14:20.860 --> 00:14:23.080
+the relationships that you're interested
+in. Okay. So this is
+
+272
+00:14:23.100 --> 00:14:25.470
+using, using that design surface
+as your kind of ER,
+
+273
+00:14:25.470 --> 00:14:29.820
+studio. Exactly, exactly. And this,
+this the way I'm kind
+
+274
+00:14:29.820 --> 00:14:31.020
+of put this in my
+own head, I'm trying to
+
+275
+00:14:31.020 --> 00:14:34.170
+model this in my own
+brain. Is that the, that
+
+276
+00:14:34.170 --> 00:14:36.150
+there's the physical aspects of
+your database, which can be
+
+277
+00:14:36.150 --> 00:14:38.880
+modeled via linked to SQL,
+and there can be some
+
+278
+00:14:38.910 --> 00:14:41.040
+mappings, but for the most
+part what's going on in
+
+279
+00:14:41.040 --> 00:14:43.470
+your database is what's going
+on in the object when
+
+280
+00:14:43.470 --> 00:14:46.110
+the link to SQL world.
+But that extra layer of
+
+281
+00:14:46.110 --> 00:14:49.920
+indirection is, is basically saying
+that there's the physical characteristics
+
+282
+00:14:49.920 --> 00:14:54.050
+of your database, which are
+not always the logical representation
+
+283
+00:14:54.050 --> 00:14:56.330
+of your, of your data
+model. You may have this
+
+284
+00:14:56.450 --> 00:15:00.170
+logical concept in your entities
+of products, but products may
+
+285
+00:15:00.170 --> 00:15:02.990
+be inside of three different
+tables and they may look
+
+286
+00:15:02.990 --> 00:15:05.420
+entirely different, right? So then
+you're shielding them from all
+
+287
+00:15:05.420 --> 00:15:09.700
+those. So, so the entity
+framework is an implementation of
+
+288
+00:15:09.700 --> 00:15:13.420
+the entity model over a
+relational store, over an ado.net
+
+289
+00:15:13.420 --> 00:15:16.300
+data provider. Okay. So what
+we've done with entity framework
+
+290
+00:15:16.300 --> 00:15:19.810
+is we've expanded the definition
+of an ado.net data provider,
+
+291
+00:15:20.020 --> 00:15:22.870
+so that other data providers
+besides SQL client can plug
+
+292
+00:15:22.870 --> 00:15:25.990
+into this framework and the
+way that we've extended, it
+
+293
+00:15:25.990 --> 00:15:29.620
+is basically by providing a
+mechanism whereby we can pass
+
+294
+00:15:29.620 --> 00:15:33.400
+a query in economical form
+as a syntax tree and
+
+295
+00:15:33.410 --> 00:15:37.480
+expression tree, and the provider
+generates their provider specific sequel
+
+296
+00:15:37.510 --> 00:15:40.600
+out of that syntax tree.
+Ah, okay. So that's how
+
+297
+00:15:40.600 --> 00:15:43.270
+other providers can plug into
+the entity framework. One layer
+
+298
+00:15:43.270 --> 00:15:45.130
+above that we have something
+called the end of the
+
+299
+00:15:45.130 --> 00:15:47.950
+client and the end of
+the client is an ado.net
+
+300
+00:15:47.950 --> 00:15:50.170
+data provider. So it has
+a connection, a command and
+
+301
+00:15:50.170 --> 00:15:52.900
+a data reader. You can
+actually program against it directly
+
+302
+00:15:52.900 --> 00:15:55.900
+without generating objects and without
+using link. Okay. Okay. So
+
+303
+00:15:55.900 --> 00:15:58.420
+in this instance, ado.net is
+not talking to the SQL
+
+304
+00:15:58.420 --> 00:16:01.840
+data provider, but talking to
+the entity client data provider,
+
+305
+00:16:02.230 --> 00:16:04.840
+which is providing that layer
+of, And the entity client
+
+306
+00:16:04.840 --> 00:16:08.020
+data providers in turn talking
+to either the SQL client,
+
+307
+00:16:08.080 --> 00:16:11.380
+the SQL server data provider,
+the Oracle client, the DB
+
+308
+00:16:11.380 --> 00:16:14.380
+two, or whatever other provider.
+I have an understanding of
+
+309
+00:16:14.380 --> 00:16:16.180
+this I'm up in a,
+in a, in a client
+
+310
+00:16:16.180 --> 00:16:19.030
+application. And I, I'm doing
+linked to entities. I've described
+
+311
+00:16:19.030 --> 00:16:22.090
+my, my logical data model.
+And then I, I send
+
+312
+00:16:22.100 --> 00:16:25.390
+something off via LinkedIn entities
+that get translated into an
+
+313
+00:16:25.390 --> 00:16:27.340
+I query will interface, which
+has an interpreted by the
+
+314
+00:16:27.340 --> 00:16:31.180
+entity client. The entity client
+then talks to it's a
+
+315
+00:16:31.570 --> 00:16:35.860
+ado.net provider, which then takes
+that abstract syntax tree. And
+
+316
+00:16:35.890 --> 00:16:38.920
+it passes it along to
+either the SQL provider or
+
+317
+00:16:38.920 --> 00:16:42.400
+the Oracle provider translates that
+into either T sequel or
+
+318
+00:16:42.400 --> 00:16:45.280
+Oracle SQL and then along
+and then back. Right. And
+
+319
+00:16:45.280 --> 00:16:46.690
+then the record set Of
+course follows all the way
+
+320
+00:16:46.690 --> 00:16:49.270
+back. Right. And, and so
+that's all a part of
+
+321
+00:16:49.270 --> 00:16:52.090
+the magic that goes on
+under the covers. Now you,
+
+322
+00:16:52.090 --> 00:16:55.450
+as the programmer within visual
+studio, don't need to think
+
+323
+00:16:55.450 --> 00:16:57.280
+about or see any of
+that. That's all sort of
+
+324
+00:16:57.280 --> 00:17:00.190
+wired for you as part
+of this entity framework experience,
+
+325
+00:17:00.220 --> 00:17:04.690
+right? So within the designer,
+now you can specify more
+
+326
+00:17:04.690 --> 00:17:08.050
+complex mappings between the entities
+that you have in your
+
+327
+00:17:08.050 --> 00:17:11.140
+entity model and the actual
+storage and the database. So
+
+328
+00:17:11.140 --> 00:17:15.010
+for instance, you can map
+multiple tables to the same
+
+329
+00:17:15.010 --> 00:17:17.560
+entity, or you can map
+multiple entity types to the
+
+330
+00:17:17.560 --> 00:17:22.720
+same table, or you can
+map many to many relationships
+
+331
+00:17:22.720 --> 00:17:25.120
+that take out the joint
+table. So you just said,
+
+332
+00:17:25.150 --> 00:17:27.610
+I could do multiple entity
+types to one table. So
+
+333
+00:17:27.610 --> 00:17:30.790
+I could have a table
+of, I don't know, products,
+
+334
+00:17:31.180 --> 00:17:33.940
+but I really wanted to
+have, let's say I had
+
+335
+00:17:34.430 --> 00:17:37.780
+different entities, products and discounted
+products. And based on some
+
+336
+00:17:38.560 --> 00:17:41.020
+flipped bit in a column
+somewhere, I wanted my entity
+
+337
+00:17:41.020 --> 00:17:43.210
+monitor look entirely different where
+someone could get back a
+
+338
+00:17:43.210 --> 00:17:45.910
+list of products or a
+list of just discounted products,
+
+339
+00:17:45.940 --> 00:17:48.220
+even though they're being stored
+in a single table. Correct.
+
+340
+00:17:48.250 --> 00:17:49.830
+I can see where that'd
+be more to do that
+
+341
+00:17:49.830 --> 00:17:53.630
+in another, the old fashioned
+In, in this example of
+
+342
+00:17:53.930 --> 00:17:57.740
+products and discontinued products, it's
+likely that they're an either
+
+343
+00:17:57.740 --> 00:18:01.130
+be the same entity type,
+but different logical entity extents
+
+344
+00:18:01.130 --> 00:18:03.560
+for those that is the
+type may look the same,
+
+345
+00:18:04.100 --> 00:18:06.320
+but there are different entity
+sets and the entity framework
+
+346
+00:18:06.320 --> 00:18:08.360
+does support that. So that's
+a great example for a
+
+347
+00:18:08.360 --> 00:18:12.260
+different mapping concept. A similar
+concept is it would be
+
+348
+00:18:12.260 --> 00:18:15.860
+inheritance where maybe a discontinued
+product has the data, it
+
+349
+00:18:15.860 --> 00:18:19.520
+was discontinued. So that's not
+a completely different type, but
+
+350
+00:18:19.520 --> 00:18:22.130
+it's derived from that type.
+And again, you may have,
+
+351
+00:18:22.190 --> 00:18:24.170
+you may have a different
+extent for it, or it
+
+352
+00:18:24.170 --> 00:18:26.750
+may just be when you
+query the products extent you
+
+353
+00:18:26.750 --> 00:18:31.040
+asked specifically for discontinued products
+or you specifically filter out
+
+354
+00:18:31.040 --> 00:18:34.580
+discontinued products. So in fact,
+with both link and with
+
+355
+00:18:34.610 --> 00:18:38.060
+a variant of SQL, we
+call entity sequel. You can
+
+356
+00:18:38.060 --> 00:18:41.480
+use the type information as
+part of your query, because
+
+357
+00:18:41.480 --> 00:18:44.360
+again, the type information is
+part of the entity model.
+
+358
+00:18:44.360 --> 00:18:46.490
+It's part of the model
+that you're working with at
+
+359
+00:18:46.490 --> 00:18:50.300
+the application layer. So in
+addition to being able to
+
+360
+00:18:51.380 --> 00:18:54.680
+perhaps a better example of
+mapping multiple types to the
+
+361
+00:18:54.680 --> 00:18:58.130
+same table, the extreme example
+of mapping multiple types to
+
+362
+00:18:58.130 --> 00:19:01.130
+the same table is a
+scenario we call the universal
+
+363
+00:19:01.130 --> 00:19:07.610
+database scenario. And so a
+highly normalized database is one
+
+364
+00:19:07.610 --> 00:19:10.670
+in which there are multiple
+tables and there's no redundancy
+
+365
+00:19:10.670 --> 00:19:13.460
+of information. There's a high
+number of you find a
+
+366
+00:19:13.460 --> 00:19:15.470
+high number of tables with
+a lot of foreign keys
+
+367
+00:19:15.470 --> 00:19:17.630
+relating all these different tables.
+Those are usually pretty hard
+
+368
+00:19:17.630 --> 00:19:19.910
+to read. They're very hard
+to read. And again, they're
+
+369
+00:19:19.910 --> 00:19:22.880
+not the, they're not the
+model the application wants. And
+
+370
+00:19:22.880 --> 00:19:26.930
+so the entity framework allows
+you to have flexible mapping
+
+371
+00:19:26.930 --> 00:19:29.630
+where you take what's in
+multiple different tables and where
+
+372
+00:19:29.630 --> 00:19:33.170
+they logically represent one type
+or an inheritance of type
+
+373
+00:19:33.410 --> 00:19:35.750
+that's the model that the
+application works with through the
+
+374
+00:19:35.750 --> 00:19:38.540
+end of the model. So
+that's, that's the first half
+
+375
+00:19:38.540 --> 00:19:41.660
+of that. The other extreme
+to that highly normalized schema
+
+376
+00:19:41.870 --> 00:19:43.880
+is a single table where
+all of your types are
+
+377
+00:19:43.880 --> 00:19:48.140
+stored. And in this case,
+it's a single table. There's
+
+378
+00:19:48.140 --> 00:19:51.140
+again, usually a discriminator column
+that says this type is
+
+379
+00:19:51.140 --> 00:19:53.510
+a customer. This type is
+an order of this type
+
+380
+00:19:53.510 --> 00:19:57.620
+is an order detail. In
+this case, there's no necessarily
+
+381
+00:19:57.890 --> 00:20:01.430
+any commonality between these different
+types during the single table.
+
+382
+00:20:01.610 --> 00:20:04.520
+So you've got columns, a
+very sparse table where some
+
+383
+00:20:04.520 --> 00:20:06.770
+columns are used for one
+type, some columns are used
+
+384
+00:20:06.770 --> 00:20:10.880
+for another type. Again, that's
+not a very convenient model
+
+385
+00:20:10.880 --> 00:20:14.510
+to pro gram against from
+using your application, but the
+
+386
+00:20:14.510 --> 00:20:17.900
+entity model and the entity
+framework can actually model the
+
+387
+00:20:17.900 --> 00:20:22.040
+same model, the same customer
+order, order detail, either highly
+
+388
+00:20:22.040 --> 00:20:25.400
+factored into these normalized tables.
+As you typically see in
+
+389
+00:20:25.400 --> 00:20:28.820
+a specialized enterprise database, or
+the same model can be
+
+390
+00:20:28.820 --> 00:20:32.300
+mapped to a single table
+where it actually uses a
+
+391
+00:20:32.300 --> 00:20:36.230
+discriminator to specify the different
+types. So that's, that's just
+
+392
+00:20:36.230 --> 00:20:39.050
+an example of some of
+the flexibility of the mapping
+
+393
+00:20:39.050 --> 00:20:41.930
+defined by part of the
+entity frame. Yeah. I mean,
+
+394
+00:20:42.080 --> 00:20:43.640
+I've got like a tear
+coming down my eye here,
+
+395
+00:20:43.640 --> 00:20:45.710
+cause I'm thinking of a
+particular database that I've worked
+
+396
+00:20:45.710 --> 00:20:47.860
+on, where it was going
+to, you know, the, the,
+
+397
+00:20:47.860 --> 00:20:50.710
+the grant database plan, right.
+It was the end database
+
+398
+00:20:50.710 --> 00:20:53.350
+to end all databases. And,
+you know, you started out
+
+399
+00:20:53.350 --> 00:20:56.440
+with the person and then
+suddenly address and then, well,
+
+400
+00:20:56.440 --> 00:20:58.960
+there's multiple addresses and billing
+address and mailing address. And
+
+401
+00:20:58.960 --> 00:21:00.730
+then we start to blow
+the address apart. And that
+
+402
+00:21:00.730 --> 00:21:03.310
+became different postal codes and
+it got more and more
+
+403
+00:21:03.310 --> 00:21:05.920
+and more complicated so that
+the concept of a person
+
+404
+00:21:06.550 --> 00:21:09.220
+was like, you know, literally
+spread across like nine, 10
+
+405
+00:21:09.220 --> 00:21:12.100
+different tables, and then you
+start relating them to accounts
+
+406
+00:21:12.700 --> 00:21:14.980
+and the programmer, you know,
+the, the, the poor guy
+
+407
+00:21:14.980 --> 00:21:16.750
+who's got to just get
+that data grid filled up
+
+408
+00:21:16.780 --> 00:21:19.030
+on the client side. It's
+like, just give me a
+
+409
+00:21:19.030 --> 00:21:21.820
+person. Right. Where's get person.
+Can I just have a
+
+410
+00:21:21.820 --> 00:21:24.850
+person object please? Well, no,
+you have to go and
+
+411
+00:21:24.850 --> 00:21:26.680
+retrieve this. And then you
+start getting into issues like
+
+412
+00:21:26.680 --> 00:21:28.870
+lazy loading, which would be
+something I'd be interested, understanding,
+
+413
+00:21:28.870 --> 00:21:31.480
+like a person might have
+an, an address, but perhaps
+
+414
+00:21:31.480 --> 00:21:34.780
+that's in another database somewhere.
+Do I get a person
+
+415
+00:21:34.780 --> 00:21:37.210
+object back? And he has
+an address object and I
+
+416
+00:21:37.210 --> 00:21:40.540
+don't go and data access
+that data until I access
+
+417
+00:21:40.540 --> 00:21:42.550
+that property. What about those
+kinds of, can you have
+
+418
+00:21:42.730 --> 00:21:47.850
+sparse objects? Yeah. So these
+are all great questions. Yes.
+
+419
+00:21:47.910 --> 00:21:49.470
+All right. I'm going to
+rapid fire. I'm like, how
+
+420
+00:21:49.470 --> 00:21:52.320
+can I use this tomorrow?
+So backing up a little
+
+421
+00:21:52.320 --> 00:21:58.620
+bit, please just elaborate on
+your example. Not only does
+
+422
+00:21:58.620 --> 00:22:01.260
+it become difficult for the
+programmer to write the code
+
+423
+00:22:01.590 --> 00:22:03.690
+that figures out how to
+get the information for their
+
+424
+00:22:03.690 --> 00:22:07.680
+logical person out of 12
+different tables. But that code
+
+425
+00:22:07.680 --> 00:22:10.320
+is very, very brittle and
+very, very hard to read
+
+426
+00:22:10.320 --> 00:22:13.320
+and maintain because it has
+a lot of implicit knowledge
+
+427
+00:22:13.350 --> 00:22:15.930
+baked into the string query.
+So it's not even something
+
+428
+00:22:15.930 --> 00:22:18.390
+that we can reflect on
+and understand where we factor
+
+429
+00:22:18.420 --> 00:22:22.770
+or refactor. That depends on
+the physical layout of the
+
+430
+00:22:22.770 --> 00:22:26.790
+database. So later, if you
+change some field in the
+
+431
+00:22:26.790 --> 00:22:29.370
+database, it's going to totally
+disrupt the queries that you
+
+432
+00:22:29.370 --> 00:22:31.590
+have in ways that are
+difficult to track down and
+
+433
+00:22:31.590 --> 00:22:34.620
+understand. So part of the
+beauty of the entity framework
+
+434
+00:22:34.620 --> 00:22:37.650
+is not just that it
+provides these mapping capabilities, but
+
+435
+00:22:37.650 --> 00:22:41.520
+those mapping capabilities are specified
+declaratively through a mapping file.
+
+436
+00:22:41.850 --> 00:22:45.720
+And if you decide to
+change the underlying store, if
+
+437
+00:22:45.720 --> 00:22:49.080
+you refactor things or renormalize,
+or de normalize your tables,
+
+438
+00:22:49.320 --> 00:22:51.600
+you can modify that mapping.
+And in fact, you don't
+
+439
+00:22:51.600 --> 00:22:56.790
+have to regenerate, rewrite, or
+even recompile your application. It
+
+440
+00:22:56.790 --> 00:23:00.060
+continues working because it's working
+in terms of this conceptual
+
+441
+00:23:00.060 --> 00:23:03.150
+model and the classes that
+were either generated or handwritten
+
+442
+00:23:03.150 --> 00:23:06.690
+to reflect that conceptual model.
+And those are being declaratively
+
+443
+00:23:06.690 --> 00:23:10.260
+mapped through this mapping file
+to your particular storage schema.
+
+444
+00:23:11.220 --> 00:23:14.460
+Now, this doesn't seem like
+too thick of a layer.
+
+445
+00:23:14.730 --> 00:23:16.620
+It sounds like there's a
+lot going on, but it's,
+
+446
+00:23:17.070 --> 00:23:19.110
+it doesn't appear to me,
+you know, in thinking about
+
+447
+00:23:19.110 --> 00:23:21.120
+the stack and trying to
+visualize it, that there's a
+
+448
+00:23:21.120 --> 00:23:25.170
+huge distance between myself and
+the database That, that, that
+
+449
+00:23:25.170 --> 00:23:27.720
+is in fact, the case,
+and really to understand how
+
+450
+00:23:27.720 --> 00:23:35.490
+this works. The typical approach
+to doing ORMs is to
+
+451
+00:23:35.490 --> 00:23:38.370
+sort of do query rewrites,
+where you get a query
+
+452
+00:23:38.370 --> 00:23:40.740
+in and you apply a
+set of transformations to that
+
+453
+00:23:40.740 --> 00:23:42.420
+query, right? Because I'm familiar
+with a number of open
+
+454
+00:23:42.420 --> 00:23:44.220
+source RMS that I was
+going to ask you about
+
+455
+00:23:44.580 --> 00:23:47.150
+how you relate to those
+guys. Right? So, so typically
+
+456
+00:23:47.150 --> 00:23:49.910
+in those scenarios, there, there's
+a fairly straightforward set of
+
+457
+00:23:49.910 --> 00:23:53.510
+transformations. And if you decide
+to add a new mapping
+
+458
+00:23:53.510 --> 00:23:56.510
+concept, you go and you
+implement a new transformation and
+
+459
+00:23:56.510 --> 00:23:58.970
+it sort of goes through.
+And when you start off
+
+460
+00:23:58.970 --> 00:24:01.970
+and there's only three or
+four transformations where you're changing
+
+461
+00:24:01.970 --> 00:24:05.720
+names or doing inheritance or
+something like that, it's pretty
+
+462
+00:24:05.720 --> 00:24:08.840
+straight forward. Right. But as
+you add more and more
+
+463
+00:24:08.930 --> 00:24:12.110
+transformations, like being able to
+take a one entity and
+
+464
+00:24:12.110 --> 00:24:15.980
+map it to multiple different
+tables, the interaction between those
+
+465
+00:24:15.980 --> 00:24:19.610
+transformations starts becoming very complex
+and very difficult to manage.
+
+466
+00:24:19.910 --> 00:24:21.860
+And it's even harder when
+you try now to send
+
+467
+00:24:21.860 --> 00:24:24.560
+updates through the same pipeline.
+Cause you have to sort
+
+468
+00:24:24.560 --> 00:24:27.110
+of write the reverse transformation.
+That was my next question.
+
+469
+00:24:27.130 --> 00:24:30.490
+It's fine. The updates issue
+is always a problem where
+
+470
+00:24:30.490 --> 00:24:32.110
+it's, Oh, look how easy
+it is to get the
+
+471
+00:24:32.110 --> 00:24:34.330
+data. And then you've got
+to figure out how to
+
+472
+00:24:34.330 --> 00:24:36.700
+put it back in the
+right order. Right? And so
+
+473
+00:24:36.700 --> 00:24:38.830
+what the entity, the entity
+framework really takes sort of
+
+474
+00:24:38.830 --> 00:24:41.620
+a novel approach to how
+it does this mapping. And
+
+475
+00:24:41.620 --> 00:24:44.590
+it does it through something
+we call client views and
+
+476
+00:24:44.590 --> 00:24:48.460
+client views are basically similar
+to relational views. And that
+
+477
+00:24:48.490 --> 00:24:54.520
+we define a view to
+represent your entity set and
+
+478
+00:24:54.670 --> 00:24:57.760
+a query in terms of
+this entity SQL this canonical
+
+479
+00:24:58.600 --> 00:25:04.120
+syntax that I had mentioned
+before, that transforms that conceptual
+
+480
+00:25:04.150 --> 00:25:07.420
+query the query against the
+conceptual view, into the query
+
+481
+00:25:07.420 --> 00:25:10.630
+against your actual storage tables.
+Now it's important to understand
+
+482
+00:25:10.630 --> 00:25:14.170
+that those views are generated
+at design time. And then
+
+483
+00:25:14.170 --> 00:25:17.230
+when you pose a query
+to the system, we go
+
+484
+00:25:17.230 --> 00:25:22.120
+through a, an expansion phase
+where we replace references to
+
+485
+00:25:22.300 --> 00:25:26.230
+the entity sets the conceptual
+entity sets with these generated
+
+486
+00:25:26.230 --> 00:25:28.570
+queries that are in terms
+of the actual storage schema.
+
+487
+00:25:28.690 --> 00:25:31.270
+Okay, now we don't do
+any query evaluation on the
+
+488
+00:25:31.270 --> 00:25:33.790
+client. We just do the
+simple expansion step on the
+
+489
+00:25:33.790 --> 00:25:36.010
+client. And then we pass
+the query down to the
+
+490
+00:25:36.010 --> 00:25:38.830
+backend. The backend then is
+able to take that query,
+
+491
+00:25:38.830 --> 00:25:41.260
+which is now in terms
+of the storage schema and
+
+492
+00:25:41.260 --> 00:25:43.960
+do what it's good at,
+which is executing that query
+
+493
+00:25:44.170 --> 00:25:46.780
+and returning us to the
+results. Doesn't put too much
+
+494
+00:25:46.870 --> 00:25:50.190
+pressure on the client as
+far as performance or So,
+
+495
+00:25:51.010 --> 00:25:53.440
+as far as performance is
+concerned, there's sort of three
+
+496
+00:25:53.440 --> 00:25:56.980
+areas to think about, okay,
+the first is loading the
+
+497
+00:25:56.980 --> 00:26:01.420
+metadata associated with the model
+and the transformations to the
+
+498
+00:26:01.420 --> 00:26:04.090
+actual storage schema. And so
+there's a fair amount of
+
+499
+00:26:04.120 --> 00:26:06.700
+metadata that needs to get
+loaded, right? But that only
+
+500
+00:26:06.700 --> 00:26:09.970
+has to happen once. And
+we've made a significant investment
+
+501
+00:26:10.030 --> 00:26:13.420
+in cashing that metadata and
+even compiling, we've done some
+
+502
+00:26:13.420 --> 00:26:16.030
+work with trying to compile
+the metadata and those transformations,
+
+503
+00:26:16.240 --> 00:26:19.270
+so that to minimize that
+hit, okay, the second hit
+
+504
+00:26:19.270 --> 00:26:21.940
+is actually the query transformation.
+So you're getting a query
+
+505
+00:26:21.940 --> 00:26:26.080
+that is represented in this
+canonical manner. And eventually that
+
+506
+00:26:26.080 --> 00:26:28.780
+ends up generating SQL and
+it's a fairly straight forward
+
+507
+00:26:28.780 --> 00:26:32.350
+path, but there's certain steps
+involved and that can be
+
+508
+00:26:32.350 --> 00:26:36.460
+expensive. So the investment there
+is again to do compilation
+
+509
+00:26:36.460 --> 00:26:39.040
+of those so we can
+compile the query. So that
+
+510
+00:26:39.040 --> 00:26:43.470
+at runtime you're, you're not,
+well, I'm sorry. Step back.
+
+511
+00:26:43.470 --> 00:26:46.170
+When we talk about compiled
+queries, it's not designed time
+
+512
+00:26:46.170 --> 00:26:50.190
+compilation, but basically you kind
+of chit it exactly the
+
+513
+00:26:50.190 --> 00:26:52.170
+first time you use it,
+we can compile it and
+
+514
+00:26:52.170 --> 00:26:55.440
+then you can reference a
+compiled query for repeated execution.
+
+515
+00:26:55.470 --> 00:26:57.300
+So you're not at yourself
+or is that handled for
+
+516
+00:26:57.300 --> 00:26:59.450
+you? How much of what
+I guess I'm trying to
+
+517
+00:26:59.450 --> 00:27:01.670
+understand is how much awareness
+does a client of this
+
+518
+00:27:01.670 --> 00:27:04.910
+have to have. So, so
+at the link level, if
+
+519
+00:27:04.910 --> 00:27:07.850
+you want to use compiled
+queries, there's a mechanism for
+
+520
+00:27:07.850 --> 00:27:10.940
+you to create the compiled
+query and then call that
+
+521
+00:27:10.940 --> 00:27:12.980
+compiled query as if it
+were a method that may
+
+522
+00:27:12.980 --> 00:27:16.430
+be parameterized. Okay. If so,
+so you don't have to
+
+523
+00:27:16.430 --> 00:27:18.260
+think about, Oh, I've got
+these different layers and how
+
+524
+00:27:18.260 --> 00:27:21.200
+do they interact? And it's
+fairly straightforward, but yeah, you
+
+525
+00:27:21.200 --> 00:27:23.540
+do define, this is a
+query that I'm going to
+
+526
+00:27:23.540 --> 00:27:25.580
+call multiple times. Okay. So
+I want you to go
+
+527
+00:27:25.580 --> 00:27:28.010
+through the work of compiling
+it and giving me a
+
+528
+00:27:28.010 --> 00:27:30.860
+very fast access pet. This
+is not uncommon for like
+
+529
+00:27:30.860 --> 00:27:32.840
+things like XSLT or red
+jacks. I mean, there are
+
+530
+00:27:32.840 --> 00:27:34.460
+those things that cost on
+the client that we know
+
+531
+00:27:34.460 --> 00:27:37.850
+that there's a client library.
+You can use it as
+
+532
+00:27:37.850 --> 00:27:39.800
+per usual, or you can
+hang onto one and then
+
+533
+00:27:39.800 --> 00:27:43.160
+use that compiled one. Right.
+Okay. Right. So compile queries,
+
+534
+00:27:43.160 --> 00:27:46.910
+give us the ability to
+sort of factor away that
+
+535
+00:27:46.910 --> 00:27:49.700
+for repeated execution. Okay. And
+the final stage is the
+
+536
+00:27:49.700 --> 00:27:52.620
+materialization of the objects. So
+if you're using linked to
+
+537
+00:27:52.620 --> 00:27:55.460
+SQL or linked to entities,
+we at some point are
+
+538
+00:27:55.460 --> 00:27:57.530
+getting records out of the
+database and we need to
+
+539
+00:27:57.530 --> 00:28:02.390
+transform those into CLR objects.
+Again, we do a lot
+
+540
+00:28:02.390 --> 00:28:05.060
+of work in order to,
+we do something called lightweight
+
+541
+00:28:05.060 --> 00:28:08.960
+code gen, which is we
+generate the actual property setters
+
+542
+00:28:08.960 --> 00:28:11.870
+and object constructors to make
+it as quick and efficient
+
+543
+00:28:11.870 --> 00:28:15.920
+as possible to retrieve those
+objects and generate them. But
+
+544
+00:28:15.920 --> 00:28:18.980
+there is some overhead because
+you're representing your results now
+
+545
+00:28:18.980 --> 00:28:22.070
+in terms of an object,
+as opposed to a standard
+
+546
+00:28:22.070 --> 00:28:25.040
+ad hoc record. So we've
+done everything that we can
+
+547
+00:28:25.040 --> 00:28:29.750
+to try to optimize that
+scenario as well. So the
+
+548
+00:28:29.750 --> 00:28:32.030
+end result is, as you
+say, even though a lot
+
+549
+00:28:32.030 --> 00:28:34.910
+is going on under the
+covers, it's all pretty straight
+
+550
+00:28:34.910 --> 00:28:37.670
+forward. And at runtime, we've
+got a very efficient path
+
+551
+00:28:37.670 --> 00:28:40.520
+through the stack. Now this
+is true. The compiled queries
+
+552
+00:28:40.550 --> 00:28:45.380
+and the result materialization are
+true, both for the link
+
+553
+00:28:45.380 --> 00:28:48.140
+to SQL and the link
+to entity stack. It's arguably
+
+554
+00:28:48.140 --> 00:28:50.240
+more important than the link
+to entity stack, where we're
+
+555
+00:28:50.240 --> 00:28:53.780
+doing more sophisticated transformations, but
+I wanted to be clear
+
+556
+00:28:53.780 --> 00:28:55.940
+that that was a feature
+of both sides. Now, how
+
+557
+00:28:55.940 --> 00:28:57.800
+much pressure is there on
+the part of the person
+
+558
+00:28:57.800 --> 00:28:59.810
+who is writing one of
+these providers for a particular
+
+559
+00:28:59.810 --> 00:29:03.140
+database to affect performance? I
+mean, if I'm going to
+
+560
+00:29:03.140 --> 00:29:06.830
+go and write the, my
+SQL entity framework provider, it
+
+561
+00:29:06.830 --> 00:29:08.540
+appeared from what you were
+describing that most of this
+
+562
+00:29:08.540 --> 00:29:11.120
+stuff is happening outside of
+that person's control. So there's
+
+563
+00:29:11.120 --> 00:29:13.670
+not a whole lot that
+they can do in the,
+
+564
+00:29:13.670 --> 00:29:15.680
+in the creation of their,
+their SQL from the app
+
+565
+00:29:15.680 --> 00:29:18.470
+sec abstract syntax tree to
+kind of screw it up.
+
+566
+00:29:18.680 --> 00:29:23.060
+Right. So, so that's true.
+And in fact, we have
+
+567
+00:29:23.060 --> 00:29:24.950
+been working with a number
+of providers. We've had a
+
+568
+00:29:24.950 --> 00:29:27.590
+couple of different what we
+call provider fests, where we've
+
+569
+00:29:27.590 --> 00:29:30.020
+had provider riders come in
+house, and we've worked with
+
+570
+00:29:30.020 --> 00:29:34.040
+them specifically on understanding how
+to take that syntax tree
+
+571
+00:29:34.040 --> 00:29:36.170
+and generate the SQL. And
+in fact, it's been a
+
+572
+00:29:36.170 --> 00:29:40.190
+fairly straightforward process. We've had
+great success with that. There's
+
+573
+00:29:40.190 --> 00:29:43.930
+not a lot that the
+provider can do in that
+
+574
+00:29:43.930 --> 00:29:48.850
+path that would affect performance
+other than to think about
+
+575
+00:29:48.850 --> 00:29:51.400
+the types of SQL that
+they generate. So there may
+
+576
+00:29:51.400 --> 00:29:55.030
+be optimizations where in the
+common syntax, there is a
+
+577
+00:29:55.030 --> 00:29:57.880
+particular operator and there may
+be different ways that they
+
+578
+00:29:57.880 --> 00:30:01.510
+could translate that operator into
+a SQL when they generate
+
+579
+00:30:01.510 --> 00:30:03.180
+the sequel. Do they want
+to do the one that's
+
+580
+00:30:03.180 --> 00:30:05.970
+the most efficient for their
+particular platform? Correct? Correct. And
+
+581
+00:30:05.970 --> 00:30:09.960
+in fact, for SQL client,
+we have a flag internally
+
+582
+00:30:09.960 --> 00:30:13.350
+that tells us whether we're
+generating SQL for SQL server
+
+583
+00:30:13.350 --> 00:30:17.820
+2005 or 2000 or 2008.
+And we made, generate slightly
+
+584
+00:30:17.820 --> 00:30:20.850
+different sequel for the different
+ends to optimize for that
+
+585
+00:30:20.850 --> 00:30:24.990
+particular backend. But that's a
+fairly minor optimization in terms
+
+586
+00:30:24.990 --> 00:30:28.440
+of the overall path. The
+other thing we found is
+
+587
+00:30:28.440 --> 00:30:32.310
+that the queer processors do
+a pretty good job of
+
+588
+00:30:32.310 --> 00:30:35.610
+optimizing the queries once they
+get in the database. So
+
+589
+00:30:35.880 --> 00:30:38.130
+I was doing some experimentation
+where I was trying to
+
+590
+00:30:38.130 --> 00:30:41.160
+figure out ways to provide
+hints or rewrite queries in
+
+591
+00:30:41.160 --> 00:30:44.100
+order to generate better patterns
+that were then passed down
+
+592
+00:30:44.100 --> 00:30:48.120
+to the store. And although
+I could affect the length
+
+593
+00:30:48.150 --> 00:30:51.600
+of the queries that were
+generated, make them more aesthetically
+
+594
+00:30:51.600 --> 00:30:55.950
+pretty, right, exactly. Typically the
+overall performance of the queries
+
+595
+00:30:55.950 --> 00:30:59.400
+didn't vary much because the
+plan compilers in the database
+
+596
+00:30:59.610 --> 00:31:02.940
+were so good at recognizing
+the patterns, caching that pattern
+
+597
+00:31:03.150 --> 00:31:06.270
+and then re executing it
+multiple times. I remember I
+
+598
+00:31:06.270 --> 00:31:07.920
+used to spend hours and
+hours trying to get my
+
+599
+00:31:07.920 --> 00:31:10.710
+certain sense of aesthetic my
+own brand of aesthetic inside
+
+600
+00:31:10.710 --> 00:31:12.750
+of the SQL. And it
+sounds like that as I'm
+
+601
+00:31:12.750 --> 00:31:15.180
+spending these hours, trying to
+make it prettier, of course,
+
+602
+00:31:15.390 --> 00:31:17.430
+hours are being spent on
+the SQL processes to just
+
+603
+00:31:17.430 --> 00:31:19.320
+make it faster, no matter
+what it looks like. So,
+
+604
+00:31:19.410 --> 00:31:22.680
+Right. In some ways it
+was relieving to see that
+
+605
+00:31:22.680 --> 00:31:27.240
+the framework and the, and
+the database were doing such
+
+606
+00:31:27.240 --> 00:31:29.280
+a good job. In some
+ways it was humbling because
+
+607
+00:31:29.280 --> 00:31:32.250
+I wanted to have more
+control over it. And I
+
+608
+00:31:32.250 --> 00:31:35.970
+found that even my best
+efforts were normally not worth
+
+609
+00:31:35.970 --> 00:31:38.370
+the effort Loss of the
+there's, the loss of the,
+
+610
+00:31:38.430 --> 00:31:40.950
+that aesthetic. I mean, there
+are CQL as feats out
+
+611
+00:31:40.950 --> 00:31:44.490
+there and I've respect them.
+And from performance perspective, I
+
+612
+00:31:44.490 --> 00:31:46.170
+assume all the other, I
+mean, all the regular things
+
+613
+00:31:46.170 --> 00:31:47.880
+and making a database better
+as far as good use
+
+614
+00:31:47.880 --> 00:31:49.590
+of indexes and clustered in
+texts, and you can still
+
+615
+00:31:49.590 --> 00:31:51.660
+run the profile and look
+at the query plan. And
+
+616
+00:31:52.080 --> 00:31:53.700
+what if the query plan
+doesn't look right? And you
+
+617
+00:31:53.700 --> 00:31:56.010
+feel that it's, it's doing
+something inappropriate and you don't
+
+618
+00:31:56.010 --> 00:31:58.440
+like how that SQL went
+down because the query plan
+
+619
+00:31:58.560 --> 00:32:02.820
+isn't efficient. So in cases
+where the career plan is
+
+620
+00:32:02.960 --> 00:32:05.670
+efficient, oftentimes it has to
+do with those things that
+
+621
+00:32:05.670 --> 00:32:08.010
+you're just mentioning. Do I
+have a good index? Do
+
+622
+00:32:08.010 --> 00:32:10.890
+I have a good physical
+layout of the database? Is
+
+623
+00:32:10.890 --> 00:32:15.000
+it lending itself well to
+those queries, if that's not
+
+624
+00:32:15.000 --> 00:32:17.490
+the case, if things are,
+are well set out and
+
+625
+00:32:17.490 --> 00:32:19.800
+it's just the queries that
+are being generated, then yeah.
+
+626
+00:32:19.800 --> 00:32:22.320
+You can play around a
+little bit with the way
+
+627
+00:32:22.320 --> 00:32:24.180
+that you build a query
+to try to optimize it
+
+628
+00:32:24.210 --> 00:32:26.430
+much as you would, if
+you were just passing a
+
+629
+00:32:26.430 --> 00:32:30.150
+string down. But in most
+cases that we've looked at,
+
+630
+00:32:30.150 --> 00:32:32.760
+it's more a case of
+how the database is set
+
+631
+00:32:32.760 --> 00:32:35.460
+up than how the queries
+themselves are being. That's just,
+
+632
+00:32:35.460 --> 00:32:36.780
+as we, as we wrap
+up here at the very
+
+633
+00:32:36.780 --> 00:32:39.740
+beginning, we also talked about
+a link to dataset and
+
+634
+00:32:39.740 --> 00:32:41.030
+you were going to touch
+a little bit on that.
+
+635
+00:32:41.180 --> 00:32:44.620
+Yeah. So linked to data
+set is basically taking the
+
+636
+00:32:44.620 --> 00:32:50.380
+existing ado.net data set, which
+is an in memory, relational
+
+637
+00:32:50.650 --> 00:32:56.080
+cache and link enabling it.
+So since we came out
+
+638
+00:32:56.080 --> 00:32:59.830
+with the ado.net data set
+in version one, I thought
+
+639
+00:32:59.830 --> 00:33:02.560
+it was something much more
+mysterious Trickier in our naming.
+
+640
+00:33:03.820 --> 00:33:06.520
+Since ADA had done that
+1.0, people have loved the
+
+641
+00:33:06.520 --> 00:33:10.510
+data set as a means
+of moving data with changes
+
+642
+00:33:10.510 --> 00:33:14.950
+back and forth across the
+web, as a way of
+
+643
+00:33:14.950 --> 00:33:18.070
+aggregating data from multiple sources
+as a way to bind
+
+644
+00:33:18.070 --> 00:33:21.190
+and interact with data and
+memory in a very rich
+
+645
+00:33:21.190 --> 00:33:24.040
+way. And one of the
+biggest requests we've had since
+
+646
+00:33:24.040 --> 00:33:27.610
+ado.net 1.0 is better query
+ability over the data once
+
+647
+00:33:27.610 --> 00:33:31.000
+it's in the data set.
+And so by link enabling
+
+648
+00:33:31.000 --> 00:33:33.460
+the data set, we're not
+only giving you link, but
+
+649
+00:33:33.460 --> 00:33:36.190
+we're also giving you query.
+So the first time you're
+
+650
+00:33:36.190 --> 00:33:39.250
+able to really write within
+the data set queries that
+
+651
+00:33:39.250 --> 00:33:42.100
+join different tables within the
+data set. And in fact,
+
+652
+00:33:42.100 --> 00:33:45.310
+you can join the tables
+within the dataset with collections
+
+653
+00:33:45.310 --> 00:33:47.650
+that you have outside of
+the data set, you can
+
+654
+00:33:47.650 --> 00:33:50.950
+invoke CLR methods as part
+of your query. It's a
+
+655
+00:33:50.950 --> 00:33:56.860
+very, very well integrated query
+experience for really using the
+
+656
+00:33:56.860 --> 00:33:58.780
+data that you have in
+the dataset. So the use
+
+657
+00:33:58.780 --> 00:34:01.630
+cases don't really change the
+scenarios that you use data
+
+658
+00:34:01.630 --> 00:34:03.880
+set in the old days
+are still scenarios that you'd
+
+659
+00:34:03.880 --> 00:34:08.620
+use data set today. We've
+just now enhanced that experience
+
+660
+00:34:08.620 --> 00:34:11.440
+by adding link to it,
+the scenarios where you used
+
+661
+00:34:11.440 --> 00:34:15.370
+to use data readers and
+would in all likelihood end
+
+662
+00:34:15.370 --> 00:34:18.190
+up generating your own objects
+and populating those objects and
+
+663
+00:34:18.190 --> 00:34:21.040
+so forth is now done
+for you with linked to
+
+664
+00:34:21.040 --> 00:34:24.250
+sequel, when your objects directly
+represent the scheme of your
+
+665
+00:34:24.250 --> 00:34:27.190
+database, and you're going against
+SQL server or with entity
+
+666
+00:34:27.190 --> 00:34:31.660
+framework, when you want to
+work with a, a richer
+
+667
+00:34:31.900 --> 00:34:35.320
+model that has more flexibility
+in how it maps to
+
+668
+00:34:35.320 --> 00:34:37.930
+the relational store. Okay. That's,
+I'm sorry. That makes a
+
+669
+00:34:37.930 --> 00:34:39.190
+lot more sense. When you
+brought into the, when you
+
+670
+00:34:39.190 --> 00:34:41.740
+start talking with the data
+reader and I've written just
+
+671
+00:34:41.740 --> 00:34:43.840
+thousands of lines of that
+code, where I'm spinning through
+
+672
+00:34:43.840 --> 00:34:45.940
+the data reader and going
+basically shuffling the deck. I
+
+673
+00:34:45.940 --> 00:34:47.500
+like to say, you know,
+this one goes here and
+
+674
+00:34:47.500 --> 00:34:50.080
+that one goes there and
+column zero goes there. Now
+
+675
+00:34:50.080 --> 00:34:52.270
+full disclosure though. I know
+that there's, some listeners are
+
+676
+00:34:52.270 --> 00:34:54.280
+gonna chuckle because I wrote
+an essay a number of
+
+677
+00:34:54.280 --> 00:34:57.460
+years ago called returning data
+sets from web services or
+
+678
+00:34:57.460 --> 00:35:00.310
+the spawn of Satan and
+the recall evil. So when
+
+679
+00:35:00.310 --> 00:35:02.230
+you said data sets, I've
+used data sets a number
+
+680
+00:35:02.230 --> 00:35:05.200
+of times for WinForms applications
+for binding and stuff like
+
+681
+00:35:05.200 --> 00:35:07.060
+that. But I always get
+worried when data sets get
+
+682
+00:35:07.060 --> 00:35:10.450
+passed around inside of web
+services as a result, which
+
+683
+00:35:10.450 --> 00:35:12.370
+one of these three technologies
+would, I want to use
+
+684
+00:35:12.370 --> 00:35:14.800
+if I wanted really nice
+XML to be passed into
+
+685
+00:35:14.940 --> 00:35:17.440
+a web service. So I
+wanted to take that object.
+
+686
+00:35:17.440 --> 00:35:19.870
+And then she realized that
+that tree and that, that
+
+687
+00:35:19.870 --> 00:35:22.570
+object graph, would it be,
+could I take those links
+
+688
+00:35:22.840 --> 00:35:26.020
+to SQL a, between those
+linked to entities objects, Mark
+
+689
+00:35:26.020 --> 00:35:28.630
+them up with a, you
+know, XML sterilizable and then
+
+690
+00:35:28.750 --> 00:35:31.420
+pass them along their way
+as angle bracket. So the
+
+691
+00:35:31.420 --> 00:35:34.780
+generated objects, both in linked
+to SQL and linked to
+
+692
+00:35:34.780 --> 00:35:41.190
+entities are serialized. That said,
+what serializes is the current
+
+693
+00:35:41.190 --> 00:35:44.880
+values of those, not the
+original values. So today with
+
+694
+00:35:44.880 --> 00:35:47.760
+both linked to SQL, linked
+to entities, there's additional work
+
+695
+00:35:47.760 --> 00:35:50.250
+that you would need to
+do in order to transport
+
+696
+00:35:50.250 --> 00:35:52.860
+the original values. That is
+the chain set that you
+
+697
+00:35:52.860 --> 00:35:56.010
+get with the diff ground,
+the dataset diff gram today.
+
+698
+00:35:56.070 --> 00:35:57.920
+Okay. Now it's just the
+thing You get. If you
+
+699
+00:35:57.920 --> 00:36:00.290
+do in fact pass datasets,
+because you're getting that extra
+
+700
+00:36:00.290 --> 00:36:05.390
+bit of, of context that
+makes Now, if you are
+
+701
+00:36:05.390 --> 00:36:09.230
+trying to write a data
+service, that is what you're
+
+702
+00:36:09.230 --> 00:36:12.350
+trying to expose is a
+rich way to interact with
+
+703
+00:36:12.350 --> 00:36:14.690
+your data. Then the technology
+to look at which I
+
+704
+00:36:14.690 --> 00:36:16.880
+know you've had a previous
+podcast on, yeah. Is what
+
+705
+00:36:16.880 --> 00:36:19.580
+we used to call a
+project a Storia and is
+
+706
+00:36:19.580 --> 00:36:24.620
+now called ado.net data services
+and ado.net data services basically
+
+707
+00:36:24.620 --> 00:36:29.420
+build on this entity data
+model and allow you to
+
+708
+00:36:29.450 --> 00:36:33.170
+not publish just methods for
+calling in and getting back
+
+709
+00:36:33.170 --> 00:36:35.780
+a fixed set of results,
+but actually to publish your
+
+710
+00:36:35.780 --> 00:36:39.980
+entity model and allow the
+application to query that end
+
+711
+00:36:39.980 --> 00:36:43.820
+D model through a rest
+based a very natural URL
+
+712
+00:36:43.820 --> 00:36:48.590
+based mechanism that identifies the
+particular resources within that entity
+
+713
+00:36:48.590 --> 00:36:51.080
+model that you want to
+query. So now it's all
+
+714
+00:36:51.080 --> 00:36:52.790
+coming full circle for me
+now. So then if I'm
+
+715
+00:36:52.790 --> 00:36:55.520
+doing entity framework work and
+I want to start exposing
+
+716
+00:36:55.520 --> 00:36:57.530
+it, then it is a
+story. And the, that, that,
+
+717
+00:36:57.650 --> 00:37:00.440
+that those data ado.net data
+services, I guess I like
+
+718
+00:37:00.440 --> 00:37:02.710
+calling them by their code
+names. So it's easier that
+
+719
+00:37:02.720 --> 00:37:04.370
+I would want to expose.
+So that makes sense then.
+
+720
+00:37:04.730 --> 00:37:10.160
+Yeah. So, so the ado.net
+data services technically are able
+
+721
+00:37:10.160 --> 00:37:13.520
+to query over any I
+queryable interface. So any link
+
+722
+00:37:13.520 --> 00:37:17.390
+enabled provider you can query
+over now, if you want
+
+723
+00:37:17.390 --> 00:37:20.480
+to do updating against the
+data source, you have to
+
+724
+00:37:20.480 --> 00:37:23.750
+implement an additional interface called
+I updatable. And then there
+
+725
+00:37:23.750 --> 00:37:26.480
+was other functionality that we're
+looking at adding over time,
+
+726
+00:37:26.690 --> 00:37:30.170
+which will require other incremental
+investments. Now, the nice thing
+
+727
+00:37:30.170 --> 00:37:33.140
+about the entity framework is
+it will, we will have
+
+728
+00:37:33.140 --> 00:37:36.470
+an implementation of all of
+these interfaces directly over the
+
+729
+00:37:36.470 --> 00:37:39.170
+energy framework and a very
+nice design experience where you
+
+730
+00:37:39.170 --> 00:37:41.810
+can walk into visual studio,
+you can create your entity
+
+731
+00:37:41.810 --> 00:37:43.880
+model, and then you can
+go in and create your
+
+732
+00:37:43.880 --> 00:37:48.620
+ado.net data service, point it
+to that entity model and
+
+733
+00:37:48.620 --> 00:37:50.690
+specify. These are the entity
+sets that I want to
+
+734
+00:37:50.690 --> 00:37:54.140
+expose, and you're off and
+running. You have a data
+
+735
+00:37:54.140 --> 00:37:59.090
+service that can be called
+from any HTTP client. You
+
+736
+00:37:59.090 --> 00:38:01.400
+can then go beyond that
+and start on adding additional
+
+737
+00:38:01.400 --> 00:38:05.570
+service operations, additional intersection. A
+lot of other features that
+
+738
+00:38:05.870 --> 00:38:08.930
+ado.net data services have built
+in, but it's, it's a
+
+739
+00:38:08.930 --> 00:38:12.500
+great experience. And part of
+the, part of the promise
+
+740
+00:38:12.500 --> 00:38:16.070
+of the entity data model
+is building on this common
+
+741
+00:38:16.070 --> 00:38:19.880
+model, not just the ability
+to have link expressions that
+
+742
+00:38:19.880 --> 00:38:22.400
+are mapped to a database,
+but to build a whole
+
+743
+00:38:22.520 --> 00:38:28.670
+framework around services around other
+components that work in terms
+
+744
+00:38:28.670 --> 00:38:32.990
+of this conceptual model. So
+this is good. I'm just
+
+745
+00:38:32.990 --> 00:38:34.850
+trying to, sorry. I'm actually
+kind of pause. It's giving
+
+746
+00:38:34.850 --> 00:38:37.090
+me pause and whenever I
+have conversations like this, I
+
+747
+00:38:37.090 --> 00:38:40.390
+start kind of mentally drawing
+the stack and I'm gonna
+
+748
+00:38:40.390 --> 00:38:41.860
+have to go draw a
+picture about this and blog
+
+749
+00:38:41.860 --> 00:38:44.080
+about it because suddenly what
+I thought was a lot
+
+750
+00:38:44.080 --> 00:38:46.330
+more complicated stack, got a
+lot more, a lot simpler.
+
+751
+00:38:46.630 --> 00:38:49.000
+Great. You know, sometimes it
+just seems so wide. I
+
+752
+00:38:49.000 --> 00:38:51.340
+mean, I'm wondering around Microsoft
+and someone's always working on
+
+753
+00:38:51.340 --> 00:38:54.790
+something and I always worry
+that these things don't inter-operate
+
+754
+00:38:54.790 --> 00:38:56.260
+and they don't work together.
+And it freaks me out
+
+755
+00:38:56.260 --> 00:38:58.000
+a little bit and the
+way that I go and
+
+756
+00:38:58.000 --> 00:38:59.570
+try to get a better
+understanding as I talk to
+
+757
+00:38:59.570 --> 00:39:01.300
+people like you. And then
+I go home and I
+
+758
+00:39:01.300 --> 00:39:04.300
+draw a picture. Yeah, well,
+I was very nervous about
+
+759
+00:39:04.300 --> 00:39:08.560
+doing this webcast because as
+an architect and an Italian,
+
+760
+00:39:08.680 --> 00:39:10.720
+I speak with my hands,
+or I draw on the
+
+761
+00:39:10.720 --> 00:39:13.960
+white. That is true. You
+are, and try and understand
+
+762
+00:39:14.140 --> 00:39:16.930
+how to communicate some of
+these concepts without being able
+
+763
+00:39:16.930 --> 00:39:19.230
+to draw on my whiteboard
+was a little bit intimidating.
+
+764
+00:39:19.410 --> 00:39:22.390
+Okay. I will, I will
+add a proper slide with
+
+765
+00:39:22.510 --> 00:39:24.940
+explanation of what this looks
+like. I really appreciate you
+
+766
+00:39:24.940 --> 00:39:27.340
+taking the time to sit
+down with me today. This
+
+767
+00:39:27.340 --> 00:39:29.650
+has been another episode of
+Hanselminutes and we'll see you
+
+768
+00:39:29.650 --> 00:39:30.310
+again next week.
+

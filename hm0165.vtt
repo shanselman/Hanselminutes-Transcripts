@@ -1,0 +1,2577 @@
+WEBVTT FILE
+
+1
+00:00:12.020 --> 00:00:16.610
+From Hanselman it's dot com
+is Hansel minutes, a weekly
+
+2
+00:00:16.610 --> 00:00:20.630
+discussion with web developer and
+technologists. Scott Hanselman hosted by
+
+3
+00:00:20.630 --> 00:00:25.760
+Carl Franklin. This is Lawrence Ryan announcing
+show number one 65. Recorded
+
+4
+00:00:25.760 --> 00:00:30.260
+live Thursday, June 18, 2009.
+Support for Hanselman it's as
+
+5
+00:00:30.260 --> 00:00:34.100
+provided by Tellerik Reb controllers.
+The most comprehensive suite of
+
+6
+00:00:34.100 --> 00:00:44.810
+components for windows forms and
+asp.net web applications online@wwwdottelerikdotcomandby.net developers
+
+7
+00:00:44.810 --> 00:00:49.790
+journal the world's leading.net developer
+magazine online at www dot
+
+8
+00:00:49.790 --> 00:00:54.170
+<inaudible> dot com. In this
+episode, Scott talks legacy code
+
+9
+00:00:54.200 --> 00:00:58.970
+with Michael feathers. Hi, this
+is Scott Hanselman, and this
+
+10
+00:00:58.970 --> 00:01:00.950
+is another episode of Hansel
+minutes. I'm here in Oslo,
+
+11
+00:01:00.950 --> 00:01:03.800
+Norway at the Norwegian developers
+conference, and I'm sitting down
+
+12
+00:01:03.800 --> 00:01:06.920
+in a reasonably quiet conference
+room with Michael feathers, the
+
+13
+00:01:06.920 --> 00:01:10.010
+author of working effectively with
+legacy code who works for
+
+14
+00:01:10.010 --> 00:01:12.050
+object mentor, and he knows
+all sorts of things that
+
+15
+00:01:12.050 --> 00:01:14.150
+I don't know. So I
+said, I got to jump
+
+16
+00:01:14.150 --> 00:01:15.500
+at the chance to talk
+to you. So thanks for
+
+17
+00:01:15.500 --> 00:01:17.630
+sitting down. Yeah, thanks a
+lot. I'm really enjoying the
+
+18
+00:01:17.630 --> 00:01:20.420
+conference here and so great
+venue and lots of interesting
+
+19
+00:01:20.420 --> 00:01:22.850
+speakers, You know, and as
+with all conferences, it feels
+
+20
+00:01:22.850 --> 00:01:25.100
+like the really interesting things
+happen in the hallways and
+
+21
+00:01:25.100 --> 00:01:30.260
+happened between conference sessions and
+uncle Bob was talking about
+
+22
+00:01:30.290 --> 00:01:34.040
+something and the guys were,
+were brainstorming that someone was
+
+23
+00:01:34.040 --> 00:01:37.940
+saying that they like to
+select chunks of code and
+
+24
+00:01:38.060 --> 00:01:41.060
+within a long method, something
+that's maybe legacy code and
+
+25
+00:01:41.060 --> 00:01:44.210
+they like to go extract
+method using their refactoring tool
+
+26
+00:01:44.210 --> 00:01:47.120
+of choice. And then that
+gives them a sense of
+
+27
+00:01:47.120 --> 00:01:50.810
+what the inputs and outputs
+for that block are. Yeah,
+
+28
+00:01:51.320 --> 00:01:54.140
+but in a method that
+maybe has three or four
+
+29
+00:01:54.140 --> 00:01:58.250
+inputs that might be inputs,
+as far as parameters into
+
+30
+00:01:58.250 --> 00:02:01.490
+the method that might show
+them that they're really reaching
+
+31
+00:02:01.490 --> 00:02:04.460
+outside the method and looking
+at global variables, if it's
+
+32
+00:02:04.460 --> 00:02:07.790
+of context. And that all
+seemed very klugey to me
+
+33
+00:02:07.790 --> 00:02:10.430
+that maybe this person should
+be using a different kind
+
+34
+00:02:10.430 --> 00:02:12.620
+of programming language. I mean,
+they were basically saying there's
+
+35
+00:02:12.620 --> 00:02:14.930
+a lot of sites Effects
+that can happen. Yeah. Yeah.
+
+36
+00:02:16.310 --> 00:02:18.020
+I think that's a thing
+that we have to go
+
+37
+00:02:18.020 --> 00:02:19.940
+and really ask ourselves very
+seriously in the industry right
+
+38
+00:02:19.940 --> 00:02:23.420
+now, the, I spent a
+lot of time helping people
+
+39
+00:02:23.420 --> 00:02:26.000
+with, you know, really ratty
+code basis trying to go
+
+40
+00:02:26.000 --> 00:02:28.400
+and recover, you know, and
+it's not atypical to have
+
+41
+00:02:28.790 --> 00:02:30.440
+these big 3000 line methods
+and you have to go
+
+42
+00:02:30.440 --> 00:02:31.610
+and try to figure out
+how to break them down
+
+43
+00:02:31.610 --> 00:02:33.890
+and do various things. One
+of the things that I
+
+44
+00:02:33.890 --> 00:02:37.400
+noticed is that side effects,
+you know, are really a
+
+45
+00:02:37.400 --> 00:02:39.110
+big deal. If you didn't
+really have to reason through
+
+46
+00:02:39.110 --> 00:02:41.930
+side effects, you could basically
+basically make a lot of
+
+47
+00:02:41.930 --> 00:02:45.380
+change much more effectively and
+much more, much easier. So
+
+48
+00:02:45.380 --> 00:02:46.940
+it just kinda makes me
+wonder, you know, it seems
+
+49
+00:02:46.940 --> 00:02:49.880
+like we are making, moving
+the industry towards functional programming
+
+50
+00:02:49.880 --> 00:02:52.610
+languages. And some of the
+dabbling that I've done with
+
+51
+00:02:52.610 --> 00:02:54.680
+functional programming languages has really
+kind of led me to
+
+52
+00:02:54.680 --> 00:02:57.170
+believe that this could be
+a bit of an answer.
+
+53
+00:02:57.350 --> 00:02:59.120
+I mean, it's not going
+to be a complete panacea
+
+54
+00:02:59.140 --> 00:03:01.960
+because there's, there are always
+problems in development, but it
+
+55
+00:03:01.960 --> 00:03:03.310
+seems like if we can
+get a control of the
+
+56
+00:03:03.310 --> 00:03:04.870
+side effects situation, we might
+be able to go and
+
+57
+00:03:04.870 --> 00:03:07.920
+do some really cool stuff.
+Now for those listeners who
+
+58
+00:03:07.920 --> 00:03:10.170
+may not be, you know,
+into this stuff and be
+
+59
+00:03:10.240 --> 00:03:13.800
+really understanding it, we're talking
+about a way of programming
+
+60
+00:03:13.800 --> 00:03:18.300
+that involves not changing something
+that's, you know, not changing
+
+61
+00:03:18.300 --> 00:03:21.120
+a variable that then you
+wouldn't have expected to get
+
+62
+00:03:21.120 --> 00:03:22.650
+changed. I mean, how can
+we, you maybe explain that
+
+63
+00:03:22.650 --> 00:03:26.940
+to Functional programming. One is
+it functions are like first
+
+64
+00:03:26.940 --> 00:03:29.250
+class citizens, so you can
+pass functions to other functions.
+
+65
+00:03:30.210 --> 00:03:32.010
+The thing that's really important
+for us, like in this
+
+66
+00:03:32.010 --> 00:03:36.690
+conversation though really is the
+immutability aspect. The notion that
+
+67
+00:03:36.690 --> 00:03:40.080
+you really are working with
+Constance all the time, whenever
+
+68
+00:03:40.080 --> 00:03:42.120
+you have a variable, you
+don't really reassign to it.
+
+69
+00:03:42.120 --> 00:03:43.890
+You just go ahead and
+construct a new variable based
+
+70
+00:03:43.890 --> 00:03:47.030
+upon the previous value and,
+you know, do something computationally
+
+71
+00:03:47.030 --> 00:03:50.490
+to produce that new value.
+You know, one thing I
+
+72
+00:03:50.490 --> 00:03:52.230
+noticed over and over again
+said, when you're looking at
+
+73
+00:03:52.230 --> 00:03:55.290
+very long methods, it's the
+temporaries that get you. Okay.
+
+74
+00:03:55.290 --> 00:03:58.290
+And when you have temporary
+variables inside the, the method
+
+75
+00:03:58.290 --> 00:04:00.330
+and people are going in
+randomly updating them in various
+
+76
+00:04:00.330 --> 00:04:03.660
+different places, those temporaries are
+just really kind of like
+
+77
+00:04:03.660 --> 00:04:05.400
+a glue that make it
+really very hard to go
+
+78
+00:04:05.400 --> 00:04:08.940
+and extract out pieces and,
+and you make separate methods
+
+79
+00:04:08.940 --> 00:04:10.530
+out of them. It's just
+really hard to reason through
+
+80
+00:04:10.530 --> 00:04:13.920
+all that nonsense. You know,
+when you have a mutable
+
+81
+00:04:13.920 --> 00:04:16.860
+data, then you're constantly constructing
+new values and you're able
+
+82
+00:04:16.860 --> 00:04:19.590
+to, to see, you know,
+like you were saying earlier,
+
+83
+00:04:19.590 --> 00:04:21.750
+exactly what comes in and
+exactly what goes out and,
+
+84
+00:04:22.230 --> 00:04:24.810
+and your reasoning is easier
+recently. It's easier, not only
+
+85
+00:04:24.810 --> 00:04:27.000
+for you, but also for
+tool that needs to figure
+
+86
+00:04:27.000 --> 00:04:28.500
+out what you can really
+extract a method or not.
+
+87
+00:04:29.130 --> 00:04:31.200
+Your book is about legacy
+code, but it's sometimes I
+
+88
+00:04:31.200 --> 00:04:33.540
+feel like legacy code is
+code I wrote last week.
+
+89
+00:04:33.870 --> 00:04:35.760
+Well, yeah. Then you're really
+in tune with the definition
+
+90
+00:04:35.760 --> 00:04:38.640
+in the book in a
+way it's funny. I was
+
+91
+00:04:38.640 --> 00:04:40.590
+trying, I kept trying to
+find a decent title for
+
+92
+00:04:40.590 --> 00:04:42.150
+the book when I was
+writing it. And I kept
+
+93
+00:04:42.150 --> 00:04:46.230
+coming back to the notion
+of legacy code. I have
+
+94
+00:04:46.230 --> 00:04:48.000
+a friend named Eric Mead
+and I called him up
+
+95
+00:04:48.000 --> 00:04:49.590
+one time. He was doing
+a gig with a new
+
+96
+00:04:49.590 --> 00:04:53.160
+client. And I said, you
+know, so how was the
+
+97
+00:04:53.160 --> 00:04:54.540
+day to day? And he
+says, Oh man, they're writing
+
+98
+00:04:54.540 --> 00:04:58.950
+legacy code, The writing legacy
+creating. Yeah. And I mean,
+
+99
+00:04:58.950 --> 00:05:00.990
+that really struck me that,
+you know, there's the dictionary
+
+100
+00:05:00.990 --> 00:05:03.390
+definition of legacy code, which
+is Cody yacht from somebody
+
+101
+00:05:03.390 --> 00:05:06.240
+else. But there's also this
+definition that we also feel
+
+102
+00:05:06.240 --> 00:05:08.640
+informally, which is it's just
+code. You may have just
+
+103
+00:05:08.640 --> 00:05:10.770
+written it yesterday, but it's
+just intractable. It's really hard
+
+104
+00:05:10.770 --> 00:05:14.490
+to work with. So, you
+know, Why is it intractable?
+
+105
+00:05:14.490 --> 00:05:17.040
+I mean, nobody wants to
+admit that they're the kind
+
+106
+00:05:17.040 --> 00:05:19.590
+of person that would create
+legacy code and they might
+
+107
+00:05:19.590 --> 00:05:22.170
+say, well, I inherited the
+system. I'm only able to
+
+108
+00:05:22.170 --> 00:05:25.180
+write legacy code given the
+constraints of this. Yeah. It's
+
+109
+00:05:25.200 --> 00:05:27.060
+really a bit of a
+fallacy though. You can always
+
+110
+00:05:27.090 --> 00:05:29.370
+in an old code base,
+make fresh, starts with the
+
+111
+00:05:29.370 --> 00:05:30.810
+new things that you write
+and you have to be
+
+112
+00:05:30.810 --> 00:05:33.830
+really, you know, you always
+have a choice between going
+
+113
+00:05:33.840 --> 00:05:35.940
+and adding five lines to
+an existing method and, you
+
+114
+00:05:35.940 --> 00:05:38.250
+know, creating a new method
+that you delegate out to,
+
+115
+00:05:38.310 --> 00:05:40.530
+you know, doing things where
+you have, you know, smaller
+
+116
+00:05:40.530 --> 00:05:44.520
+structure and clearer simpler structure
+and moving forward with tests
+
+117
+00:05:44.970 --> 00:05:47.640
+and that sort of thing.
+It it's tough because, you
+
+118
+00:05:47.640 --> 00:05:50.130
+know, in the existing code,
+you, you know, you're, you're
+
+119
+00:05:50.130 --> 00:05:53.130
+surrounded by badness, right. But
+you know, it pays to
+
+120
+00:05:53.130 --> 00:05:56.700
+learn design principles to learn
+good things about code structuring
+
+121
+00:05:56.700 --> 00:05:59.800
+and make fresh starts and
+an existing code base. Am
+
+122
+00:05:59.800 --> 00:06:03.040
+I always going to find
+myself though, spackling over something?
+
+123
+00:06:03.040 --> 00:06:04.090
+You know, it's like, you
+know, when you buy an
+
+124
+00:06:04.090 --> 00:06:05.950
+old house and you say,
+well, it needs a fresh
+
+125
+00:06:05.980 --> 00:06:08.080
+coat of paint and you
+know, you put a couple
+
+126
+00:06:08.080 --> 00:06:10.240
+of coats of paint or
+something, but you'll always know
+
+127
+00:06:10.240 --> 00:06:13.660
+that there's mold and nastiness
+in the wall. Well, you
+
+128
+00:06:13.660 --> 00:06:15.490
+know, I think the truth
+of the matter is that
+
+129
+00:06:15.490 --> 00:06:18.370
+for many large existing systems,
+you're never going to escape,
+
+130
+00:06:18.400 --> 00:06:20.680
+you know, the, the, the
+structure that you built up
+
+131
+00:06:20.710 --> 00:06:24.700
+over the years, you know,
+but you, you can build
+
+132
+00:06:24.700 --> 00:06:27.970
+new abstractions. You know, there's
+a really cool pattern. That's
+
+133
+00:06:27.970 --> 00:06:30.850
+been written up on the
+net called strangler application and
+
+134
+00:06:30.970 --> 00:06:36.010
+strangler strangler application choke someone
+to death. Yeah. And the
+
+135
+00:06:36.010 --> 00:06:38.170
+idea is that if you
+have this big hulking massive
+
+136
+00:06:38.170 --> 00:06:39.880
+legacy code, what you can
+do is you can say,
+
+137
+00:06:39.880 --> 00:06:42.940
+look, if we have events
+coming into the system, we
+
+138
+00:06:42.940 --> 00:06:44.500
+can do so we can
+divert some of those events
+
+139
+00:06:44.500 --> 00:06:47.110
+to something which is really
+like a new system. And
+
+140
+00:06:47.110 --> 00:06:49.120
+then the outputs from that
+end up going and being
+
+141
+00:06:49.180 --> 00:06:52.870
+pushed out with a normal
+outputs. So taking certain things
+
+142
+00:06:52.870 --> 00:06:54.340
+that come in and kind
+of diverting them off into
+
+143
+00:06:54.340 --> 00:06:57.490
+this auxiliary structure, which is
+this new architecture that you're
+
+144
+00:06:57.490 --> 00:07:00.970
+building up slowly with with
+better structuring. And, you know,
+
+145
+00:07:00.970 --> 00:07:02.890
+that can be good, but
+sometimes it just really ever
+
+146
+00:07:02.890 --> 00:07:05.980
+becomes a complete thing. You're
+just building a secondary pathway
+
+147
+00:07:05.980 --> 00:07:09.310
+in your application that allows
+you to do things in
+
+148
+00:07:09.310 --> 00:07:11.140
+a better way. Why is
+it called strangler? I don't
+
+149
+00:07:11.140 --> 00:07:13.120
+understand that. Well, cause it's
+kind of like you, it's
+
+150
+00:07:13.120 --> 00:07:15.340
+kinda like a, a vine,
+a kudzu or something like
+
+151
+00:07:15.340 --> 00:07:17.140
+that. It's kind of like
+growing, you know, over the
+
+152
+00:07:17.140 --> 00:07:20.830
+application and sapping and strength,
+but becoming, you know, the
+
+153
+00:07:20.830 --> 00:07:23.800
+thing itself, divine becomes the
+stronger thing. So it's kind
+
+154
+00:07:23.800 --> 00:07:28.150
+of strangling the existing structure
+and imposing constraints on this.
+
+155
+00:07:28.630 --> 00:07:30.370
+Well, your what's, your, your
+hope is, is that the
+
+156
+00:07:30.370 --> 00:07:34.270
+older pieces really just not
+end up going and doing
+
+157
+00:07:34.270 --> 00:07:37.330
+things functionally for you, all
+the functionality used to the
+
+158
+00:07:37.330 --> 00:07:41.620
+newer thing. Yeah. The system
+around it that strangles, the
+
+159
+00:07:41.620 --> 00:07:44.350
+old system forces it to
+change or to go away.
+
+160
+00:07:45.060 --> 00:07:47.170
+Yeah. And that's, that's one
+strategy. Another strategy is to
+
+161
+00:07:47.170 --> 00:07:49.930
+essentially just, you know, keep,
+you know, creating new classes
+
+162
+00:07:49.930 --> 00:07:52.960
+and building new structure in
+the existing application without trying
+
+163
+00:07:52.960 --> 00:07:55.680
+to go and create a
+parallel pathway a third. And
+
+164
+00:07:55.680 --> 00:07:58.240
+the third way of approaching
+things is to take a
+
+165
+00:07:58.240 --> 00:08:01.600
+big area of code and
+try to go and write
+
+166
+00:08:01.840 --> 00:08:03.550
+enough tests for it so
+that you feel that you
+
+167
+00:08:03.550 --> 00:08:05.500
+can go and do some
+serious refactoring in that area.
+
+168
+00:08:06.250 --> 00:08:08.770
+And that's kinda what I
+specialize in a bit with
+
+169
+00:08:09.010 --> 00:08:11.920
+the book is I'm trying
+to go and break dependencies
+
+170
+00:08:11.950 --> 00:08:14.290
+in ways that are very
+conservative. So you, they feel
+
+171
+00:08:14.290 --> 00:08:17.980
+like you aren't really breaking
+the applications behavior, right? And
+
+172
+00:08:17.980 --> 00:08:19.870
+then you're able to go
+and write tests against that.
+
+173
+00:08:19.870 --> 00:08:22.750
+And with those tests, get
+a lot more confidence that
+
+174
+00:08:22.750 --> 00:08:25.540
+you can start to refactor
+and, and make, you know,
+
+175
+00:08:25.570 --> 00:08:27.760
+some really nice structural changes
+in the code that make
+
+176
+00:08:27.760 --> 00:08:32.020
+your maintenance easier. Hi, it's
+Scott here from another place
+
+177
+00:08:32.020 --> 00:08:33.970
+in time. I hope you're
+enjoying the show so far.
+
+178
+00:08:34.360 --> 00:08:36.190
+I apologize for interrupting it,
+but I wanted to let
+
+179
+00:08:36.190 --> 00:08:38.380
+you know that assembling a
+podcast like this every week,
+
+180
+00:08:38.380 --> 00:08:41.530
+isn't free. Certainly the bandwidth
+bill crushes us every month.
+
+181
+00:08:41.560 --> 00:08:42.880
+So I want to let
+you know that this show
+
+182
+00:08:42.880 --> 00:08:45.670
+is sponsored by Tellerik. They
+make the show possible and
+
+183
+00:08:45.670 --> 00:08:48.400
+it makes it pretty cool
+products as well. For example,
+
+184
+00:08:48.400 --> 00:08:51.040
+if you're trying to build
+a web 2.0 Ajax application,
+
+185
+00:08:51.070 --> 00:08:53.350
+trying to use the web
+1.0 components, it's kind of
+
+186
+00:08:53.350 --> 00:08:55.680
+difficult. You got to get
+the next gen stuff. If
+
+187
+00:08:55.680 --> 00:08:57.690
+you want to build the
+next gen websites. And that's
+
+188
+00:08:57.690 --> 00:08:59.970
+exactly what the folks at
+Telarc have got and their
+
+189
+00:08:59.970 --> 00:09:03.270
+new upcoming product, which is
+code named rad controls. Prometheus's,
+
+190
+00:09:03.540 --> 00:09:05.730
+it's a big pack of
+web controls built entirely on
+
+191
+00:09:05.730 --> 00:09:08.310
+top of the Microsoft ASP
+net Ajax stuff that you
+
+192
+00:09:08.310 --> 00:09:10.320
+already understand. It's going to
+give you a lot of
+
+193
+00:09:10.320 --> 00:09:13.860
+performance interactivity on your next
+project. They mirror the ASP
+
+194
+00:09:13.860 --> 00:09:17.430
+net Ajax API. So the
+development's really straightforward client scripture's
+
+195
+00:09:17.430 --> 00:09:20.550
+shared loading time is pretty
+fast set a couple of
+
+196
+00:09:20.550 --> 00:09:22.770
+properties. You can even bind
+to web services for really
+
+197
+00:09:22.770 --> 00:09:26.250
+efficient operation. The new rad
+editor for ASP at Ajax
+
+198
+00:09:26.250 --> 00:09:28.830
+loads up to four times
+faster than before. And the
+
+199
+00:09:28.830 --> 00:09:32.040
+rad grid will do thousands
+of records in milliseconds. But
+
+200
+00:09:32.040 --> 00:09:33.540
+of course, it's, it's better
+to try these things for
+
+201
+00:09:33.540 --> 00:09:36.510
+yourself. So you can visit
+<inaudible> dot com slash ASP,
+
+202
+00:09:36.510 --> 00:09:39.330
+net Ajax, and download a
+trial. Thanks a lot for
+
+203
+00:09:39.330 --> 00:09:42.510
+listening and we'll get right
+back to the show. So
+
+204
+00:09:42.540 --> 00:09:44.580
+maybe I could ask you
+a question about, I was
+
+205
+00:09:44.580 --> 00:09:47.400
+on site recently at a,
+at a large company that
+
+206
+00:09:47.400 --> 00:09:49.980
+had a legacy system and
+the legacy system was in
+
+207
+00:09:50.470 --> 00:09:54.330
+C plus plus. And it
+was probably, gosh, maybe almost
+
+208
+00:09:54.330 --> 00:09:57.750
+15 years old, but it
+worked and it worked great,
+
+209
+00:09:58.230 --> 00:10:00.420
+but it was legacy. It
+was legacy because it wasn't
+
+210
+00:10:00.420 --> 00:10:03.630
+on the new shiny interfaces
+and whatnot. Yeah, it worked.
+
+211
+00:10:03.630 --> 00:10:07.290
+And they had people actively
+adding to the system, but
+
+212
+00:10:07.770 --> 00:10:09.930
+it was what I would
+call in. I don't know
+
+213
+00:10:09.930 --> 00:10:11.940
+if this, I invent, I
+think I invented this. Maybe
+
+214
+00:10:11.940 --> 00:10:13.290
+I invented it in the
+case of, I pulled it
+
+215
+00:10:13.290 --> 00:10:16.440
+out of my butt. I
+have this caste system in
+
+216
+00:10:16.440 --> 00:10:19.740
+my mind for API APIs,
+third class API APIs. Like
+
+217
+00:10:19.740 --> 00:10:21.450
+the ones that were written
+in the early nineties were
+
+218
+00:10:21.450 --> 00:10:25.950
+always dot, execute, or dot,
+do it for dot master,
+
+219
+00:10:25.950 --> 00:10:28.860
+whatever. And you pass in
+a magic string and maybe
+
+220
+00:10:28.860 --> 00:10:31.920
+it's tag value pairs or
+SQL, but it's something that
+
+221
+00:10:32.370 --> 00:10:35.850
+the language that you're writing
+can't see right. At some
+
+222
+00:10:35.850 --> 00:10:38.850
+custom thing. And these are
+often in large systems that
+
+223
+00:10:38.850 --> 00:10:41.430
+were, multi-tiered the only thing
+that we could easily Marshall
+
+224
+00:10:41.430 --> 00:10:44.730
+across the strings strengths. So
+they pass tag value pairs
+
+225
+00:10:44.730 --> 00:10:47.790
+around, and that was a
+third class interface. And then
+
+226
+00:10:47.790 --> 00:10:49.860
+like a second class interface
+might be something like a
+
+227
+00:10:49.860 --> 00:10:52.980
+data set, which is a
+structure that organizes. These are
+
+228
+00:10:52.980 --> 00:10:55.740
+a hash table or a
+dictionary, right. Still not first
+
+229
+00:10:55.740 --> 00:10:58.260
+class. And then a first
+class is like a proper
+
+230
+00:10:58.260 --> 00:11:01.740
+interface. We ended up building
+over the course of a
+
+231
+00:11:01.740 --> 00:11:04.140
+week, a prototype that was
+a kind of a, a
+
+232
+00:11:04.250 --> 00:11:07.530
+series of layers on top
+of this onion via the
+
+233
+00:11:07.530 --> 00:11:11.550
+hope being that we would,
+we would create data transfer
+
+234
+00:11:11.550 --> 00:11:14.910
+objects that look closer and
+closer the way we wish
+
+235
+00:11:14.940 --> 00:11:17.790
+they looked as they got
+out towards the outside to
+
+236
+00:11:17.790 --> 00:11:20.460
+the service layer. And then
+in the future, we would
+
+237
+00:11:20.460 --> 00:11:24.210
+remove the core of this
+onion and replace it with
+
+238
+00:11:24.210 --> 00:11:27.920
+something better. Yeah. Is that
+a, It is it's reasonable,
+
+239
+00:11:27.960 --> 00:11:29.960
+you know? Cause you, you
+are, you know, you're keeping
+
+240
+00:11:29.960 --> 00:11:31.760
+the whole thing running while
+going and building a parallel
+
+241
+00:11:31.760 --> 00:11:34.700
+structure that you're going to
+use to eventually replace something
+
+242
+00:11:34.700 --> 00:11:36.980
+there. So it's, it's not
+quite the same as the
+
+243
+00:11:36.980 --> 00:11:39.620
+stringer stringer application thing, but
+it is a very common
+
+244
+00:11:39.620 --> 00:11:42.290
+strategy for large refactorings to
+do that sort of thing.
+
+245
+00:11:42.440 --> 00:11:45.530
+Okay. Well that's good. Yeah.
+See, I was only going
+
+246
+00:11:45.560 --> 00:11:47.720
+partially through your book at
+the time, so I hadn't
+
+247
+00:11:47.720 --> 00:11:50.870
+completed it. Yeah. I know.
+No problem. But yeah, it's
+
+248
+00:11:51.410 --> 00:11:53.230
+yeah. That's a decent strategy
+with this sort of thing.
+
+249
+00:11:53.260 --> 00:11:55.330
+Okay. Well, that's comforting. It
+is a weird thing though,
+
+250
+00:11:55.330 --> 00:11:57.490
+to notice that for very
+old applications, you know, I
+
+251
+00:11:57.490 --> 00:12:00.040
+feel like for some of
+them you often have multiple
+
+252
+00:12:00.040 --> 00:12:01.960
+ways of doing things to
+just end up going existing.
+
+253
+00:12:01.960 --> 00:12:03.910
+You know, it's kind of
+like you, you look around
+
+254
+00:12:03.910 --> 00:12:05.710
+and you can say, Oh,
+you know, man invented fire
+
+255
+00:12:05.710 --> 00:12:07.990
+here, you know? And I
+was like, Oh man, discovered
+
+256
+00:12:07.990 --> 00:12:10.120
+wheel here. You know? And
+just, you find the entire
+
+257
+00:12:10.120 --> 00:12:12.760
+history of 15 years of
+software development stuck in one
+
+258
+00:12:12.760 --> 00:12:16.620
+code base. Do you enumerate
+the different techniques for working
+
+259
+00:12:16.620 --> 00:12:18.660
+with legacy code that you
+have, like any friendly mnemonics
+
+260
+00:12:18.690 --> 00:12:21.420
+or something like that? Yeah.
+No, not really. I mean,
+
+261
+00:12:21.420 --> 00:12:23.460
+one of them is just
+like a modification of the
+
+262
+00:12:23.460 --> 00:12:25.620
+test driven development cycle. I
+mean, the typical thing with
+
+263
+00:12:25.620 --> 00:12:28.440
+test driven development is to
+say, you know, first thing
+
+264
+00:12:28.440 --> 00:12:29.850
+you do is you write
+a failing test case and
+
+265
+00:12:29.850 --> 00:12:31.740
+then you make it compile.
+Then you make it pass.
+
+266
+00:12:31.740 --> 00:12:35.400
+And then you refactor, I
+add a secondary, another step
+
+267
+00:12:35.400 --> 00:12:36.660
+to this, which is basically
+first thing you do is
+
+268
+00:12:36.660 --> 00:12:39.570
+you break dependencies. Okay. You
+want to break dependencies and
+
+269
+00:12:39.570 --> 00:12:41.010
+where to go and get
+the tests in place in
+
+270
+00:12:41.010 --> 00:12:43.920
+order to go and write
+the test and refactor underneath
+
+271
+00:12:43.920 --> 00:12:47.070
+it. That's really interesting because
+that's funny. One of the
+
+272
+00:12:47.070 --> 00:12:49.200
+things that we found with
+in this legacy system we
+
+273
+00:12:49.200 --> 00:12:51.570
+were working on was that
+it had a dependency in
+
+274
+00:12:51.570 --> 00:12:55.380
+this case, on, on IIS,
+on internet, on the internet
+
+275
+00:12:55.380 --> 00:13:00.420
+information server, the windows web
+server that was profound. So
+
+276
+00:13:00.450 --> 00:13:04.620
+we decided to spend the
+first day mocking away IIS,
+
+277
+00:13:04.920 --> 00:13:08.850
+basically making a test harness
+to lie to this old
+
+278
+00:13:08.850 --> 00:13:11.730
+system. And once we did
+that, we realized that now
+
+279
+00:13:11.730 --> 00:13:14.220
+we can start writing tests.
+Yeah, No, I mean, it's
+
+280
+00:13:14.220 --> 00:13:15.840
+great. The thing that you
+realize after doing this a
+
+281
+00:13:15.840 --> 00:13:19.230
+lot, it's kind of like
+most applications are really glued
+
+282
+00:13:19.230 --> 00:13:22.350
+together. It's like they have
+hard-coded, you know, dependencies upon
+
+283
+00:13:22.350 --> 00:13:25.080
+singletons and upon, you know,
+third party, API APIs and
+
+284
+00:13:25.080 --> 00:13:27.930
+all this other stuff that
+you can't really mock out
+
+285
+00:13:27.960 --> 00:13:29.370
+and you really need to
+be able to mock those
+
+286
+00:13:29.370 --> 00:13:30.840
+things out and where to
+go and test some things
+
+287
+00:13:30.840 --> 00:13:33.270
+in isolation. You know, it's
+just really painful. Do you
+
+288
+00:13:33.270 --> 00:13:34.860
+want to have to go
+and have IAS running in
+
+289
+00:13:34.860 --> 00:13:36.660
+the database, running and all
+this other stuff and build
+
+290
+00:13:36.960 --> 00:13:38.370
+your own little world just
+to want and run some
+
+291
+00:13:38.370 --> 00:13:40.860
+simple tests it takes too
+long to do. And you
+
+292
+00:13:40.860 --> 00:13:43.200
+never really get the benefit
+of quick feedback from testing.
+
+293
+00:13:43.200 --> 00:13:45.660
+The, you really need, It's
+a good idea to write
+
+294
+00:13:45.720 --> 00:13:48.120
+lots of tests around a
+legacy system, so you can
+
+295
+00:13:48.120 --> 00:13:49.770
+make sure that it works
+the way you think it
+
+296
+00:13:49.770 --> 00:13:52.290
+works. Yeah. It's a good
+idea that, I mean, this
+
+297
+00:13:52.290 --> 00:13:53.790
+is a first step is
+do you want to try
+
+298
+00:13:53.790 --> 00:13:56.220
+to write tests around stuff
+that describe it? I call
+
+299
+00:13:56.220 --> 00:13:59.010
+this characterization testing. You want
+to characterize the behavior so
+
+300
+00:13:59.010 --> 00:14:01.320
+that you can refactor underneath
+it. You can add new
+
+301
+00:14:01.320 --> 00:14:03.450
+functionality and find out whether
+it's compatible with the old
+
+302
+00:14:03.450 --> 00:14:06.390
+functionality. The thing I always
+like to go and underscore
+
+303
+00:14:06.390 --> 00:14:08.340
+though, is that you shouldn't
+really approach this and say,
+
+304
+00:14:08.340 --> 00:14:10.710
+well, I want to write
+tests for everything because for
+
+305
+00:14:10.710 --> 00:14:12.780
+any large application, you know,
+you could spend your entire
+
+306
+00:14:12.780 --> 00:14:15.240
+career going through writing tests
+for all this stuff. What
+
+307
+00:14:15.240 --> 00:14:16.350
+you want to be able
+to do is develop the
+
+308
+00:14:16.350 --> 00:14:19.110
+skill to go and do
+this on a spot basis.
+
+309
+00:14:19.140 --> 00:14:20.340
+You wanna be able to
+go and say, okay, well,
+
+310
+00:14:20.340 --> 00:14:22.500
+look, you know, I want
+to change code here. So
+
+311
+00:14:22.500 --> 00:14:23.670
+where do I have to
+write my tests? I already
+
+312
+00:14:23.670 --> 00:14:25.770
+go and get a bit
+of coverage just to go
+
+313
+00:14:25.770 --> 00:14:27.840
+and kind of understand as
+I'm working with this code,
+
+314
+00:14:28.170 --> 00:14:29.400
+you know, as I'm trying
+to make it better, as
+
+315
+00:14:29.400 --> 00:14:30.900
+I'm trying to go and
+add features to it, that
+
+316
+00:14:30.900 --> 00:14:34.230
+I'm not breaking anything Interesting.
+We ended up calling this
+
+317
+00:14:34.230 --> 00:14:38.370
+fear-based testing. That's good. Right.
+We write tests around those
+
+318
+00:14:38.370 --> 00:14:40.560
+sections that we were the
+most afraid of. Yeah. You
+
+319
+00:14:40.560 --> 00:14:42.360
+know, it's like, okay, I'm
+going in. All right, well,
+
+320
+00:14:42.360 --> 00:14:44.190
+let's hang on. You know,
+if I'm going to get
+
+321
+00:14:44.190 --> 00:14:45.990
+your back, I'm going to
+need tests in order to
+
+322
+00:14:45.990 --> 00:14:49.080
+feel not afraid. It's good.
+And I think there's a
+
+323
+00:14:49.080 --> 00:14:50.790
+level beyond that too, which
+is kind of cool. It's
+
+324
+00:14:50.790 --> 00:14:53.810
+like, you're not scared anymore.
+And you have the support
+
+325
+00:14:53.810 --> 00:14:55.190
+to be able to get
+tests in place. You've broken
+
+326
+00:14:55.190 --> 00:14:57.950
+dependencies. The step beyond that
+is going to have curiosity
+
+327
+00:14:57.950 --> 00:15:00.560
+based testing and people are
+quite often they're, you know,
+
+328
+00:15:00.560 --> 00:15:02.180
+they often ask the question.
+It's like, how many tests
+
+329
+00:15:02.180 --> 00:15:03.740
+do I need? And I,
+I really don't like to
+
+330
+00:15:03.740 --> 00:15:05.680
+rely on coverage numbers all
+that much. You know, I
+
+331
+00:15:05.690 --> 00:15:08.450
+think coverage is a decent
+metric, but what I really
+
+332
+00:15:08.450 --> 00:15:11.060
+want is the situation where
+people can say, look, I
+
+333
+00:15:11.060 --> 00:15:13.070
+don't quite understand how this
+little piece of code works
+
+334
+00:15:13.170 --> 00:15:14.870
+instead of going and trying
+to hunt through and read
+
+335
+00:15:14.870 --> 00:15:17.210
+all through the code and
+try to figure out a
+
+336
+00:15:17.210 --> 00:15:18.830
+mental model that how it
+works, what they can do
+
+337
+00:15:18.830 --> 00:15:20.630
+is to just write a
+test. Right. And they can
+
+338
+00:15:20.630 --> 00:15:22.430
+write that test to go
+and say, Oh, okay, now
+
+339
+00:15:22.460 --> 00:15:24.500
+I've seen, I apply these
+inputs and it does this
+
+340
+00:15:24.500 --> 00:15:26.960
+for me. And the cool
+thing with the test though,
+
+341
+00:15:26.960 --> 00:15:28.730
+is that those tests remained
+in the code base. You
+
+342
+00:15:28.730 --> 00:15:30.800
+can look at these tests
+and use them to go
+
+343
+00:15:30.800 --> 00:15:34.700
+and really understand how pieces
+work intimately. And that just
+
+344
+00:15:34.700 --> 00:15:37.550
+makes it, makes everything feedback
+driven. It makes everything just
+
+345
+00:15:37.550 --> 00:15:41.190
+exploratory and really much more
+pleasant. It's funny, there's, there's
+
+346
+00:15:41.220 --> 00:15:43.540
+so many different words that
+you could put in front
+
+347
+00:15:43.540 --> 00:15:48.700
+of hyphen based testing, you
+know, comfort based testing from
+
+348
+00:15:48.700 --> 00:15:50.560
+my point of view, anything
+that you can do that
+
+349
+00:15:50.560 --> 00:15:52.780
+makes it easier for you
+to sleep at night. Yes,
+
+350
+00:15:52.780 --> 00:15:55.090
+definitely. If it didn't, you
+know, Good thing. Yeah. I
+
+351
+00:15:55.090 --> 00:15:56.140
+think at the end of
+the day with all this,
+
+352
+00:15:56.140 --> 00:15:58.570
+this is all about making
+developer's lives easier. And you
+
+353
+00:15:58.570 --> 00:16:00.610
+know, the cool thing is
+you make developers lives easier
+
+354
+00:16:00.610 --> 00:16:02.650
+and it's good for the
+business also because you can
+
+355
+00:16:02.650 --> 00:16:05.500
+end up having, you know,
+faster feature development and you
+
+356
+00:16:05.500 --> 00:16:09.310
+know, a more maintainable system.
+Exactly. You know, so, so
+
+357
+00:16:09.310 --> 00:16:11.680
+lots of people have, have
+legacy issues, but at the
+
+358
+00:16:11.680 --> 00:16:13.690
+same time, you've got these
+systems that you want to
+
+359
+00:16:13.690 --> 00:16:16.660
+maintain, but you need, you,
+you need, or you want
+
+360
+00:16:17.080 --> 00:16:20.050
+to get involved in the
+new stuff. And I've got
+
+361
+00:16:20.050 --> 00:16:22.180
+this archetype that I've used
+a number of times on
+
+362
+00:16:22.180 --> 00:16:24.820
+the show, and I've actually
+got a buddy in a
+
+363
+00:16:25.780 --> 00:16:28.540
+who, who lives in this
+area of the country. Who
+
+364
+00:16:28.540 --> 00:16:30.280
+always laughs when I use
+this and I say, I've
+
+365
+00:16:30.280 --> 00:16:33.190
+got this guy, I call
+him the chief architect of
+
+366
+00:16:33.190 --> 00:16:36.100
+the Nebraska department of forestry.
+And it was a silly
+
+367
+00:16:36.100 --> 00:16:37.900
+archetype that I threw out
+a while back. But I'm
+
+368
+00:16:37.900 --> 00:16:40.570
+realizing it's more interesting than
+I thought, because here's a
+
+369
+00:16:40.570 --> 00:16:44.620
+guy, who's got an important
+job if a small job,
+
+370
+00:16:45.130 --> 00:16:49.180
+but he's got legacy systems
+that people are counting on
+
+371
+00:16:49.510 --> 00:16:53.800
+he's he matters his systems
+matter, but he's an alpha
+
+372
+00:16:53.800 --> 00:16:56.590
+geek. He wants to get
+involved in the new stuff.
+
+373
+00:16:57.100 --> 00:17:01.030
+Maybe he's running access databases
+from 20 years ago, but
+
+374
+00:17:01.540 --> 00:17:04.300
+he's, he's smart enough to
+understand what he's missing. How
+
+375
+00:17:04.300 --> 00:17:08.590
+can he use some of
+these techniques to get, you
+
+376
+00:17:08.590 --> 00:17:11.680
+know, make sure that he's
+meeting his job's needs and
+
+377
+00:17:11.680 --> 00:17:14.830
+his constituencies needs while still
+getting involved in the new
+
+378
+00:17:15.130 --> 00:17:17.800
+technology. Yeah, it's a great
+question. And I think it
+
+379
+00:17:17.890 --> 00:17:20.290
+comes back to something which
+is kind of interesting that
+
+380
+00:17:20.290 --> 00:17:22.090
+I ask every once in
+a while when I visit
+
+381
+00:17:22.090 --> 00:17:23.710
+teams, it's like, when's the
+last time you wrote a
+
+382
+00:17:23.710 --> 00:17:27.580
+new class. Right. And it's
+funny because in some places
+
+383
+00:17:27.580 --> 00:17:29.470
+it's like, people don't really
+write new classes all that.
+
+384
+00:17:29.470 --> 00:17:31.840
+Often they just go and
+add code into existing methods.
+
+385
+00:17:32.260 --> 00:17:34.570
+You know, they add methods
+on existing classes because they
+
+386
+00:17:34.570 --> 00:17:36.910
+kind of feel like they're,
+they're in maintenance and design
+
+387
+00:17:36.910 --> 00:17:39.280
+is over. I think that's
+one of the worst mistakes
+
+388
+00:17:39.280 --> 00:17:40.900
+you can make in software
+development is to feel the
+
+389
+00:17:40.910 --> 00:17:44.440
+design is over. It's really
+a continual process. And, and
+
+390
+00:17:44.740 --> 00:17:46.810
+even in the older systems,
+you should be creating new
+
+391
+00:17:46.810 --> 00:17:50.850
+functions and creating new classes.
+So, you know, the rule
+
+392
+00:17:50.850 --> 00:17:53.560
+of thumb don't stop. Yeah.
+Don't stop design. I mean,
+
+393
+00:17:53.840 --> 00:17:58.200
+design is a continual process
+of examination and reexamination and
+
+394
+00:17:58.230 --> 00:18:01.700
+evaluation and Got some system
+in VB six. Should I
+
+395
+00:18:01.700 --> 00:18:05.090
+be still developing in VB
+six? And You've got to
+
+396
+00:18:05.090 --> 00:18:06.830
+make a change, you know,
+make a decision. You may
+
+397
+00:18:06.830 --> 00:18:09.140
+want to go and move
+to vb.net or move to
+
+398
+00:18:09.140 --> 00:18:11.510
+C-sharp or something along those
+lines. But even if you
+
+399
+00:18:11.510 --> 00:18:13.850
+stay in VB six, you've
+got to recognize that all
+
+400
+00:18:13.850 --> 00:18:16.550
+the choices you're making are
+really designed decisions and that
+
+401
+00:18:16.550 --> 00:18:18.530
+you should try to go
+in and use, you know,
+
+402
+00:18:18.530 --> 00:18:21.920
+good principals and make good
+evaluations and do good things.
+
+403
+00:18:22.340 --> 00:18:25.730
+No though, but I'm thinking
+about it again with fear.
+
+404
+00:18:26.570 --> 00:18:27.650
+I don't want to ma
+I don't want to mess
+
+405
+00:18:27.650 --> 00:18:29.600
+it up. I don't want
+to break it. You know,
+
+406
+00:18:29.720 --> 00:18:31.010
+it's one of those things
+where if you, if you
+
+407
+00:18:31.010 --> 00:18:34.460
+haven't gotten to the build
+deploy cycle, if you've fallen
+
+408
+00:18:34.460 --> 00:18:37.430
+out of even for six
+months, even a six month
+
+409
+00:18:37.430 --> 00:18:39.170
+old or even a three
+month old system, I may
+
+410
+00:18:39.170 --> 00:18:43.250
+be afraid to, to deploy
+it for, for the sense
+
+411
+00:18:43.250 --> 00:18:46.820
+that I might, I don't
+know, make the gods angry.
+
+412
+00:18:47.840 --> 00:18:49.280
+One thing to point out
+though, is it's like if
+
+413
+00:18:49.280 --> 00:18:51.530
+you're scared of making changes
+in a big, long method,
+
+414
+00:18:51.530 --> 00:18:53.000
+right. And that's, you know,
+it really is a very
+
+415
+00:18:53.000 --> 00:18:56.330
+scary thing. Some changes that
+you make can be articulated
+
+416
+00:18:56.330 --> 00:18:58.880
+as new methods, right? You
+can go ahead and say,
+
+417
+00:18:58.880 --> 00:19:01.160
+look, let me create a
+new method. Let me go
+
+418
+00:19:01.160 --> 00:19:03.230
+and delegate from the big
+old method to this new
+
+419
+00:19:03.230 --> 00:19:05.540
+method. And what's cool about
+that is that you have
+
+420
+00:19:05.570 --> 00:19:08.210
+a new context, right? This
+is a completely different new
+
+421
+00:19:08.210 --> 00:19:11.690
+context. You can pass, you
+know, pass variables in and
+
+422
+00:19:11.690 --> 00:19:14.420
+write code that, you know,
+that just, you know, deals
+
+423
+00:19:14.420 --> 00:19:17.390
+with those particular parameters and,
+and do it using test
+
+424
+00:19:17.390 --> 00:19:19.190
+driven development, which is a
+great thing for your, you
+
+425
+00:19:19.190 --> 00:19:21.860
+know, your architect to do.
+I mean, you want to
+
+426
+00:19:21.860 --> 00:19:24.380
+get into something which is
+new TTD has been around
+
+427
+00:19:24.380 --> 00:19:25.880
+for quite a while, but
+for many people it's new,
+
+428
+00:19:26.180 --> 00:19:29.090
+right? Practicing test driven development
+is a wonderful, you know,
+
+429
+00:19:29.090 --> 00:19:32.600
+new and wonderful practice. And
+you can build up new
+
+430
+00:19:32.600 --> 00:19:35.210
+things in the context of
+old systems. And, you know,
+
+431
+00:19:35.210 --> 00:19:37.580
+really, if you can delegate
+out to something else and
+
+432
+00:19:37.580 --> 00:19:39.350
+build it up as a
+new structure, that's a, a
+
+433
+00:19:39.350 --> 00:19:41.150
+very valuable thing to do
+in the context of old
+
+434
+00:19:41.150 --> 00:19:44.240
+code. I'd be interested if
+there are people in who
+
+435
+00:19:44.240 --> 00:19:46.490
+are listening, who are maybe
+using older systems, maybe older
+
+436
+00:19:46.490 --> 00:19:48.890
+versions of Fox pro or
+older versions of Phoebe who
+
+437
+00:19:48.890 --> 00:19:52.670
+have written test harnesses. Like,
+is there a VB six
+
+438
+00:19:53.300 --> 00:19:58.640
+test system? Yeah. Yeah. And
+I I'm, I hope it's
+
+439
+00:19:58.640 --> 00:20:03.320
+still there, but there's, there's
+a XP programming website by
+
+440
+00:20:03.320 --> 00:20:06.770
+Ron Jeffries that contains a
+list of all of the
+
+441
+00:20:07.310 --> 00:20:11.120
+variations of the X unit
+testing framework. Okay. And, you
+
+442
+00:20:11.120 --> 00:20:12.920
+know, we call it X
+unit, even though there's like,
+
+443
+00:20:12.920 --> 00:20:15.500
+there's actually like a brand
+X unit now, but like
+
+444
+00:20:15.500 --> 00:20:17.990
+everything which is basically adopting
+the same architecture that J
+
+445
+00:20:17.990 --> 00:20:19.700
+unit did, it was one
+of the very first early
+
+446
+00:20:19.700 --> 00:20:22.850
+testing frameworks. There's CVP unit
+there's end unit. There's, you
+
+447
+00:20:22.850 --> 00:20:25.940
+know, there's after unit for,
+for, for Tran, you know,
+
+448
+00:20:25.970 --> 00:20:28.760
+every language you can imagine.
+Yes. It really are. So
+
+449
+00:20:28.760 --> 00:20:30.320
+it's, it's just a matter
+of going into a little
+
+450
+00:20:30.320 --> 00:20:32.090
+bit of digging, but know,
+chances are the language you're
+
+451
+00:20:32.090 --> 00:20:34.640
+working in has a, there's
+an H unit for Haskell.
+
+452
+00:20:34.950 --> 00:20:37.130
+It's funny. I, I date
+myself by coming back to
+
+453
+00:20:37.130 --> 00:20:39.230
+VB six. I actually had
+to start, I started in,
+
+454
+00:20:39.230 --> 00:20:41.300
+in C and C plus
+plus, but I didn't think
+
+455
+00:20:41.300 --> 00:20:44.210
+about unit testing back then.
+This is like, you know,
+
+456
+00:20:44.360 --> 00:20:47.800
+89 90 in that area.
+And then <inaudible> came along.
+
+457
+00:20:47.800 --> 00:20:50.320
+But for, For me, the
+fat part of the bell
+
+458
+00:20:50.320 --> 00:20:53.770
+curve was VB six of
+the, of the bell curve
+
+459
+00:20:53.770 --> 00:20:56.800
+of my career. So I
+think about like, and that's
+
+460
+00:20:56.800 --> 00:20:59.080
+when I really got a
+lot done, a lot of
+
+461
+00:20:59.080 --> 00:21:03.010
+really crappy stuff. God helped
+the people who have those
+
+462
+00:21:03.010 --> 00:21:05.680
+things that I wrote. But
+yeah, it'd be interesting to
+
+463
+00:21:05.680 --> 00:21:09.280
+go back and instrument that
+code and get that, that,
+
+464
+00:21:09.960 --> 00:21:12.700
+that, that the same feeling
+that I get with unit
+
+465
+00:21:12.700 --> 00:21:16.480
+testing today. Yeah. And the
+feeling of productivity I had
+
+466
+00:21:16.480 --> 00:21:20.020
+at that time and combine
+those things. It's very possible.
+
+467
+00:21:20.020 --> 00:21:21.930
+I know teams are working
+in Delphi and they're basically
+
+468
+00:21:22.000 --> 00:21:24.280
+doing unit testing and I
+mean, early Delphi, as opposed
+
+469
+00:21:24.280 --> 00:21:26.550
+to the later.net stuff. And
+I was so productive and
+
+470
+00:21:26.550 --> 00:21:30.400
+early. Great. Yeah, no, it's
+a cool language. It's a
+
+471
+00:21:30.400 --> 00:21:32.110
+bit different, a bit off
+the mainstream because it's a
+
+472
+00:21:32.110 --> 00:21:35.230
+passcode river. Where do you
+find yourself writing code in
+
+473
+00:21:35.230 --> 00:21:37.990
+or you in all systems?
+I mean, you consult, I'm
+
+474
+00:21:37.990 --> 00:21:39.670
+a consultant. Then I go
+around to many different teams.
+
+475
+00:21:39.700 --> 00:21:41.650
+The thing that I find
+rather interesting, it's what I'm
+
+476
+00:21:41.650 --> 00:21:44.140
+called in quite often now
+for CNC plus plus teams.
+
+477
+00:21:44.230 --> 00:21:46.750
+And the main reason I
+think is because the problems
+
+478
+00:21:46.750 --> 00:21:49.480
+are harder, you know, the
+particularly in C plus plus
+
+479
+00:21:49.480 --> 00:21:51.010
+it's like the work that
+it takes to go on
+
+480
+00:21:51.010 --> 00:21:53.980
+break dependencies, to get tests
+in places really kind of
+
+481
+00:21:53.980 --> 00:21:56.050
+tough. The language wasn't really
+engineered for that sort of
+
+482
+00:21:56.050 --> 00:21:58.450
+thing. It's really interesting. The
+system I was working on
+
+483
+00:21:58.450 --> 00:22:01.870
+last last week was a
+plus plus system. And we
+
+484
+00:22:01.870 --> 00:22:06.040
+had some situations where they
+had a specific compiler and
+
+485
+00:22:06.040 --> 00:22:08.560
+a specific version of the
+compiler exports were certain way.
+
+486
+00:22:08.560 --> 00:22:11.410
+They were memory model things.
+They'd replaced the memory manager.
+
+487
+00:22:11.440 --> 00:22:15.220
+Yeah. The, you can't just
+go and say, Hey, compile
+
+488
+00:22:15.220 --> 00:22:18.460
+it. Yeah. You had to
+set up the build environment.
+
+489
+00:22:18.460 --> 00:22:22.000
+And that in itself was
+a task. It's really tough.
+
+490
+00:22:22.000 --> 00:22:23.890
+And I think the thing
+that I really hope for
+
+491
+00:22:23.890 --> 00:22:25.990
+most teams that are out
+there now that are working
+
+492
+00:22:25.990 --> 00:22:29.320
+with, you know, current technologies
+that they do is try
+
+493
+00:22:29.320 --> 00:22:31.660
+to maintain the upgrade chain,
+try to upgrade your language
+
+494
+00:22:31.660 --> 00:22:36.400
+periodically and, you know, try
+to upgrade your libraries. You
+
+495
+00:22:36.400 --> 00:22:37.780
+know, it's terrible when you
+visit teams and they're like
+
+496
+00:22:37.780 --> 00:22:40.020
+three or four versions behind
+because you know, the, the
+
+497
+00:22:40.100 --> 00:22:41.650
+more versions you fall behind,
+the harder it is to
+
+498
+00:22:41.650 --> 00:22:43.360
+go and catch up again.
+And you really just pull
+
+499
+00:22:43.360 --> 00:22:44.860
+yourself out of the path
+of a lot of goodness.
+
+500
+00:22:44.920 --> 00:22:47.080
+Right. And you're not necessarily
+upgrading just because it's new
+
+501
+00:22:47.080 --> 00:22:49.210
+and shiny. No, but just
+basically to keep yourself in
+
+502
+00:22:49.210 --> 00:22:51.250
+the path of new tools,
+some new technologies and stuff
+
+503
+00:22:51.250 --> 00:22:52.750
+like that, it's not the
+worst thing in the world
+
+504
+00:22:52.750 --> 00:22:54.490
+to go and fall completely
+behind on some of these
+
+505
+00:22:54.490 --> 00:22:57.400
+things. You can still do
+some cool stuff, but it's
+
+506
+00:22:57.400 --> 00:22:59.830
+just so simple to upgrade.
+I mean, it's, it's, it's
+
+507
+00:22:59.830 --> 00:23:02.200
+a great discipline to go
+and keep upgrading because you
+
+508
+00:23:02.530 --> 00:23:04.720
+deal with different change cases
+and then basically increases the
+
+509
+00:23:04.720 --> 00:23:07.540
+robustness of your code. Yeah.
+Well, it looks like we've
+
+510
+00:23:07.540 --> 00:23:08.890
+got to get going because
+we've got to go to
+
+511
+00:23:08.890 --> 00:23:11.500
+another session right now here
+at Norwegian developer's conference. I
+
+512
+00:23:11.500 --> 00:23:13.330
+really appreciate you sitting down
+and thanks a lot. It's
+
+513
+00:23:13.330 --> 00:23:16.750
+been great. Really good conversation.
+Check out my professor's book,
+
+514
+00:23:16.780 --> 00:23:20.740
+working effectively with legacy code.
+And this has been another
+
+515
+00:23:20.740 --> 00:23:23.140
+episode of Hansel minutes. I'll
+see you again next week.
+

@@ -1,0 +1,3406 @@
+WEBVTT FILE
+
+1
+00:00:05.370 --> 00:00:16.300
+<inaudible> From Hanselman it's dot
+com. It's Hansel minutes, but
+
+2
+00:00:16.300 --> 00:00:20.150
+weekly discussion with web developer
+and technologists. Scott Hanselman hosted
+
+3
+00:00:20.180 --> 00:00:25.430
+by Carl Franklin. This is Lawrence Ryan
+announcing show number 36 recorded
+
+4
+00:00:25.430 --> 00:00:30.440
+Monday, October nine, 2006. Support
+for Hanselman. This is provided
+
+5
+00:00:30.440 --> 00:00:34.970
+by coach Smith tools, makers
+of coach Smith, an extensible
+
+6
+00:00:34.970 --> 00:00:39.800
+template based code generator for.net
+Hanselman its listeners. Get $100
+
+7
+00:00:39.800 --> 00:00:43.700
+off coats with professional with
+coupon code age M 100
+
+8
+00:00:44.390 --> 00:00:50.840
+online@covidsmithtools.com. Support is also provided
+by Dartmouth developers journal the
+
+9
+00:00:50.840 --> 00:00:56.780
+world's leading.net developer magazine online
+at www dot <inaudible> dot
+
+10
+00:00:56.780 --> 00:01:06.680
+com. In this episode, Scott
+interviews, PowerShell architect, Jeffrey Snow. Hey,
+
+11
+00:01:06.680 --> 00:01:08.960
+this is Scott Hanselman and
+this is Hansel minutes. We're
+
+12
+00:01:08.960 --> 00:01:11.870
+doing other unconventional Hansel minutes
+this week. I'm up on
+
+13
+00:01:11.870 --> 00:01:15.620
+campus at Redmond. I drove
+up here for the PowerShell
+
+14
+00:01:15.620 --> 00:01:18.770
+ISV developers conference, and I
+am lucky enough to be
+
+15
+00:01:18.770 --> 00:01:22.760
+sitting in the office of
+Jeffrey's Nover the PowerShell architect.
+
+16
+00:01:23.150 --> 00:01:25.790
+That is correct, correct. There's
+not more than one PowerShell
+
+17
+00:01:25.790 --> 00:01:29.040
+architect. No, there isn't. That's
+funny story though. Digital, I
+
+18
+00:01:29.060 --> 00:01:32.090
+ran into somebody who introduced
+themselves as the deck net
+
+19
+00:01:32.090 --> 00:01:34.880
+architect. I thought, Oh my
+God, the definite architect, the
+
+20
+00:01:35.240 --> 00:01:38.060
+architect. And then a few
+weeks later I met another
+
+21
+00:01:38.060 --> 00:01:40.880
+guy and he introduced himself
+as the deck net architect.
+
+22
+00:01:40.880 --> 00:01:43.340
+And then I discovered that
+there were 30 or so
+
+23
+00:01:43.340 --> 00:01:45.710
+the deck that architects. And
+so it turns out that
+
+24
+00:01:45.950 --> 00:01:49.220
+in general architects have a
+problem with their, that their
+
+25
+00:01:49.220 --> 00:01:52.940
+definitive articles. That sounds like
+a bank's everyone's a VP.
+
+26
+00:01:52.940 --> 00:01:54.350
+You know, if you've ever
+met someone at a bank
+
+27
+00:01:54.890 --> 00:01:57.590
+virtually, you know, in the
+it department, like everyone is
+
+28
+00:01:57.590 --> 00:02:00.320
+a vice president at all
+levels, so that's cool. But
+
+29
+00:02:00.320 --> 00:02:03.830
+in this case I am
+the architect. So I've done
+
+30
+00:02:03.830 --> 00:02:06.440
+podcasts on PowerShell before I
+did it. When it was
+
+31
+00:02:06.670 --> 00:02:09.590
+one, one is called monad.
+I had the opportunity to
+
+32
+00:02:09.590 --> 00:02:11.000
+meet you at tech ed.
+And we got to do
+
+33
+00:02:11.000 --> 00:02:14.180
+some talks together since then,
+of course it's PowerShell. And
+
+34
+00:02:14.180 --> 00:02:18.200
+you just came out with
+PowerShell, RC, everyone's loving PowerShell.
+
+35
+00:02:18.200 --> 00:02:21.260
+I'm spreading the word. I
+love PowerShell, but let's get
+
+36
+00:02:21.260 --> 00:02:23.240
+a little insight into, what's
+kind of going on behind
+
+37
+00:02:23.240 --> 00:02:26.390
+the scenes. How many people
+make PowerShell happen? It's not
+
+38
+00:02:26.390 --> 00:02:29.420
+just, you know, we've got
+a great team, you know,
+
+39
+00:02:29.420 --> 00:02:32.720
+I'm always poorest with numbers
+and, but, you know, ballpark
+
+40
+00:02:34.640 --> 00:02:37.370
+tech. So you did what
+the overall thing. I came
+
+41
+00:02:37.370 --> 00:02:41.000
+up with the idea. So
+it flew out of WMI
+
+42
+00:02:41.000 --> 00:02:44.420
+C WMI. At the time
+we were looking for, you
+
+43
+00:02:44.420 --> 00:02:46.820
+know, a great value proposition
+for WMI. You know, when
+
+44
+00:02:46.820 --> 00:02:49.550
+you write a perfect counter,
+you write perfect counter United,
+
+45
+00:02:49.550 --> 00:02:52.190
+see a nice graph, right.
+But with WMI, see, you
+
+46
+00:02:52.190 --> 00:02:54.080
+did a whole bunch of
+work and you didn't see
+
+47
+00:02:54.080 --> 00:02:56.240
+anything for it. So, so
+we want to solve that
+
+48
+00:02:57.170 --> 00:03:01.000
+mic and it was great,
+powerful. And at the time
+
+49
+00:03:01.000 --> 00:03:05.230
+bill had been beating me
+up about Donna. You were
+
+50
+00:03:05.230 --> 00:03:07.810
+personally being beaten up by
+bill Gates. Yeah. That's cool
+
+51
+00:03:08.050 --> 00:03:10.690
+that you have that kind
+of spoken like someone who
+
+52
+00:03:10.690 --> 00:03:12.550
+has been beat up by
+bill. I would love to
+
+53
+00:03:12.550 --> 00:03:13.960
+be beat up. I go
+at least once. So I
+
+54
+00:03:13.960 --> 00:03:16.150
+could say that there you
+go talk to him about
+
+55
+00:03:16.150 --> 00:03:18.340
+diagnostics. So he was beating
+you up saying it's not
+
+56
+00:03:18.340 --> 00:03:20.880
+manageable enough. Oh, just saying
+that, You know, w that
+
+57
+00:03:20.880 --> 00:03:23.430
+our division we needed to
+get on.net, you know, that
+
+58
+00:03:23.430 --> 00:03:26.520
+was the future. Get with
+the program. And so at
+
+59
+00:03:26.520 --> 00:03:28.110
+the time I said, okay,
+you know, I'll go find
+
+60
+00:03:28.110 --> 00:03:31.260
+out what he's talking about
+here. Investigated it, thought, Oh,
+
+61
+00:03:31.260 --> 00:03:33.150
+you know what? As a,
+as a kind of science
+
+62
+00:03:33.150 --> 00:03:36.810
+project, I'll take WIC and
+I'll rewrite it in.net. And
+
+63
+00:03:36.810 --> 00:03:38.940
+I was doing that. And
+I was thinking also thinking,
+
+64
+00:03:38.940 --> 00:03:41.340
+well, you know, I also
+want to, right now, WIC
+
+65
+00:03:41.340 --> 00:03:45.300
+is.is a, you know, coupled
+to WMI, I could take
+
+66
+00:03:45.300 --> 00:03:48.030
+some of the same concepts
+and apply them to XML.
+
+67
+00:03:48.570 --> 00:03:51.030
+And so I was going
+to write an XML shell.
+
+68
+00:03:51.600 --> 00:03:53.820
+And so then as I
+got into it, I saw,
+
+69
+00:03:53.880 --> 00:03:58.110
+Oh, dot net has reflection.
+Reflection gives me about 75,
+
+70
+00:03:58.110 --> 00:04:00.540
+80% of what I get
+out of WMI. The ability
+
+71
+00:04:00.540 --> 00:04:03.150
+to walk up to random
+objects. Who are you, what
+
+72
+00:04:03.150 --> 00:04:04.830
+properties do you have? What
+methods do you are? Give
+
+73
+00:04:04.830 --> 00:04:07.590
+me these properties, invoke these
+methods. So then I realized
+
+74
+00:04:07.590 --> 00:04:08.940
+I could do the same
+thing I was doing with
+
+75
+00:04:08.940 --> 00:04:13.710
+WYC against dotnet objects. And
+Bill's out there, obviously beaten
+
+76
+00:04:13.710 --> 00:04:15.690
+me up to get on
+the board at the top
+
+77
+00:04:15.690 --> 00:04:17.940
+bed. He's going to beat
+everybody else up. And so
+
+78
+00:04:17.940 --> 00:04:21.450
+I could apply these principles
+to the mainstream of technology
+
+79
+00:04:21.450 --> 00:04:24.360
+and get awesome power. So
+that's what happened. So I
+
+80
+00:04:24.360 --> 00:04:26.280
+took that and then found
+a group who had some
+
+81
+00:04:26.280 --> 00:04:29.400
+funding to do a next
+generation shell. They were kind
+
+82
+00:04:29.400 --> 00:04:32.100
+of off thinking about doing
+it in K shell, or
+
+83
+00:04:32.250 --> 00:04:34.650
+So there was another group.
+So you're in during the
+
+84
+00:04:34.650 --> 00:04:38.700
+management and its rotation group.
+Yep. You're screwing around. It
+
+85
+00:04:38.700 --> 00:04:41.520
+sounds like you're just kind
+of doing some prototyping around.
+
+86
+00:04:41.550 --> 00:04:44.310
+Yep. How long did, did
+you, had you learned.net before?
+
+87
+00:04:44.370 --> 00:04:47.430
+Nope. No. You sat down.
+Oh, welcome to.net. Yep. And
+
+88
+00:04:47.430 --> 00:04:50.850
+how long between that sit
+down, welcome to.net and really
+
+89
+00:04:50.850 --> 00:04:52.680
+getting that reflection could do
+what you needed to do.
+
+90
+00:04:52.680 --> 00:04:54.090
+It was a couple of
+weeks or you got it
+
+91
+00:04:54.090 --> 00:04:56.580
+right away. Yeah. It was
+a week and a half,
+
+92
+00:04:56.580 --> 00:04:59.280
+two weeks Immediately said, Oh
+yeah. Now I can do
+
+93
+00:04:59.280 --> 00:05:01.240
+something. Yeah, Exactly. Once I
+saw it, you know, when,
+
+94
+00:05:02.310 --> 00:05:04.680
+when you say goals Yeah.
+You just knew it immediately.
+
+95
+00:05:04.710 --> 00:05:07.530
+Yeah. So then there's another
+group that was not your
+
+96
+00:05:07.530 --> 00:05:10.830
+group was using the next
+generation show. Well, no, they
+
+97
+00:05:10.830 --> 00:05:12.870
+weren't after next generation shell,
+they were just after a
+
+98
+00:05:12.870 --> 00:05:14.760
+better shell. Right. So they
+were going to try and
+
+99
+00:05:14.760 --> 00:05:17.940
+port K shell or, or
+something just somehow get us
+
+100
+00:05:17.940 --> 00:05:20.880
+a better shell, anything but
+dos. And so I went
+
+101
+00:05:20.880 --> 00:05:22.650
+and I talked to them.
+I said, Hey, listen, here's
+
+102
+00:05:22.650 --> 00:05:24.690
+what we could do. And
+honest to God, they look
+
+103
+00:05:25.170 --> 00:05:27.510
+like at a rat's tail
+hanging out of my mouth,
+
+104
+00:05:27.510 --> 00:05:30.210
+like, what are you talking
+about? And so they're kind
+
+105
+00:05:30.210 --> 00:05:32.670
+of intrigued. So they kept
+coming back and talk to
+
+106
+00:05:32.670 --> 00:05:33.930
+them and talk to them.
+And they just kind of
+
+107
+00:05:33.930 --> 00:05:37.200
+like, you're strange. And so
+I said, you know what,
+
+108
+00:05:37.860 --> 00:05:39.690
+come to me in a
+month. And so then I
+
+109
+00:05:39.690 --> 00:05:43.050
+sat down, I just cranked
+out like 15,000 lines of
+
+110
+00:05:43.050 --> 00:05:45.900
+code prototype in it. And
+I said, now let me
+
+111
+00:05:45.900 --> 00:05:48.240
+show ya. And then, then
+they like, Oh my God,
+
+112
+00:05:48.390 --> 00:05:49.860
+you know, what can I
+do this? And I show
+
+113
+00:05:49.860 --> 00:05:51.660
+them, I can do that.
+And they're like, well, what
+
+114
+00:05:51.660 --> 00:05:54.990
+about this? And then they
+were totally bought in. And
+
+115
+00:05:54.990 --> 00:05:57.530
+so then we fired up
+a team to anxious. We
+
+116
+00:05:57.530 --> 00:06:00.020
+ended up having to, I
+left that group and then
+
+117
+00:06:00.020 --> 00:06:01.700
+they left that group and
+we went to a third
+
+118
+00:06:01.700 --> 00:06:04.070
+group to get the funding
+and make it part of
+
+119
+00:06:04.070 --> 00:06:06.400
+the mainstream. Oh, us. So
+you had, you basically had
+
+120
+00:06:06.400 --> 00:06:08.230
+this idea kind of spontaneously.
+It's the two of you
+
+121
+00:06:08.230 --> 00:06:10.870
+guys from pressure from bill.
+And how do you just
+
+122
+00:06:10.870 --> 00:06:13.960
+get a group? Hey, if
+you find some boss who
+
+123
+00:06:13.990 --> 00:06:16.240
+has the power to do
+that, right? You can't just
+
+124
+00:06:16.240 --> 00:06:19.090
+make a group yourself. No,
+that's correct. And so they
+
+125
+00:06:19.090 --> 00:06:22.180
+had some funding. And so
+we started to use that.
+
+126
+00:06:22.480 --> 00:06:26.950
+And then I worked, I
+transferred to the windows server
+
+127
+00:06:26.950 --> 00:06:31.090
+group, too. They had the
+biggest need for this. And
+
+128
+00:06:31.090 --> 00:06:34.510
+then over time we eventually
+moved. It consolidated all underneath
+
+129
+00:06:34.510 --> 00:06:39.310
+windows server. So basically we
+had a superstar executive, Dave
+
+130
+00:06:39.310 --> 00:06:42.550
+Thomas Thompson, excuse me, who understood
+the need for this stuff
+
+131
+00:06:42.940 --> 00:06:46.060
+and was a fantastic sponsor.
+We've had, we've had very
+
+132
+00:06:46.060 --> 00:06:49.990
+good luck with executive sponsors.
+Bob Muglia has been very
+
+133
+00:06:49.990 --> 00:06:52.510
+helpful in this. Do those
+guys get it? I mean
+
+134
+00:06:52.540 --> 00:06:56.260
+sometimes, Well, increasingly Microsoft, the
+execs really getting, you know,
+
+135
+00:06:56.260 --> 00:06:58.360
+I've worked a lot of
+places. And the great thing
+
+136
+00:06:58.360 --> 00:07:01.570
+about Microsoft is the execs
+are truly technical and they
+
+137
+00:07:01.570 --> 00:07:03.370
+get, I tell you what,
+you know, you do lots
+
+138
+00:07:03.370 --> 00:07:05.590
+of technical reviews, you know,
+your peer in this blah,
+
+139
+00:07:05.590 --> 00:07:08.610
+blah, blah. And you people
+drill into the, to the
+
+140
+00:07:08.620 --> 00:07:11.830
+details of your specs and
+your architecture, honest to God,
+
+141
+00:07:11.830 --> 00:07:15.460
+the best ever Jim algin
+Jim algin. Oh my Lord.
+
+142
+00:07:15.910 --> 00:07:20.650
+He gives the he's the
+white hair guy looks like,
+
+143
+00:07:21.700 --> 00:07:25.270
+who's the guy who did
+the pictures of Andy Warhol.
+
+144
+00:07:25.720 --> 00:07:28.330
+Okay. A little about that.
+But yeah, I saw him
+
+145
+00:07:28.330 --> 00:07:30.910
+actually working onstage doing, he
+was doing the coding. He
+
+146
+00:07:30.910 --> 00:07:34.090
+like played the coding monkey
+for somebody he's like, yeah.
+
+147
+00:07:34.120 --> 00:07:37.090
+I mean, that's pretty useful
+Credibly perceptive, you know? So
+
+148
+00:07:37.090 --> 00:07:38.650
+we go in with a
+lot of people, you know,
+
+149
+00:07:38.650 --> 00:07:41.200
+they, they, they hear the
+story and they're like, huh.
+
+150
+00:07:41.440 --> 00:07:43.450
+And it takes them like
+weeks before they finally get
+
+151
+00:07:43.450 --> 00:07:45.430
+it. Jim, we talked to
+him about it and I'm
+
+152
+00:07:45.430 --> 00:07:48.220
+like, in a few minutes
+he got to the three
+
+153
+00:07:48.280 --> 00:07:52.630
+core issues and he nailed
+them the three most insightful
+
+154
+00:07:52.630 --> 00:07:56.020
+questions. And I knew that
+because I've been dealing with
+
+155
+00:07:56.020 --> 00:08:00.370
+them, struggling with them <inaudible>
+yeah. And all the executive
+
+156
+00:08:00.370 --> 00:08:02.980
+that way. Steve's that way.
+Bob's that way that has
+
+157
+00:08:02.980 --> 00:08:05.560
+combined both, you know, strong
+technical skills. I mean, you
+
+158
+00:08:05.560 --> 00:08:08.050
+gotta have your technical act
+together when you've talked to
+
+159
+00:08:08.050 --> 00:08:10.270
+these guys. Right. Because they're
+going to sniff it out
+
+160
+00:08:10.570 --> 00:08:14.080
+and they got business skills,
+strategy skills. They're wow. Yeah.
+
+161
+00:08:14.110 --> 00:08:16.510
+That's true. How close is
+what you showed them to
+
+162
+00:08:16.510 --> 00:08:20.620
+what you ended up with
+that gonna See it's very
+
+163
+00:08:20.620 --> 00:08:22.930
+close. I think the things
+I think are the biggest
+
+164
+00:08:22.930 --> 00:08:27.070
+differences are originally, we had
+relied heavily on command and
+
+165
+00:08:27.070 --> 00:08:30.940
+lets as being the universal
+surface for everything. And when
+
+166
+00:08:30.940 --> 00:08:33.790
+it became obvious that that
+wasn't going to happen in
+
+167
+00:08:33.790 --> 00:08:38.710
+version one, we shifted and
+supported more native data types,
+
+168
+00:08:38.710 --> 00:08:42.910
+right? Legacy, data types, script,
+you know, XML, sorry, text.
+
+169
+00:08:43.300 --> 00:08:47.230
+So IP config, IP config,
+wasn't converted in version one.
+
+170
+00:08:47.500 --> 00:08:49.360
+So I needed to be
+able to take IP config,
+
+171
+00:08:49.360 --> 00:08:53.320
+which outputs text parse that
+text and manipulate it. Right.
+
+172
+00:08:53.320 --> 00:08:56.820
+So we got great text,
+parsing, regular expression support, same
+
+173
+00:08:56.820 --> 00:09:00.300
+thing with calm, a bunch
+of stuff today is scripted
+
+174
+00:09:00.300 --> 00:09:04.230
+through VB script and comps.
+So we supported that then
+
+175
+00:09:04.230 --> 00:09:07.560
+support for, you know, XML
+ADSI WMI, that was all
+
+176
+00:09:07.560 --> 00:09:10.110
+there. So that was one
+thing. And the second thing
+
+177
+00:09:10.110 --> 00:09:14.310
+is that the language is
+just, you know, far, far,
+
+178
+00:09:14.310 --> 00:09:18.870
+far, far, far richer than
+I had ever dreamed for
+
+179
+00:09:19.190 --> 00:09:23.840
+Your language guy, Bruce, Bruce
+superstar, Bruce and superstar, Jim
+
+180
+00:09:23.840 --> 00:09:26.930
+Jim's a PM and Bruce
+is the dev lead and
+
+181
+00:09:26.930 --> 00:09:29.600
+often there's as well. Who's
+responsible. What is the difference
+
+182
+00:09:29.600 --> 00:09:31.970
+between that? And you know,
+in some place in sunrise
+
+183
+00:09:31.970 --> 00:09:34.580
+code one doesn't yes, that's
+true. But Jim writes a
+
+184
+00:09:34.580 --> 00:09:36.080
+lot of code. Just, we
+don't want to check it
+
+185
+00:09:36.080 --> 00:09:40.700
+in, but in general, these
+two just work together as
+
+186
+00:09:40.700 --> 00:09:43.640
+a great team to, you
+know, define what the language
+
+187
+00:09:43.640 --> 00:09:46.520
+should do. Right. Jim's got
+a lot of deep Unix
+
+188
+00:09:46.520 --> 00:09:48.440
+backgrounds. We knew a bunch
+of the things that the
+
+189
+00:09:48.440 --> 00:09:51.800
+Unix guys would want. And
+then Bruce is a walking
+
+190
+00:09:51.800 --> 00:09:54.770
+encyclopedia of languages. I mean,
+you know, we'd come up
+
+191
+00:09:54.770 --> 00:09:56.420
+with some things we wanted
+to do and he'd say,
+
+192
+00:09:56.450 --> 00:09:59.960
+Oh, you know, some obscure
+language, you know, snowball used
+
+193
+00:09:59.960 --> 00:10:02.030
+to try and do that.
+And here's what the worked
+
+194
+00:10:02.030 --> 00:10:04.190
+well. And here's what didn't
+work. Well, these other guys
+
+195
+00:10:04.190 --> 00:10:06.080
+do it this way. I
+think we'd be better suited
+
+196
+00:10:06.080 --> 00:10:09.050
+to take their approach. It's
+like, Oh my Lord. So,
+
+197
+00:10:09.110 --> 00:10:11.780
+and, and you know, Jim,
+sorry, Bruce is the guy
+
+198
+00:10:11.780 --> 00:10:13.430
+who one day walked in
+and said, I think we've
+
+199
+00:10:13.430 --> 00:10:16.190
+got a support script blocks.
+It's like what? And he
+
+200
+00:10:16.190 --> 00:10:18.320
+explained it and it's like,
+Oh my Lord. And it
+
+201
+00:10:18.320 --> 00:10:21.440
+was just transformational experience. I
+mean, just got an order
+
+202
+00:10:21.440 --> 00:10:25.460
+of magnitude, more powerful in
+Grip blocks took me a
+
+203
+00:10:25.460 --> 00:10:27.950
+second. But once you get
+the idea of the different,
+
+204
+00:10:28.000 --> 00:10:29.990
+you know, the scope, how,
+how much of a boundary
+
+205
+00:10:29.990 --> 00:10:32.780
+that is that the script
+block boundary is. And then
+
+206
+00:10:32.780 --> 00:10:35.270
+that there are actual objects
+themselves that things can take
+
+207
+00:10:35.270 --> 00:10:39.140
+script blocks as input. You
+know, self-modifying kind of stuff
+
+208
+00:10:39.140 --> 00:10:42.560
+you can pass behavior in
+script blocks as delegates. Yup.
+
+209
+00:10:42.710 --> 00:10:45.440
+Ben mine start getting blown.
+That's pretty advanced stuff, but
+
+210
+00:10:45.440 --> 00:10:47.750
+I've been reading some of
+these different superstar bloggers of
+
+211
+00:10:47.750 --> 00:10:50.990
+the PowerShell bloggers and the
+stuff they're doing with description,
+
+212
+00:10:51.020 --> 00:10:55.430
+you know, script blocks as
+delegates. There was one post
+
+213
+00:10:55.430 --> 00:10:57.130
+you guys posted on where
+you did some kind of
+
+214
+00:10:57.140 --> 00:10:59.570
+a, there's a limitation right
+now in script blocks, just
+
+215
+00:10:59.570 --> 00:11:02.750
+delegates isn't there. They have
+to have a certain signature
+
+216
+00:11:02.780 --> 00:11:05.030
+signature, but then you guys
+came up with a workaround
+
+217
+00:11:05.630 --> 00:11:10.490
+by dynamically generating the assembly
+that contains the appropriate signature.
+
+218
+00:11:10.940 --> 00:11:13.100
+I mean, that was pretty
+hardcore. That was about the
+
+219
+00:11:13.100 --> 00:11:15.740
+most hardcore thing I'd seen.
+It was all done in
+
+220
+00:11:15.740 --> 00:11:17.990
+script. Well, the nice thing
+about it is that's what
+
+221
+00:11:18.020 --> 00:11:20.810
+I love the most about
+PowerShell is the incredible dynamic
+
+222
+00:11:20.810 --> 00:11:22.760
+range. You know? So if
+you're a beginner out there
+
+223
+00:11:22.760 --> 00:11:25.370
+and you're hearing this, you're
+saying, Whoa, run away. Right.
+
+224
+00:11:26.180 --> 00:11:28.130
+We got too deep, too
+fast. Sorry. Yeah, don't run
+
+225
+00:11:28.130 --> 00:11:30.260
+away. You'll see that. It's
+very easy to get in
+
+226
+00:11:30.260 --> 00:11:32.510
+just type commands and, and
+deal with it at an
+
+227
+00:11:32.510 --> 00:11:35.300
+operator level. When you want
+to start doing scripting, you
+
+228
+00:11:35.300 --> 00:11:37.550
+can kind of do it
+at like a bash style,
+
+229
+00:11:37.760 --> 00:11:39.080
+which is to say, and
+by the way, this is
+
+230
+00:11:39.080 --> 00:11:42.680
+an explicit design decision to
+have an incredibly wide dynamic
+
+231
+00:11:42.680 --> 00:11:45.380
+range. So you can go
+right with very quick ad
+
+232
+00:11:45.380 --> 00:11:48.020
+hoc functions. You don't need
+to name your parameters or
+
+233
+00:11:48.020 --> 00:11:51.290
+type them. Then you can
+get more formal name type
+
+234
+00:11:51.290 --> 00:11:55.390
+initialize, apply constraints, your variables,
+that sort of thing, use
+
+235
+00:11:55.390 --> 00:11:58.930
+different types of scoping, more
+sophisticated stuff, all the way
+
+236
+00:11:58.930 --> 00:12:01.930
+to systems programming. And the
+reason for this is, you
+
+237
+00:12:01.930 --> 00:12:03.850
+know, take a look at
+my bookshelf, right? What you
+
+238
+00:12:03.850 --> 00:12:06.080
+see is lots and lots
+of different types of books
+
+239
+00:12:06.080 --> 00:12:09.610
+and tools, techniques, right? So
+it's K shell, I guess
+
+240
+00:12:09.610 --> 00:12:12.850
+at home, I've got some
+on regular expressions and all
+
+241
+00:12:12.850 --> 00:12:15.820
+these utilities. And what happens
+is that in the Unix
+
+242
+00:12:15.820 --> 00:12:18.670
+world, you know, you have
+this like tool kit of,
+
+243
+00:12:18.750 --> 00:12:22.000
+of, of tools and that's
+great. You know, the toolkit
+
+244
+00:12:22.000 --> 00:12:24.850
+model is a great model,
+but its downside is that,
+
+245
+00:12:25.540 --> 00:12:28.420
+you know, you have one,
+one tool doesn't really have
+
+246
+00:12:28.420 --> 00:12:31.810
+a particularly large dynamic range.
+And so you end up
+
+247
+00:12:31.810 --> 00:12:34.060
+having to switch and switch
+and switch. And each one
+
+248
+00:12:34.060 --> 00:12:36.010
+of the tools kind of
+do the same things in
+
+249
+00:12:36.010 --> 00:12:39.430
+different ways. So where's the
+synergy. We wouldn't have one
+
+250
+00:12:39.430 --> 00:12:42.160
+tool. Yes, you learn it.
+And then you can have
+
+251
+00:12:42.160 --> 00:12:46.480
+incredible dynamic range. Beginners can
+do beginner stuff and then
+
+252
+00:12:46.480 --> 00:12:49.990
+grow over time to become
+experts. Experts can do expert
+
+253
+00:12:49.990 --> 00:12:52.030
+stuff, but if they just
+got a quick ad hoc
+
+254
+00:12:52.030 --> 00:12:54.510
+problem, boom, just type it
+and they're done. No, no
+
+255
+00:12:54.510 --> 00:12:56.940
+in Unix, they've got their
+kind of basic text passing
+
+256
+00:12:56.970 --> 00:13:01.470
+pipeline. We use a PS
+and it would pass, get
+
+257
+00:13:01.470 --> 00:13:04.440
+all the processes pipe through
+said walk and you're moving
+
+258
+00:13:04.440 --> 00:13:06.690
+string from place to place.
+And it seems like every
+
+259
+00:13:06.690 --> 00:13:09.780
+two letter combination is some
+tool. Right. You know, let's
+
+260
+00:13:09.780 --> 00:13:13.110
+go XQ and that's something
+that's in a bin folder
+
+261
+00:13:13.110 --> 00:13:15.360
+somewhere, you know? So every
+two or three letter character
+
+262
+00:13:15.360 --> 00:13:19.860
+combination is some widget and
+their, their show experience is
+
+263
+00:13:19.890 --> 00:13:22.620
+the string passing combined with
+all of these kind of
+
+264
+00:13:22.650 --> 00:13:25.770
+little things. I don't know
+what they're called. Little applets
+
+265
+00:13:26.250 --> 00:13:30.300
+utilities, little utilities, the other
+good news set of utilities.
+
+266
+00:13:30.300 --> 00:13:33.480
+Right. So how did you,
+how did you keep from
+
+267
+00:13:33.480 --> 00:13:35.850
+putting in the whole kitchen
+sink? You've got a lot
+
+268
+00:13:35.850 --> 00:13:38.880
+of these commandlets right. Which
+are not executable. There's no
+
+269
+00:13:38.910 --> 00:13:42.540
+get underscore content dot exe
+floating out there somewhere. It's
+
+270
+00:13:42.540 --> 00:13:45.630
+a different model, right? Yeah.
+And so what happens is
+
+271
+00:13:45.630 --> 00:13:48.570
+that it looks like a
+command line, right? That maps
+
+272
+00:13:48.570 --> 00:13:51.270
+to a traditional executable. In
+fact, what it does is
+
+273
+00:13:51.540 --> 00:13:54.570
+it drives a common parser,
+right? There's a grammar. These
+
+274
+00:13:54.570 --> 00:13:58.470
+commandlets are. In fact dotnet
+classes, they present a grammar
+
+275
+00:13:58.470 --> 00:14:02.220
+to the runtime engine that
+then parses, we find the
+
+276
+00:14:02.220 --> 00:14:06.450
+correct.net object. We invoke it.
+It spits out these other.net
+
+277
+00:14:06.450 --> 00:14:09.660
+objects. And then you can
+manipulate those. And because we
+
+278
+00:14:09.660 --> 00:14:13.050
+never rendered a text until
+you need texts, that allows
+
+279
+00:14:13.050 --> 00:14:15.900
+us to be really efficient
+about the processing of things
+
+280
+00:14:15.990 --> 00:14:18.630
+and the utilities. Right. We
+can white, you know, kind
+
+281
+00:14:18.630 --> 00:14:23.100
+of CQL type utilities against
+live in memory objects because
+
+282
+00:14:23.100 --> 00:14:25.980
+you don't render to text
+until you need to. So
+
+283
+00:14:25.980 --> 00:14:30.540
+you can just get way
+more powerful by basically deferred,
+
+284
+00:14:30.870 --> 00:14:34.200
+deferred rendering. So I can
+write my own commandlet by
+
+285
+00:14:34.200 --> 00:14:37.170
+making a class and decorating
+it with some attributes. Yep.
+
+286
+00:14:37.530 --> 00:14:40.290
+Why would I write a
+commandlet in C sharp or
+
+287
+00:14:40.290 --> 00:14:44.400
+Phoebe done that versus writing
+a script? Yeah. So, you
+
+288
+00:14:44.400 --> 00:14:45.870
+know, we want to get
+to the point where it's
+
+289
+00:14:45.870 --> 00:14:49.380
+completely the same, you know,
+it's a lifestyle choice, but
+
+290
+00:14:49.380 --> 00:14:51.980
+right now you can only
+do about C know, it
+
+291
+00:14:51.980 --> 00:14:54.260
+depends on how you view
+it. But about 75% of
+
+292
+00:14:54.260 --> 00:14:56.090
+the things you can do
+with a command line that
+
+293
+00:14:56.090 --> 00:14:58.580
+you can do with a
+script. So in particular, you
+
+294
+00:14:58.580 --> 00:15:01.760
+can only have one parameter
+set. So parameters set is
+
+295
+00:15:01.760 --> 00:15:04.670
+this like get processed. You
+can start stop process. You
+
+296
+00:15:04.670 --> 00:15:08.960
+can say stop process, minus
+ID, blah, or stop process
+
+297
+00:15:08.960 --> 00:15:12.320
+minus name black. Those are
+two parameter sets with a,
+
+298
+00:15:12.620 --> 00:15:16.070
+with a script. You can
+only do one. You can
+
+299
+00:15:16.080 --> 00:15:19.520
+also in a command let,
+what you can do is
+
+300
+00:15:19.520 --> 00:15:23.030
+you can put attributes on
+your parameters for validation and
+
+301
+00:15:23.030 --> 00:15:25.970
+then PowerShell will do the
+validation for you. And at
+
+302
+00:15:25.970 --> 00:15:28.880
+some point I always loved
+this one, you know, systems
+
+303
+00:15:28.880 --> 00:15:30.920
+programmers learned this and they
+look at these attributes and
+
+304
+00:15:30.920 --> 00:15:33.410
+they're like, you know what?
+That, that attribute saves me
+
+305
+00:15:33.410 --> 00:15:35.510
+like three lines of code.
+You know, I'll just write
+
+306
+00:15:35.510 --> 00:15:39.080
+the script. Well, I'll just
+write the code. This isn't
+
+307
+00:15:39.110 --> 00:15:41.270
+if you're a C sharp
+programmer and we tell them,
+
+308
+00:15:41.270 --> 00:15:43.040
+no, no, no. Don't write
+your three lines of code.
+
+309
+00:15:43.040 --> 00:15:45.980
+Use the attribute because if
+you use the attribute, well,
+
+310
+00:15:46.040 --> 00:15:48.140
+if you, if you write
+the code, one of those
+
+311
+00:15:48.140 --> 00:15:50.030
+lines of code is going
+to be an error message,
+
+312
+00:15:50.030 --> 00:15:53.150
+right? Cause you said that
+validation attributes are like, it's
+
+313
+00:15:53.150 --> 00:15:55.190
+gotta be one of these
+four values or it's gotta
+
+314
+00:15:55.190 --> 00:15:57.530
+be greater than five or
+less than 15 or support
+
+315
+00:15:57.530 --> 00:16:00.020
+this regular expression. So if
+you write the code to
+
+316
+00:16:00.020 --> 00:16:02.180
+do that, you know, when
+it doesn't work, you're going
+
+317
+00:16:02.180 --> 00:16:05.180
+to output an error message,
+which means you don't want
+
+318
+00:16:05.190 --> 00:16:08.840
+to, when you have the
+bell curve of programmers doing
+
+319
+00:16:08.840 --> 00:16:11.210
+this same technique, you know,
+the user's going to get
+
+320
+00:16:11.210 --> 00:16:14.450
+a thousand different error messages
+for exactly the same condition.
+
+321
+00:16:15.230 --> 00:16:17.750
+Whereas if you use our
+attribute there, get exactly one
+
+322
+00:16:18.470 --> 00:16:21.350
+and then we'll translate it
+into all the languages. Right?
+
+323
+00:16:21.350 --> 00:16:23.300
+And so you don't have
+to do that. So only
+
+324
+00:16:23.300 --> 00:16:25.850
+wait right now, you can't
+do that with a script,
+
+325
+00:16:25.910 --> 00:16:28.670
+right? You can't say this
+parameter has these attributes that
+
+326
+00:16:28.670 --> 00:16:32.060
+do validation. So those things
+will be common, but parameter
+
+327
+00:16:32.060 --> 00:16:37.490
+sets today and attributes validation.
+Yeah. Some of the common
+
+328
+00:16:37.490 --> 00:16:41.420
+parameters. So with a command
+led because it's subclass off
+
+329
+00:16:41.420 --> 00:16:44.510
+of base class, our base
+class has a set of
+
+330
+00:16:44.510 --> 00:16:48.710
+kind of core parameters, which
+then the engine recognizes. So
+
+331
+00:16:48.710 --> 00:16:51.710
+like air action, if you,
+and when you read your
+
+332
+00:16:51.710 --> 00:16:55.520
+chameleon, parameter, ubiquitous parameters, one
+of my favorite words, that's
+
+333
+00:16:55.520 --> 00:16:57.970
+a great, yeah, that's it.
+Well, I explain it like,
+
+334
+00:16:58.000 --> 00:17:00.460
+Oh, well these are ubiquitous.
+You see? Oh really? Oh
+
+335
+00:17:00.460 --> 00:17:03.490
+yeah, everyone has them. Huh?
+They're everywhere. You'll find them
+
+336
+00:17:03.490 --> 00:17:06.250
+everywhere. You read the ubiquitous
+Adam. Oh, one of my
+
+337
+00:17:06.250 --> 00:17:09.550
+favorite, the early, you know,
+kid grown up learning get
+
+338
+00:17:09.610 --> 00:17:12.820
+totally turned on about science,
+the ubiquitous Adam. And I've
+
+339
+00:17:12.820 --> 00:17:15.970
+been turned onto the, no,
+I don't know. Some of
+
+340
+00:17:15.970 --> 00:17:18.700
+this is one of the,
+not real scientists. I don't
+
+341
+00:17:18.790 --> 00:17:22.390
+know. I don't remember who.
+Yeah. So, and you don't
+
+342
+00:17:22.390 --> 00:17:24.460
+get those with a, with
+a script, but we're going
+
+343
+00:17:24.460 --> 00:17:27.070
+to get it. We're going
+to make them full peers
+
+344
+00:17:27.070 --> 00:17:30.280
+in the future. Is there,
+Is there a pattern or
+
+345
+00:17:30.280 --> 00:17:35.740
+is there prescriptive guidance on
+taking existing libraries and deciding
+
+346
+00:17:35.860 --> 00:17:39.550
+how to kind of shoehorn
+them into being appropriate? Commandlets
+
+347
+00:17:39.570 --> 00:17:41.560
+cause I know there's a
+lot of constraints around what
+
+348
+00:17:41.560 --> 00:17:43.360
+a command that ought to
+look like without ought behave.
+
+349
+00:17:43.360 --> 00:17:45.760
+Like a lot of decisions
+need to be made about
+
+350
+00:17:46.030 --> 00:17:48.310
+how it takes input, what
+kinds of things it takes
+
+351
+00:17:48.310 --> 00:17:51.330
+as input. And it's not
+necessarily, and because it's a
+
+352
+00:17:51.330 --> 00:17:54.990
+member of a pipeline because,
+because in an, a pipe
+
+353
+00:17:55.020 --> 00:17:59.160
+B pipe C situation, you
+might be writing B I
+
+354
+00:17:59.160 --> 00:18:01.200
+think more thought in the
+design has to go into
+
+355
+00:18:01.200 --> 00:18:03.210
+it in my opinion then
+as if you were writing
+
+356
+00:18:03.210 --> 00:18:06.230
+just some data access layer,
+some Dow. Yep. Exactly. And
+
+357
+00:18:06.280 --> 00:18:09.760
+in fact, so here I
+actually take the question and
+
+358
+00:18:09.830 --> 00:18:11.630
+the question is, so if
+I have this library, how
+
+359
+00:18:11.630 --> 00:18:13.340
+do I expose to this
+commands? And I'd say, that's
+
+360
+00:18:13.340 --> 00:18:17.240
+exactly the wrong thing to
+do. Yeah. You got it
+
+361
+00:18:17.250 --> 00:18:21.140
+wrong. No. And particularly, I
+mean, that's the whole point
+
+362
+00:18:21.140 --> 00:18:22.520
+of it is what you
+want to do is to
+
+363
+00:18:22.520 --> 00:18:25.010
+start with the user. And
+you think about that poor
+
+364
+00:18:25.010 --> 00:18:27.890
+guy sitting there trying to
+get his job done and
+
+365
+00:18:27.890 --> 00:18:30.770
+say, what does that guy
+need? Right. What functions does
+
+366
+00:18:30.770 --> 00:18:33.080
+he need when he's sitting
+there? Right. And then think
+
+367
+00:18:33.080 --> 00:18:36.080
+in terms of a set
+of tasks, right? What tasks
+
+368
+00:18:36.080 --> 00:18:37.940
+is he going to perform?
+What's he going to want
+
+369
+00:18:37.940 --> 00:18:41.150
+to type, what's he going
+to want to get process
+
+370
+00:18:41.150 --> 00:18:44.540
+and pipe and other things
+and then build that right?
+
+371
+00:18:44.540 --> 00:18:47.150
+And then take whatever you
+have, whatever random surface you,
+
+372
+00:18:47.150 --> 00:18:50.750
+you might've generated and expose
+it to them. Right? Because
+
+373
+00:18:50.780 --> 00:18:53.690
+the things you surface to
+a developer are different in
+
+374
+00:18:53.690 --> 00:18:56.450
+both type and granularity, then
+the things you're going to
+
+375
+00:18:56.450 --> 00:18:59.150
+surface to the admin or
+maybe. And so the key
+
+376
+00:18:59.150 --> 00:19:01.220
+is to think through what
+is the admin want and
+
+377
+00:19:01.220 --> 00:19:03.380
+surface that, you know, it
+was interesting. We had always
+
+378
+00:19:03.380 --> 00:19:06.230
+thought that the idea would
+be that people would write
+
+379
+00:19:06.920 --> 00:19:10.790
+their command lads right there.net
+libraries, and then command it
+
+380
+00:19:10.790 --> 00:19:13.280
+to be a really thin
+layer on top of those.
+
+381
+00:19:14.000 --> 00:19:17.660
+But we were shocked actually
+defined that groups like exchange.
+
+382
+00:19:17.900 --> 00:19:19.880
+What they're doing is they're,
+they're actually doing that, but
+
+383
+00:19:19.880 --> 00:19:23.180
+they're keeping their done at
+libraries, private internal, and they're
+
+384
+00:19:23.180 --> 00:19:28.010
+only surfacing their.net, their command
+lights. And the reason for
+
+385
+00:19:28.010 --> 00:19:31.100
+that is the commandments then
+define their well-defined, you know,
+
+386
+00:19:32.240 --> 00:19:36.050
+interface to all their functions.
+It is the remoting surface.
+
+387
+00:19:36.260 --> 00:19:41.180
+It's the surface that can
+be logged, et cetera. So
+
+388
+00:19:41.180 --> 00:19:43.190
+you are using exchange and
+exists as kind of the
+
+389
+00:19:43.190 --> 00:19:45.320
+conical example for those that
+might want to go and
+
+390
+00:19:45.320 --> 00:19:47.180
+write these kinds of things.
+If I go on exchange
+
+391
+00:19:47.180 --> 00:19:50.480
+and the new exchange, 2007,
+I say, get user as
+
+392
+00:19:50.480 --> 00:19:54.680
+Hanselman pipe, move mailbox, I'm
+piping the user through the
+
+393
+00:19:54.680 --> 00:19:57.860
+move mailbox and then move
+mailbox knows who I'm talking
+
+394
+00:19:57.860 --> 00:20:01.820
+about because there's this implied,
+this entirely applied, it's pretty
+
+395
+00:20:01.820 --> 00:20:06.590
+explicit, actually a user's being
+piped through that user object.
+
+396
+00:20:06.620 --> 00:20:08.720
+That's kind of the, the,
+the, the now, and that's
+
+397
+00:20:08.720 --> 00:20:11.480
+the domain object. This is
+a, you just said that
+
+398
+00:20:11.480 --> 00:20:14.240
+the user experience is important,
+but it seems like there's,
+
+399
+00:20:14.240 --> 00:20:16.640
+it's a little service oriented
+architecture just on a command
+
+400
+00:20:16.640 --> 00:20:19.190
+line as they're moving data
+from service to service with
+
+401
+00:20:19.190 --> 00:20:24.200
+very explicit boundaries, that user
+object that they're piping through
+
+402
+00:20:24.470 --> 00:20:27.890
+is that unique to the
+PowerShell implementation in the sense
+
+403
+00:20:27.890 --> 00:20:31.370
+of they've designed this noun
+called user or mailbox, and
+
+404
+00:20:31.370 --> 00:20:34.580
+it's only used in the
+context of commandlets or might
+
+405
+00:20:34.580 --> 00:20:37.130
+it be used in some
+larger dowel or document object
+
+406
+00:20:37.130 --> 00:20:38.960
+model that they've designed? Yeah,
+no, it can be used
+
+407
+00:20:38.960 --> 00:20:42.380
+in larger document in larger
+context. So the way these
+
+408
+00:20:42.380 --> 00:20:45.440
+things work is this is
+a great discussion about, is
+
+409
+00:20:45.440 --> 00:20:48.550
+a versus has a couple
+of, okay. And is a
+
+410
+00:20:48.550 --> 00:20:51.730
+coupling model says, Oh, I'm
+a command. And I take
+
+411
+00:20:51.760 --> 00:20:56.110
+a system dot diagnostic step
+process. Right. And you got
+
+412
+00:20:56.110 --> 00:20:58.030
+to be one of those
+things and I'll take it
+
+413
+00:20:58.210 --> 00:21:00.970
+well, that then limits you
+to the event, allows you
+
+414
+00:21:00.970 --> 00:21:03.340
+to then integrate with anything
+that produces one of those
+
+415
+00:21:03.340 --> 00:21:07.270
+things, right. Cardinality X. But
+if instead you said, well,
+
+416
+00:21:07.300 --> 00:21:09.730
+no, you know, I can
+take that or I can
+
+417
+00:21:09.730 --> 00:21:13.930
+take anything which has one
+of those things, or which
+
+418
+00:21:14.110 --> 00:21:17.080
+has a process ID name.
+Cause if you give me
+
+419
+00:21:17.080 --> 00:21:18.700
+the process ID name, I
+know how to take the
+
+420
+00:21:18.700 --> 00:21:20.260
+PR or the process ID.
+I know how to take
+
+421
+00:21:20.260 --> 00:21:22.990
+the process ID and create
+one of those things. So
+
+422
+00:21:22.990 --> 00:21:25.240
+that's a hazard model. And
+all of a sudden you
+
+423
+00:21:25.240 --> 00:21:28.180
+can integrate with a ton
+of things, right? CSV files
+
+424
+00:21:28.180 --> 00:21:30.430
+that has a, a field
+that has an ID or
+
+425
+00:21:30.430 --> 00:21:35.140
+an SES, sorry, CSV or
+XML or WMI, whatever, as
+
+426
+00:21:35.140 --> 00:21:37.780
+long as it has an
+attribute named ID that you
+
+427
+00:21:37.780 --> 00:21:40.480
+can then take use as
+a lookup to the real
+
+428
+00:21:40.480 --> 00:21:43.270
+object and then operate on,
+you can integrate with a
+
+429
+00:21:43.270 --> 00:21:46.270
+ton more things. And so
+PowerShell supports both models. And
+
+430
+00:21:46.270 --> 00:21:48.910
+it's actually one of the
+rules for these parameter sets.
+
+431
+00:21:49.210 --> 00:21:51.520
+If you take a look
+at stop process and drill
+
+432
+00:21:51.520 --> 00:21:54.910
+into it, one parameter set
+says, Hey, you can pipeline
+
+433
+00:21:54.970 --> 00:21:57.670
+the process object to me.
+The other one says, Hey,
+
+434
+00:21:57.670 --> 00:22:01.180
+you can pipeline the process
+IDs to me. And so
+
+435
+00:22:01.180 --> 00:22:05.830
+that's how you get this,
+like mind boggling integration, possibilities.
+
+436
+00:22:05.830 --> 00:22:07.960
+You were, you know, kind
+of almost anything can talk
+
+437
+00:22:07.960 --> 00:22:10.090
+to anything cause underneath the
+covers. I don't know if
+
+438
+00:22:10.090 --> 00:22:12.730
+you've figured this out yet,
+but underneath the covers, it
+
+439
+00:22:12.730 --> 00:22:15.490
+looks like a traditional your,
+your, your dad's command line,
+
+440
+00:22:15.520 --> 00:22:17.440
+but it's not at all.
+What we're doing is we're
+
+441
+00:22:17.440 --> 00:22:20.110
+taking that thing and we're
+turning it into an execution
+
+442
+00:22:20.110 --> 00:22:24.310
+plan against a generalized object
+flow engine, right? So you
+
+443
+00:22:24.310 --> 00:22:26.920
+heard a data flows. Well,
+this is an object flow
+
+444
+00:22:26.920 --> 00:22:29.860
+engine. You give the object
+to one part of the
+
+445
+00:22:29.860 --> 00:22:32.860
+control. You run the control.
+And until it admits another
+
+446
+00:22:32.860 --> 00:22:37.120
+object that then controls the
+sequencing of the next element
+
+447
+00:22:37.120 --> 00:22:41.010
+of the program. So Who,
+if I'm passing into stop
+
+448
+00:22:41.010 --> 00:22:43.950
+process, using that example, I
+could go and say, get
+
+449
+00:22:43.950 --> 00:22:48.390
+process, outlook, pipe, stop process,
+and it'll get the process
+
+450
+00:22:48.390 --> 00:22:50.490
+of your candidate to it.
+Or I could say stop
+
+451
+00:22:50.490 --> 00:22:53.580
+process dash, you know, pit
+equals. And then the near
+
+452
+00:22:53.580 --> 00:22:58.140
+pit, The number who handles
+the ghetto Of the process,
+
+453
+00:22:58.440 --> 00:23:00.060
+you know, you're saying that
+you could pass the actual
+
+454
+00:23:00.060 --> 00:23:02.760
+process or something with a
+little less fidelity, but a
+
+455
+00:23:02.760 --> 00:23:05.640
+unique enough thing that I
+could do. Yeah. And then
+
+456
+00:23:05.640 --> 00:23:08.760
+the commanders, the resolution, the
+command does that command actually,
+
+457
+00:23:08.760 --> 00:23:10.530
+there's two answers to that
+because it would be nice
+
+458
+00:23:10.530 --> 00:23:12.960
+if someone would get that
+for me. Sure, sure. There's
+
+459
+00:23:12.960 --> 00:23:17.340
+actually two answers to that.
+First is yeah. So one
+
+460
+00:23:17.340 --> 00:23:20.850
+is what we do literally
+is we take a look
+
+461
+00:23:20.850 --> 00:23:23.690
+at the object in the
+pipeline and we say, does
+
+462
+00:23:23.700 --> 00:23:27.180
+it, is there something that
+accepts it by type? And
+
+463
+00:23:27.180 --> 00:23:29.190
+we say, try and bind
+it. And if it works,
+
+464
+00:23:29.220 --> 00:23:32.280
+we go then if not,
+we say, is there something
+
+465
+00:23:32.280 --> 00:23:34.650
+that binds it by name?
+And we take a look
+
+466
+00:23:34.650 --> 00:23:37.110
+at the name, Oh, it
+takes ID. And we'll look
+
+467
+00:23:37.110 --> 00:23:39.180
+at the current object and
+we see, does it have
+
+468
+00:23:39.180 --> 00:23:41.160
+an ID? And then we
+say, yes, it does. So,
+
+469
+00:23:41.160 --> 00:23:43.320
+okay. Then I'm going to
+bind it. And we do
+
+470
+00:23:43.320 --> 00:23:45.770
+is we take it and
+we see what is the
+
+471
+00:23:45.770 --> 00:23:48.170
+type. So this thing takes
+it, it takes it an
+
+472
+00:23:48.170 --> 00:23:51.110
+integer. But if this has
+a string, we'll do the
+
+473
+00:23:51.110 --> 00:23:54.550
+coercion to that. Right. Oh.
+So the naming is more
+
+474
+00:23:54.550 --> 00:23:56.590
+important than the type. The
+name Gaming is more important
+
+475
+00:23:56.590 --> 00:23:58.990
+when the, in the hazard
+model. So the point there
+
+476
+00:23:58.990 --> 00:24:01.600
+is, if you had said,
+well, basically then we have
+
+477
+00:24:01.600 --> 00:24:04.330
+a number of ways to
+do this big data coercion
+
+478
+00:24:04.330 --> 00:24:08.020
+stuff. Right. So, you know,
+we use the.net conversion libraries,
+
+479
+00:24:08.200 --> 00:24:10.990
+so you could type converters,
+I've converted stuff, right? So
+
+480
+00:24:10.990 --> 00:24:13.000
+you could say, Hey, I'm
+going to bind to things
+
+481
+00:24:13.150 --> 00:24:16.240
+whose type is process ID.
+And we'll take them. We
+
+482
+00:24:16.240 --> 00:24:17.890
+see, well, I have this
+integer and I don't have
+
+483
+00:24:17.890 --> 00:24:22.780
+a process ID if you've
+registered a converter from integers
+
+484
+00:24:22.780 --> 00:24:25.960
+to process IDs, that will
+just work. That's exactly, Exactly
+
+485
+00:24:25.960 --> 00:24:27.760
+what my next question was
+going to be. You nailed
+
+486
+00:24:27.760 --> 00:24:30.790
+it. So Mike, in my
+command that I would write,
+
+487
+00:24:30.880 --> 00:24:32.260
+I was just thinking like,
+well, I'm going to have
+
+488
+00:24:32.260 --> 00:24:35.380
+my do it method. And
+my do, it's going to
+
+489
+00:24:35.380 --> 00:24:37.540
+want processes, am I do,
+it's not going to want
+
+490
+00:24:37.540 --> 00:24:41.170
+to worry about how to
+get from foods to processes
+
+491
+00:24:41.170 --> 00:24:43.330
+or IDs or strings or
+whatever. I just want to
+
+492
+00:24:43.330 --> 00:24:45.700
+process handle it. Yep. You're
+saying I can go and
+
+493
+00:24:45.700 --> 00:24:48.280
+register type converters using this
+type converter stuff that I
+
+494
+00:24:48.280 --> 00:24:50.440
+already know how to do
+that because it's built into.net
+
+495
+00:24:50.920 --> 00:24:53.110
+and I'll take as many
+types as you can throw
+
+496
+00:24:53.110 --> 00:24:55.020
+at me and you'll say,
+Oh, is there a type
+
+497
+00:24:55.040 --> 00:24:58.330
+converter registered convert it? And
+in that conversion, I could
+
+498
+00:24:58.330 --> 00:25:02.710
+do a lookup database or
+WMI call or whatever. Exactly
+
+499
+00:25:02.710 --> 00:25:04.530
+correct. Right. And so you
+could say, well, you know,
+
+500
+00:25:04.810 --> 00:25:08.620
+I produce type foods. You
+can go and write food
+
+501
+00:25:08.650 --> 00:25:12.010
+to process converter food to
+this converter food to that
+
+502
+00:25:12.010 --> 00:25:14.680
+converter. And, and, and then
+people will be able to
+
+503
+00:25:14.680 --> 00:25:17.020
+take your stuff and pipeline
+into, to a wide set
+
+504
+00:25:17.020 --> 00:25:19.330
+of thing. That wouldn't be,
+it would be okay in
+
+505
+00:25:19.330 --> 00:25:21.820
+that instance too, to go
+somewhere, to answer that question.
+
+506
+00:25:21.850 --> 00:25:24.310
+I mean, cause converting something
+isn't necessarily always coercion it,
+
+507
+00:25:24.310 --> 00:25:27.040
+maybe look up. Yup. Oh
+yeah. That's true. However you
+
+508
+00:25:27.040 --> 00:25:30.010
+implement your converters. Fine. That's
+hot. Yeah. Yeah. No, that's
+
+509
+00:25:30.010 --> 00:25:31.990
+a, that's the whole goal.
+That's the idea of this
+
+510
+00:25:31.990 --> 00:25:34.450
+object flow engine, right. A
+lot of pain in the
+
+511
+00:25:34.450 --> 00:25:38.830
+ass programming stuff is this
+impedance mismatch stuff. Right. This
+
+512
+00:25:38.830 --> 00:25:40.780
+guy I'll put something and
+I got to get it
+
+513
+00:25:40.780 --> 00:25:44.080
+exactly right to this guy.
+And the answer is, boy,
+
+514
+00:25:44.080 --> 00:25:46.390
+that's a big pain in
+the butt. Right. So, you
+
+515
+00:25:46.390 --> 00:25:49.120
+know, it's kind of like
+programming surgical knives. Right. But
+
+516
+00:25:49.120 --> 00:25:51.700
+we want to be able
+to like program with artillery.
+
+517
+00:25:51.910 --> 00:25:54.190
+Right. You know, just kind
+of over there is where
+
+518
+00:25:54.190 --> 00:25:55.870
+I want it to get
+and you take care of
+
+519
+00:25:55.870 --> 00:25:59.260
+it. So talk to me
+about this PS custom object
+
+520
+00:25:59.260 --> 00:26:02.140
+piss object thing. That, that
+if, if, if I have
+
+521
+00:26:02.140 --> 00:26:06.460
+a, if I have a
+Fu object and, and, and
+
+522
+00:26:06.640 --> 00:26:09.190
+the, the listeners are, you
+know, dot net programmers, should
+
+523
+00:26:09.190 --> 00:26:11.920
+they think about things in
+terms of CLR types? Right.
+
+524
+00:26:11.950 --> 00:26:15.310
+So I've got a food
+CLR type. I can pipe
+
+525
+00:26:15.310 --> 00:26:20.770
+it into something and maybe
+on the way there can't
+
+526
+00:26:20.800 --> 00:26:22.570
+really think of a good
+example, but I lost that
+
+527
+00:26:22.570 --> 00:26:25.300
+CLR type. But you can
+still process a food, even
+
+528
+00:26:25.300 --> 00:26:27.370
+though you've never seen one,
+even though maybe the assembly's
+
+529
+00:26:27.370 --> 00:26:30.580
+gone. Yeah. How does that
+work? Why would that be
+
+530
+00:26:30.580 --> 00:26:34.960
+useful? Yeah. So what we
+do is we wrap all
+
+531
+00:26:34.960 --> 00:26:37.840
+the.net objects in an adapter
+object. We call P S
+
+532
+00:26:37.840 --> 00:26:42.370
+object. Okay. And then the
+PS object then adapt different
+
+533
+00:26:42.370 --> 00:26:45.900
+types. So here's basic issue
+is that various technology teams
+
+534
+00:26:46.200 --> 00:26:49.980
+have taken and implemented their
+own type system within.net. Right.
+
+535
+00:26:50.220 --> 00:26:53.880
+So WMI WMI has implemented
+their own type system within.net.
+
+536
+00:26:53.940 --> 00:26:55.950
+What's that mean? There's, I
+don't know what half a
+
+537
+00:26:55.950 --> 00:27:00.000
+dozen WMI classes, but they
+actually represent, you know, tens
+
+538
+00:27:00.000 --> 00:27:04.200
+of thousands of WMI types.
+Right? So, you know, WMI
+
+539
+00:27:04.200 --> 00:27:08.130
+object, well in WMI object,
+it has a property WMI
+
+540
+00:27:08.160 --> 00:27:11.490
+type and that can take
+anyone at 10,000 fields. Well,
+
+541
+00:27:11.520 --> 00:27:12.720
+and then, and then you
+say, well, what are you
+
+542
+00:27:12.720 --> 00:27:15.270
+properties? And they all say,
+well, why have two properties,
+
+543
+00:27:15.270 --> 00:27:18.570
+system properties, object properties? And
+it's like, well, how's that
+
+544
+00:27:18.570 --> 00:27:21.090
+helpful? And the answer is,
+there's good reasons for it.
+
+545
+00:27:21.090 --> 00:27:22.950
+Blah, blah, blah. Let them
+explain to you why those
+
+546
+00:27:22.950 --> 00:27:25.470
+are good reasons. But two,
+you trying to just program,
+
+547
+00:27:25.470 --> 00:27:27.360
+it's a pain in the
+butt. So we adapt it.
+
+548
+00:27:27.360 --> 00:27:29.120
+And so in our world,
+when you say, Oh, I
+
+549
+00:27:29.130 --> 00:27:31.980
+have this WMI object, I
+say, well, whatever it's properties
+
+550
+00:27:32.160 --> 00:27:34.830
+will reach into those property
+bags and show you them.
+
+551
+00:27:35.250 --> 00:27:37.050
+So basically what we're trying
+to, and we do the
+
+552
+00:27:37.050 --> 00:27:41.510
+same thing with XML, ado,
+Everything has this facade. Yes.
+
+553
+00:27:42.260 --> 00:27:45.500
+Everything has this facade. And
+then for most things like.net
+
+554
+00:27:45.500 --> 00:27:48.410
+objects, it's a very thin
+facade. Just quick go adapt
+
+555
+00:27:48.410 --> 00:27:51.800
+it. We provide the facade
+there so that you can
+
+556
+00:27:51.920 --> 00:27:55.550
+add extensions to the dotnet
+object. So for instance, processes,
+
+557
+00:27:56.300 --> 00:27:58.760
+you know, dot net is
+a very regular surface, but
+
+558
+00:27:58.760 --> 00:28:02.000
+not really regular. And as,
+as up to the standards
+
+559
+00:28:02.000 --> 00:28:05.630
+of a management technology, right?
+So specifically WMI got it,
+
+560
+00:28:05.630 --> 00:28:09.440
+right. Everything's called name. Everything's
+got a name property. Whereas
+
+561
+00:28:09.440 --> 00:28:12.950
+in.net, you know, some things
+have named process has process
+
+562
+00:28:12.960 --> 00:28:15.650
+name, service has service name.
+Well, why is that helpful?
+
+563
+00:28:15.950 --> 00:28:17.600
+And what we'd allow you
+to do is to have
+
+564
+00:28:17.600 --> 00:28:20.750
+these type extensions. So you
+can say process, I've got
+
+565
+00:28:20.750 --> 00:28:23.570
+a new property, it's called
+name it maps to process.
+
+566
+00:28:23.570 --> 00:28:26.270
+Name service got a new
+property. It's called names Included
+
+567
+00:28:26.270 --> 00:28:28.970
+some of those by default.
+Absolutely. So you've actually modified
+
+568
+00:28:28.970 --> 00:28:32.150
+the base class library by
+spot welding on additional stuff
+
+569
+00:28:32.450 --> 00:28:35.030
+where you didn't like what
+they did. Exactly. Yeah. So
+
+570
+00:28:35.030 --> 00:28:37.250
+this is make it more
+regular, More regular, right? This
+
+571
+00:28:37.250 --> 00:28:40.190
+is this whole theme of
+like the democratization, the types.
+
+572
+00:28:40.430 --> 00:28:42.140
+But you know, you got
+a job to do. And
+
+573
+00:28:42.140 --> 00:28:43.910
+these guys, their role is
+to help you do their
+
+574
+00:28:43.910 --> 00:28:45.950
+job and the degree to
+which they do it. Great.
+
+575
+00:28:45.950 --> 00:28:48.110
+And to which the degree
+to the greets, which they
+
+576
+00:28:48.110 --> 00:28:50.030
+don't do it, then get
+the hell out of the
+
+577
+00:28:50.030 --> 00:28:51.890
+way and let some people
+in there who can help
+
+578
+00:28:51.890 --> 00:28:54.410
+you get your job done.
+That's what our type systems
+
+579
+00:28:54.410 --> 00:28:58.040
+about, right? If they've met
+your needs fine, we're very
+
+580
+00:28:58.040 --> 00:29:00.890
+thin layer access directly. But
+if they haven't met your
+
+581
+00:29:00.890 --> 00:29:03.560
+needs, we've extended and wrapped
+it in such a way
+
+582
+00:29:03.560 --> 00:29:07.370
+that we, you, third parties
+can go and make it
+
+583
+00:29:07.370 --> 00:29:11.480
+meet your needs. Wow. That's
+hot. There you go. The
+
+584
+00:29:11.480 --> 00:29:13.160
+last question I want to
+ask you is about the
+
+585
+00:29:13.160 --> 00:29:16.010
+hosting stuff. You know, if
+you type get hosts, get
+
+586
+00:29:16.010 --> 00:29:19.700
+hyphen hosts, you see that
+even, even the UI is,
+
+587
+00:29:19.720 --> 00:29:22.760
+is, is a facade. I
+mean, everything is abstracted away.
+
+588
+00:29:22.760 --> 00:29:25.520
+Everything can be swapped out
+and already we've seen things
+
+589
+00:29:25.520 --> 00:29:29.780
+like Karl processors, PowerShell analyzer,
+like SQL analyzer for PowerShell,
+
+590
+00:29:29.800 --> 00:29:31.700
+you know, it's a complete,
+he doesn't want to call
+
+591
+00:29:31.700 --> 00:29:34.160
+it an ID, but it's,
+it's, it's an environment for
+
+592
+00:29:34.160 --> 00:29:37.970
+developing PowerShell, but it's a
+complete host it's hosting power
+
+593
+00:29:37.970 --> 00:29:40.700
+show. What other kind of
+instances do you think people
+
+594
+00:29:40.700 --> 00:29:43.510
+are going to using? I've
+seen those couple. What other
+
+595
+00:29:43.660 --> 00:29:45.790
+reasons might, I want to
+go and write a host
+
+596
+00:29:46.210 --> 00:29:49.200
+for power show. Yeah. So
+basically anytime you want to,
+
+597
+00:29:50.640 --> 00:29:55.620
+well, just computing engine, right?
+So, or, Or run space.
+
+598
+00:29:56.470 --> 00:29:59.700
+Oh, okay. Because you've been
+saying that we want to
+
+599
+00:29:59.700 --> 00:30:02.460
+do NMC, right. So I'll
+go on. I'll write my
+
+600
+00:30:02.460 --> 00:30:04.800
+whole, like a curling. We
+do banking. So I'll write
+
+601
+00:30:04.800 --> 00:30:08.430
+a whole financial institution management
+system entirely in PowerShell. And
+
+602
+00:30:08.430 --> 00:30:10.920
+now it's time to do
+it in NMC. Yep. How
+
+603
+00:30:10.920 --> 00:30:13.110
+do I call those those
+command? Let's how do I
+
+604
+00:30:13.110 --> 00:30:16.290
+reuse my pipelines? Am I
+just building command lines and
+
+605
+00:30:16.290 --> 00:30:19.080
+calling run spaces? And how,
+how is hosting a run
+
+606
+00:30:19.080 --> 00:30:23.160
+space different than becoming a
+host? Gotcha. Okay. So when
+
+607
+00:30:23.160 --> 00:30:25.080
+do you know in this
+regard, I don't know if
+
+608
+00:30:25.080 --> 00:30:27.600
+you ever used tickle, but
+I was very inspired by
+
+609
+00:30:27.600 --> 00:30:30.990
+tickle and wanted to emulate
+the great characteristics of tickle.
+
+610
+00:30:31.000 --> 00:30:33.660
+The great characteristic of tickle
+was they had a tickle
+
+611
+00:30:33.660 --> 00:30:36.450
+shell and interactive shell, but
+it could also be loaded
+
+612
+00:30:36.450 --> 00:30:39.900
+into your lot into, as
+a library, into your application
+
+613
+00:30:40.200 --> 00:30:43.170
+and then load it into
+your library. During the initialization,
+
+614
+00:30:43.170 --> 00:30:45.030
+you could go and say,
+Hey, here, I want to
+
+615
+00:30:45.030 --> 00:30:49.620
+add my, my extensions. So
+then all of a sudden,
+
+616
+00:30:49.620 --> 00:30:52.890
+in that instance of the,
+the engine, you could run
+
+617
+00:30:52.890 --> 00:30:58.620
+scripts, which performed actions against
+your applications, objects. I think
+
+618
+00:30:58.620 --> 00:31:02.520
+macro enable your application just
+by including their library. Exactly.
+
+619
+00:31:02.520 --> 00:31:04.980
+So that was the inspiration
+for this. And so what
+
+620
+00:31:04.980 --> 00:31:07.080
+we did was we went
+a little bit farther and
+
+621
+00:31:07.080 --> 00:31:09.540
+we said, instead of it
+being a library, we chose
+
+622
+00:31:09.540 --> 00:31:13.140
+the ATO model, right? The
+conceptual model of ha and
+
+623
+00:31:13.140 --> 00:31:15.420
+we called them run spaces.
+And the idea was, I'd
+
+624
+00:31:15.420 --> 00:31:17.580
+like to connect to a
+run space and that's going
+
+625
+00:31:17.580 --> 00:31:20.490
+to be a script execution
+space. And I'd like it
+
+626
+00:31:20.490 --> 00:31:22.920
+to be here or there,
+or there I'd like to
+
+627
+00:31:22.920 --> 00:31:25.710
+have five of them or
+10 of them, whatever in
+
+628
+00:31:25.710 --> 00:31:27.270
+the future, you'll see that
+you'll be able to say,
+
+629
+00:31:27.270 --> 00:31:29.490
+I'd like to be fully
+Dio type. Molly say I'd
+
+630
+00:31:29.490 --> 00:31:31.410
+like to have a run
+space on that machine with
+
+631
+00:31:31.410 --> 00:31:34.950
+these credentials and that machine
+and those credentials set up
+
+632
+00:31:34.950 --> 00:31:38.340
+these parameters and then send
+some scripts there. Some SERPs
+
+633
+00:31:38.340 --> 00:31:42.020
+there, give the output, merge
+them, et cetera. Then the,
+
+634
+00:31:42.020 --> 00:31:44.370
+the issue is now when
+I run these scripts, at
+
+635
+00:31:44.370 --> 00:31:47.430
+some point they might require
+information from the user read
+
+636
+00:31:47.430 --> 00:31:50.010
+host or right host. So
+if Nora did that to
+
+637
+00:31:50.010 --> 00:31:53.430
+work, we have this virtualized
+host interface, which basically has
+
+638
+00:31:53.700 --> 00:31:57.300
+a set of interfaces that
+you support read host, right?
+
+639
+00:31:57.300 --> 00:32:00.240
+Host, things like that. And
+then you get to implement
+
+640
+00:32:00.240 --> 00:32:03.990
+them however you want. So
+exchange went, wrote an MMC
+
+641
+00:32:03.990 --> 00:32:08.700
+snap in there, a DLL
+right into MMC. They load
+
+642
+00:32:08.700 --> 00:32:12.180
+our DLL, which then creates
+a number of run spaces.
+
+643
+00:32:12.390 --> 00:32:14.880
+They Y a number. Oh
+I'm. So when you do
+
+644
+00:32:14.880 --> 00:32:17.790
+a, a w when you
+send it a command on
+
+645
+00:32:17.790 --> 00:32:21.240
+a run space, it blocks,
+it's basically the ver you
+
+646
+00:32:21.240 --> 00:32:23.610
+know, the kind of early
+ado model where you can
+
+647
+00:32:23.610 --> 00:32:26.670
+run one at a time.
+Okay. It's exactly the same,
+
+648
+00:32:26.670 --> 00:32:29.430
+maintain my own run space
+pool. That's what they did.
+
+649
+00:32:29.460 --> 00:32:32.520
+Okay. Yep. And so they
+have, and so if you
+
+650
+00:32:32.520 --> 00:32:34.590
+do something that's gonna take
+awhile, you can run it
+
+651
+00:32:34.590 --> 00:32:36.420
+on that one, and then
+you have something else, you
+
+652
+00:32:36.420 --> 00:32:38.910
+run it on another one,
+get the results and use
+
+653
+00:32:38.910 --> 00:32:41.900
+them. Then they've got a
+host Interface for things like,
+
+654
+00:32:41.960 --> 00:32:44.450
+you know, when you do
+write progress, they actually bring
+
+655
+00:32:44.450 --> 00:32:47.270
+up, you know, when 32
+dialogue box with the progress
+
+656
+00:32:47.270 --> 00:32:51.170
+indicator, we're, we're here at
+the, at the PowerShell developers
+
+657
+00:32:51.170 --> 00:32:53.150
+conference. And there's going to
+be some talks later this
+
+658
+00:32:53.150 --> 00:32:56.450
+afternoon on how to integrate
+with MMC. What kind of
+
+659
+00:32:56.450 --> 00:32:59.570
+help or applicant helper libraries
+do you have that are
+
+660
+00:32:59.570 --> 00:33:03.230
+PowerShell specific and NMC specific
+to make, or, or best
+
+661
+00:33:03.230 --> 00:33:05.960
+practices to make this easier?
+Or do we just go
+
+662
+00:33:05.960 --> 00:33:08.990
+and make a snap in
+and start calling run spaces?
+
+663
+00:33:08.990 --> 00:33:11.060
+What are the, what are
+the best practices? No, that's
+
+664
+00:33:11.060 --> 00:33:14.270
+is essentially it Jamaica run
+space and started invoking it.
+
+665
+00:33:15.050 --> 00:33:17.150
+You know, we have lots
+of content on how to
+
+666
+00:33:17.150 --> 00:33:19.280
+do that today. Do we
+have to write the host
+
+667
+00:33:19.280 --> 00:33:22.040
+ourselves to handle things like
+write progress and the different
+
+668
+00:33:22.040 --> 00:33:25.370
+progress bar interactions? Sadly. Yes,
+you do. Okay. Yeah. Over
+
+669
+00:33:25.370 --> 00:33:27.920
+time, you'll see more and
+more of that integrated directly
+
+670
+00:33:27.920 --> 00:33:30.770
+into the system. But for
+now, that's what, at some
+
+671
+00:33:30.770 --> 00:33:33.380
+point in the future, then
+maybe writing at PowerShell, NMC
+
+672
+00:33:33.380 --> 00:33:36.800
+snap in would be, you
+know, file new power MC
+
+673
+00:33:36.830 --> 00:33:39.590
+PowerShell, MMC snapping thing. And
+I get some of that
+
+674
+00:33:40.010 --> 00:33:43.100
+available to us. Oh, watch
+that space. Here's the other
+
+675
+00:33:43.100 --> 00:33:44.720
+way to do this. They
+learned this trick when I
+
+676
+00:33:44.720 --> 00:33:47.270
+used to work for titillate
+think about it this way.
+
+677
+00:33:47.540 --> 00:33:50.690
+What would a smart person
+do? Fantastic. That's what we're
+
+678
+00:33:50.690 --> 00:33:53.000
+going to do. That's exactly
+what I like to hear.
+
+679
+00:33:53.000 --> 00:33:55.100
+And that's a good place
+to end. Thank you very
+
+680
+00:33:55.100 --> 00:33:57.320
+much for being on handsome
+minutes. I really appreciate your
+
+681
+00:33:57.320 --> 00:33:58.460
+time. Thank you.
+

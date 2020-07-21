@@ -1,0 +1,3127 @@
+WEBVTT FILE
+
+1
+00:00:12.020 --> 00:00:17.540
+From Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+2
+00:00:17.540 --> 00:00:22.880
+web developer and technologist Scott
+Hanselman hosted by Carl Franklin. This
+
+3
+00:00:22.880 --> 00:00:26.750
+is Lauren's Ryan announcing show
+number one 28. Recorded live
+
+4
+00:00:26.780 --> 00:00:31.310
+Thursday, September 4th, 2008. Support for handful
+of minutes is provided by
+
+5
+00:00:31.310 --> 00:00:35.330
+Tellerik RSV controls. The most
+comprehensive suite of components for
+
+6
+00:00:35.330 --> 00:00:44.570
+windows forms and asp.net web
+applications. online@wwwdotterik.com. Support is also
+
+7
+00:00:44.570 --> 00:00:49.550
+provided by.net developers journal the
+world's leading.net developer magazine online
+
+8
+00:00:49.550 --> 00:00:54.590
+at www dot <inaudible> dot
+com. In this episode, Scott
+
+9
+00:00:54.590 --> 00:01:00.590
+talks, object oriented Ajax with
+Scott Kate. Hi, this is
+
+10
+00:01:00.590 --> 00:01:02.690
+Scott Hansen And this is another
+episode of Hansel minutes. And
+
+11
+00:01:02.690 --> 00:01:06.170
+I'm sitting here in Sydney,
+Australia at tech ed, Australia,
+
+12
+00:01:06.770 --> 00:01:09.830
+myself and Scott, Kate have
+just come on done two
+
+13
+00:01:09.830 --> 00:01:12.200
+different tickets. We were at
+ticket and New Zealand in Auckland,
+
+14
+00:01:12.200 --> 00:01:13.760
+just a couple of days
+ago, and now we're in
+
+15
+00:01:13.760 --> 00:01:16.280
+tech at Sydney and tomorrow
+you're going to be finishing
+
+16
+00:01:16.280 --> 00:01:19.070
+your last talk. Scott, you're
+going to be talking about
+
+17
+00:01:19.580 --> 00:01:24.080
+object oriented Ajax. That's right.
+I thought JavaScript was object
+
+18
+00:01:24.080 --> 00:01:27.620
+jointed already. Yeah. So most
+people would probably think that
+
+19
+00:01:27.740 --> 00:01:31.880
+I'm actually exactly the opposite.
+There's truly no such thing
+
+20
+00:01:31.880 --> 00:01:36.680
+as object oriented Ajax. In
+fact, if you look at
+
+21
+00:01:36.920 --> 00:01:40.610
+JavaScript in general, which obviously
+is where Ajax comes from,
+
+22
+00:01:41.780 --> 00:01:45.710
+everything in JavaScript can be
+simplified to a hash table.
+
+23
+00:01:46.280 --> 00:01:48.710
+Everything is named value pair.
+So if you're looking at
+
+24
+00:01:48.770 --> 00:01:52.550
+adjacent object, you have name
+value pair. That value may
+
+25
+00:01:52.550 --> 00:01:55.820
+be, you know, an array
+of other name, value pairs,
+
+26
+00:01:55.850 --> 00:02:00.320
+but literally everything in JavaScript
+can be simplified to a
+
+27
+00:02:00.320 --> 00:02:03.710
+hash table. So there's really
+no such thing as object
+
+28
+00:02:03.710 --> 00:02:08.510
+oriented Ajax. However, there is
+some icing on the cake
+
+29
+00:02:08.540 --> 00:02:15.530
+that Microsoft Ajax library gives
+you object oriented, like features
+
+30
+00:02:16.010 --> 00:02:22.100
+that make it very easy
+for.net developers to use technologies
+
+31
+00:02:22.100 --> 00:02:25.730
+that they're used to on
+the server inside of JavaScript.
+
+32
+00:02:25.730 --> 00:02:29.660
+Like a perfect example is
+the event architecture. So if
+
+33
+00:02:29.660 --> 00:02:32.330
+you've ever double clicked on
+a button inside of visual
+
+34
+00:02:32.330 --> 00:02:34.580
+studio and then went to
+your code behind page on
+
+35
+00:02:34.580 --> 00:02:38.900
+asp.net, you've probably seen the
+signature is in C sharp
+
+36
+00:02:38.900 --> 00:02:43.490
+is void object sender event
+arcs E well, it would
+
+37
+00:02:43.490 --> 00:02:46.010
+be great if in JavaScript
+you could have that same
+
+38
+00:02:46.010 --> 00:02:49.670
+style of signature. And so
+you have something called raise
+
+39
+00:02:49.690 --> 00:02:52.520
+event and you can raise
+an event. And when that
+
+40
+00:02:52.520 --> 00:02:55.940
+happens, you get the sender
+and you get the event
+
+41
+00:02:55.940 --> 00:03:00.040
+arc. So my talk tomorrow
+is about object oriented Ajax.
+
+42
+00:03:00.100 --> 00:03:06.040
+And really what it's about
+is making the, the.net developer
+
+43
+00:03:06.040 --> 00:03:12.420
+skillset available to the JavaScript.
+So how, how are events
+
+44
+00:03:12.420 --> 00:03:14.490
+in this library different from
+the kind of events I'm
+
+45
+00:03:14.490 --> 00:03:17.340
+used to like Dom events
+and onload and things like
+
+46
+00:03:17.340 --> 00:03:21.510
+that? Well, they're actually, they're,
+they're not different. They're, they're
+
+47
+00:03:21.510 --> 00:03:26.370
+very similar. The events that
+I'm particularly talking about are
+
+48
+00:03:26.370 --> 00:03:29.760
+the events that you have
+control over. So when people
+
+49
+00:03:29.760 --> 00:03:34.050
+write JavaScript, typically they're going
+back to like the 1980
+
+50
+00:03:34.050 --> 00:03:38.820
+or the 1990, very sloppy
+kind of spaghetti code Java
+
+51
+00:03:38.820 --> 00:03:41.160
+script, where I just have
+this one thing that I
+
+52
+00:03:41.160 --> 00:03:44.190
+want to change the background
+color of an item to
+
+53
+00:03:44.190 --> 00:03:49.110
+red, and I'll use JavaScript
+for that. Or I have
+
+54
+00:03:49.110 --> 00:03:51.750
+some data that I've gotten
+back from a service call
+
+55
+00:03:51.750 --> 00:03:54.810
+from Microsoft Ajax, because I
+use this really cool script
+
+56
+00:03:54.810 --> 00:03:58.560
+manager. And now I'll go
+through a set of four,
+
+57
+00:03:58.710 --> 00:04:01.470
+four loops and then I'll
+draw out a table or
+
+58
+00:04:01.470 --> 00:04:08.550
+something specific. But typically the,
+the JavaScript is very, as
+
+59
+00:04:08.550 --> 00:04:11.700
+I mentioned, spaghetti code, and
+when you start putting objects
+
+60
+00:04:11.700 --> 00:04:16.230
+together, then you can expose
+events off of those objects.
+
+61
+00:04:16.260 --> 00:04:20.400
+And then you become too.
+Then you start to build
+
+62
+00:04:20.400 --> 00:04:24.930
+a framework inside of JavaScript
+instead of just spaghetti code
+
+63
+00:04:24.930 --> 00:04:28.650
+of doing one little firework
+piece of code. Okay. So,
+
+64
+00:04:28.650 --> 00:04:30.840
+so what is this prototype?
+Everyone always talks about, they
+
+65
+00:04:30.840 --> 00:04:33.240
+say JavaScript and the prototype.
+I think I know that
+
+66
+00:04:33.240 --> 00:04:35.760
+there's a library called prototype.
+Is there some kind of
+
+67
+00:04:35.760 --> 00:04:37.890
+an object called prototype or
+property that allows us to
+
+68
+00:04:37.890 --> 00:04:41.550
+do objects and ingest? There's
+definitely some confusion there. So
+
+69
+00:04:41.940 --> 00:04:46.020
+a prototype is a keyword
+in JavaScript and it gives
+
+70
+00:04:46.020 --> 00:04:50.790
+you the ability to append
+a method to an already
+
+71
+00:04:50.790 --> 00:04:55.800
+existing object. So if you
+have an object that's given
+
+72
+00:04:55.800 --> 00:05:00.000
+to you by somebody else,
+you can prototype that object
+
+73
+00:05:00.150 --> 00:05:05.280
+and then add functionality to
+it. So in, in the,
+
+74
+00:05:05.580 --> 00:05:09.270
+in a comparison to the
+server world, prototype might be
+
+75
+00:05:09.570 --> 00:05:12.510
+what you know, on the
+server with an extension method.
+
+76
+00:05:12.960 --> 00:05:15.300
+So it's a type that
+already exists. Somebody else wrote
+
+77
+00:05:15.300 --> 00:05:16.890
+it. So you're not in
+charge of it, but it's
+
+78
+00:05:16.890 --> 00:05:19.350
+handed to you and you
+say, Hey, I would really
+
+79
+00:05:19.350 --> 00:05:23.700
+like that object to do
+my thing. And then, so
+
+80
+00:05:23.700 --> 00:05:27.090
+that, that's what the whole
+program Did they write those
+
+81
+00:05:27.090 --> 00:05:29.310
+objects as prototypes as well?
+I mean, if I was
+
+82
+00:05:29.310 --> 00:05:31.710
+going to start from scratch
+and make a person object,
+
+83
+00:05:32.790 --> 00:05:35.430
+I mean, you said that
+it's not object oriented. So
+
+84
+00:05:35.430 --> 00:05:39.480
+typically what would happen is
+remember everything goes back to
+
+85
+00:05:39.480 --> 00:05:43.110
+being a simple name, value
+pair. So your person object
+
+86
+00:05:43.110 --> 00:05:47.190
+would probably immediately have something
+synonymous with properties. So you'd
+
+87
+00:05:47.190 --> 00:05:49.620
+have first name, last name,
+street, address, city, state, zip.
+
+88
+00:05:49.980 --> 00:05:57.470
+Those would probably just be
+defined as person dot person
+
+89
+00:05:57.470 --> 00:06:02.060
+dot first name, person dot
+last name. And the methods
+
+90
+00:06:02.390 --> 00:06:06.440
+would be prototyped onto person.
+So if you had something
+
+91
+00:06:06.440 --> 00:06:12.590
+like age, or we just
+say, you would say person
+
+92
+00:06:12.590 --> 00:06:15.800
+dot get AIDS, which would
+do a calculation on versus
+
+93
+00:06:16.090 --> 00:06:17.860
+Maybe it would lie about
+their age or something like
+
+94
+00:06:17.860 --> 00:06:21.490
+that, or do some sort
+of work, right. Then you
+
+95
+00:06:21.490 --> 00:06:26.830
+would typically prototype that onto
+the, the original. So in
+
+96
+00:06:26.920 --> 00:06:30.280
+a standard optic oriented language,
+we're familiar with declarations. You
+
+97
+00:06:30.280 --> 00:06:33.370
+know, I declare that there
+is a thing called Persian
+
+98
+00:06:33.370 --> 00:06:36.220
+and I declare that it
+looks like this, right? But
+
+99
+00:06:36.220 --> 00:06:39.550
+in JavaScript, there's not any
+declarations. There's simply code that
+
+100
+00:06:39.550 --> 00:06:43.060
+is executing. So I'm going
+not to declare that there
+
+101
+00:06:43.060 --> 00:06:45.730
+isn't a thing, but I'm
+going to create a, an
+
+102
+00:06:45.730 --> 00:06:48.550
+empty object, an object that
+knows nothing about anything and
+
+103
+00:06:48.550 --> 00:06:52.150
+then starts to spot welding
+onto it. That's correct methods.
+
+104
+00:06:52.210 --> 00:06:54.430
+And then at the end
+I have the equivalent of,
+
+105
+00:06:55.180 --> 00:06:58.120
+you know, an object kind
+of in air quotes. I
+
+106
+00:06:58.120 --> 00:07:00.160
+have an object and then
+I can start calling methods
+
+107
+00:07:00.160 --> 00:07:03.880
+and amusing properties, but it's
+a Similac room. It's And
+
+108
+00:07:03.880 --> 00:07:06.460
+you hope that they're there.
+And you may, you may
+
+109
+00:07:06.460 --> 00:07:08.470
+know that they're there either
+because you wrote them or
+
+110
+00:07:08.470 --> 00:07:11.200
+from past experience or you
+found out through a debugger,
+
+111
+00:07:12.130 --> 00:07:14.650
+but another thing you don't
+have from a true object
+
+112
+00:07:14.650 --> 00:07:18.580
+oriented language is encapsulation. So
+if you think about a
+
+113
+00:07:18.580 --> 00:07:22.300
+private member and a public
+property or a property with
+
+114
+00:07:22.300 --> 00:07:27.370
+a backing field with JavaScript,
+because everything does truly get
+
+115
+00:07:27.370 --> 00:07:31.600
+simplified down to a hash
+table, you cannot really hide
+
+116
+00:07:31.600 --> 00:07:37.720
+anything from anybody. So let's
+say that I have on
+
+117
+00:07:37.720 --> 00:07:39.640
+the server in C sharp,
+I could have a person
+
+118
+00:07:39.640 --> 00:07:43.270
+class with a birthday field
+and maybe the birthday is
+
+119
+00:07:43.270 --> 00:07:45.490
+sent in as the constructor.
+And then I can have
+
+120
+00:07:45.490 --> 00:07:48.730
+a public age property that
+was calculated from the birthday,
+
+121
+00:07:48.970 --> 00:07:54.280
+right? There's nothing stopping anyone
+from JavaScript to actually inspecting
+
+122
+00:07:54.280 --> 00:07:57.070
+that person class to say,
+Hey, what's this a birthday
+
+123
+00:07:57.070 --> 00:08:02.080
+field. Let's set that to
+1801. And now all of
+
+124
+00:08:02.080 --> 00:08:05.140
+a sudden you're 200 years
+old, which violates your business
+
+125
+00:08:05.140 --> 00:08:11.500
+logic. So the only encapsulation
+is by a pattern. And
+
+126
+00:08:11.500 --> 00:08:15.220
+so typically the private properties
+in JavaScript are going to
+
+127
+00:08:15.220 --> 00:08:19.990
+be prefaced with an underscore.
+And the what we'll call
+
+128
+00:08:19.990 --> 00:08:24.190
+public properties will be prefaced
+with a get and set
+
+129
+00:08:24.490 --> 00:08:28.570
+access. Yes, sir. So that
+means that Java script isn't
+
+130
+00:08:28.600 --> 00:08:31.990
+object oriented. But if we
+all pretend that it is
+
+131
+00:08:32.020 --> 00:08:36.430
+and come up with some
+conventions, then we can, we
+
+132
+00:08:36.430 --> 00:08:38.260
+can all lie to each
+other and we get the
+
+133
+00:08:38.260 --> 00:08:40.570
+benefits of an object oriented
+language, but it's not really
+
+134
+00:08:40.660 --> 00:08:42.910
+In a sense. That's correct.
+I don't really like the
+
+135
+00:08:42.910 --> 00:08:45.460
+term pretend because it kind
+of makes it like it's
+
+136
+00:08:45.460 --> 00:08:49.000
+child's play. But really, I
+think at the end of
+
+137
+00:08:49.000 --> 00:08:52.810
+the day, what's what's happening
+with any library is trying
+
+138
+00:08:52.810 --> 00:08:57.090
+to make your life easier.
+And the library is saying,
+
+139
+00:08:57.390 --> 00:09:00.840
+you already know how to
+do something one way and
+
+140
+00:09:01.020 --> 00:09:03.270
+it would be great if
+you had the ability to
+
+141
+00:09:03.270 --> 00:09:05.930
+continue using the knowledge base
+that you already have. Okay.
+
+142
+00:09:06.110 --> 00:09:08.990
+So this is object orientation
+via convention rather than via
+
+143
+00:09:08.990 --> 00:09:13.550
+mandate. That's correct. But it's
+also giving me ability to
+
+144
+00:09:13.550 --> 00:09:16.760
+do things and enforce rules
+that I otherwise wouldn't have,
+
+145
+00:09:16.760 --> 00:09:20.540
+for example, implementing an interface.
+And when I throw that
+
+146
+00:09:20.540 --> 00:09:24.200
+out, people go, Oh, wow,
+that's weird. You can't implement
+
+147
+00:09:24.200 --> 00:09:26.930
+an interface in JavaScript. First
+of all, there's no such
+
+148
+00:09:26.930 --> 00:09:29.750
+thing as an interface in
+JavaScript. So I mean, how
+
+149
+00:09:29.750 --> 00:09:32.900
+can you even implement something
+that doesn't there or something
+
+150
+00:09:32.900 --> 00:09:37.910
+that doesn't exist? So what
+the Microsoft asp.net Ajax framework
+
+151
+00:09:37.910 --> 00:09:40.040
+does is it does in
+fact, give you a type
+
+152
+00:09:40.070 --> 00:09:44.930
+of interface. And when you
+define an interface, just like
+
+153
+00:09:44.930 --> 00:09:48.230
+on the server, you're only
+defining the contract. You're not
+
+154
+00:09:48.230 --> 00:09:52.550
+defining any sort of implementation.
+And then when you register
+
+155
+00:09:52.550 --> 00:09:55.940
+a class, you have the
+ability to define how that
+
+156
+00:09:55.940 --> 00:09:58.850
+class is being inherited from.
+So what its parent is
+
+157
+00:09:59.210 --> 00:10:04.850
+as well as the interfaces
+that it implements. And when
+
+158
+00:10:04.850 --> 00:10:08.960
+that class gets registered, the
+Ajax library goes through and,
+
+159
+00:10:09.080 --> 00:10:12.170
+and confirms that in fact,
+you have added all the
+
+160
+00:10:12.170 --> 00:10:15.350
+methods to that class that
+are required by that interface.
+
+161
+00:10:15.350 --> 00:10:17.570
+And if you haven't, it'll
+throw an exception for you.
+
+162
+00:10:18.080 --> 00:10:21.200
+And then, you know, even
+that may raise some eyebrows
+
+163
+00:10:21.200 --> 00:10:23.660
+and say, well, what does
+that mean? Throw an exception.
+
+164
+00:10:23.660 --> 00:10:26.480
+You're still in JavaScript. And
+it just means that it
+
+165
+00:10:26.480 --> 00:10:28.670
+literally will throw an error
+and, and either give you
+
+166
+00:10:28.670 --> 00:10:31.370
+a dialogue or depending on
+how you're handling that air.
+
+167
+00:10:31.670 --> 00:10:36.110
+So again, how we started
+the conversation, the idea of
+
+168
+00:10:36.110 --> 00:10:41.090
+the Microsoft, a asp.net Ajax
+library is to just take
+
+169
+00:10:41.090 --> 00:10:43.910
+something that you already know
+and give you the ability
+
+170
+00:10:43.910 --> 00:10:48.080
+to go with that, right.
+In, in JavaScript, The term
+
+171
+00:10:48.080 --> 00:10:50.420
+Microsoft Ajax has been kind
+of from a marketing perspective,
+
+172
+00:10:50.420 --> 00:10:53.870
+kind of unfortunately overloaded because
+there's, there's the Ajax control
+
+173
+00:10:53.900 --> 00:10:58.250
+toolkit, which gives us accordion
+controls and calendars and stuff.
+
+174
+00:10:58.310 --> 00:11:01.340
+Right. Then there's the MSA
+Jack server side kind of
+
+175
+00:11:01.340 --> 00:11:05.370
+experienced dragging controls onto the
+Yeah. Update panel magic. Yeah.
+
+176
+00:11:05.630 --> 00:11:08.210
+The panel and the script
+manager. Right. But then there's
+
+177
+00:11:08.210 --> 00:11:11.240
+this <inaudible> client library, which
+I think a lot of
+
+178
+00:11:11.240 --> 00:11:14.540
+people don't realize it's just
+another JavaScript that you could
+
+179
+00:11:14.540 --> 00:11:17.090
+take. If you want it
+to be a PHP programmer
+
+180
+00:11:17.090 --> 00:11:20.810
+who used MSA Jack's client,
+it's just out there, right.
+
+181
+00:11:20.900 --> 00:11:24.020
+It's a source Libraries, right?
+You mentioned one prototype. There's
+
+182
+00:11:24.020 --> 00:11:26.720
+also jQuery. And now we
+have this MSA jacks and
+
+183
+00:11:26.720 --> 00:11:29.960
+there are a couple of
+different pieces. So just given
+
+184
+00:11:29.960 --> 00:11:34.400
+everybody kind of a 32nd
+tour of what's available first,
+
+185
+00:11:34.400 --> 00:11:37.370
+you have a script manager,
+which is the ultimate requirement,
+
+186
+00:11:37.730 --> 00:11:41.600
+script manager is in charge
+of delivering all scripts that
+
+187
+00:11:41.630 --> 00:11:44.630
+are required by the framework.
+So script manager though, you're
+
+188
+00:11:44.630 --> 00:11:46.130
+giving us this tour from
+the point of view and
+
+189
+00:11:46.130 --> 00:11:50.000
+asp.net programmer a yes. So
+we should refer to make
+
+190
+00:11:50.000 --> 00:11:52.610
+sure that we're talking about
+service eye controls versus actual
+
+191
+00:11:52.610 --> 00:11:54.430
+files. Cause I'd also like
+to know whether someone can
+
+192
+00:11:54.430 --> 00:11:57.810
+use MSA jacks from Ruby.
+Yeah, absolutely. And from whatever.
+
+193
+00:11:58.320 --> 00:12:02.250
+Okay. So, so I'll further
+define the definition of those
+
+194
+00:12:02.550 --> 00:12:05.460
+controls and where they live.
+So starting on the server,
+
+195
+00:12:05.460 --> 00:12:09.300
+as an ASP net developer,
+you have an ASP colon
+
+196
+00:12:09.300 --> 00:12:14.280
+script manager control, and the
+script manager control really only
+
+197
+00:12:14.280 --> 00:12:18.450
+has one goal in life.
+And that is to deliver
+
+198
+00:12:18.450 --> 00:12:22.260
+the appropriate scripts to the
+person who's requesting your page,
+
+199
+00:12:22.290 --> 00:12:24.660
+which ultimately ends up being
+either the browser or your
+
+200
+00:12:24.660 --> 00:12:27.630
+smartphone. And it delivers the
+right type of script. So
+
+201
+00:12:27.630 --> 00:12:30.000
+it knows whether you're in
+debug mode or whether you're
+
+202
+00:12:30.540 --> 00:12:33.660
+in runtime. It also does
+some really smart things with
+
+203
+00:12:33.660 --> 00:12:37.530
+being able to combine those
+scripts together. There are people
+
+204
+00:12:37.530 --> 00:12:42.180
+out there who've written minification
+scripts. They have the, I
+
+205
+00:12:42.180 --> 00:12:44.130
+mean, you know, it's it's
+general goal is to get
+
+206
+00:12:44.130 --> 00:12:48.600
+scripts to the client. And
+just in closing those scripts,
+
+207
+00:12:48.630 --> 00:12:53.670
+both control your scripts as
+well as the framework scripts.
+
+208
+00:12:54.180 --> 00:12:56.130
+And so when we talk
+about the framework scripts, we're
+
+209
+00:12:56.130 --> 00:13:00.450
+actually talking about the client
+side library and the client
+
+210
+00:13:00.450 --> 00:13:02.670
+side library is going to
+be responsible for all the
+
+211
+00:13:02.670 --> 00:13:05.580
+communication that happens between the
+client and the server. So
+
+212
+00:13:05.580 --> 00:13:09.360
+that's where the asynchronous calls
+happen. Okay. So for example,
+
+213
+00:13:09.360 --> 00:13:13.290
+you can not have any
+update panel functionality without the
+
+214
+00:13:13.290 --> 00:13:16.560
+script manager, because those scripts
+can not be delivered to
+
+215
+00:13:16.560 --> 00:13:20.580
+the page. Now, going back
+to your question earlier, can
+
+216
+00:13:20.580 --> 00:13:24.000
+you use these scripts inside
+of another library? Yeah. And
+
+217
+00:13:24.000 --> 00:13:27.090
+the answer is absolutely because
+once you get down to
+
+218
+00:13:27.090 --> 00:13:32.850
+the client, now you're pure
+JavaScript. And once you're on
+
+219
+00:13:32.850 --> 00:13:35.430
+the client, it doesn't matter
+what language you're using on
+
+220
+00:13:35.430 --> 00:13:38.670
+the server. You can very
+easily include these scripts. And
+
+221
+00:13:38.670 --> 00:13:41.160
+inside the scripts, you have
+all of the object oriented,
+
+222
+00:13:41.160 --> 00:13:44.970
+goodness that I'm talking about
+as well as a huge
+
+223
+00:13:44.970 --> 00:13:49.860
+array of prebuilt objects that
+are beneficial for you. So
+
+224
+00:13:49.860 --> 00:13:53.090
+you have something like a
+cyst dot web request and
+
+225
+00:13:53.100 --> 00:13:56.400
+CIS dot string and SIS,
+that string builder in a
+
+226
+00:13:56.400 --> 00:13:59.340
+bunch of other objects that
+are just built and kind
+
+227
+00:13:59.340 --> 00:14:03.030
+of hand it over to
+you. Hmm. So this client
+
+228
+00:14:03.030 --> 00:14:05.340
+library, I can use it
+in MVC. I wouldn't need
+
+229
+00:14:05.340 --> 00:14:08.040
+necessarily a script manager. I
+just have to figure out
+
+230
+00:14:08.040 --> 00:14:12.390
+on my own what to
+deliver The client manager it's
+
+231
+00:14:12.390 --> 00:14:14.850
+JavaScript. Right. It doesn't have
+it doesn't know, it doesn't
+
+232
+00:14:14.850 --> 00:14:16.830
+even know what a server
+And this is something that's
+
+233
+00:14:16.830 --> 00:14:18.930
+separately licensed. I understand you
+can download it and you
+
+234
+00:14:18.930 --> 00:14:22.140
+can call up on COVID
+Plex and see. So I
+
+235
+00:14:22.140 --> 00:14:24.300
+think what you're looking you're
+referring to there might be
+
+236
+00:14:24.300 --> 00:14:28.530
+the control toolkit. Okay. Isn't
+the, I understand that there's
+
+237
+00:14:28.530 --> 00:14:29.940
+a separate, I thought there
+was a separate place on
+
+238
+00:14:29.940 --> 00:14:32.760
+copex. If you could get
+the client scripts, just download
+
+239
+00:14:32.760 --> 00:14:34.530
+it as a, as a,
+as a sub file. I
+
+240
+00:14:34.530 --> 00:14:37.320
+know that there's been different
+places. You can get it,
+
+241
+00:14:37.350 --> 00:14:39.570
+but I'd have to defer
+to somebody else. I don't
+
+242
+00:14:39.570 --> 00:14:41.640
+know. Well, the real question
+that I'm interested in is
+
+243
+00:14:41.640 --> 00:14:46.530
+that I hear amongst kind
+of JavaScript the JavaScript elite,
+
+244
+00:14:46.710 --> 00:14:50.520
+the digerati that they kind
+of poo poo MSH ex,
+
+245
+00:14:51.020 --> 00:14:52.550
+and, and I haven't spent
+a lot, I have to
+
+246
+00:14:52.550 --> 00:14:54.080
+admit, I haven't spent a
+lot of time with MSA
+
+247
+00:14:54.080 --> 00:14:56.690
+jacks. Right. Which is why
+I'm talking to you. I'm
+
+248
+00:14:56.690 --> 00:14:58.940
+more of a jQuery guy.
+And so when I talked
+
+249
+00:14:58.940 --> 00:15:01.010
+to the kind of the
+jQuery bigots or the MooTools
+
+250
+00:15:01.010 --> 00:15:03.650
+or the mochi bigots, or
+the guy, there's nothing MSA
+
+251
+00:15:03.650 --> 00:15:05.600
+techs, they got a string
+builder. That's all that is.
+
+252
+00:15:06.440 --> 00:15:10.010
+But you think it's, it's
+actually very complimentary to those
+
+253
+00:15:10.010 --> 00:15:12.910
+other libraries. It's a lot
+more than, than that. So,
+
+254
+00:15:13.780 --> 00:15:15.790
+well, first let's just pause
+on string builder for a
+
+255
+00:15:15.790 --> 00:15:18.730
+moment for those people that
+are done at developers, one
+
+256
+00:15:18.730 --> 00:15:22.900
+of your favorite and probably
+most commonly used objects on
+
+257
+00:15:22.900 --> 00:15:25.990
+the server is a string
+builder. And it's very simply
+
+258
+00:15:25.990 --> 00:15:29.650
+an object that will let
+you append multiple strings to
+
+259
+00:15:29.650 --> 00:15:31.390
+each other. And then at
+the very end, you say,
+
+260
+00:15:31.390 --> 00:15:33.700
+okay, give me everything I
+got, right? And then you
+
+261
+00:15:33.700 --> 00:15:36.790
+just get this one giant
+long string. So something you'll
+
+262
+00:15:36.790 --> 00:15:39.670
+commonly use inside of a
+four loop or, you know,
+
+263
+00:15:39.690 --> 00:15:41.740
+pass it around. You don't
+know the end of this
+
+264
+00:15:41.740 --> 00:15:43.390
+thing. You just know you're
+going to keep tacking stuff
+
+265
+00:15:43.390 --> 00:15:46.120
+onto the end while you
+can do something like that
+
+266
+00:15:46.150 --> 00:15:49.360
+in JavaScript with an array.
+And many people have been
+
+267
+00:15:49.360 --> 00:15:53.110
+doing it for years and
+you'll see code like array,
+
+268
+00:15:53.110 --> 00:15:57.100
+square bracket, array dot length,
+square bracket equals. And that's
+
+269
+00:15:57.100 --> 00:16:00.220
+basically popping something onto the
+end of an array. And
+
+270
+00:16:00.220 --> 00:16:03.130
+then at the very end
+of that, after you've done
+
+271
+00:16:03.130 --> 00:16:05.560
+all of this work, then
+you'll do something like array
+
+272
+00:16:05.560 --> 00:16:09.040
+dot join with no space.
+And that's basically a poor,
+
+273
+00:16:09.040 --> 00:16:13.720
+man's a JavaScript string builder.
+Okay. Well the Microsoft Ajax
+
+274
+00:16:13.750 --> 00:16:17.950
+client side library has something
+like that built in, and
+
+275
+00:16:17.980 --> 00:16:22.330
+it, it allows you to
+do something like VAR SB
+
+276
+00:16:22.330 --> 00:16:25.390
+equals new CIS dot string
+builder. And then you can
+
+277
+00:16:25.390 --> 00:16:28.690
+do it SB dot append,
+which is a lot easier
+
+278
+00:16:28.690 --> 00:16:31.750
+than the square bracket, array
+dot length, et cetera. So
+
+279
+00:16:31.750 --> 00:16:33.880
+it really behaves like a
+string builder that we're already
+
+280
+00:16:33.880 --> 00:16:35.440
+used to, and it happens
+inside of it. Okay. It
+
+281
+00:16:35.440 --> 00:16:37.390
+has a two string method.
+So when you're done using
+
+282
+00:16:37.390 --> 00:16:39.250
+it, you say SB dot
+two string, and you get
+
+283
+00:16:39.250 --> 00:16:43.180
+what you need. Okay. There's
+a bunch of methods on
+
+284
+00:16:43.180 --> 00:16:45.790
+that. Two string, one of
+which is missing is a
+
+285
+00:16:45.790 --> 00:16:49.060
+pen format. So I'm going
+a big, I'm a big
+
+286
+00:16:49.240 --> 00:16:51.700
+format guy. I like to
+do string dot format and
+
+287
+00:16:51.700 --> 00:16:53.920
+you send in a mask
+and then you can pass
+
+288
+00:16:53.920 --> 00:16:56.440
+in an array of parameters
+after that. But the string
+
+289
+00:16:56.440 --> 00:16:58.990
+builder doesn't have that. And
+so going back to what
+
+290
+00:16:58.990 --> 00:17:01.750
+we talked about earlier with
+the prototype is you can
+
+291
+00:17:01.780 --> 00:17:06.340
+easily append that method. I
+guess that's kind of a
+
+292
+00:17:06.520 --> 00:17:10.150
+play on words, append format
+with a prototype. So you
+
+293
+00:17:10.150 --> 00:17:14.770
+can easily add that functionality,
+but getting into the jQuery
+
+294
+00:17:14.770 --> 00:17:17.770
+things. I'm a fan of
+jQuery. Also. I can't say
+
+295
+00:17:17.770 --> 00:17:20.770
+that I'm an expert at
+it, but I've gone through
+
+296
+00:17:20.770 --> 00:17:26.770
+the tutorials online and the,
+the jQuery has a lot
+
+297
+00:17:26.770 --> 00:17:31.140
+of functionality, but I would
+say there's a different, a
+
+298
+00:17:31.140 --> 00:17:35.470
+definite differential between the Microsoft
+Ajax client side library and
+
+299
+00:17:35.470 --> 00:17:39.370
+jQuery, because jQuery is going
+to work with data that
+
+300
+00:17:39.370 --> 00:17:43.960
+you already have downloaded. So
+I've got this Dom and
+
+301
+00:17:43.960 --> 00:17:49.120
+now I want to change
+all of my specific selected
+
+302
+00:17:49.140 --> 00:17:52.650
+elements, whether those are P
+tags or H ones or
+
+303
+00:17:52.950 --> 00:17:56.550
+H ones that are nested
+inside of other tags, you
+
+304
+00:17:56.550 --> 00:17:59.100
+know, whatever your select or
+happens to be. And I
+
+305
+00:17:59.100 --> 00:18:02.010
+want to massage the data
+after I've already received it
+
+306
+00:18:02.010 --> 00:18:06.180
+from the server, but where
+Microsoft Ajax comes in really
+
+307
+00:18:06.180 --> 00:18:09.510
+is to handle that communication
+layer for you back to
+
+308
+00:18:09.510 --> 00:18:13.650
+the server. It handles the
+serialization of your objects. So
+
+309
+00:18:13.650 --> 00:18:16.200
+it knows how to do
+a web service. There is
+
+310
+00:18:16.210 --> 00:18:20.340
+adjacent serializer and D serializer,
+and there may be a
+
+311
+00:18:20.340 --> 00:18:24.210
+little bit of overlap there
+with jQuery, but typically Microsoft
+
+312
+00:18:24.210 --> 00:18:29.430
+Ajax is going to be
+my, my object oriented, JavaScript
+
+313
+00:18:29.430 --> 00:18:32.460
+style programming, if you will.
+And that's what my talks
+
+314
+00:18:32.460 --> 00:18:35.910
+on at the conferences, which
+we've, we've really gotten a
+
+315
+00:18:35.910 --> 00:18:38.880
+lot of good feedback on
+because people just don't know
+
+316
+00:18:38.880 --> 00:18:41.490
+that these types of services
+are available for you in
+
+317
+00:18:41.490 --> 00:18:44.880
+Ajax. Yeah. But then jQuery
+is really going to be
+
+318
+00:18:45.510 --> 00:18:48.570
+your select and modify, select
+something from what you already
+
+319
+00:18:48.570 --> 00:18:51.750
+have and then make it
+easy to modify, which is
+
+320
+00:18:51.750 --> 00:18:54.570
+phenomenal. I mean, I'm a
+huge fan of the, the
+
+321
+00:18:54.570 --> 00:18:59.670
+tidiness of, of jQuery and
+also the simplicity in the
+
+322
+00:18:59.670 --> 00:19:03.210
+work that they've done with
+making those selectors very easy
+
+323
+00:19:03.210 --> 00:19:06.560
+to use. Yeah. The syntax
+is pretty, pretty extraordinary. It
+
+324
+00:19:06.560 --> 00:19:09.560
+seems like those two libraries
+compliment each other very well.
+
+325
+00:19:09.560 --> 00:19:10.850
+I mean, if you're the
+way that you described it
+
+326
+00:19:10.850 --> 00:19:14.750
+is that you're selecting and
+modifying and manipulating your current
+
+327
+00:19:14.750 --> 00:19:17.600
+document, but where's that new
+data coming from, it's coming
+
+328
+00:19:17.600 --> 00:19:20.990
+back from, from MSA Ajax.
+Yeah. I think that they're
+
+329
+00:19:20.990 --> 00:19:26.480
+very complimentary as well. There's
+probably some overlap and again,
+
+330
+00:19:26.480 --> 00:19:28.970
+I'm not a jQuery expert,
+so I can't speak to
+
+331
+00:19:28.970 --> 00:19:31.760
+it. Where on the Microsoft
+Ajax side, I think I've
+
+332
+00:19:31.790 --> 00:19:34.730
+probably stepped through just about
+every line of code in
+
+333
+00:19:34.730 --> 00:19:38.680
+the library. That's the one
+phenomenal thing about Ajax or,
+
+334
+00:19:38.680 --> 00:19:43.010
+or JavaScript specifically. You're not
+allowed to hide anything. Right?
+
+335
+00:19:43.070 --> 00:19:45.200
+Cause even if you wanted
+to, I mean, at best
+
+336
+00:19:45.200 --> 00:19:47.780
+you can obviously skate it,
+but I can still step
+
+337
+00:19:47.780 --> 00:19:50.930
+through with the, with a
+debugger like visual studio. I
+
+338
+00:19:50.930 --> 00:19:52.820
+can see all the variable
+names. I know what they're
+
+339
+00:19:52.820 --> 00:19:55.880
+doing. I know where they
+came from. In fact, that's
+
+340
+00:19:55.880 --> 00:19:59.390
+how I learned the Ajax
+library. When it first came
+
+341
+00:19:59.390 --> 00:20:02.180
+out was if you add
+a script manager to a
+
+342
+00:20:02.180 --> 00:20:06.740
+page and then attached to
+the running process of your
+
+343
+00:20:07.340 --> 00:20:09.740
+page inside of visual studio,
+if you look at the
+
+344
+00:20:09.740 --> 00:20:15.860
+very bottom, you'll see us
+something like assist.page request manager
+
+345
+00:20:15.860 --> 00:20:18.770
+dot initialize. And if you
+set a break point there,
+
+346
+00:20:18.800 --> 00:20:21.650
+yeah, you can pretty much
+step through the whole framework.
+
+347
+00:20:21.650 --> 00:20:25.400
+You can see how it
+gets initialized and then you
+
+348
+00:20:25.400 --> 00:20:28.580
+can add other breakpoints. And
+you know, you just walk
+
+349
+00:20:28.580 --> 00:20:31.610
+through the, the framework right
+there. Not only are they
+
+350
+00:20:31.610 --> 00:20:34.400
+not allowed to not hide
+anything from you, it's impossible
+
+351
+00:20:34.400 --> 00:20:37.700
+because there's no compilation. There's
+no hiding. I mean, if
+
+352
+00:20:37.700 --> 00:20:39.020
+you want it to run,
+you have to give me
+
+353
+00:20:39.020 --> 00:20:40.580
+the script. And once you
+give me the script, I'm
+
+354
+00:20:40.580 --> 00:20:43.730
+allowed to look through it.
+Hi, this is Scott Hanselman
+
+355
+00:20:43.730 --> 00:20:45.740
+with a word from our
+sponsor. Do you know how
+
+356
+00:20:45.740 --> 00:20:49.480
+to build web 2.0 Ajax
+applications with web 1.0 components?
+
+357
+00:20:49.900 --> 00:20:51.310
+You really can't. If you
+want to do the next
+
+358
+00:20:51.310 --> 00:20:55.180
+generation web applications you'll need
+next generation components. Just like
+
+359
+00:20:55.180 --> 00:20:56.980
+the ones that our friends
+at Telerik have got their
+
+360
+00:20:56.980 --> 00:21:00.370
+rad controls for ESPN at
+Ajax. It's a huge pack
+
+361
+00:21:00.370 --> 00:21:04.090
+of web controls built on
+top of asp.net. Ajax. That'll
+
+362
+00:21:04.090 --> 00:21:08.200
+add previously impossible performance interactivity
+to your next project. The
+
+363
+00:21:08.200 --> 00:21:12.490
+new controls mirror, the Ajax
+API from asp.net. So development
+
+364
+00:21:12.490 --> 00:21:15.760
+is really straightforward. The client
+scripts are shared. So loading
+
+365
+00:21:15.760 --> 00:21:17.890
+time is not a problem.
+If you just set a
+
+366
+00:21:17.890 --> 00:21:20.170
+couple of properties and you'll
+be able to automatically bind
+
+367
+00:21:20.170 --> 00:21:23.680
+a web services for a
+really efficient operation, the new
+
+368
+00:21:23.680 --> 00:21:27.280
+rad editor from ESPN Ajax,
+Telerik loads up to four
+
+369
+00:21:27.280 --> 00:21:30.160
+times faster than before. And
+the new rad grid handles
+
+370
+00:21:30.160 --> 00:21:33.370
+thousands of records and just
+milliseconds, but as always, it's
+
+371
+00:21:33.370 --> 00:21:36.340
+best to try for yourself.
+So you can visit <inaudible>
+
+372
+00:21:36.340 --> 00:21:39.520
+dot com slash ASP, net
+Ajax, and download a trial.
+
+373
+00:21:39.850 --> 00:21:43.960
+Thanks a lot. I've seen,
+I've seen your product that
+
+374
+00:21:43.960 --> 00:21:46.900
+you've got easy DB and
+the interface is pretty extraordinary.
+
+375
+00:21:46.900 --> 00:21:49.390
+I mean, it's a whole
+windowing environment and there's constant
+
+376
+00:21:49.390 --> 00:21:52.750
+communications back and forth. It's
+almost like, you know, Microsoft
+
+377
+00:21:52.750 --> 00:21:54.550
+access in the browser. You
+know, it's kind of like
+
+378
+00:21:54.550 --> 00:21:59.290
+the Gmail of database applications
+or what JavaScript libraries are
+
+379
+00:21:59.290 --> 00:22:01.530
+you using to make that
+What happened to make that
+
+380
+00:22:01.530 --> 00:22:04.560
+whole application? So just a
+little clarification. The product is
+
+381
+00:22:04.560 --> 00:22:09.180
+actually cloud db.com. Okay. And
+the reason you mentioned easy
+
+382
+00:22:09.180 --> 00:22:13.800
+to be.com is because our,
+our free public offering is
+
+383
+00:22:14.520 --> 00:22:17.640
+an instance of cloud db.com.
+That's running on easy DB.
+
+384
+00:22:18.150 --> 00:22:20.610
+So the product that we're
+actually selling is hosted on
+
+385
+00:22:20.610 --> 00:22:25.830
+cloud DB. But the interface
+that you've seen is, is
+
+386
+00:22:25.830 --> 00:22:30.150
+highly JavaScript enabled. It's very
+web 3.0, if you will,
+
+387
+00:22:32.070 --> 00:22:34.110
+I'm not going to coin
+a term or anything, but
+
+388
+00:22:35.820 --> 00:22:38.220
+no, it's, it's, it's pretty
+far ahead of its time.
+
+389
+00:22:38.220 --> 00:22:40.590
+And there's a lot of
+windows that pop up and
+
+390
+00:22:41.460 --> 00:22:45.930
+the communication layer there again,
+here's a good differentiation between
+
+391
+00:22:45.930 --> 00:22:49.860
+the different libraries that are
+at play. The communication layer
+
+392
+00:22:49.860 --> 00:22:54.030
+is 100% Microsoft Ajax. So
+cloud DB is actually a
+
+393
+00:22:54.030 --> 00:22:57.150
+service where you don't necessarily
+know the hardware that's behind
+
+394
+00:22:57.150 --> 00:22:59.820
+it. All you have as
+an end point. And with
+
+395
+00:22:59.820 --> 00:23:05.880
+Microsoft Ajax, we give you
+that endpoint in a JavaScript
+
+396
+00:23:06.720 --> 00:23:10.260
+as an, as a JavaScript
+object. Okay? So using something
+
+397
+00:23:10.260 --> 00:23:13.890
+simple, like the script manager,
+you have total control over
+
+398
+00:23:13.890 --> 00:23:17.850
+serializing that proxy down to
+JavaScript. And then you can
+
+399
+00:23:17.850 --> 00:23:22.860
+simply say, you know, cloud
+db.save new record, and you
+
+400
+00:23:22.860 --> 00:23:25.140
+send that data back. So
+you had been saying SIS
+
+401
+00:23:25.140 --> 00:23:27.720
+dot this and says dot
+that that's, Microsoft's kind of
+
+402
+00:23:27.720 --> 00:23:30.360
+a namespace that they've taken
+over. Exactly. And if I
+
+403
+00:23:30.360 --> 00:23:32.850
+was going to go and
+write an asp.net MVC application,
+
+404
+00:23:33.210 --> 00:23:36.000
+and I wanted to use
+a backing database, I would
+
+405
+00:23:36.000 --> 00:23:38.580
+go and get an instance
+of cloud DB, right. I
+
+406
+00:23:38.850 --> 00:23:40.470
+pay, buy this from you.
+And you'd give me a
+
+407
+00:23:40.470 --> 00:23:44.070
+JavaScript library that would let
+me go. Cloud db.is in
+
+408
+00:23:44.070 --> 00:23:48.320
+that cloud to be hanselminutes.com.
+And then you would code
+
+409
+00:23:48.320 --> 00:23:51.340
+against that as your end
+point. And then you're using
+
+410
+00:23:51.340 --> 00:23:55.930
+H MSA checks underneath that
+for the communication. Well, our
+
+411
+00:23:55.930 --> 00:24:00.130
+UI. So remember Ajax is
+all about UI, right? So
+
+412
+00:24:00.160 --> 00:24:02.350
+we're talking about two different
+things. One is the service,
+
+413
+00:24:02.410 --> 00:24:05.530
+Me consuming a reusable library.
+I buy your product and
+
+414
+00:24:05.530 --> 00:24:09.070
+I consume your library. You're
+using MSA Jack's client library
+
+415
+00:24:09.070 --> 00:24:11.950
+to talk back to your
+end point. That's the option
+
+416
+00:24:11.950 --> 00:24:14.500
+that we've chose to use
+for the easy to be
+
+417
+00:24:14.500 --> 00:24:18.520
+implementation, right? So if you
+go to a beta, easy
+
+418
+00:24:18.520 --> 00:24:22.480
+to beat.com, there's some very
+age ACCE, web style support.
+
+419
+00:24:22.510 --> 00:24:26.380
+Okay. And that's all happening.
+That communication layer is all
+
+420
+00:24:26.380 --> 00:24:29.770
+happening back up to the
+cloud, which is a WCF
+
+421
+00:24:29.770 --> 00:24:33.430
+service, which is rendered as
+an SMX end point. Okay.
+
+422
+00:24:34.150 --> 00:24:38.920
+So that's currently just, we
+have two options for that.
+
+423
+00:24:38.920 --> 00:24:41.710
+One is POCs, right? Playing
+Alexa, Mel. And that's, if
+
+424
+00:24:41.710 --> 00:24:45.790
+you point up to the
+ASM X and you get
+
+425
+00:24:45.790 --> 00:24:49.180
+that with still proxy coming
+back from visual studio or
+
+426
+00:24:49.180 --> 00:24:52.390
+with the JavaScript, you just
+do the M dot SMX
+
+427
+00:24:52.420 --> 00:24:55.960
+slash JS, right. And then
+you get the JavaScript representation
+
+428
+00:24:55.960 --> 00:24:58.240
+of that data. So we
+get that for free, right.
+
+429
+00:24:58.240 --> 00:25:00.880
+Microsoft built all that work
+for me. So we just
+
+430
+00:25:00.880 --> 00:25:03.100
+utilize it and love it.
+It makes our job easy.
+
+431
+00:25:03.400 --> 00:25:05.860
+So I'm just trying to
+understand the layering here, as
+
+432
+00:25:05.860 --> 00:25:08.530
+far as could I write
+an academic, an application and
+
+433
+00:25:08.530 --> 00:25:12.850
+I could talk to your
+backend. Absolutely. And I'm hearing
+
+434
+00:25:13.210 --> 00:25:17.920
+that there's the client side
+proxy created by M as
+
+435
+00:25:17.920 --> 00:25:21.160
+a MEK slash JS, right?
+There's CIS dot this and
+
+436
+00:25:21.160 --> 00:25:23.800
+that from the ms. Ajax
+client library. I see the
+
+437
+00:25:23.800 --> 00:25:27.340
+confusion. Have you written a,
+an additional cloud DB specific
+
+438
+00:25:27.340 --> 00:25:31.450
+library? No. Okay. Only using
+what we get for free
+
+439
+00:25:31.780 --> 00:25:35.290
+out of, out of Microsoft.
+So really what it boils
+
+440
+00:25:35.290 --> 00:25:38.080
+down to is generating our
+proxy. And that's what cloudy
+
+441
+00:25:38.080 --> 00:25:40.600
+B dot this and that
+That's right. So if you
+
+442
+00:25:40.600 --> 00:25:45.010
+were programming against cloud DB
+out of visual studio, you
+
+443
+00:25:45.010 --> 00:25:47.380
+would just go right against
+the SMX, you'd have strongly
+
+444
+00:25:47.380 --> 00:25:50.090
+typed objects, and you could
+say, you know, service as
+
+445
+00:25:50.100 --> 00:25:52.630
+that. So you'd be in
+C sharp. If you were
+
+446
+00:25:52.660 --> 00:25:57.610
+in JavaScript, then you would
+program against cloud DB service
+
+447
+00:25:57.610 --> 00:26:01.150
+zero zero one, that ASMs
+slash JS that would give
+
+448
+00:26:01.150 --> 00:26:05.020
+you a JavaScript representation of
+the same proxy, but you'd
+
+449
+00:26:05.020 --> 00:26:07.510
+be in Java. And then
+at that point, bring the
+
+450
+00:26:07.510 --> 00:26:10.450
+data over and I could
+use a string builders and
+
+451
+00:26:10.450 --> 00:26:12.370
+build up each challenge to,
+and whatever, or I could
+
+452
+00:26:12.370 --> 00:26:15.100
+start using jQuery and start
+manipulating the Dom and technique.
+
+453
+00:26:15.160 --> 00:26:18.100
+Absolutely. So we give you
+back a result. Actually, we
+
+454
+00:26:18.100 --> 00:26:20.170
+give you back an outcome
+and right off of the
+
+455
+00:26:20.170 --> 00:26:23.680
+outcome is either a result
+and then also a succeeded.
+
+456
+00:26:24.580 --> 00:26:26.440
+So we, we have a
+little bit of a pattern
+
+457
+00:26:26.440 --> 00:26:28.450
+that we work with so
+that you always get back
+
+458
+00:26:28.460 --> 00:26:31.570
+the same type of data.
+So you can inspect that
+
+459
+00:26:31.570 --> 00:26:35.680
+outcome object, if the, if
+the succeeded is true or
+
+460
+00:26:35.680 --> 00:26:37.630
+false, and if it's false
+and you have an error
+
+461
+00:26:37.630 --> 00:26:40.000
+that you get back, the
+reason why it was false.
+
+462
+00:26:40.000 --> 00:26:46.890
+And, but just to bringing
+this back into Microsoft Ajax,
+
+463
+00:26:47.910 --> 00:26:51.810
+Microsoft Ajax is going to
+really do two things for
+
+464
+00:26:51.810 --> 00:26:56.820
+us. First is the communication
+between the client and the
+
+465
+00:26:56.820 --> 00:27:00.120
+server and doing all the
+object oriented library stuff. So
+
+466
+00:27:00.120 --> 00:27:03.030
+that's where CIS dot comes
+in. Okay. There's a cyst
+
+467
+00:27:03.030 --> 00:27:06.270
+dot web request. Actually. I
+don't know if that's the
+
+468
+00:27:06.540 --> 00:27:11.070
+complete name.net.net, that web request.
+I think that's it. And
+
+469
+00:27:11.070 --> 00:27:14.280
+then there's, you know, assist
+that string builder and their
+
+470
+00:27:14.280 --> 00:27:17.780
+strings. And there there's that
+whole side, Almost like a
+
+471
+00:27:17.780 --> 00:27:21.110
+mini base class library and
+JavaScript. Yeah, Yeah, exactly. And
+
+472
+00:27:21.710 --> 00:27:25.460
+you know, you can't have
+a namespace collision. So instead
+
+473
+00:27:25.460 --> 00:27:28.970
+of system dot, it's just
+shortened to CIS dot. Okay.
+
+474
+00:27:30.740 --> 00:27:33.350
+And then you have what
+you can do actually on
+
+475
+00:27:33.350 --> 00:27:38.810
+the client, which compared to
+jQuery is very limited. You
+
+476
+00:27:38.810 --> 00:27:44.690
+have some additional properties off
+of the base types in
+
+477
+00:27:44.690 --> 00:27:49.190
+JavaScript. So earlier I mentioned
+a string dot format, well,
+
+478
+00:27:49.190 --> 00:27:52.040
+there's a string type. That's
+native in JavaScript, but there's
+
+479
+00:27:52.040 --> 00:27:54.860
+not a format method off
+of it. So that's just
+
+480
+00:27:54.860 --> 00:27:58.850
+prototyped onto the client. So
+there are some client helper
+
+481
+00:27:58.850 --> 00:28:01.340
+methods like you have a
+dollar sign get, which will
+
+482
+00:28:01.340 --> 00:28:05.300
+help you select items or
+select an item. I should
+
+483
+00:28:05.300 --> 00:28:08.420
+clarify that, which, you know,
+on a scale of one
+
+484
+00:28:08.650 --> 00:28:13.220
+to a hundred from maturity,
+comparing jQuery to the Microsoft
+
+485
+00:28:13.220 --> 00:28:16.220
+Ajax on the selectors jQuery
+is probably at like a
+
+486
+00:28:16.220 --> 00:28:19.880
+95. And MSA Jackson is
+probably at like a five.
+
+487
+00:28:20.360 --> 00:28:23.210
+So there's opposite ends of
+the spectrum there. And that's
+
+488
+00:28:23.210 --> 00:28:26.630
+why they compliment each other
+so well because jQuery really
+
+489
+00:28:26.630 --> 00:28:29.420
+lets you take control of
+the dominant data once it's
+
+490
+00:28:29.420 --> 00:28:32.990
+on the client. And then
+the client library for Microsoft
+
+491
+00:28:33.020 --> 00:28:35.960
+Ajax really gives you the
+ability to get that data
+
+492
+00:28:35.960 --> 00:28:38.930
+back and forth between the
+client and the server. So
+
+493
+00:28:38.930 --> 00:28:41.420
+that the, the code that
+I'm writing in jQuery re
+
+494
+00:28:41.480 --> 00:28:46.670
+really isn't object oriented. I'm
+just manipulating an object model.
+
+495
+00:28:46.670 --> 00:28:48.770
+But as far as object
+orientation, like you mentioned at
+
+496
+00:28:48.770 --> 00:28:52.760
+the beginning, we've got things
+like interfaces and exceptions and
+
+497
+00:28:52.760 --> 00:28:56.240
+inventing is, is something that
+is provided by the MSH
+
+498
+00:28:56.240 --> 00:28:59.270
+X client stuff, Right? And
+it's written with the same
+
+499
+00:28:59.270 --> 00:29:04.040
+pattern and the same look
+and feel if you will,
+
+500
+00:29:04.070 --> 00:29:05.720
+of the source code that
+you would write on the
+
+501
+00:29:05.720 --> 00:29:08.120
+server. So it's something you're
+very comfortable with. In fact,
+
+502
+00:29:08.120 --> 00:29:11.060
+if you look at some
+of the documentation or some
+
+503
+00:29:11.060 --> 00:29:14.450
+of the samples around Microsoft
+Ajax, you'll see that it
+
+504
+00:29:14.450 --> 00:29:18.590
+has a server style feel.
+I mean, even if, anytime
+
+505
+00:29:18.590 --> 00:29:22.160
+I see something with the
+objects center event, arcs E
+
+506
+00:29:22.610 --> 00:29:26.420
+that immediately brings me into
+the eventing architecture that I've
+
+507
+00:29:26.420 --> 00:29:30.350
+kind of been molded into
+as a.net developer over the
+
+508
+00:29:30.350 --> 00:29:32.630
+last eight or nine years.
+And so when I see
+
+509
+00:29:32.630 --> 00:29:35.270
+something like that in JavaScript,
+I already know how it
+
+510
+00:29:35.270 --> 00:29:38.390
+works without having inspected it.
+And I think that's the
+
+511
+00:29:38.390 --> 00:29:41.650
+goal. I mean, we've all
+been coding in.net for a
+
+512
+00:29:41.650 --> 00:29:44.110
+really long time, or a
+lot of us, at least
+
+513
+00:29:44.350 --> 00:29:47.770
+the listeners on your show,
+and you already know how
+
+514
+00:29:47.770 --> 00:29:52.000
+some things work. So if
+we can keep that familiarity
+
+515
+00:29:52.210 --> 00:29:54.790
+in line with the work
+that now you're being forced
+
+516
+00:29:54.790 --> 00:29:57.550
+to do on the client
+with some of the richer
+
+517
+00:29:57.610 --> 00:30:01.810
+internet applications, that's going to
+mold with what you're doing
+
+518
+00:30:01.810 --> 00:30:03.610
+with Silverlight and it's going
+to mold with what you're
+
+519
+00:30:03.610 --> 00:30:07.330
+doing on the server. And
+you know, you already know
+
+520
+00:30:07.330 --> 00:30:09.280
+how this works, so let's
+try to give you that
+
+521
+00:30:09.280 --> 00:30:14.740
+same, same syntax along the
+way. And it's not identical,
+
+522
+00:30:14.740 --> 00:30:17.640
+but it's very simple, Same
+vibe. It's bringing up common
+
+523
+00:30:17.640 --> 00:30:21.390
+patterns called immediate common idioms.
+Now, why do you think
+
+524
+00:30:21.390 --> 00:30:24.390
+that MSA Jack's gets a
+bad rap? Why do people
+
+525
+00:30:24.390 --> 00:30:27.120
+dismiss MSA Jackson? Is it
+the update panel that's holding
+
+526
+00:30:27.120 --> 00:30:30.840
+us back kind of as
+a, You know, I think
+
+527
+00:30:30.840 --> 00:30:34.350
+that the update panel really
+is a phenomenal control. And
+
+528
+00:30:34.380 --> 00:30:37.950
+I do hear people say
+bad things about it, but
+
+529
+00:30:37.980 --> 00:30:43.410
+I think that, you know,
+Basically it's bloated, it's complicated,
+
+530
+00:30:43.410 --> 00:30:46.440
+it's obscure, it's this, you
+know, Here's a problem with
+
+531
+00:30:47.070 --> 00:30:50.910
+a very popular radio show
+like yours, right? 99% of
+
+532
+00:30:50.910 --> 00:30:53.370
+the people are going to
+agree with you. And then
+
+533
+00:30:53.370 --> 00:30:56.430
+1% which may be the
+more vocal people will say,
+
+534
+00:30:56.460 --> 00:30:59.580
+Oh, that's a, you know,
+I think the people we
+
+535
+00:30:59.580 --> 00:31:02.790
+hear poopoo, the update panel
+are the same guys who
+
+536
+00:31:02.790 --> 00:31:05.730
+said, Oh, you know that
+Ajax 2.0 stuff we've been,
+
+537
+00:31:06.070 --> 00:31:09.090
+I've been doing that since
+1999. In fact, the XML
+
+538
+00:31:09.090 --> 00:31:13.380
+HTTP request has been there
+forever. I would argue that
+
+539
+00:31:13.380 --> 00:31:15.990
+the people who don't like
+the update panel have a
+
+540
+00:31:15.990 --> 00:31:20.730
+strong sense of the aesthetic
+and they feel that there's
+
+541
+00:31:20.730 --> 00:31:24.780
+some purity and some terseness
+and some clarity, One common
+
+542
+00:31:24.780 --> 00:31:27.330
+complaint that comes back around
+the update panel. And that
+
+543
+00:31:27.330 --> 00:31:29.310
+is in order to use
+it, you have to process
+
+544
+00:31:29.310 --> 00:31:32.760
+a full page request on
+the backside, and that uses
+
+545
+00:31:32.760 --> 00:31:36.030
+a little bit more server.
+And there's, there's not more
+
+546
+00:31:36.030 --> 00:31:38.790
+bandwidth used because you're not
+getting a full page request
+
+547
+00:31:38.790 --> 00:31:41.460
+object back. You're only getting
+back the content that's relevant
+
+548
+00:31:42.750 --> 00:31:45.420
+as well as some additional
+meta content. Like if the
+
+549
+00:31:45.420 --> 00:31:49.590
+page title changes, if the
+view state changes and you
+
+550
+00:31:49.590 --> 00:31:52.740
+know, to the common developer,
+which really is who the
+
+551
+00:31:52.740 --> 00:31:55.050
+update panel is developed for.
+I mean, there's nothing that
+
+552
+00:31:55.050 --> 00:31:56.760
+says you have to develop
+one to get your job
+
+553
+00:31:56.760 --> 00:32:00.030
+done and they rent it
+in there. It's a phenomenal
+
+554
+00:32:00.030 --> 00:32:02.790
+control. And it does some
+amazing things, right? In literally
+
+555
+00:32:02.790 --> 00:32:06.660
+a matter of 30 seconds,
+you can Ajax the data
+
+556
+00:32:06.660 --> 00:32:08.940
+grid that was written By
+the lawn Lipton. The lead
+
+557
+00:32:08.940 --> 00:32:12.060
+developer on ms. ADA has
+put on an NBC. I
+
+558
+00:32:12.060 --> 00:32:15.060
+actually don't know who wrote
+the update panel, but I've
+
+559
+00:32:15.060 --> 00:32:17.700
+been talking about it for,
+I dunno, two or three
+
+560
+00:32:17.700 --> 00:32:19.800
+years now. And I've always
+said in every one of
+
+561
+00:32:19.800 --> 00:32:23.100
+my talks, that person deserves
+a bigger raise. That's the
+
+562
+00:32:23.100 --> 00:32:25.740
+lead developer on MVC who
+works with Phil here. Hang
+
+563
+00:32:25.740 --> 00:32:32.370
+on Applause. Yeah. I mean,
+I think it's a phenomenal
+
+564
+00:32:32.370 --> 00:32:35.220
+control because if you look
+at the, the business developer
+
+565
+00:32:35.250 --> 00:32:40.100
+who is developing an application
+for their sales and they've
+
+566
+00:32:40.100 --> 00:32:43.610
+written a data grid, data
+grid has some phenomenal functionality
+
+567
+00:32:43.610 --> 00:32:45.680
+to it, right? It's got
+an automatic sorting, it's got
+
+568
+00:32:45.680 --> 00:32:47.990
+paging, it's got all this
+thing, the inline edit the
+
+569
+00:32:47.990 --> 00:32:51.560
+update, the cancel. And if
+you can wrap an update
+
+570
+00:32:51.560 --> 00:32:55.070
+panel around that, that knows
+how to hijack that the
+
+571
+00:32:55.070 --> 00:33:00.560
+magical mystical underscore underscore do
+post-bac. That is a phenomenal
+
+572
+00:33:00.560 --> 00:33:04.130
+thing because it's backward compatible.
+The code that I've been
+
+573
+00:33:04.130 --> 00:33:07.400
+working on for the last
+three years now, magically works
+
+574
+00:33:07.400 --> 00:33:09.860
+in this new web world
+by simply wrapping an update
+
+575
+00:33:09.860 --> 00:33:13.910
+panel. And I agree that
+it's not perfect, but it's
+
+576
+00:33:13.910 --> 00:33:17.570
+much better than making me
+spend another two weeks rewriting
+
+577
+00:33:17.570 --> 00:33:20.350
+my application. Right. You know,
+this is just instant plugging.
+
+578
+00:33:20.540 --> 00:33:26.440
+And this is the tension
+point between pure pragmatism and
+
+579
+00:33:26.620 --> 00:33:30.190
+pure purity. So I like
+the pure pragmatism and the
+
+580
+00:33:30.190 --> 00:33:32.200
+guys that are really smart
+and they know what's going
+
+581
+00:33:32.200 --> 00:33:33.880
+on and they have been
+doing it for a decade.
+
+582
+00:33:34.120 --> 00:33:36.940
+There's no handcuffs on the
+update panel that says, you
+
+583
+00:33:36.940 --> 00:33:39.570
+have to use this, or
+you will get fired. Right.
+
+584
+00:33:39.590 --> 00:33:43.300
+Just one more control within
+the right. I mean the
+
+585
+00:33:43.300 --> 00:33:47.200
+option. Yeah. The update panel
+by far is I think
+
+586
+00:33:47.200 --> 00:33:50.920
+that the most powerful control
+inside of the Ajax library.
+
+587
+00:33:50.980 --> 00:33:53.050
+Wow. I didn't know. I
+was stumbling on this whole.
+
+588
+00:33:53.350 --> 00:33:55.390
+Yeah. I mean, this is
+like a crusade of yours.
+
+589
+00:33:55.390 --> 00:33:56.670
+I was just like, Hey,
+why is he up to
+
+590
+00:33:56.670 --> 00:33:58.150
+the panel? Get a bad
+rap. But you felt like
+
+591
+00:33:58.180 --> 00:34:00.790
+you've put some time in
+minutes, Absolute defender of the
+
+592
+00:34:00.790 --> 00:34:06.640
+update panel because it's an,
+it gives immediate gratification. And
+
+593
+00:34:06.700 --> 00:34:10.450
+for 99% of the developers
+that I talked to and
+
+594
+00:34:10.450 --> 00:34:12.400
+the people that I work
+with and user groups and
+
+595
+00:34:12.400 --> 00:34:15.460
+conferences around the world, they
+go to work everyday to
+
+596
+00:34:15.460 --> 00:34:19.660
+get their job done. And
+if they can do something
+
+597
+00:34:19.660 --> 00:34:22.090
+that just takes a couple
+of hours to upgrade an
+
+598
+00:34:22.090 --> 00:34:26.680
+entire project that they've been
+working on forever, then I
+
+599
+00:34:26.680 --> 00:34:29.620
+think that gives them immediate
+gratification. Now that being said,
+
+600
+00:34:29.620 --> 00:34:31.570
+there are always people who
+take advantage of it, right?
+
+601
+00:34:31.570 --> 00:34:36.220
+So you can nest update
+panels and imagine putting an
+
+602
+00:34:36.220 --> 00:34:38.590
+update panel in a user
+control. That was part of
+
+603
+00:34:38.590 --> 00:34:40.750
+a data grid that gets
+rendered out to the page
+
+604
+00:34:40.780 --> 00:34:43.210
+500 times. And then you
+have an update panel on
+
+605
+00:34:43.210 --> 00:34:46.240
+your master page. That updates
+all of those. I mean,
+
+606
+00:34:46.780 --> 00:34:50.260
+that's obviously bad. And so
+I'm not saying that everyone
+
+607
+00:34:50.260 --> 00:34:54.250
+uses it to its fullest
+potential and there's danger with
+
+608
+00:34:54.250 --> 00:34:59.620
+everything. But I, I still
+think that update panel is,
+
+609
+00:35:00.000 --> 00:35:03.250
+is a phenomenal control. And
+the gentleman that you referenced
+
+610
+00:35:03.250 --> 00:35:07.450
+earlier still deserves a bigger
+room. Oh, I will. I
+
+611
+00:35:07.450 --> 00:35:08.830
+have no power over a
+long, but I will tell
+
+612
+00:35:08.830 --> 00:35:11.150
+the goo I will tell
+the goo we should immediately
+
+613
+00:35:11.440 --> 00:35:14.320
+promote Elon. Well, cool. Well,
+thanks so much, Scott, Kate
+
+614
+00:35:14.320 --> 00:35:16.390
+for sitting down with me
+to talk about HX here.
+
+615
+00:35:16.390 --> 00:35:18.310
+And so, yeah, We'll have
+to do it a little
+
+616
+00:35:18.310 --> 00:35:21.430
+closer to home. You know,
+we only live probably, I
+
+617
+00:35:21.430 --> 00:35:23.860
+dunno, a thousand miles, maybe
+not even that far 800
+
+618
+00:35:23.860 --> 00:35:26.950
+miles, I'm in Arizona and
+you're in Oregon, Oregon. So
+
+619
+00:35:28.420 --> 00:35:30.670
+it's a shame we had
+to come literally halfway around
+
+620
+00:35:30.670 --> 00:35:32.950
+the world to get together,
+but I'm anxious to do
+
+621
+00:35:32.950 --> 00:35:34.840
+your show again. It's a
+good time. Cool. Thanks a
+
+622
+00:35:34.840 --> 00:35:37.030
+lot. And everyone be sure
+to check out easy DB
+
+623
+00:35:37.200 --> 00:35:40.140
+com and cloud db.com, check
+out some of the stuff
+
+624
+00:35:40.140 --> 00:35:43.080
+that Scott's working on. And
+this has been another episode
+
+625
+00:35:43.140 --> 00:35:55.370
+of Hansel minutes. I'll see
+you again next week. <inaudible>.
+

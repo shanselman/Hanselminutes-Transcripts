@@ -1,0 +1,2917 @@
+WEBVTT FILE
+
+1
+00:00:12.090 --> 00:00:16.530
+From Hanselman it's dot com.
+It's Hansel minutes, a weekly
+
+2
+00:00:16.530 --> 00:00:20.610
+discussion with web developer and
+technologists. Scott Hanselman. This is
+
+3
+00:00:20.610 --> 00:00:26.280
+Lawrence Ryan announcing show number one
+76. Recorded live Thursday, August 20th, 2009.
+
+4
+00:00:26.700 --> 00:00:30.270
+Support for Hansel minutes is
+provided by Tellerik RD controls
+
+5
+00:00:30.450 --> 00:00:33.540
+the most comprehensive suite of
+components for windows forums and
+
+6
+00:00:33.540 --> 00:00:42.150
+asp.net web applications online@wwwdottelerik.com. In
+this episode, Scott discusses and
+
+7
+00:00:42.150 --> 00:00:45.840
+service bus with author and
+enterprise development expert booty to
+
+8
+00:00:45.840 --> 00:00:50.660
+hon. Hi, This is Scott
+Hanselman, and this is another
+
+9
+00:00:50.660 --> 00:00:53.330
+episode of Hanselminutes today. I
+have the pleasure of sitting
+
+10
+00:00:53.330 --> 00:00:56.720
+down with UDI to Han,
+who is a enterprise, a
+
+11
+00:00:56.730 --> 00:01:01.220
+consultant, and an independent consultant
+who has a known worldwide
+
+12
+00:01:01.250 --> 00:01:04.160
+for, for making things happen
+in the enterprise. And he
+
+13
+00:01:04.160 --> 00:01:07.490
+has got an, a, an
+open source application called N
+
+14
+00:01:07.490 --> 00:01:11.450
+service bus, and I bumped
+into hoody all over the,
+
+15
+00:01:11.690 --> 00:01:13.010
+all over the world. I
+think I saw you in
+
+16
+00:01:13.010 --> 00:01:15.560
+Norway a couple of months
+ago. You're in Norway again
+
+17
+00:01:15.560 --> 00:01:20.360
+right now. Is that correct?
+That's right. That's right. Yeah.
+
+18
+00:01:20.810 --> 00:01:23.060
+And you must do a
+lot of traveling all over,
+
+19
+00:01:23.150 --> 00:01:26.540
+all over the world, doing
+this kind of consulting pretty
+
+20
+00:01:26.540 --> 00:01:29.450
+much. That's what I do
+and go to all sorts
+
+21
+00:01:29.450 --> 00:01:33.260
+of places and help people
+with their, with their applications,
+
+22
+00:01:33.260 --> 00:01:40.070
+with their systems, all that
+fun stuff. And on your,
+
+23
+00:01:40.370 --> 00:01:43.700
+on your blog, you call
+yourself the software simplest. It
+
+24
+00:01:43.700 --> 00:01:45.680
+always seems like you write
+in such a clear way
+
+25
+00:01:45.680 --> 00:01:48.740
+that you're always trying to
+strive for, for simplicity and
+
+26
+00:01:48.740 --> 00:01:53.720
+clarity and everything that you
+do. And recently end service
+
+27
+00:01:53.720 --> 00:01:55.790
+bus came to my attention
+and it was kind of
+
+28
+00:01:55.790 --> 00:01:57.860
+an interesting thing because I
+used to work for a
+
+29
+00:01:57.860 --> 00:02:01.550
+large financial services company. And
+recently, one of my cohort,
+
+30
+00:02:01.550 --> 00:02:04.070
+my former coworker said that
+they were working with you
+
+31
+00:02:04.070 --> 00:02:06.560
+and with an service bus.
+And I had just seen
+
+32
+00:02:06.560 --> 00:02:08.480
+you before, and we hadn't
+had a chance to hook
+
+33
+00:02:08.480 --> 00:02:11.900
+up for a, for a
+chat. So I started digging
+
+34
+00:02:11.900 --> 00:02:13.340
+into this and I, I
+think that this is really
+
+35
+00:02:13.340 --> 00:02:16.370
+something interesting for the community
+to hear more about it.
+
+36
+00:02:16.370 --> 00:02:19.790
+Cause I don't think that
+everyone knows what a service
+
+37
+00:02:19.790 --> 00:02:23.240
+bus is. And maybe we
+can start from the beginning
+
+38
+00:02:23.240 --> 00:02:26.090
+and you can explain what
+a service bus is at.
+
+39
+00:02:26.090 --> 00:02:32.000
+It's at its lowest level.
+Well, the, the enterprise service
+
+40
+00:02:32.000 --> 00:02:39.770
+bus is not Microsoft community,
+but it's been going strong
+
+41
+00:02:39.770 --> 00:02:43.730
+now for a number of
+years on the Java side
+
+42
+00:02:43.730 --> 00:02:48.230
+of the world. And one
+of the things that often
+
+43
+00:02:49.100 --> 00:02:52.040
+confuses a lot of people
+when thinking about a service
+
+44
+00:02:52.040 --> 00:02:57.200
+bus is that they have
+this picture of a large
+
+45
+00:02:57.200 --> 00:03:02.710
+broker, that all communication goes
+through It. And it turns
+
+46
+00:03:02.710 --> 00:03:06.370
+out that the Roker style
+and the bus style are
+
+47
+00:03:06.400 --> 00:03:10.030
+actually very different from each
+other, if not complete opposites.
+
+48
+00:03:10.780 --> 00:03:14.410
+So while most people wouldn't,
+when they think of a
+
+49
+00:03:14.410 --> 00:03:16.300
+service bus where they think
+of a broker, they have
+
+50
+00:03:16.300 --> 00:03:19.270
+a picture of, of this
+talk in their mind. That's
+
+51
+00:03:19.270 --> 00:03:23.380
+actually a very accurate representation
+of a broker. A bus
+
+52
+00:03:23.380 --> 00:03:29.170
+is something else in that
+it is distributed inherently. There
+
+53
+00:03:29.170 --> 00:03:32.410
+is no such thing as
+a centralized bus, a bus
+
+54
+00:03:32.410 --> 00:03:37.900
+is inherently distributed. And the
+other thing that differentiates a
+
+55
+00:03:37.900 --> 00:03:41.710
+bus from a broker is
+that, well, quite frankly, a
+
+56
+00:03:41.710 --> 00:03:45.160
+bus isn't supposed to do
+very much of us. It's
+
+57
+00:03:45.160 --> 00:03:48.670
+more about getting out of
+the way of the services
+
+58
+00:03:48.670 --> 00:03:52.690
+that run on top of
+it, rather than doing a,
+
+59
+00:03:52.810 --> 00:03:57.430
+let's seek an example of
+some very complicated content-based routing,
+
+60
+00:03:57.880 --> 00:04:01.240
+like opening up the XML
+of a payload that goes
+
+61
+00:04:01.240 --> 00:04:05.200
+through it, sifting through a
+bunch of fields. And seeing
+
+62
+00:04:05.200 --> 00:04:08.350
+if a given field is
+greater than 17, then routing
+
+63
+00:04:08.350 --> 00:04:10.450
+it to the left. And
+if it's less than 17,
+
+64
+00:04:10.450 --> 00:04:13.450
+routing it to the right,
+that's the kind of stuff
+
+65
+00:04:13.450 --> 00:04:16.180
+that often our broker would
+do that a bus would
+
+66
+00:04:16.180 --> 00:04:20.740
+not do. And what makes
+that interesting is that it
+
+67
+00:04:20.740 --> 00:04:25.810
+leaves the responsibility for all
+the business logic at the
+
+68
+00:04:25.810 --> 00:04:29.050
+service layer, so that we
+have to be a lot
+
+69
+00:04:29.050 --> 00:04:33.070
+more conscientious about how we
+assign responsibility to the things
+
+70
+00:04:33.070 --> 00:04:36.400
+on top of the bus.
+So that's about it in
+
+71
+00:04:36.400 --> 00:04:40.500
+a nutshell. So is a,
+is a bus about separation
+
+72
+00:04:40.500 --> 00:04:43.740
+of concerns is a bus
+about deciding that here's something
+
+73
+00:04:43.740 --> 00:04:46.530
+that, that does know a
+lot about the intricacies of
+
+74
+00:04:46.540 --> 00:04:49.800
+our larger business, but at
+the same time, abstracts away
+
+75
+00:04:50.220 --> 00:04:54.180
+the smaller entities within the
+business. That's a good question.
+
+76
+00:04:54.180 --> 00:04:57.840
+I'm not quite sure exactly
+how to answer that I
+
+77
+00:04:57.840 --> 00:05:01.500
+ask is that it seems
+like whenever I, let me
+
+78
+00:05:01.500 --> 00:05:03.300
+try to phrase this nicely,
+I'm trying to think about
+
+79
+00:05:03.300 --> 00:05:04.980
+all the different things I've
+done in my life. I
+
+80
+00:05:04.980 --> 00:05:07.590
+don't want to pick on
+a particular company, but it
+
+81
+00:05:07.590 --> 00:05:10.320
+seems like at some point
+you, you get to an
+
+82
+00:05:10.320 --> 00:05:13.500
+organization that is large enough
+that has enough systems talking
+
+83
+00:05:13.500 --> 00:05:16.680
+to each other, that someone
+starts saying time for a
+
+84
+00:05:16.680 --> 00:05:19.290
+service bus. You know, it's
+almost kind of like the,
+
+85
+00:05:20.820 --> 00:05:22.800
+the, the, the bandaid that
+they put on, on the
+
+86
+00:05:22.800 --> 00:05:26.370
+cancer of the larger organization
+that, that might be overstating
+
+87
+00:05:26.370 --> 00:05:29.160
+it, but the idea that
+they have systems that are
+
+88
+00:05:29.160 --> 00:05:31.680
+varied and complex, but need
+to talk to each other,
+
+89
+00:05:32.910 --> 00:05:34.890
+maybe in the past, they
+were tightly coupled. But now
+
+90
+00:05:34.890 --> 00:05:38.600
+they're looking for a way
+to really separate the system
+
+91
+00:05:38.610 --> 00:05:41.820
+and needs to talk to
+system B with, with, with,
+
+92
+00:05:41.950 --> 00:05:44.370
+you know, with other concerns.
+So I'm trying to understand
+
+93
+00:05:44.370 --> 00:05:47.070
+what the bus is concerned
+with. Is it just simply
+
+94
+00:05:47.070 --> 00:05:50.700
+a router and where does
+the logic live and is
+
+95
+00:05:50.700 --> 00:05:57.590
+this a large company problem
+only? Okay. So I'll actually
+
+96
+00:05:57.680 --> 00:06:00.410
+come back to that separation
+of concerns that you mentioned
+
+97
+00:06:01.130 --> 00:06:07.790
+and, and, and, and create
+a slight differentiation between what's
+
+98
+00:06:07.790 --> 00:06:13.580
+known as enterprise application integration,
+EAI, which looks very much
+
+99
+00:06:13.580 --> 00:06:17.240
+as how you described it.
+We have an existing set
+
+100
+00:06:17.240 --> 00:06:22.880
+of applications and systems that
+we'd been having some pain
+
+101
+00:06:22.910 --> 00:06:26.810
+integrating with each other. And
+what we're looking for is
+
+102
+00:06:26.810 --> 00:06:32.930
+a way to ease that
+pain and EAI was, or
+
+103
+00:06:32.930 --> 00:06:37.400
+had its heyday, and that's
+pretty much done. And now
+
+104
+00:06:37.400 --> 00:06:44.120
+we're all doing SOA. The
+separation of concerns that the
+
+105
+00:06:44.120 --> 00:06:48.110
+bus that is looking to
+bring that wasn't so much
+
+106
+00:06:48.110 --> 00:06:53.180
+there with the EAI brokers,
+is that we're less focused
+
+107
+00:06:53.300 --> 00:06:58.640
+on the applications as they
+are, and more focused on
+
+108
+00:06:58.640 --> 00:07:03.260
+the business responsibilities above that.
+So the first thing that
+
+109
+00:07:03.260 --> 00:07:05.420
+we're trying to achieve is
+separation of concerns at a
+
+110
+00:07:05.420 --> 00:07:10.640
+business level, and then use
+a bus to conceptually hook
+
+111
+00:07:10.640 --> 00:07:15.110
+those up and at a
+lower level, look at how
+
+112
+00:07:15.110 --> 00:07:20.030
+the free existing applications map
+to those higher level services.
+
+113
+00:07:20.870 --> 00:07:25.220
+So I know it sounds
+a little bit abstract, but
+
+114
+00:07:26.540 --> 00:07:30.020
+a lot of the problems
+that we've been seeing with
+
+115
+00:07:30.020 --> 00:07:34.910
+integration are often a function
+of taking a, a tightly
+
+116
+00:07:34.910 --> 00:07:38.990
+coupled business domain. Something that
+the business view says always
+
+117
+00:07:38.990 --> 00:07:43.070
+needing to be consistent and
+shoving the service bus in
+
+118
+00:07:43.070 --> 00:07:45.470
+the middle, or shoving a
+broker in the middle of
+
+119
+00:07:45.470 --> 00:07:50.270
+that. So it's very important
+to get the boundaries rights
+
+120
+00:07:51.230 --> 00:07:54.650
+and have them lining up
+both technical, technical and business
+
+121
+00:07:54.650 --> 00:07:58.720
+wise. So how does sending
+messages with the, you know,
+
+122
+00:07:58.720 --> 00:08:01.090
+the, the entity that you
+send on to the bus,
+
+123
+00:08:01.150 --> 00:08:04.120
+how does that different, how
+does sending messages at the,
+
+124
+00:08:04.690 --> 00:08:06.550
+at the large, at the
+enterprise level, at the company
+
+125
+00:08:06.550 --> 00:08:10.900
+level differ from sending events
+and responding to events at
+
+126
+00:08:10.900 --> 00:08:14.770
+the local application level? I,
+I'm not sure that, that,
+
+127
+00:08:14.770 --> 00:08:17.710
+that I'd say that that
+they're, that they're that different
+
+128
+00:08:18.010 --> 00:08:21.760
+in terms of mechanics, in
+both case, in both cases,
+
+129
+00:08:21.760 --> 00:08:25.300
+you, you are sending a
+message. It's more an issue
+
+130
+00:08:25.390 --> 00:08:30.310
+of, of intent. So when
+you're going to publish an
+
+131
+00:08:30.310 --> 00:08:34.780
+event to have that event,
+actually have a certain business
+
+132
+00:08:34.780 --> 00:08:40.030
+meaning for example, order canceled
+order canceled is a, both
+
+133
+00:08:40.030 --> 00:08:44.140
+a business event and can
+be represented as a message
+
+134
+00:08:44.140 --> 00:08:49.630
+in its own rights. Something
+that would not be a
+
+135
+00:08:49.650 --> 00:08:54.910
+good fit for an event
+would be something like cancel
+
+136
+00:08:54.930 --> 00:08:59.970
+order requests. A lot of
+times the difficulties that people
+
+137
+00:08:59.970 --> 00:09:03.600
+run into when using a
+service bus is doing request
+
+138
+00:09:03.600 --> 00:09:09.060
+response patterns on top of
+a published, subscribed infrastructure. Then
+
+139
+00:09:09.090 --> 00:09:12.120
+we're, we're confusing the language
+that we're using. And that
+
+140
+00:09:12.120 --> 00:09:14.640
+often makes routing quite a
+little, quite a bit more
+
+141
+00:09:14.640 --> 00:09:20.280
+difficult and makes a, the
+whole who subscribes to who
+
+142
+00:09:21.390 --> 00:09:23.640
+seem a little bit out
+of whack. It would seem
+
+143
+00:09:23.670 --> 00:09:27.600
+quite unusual for a server
+to subscribe to a client,
+
+144
+00:09:27.780 --> 00:09:31.140
+especially if we have a
+lot of clients. So a
+
+145
+00:09:31.140 --> 00:09:33.390
+lot of the mix ups
+and the difficulties that people
+
+146
+00:09:33.390 --> 00:09:37.650
+have when trying to employ
+a service bus are due
+
+147
+00:09:37.650 --> 00:09:41.310
+to not understanding the concepts
+behind it, that when you're
+
+148
+00:09:41.310 --> 00:09:44.580
+going to publish something, this
+should be an event that
+
+149
+00:09:44.580 --> 00:09:47.730
+has meaning in the business
+domain rather than being a
+
+150
+00:09:47.730 --> 00:09:51.510
+request. So not everything needs
+to be pubs out. You
+
+151
+00:09:51.510 --> 00:09:54.630
+can still do request response
+over a service bus, just
+
+152
+00:09:54.630 --> 00:09:58.490
+don't use its published API.
+Okay. So you're the, it
+
+153
+00:09:58.490 --> 00:10:02.000
+sounds like there's a, a
+not too subtle difference between
+
+154
+00:10:02.000 --> 00:10:05.930
+publishing a message and sending
+a message. Correct. Okay. So
+
+155
+00:10:06.110 --> 00:10:09.050
+trying to reconcile the things
+that people might be familiar
+
+156
+00:10:09.050 --> 00:10:11.390
+with in the sense of,
+I have a system that
+
+157
+00:10:11.390 --> 00:10:15.020
+wants to talk, you know,
+WCF and have an endpoint
+
+158
+00:10:15.020 --> 00:10:20.900
+to endpoint discussion versus, you
+know, what we call pub
+
+159
+00:10:20.900 --> 00:10:23.600
+sub, which can be, you
+know, can be a pattern
+
+160
+00:10:23.600 --> 00:10:25.100
+at the VA that can
+be very local or that
+
+161
+00:10:25.100 --> 00:10:29.270
+can be very, very distributed.
+And then you use the
+
+162
+00:10:29.270 --> 00:10:32.060
+term routing and I, and
+I I've, I'm familiar. And
+
+163
+00:10:32.060 --> 00:10:34.910
+we were familiar with that
+in the context of send
+
+164
+00:10:34.910 --> 00:10:37.490
+something to a trusted intermediary
+that knows a little bit
+
+165
+00:10:37.490 --> 00:10:40.640
+more and maybe can handle
+some addressing and then might
+
+166
+00:10:40.640 --> 00:10:42.950
+say, you know, I'll give
+it to my friend and
+
+167
+00:10:42.950 --> 00:10:45.080
+my friend will give it
+to UDI, which is still
+
+168
+00:10:45.080 --> 00:10:48.170
+effectively point to point. Although
+my friend could route to
+
+169
+00:10:48.170 --> 00:10:51.260
+a different person, if they
+needed to, what kind of
+
+170
+00:10:51.260 --> 00:10:55.100
+things does the business logic
+in our applications know and
+
+171
+00:10:55.100 --> 00:11:00.110
+handle versus responsibilities of the,
+the bus, like you had
+
+172
+00:11:00.110 --> 00:11:02.660
+made the comment about route
+it to the left, if
+
+173
+00:11:02.660 --> 00:11:06.020
+it's above 17, right? If
+it's below, is that the,
+
+174
+00:11:06.050 --> 00:11:09.800
+does the bus have, you
+know, really internal knowledge about
+
+175
+00:11:11.160 --> 00:11:13.190
+the system that it could
+make such a decision is
+
+176
+00:11:13.190 --> 00:11:18.710
+that business logic It's exactly
+the opposite that brokers are
+
+177
+00:11:18.710 --> 00:11:23.810
+the kinds of technologies or
+patterns that would do that
+
+178
+00:11:23.810 --> 00:11:26.870
+kind of decision making routed
+to the left, routed to
+
+179
+00:11:26.870 --> 00:11:30.770
+the right don't and shouldn't
+do that. So a bus
+
+180
+00:11:30.770 --> 00:11:32.420
+would never do anything like
+that, but it would never
+
+181
+00:11:32.420 --> 00:11:36.440
+know about internals, Right? It
+shouldn't need to know about
+
+182
+00:11:36.440 --> 00:11:40.250
+internals. It's the responsibility of
+the system on top of
+
+183
+00:11:40.250 --> 00:11:43.370
+it to handle those kinds
+of things itself, to structure
+
+184
+00:11:43.370 --> 00:11:48.860
+itself correctly, but getting to
+maybe the difference between where
+
+185
+00:11:48.860 --> 00:11:52.370
+you do the service bus
+and the way that a
+
+186
+00:11:52.370 --> 00:11:58.510
+lot of people about using
+a WCF, the difference is
+
+187
+00:11:58.510 --> 00:12:02.020
+more along the lines of
+when people think about using
+
+188
+00:12:02.020 --> 00:12:04.990
+WCF, they think about using
+it between their client tier
+
+189
+00:12:04.990 --> 00:12:11.020
+and their server tier and
+as a communications technology. Whereas
+
+190
+00:12:11.020 --> 00:12:15.510
+when, when you're looking at
+the layers of a, of
+
+191
+00:12:15.520 --> 00:12:20.440
+a classical application, you often
+wouldn't insert a service bus
+
+192
+00:12:20.770 --> 00:12:24.340
+between layers. And that sounds
+a little bit odd. And
+
+193
+00:12:24.670 --> 00:12:27.130
+I'll explain in just a
+second where you put it,
+
+194
+00:12:28.330 --> 00:12:32.170
+think about taking those layers
+in, slicing it like a
+
+195
+00:12:32.170 --> 00:12:36.910
+cake down the middle right
+now, those two pieces in
+
+196
+00:12:36.910 --> 00:12:39.640
+essence, you've got two applications.
+Now, each one with its
+
+197
+00:12:39.640 --> 00:12:43.840
+own layers, you'd be looking
+at what, in what way
+
+198
+00:12:43.840 --> 00:12:48.010
+does my business decompose so
+that I could really have
+
+199
+00:12:48.040 --> 00:12:53.650
+two discreet apps. So if
+we think of the classical
+
+200
+00:12:53.650 --> 00:13:00.580
+e-commerce example, the part of
+accepting orders being, and seeing
+
+201
+00:13:00.580 --> 00:13:04.210
+that they're valid and, and
+all, all that selling portion
+
+202
+00:13:04.750 --> 00:13:07.630
+could be viewed as one
+part of the app and
+
+203
+00:13:07.630 --> 00:13:12.160
+the part dealing with inventory
+management and purchasing new items
+
+204
+00:13:12.160 --> 00:13:14.260
+in ordering them and managing
+where they are in the
+
+205
+00:13:14.260 --> 00:13:20.860
+warehouse has another discreet chunk
+where there's an explicit events
+
+206
+00:13:21.130 --> 00:13:24.310
+that passes data from one
+to the other. So the
+
+207
+00:13:24.310 --> 00:13:29.740
+order acceptance of events is
+something that the order side
+
+208
+00:13:29.740 --> 00:13:32.440
+of the app can make
+the decision to do by
+
+209
+00:13:32.440 --> 00:13:38.800
+itself would then publish that
+event, using a service bus
+
+210
+00:13:39.880 --> 00:13:44.080
+to the other side, at
+which point, the inventory side
+
+211
+00:13:44.080 --> 00:13:47.770
+of our application would do
+its inventory management and say,
+
+212
+00:13:47.770 --> 00:13:50.980
+okay, well now we see
+that someone's ordered 50 widgets,
+
+213
+00:13:51.400 --> 00:13:53.350
+that we need to get
+them out of the warehouse
+
+214
+00:13:53.350 --> 00:13:57.850
+and ship them to the
+consumer. So that's really the
+
+215
+00:13:57.850 --> 00:14:02.350
+place where we'd look at
+introducing a service bus, not
+
+216
+00:14:02.350 --> 00:14:06.100
+so much between a client
+and a server, but rather
+
+217
+00:14:06.100 --> 00:14:12.400
+between two different business parts.
+Each one can have its
+
+218
+00:14:12.400 --> 00:14:16.390
+own UI focused on its
+own little thing. So you
+
+219
+00:14:16.390 --> 00:14:19.420
+don't necessarily need to view
+this as I'm building a
+
+220
+00:14:19.420 --> 00:14:23.620
+gigantic app for investment banking
+and needs to be super
+
+221
+00:14:23.620 --> 00:14:26.830
+high performance, I'm going to
+need to get a service
+
+222
+00:14:26.830 --> 00:14:30.550
+bus, but even for, for
+smaller apps that are more
+
+223
+00:14:30.550 --> 00:14:35.170
+locally focused, they, it helps
+me to, instead of having
+
+224
+00:14:35.170 --> 00:14:39.130
+one large monolithic app, I
+can look at having several
+
+225
+00:14:39.130 --> 00:14:43.570
+smaller apps, each one focused
+on its own domain that
+
+226
+00:14:44.320 --> 00:14:50.170
+tell each other about interesting
+occurrences via this bus. So
+
+227
+00:14:50.350 --> 00:14:53.210
+when we got our little
+order domain, that's accepting orders
+
+228
+00:14:53.210 --> 00:14:57.230
+and our inventory management, that's
+keeping track of stock. We've
+
+229
+00:14:57.230 --> 00:15:00.710
+got our billing domain, that's
+charging customers and our little
+
+230
+00:15:00.710 --> 00:15:03.410
+CRM part, that's saying, wow,
+this person is really buying
+
+231
+00:15:03.410 --> 00:15:05.900
+a lot from us. Maybe
+we should say that this
+
+232
+00:15:05.900 --> 00:15:09.650
+person is a preferred customer.
+That's an event. And the
+
+233
+00:15:09.650 --> 00:15:13.700
+guys from the ordering parts,
+we've got a preferred customer.
+
+234
+00:15:14.060 --> 00:15:19.880
+Let's give him a discount.
+So it's more about describing
+
+235
+00:15:20.150 --> 00:15:22.970
+the business activities that are
+going on and the business
+
+236
+00:15:22.970 --> 00:15:27.650
+events, and then representing those
+as messages that get passed
+
+237
+00:15:27.650 --> 00:15:31.930
+around on a surface. Okay.
+So this means that, okay,
+
+238
+00:15:31.930 --> 00:15:34.990
+so this means that I
+could have this bus be
+
+239
+00:15:35.170 --> 00:15:38.630
+something I use inside of
+a single process, just for,
+
+240
+00:15:38.630 --> 00:15:42.070
+for, for organization of my,
+of my system. I could
+
+241
+00:15:42.070 --> 00:15:44.350
+have a single console application
+and I could bring this
+
+242
+00:15:44.350 --> 00:15:48.370
+bus up and have it
+all happened in memory, or
+
+243
+00:15:48.370 --> 00:15:50.380
+I could do a larger
+system and have it run
+
+244
+00:15:50.380 --> 00:15:53.110
+on a, have the bus,
+manage it, work on a
+
+245
+00:15:53.110 --> 00:15:55.270
+queue. Is that right? It
+could be in a, in
+
+246
+00:15:55.270 --> 00:15:59.080
+a land environment. It could
+be in a single data
+
+247
+00:15:59.080 --> 00:16:03.520
+center across multiple data centers.
+Really. It's just a function
+
+248
+00:16:03.520 --> 00:16:09.040
+of which technologies we put
+underneath or inside the bus,
+
+249
+00:16:09.550 --> 00:16:13.600
+but it doesn't change conceptually
+what the events are that
+
+250
+00:16:13.600 --> 00:16:17.650
+we're publishing. That's really the
+value of the service bus
+
+251
+00:16:18.190 --> 00:16:23.560
+is that it, it helps
+us focus on our business
+
+252
+00:16:23.560 --> 00:16:27.610
+logic and on the, on
+the ways that it can
+
+253
+00:16:27.610 --> 00:16:31.450
+be broken down into smaller
+chunks. And that helps us
+
+254
+00:16:31.450 --> 00:16:36.160
+manage a lot of the
+complexity in the application, as
+
+255
+00:16:36.160 --> 00:16:39.340
+it grows over time, often
+have the scenario. If the
+
+256
+00:16:39.340 --> 00:16:42.640
+system started simple, it is,
+but it grew into this
+
+257
+00:16:42.700 --> 00:16:46.780
+huge ungainly mess. How did
+that ever happen? And it's
+
+258
+00:16:46.780 --> 00:16:51.520
+often because we didn't know
+to look for those places
+
+259
+00:16:51.520 --> 00:16:55.840
+where we could start introducing
+some of that. So in
+
+260
+00:16:55.840 --> 00:16:59.560
+that sense, a service, but
+it's actually very practical in
+
+261
+00:16:59.560 --> 00:17:05.140
+helping us keep our systems
+maintainable and loosely coupled, Hey
+
+262
+00:17:05.140 --> 00:17:07.300
+everybody, this is Scott coming
+at you from another place
+
+263
+00:17:07.300 --> 00:17:10.450
+in time. No doubt. You
+probably bump into testing tasks
+
+264
+00:17:10.450 --> 00:17:12.880
+now, and then, and your
+work and, you know, writing
+
+265
+00:17:12.880 --> 00:17:15.220
+functional tests is probably not
+your favorite thing. It's kind
+
+266
+00:17:15.220 --> 00:17:17.170
+of difficult. It takes time
+and the results can be
+
+267
+00:17:17.170 --> 00:17:20.440
+dubious. Well, get ready to
+start liking tests. Thanks to
+
+268
+00:17:20.440 --> 00:17:24.520
+Tellerik with the, the new
+webinar testing framework. Building web
+
+269
+00:17:24.520 --> 00:17:27.820
+automation test is a breeze.
+You've got code automation with
+
+270
+00:17:27.820 --> 00:17:30.790
+advanced asp.net Ajax, and several
+light applications. You can write
+
+271
+00:17:30.790 --> 00:17:34.060
+a single test, have it
+executed against multiple browsers at
+
+272
+00:17:34.060 --> 00:17:37.480
+once. You'd benefit from a
+rich API there's link support
+
+273
+00:17:37.510 --> 00:17:40.990
+integration with visual studio, unit
+testing, also end unit X
+
+274
+00:17:40.990 --> 00:17:44.260
+unit and NBA unit, not
+to mention the free rappers
+
+275
+00:17:44.260 --> 00:17:47.050
+for Telerik rad controls for
+ESPN and Ajax, and several
+
+276
+00:17:47.050 --> 00:17:51.000
+lines, all shipping with Telerik's
+testing tool. One of the
+
+277
+00:17:51.000 --> 00:17:54.210
+best features, the webinar testing
+framework, which is developed by
+
+278
+00:17:54.210 --> 00:17:58.440
+art of test is it's
+absolutely free Friday got hooked
+
+279
+00:17:58.440 --> 00:18:01.290
+on web testing framework, start
+using it right away, go
+
+280
+00:18:01.290 --> 00:18:06.000
+to tellerik.com for more info.
+Thanks a lot. This gives
+
+281
+00:18:06.000 --> 00:18:08.220
+me the sense that if
+a service bus is not
+
+282
+00:18:08.220 --> 00:18:10.200
+something that someone would take
+lightly in the sense that
+
+283
+00:18:10.200 --> 00:18:12.840
+you wouldn't, would it be
+difficult to take an existing
+
+284
+00:18:12.840 --> 00:18:16.500
+application and add a service
+bus to it, or you
+
+285
+00:18:16.500 --> 00:18:18.510
+should have service supposed to
+be part of a larger,
+
+286
+00:18:19.290 --> 00:18:22.440
+for lack of a better
+word, more, more clever architecture.
+
+287
+00:18:24.320 --> 00:18:26.840
+I've been working with companies
+for a number of years
+
+288
+00:18:27.620 --> 00:18:31.370
+on this, this exact kind
+of work. And often introducing
+
+289
+00:18:31.370 --> 00:18:34.550
+a service bus is something
+that we look at doing
+
+290
+00:18:34.550 --> 00:18:38.960
+first and foremost around the
+edges. So less along the
+
+291
+00:18:38.960 --> 00:18:42.800
+lines of how do we
+break up RF, but when
+
+292
+00:18:42.800 --> 00:18:45.050
+we need to integrate with
+some other system or with
+
+293
+00:18:45.050 --> 00:18:51.020
+some other partner said, instead
+of calling each other and
+
+294
+00:18:51.020 --> 00:18:56.360
+creating more coupling, what events
+could we publish just around
+
+295
+00:18:56.360 --> 00:19:02.450
+the edges saying what happened
+inside our app? Sometimes the
+
+296
+00:19:02.450 --> 00:19:04.940
+way that we go about
+doing that is by writing
+
+297
+00:19:04.940 --> 00:19:08.150
+a trigger in the database
+and saying, when a row
+
+298
+00:19:08.160 --> 00:19:12.710
+has been added to this
+table publish, and then whoever
+
+299
+00:19:12.710 --> 00:19:15.680
+wants to listen to that
+can hook into that. So
+
+300
+00:19:15.680 --> 00:19:19.730
+it's often a good first
+step towards integrating our system
+
+301
+00:19:20.210 --> 00:19:23.900
+into a larger ecosystem. So
+that's one way that we
+
+302
+00:19:23.900 --> 00:19:27.500
+could look at introducing the
+service bus without worrying too
+
+303
+00:19:27.500 --> 00:19:31.760
+much about the way our
+system is currently built and
+
+304
+00:19:31.820 --> 00:19:33.860
+doing that sort of a,
+in a step by step
+
+305
+00:19:33.890 --> 00:19:38.070
+fashion. So you don't have
+to refactor your app and
+
+306
+00:19:38.390 --> 00:19:41.910
+break it up into a
+million different little pieces. So
+
+307
+00:19:41.910 --> 00:19:45.140
+I'm, I'm not sure that
+I'd say that it's something
+
+308
+00:19:45.140 --> 00:19:50.970
+that you take lightly, that
+if you're looking at the,
+
+309
+00:19:51.260 --> 00:19:57.140
+the longterm maintainability and integration
+of your system with other
+
+310
+00:19:57.140 --> 00:20:01.040
+systems and providing more business
+value on top of that.
+
+311
+00:20:02.480 --> 00:20:06.410
+Yeah, I do see it
+having some kind of service
+
+312
+00:20:06.410 --> 00:20:09.800
+bus or having the facility
+of being able to publish
+
+313
+00:20:09.800 --> 00:20:12.860
+events, being very useful. Right.
+How often do you find
+
+314
+00:20:12.860 --> 00:20:18.440
+yourself where you're using WCF,
+you know, windows, communication foundation,
+
+315
+00:20:18.500 --> 00:20:22.690
+you know, and windows workflow
+and the, you know, and
+
+316
+00:20:22.760 --> 00:20:25.550
+they add the Microsoft applications
+that start kind of getting,
+
+317
+00:20:26.270 --> 00:20:29.210
+getting in this general space.
+I mean, how much does
+
+318
+00:20:29.210 --> 00:20:33.380
+an service bus and fill
+a gap where Microsoft has
+
+319
+00:20:33.500 --> 00:20:36.800
+kind of completely dropped the
+ball and, and, and how
+
+320
+00:20:36.800 --> 00:20:38.840
+do you, how do you
+feel about, you know, things
+
+321
+00:20:38.840 --> 00:20:41.450
+that Microsoft might be coming
+out and were coming out
+
+322
+00:20:41.450 --> 00:20:43.310
+with and where a service
+bus would fit into that?
+
+323
+00:20:44.120 --> 00:20:52.570
+Okay, well, and service bus
+specifically is not meant to
+
+324
+00:20:54.130 --> 00:20:58.840
+replace WCS or to replace
+synchronous communication and service bus
+
+325
+00:20:58.840 --> 00:21:03.730
+does not do synchronous communication.
+That is what makes it
+
+326
+00:21:03.730 --> 00:21:07.570
+do publish subscribe well, because
+it focuses on doing one
+
+327
+00:21:07.570 --> 00:21:11.680
+thing very well. WCF on
+the other hand does not
+
+328
+00:21:11.680 --> 00:21:15.820
+do publish subscribe. You don't
+have a, a WCF dot
+
+329
+00:21:15.880 --> 00:21:18.880
+publish out of the box,
+and you can try to
+
+330
+00:21:18.880 --> 00:21:24.670
+implement that kind of thing
+with callback contracts and some
+
+331
+00:21:24.670 --> 00:21:29.770
+sort of routing and point
+that you set up. And
+
+332
+00:21:30.430 --> 00:21:33.190
+even the stuff that's coming
+out in dotnet 4.0 with,
+
+333
+00:21:33.910 --> 00:21:37.840
+with the Dublin technologies in
+the window server technologies, there
+
+334
+00:21:37.840 --> 00:21:41.530
+still is no published subscribed
+facility that comes with WCF.
+
+335
+00:21:43.810 --> 00:21:48.310
+So in that respect, in
+a given classical Microsoft app,
+
+336
+00:21:48.910 --> 00:21:52.300
+you continue to use WCF
+for your client to server
+
+337
+00:21:52.300 --> 00:21:57.070
+communication. And you may find
+that the use for in
+
+338
+00:21:57.070 --> 00:22:01.270
+service bus, in doing your
+published, subscribed communication. So you'd
+
+339
+00:22:01.270 --> 00:22:05.710
+end up using both. So
+it really is complimentary. It's
+
+340
+00:22:05.760 --> 00:22:11.850
+not something that, that Microsoft
+does. Microsoft have a service
+
+341
+00:22:11.850 --> 00:22:14.160
+bus lying around that we
+are going to, or buying
+
+342
+00:22:14.160 --> 00:22:18.870
+and wait, do you know,
+The.net service bus? And then
+
+343
+00:22:19.320 --> 00:22:22.560
+what was known for a
+while as the internet service
+
+344
+00:22:22.560 --> 00:22:32.730
+bus, which are primarily technologies
+for, in essence, doing WCF
+
+345
+00:22:32.940 --> 00:22:38.640
+full duplex over the internet,
+but even there, you don't
+
+346
+00:22:38.640 --> 00:22:44.760
+have published subscribed functionality, right?
+You have a starting point
+
+347
+00:22:45.960 --> 00:22:50.550
+as a part of the
+Azure technologies with the, with
+
+348
+00:22:50.550 --> 00:22:54.090
+the queue service that's out
+there. So in other words,
+
+349
+00:22:54.120 --> 00:22:56.670
+you you'd have a queue
+in the cloud similar to
+
+350
+00:22:56.700 --> 00:23:02.160
+how you have MSMQ in
+windows. So it's having a
+
+351
+00:23:02.160 --> 00:23:07.440
+queue as a very useful
+thing and, and service bus
+
+352
+00:23:07.440 --> 00:23:12.930
+makes use of MSMQ and
+queues in general. But when,
+
+353
+00:23:13.020 --> 00:23:18.330
+when we look at that
+published subscribed functionality, again, more
+
+354
+00:23:18.330 --> 00:23:26.700
+in terms of discretely representing
+events, rather than any kind
+
+355
+00:23:26.700 --> 00:23:34.020
+of communication, I just haven't
+seen that working out so
+
+356
+00:23:34.020 --> 00:23:37.410
+well, especially if we're looking
+for something that we want
+
+357
+00:23:37.410 --> 00:23:40.710
+it to be both lightweight
+in process and not just
+
+358
+00:23:40.710 --> 00:23:47.600
+over the internet or within
+our private land. So even
+
+359
+00:23:47.600 --> 00:23:51.560
+though there is the, the
+service bus as a part
+
+360
+00:23:51.560 --> 00:23:56.000
+of Azure, it's targeted at
+serve, it's solving a different
+
+361
+00:23:56.000 --> 00:24:03.170
+problem, which is that internet
+relay communication and service bus,
+
+362
+00:24:04.370 --> 00:24:08.390
+the way that it's currently
+built is focused primarily on
+
+363
+00:24:08.660 --> 00:24:11.690
+in the land. So you've
+got a bunch of apps
+
+364
+00:24:11.700 --> 00:24:16.520
+already, physically together, and you
+just want to introduce some
+
+365
+00:24:16.520 --> 00:24:21.310
+logical ups of communication. Hmm.
+Now, when, when I'm moving
+
+366
+00:24:21.310 --> 00:24:24.820
+things around the internet, inevitably
+things will turn into to
+
+367
+00:24:24.820 --> 00:24:28.660
+angle brackets and there's there's
+messages that I have to
+
+368
+00:24:28.660 --> 00:24:30.850
+deal with versioning I have
+to do. And typically I
+
+369
+00:24:30.860 --> 00:24:35.510
+deal with versioning and with
+names V XML. Namespaces when,
+
+370
+00:24:35.510 --> 00:24:37.570
+when we're doing something in,
+in service bus and we're
+
+371
+00:24:37.570 --> 00:24:40.780
+dealing with, with versioning, are
+we talking about that CLR
+
+372
+00:24:40.780 --> 00:24:44.770
+types? And if I have
+two applications that are going
+
+373
+00:24:44.770 --> 00:24:47.440
+to talk to each other,
+what is the thing they're
+
+374
+00:24:47.440 --> 00:24:51.130
+collaborating over? Is it, is
+it a CLR interface? Is
+
+375
+00:24:51.130 --> 00:24:53.410
+it something, is it something
+else? How much do they
+
+376
+00:24:53.410 --> 00:24:55.420
+have to know about each
+other? They, they, they both
+
+377
+00:24:55.420 --> 00:24:57.550
+know about the bus. What
+do they have to know
+
+378
+00:24:57.550 --> 00:25:01.690
+about the message? Well, the
+message first and foremost is
+
+379
+00:25:02.650 --> 00:25:06.160
+just like in, in, in,
+in any communication, it's your
+
+380
+00:25:06.160 --> 00:25:10.660
+schema, it's the language that
+you use to communicate. And
+
+381
+00:25:10.960 --> 00:25:13.630
+first of all, there's the
+logical representation of that, which
+
+382
+00:25:13.630 --> 00:25:18.310
+is like we do with
+a regular.net and web services,
+
+383
+00:25:18.310 --> 00:25:21.490
+things like that. We can
+represent them as regular classes.
+
+384
+00:25:22.210 --> 00:25:24.430
+Then the question of when
+we want to move them
+
+385
+00:25:24.550 --> 00:25:27.220
+over the wire, how do
+we want to serialize them?
+
+386
+00:25:27.220 --> 00:25:30.760
+We can do binary, serialization.
+We can do XML serialization.
+
+387
+00:25:32.350 --> 00:25:35.230
+It's the same thing within
+service bus, how you choose
+
+388
+00:25:35.230 --> 00:25:40.870
+to serialize your plain old
+CLR messages. It is pretty
+
+389
+00:25:40.870 --> 00:25:44.740
+much up to you. So
+that's more in terms of
+
+390
+00:25:44.770 --> 00:25:48.940
+the representation on the wire
+and while that's related to
+
+391
+00:25:48.940 --> 00:25:53.650
+how we version things, that's
+not the entire story of
+
+392
+00:25:53.650 --> 00:25:57.040
+versioning. It turns out that
+versioning is, is a slightly
+
+393
+00:25:57.040 --> 00:26:02.530
+more complicated problem than just
+angled brackets by themselves can
+
+394
+00:26:02.530 --> 00:26:07.000
+solve a heart of the
+things that, that makes versioning
+
+395
+00:26:07.060 --> 00:26:11.950
+a little bit easier. When
+thinking about published subscribe is
+
+396
+00:26:11.950 --> 00:26:16.930
+that you've got explicit ownership
+of the schema. So for
+
+397
+00:26:16.930 --> 00:26:23.950
+example, in that e-commerce example,
+our order of service is
+
+398
+00:26:24.040 --> 00:26:26.650
+the one it's the only
+one that gets to define
+
+399
+00:26:26.920 --> 00:26:31.480
+and to version what an
+order accepted events looks like
+
+400
+00:26:32.950 --> 00:26:36.610
+in a web services world,
+where we have collars and
+
+401
+00:26:36.670 --> 00:26:39.730
+call leaves, and that those
+colors can call others in
+
+402
+00:26:39.730 --> 00:26:45.240
+turn pretty much any web
+service use any structure that
+
+403
+00:26:45.240 --> 00:26:48.630
+they want. And it's harder
+to pin down who owns
+
+404
+00:26:48.630 --> 00:26:52.350
+this and who gets to
+version this, right? So that,
+
+405
+00:26:52.530 --> 00:26:56.130
+that model of thinking of
+saying, no, you own this.
+
+406
+00:26:56.880 --> 00:27:00.030
+So it's your responsibility to
+version it. And not only
+
+407
+00:27:00.030 --> 00:27:02.640
+that, if you're the, if
+it's your responsibility to diversion,
+
+408
+00:27:02.640 --> 00:27:05.850
+it, it's your responsibility to
+version it in a backwards
+
+409
+00:27:05.850 --> 00:27:10.530
+compatible way. So once you
+have that throat to choke,
+
+410
+00:27:11.700 --> 00:27:16.020
+everybody tends to play along
+quite a bit better than
+
+411
+00:27:16.140 --> 00:27:19.080
+in a classical web service
+style of approach where everybody
+
+412
+00:27:19.080 --> 00:27:22.200
+can say, no, it's not
+me, it's him. No, I
+
+413
+00:27:22.200 --> 00:27:24.570
+changed my web service, but
+he didn't change his web
+
+414
+00:27:24.570 --> 00:27:28.740
+service. And you can never
+really say the buck stops
+
+415
+00:27:28.740 --> 00:27:32.250
+here because anybody can call
+anybody in web services with
+
+416
+00:27:32.250 --> 00:27:36.600
+published subscribed. There is only
+one publisher for a given
+
+417
+00:27:36.720 --> 00:27:39.150
+there's only one logical publisher
+for a given kind of
+
+418
+00:27:39.150 --> 00:27:44.730
+event. And they're responsible for
+that. So that's more the
+
+419
+00:27:44.970 --> 00:27:50.880
+out the organizational aspects of
+versioning, the technical aspect of
+
+420
+00:27:50.880 --> 00:27:55.800
+versioning that and service Busta,
+something quite interesting with is
+
+421
+00:27:55.830 --> 00:28:00.720
+that it allows you to
+find messages as interfaces only,
+
+422
+00:28:01.800 --> 00:28:05.280
+and not as a, not
+just as classes. Now, the
+
+423
+00:28:05.280 --> 00:28:09.840
+nice thing about interfaces is
+that you've got multiple inheritance
+
+424
+00:28:10.230 --> 00:28:14.070
+or interfaces and you don't
+have them for classes. But
+
+425
+00:28:14.070 --> 00:28:19.170
+when we think about messages
+or events, there's absolutely no
+
+426
+00:28:19.170 --> 00:28:23.670
+reason that we would stop
+ourselves from saying, I have
+
+427
+00:28:23.670 --> 00:28:28.260
+a new event, which means
+both event a and event
+
+428
+00:28:28.290 --> 00:28:32.220
+B occurred. In other words,
+I want to represent an
+
+429
+00:28:32.250 --> 00:28:37.530
+is a relationship between between
+one new event and two
+
+430
+00:28:37.530 --> 00:28:42.510
+preexisting events. What that means
+is that when I publish
+
+431
+00:28:42.840 --> 00:28:47.790
+this new events, I'll previous
+subscribers of event a will
+
+432
+00:28:47.790 --> 00:28:51.000
+receive it and I'll preview
+subscribers of event. He will
+
+433
+00:28:51.000 --> 00:28:54.000
+receive it as well. In
+other words, I don't create
+
+434
+00:28:54.030 --> 00:28:57.630
+a routing problem saying, well,
+you have to inherit from
+
+435
+00:28:57.630 --> 00:29:00.270
+only one. And then you're
+going to have to do
+
+436
+00:29:00.270 --> 00:29:04.260
+composition for the other, which
+means you're going to need
+
+437
+00:29:04.260 --> 00:29:07.680
+a content based router to
+open up that message, take
+
+438
+00:29:07.680 --> 00:29:10.650
+out the composed part and
+route it to the previous
+
+439
+00:29:10.650 --> 00:29:15.810
+subscribers. So the fact that
+we can use interfaces in
+
+440
+00:29:15.810 --> 00:29:20.130
+order to describe messages in
+order to describe events, helps
+
+441
+00:29:20.130 --> 00:29:25.020
+us prevent a lot of
+versioning problems and routing problems,
+
+442
+00:29:25.380 --> 00:29:28.920
+especially as the system grows
+and we want to represent
+
+443
+00:29:28.920 --> 00:29:33.950
+more complex relationships. Very cool.
+Very cool. Yeah. The composition
+
+444
+00:29:33.950 --> 00:29:37.760
+of messages, as well as
+identity is it's been always
+
+445
+00:29:37.760 --> 00:29:42.460
+been challenging and that the
+interface does have kind of
+
+446
+00:29:42.460 --> 00:29:46.800
+an elegant way of, of,
+of both handling composition and
+
+447
+00:29:46.810 --> 00:29:49.660
+kind of tagging a message
+with information. Can you, can
+
+448
+00:29:49.660 --> 00:29:53.890
+you annotate these, these messages?
+Can you add metadata, like
+
+449
+00:29:53.890 --> 00:29:56.860
+in the form of attributes
+or would that be inappropriate?
+
+450
+00:29:57.450 --> 00:30:00.780
+The, the, the data is,
+is just the properties and
+
+451
+00:30:00.780 --> 00:30:05.010
+the interface. So if you
+want to define an additional
+
+452
+00:30:05.010 --> 00:30:09.570
+property just to find an
+additional property, though, I'm guessing
+
+453
+00:30:09.570 --> 00:30:12.870
+that the, the in terms
+of annotation, I'm thinking you're
+
+454
+00:30:12.870 --> 00:30:17.280
+meaning something else. Well, I
+mean, hands that aren't necessarily
+
+455
+00:30:17.280 --> 00:30:20.580
+a part of the business
+process maybe. And when I
+
+456
+00:30:20.580 --> 00:30:22.920
+think of an attribute of
+something, it's, I always describe
+
+457
+00:30:22.920 --> 00:30:26.040
+it as a posted note,
+which is like something that's
+
+458
+00:30:26.070 --> 00:30:29.640
+maybe outside the usual running
+of the, of the business.
+
+459
+00:30:29.850 --> 00:30:32.070
+You know, when someone hands
+you a whatever request on
+
+460
+00:30:32.070 --> 00:30:34.890
+a piece of paper, that
+is a form that they've
+
+461
+00:30:34.890 --> 00:30:36.780
+all agreed on and they
+might add a post it
+
+462
+00:30:36.780 --> 00:30:40.140
+note that is some additional
+bit of information that might
+
+463
+00:30:40.140 --> 00:30:43.320
+be required. So the way
+that you do that within
+
+464
+00:30:43.320 --> 00:30:47.610
+service bus is using headers,
+because w what you've defined
+
+465
+00:30:47.640 --> 00:30:50.970
+that this, this posted note
+is not an inherent part
+
+466
+00:30:50.970 --> 00:30:55.740
+of the structure of this
+interface. It's something that I
+
+467
+00:30:55.740 --> 00:30:57.810
+may put on. I may
+not put on. I may
+
+468
+00:30:57.810 --> 00:31:02.220
+put it on a bunch
+of instances of messages. So
+
+469
+00:31:02.220 --> 00:31:04.800
+when you're sending a message,
+or when you're publishing a
+
+470
+00:31:04.800 --> 00:31:10.140
+message, you can add headers,
+regular string value pairs, and
+
+471
+00:31:10.380 --> 00:31:14.670
+put whatever you want in
+there. And obviously that something
+
+472
+00:31:14.670 --> 00:31:17.430
+needs to be on the
+other side to look at
+
+473
+00:31:17.430 --> 00:31:21.690
+those headers and decide what
+to do with them. But,
+
+474
+00:31:21.750 --> 00:31:24.340
+but that's the facility that
+you'd use in order to,
+
+475
+00:31:24.340 --> 00:31:29.760
+to do your post it
+notes. One of the questions
+
+476
+00:31:29.760 --> 00:31:32.250
+I wanted to ask was
+when you have really, really
+
+477
+00:31:32.250 --> 00:31:34.650
+large systems, like when you
+put end service bus into
+
+478
+00:31:34.650 --> 00:31:37.320
+a much larger system, I
+can, I can visualize the
+
+479
+00:31:37.320 --> 00:31:42.090
+distribution of the messages within
+physical process, but when you
+
+480
+00:31:42.090 --> 00:31:46.080
+have, you know, 40 or
+50 machines, what's doing the
+
+481
+00:31:46.080 --> 00:31:49.410
+distribution distribution part of the,
+of the messages. And how
+
+482
+00:31:49.410 --> 00:31:53.220
+does that, how does that
+work? I mean, machines go
+
+483
+00:31:53.220 --> 00:31:55.200
+up machines, go down, you've
+got a large number of
+
+484
+00:31:55.200 --> 00:31:59.000
+machines in a farm. You
+know, things happen in, in,
+
+485
+00:31:59.000 --> 00:32:01.200
+in the more systems that
+you have, what kind of,
+
+486
+00:32:01.530 --> 00:32:03.360
+how, how is the robustness
+handled and how is the
+
+487
+00:32:03.360 --> 00:32:08.750
+distribution handle of the, of
+the messages? Okay. So the,
+
+488
+00:32:08.750 --> 00:32:12.120
+the transport that's used for
+machine to machine communication and
+
+489
+00:32:12.120 --> 00:32:17.250
+in service bus, or let's
+say that the, the, the
+
+490
+00:32:17.250 --> 00:32:21.240
+strongest one that comes out
+of the box. So there
+
+491
+00:32:21.240 --> 00:32:24.430
+is the ability to plug
+in others instead is that
+
+492
+00:32:24.430 --> 00:32:31.170
+MSM queue based transport MSMQ,
+and just like WCF uses
+
+493
+00:32:31.170 --> 00:32:35.790
+MSMQ for durable messaging and
+service bus uses emphasis on
+
+494
+00:32:35.790 --> 00:32:39.440
+cue for verbal messaging. So
+that's the way that we
+
+495
+00:32:39.440 --> 00:32:44.240
+handle scenarios, where one machine
+is trying to send a
+
+496
+00:32:44.240 --> 00:32:48.890
+message to another. And that
+machine is down. What happens
+
+497
+00:32:48.890 --> 00:32:50.690
+at them as in queue
+level is just that, that
+
+498
+00:32:50.690 --> 00:32:55.700
+message weights on the sending
+machine until the target machine
+
+499
+00:32:55.700 --> 00:33:00.050
+comes back up again. But
+this doesn't lock the process
+
+500
+00:33:00.500 --> 00:33:04.190
+that asks to send the
+message. So that's in terms
+
+501
+00:33:04.220 --> 00:33:08.120
+of the physical, moving the
+message from one machine to
+
+502
+00:33:08.120 --> 00:33:13.400
+another, under all sorts of
+failure scenarios. When we want
+
+503
+00:33:13.400 --> 00:33:18.470
+to talk about robustness in
+a broader system perspective, then
+
+504
+00:33:18.470 --> 00:33:23.240
+we have to start connecting
+messaging and friends actions and
+
+505
+00:33:23.240 --> 00:33:28.910
+business logic together. So let's
+say that we had a
+
+506
+00:33:28.910 --> 00:33:33.860
+scenario where someone published an
+event that said order accepted,
+
+507
+00:33:34.520 --> 00:33:39.140
+and we're the billing service
+and that message that we're
+
+508
+00:33:39.140 --> 00:33:43.220
+subscribed to appears in our
+queue, and we start processing
+
+509
+00:33:43.220 --> 00:33:45.020
+it. So we take the
+message out to the queue.
+
+510
+00:33:45.770 --> 00:33:48.590
+We start running some business
+logic, we go write some
+
+511
+00:33:48.590 --> 00:33:53.150
+data to the database, and
+then our machine crashes that
+
+512
+00:33:53.330 --> 00:33:56.120
+this can happen no matter
+what we're doing, whether we're
+
+513
+00:33:56.120 --> 00:33:59.150
+using in service bus or
+not. The thing that we'd
+
+514
+00:33:59.150 --> 00:34:02.150
+like to have happened is
+that while the database is
+
+515
+00:34:02.150 --> 00:34:04.490
+smart, it knows to roll
+back. If we didn't commit
+
+516
+00:34:04.490 --> 00:34:09.110
+our transaction. And when our
+machine comes back up again,
+
+517
+00:34:09.170 --> 00:34:11.570
+the database is going to
+be in a consistent state.
+
+518
+00:34:12.380 --> 00:34:19.160
+However, what tends to happen
+specifically if you're using HTTP,
+
+519
+00:34:19.880 --> 00:34:25.400
+is that, well, the order
+accepted event disappeared, you forgot
+
+520
+00:34:25.400 --> 00:34:29.960
+about it because you crashed.
+However, when you use MSMQ
+
+521
+00:34:30.740 --> 00:34:36.470
+and the transaction that you're
+using, it spends both the
+
+522
+00:34:36.470 --> 00:34:41.360
+queue and your database processing,
+as well as the sending
+
+523
+00:34:42.110 --> 00:34:46.850
+of additional messages. You've got
+a much, a much broader
+
+524
+00:34:46.850 --> 00:34:50.600
+perspective of unit of work.
+In other words, we need
+
+525
+00:34:50.600 --> 00:34:53.390
+to make sure that we
+were able to both write
+
+526
+00:34:53.390 --> 00:34:56.690
+everything that we needed to
+the database. We are, we
+
+527
+00:34:56.690 --> 00:34:59.510
+have finished all our processing
+in terms of sending additional
+
+528
+00:34:59.510 --> 00:35:03.890
+messages and only then will
+the original message also disappear.
+
+529
+00:35:04.910 --> 00:35:08.630
+So that way, no matter
+what crashes at which point
+
+530
+00:35:08.630 --> 00:35:14.330
+in time, nothing ever gets
+inconsistent, but this is, this
+
+531
+00:35:14.330 --> 00:35:18.200
+is a core piece of
+functionality that making sure you
+
+532
+00:35:18.200 --> 00:35:20.540
+do this the right way.
+And there are all sorts
+
+533
+00:35:20.540 --> 00:35:23.780
+of scenarios that you have
+to take care of as
+
+534
+00:35:23.780 --> 00:35:26.810
+well. That include things like,
+well, if we have a
+
+535
+00:35:26.810 --> 00:35:30.740
+message that we can de
+serialize, that always causes an
+
+536
+00:35:30.740 --> 00:35:35.570
+exception, we don't want to
+get stuck retrying that message
+
+537
+00:35:35.600 --> 00:35:39.780
+forever. So please a message
+handling, being able to detect
+
+538
+00:35:40.350 --> 00:35:43.140
+the number of times that
+we failed processing a given
+
+539
+00:35:43.140 --> 00:35:46.740
+message, and then moving that
+to some different queue is
+
+540
+00:35:46.740 --> 00:35:49.890
+also a core capability. That's
+an in service bus. So
+
+541
+00:35:49.890 --> 00:35:54.570
+that's how we maintain robustness
+and reliability at the single
+
+542
+00:35:54.570 --> 00:35:59.520
+node level, which makes sure
+that we maintain consistency at
+
+543
+00:35:59.910 --> 00:36:03.180
+the local level between, between
+all of the machines in
+
+544
+00:36:03.180 --> 00:36:06.510
+our service and with all
+our partners, trying to do
+
+545
+00:36:06.510 --> 00:36:09.840
+this kind of stuff over
+HTTP with Costco web services.
+
+546
+00:36:10.440 --> 00:36:12.270
+We'll really the only way
+that you can do that
+
+547
+00:36:12.300 --> 00:36:16.320
+is by flowing Ws, atomic
+transaction, everywhere, but that makes
+
+548
+00:36:16.320 --> 00:36:19.490
+everything slow as hell. Hmm.
+And yeah, I mean, certainly
+
+549
+00:36:19.490 --> 00:36:21.680
+what I've read about and
+service bus slow is not
+
+550
+00:36:21.680 --> 00:36:26.720
+a problem that you have
+Not really the, the, the
+
+551
+00:36:27.080 --> 00:36:31.310
+in service bus, as a
+transport with all the transactions
+
+552
+00:36:31.310 --> 00:36:35.990
+and durable and XML, serialization,
+things like that. It can
+
+553
+00:36:35.990 --> 00:36:42.560
+fairly easily do per process
+for machine hundreds up to
+
+554
+00:36:42.560 --> 00:36:45.650
+the level of maybe a
+thousand durable, transactional messages a
+
+555
+00:36:45.650 --> 00:36:50.960
+second. But it's more in
+terms of when you design
+
+556
+00:36:51.050 --> 00:36:55.430
+a system, according to these
+principles, then you are able
+
+557
+00:36:55.430 --> 00:37:01.730
+to scale out and achieve
+these benefits in parallel. So
+
+558
+00:37:01.730 --> 00:37:04.400
+having two machines, that would
+be 2000 messages, a second,
+
+559
+00:37:04.400 --> 00:37:08.480
+having 10 machines, that's 10,000
+messages a second. Whereas with
+
+560
+00:37:08.480 --> 00:37:12.470
+classical web services, we just
+end up having more machines,
+
+561
+00:37:12.770 --> 00:37:16.610
+waiting for a response from
+each other, whereas within service
+
+562
+00:37:16.610 --> 00:37:20.000
+bus, because all the communication
+is nonblocking, you don't get
+
+563
+00:37:20.000 --> 00:37:23.000
+into those problems to begin
+with. So w folks can
+
+564
+00:37:23.000 --> 00:37:26.510
+go to end service, bus.com
+to read the documentation and
+
+565
+00:37:26.520 --> 00:37:29.510
+get the downloads and stuff.
+Are there, what are books
+
+566
+00:37:29.510 --> 00:37:32.600
+or talks that you can
+recommend that people can read
+
+567
+00:37:32.630 --> 00:37:36.470
+to start familiarizing themselves with,
+with service buses and how
+
+568
+00:37:36.470 --> 00:37:40.370
+they fit into the ecosystem?
+Well, I've been talking about
+
+569
+00:37:41.210 --> 00:37:44.030
+writing about these patterns for
+a good long time. So
+
+570
+00:37:44.840 --> 00:37:47.300
+people can always go to
+my blog. That's <inaudible> dot
+
+571
+00:37:47.300 --> 00:37:51.230
+com and read up all
+the stuff that I've written
+
+572
+00:37:51.560 --> 00:37:55.400
+over the years. Also recently,
+I was here in Norway,
+
+573
+00:37:55.940 --> 00:37:59.600
+giving talks about how these
+patterns can be used in
+
+574
+00:37:59.600 --> 00:38:04.640
+building a scalable web systems.
+And those talks are now
+
+575
+00:38:05.060 --> 00:38:07.730
+recorded and online. So you
+can take a look at
+
+576
+00:38:07.730 --> 00:38:10.960
+those as well. Those would
+probably be the two best,
+
+577
+00:38:10.980 --> 00:38:14.660
+most immediate resources to go
+to. Very cool. Well, thanks
+
+578
+00:38:14.660 --> 00:38:16.880
+a lot for sitting down
+with me today and explaining
+
+579
+00:38:16.880 --> 00:38:20.930
+a surface bus and answer
+as best. And hopefully I'll
+
+580
+00:38:20.930 --> 00:38:24.020
+get you on our show
+again, to, to share some
+
+581
+00:38:24.020 --> 00:38:26.750
+more of your All right.
+Thanks a lot, Scott. All
+
+582
+00:38:26.750 --> 00:38:29.330
+right. This has been another
+episode of Hansel minutes, and
+
+583
+00:38:29.330 --> 00:38:30.560
+I'll see you again next
+week.
+

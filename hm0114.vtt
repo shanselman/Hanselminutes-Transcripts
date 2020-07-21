@@ -1,0 +1,4912 @@
+WEBVTT FILE
+
+1
+00:00:12.000 --> 00:00:16.770
+From Hanselman it's dot com.
+It's Hansel minutes, a weekly
+
+2
+00:00:16.770 --> 00:00:21.060
+discussion with web developer and
+technologists. Scott Hanselman hosted by
+
+3
+00:00:21.060 --> 00:00:27.060
+Carl Franklin, mrs. Lawrence Ryan announcing show
+number one 14. Recorded live
+
+4
+00:00:27.060 --> 00:00:31.830
+Monday, may 19, 2008. Support
+for Hanselman it's as provided
+
+5
+00:00:31.830 --> 00:00:35.850
+by Tellerik rad controls. The
+most comprehensive suite of components
+
+6
+00:00:35.850 --> 00:00:45.570
+for windows forms and asp.net
+web applications. online@wwwdottelerik.com. Support is
+
+7
+00:00:45.570 --> 00:00:50.430
+also provided by.net developers journal
+the world's leading.net developer magazine
+
+8
+00:00:50.640 --> 00:00:56.580
+online at www dot <inaudible>
+dot com. In this episode,
+
+9
+00:00:56.580 --> 00:01:02.960
+Scott talks website scaling with
+Richard Campbell. Hi, this is Scott
+
+10
+00:01:02.960 --> 00:01:05.000
+Hanselman and this is another
+episode of Hansel minutes. And
+
+11
+00:01:05.000 --> 00:01:07.610
+I'm sitting here at dev
+teach Toronto with my good
+
+12
+00:01:07.610 --> 00:01:10.880
+friend, Richard Campbell. How are you,
+sir? A legendary Richard. Oh,
+
+13
+00:01:10.880 --> 00:01:12.560
+well, thank you very much.
+I think a little more
+
+14
+00:01:12.560 --> 00:01:14.240
+legendary to me. I, last
+time I looked you were
+
+15
+00:01:14.240 --> 00:01:17.720
+keynoting. Not me. I'll keep
+keynoting is funny because it's
+
+16
+00:01:17.720 --> 00:01:20.690
+the earliest talk of the
+day. It's the shortest talk
+
+17
+00:01:20.690 --> 00:01:22.550
+of the day. I think
+that's what most people look
+
+18
+00:01:22.550 --> 00:01:25.280
+for in a keynote brevity
+short and early, so I
+
+19
+00:01:25.280 --> 00:01:27.860
+can sleep through it. That's
+exactly what I gave to
+
+20
+00:01:27.860 --> 00:01:31.970
+people. So we were talking
+about asp.net scalability earlier, and
+
+21
+00:01:31.970 --> 00:01:34.190
+I said, well, gosh, Richard,
+that's all we did at
+
+22
+00:01:34.190 --> 00:01:36.770
+my last company. It was
+make big stuff and see
+
+23
+00:01:36.770 --> 00:01:38.450
+if we could make it
+bigger. And I know that's
+
+24
+00:01:38.450 --> 00:01:40.640
+what you're working on right
+now. So let's talk about
+
+25
+00:01:41.270 --> 00:01:44.300
+making big applications. When I
+think we take it from
+
+26
+00:01:44.300 --> 00:01:46.130
+a slightly different angle because
+we're busy trying to find
+
+27
+00:01:46.130 --> 00:01:49.010
+ways to put that scalability
+into an appliance, which is
+
+28
+00:01:49.010 --> 00:01:51.020
+really interesting when you first
+told me about the stuff
+
+29
+00:01:51.020 --> 00:01:52.970
+that you're working on. I
+was like, Oh, okay, this
+
+30
+00:01:52.970 --> 00:01:55.370
+is a module I install,
+right? This is an HTTP
+
+31
+00:01:55.370 --> 00:01:57.950
+module, right? No, no. This
+is a rack. It's a
+
+32
+00:01:57.950 --> 00:01:59.900
+pizza box that you put
+into the rack and you
+
+33
+00:01:59.900 --> 00:02:01.820
+stick it in front of
+well, and it's the location
+
+34
+00:02:01.820 --> 00:02:04.010
+is came, became a key
+part of the whole equation
+
+35
+00:02:04.010 --> 00:02:06.170
+that, that made a big
+difference, the way things go.
+
+36
+00:02:06.200 --> 00:02:09.710
+But this is not what
+scalability is all about either.
+
+37
+00:02:09.710 --> 00:02:11.930
+I think scalability really comes
+down to thinking through the
+
+38
+00:02:11.930 --> 00:02:13.850
+problem. I think it's a
+very different way to think
+
+39
+00:02:13.850 --> 00:02:16.070
+about your software. When you
+talk about how is this
+
+40
+00:02:16.070 --> 00:02:18.230
+going to behave with 10,000
+people on it at once.
+
+41
+00:02:18.350 --> 00:02:20.870
+Right. Right. I think that
+for a lot of people,
+
+42
+00:02:20.930 --> 00:02:23.960
+you know, one web server
+and a nice beefy SQL
+
+43
+00:02:23.960 --> 00:02:28.040
+server is enough. I'm amazed
+at how many, quite big
+
+44
+00:02:28.040 --> 00:02:30.920
+sites I've found where that's
+exactly the scenario where that's
+
+45
+00:02:30.920 --> 00:02:33.410
+all, it's on the machine,
+there's the para machines and
+
+46
+00:02:33.410 --> 00:02:35.540
+they're doing the job well
+and there's scale. And then
+
+47
+00:02:35.540 --> 00:02:40.100
+there's a robustness. There's fail
+over it. Reliability liability. I'm
+
+48
+00:02:40.100 --> 00:02:44.480
+consistently surprised at how many
+sites don't have a geographic
+
+49
+00:02:44.480 --> 00:02:47.270
+fail over. Right. So almost
+working on a banking software,
+
+50
+00:02:47.540 --> 00:02:50.720
+there was the here's the,
+the data center. And then
+
+51
+00:02:50.720 --> 00:02:53.360
+there's the data center, 150
+miles away in case this
+
+52
+00:02:53.360 --> 00:02:56.960
+one gets Newt. Yeah. The
+whole disaster recovery model of
+
+53
+00:02:57.230 --> 00:03:00.330
+how do we swap over
+in a hurricane? Yep. And
+
+54
+00:03:00.400 --> 00:03:01.900
+we actually had that. We
+were, had a bank in
+
+55
+00:03:01.900 --> 00:03:05.760
+Louisiana. Yeah. For Katrina. I
+did a lot of work
+
+56
+00:03:05.790 --> 00:03:09.120
+with companies like that through
+the Caribbean. And that was
+
+57
+00:03:09.120 --> 00:03:12.720
+our normal pattern of behavior
+was to always have typically
+
+58
+00:03:12.720 --> 00:03:15.420
+where's Bermuda and somewhere else,
+because only one or the
+
+59
+00:03:15.420 --> 00:03:17.130
+other would be hit with
+hurricane at any given time.
+
+60
+00:03:17.820 --> 00:03:20.880
+That's such a calculated. Yeah.
+It was an interesting thing.
+
+61
+00:03:20.910 --> 00:03:23.760
+And for whatever reason, a
+lot of the math of
+
+62
+00:03:24.030 --> 00:03:26.940
+hurricanes is still in my
+head to this day, because
+
+63
+00:03:27.300 --> 00:03:29.160
+for eight months out of
+the year, that's what we
+
+64
+00:03:29.160 --> 00:03:32.280
+thought about what happened. Watching
+the CNN storm, watching you
+
+65
+00:03:32.280 --> 00:03:33.990
+going, Oh, that poor guy
+in his data center. I
+
+66
+00:03:33.990 --> 00:03:36.780
+can just see that I
+actually was. I always watched
+
+67
+00:03:36.780 --> 00:03:39.510
+the NOA website because they
+were the ones with the
+
+68
+00:03:39.510 --> 00:03:41.490
+best predictions and the software
+has gotten better and better
+
+69
+00:03:41.490 --> 00:03:44.070
+every year, but there's only
+so many hurricanes and you
+
+70
+00:03:44.070 --> 00:03:46.140
+saw them coming from a
+fairways away and you knew,
+
+71
+00:03:46.230 --> 00:03:47.790
+you know, roughly where it
+was. And there was just
+
+72
+00:03:47.790 --> 00:03:50.940
+a fairly standard conversation that
+went on about which point
+
+73
+00:03:50.940 --> 00:03:53.580
+do we switch sites? And
+we do it well in
+
+74
+00:03:53.580 --> 00:03:56.130
+advance and typically do stuff
+like fly all the hard
+
+75
+00:03:56.130 --> 00:03:58.380
+drives out. Really? You do
+that ahead of time. Oh,
+
+76
+00:03:58.380 --> 00:04:00.720
+absolutely. We'd be, we would
+be where the data center
+
+77
+00:04:00.720 --> 00:04:03.570
+would be down well before
+the hurricane got there. All
+
+78
+00:04:03.570 --> 00:04:06.120
+right. Well, let's, let's get
+back to basics. So when
+
+79
+00:04:06.120 --> 00:04:10.350
+scaling an asp.net website, most
+people in my experience will
+
+80
+00:04:10.350 --> 00:04:13.180
+take their, their one machine
+and their one SQL server.
+
+81
+00:04:13.180 --> 00:04:17.220
+And then they'll just start
+adding style, web servers, just
+
+82
+00:04:17.220 --> 00:04:21.630
+adding stuff. I believe that
+that they start out with,
+
+83
+00:04:21.990 --> 00:04:23.730
+well, as soon as we
+have performance problems, we'll just
+
+84
+00:04:23.730 --> 00:04:25.620
+add a web server and
+it's always in the context
+
+85
+00:04:25.620 --> 00:04:28.560
+of a performance problem. Site's
+too slow. Yeah. I never
+
+86
+00:04:28.560 --> 00:04:30.630
+hear anybody come to me
+and say, I think I'm
+
+87
+00:04:30.630 --> 00:04:33.810
+having scaling issues. It's always,
+site's too slow. I want
+
+88
+00:04:33.810 --> 00:04:35.790
+to add another way. So
+that's interesting. So what is
+
+89
+00:04:35.790 --> 00:04:38.010
+the difference between a performance
+problem and a scale problem?
+
+90
+00:04:38.310 --> 00:04:44.400
+I think most people see
+scaling problems manifest as perceived
+
+91
+00:04:44.400 --> 00:04:47.910
+performance problems. Exactly. During rush
+hour, you know, whenever the
+
+92
+00:04:47.910 --> 00:04:50.910
+site is busy, the site's
+too slow, right. And that's
+
+93
+00:04:50.910 --> 00:04:53.640
+the difference between a real
+performance problem where one person
+
+94
+00:04:53.640 --> 00:04:56.940
+using it, it's too slow
+versus, you know, thousands of
+
+95
+00:04:56.940 --> 00:04:58.710
+people using it. So there's
+certain times of the day
+
+96
+00:04:58.740 --> 00:05:00.960
+it's too slow and that's
+really how they see the
+
+97
+00:05:00.960 --> 00:05:03.840
+thing. And, but there's this
+belief that if I got
+
+98
+00:05:03.840 --> 00:05:06.120
+another web server, everything would
+be fine. And I think
+
+99
+00:05:06.120 --> 00:05:09.510
+that illusion exists really for
+the one server people. Right.
+
+100
+00:05:09.510 --> 00:05:12.450
+Anybody who's actually gone through
+this process quickly finds out.
+
+101
+00:05:12.630 --> 00:05:15.870
+Yeah. It's not quite that
+easy. Yeah. I've actually been
+
+102
+00:05:15.870 --> 00:05:20.010
+doing scale for a lot
+longer than, than most people
+
+103
+00:05:20.010 --> 00:05:22.920
+because I, I got put
+into it in the, in
+
+104
+00:05:22.920 --> 00:05:26.130
+the nineties during the bubble.
+Right. We didn't expect that
+
+105
+00:05:26.130 --> 00:05:27.150
+we would ever have to
+deal with it. It was
+
+106
+00:05:27.150 --> 00:05:34.890
+kind of a trial by
+fire. And I was working@acompanycalledeighthundreddotcomandeighthundreddotcomgotpurchasedbyoverstock.com.
+
+107
+00:05:35.520 --> 00:05:36.960
+They're all kind of part
+of that thing. I think
+
+108
+00:05:36.960 --> 00:05:38.490
+it's, I think that's how
+it was. I'm not sure
+
+109
+00:05:38.490 --> 00:05:40.320
+all the dot coms shoot
+each other up. I'll probably
+
+110
+00:05:40.320 --> 00:05:41.700
+get an email from someone
+who grew up in the
+
+111
+00:05:41.700 --> 00:05:43.020
+States. He did it all
+wrong. That's not how it
+
+112
+00:05:43.020 --> 00:05:45.120
+worked out, but I was
+part of the four or
+
+113
+00:05:45.120 --> 00:05:48.150
+five guys that worked on
+800 dot coms website and
+
+114
+00:05:48.750 --> 00:05:52.290
+DVDs had just come out
+and we said, let's have
+
+115
+00:05:52.290 --> 00:05:57.090
+a promotion, three DVDs For
+a dollar, a wow. Back
+
+116
+00:05:57.110 --> 00:06:02.260
+in like 1999. Yeah. It
+was all a classic ASP
+
+117
+00:06:02.680 --> 00:06:05.830
+commerce server. You know, it
+was a, you know, Netscape
+
+118
+00:06:05.830 --> 00:06:08.770
+for, Oh man. And I
+was in there optimizing tables
+
+119
+00:06:08.770 --> 00:06:12.100
+for perception of speed and
+stuff like that. But what
+
+120
+00:06:12.100 --> 00:06:14.950
+was really interesting about this
+problem is that what is
+
+121
+00:06:14.950 --> 00:06:18.900
+the typical behavior of a
+person on your site, Right.
+
+122
+00:06:18.940 --> 00:06:20.770
+Be asking yourself that, just
+sort of, how do people
+
+123
+00:06:20.770 --> 00:06:23.440
+go through your site? What
+do they hit? Where are
+
+124
+00:06:23.440 --> 00:06:25.810
+they waiting? What do they
+look at? You know, what
+
+125
+00:06:25.810 --> 00:06:29.020
+are the touch points? So
+simply spoken in this instance,
+
+126
+00:06:29.590 --> 00:06:34.180
+a typical experience on eight
+hundred.com was about 95% browsing.
+
+127
+00:06:34.420 --> 00:06:38.920
+Right? Sure. Read only type
+things and then 5% getting
+
+128
+00:06:38.920 --> 00:06:41.710
+through the purchase process. Right.
+So then the argument is,
+
+129
+00:06:41.890 --> 00:06:44.440
+well, which one of those
+is more important? Well, they're
+
+130
+00:06:44.440 --> 00:06:48.640
+arguably both equally important, but
+the purse, the perspective that
+
+131
+00:06:48.640 --> 00:06:50.800
+we had was once they
+really want to give us
+
+132
+00:06:50.920 --> 00:06:53.230
+their credit card, it would
+be our job to do
+
+133
+00:06:53.230 --> 00:06:56.980
+whatever we can to keep
+that snappy executive to not
+
+134
+00:06:56.980 --> 00:07:00.340
+screw that up. Right. So
+now change the scenario to
+
+135
+00:07:00.880 --> 00:07:06.070
+three DVDs for a dollar.
+What happens? Well, browsing happens.
+
+136
+00:07:06.430 --> 00:07:09.340
+And then suddenly the, the
+entire experience on the site
+
+137
+00:07:09.490 --> 00:07:13.240
+flips and 5% of the
+people are looking and everyone
+
+138
+00:07:13.240 --> 00:07:18.010
+else just went, Yeah. Entire
+scalability model for the site
+
+139
+00:07:18.010 --> 00:07:22.630
+completely changed. And we started
+freaking out and it was,
+
+140
+00:07:22.810 --> 00:07:25.420
+And in hindsight, completely self
+evident that this shouldn't have
+
+141
+00:07:25.420 --> 00:07:28.300
+happened. Yeah. But at the
+time when it's like three
+
+142
+00:07:28.300 --> 00:07:30.520
+in the morning and it's
+like, okay, it'll be a,
+
+143
+00:07:30.520 --> 00:07:32.290
+you know, in two hours,
+it'll be, it'll be eight
+
+144
+00:07:32.290 --> 00:07:34.390
+o'clock on in New York. And
+they're going to start again.
+
+145
+00:07:34.570 --> 00:07:36.670
+Yeah. Cause this was one
+of those things where it
+
+146
+00:07:36.670 --> 00:07:38.530
+was spreading all over the
+net for about a two
+
+147
+00:07:38.530 --> 00:07:40.510
+or three week period. I
+was like, Oh my God.
+
+148
+00:07:40.930 --> 00:07:44.830
+<inaudible> yeah, it's crazy. And
+they were coming up with
+
+149
+00:07:44.830 --> 00:07:49.510
+ways to like cheat us,
+right. Multiple, multiple shippings to
+
+150
+00:07:49.510 --> 00:07:51.490
+one address and all that.
+Yeah. Trying to find ways
+
+151
+00:07:51.490 --> 00:07:54.580
+to get deals. Now, were
+you doing the, the, the
+
+152
+00:07:54.710 --> 00:07:57.100
+specialization thing where all of
+your purchasing was on a
+
+153
+00:07:57.100 --> 00:07:59.560
+separate set of servers that
+were running under HTPs and
+
+154
+00:07:59.560 --> 00:08:01.450
+that would make sense wouldn't
+it? Yeah. It would make
+
+155
+00:08:01.450 --> 00:08:03.430
+sense. And one of, and
+it's immediately, we were talking
+
+156
+00:08:03.430 --> 00:08:05.140
+about this something, and this
+is one of those typical
+
+157
+00:08:05.140 --> 00:08:07.960
+things is we, we specialize
+so that we can scale
+
+158
+00:08:07.960 --> 00:08:09.640
+independently. So if you said,
+Hey, I want the purchase
+
+159
+00:08:09.640 --> 00:08:11.680
+process to be really fast.
+It's great. I'll create some
+
+160
+00:08:11.680 --> 00:08:14.530
+HTPs servers. That's all they'll
+do. And they'll be really
+
+161
+00:08:14.530 --> 00:08:16.750
+snapped because they're not as
+busy. So that's the first
+
+162
+00:08:16.750 --> 00:08:19.240
+thing that we did. We,
+everything originally had been under
+
+163
+00:08:19.690 --> 00:08:23.140
+www.eighthundred.com. Right. And then we
+broke it out. We broke
+
+164
+00:08:23.140 --> 00:08:25.240
+it out actually into three
+different kinds of servers. We
+
+165
+00:08:25.240 --> 00:08:28.210
+had our main browsing servers.
+That's the 95% of the
+
+166
+00:08:28.210 --> 00:08:31.240
+core reading stuff. Right. And
+that was not HTTPS. And
+
+167
+00:08:31.240 --> 00:08:34.900
+we took those pages that
+showed the free DVDs and
+
+168
+00:08:34.900 --> 00:08:38.290
+made them static. Good. Now
+that sounds cheesy. Oh no,
+
+169
+00:08:38.290 --> 00:08:41.410
+but brilliant. Really smart to
+do rather than Even bothering
+
+170
+00:08:41.410 --> 00:08:44.800
+to cash them. Yeah. When
+the site would go down,
+
+171
+00:08:44.920 --> 00:08:47.350
+it would have trouble getting
+back up because one of
+
+172
+00:08:47.350 --> 00:08:48.940
+the things that people don't
+realize when the site's being
+
+173
+00:08:48.970 --> 00:08:53.140
+pounded on is that you
+hit somebody and they fall
+
+174
+00:08:53.800 --> 00:08:56.910
+and under a, the underload
+you expect that guy to
+
+175
+00:08:56.910 --> 00:08:59.010
+not only be able to
+get back up again, but
+
+176
+00:08:59.010 --> 00:09:01.650
+to be able to get
+back up while still being
+
+177
+00:09:01.650 --> 00:09:06.060
+beaten. Yes. And, and, and
+still Recover some to recover.
+
+178
+00:09:06.620 --> 00:09:08.990
+So it is so much
+more difficult to get up
+
+179
+00:09:09.020 --> 00:09:12.110
+once you have stumbled. Yeah.
+And I do find that
+
+180
+00:09:12.110 --> 00:09:16.400
+IIS goes into a tailspin.
+I asked, has always done
+
+181
+00:09:16.400 --> 00:09:19.130
+that. And a lot of
+application servers where there's a
+
+182
+00:09:19.130 --> 00:09:22.490
+process of startup, but nothing
+can start up and start
+
+183
+00:09:22.490 --> 00:09:25.580
+serving pages faster than just
+a website dedicated to serving
+
+184
+00:09:25.580 --> 00:09:29.390
+static files. So we basically
+code gen a couple of
+
+185
+00:09:29.390 --> 00:09:33.110
+times a day as stock
+changed these DVD pages, just
+
+186
+00:09:33.110 --> 00:09:36.890
+those pages. Right. Did some
+redirects. So we had, those
+
+187
+00:09:36.890 --> 00:09:39.290
+pages will be static for
+a little bit. We had
+
+188
+00:09:39.980 --> 00:09:43.460
+a server farm that was
+just the shopping cart and
+
+189
+00:09:43.460 --> 00:09:46.760
+the checkout process. Right. And
+then, because it was such
+
+190
+00:09:46.760 --> 00:09:53.150
+an intense product image intensive
+site, we took images dot
+
+191
+00:09:53.180 --> 00:09:56.990
+eight hundred.com moved all of
+the graphics away. Right. So
+
+192
+00:09:56.990 --> 00:09:58.490
+we had a whole farm
+that was dedicated to that.
+
+193
+00:09:58.490 --> 00:10:01.550
+So this was our kind
+of poor man's content distribution
+
+194
+00:10:01.550 --> 00:10:03.890
+networks. Sure. But it's, I
+mean, it's classic tactics of
+
+195
+00:10:03.890 --> 00:10:07.850
+specialization. Yeah. Cause I find
+IAS is dramatically a different
+
+196
+00:10:07.850 --> 00:10:11.600
+product when there's no asp.net
+running on it, you can
+
+197
+00:10:11.600 --> 00:10:14.600
+do things differently. It manages
+memory differently. There's a lot
+
+198
+00:10:14.600 --> 00:10:16.700
+of stuff that changes. If
+you can get, have set
+
+199
+00:10:16.700 --> 00:10:18.770
+up, it just, you're just
+serving images. That's all you're
+
+200
+00:10:18.770 --> 00:10:20.450
+doing. It's actually, that's one
+of the things that I
+
+201
+00:10:20.450 --> 00:10:24.050
+think is really cool about
+a server core is that
+
+202
+00:10:24.050 --> 00:10:27.140
+you can make this tiny,
+tiny, tiny little windows box
+
+203
+00:10:27.210 --> 00:10:29.720
+doesn't even have a gooey,
+nothing doesn't have, you know,
+
+204
+00:10:29.720 --> 00:10:33.890
+has like six modules installed,
+like, you know, a rewrite
+
+205
+00:10:33.890 --> 00:10:35.840
+module and a static image,
+a handler and a cash.
+
+206
+00:10:35.840 --> 00:10:38.690
+And like, that's it. Yep.
+And install none of the
+
+207
+00:10:38.690 --> 00:10:42.170
+other stuff. Yeah. I think
+windows 2008 is much clearer.
+
+208
+00:10:42.170 --> 00:10:45.590
+That IIS can be different.
+Yeah. It's always been that
+
+209
+00:10:45.590 --> 00:10:47.660
+way. But I think people
+don't really understand the, how
+
+210
+00:10:47.930 --> 00:10:51.650
+dramatically different you can make
+IIS when you turn off
+
+211
+00:10:51.650 --> 00:10:53.750
+stuff and strip it down
+to what you really, really
+
+212
+00:10:53.750 --> 00:10:56.030
+need and nothing more One,
+and this is slightly off
+
+213
+00:10:56.030 --> 00:10:58.550
+topic. But the thing, in
+my opinion, that holding Microsoft
+
+214
+00:10:58.550 --> 00:11:00.830
+back on that and that
+respect is that it's still
+
+215
+00:11:00.830 --> 00:11:04.100
+confusing to me on how
+I can buy that. Yeah.
+
+216
+00:11:04.220 --> 00:11:06.880
+I just want to buy
+it and use it. And
+
+217
+00:11:06.880 --> 00:11:08.750
+at the same time they've
+done, I mean, windows, That
+
+218
+00:11:08.750 --> 00:11:10.220
+was an eight, they've made
+it pretty simple to buy
+
+219
+00:11:10.220 --> 00:11:13.430
+there's the core and all
+the different additions. They all
+
+220
+00:11:13.430 --> 00:11:16.340
+sort of come together. But
+again, I don't think people
+
+221
+00:11:16.340 --> 00:11:19.220
+really get what that is.
+I think there's an OEM
+
+222
+00:11:19.220 --> 00:11:22.760
+opportunity there. Folks selling, you
+know, the stripped down core
+
+223
+00:11:22.760 --> 00:11:25.340
+version, IAS web server. I'd
+love to be able to
+
+224
+00:11:25.340 --> 00:11:27.770
+just have a, a regular
+Joe, be able to go
+
+225
+00:11:27.770 --> 00:11:29.690
+and get an ISO and
+run it to disc and
+
+226
+00:11:29.690 --> 00:11:33.140
+have a server core box
+running immediately as a little
+
+227
+00:11:33.140 --> 00:11:35.420
+app server. So he told
+that was one of my
+
+228
+00:11:35.420 --> 00:11:38.840
+war stories. And that was
+gosh, now 10, 11 years
+
+229
+00:11:38.840 --> 00:11:41.510
+ago, You mean, like I
+said, it was talking pre.net,
+
+230
+00:11:41.660 --> 00:11:45.140
+But within.net though, you've got
+view state, you've got session.
+
+231
+00:11:45.140 --> 00:11:47.900
+One of the first things
+that happens when you decide
+
+232
+00:11:47.900 --> 00:11:50.630
+to scale out rather than
+scaling up and buying more
+
+233
+00:11:50.630 --> 00:11:54.550
+hardware is start thinking about
+where is my session state
+
+234
+00:11:54.610 --> 00:11:57.840
+managed? Where's my cash manager.
+Sure. And I think also
+
+235
+00:11:57.840 --> 00:12:02.910
+that getting session out of
+the dotnet memory context and
+
+236
+00:12:02.910 --> 00:12:04.590
+when, as soon as you're
+under any kind of load,
+
+237
+00:12:04.590 --> 00:12:05.910
+and I don't know if
+you've done a lot of
+
+238
+00:12:05.910 --> 00:12:07.320
+research in this area, but
+one of the things that
+
+239
+00:12:07.320 --> 00:12:10.290
+I've come to realize is
+most of these web servers
+
+240
+00:12:10.290 --> 00:12:12.810
+running around out there, which
+are 32 bit, they got
+
+241
+00:12:12.810 --> 00:12:15.030
+four gigs of Ram in
+them. Yeah. When you actually
+
+242
+00:12:15.030 --> 00:12:18.150
+do the math and figure
+out how much memory you've
+
+243
+00:12:18.150 --> 00:12:22.740
+got available to.net in a
+clean configured machine, multi-core four
+
+244
+00:12:22.740 --> 00:12:25.170
+gigs around 32 bed. It
+only comes out to about
+
+245
+00:12:25.200 --> 00:12:30.110
+800 megs of space I
+can use in.net process. Process
+
+246
+00:12:30.110 --> 00:12:32.640
+processes typically purchased what's the
+overhead. I don't know if
+
+247
+00:12:32.640 --> 00:12:35.100
+this is true or not.
+I'm just seeing these yeah.
+
+248
+00:12:35.830 --> 00:12:38.160
+Ended up getting is how
+much, when I'm looking at
+
+249
+00:12:38.160 --> 00:12:39.750
+perf Mont, I'm looking at
+how much can I allocate
+
+250
+00:12:39.750 --> 00:12:43.290
+out before it starts G
+seeing and going reserve it's
+
+251
+00:12:43.290 --> 00:12:45.390
+around 800 megabytes. And I
+think the OS is eight
+
+252
+00:12:45.390 --> 00:12:48.450
+and got a whole bunch
+that, you know, your overall
+
+253
+00:12:48.450 --> 00:12:50.820
+DLL loads, Like there's just
+a bunch of stuff can,
+
+254
+00:12:50.820 --> 00:12:52.770
+so I see what you're
+saying. Not per process really,
+
+255
+00:12:52.770 --> 00:12:54.870
+but yeah. Okay. 800 megs,
+if you had nothing else
+
+256
+00:12:54.870 --> 00:12:58.380
+going, It's the stack. And
+so when you throw session
+
+257
+00:12:58.410 --> 00:13:03.240
+into that space and caching
+into that space yeah. And
+
+258
+00:13:03.240 --> 00:13:05.100
+then you put this thing
+under some load, you run
+
+259
+00:13:05.100 --> 00:13:07.380
+out of memory to hurry.
+It's funny When someone tries
+
+260
+00:13:07.380 --> 00:13:10.650
+to start aggressively caching, whether
+that be output cash or
+
+261
+00:13:10.650 --> 00:13:14.550
+formerly caching, you know, from
+a business perspective, that is
+
+262
+00:13:14.550 --> 00:13:18.120
+that this there's Cartesian product
+That happens. Oh yeah. Oh,
+
+263
+00:13:18.150 --> 00:13:20.490
+I had a, An issue
+on DAS blog a couple
+
+264
+00:13:20.490 --> 00:13:23.760
+of years ago where I
+had a giant archives file.
+
+265
+00:13:23.760 --> 00:13:25.020
+If you go to my
+blog and you click on
+
+266
+00:13:25.020 --> 00:13:28.290
+archives, it's about a half
+Meg, but DAS blog has
+
+267
+00:13:28.290 --> 00:13:30.900
+this feature where we'll localize
+the things that we can
+
+268
+00:13:30.900 --> 00:13:34.410
+for the visitor. So I'll
+show dates German for German
+
+269
+00:13:34.410 --> 00:13:38.130
+viewers, right? Yeah. And what
+was happening was someone would
+
+270
+00:13:38.130 --> 00:13:41.310
+say, Hey, your archives pages
+in German, suddenly what would
+
+271
+00:13:41.310 --> 00:13:44.220
+have happened is that a
+German showed up first. Right.
+
+272
+00:13:44.640 --> 00:13:46.890
+I cashed the page. So
+then I go and say,
+
+273
+00:13:46.920 --> 00:13:49.020
+Oh, well, shoot. I need
+to catch a different copy
+
+274
+00:13:49.020 --> 00:13:51.690
+of the page for each
+person that hits site. Right.
+
+275
+00:13:51.750 --> 00:13:54.360
+We have sufficient traffic if
+sufficient languages, then you think
+
+276
+00:13:54.360 --> 00:13:58.620
+about the 26 or some
+odd number that.net supports of
+
+277
+00:13:58.620 --> 00:14:03.180
+arbitrary languages that they can
+show the date four 26
+
+278
+00:14:03.180 --> 00:14:05.310
+different people from all over
+the world decide to hit
+
+279
+00:14:05.310 --> 00:14:07.410
+the site, each one, getting
+an old cached version of
+
+280
+00:14:07.410 --> 00:14:10.410
+the site. Next thing you
+know, you've just blown 13
+
+281
+00:14:10.410 --> 00:14:13.080
+to 20 Meg Just on
+those cash items for one
+
+282
+00:14:13.080 --> 00:14:15.750
+page. Yeah. Just one page.
+So talking about a war
+
+283
+00:14:15.750 --> 00:14:19.260
+story, just this, this is
+actually early this year I
+
+284
+00:14:19.260 --> 00:14:21.510
+was dealing with and I
+don't do a lot of
+
+285
+00:14:21.510 --> 00:14:24.570
+consulting anymore, but this was
+a favor. And it was
+
+286
+00:14:24.570 --> 00:14:26.220
+in a, it was in
+an unusual place. I'm going
+
+287
+00:14:26.220 --> 00:14:28.900
+to leave out the names
+to protect the guilty. And
+
+288
+00:14:29.190 --> 00:14:33.060
+they had, they had gotten
+the caching hammer. They had
+
+289
+00:14:33.060 --> 00:14:36.120
+gone nuts and cashed every
+page. They could lay their
+
+290
+00:14:36.120 --> 00:14:39.740
+hands on. And, and that's,
+that's a really common, absolutely
+
+291
+00:14:39.750 --> 00:14:43.080
+name as we get into
+this overenthusiastic use of caching.
+
+292
+00:14:43.110 --> 00:14:45.060
+And so the, the behavior
+on the site, and this
+
+293
+00:14:45.060 --> 00:14:47.910
+was an application they installed
+at customer sites. So they'd
+
+294
+00:14:47.910 --> 00:14:51.240
+done this huge caching rev
+and for their biggest customers
+
+295
+00:14:51.410 --> 00:14:54.830
+behavior, they had about a
+thousand users internal for about
+
+296
+00:14:54.830 --> 00:14:57.080
+a half an hour. When
+they from a clean start,
+
+297
+00:14:57.500 --> 00:14:59.960
+the site would clunk. Yeah.
+And then the excuse of
+
+298
+00:14:59.960 --> 00:15:01.840
+course was it's still popular
+in the cash. Don't worry
+
+299
+00:15:01.850 --> 00:15:03.200
+because the cash will get
+all pop. It'll be really
+
+300
+00:15:03.200 --> 00:15:06.320
+fast. And about half an
+hour later, it would be
+
+301
+00:15:06.320 --> 00:15:10.430
+fast for about 10 minutes.
+And then it would freeze
+
+302
+00:15:10.430 --> 00:15:12.530
+for about a minute while
+the garbage collector ran through
+
+303
+00:15:12.530 --> 00:15:14.660
+and threw everything out of
+memory. And then it would
+
+304
+00:15:14.660 --> 00:15:17.500
+clunk for half an hour,
+right? All day long, You
+
+305
+00:15:17.500 --> 00:15:19.840
+set up cash. When you
+set up session, people forget
+
+306
+00:15:19.840 --> 00:15:22.030
+that it's not just as
+easy as putting something in
+
+307
+00:15:22.030 --> 00:15:24.970
+cash. It's about the life
+cycle of that. When's it
+
+308
+00:15:24.970 --> 00:15:26.530
+going to go away? Why
+is it going to go
+
+309
+00:15:26.530 --> 00:15:29.890
+away when it goes away?
+How's it gonna come? And
+
+310
+00:15:30.040 --> 00:15:31.450
+how long is that going
+to take? What is the
+
+311
+00:15:31.450 --> 00:15:34.450
+impact of that? So we
+actually had a great time
+
+312
+00:15:34.510 --> 00:15:37.930
+instrumenting cash items. So how
+many times does this cash
+
+313
+00:15:37.930 --> 00:15:39.700
+item gets hit? How many
+times this cash out and
+
+314
+00:15:39.700 --> 00:15:42.010
+get destroyed? How many times
+does it get repopulated any
+
+315
+00:15:42.010 --> 00:15:45.040
+given day? And just looking
+at the data we got
+
+316
+00:15:45.040 --> 00:15:48.850
+from that and finding out
+this cash item is repopulated
+
+317
+00:15:48.880 --> 00:15:51.340
+pretty much every time it
+gets used, you know, the,
+
+318
+00:15:51.340 --> 00:15:53.620
+the, between the time that
+the first time it's requesting
+
+319
+00:15:53.620 --> 00:15:55.240
+gets cash to the next
+time it's going to get
+
+320
+00:15:55.240 --> 00:15:57.520
+requested again, it will be
+thrown out of cash. Right?
+
+321
+00:15:57.550 --> 00:16:01.120
+Do not cash that. But
+until we actually instrumented all
+
+322
+00:16:01.120 --> 00:16:04.300
+this caching code, we didn't
+know. Right. And I could
+
+323
+00:16:04.300 --> 00:16:07.990
+actually turn around and I
+find good cashing code confuses
+
+324
+00:16:07.990 --> 00:16:11.680
+junior programmers. Yeah. That whole
+does the cash item exist.
+
+325
+00:16:12.550 --> 00:16:15.820
+Right. Test first and then
+already doesn't exist. So now
+
+326
+00:16:15.850 --> 00:16:17.980
+thread blocks. So only one
+person at a time can
+
+327
+00:16:17.980 --> 00:16:19.600
+do this and then check
+to see if the cash
+
+328
+00:16:19.600 --> 00:16:22.060
+item exists again. So in
+case somebody else came in
+
+329
+00:16:22.060 --> 00:16:23.620
+and as I was threatened
+thread, I mean, that's the
+
+330
+00:16:23.620 --> 00:16:27.490
+code that junior devs fix
+over and over again for
+
+331
+00:16:27.490 --> 00:16:30.490
+you. So anytime I can
+eliminate that stuff, right. It's
+
+332
+00:16:30.490 --> 00:16:33.250
+a good thing. It cuts
+down on the problems I've
+
+333
+00:16:33.250 --> 00:16:35.380
+got with other people trying
+to understand it. Or somebody
+
+334
+00:16:35.380 --> 00:16:37.420
+adding a new page that
+relates to a cash item,
+
+335
+00:16:37.420 --> 00:16:39.730
+but forgetting to do expiry
+and on and on and
+
+336
+00:16:39.730 --> 00:16:43.030
+on. So I'm a big
+believer in, can we Lynch
+
+337
+00:16:43.390 --> 00:16:45.430
+as much cash and code
+as possible? Can we avoid
+
+338
+00:16:45.430 --> 00:16:47.020
+it? And can we insert
+it in such a way
+
+339
+00:16:47.020 --> 00:16:49.960
+that we can actually see,
+is this truly providing medicine
+
+340
+00:16:49.960 --> 00:16:51.220
+to us? Yeah. From my
+point of view, I don't
+
+341
+00:16:51.220 --> 00:16:53.320
+feel I should have to
+be writing that kind of
+
+342
+00:16:53.320 --> 00:16:56.650
+code. I like the idea
+of being able to attribute
+
+343
+00:16:56.650 --> 00:16:59.440
+something or Mark something and
+have it handled because this
+
+344
+00:16:59.440 --> 00:17:01.870
+is a common pattern. Yes.
+And any time something is
+
+345
+00:17:01.870 --> 00:17:04.120
+a common pattern, I expect
+the best practice to be
+
+346
+00:17:04.120 --> 00:17:06.700
+embodied within the library. Well,
+I'm glad you think that
+
+347
+00:17:06.700 --> 00:17:09.130
+way, cause I'm making a
+profit. Does that mean this
+
+348
+00:17:09.130 --> 00:17:11.860
+is not an 30 minute
+ad for your product, but
+
+349
+00:17:12.430 --> 00:17:14.720
+I totally agree with you
+that the, you mean the
+
+350
+00:17:14.770 --> 00:17:19.270
+other side of the caching
+equation, there is this whole,
+
+351
+00:17:20.050 --> 00:17:22.120
+I have domain expertise. I
+have a group of people
+
+352
+00:17:22.120 --> 00:17:24.490
+that are being really good
+at building an app. And
+
+353
+00:17:24.490 --> 00:17:28.090
+then suddenly one of the
+items on the feature list
+
+354
+00:17:28.120 --> 00:17:31.090
+is performance. Yeah. And when
+it gets to the top
+
+355
+00:17:31.090 --> 00:17:33.580
+of the list, you need
+it right now. Like it's
+
+356
+00:17:33.580 --> 00:17:35.860
+not like every other feature.
+Yeah. I don't tend to
+
+357
+00:17:35.860 --> 00:17:38.290
+build this stuff in. I
+mean, there's, if you start
+
+358
+00:17:38.290 --> 00:17:40.690
+thinking about performance early on,
+you always get accused of
+
+359
+00:17:40.750 --> 00:17:43.990
+being a premature optimizer. Right.
+Well, and wasting time. And
+
+360
+00:17:43.990 --> 00:17:46.300
+so, and there's merit to
+that. I mean, there is
+
+361
+00:17:46.300 --> 00:17:50.220
+an angle on asp.net that
+it's big is speed of
+
+362
+00:17:50.220 --> 00:17:52.830
+development. And that if you
+don't ship these features, nobody's
+
+363
+00:17:52.830 --> 00:17:54.690
+going to care about your
+app. Anyway, when I was
+
+364
+00:17:54.960 --> 00:17:57.870
+making a living a consultant,
+doing exactly this stuff, you
+
+365
+00:17:57.870 --> 00:17:59.970
+know, you always start the
+day off with, well, congratulations,
+
+366
+00:18:00.270 --> 00:18:03.060
+you have a good problem.
+People care enough about your
+
+367
+00:18:03.060 --> 00:18:06.120
+app that they're making it
+perform badly. And they're unhappy
+
+368
+00:18:06.120 --> 00:18:09.330
+that it is, you know,
+the alternative is nobody cared.
+
+369
+00:18:09.660 --> 00:18:12.780
+That's a good point. I
+mean, just start there recognize
+
+370
+00:18:12.780 --> 00:18:15.270
+you have a good problem
+in play already. And then
+
+371
+00:18:15.270 --> 00:18:16.830
+go into now, you know,
+how are we going to
+
+372
+00:18:16.830 --> 00:18:18.450
+resolve this? But it just,
+you know, by the time
+
+373
+00:18:18.450 --> 00:18:20.790
+they actually get performance to
+the top of the feature
+
+374
+00:18:20.790 --> 00:18:23.550
+list, they're in so much
+pain. And the fact that
+
+375
+00:18:23.550 --> 00:18:26.190
+it's that it's no guarantee
+you're going to get results
+
+376
+00:18:26.190 --> 00:18:28.800
+with. They don't know what
+they gotta do. And it's
+
+377
+00:18:28.800 --> 00:18:30.900
+a different set of skills.
+I just find it very
+
+378
+00:18:30.900 --> 00:18:34.790
+disruptive to get into performance
+tuning. So let's just take
+
+379
+00:18:34.790 --> 00:18:36.890
+a very brief moment and
+we'll thank our sponsors because
+
+380
+00:18:37.170 --> 00:18:40.790
+Pay the bills. Yeah. And
+we'll be right back. Hi,
+
+381
+00:18:40.790 --> 00:18:42.860
+this is Scott Hanselman with
+a word from our sponsor.
+
+382
+00:18:43.400 --> 00:18:45.920
+Do you know how to
+build web 2.0 Ajax applications
+
+383
+00:18:45.920 --> 00:18:48.860
+with web 1.0 components? You
+really can't. If you want
+
+384
+00:18:48.860 --> 00:18:51.530
+to do the next generation
+web applications you'll need next
+
+385
+00:18:51.530 --> 00:18:53.990
+generation components. Just like the
+ones that our friends at
+
+386
+00:18:53.990 --> 00:18:57.200
+Telerik have got their rad
+controls for ESPN and Ajax.
+
+387
+00:18:57.470 --> 00:18:59.870
+It's a huge pack of
+web controls built on top
+
+388
+00:18:59.870 --> 00:19:04.730
+of asp.net. Ajax. That'll add
+previously impossible performance interactivity to
+
+389
+00:19:04.730 --> 00:19:08.840
+your next project. The new
+controls mirror, the Ajax API
+
+390
+00:19:08.990 --> 00:19:12.800
+from asp.net. So development is
+really straightforward. The client scripts
+
+391
+00:19:12.800 --> 00:19:15.410
+are shared. So loading time
+is not a problem. If
+
+392
+00:19:15.410 --> 00:19:17.060
+you just set a couple
+of properties and you'll be
+
+393
+00:19:17.060 --> 00:19:19.370
+able to automatically bind a
+web services for a really
+
+394
+00:19:19.370 --> 00:19:23.960
+efficient operation, the new rad
+editor from ESPN Ajax, Telerik
+
+395
+00:19:24.410 --> 00:19:26.930
+loads up to four times
+faster than before. And the
+
+396
+00:19:26.930 --> 00:19:29.900
+new rad grid handles thousands
+of records and just milliseconds,
+
+397
+00:19:29.930 --> 00:19:33.290
+but as always, it's best
+to try for yourself. So
+
+398
+00:19:33.290 --> 00:19:36.620
+you can visit <inaudible> dot
+com slash ASP, net Ajax,
+
+399
+00:19:36.620 --> 00:19:41.420
+and download a trial. Thanks
+a lot. So we're talking
+
+400
+00:19:41.420 --> 00:19:45.200
+about performance and how using
+junior programmers have trouble with
+
+401
+00:19:45.200 --> 00:19:48.890
+this. What are we not
+teaching them in computer science
+
+402
+00:19:48.890 --> 00:19:53.330
+class is, is I've never
+taken a performance tuning, you
+
+403
+00:19:53.330 --> 00:19:55.940
+know, Have we ever seen
+a class on that? How
+
+404
+00:19:55.940 --> 00:19:58.190
+do you find, I mean,
+I'm sure there probably are,
+
+405
+00:19:58.190 --> 00:20:00.230
+but I mean, in my
+years in university, we never
+
+406
+00:20:00.230 --> 00:20:03.980
+had any, you know, here's
+something broken. Find the, find,
+
+407
+00:20:03.980 --> 00:20:07.490
+the Bottleneck, willing to get
+diagnostics all by itself. What
+
+408
+00:20:07.490 --> 00:20:09.320
+do I need to fix?
+Yeah. Speaking of worst, I
+
+409
+00:20:09.320 --> 00:20:12.530
+was at a large bank
+that I can't say the
+
+410
+00:20:12.530 --> 00:20:15.530
+name of that we spent
+three days. It was one
+
+411
+00:20:15.530 --> 00:20:17.390
+of those things where, you
+know, on Tuesday it gets
+
+412
+00:20:17.390 --> 00:20:19.790
+slow on this day of
+the month. <inaudible> it was
+
+413
+00:20:19.790 --> 00:20:23.280
+like, you know, basically when,
+when the people get their
+
+414
+00:20:23.300 --> 00:20:25.370
+checks, they go and they
+deposit them and they immediately
+
+415
+00:20:25.370 --> 00:20:29.030
+pay their bills. And that's
+the busy day and something
+
+416
+00:20:29.030 --> 00:20:31.310
+was slow, but it was
+a, it was a multi,
+
+417
+00:20:31.310 --> 00:20:34.190
+multi tiered system. So you've
+got web servers talking to
+
+418
+00:20:34.190 --> 00:20:38.390
+business servers, talking to intermediate
+queue servers, talking to mainframes,
+
+419
+00:20:38.670 --> 00:20:41.480
+Just trying to get through
+to where the problems lie.
+
+420
+00:20:41.660 --> 00:20:44.000
+And it's a, at the,
+at the point we were
+
+421
+00:20:44.000 --> 00:20:46.640
+at, it's a performance problem.
+We have not yet identified
+
+422
+00:20:46.640 --> 00:20:50.410
+it as a problem. Right.
+And I'm a really a
+
+423
+00:20:51.190 --> 00:20:54.340
+kind of Sherlock Holmes type
+in the sense of well,
+
+424
+00:20:54.340 --> 00:20:57.280
+while people can throw out
+highfalutin ideas about what they
+
+425
+00:20:57.280 --> 00:20:59.470
+think might be wrong, I
+just say, all right, well,
+
+426
+00:20:59.470 --> 00:21:02.170
+let's just start at the
+web server and let's look
+
+427
+00:21:02.170 --> 00:21:06.160
+at cues. It's all about
+cues, right? Who's waiting how
+
+428
+00:21:06.160 --> 00:21:08.350
+many threads are in line
+to get some actual work
+
+429
+00:21:08.350 --> 00:21:11.290
+done because there's only so
+many processors on the machine
+
+430
+00:21:11.290 --> 00:21:12.580
+and there's only so much
+work that mint can be
+
+431
+00:21:12.580 --> 00:21:16.210
+going on. Is the web
+server working hard? Well, in
+
+432
+00:21:16.210 --> 00:21:19.240
+this particular instance, the web
+server was chilling. Yeah. Which
+
+433
+00:21:19.240 --> 00:21:22.450
+is really interesting. People are
+waiting 20, 30, 40 seconds
+
+434
+00:21:22.450 --> 00:21:24.490
+for the site to come
+up and the web server
+
+435
+00:21:24.490 --> 00:21:26.350
+is not doing any work.
+Okay. So what does that,
+
+436
+00:21:26.380 --> 00:21:29.460
+what does that tell us
+Something I'll obviously somewhere else
+
+437
+00:21:29.460 --> 00:21:31.830
+is the bottom Something somewhere
+else. If the web servers
+
+438
+00:21:31.830 --> 00:21:34.710
+were saturated at a hundred
+percent, at least I could
+
+439
+00:21:34.710 --> 00:21:36.840
+do something about that. Sure.
+I could get, well, you
+
+440
+00:21:36.860 --> 00:21:38.250
+know, that, that this is
+where I got to go
+
+441
+00:21:38.250 --> 00:21:40.710
+start looking for the problem.
+Right. So they were 30%,
+
+442
+00:21:40.710 --> 00:21:43.800
+40%. So then I think
+to myself, well, what kind
+
+443
+00:21:43.800 --> 00:21:45.540
+of Nicks are in this
+web server? Is this a
+
+444
+00:21:45.720 --> 00:21:49.060
+a hundred megabit or gigabit?
+Is it saturated? It's been,
+
+445
+00:21:49.110 --> 00:21:50.550
+there's been a number of
+times when I've worked on
+
+446
+00:21:50.550 --> 00:21:52.730
+sites when they've had a
+hundred megabit cards and they
+
+447
+00:21:52.730 --> 00:21:55.860
+were saturated and no one
+ever thinks that. Yeah, well
+
+448
+00:21:55.860 --> 00:21:58.020
+they never consider the fact
+that that's a problem. I
+
+449
+00:21:58.020 --> 00:22:00.570
+ran into Iraq where somebody
+had thrown a 10 base
+
+450
+00:22:00.600 --> 00:22:02.610
+T switch in the back
+of the rack to do
+
+451
+00:22:02.610 --> 00:22:05.640
+some testing and left it
+between the web server and
+
+452
+00:22:05.640 --> 00:22:07.890
+the outside connection. Oh my
+God. So of course the
+
+453
+00:22:07.890 --> 00:22:12.330
+web server was never busy.
+The site apart performed appallingly.
+
+454
+00:22:12.420 --> 00:22:14.550
+Yeah. And it wasn't until
+we actually physically got there
+
+455
+00:22:14.550 --> 00:22:17.490
+and said, what is this?
+Why is this here? That
+
+456
+00:22:17.490 --> 00:22:19.860
+we actually, you know, you
+got to find those Walking,
+
+457
+00:22:19.860 --> 00:22:22.260
+these things back, you look
+and being able to know
+
+458
+00:22:22.260 --> 00:22:24.600
+what to look at in
+perf Mon and these aren't
+
+459
+00:22:24.600 --> 00:22:27.210
+windows specific. I mean, this
+kind of scale work is
+
+460
+00:22:27.240 --> 00:22:31.110
+applicable in any operating system.
+But the theory behind that,
+
+461
+00:22:31.140 --> 00:22:33.210
+the idea that, I mean,
+just that very, very basic
+
+462
+00:22:33.210 --> 00:22:35.250
+assumption that you and I
+just made that, well, the
+
+463
+00:22:35.250 --> 00:22:38.910
+CPU is not working. Therefore
+we must be blocked waiting
+
+464
+00:22:38.910 --> 00:22:42.120
+for it to be somewhere
+else. That's simple statement. Where
+
+465
+00:22:42.120 --> 00:22:44.130
+do you get that? Did
+you just learn it in
+
+466
+00:22:44.130 --> 00:22:47.280
+the school of hard knocks?
+I think so. I totally
+
+467
+00:22:47.280 --> 00:22:50.400
+agree that. And I also
+think that the, the reflex
+
+468
+00:22:50.400 --> 00:22:52.860
+to check that the cords
+are plugged in that is
+
+469
+00:22:52.860 --> 00:22:56.460
+my next saturated is the
+machine on it is also
+
+470
+00:22:56.520 --> 00:22:58.050
+because you'll get burned by
+it. One of these days,
+
+471
+00:22:58.050 --> 00:23:00.390
+that's the only time you
+really grab on to, you
+
+472
+00:23:00.390 --> 00:23:03.340
+know, have we done these
+dumb things? Where, what I
+
+473
+00:23:03.390 --> 00:23:05.760
+think is it's also as
+we, we tend to, it's
+
+474
+00:23:05.760 --> 00:23:07.590
+usually not our problem. Right?
+We've been brought to the
+
+475
+00:23:07.590 --> 00:23:10.200
+problem. I have this assumption
+that the guy that I'm
+
+476
+00:23:10.200 --> 00:23:14.160
+working with is intelligent and
+has pursued his obvious skill
+
+477
+00:23:14.160 --> 00:23:16.800
+set. So I'm going to
+look in the unobvious skills.
+
+478
+00:23:16.860 --> 00:23:19.830
+Yeah. The idea that the
+child that the power might
+
+479
+00:23:19.830 --> 00:23:21.600
+not be right Plugged in.
+Someone told me once that
+
+480
+00:23:21.600 --> 00:23:23.010
+when you call tech support
+and they'll tell you to
+
+481
+00:23:23.010 --> 00:23:25.410
+like pull the power cord
+out and plug it back
+
+482
+00:23:25.410 --> 00:23:29.640
+in, right. Sometimes when what'll
+happen is I'm not going
+
+483
+00:23:29.640 --> 00:23:31.350
+to check the power cord.
+I mean, of course it's,
+
+484
+00:23:31.380 --> 00:23:33.630
+what's going on. Just do
+it to humor me, check
+
+485
+00:23:33.630 --> 00:23:35.760
+the power cord. Sometimes it
+won't be on, it'll be
+
+486
+00:23:35.760 --> 00:23:37.800
+okay. It will be on,
+but they won't say anything.
+
+487
+00:23:38.430 --> 00:23:40.440
+They'll just say, Oh, I
+jiggled the power cord and
+
+488
+00:23:40.650 --> 00:23:43.980
+everything's fine. Everything's fine now.
+Thanks for your time. But
+
+489
+00:23:43.980 --> 00:23:48.590
+that gives them the out
+the opportunity. So session state
+
+490
+00:23:48.590 --> 00:23:51.710
+can be a problem because
+people forget that session state
+
+491
+00:23:51.830 --> 00:23:56.290
+lives. It has node affinity.
+Yes. Well, and so we,
+
+492
+00:23:56.430 --> 00:23:58.150
+when we, and we started
+on session a while ago
+
+493
+00:23:58.150 --> 00:24:00.280
+and I sorta jumped immediately
+on the memory, consumption is
+
+494
+00:24:00.280 --> 00:24:03.250
+a big deal. I've seen
+sites where we got session
+
+495
+00:24:03.610 --> 00:24:07.330
+out of process, but not
+centralized. I still didn't. I
+
+496
+00:24:07.330 --> 00:24:09.130
+didn't care about my note
+affinity. I cared about my
+
+497
+00:24:09.130 --> 00:24:12.460
+memory consumption. And so, I
+mean, there's actually scenarios where
+
+498
+00:24:12.460 --> 00:24:14.530
+you can throw state server
+on the web server and
+
+499
+00:24:14.530 --> 00:24:17.020
+you're better off well, it's
+also, if you're just giving
+
+500
+00:24:17.020 --> 00:24:18.790
+it its own process, giving
+you some process. So the
+
+501
+00:24:18.790 --> 00:24:21.430
+worker process can recycle So
+that your session data, this
+
+502
+00:24:21.430 --> 00:24:23.260
+was a really huge thing
+I have taken in the
+
+503
+00:24:23.260 --> 00:24:27.820
+last probably five years to
+always running state server on,
+
+504
+00:24:27.850 --> 00:24:30.640
+in my development experience. Yes.
+I do not run in
+
+505
+00:24:30.640 --> 00:24:33.550
+proxy session state. Yeah. Just
+getting away from stupid serialization
+
+506
+00:24:33.550 --> 00:24:35.650
+mistakes. Right. Right. Because if
+you don't Mark your object
+
+507
+00:24:35.650 --> 00:24:38.320
+to survive realizable, they'll never
+make it over there. Yeah.
+
+508
+00:24:38.340 --> 00:24:39.670
+But it's one less thing
+to worry about. And I've
+
+509
+00:24:39.670 --> 00:24:43.120
+had situations where we were
+running live production sites within
+
+510
+00:24:43.120 --> 00:24:45.610
+product session and we needed
+to go and switch over
+
+511
+00:24:45.610 --> 00:24:48.870
+to state server. Yeah. But
+somebody didn't Mark one object
+
+512
+00:24:48.880 --> 00:24:51.580
+to realizable And all of
+a sudden things go preserve,
+
+513
+00:24:51.580 --> 00:24:53.140
+and it's not like a
+sign pops out of the
+
+514
+00:24:53.140 --> 00:24:55.660
+service saying something's not marked
+say realizable. Right. You have
+
+515
+00:24:55.660 --> 00:24:59.200
+to go and hunt these
+problems down. It's agonizing. Really.
+
+516
+00:24:59.500 --> 00:25:01.650
+So, I mean, I like
+the idea that you always
+
+517
+00:25:01.660 --> 00:25:04.060
+out of process because as
+you're develop, you'll catch those
+
+518
+00:25:04.060 --> 00:25:08.300
+mistakes. I would prefer that
+that was the default. I
+
+519
+00:25:08.500 --> 00:25:13.120
+tend to agree when people
+struggle over the performance loss,
+
+520
+00:25:13.120 --> 00:25:15.400
+you get going out a
+process that it is a
+
+521
+00:25:15.400 --> 00:25:17.200
+hit, but don't you worry
+about it. And the way
+
+522
+00:25:17.200 --> 00:25:19.510
+I usually describe it when
+you're talking about scalability is,
+
+523
+00:25:19.810 --> 00:25:22.720
+you know, good scaling site
+is not necessarily the fastest
+
+524
+00:25:22.720 --> 00:25:25.450
+site. It's consistent. It doesn't
+matter whether there's one user,
+
+525
+00:25:25.450 --> 00:25:28.210
+10,000 users. I want the
+distance between performance of one
+
+526
+00:25:28.210 --> 00:25:30.670
+user and 10,000 to me
+as narrow as possible. And
+
+527
+00:25:30.670 --> 00:25:34.720
+I'll move both lines. I
+will make one user slower
+
+528
+00:25:34.840 --> 00:25:37.180
+to get it closer to
+the 10,000. And one of
+
+529
+00:25:37.180 --> 00:25:39.040
+the ways is I'm going
+to go out of process.
+
+530
+00:25:39.250 --> 00:25:41.500
+You know, that's, that's, that's
+a really good expectation to
+
+531
+00:25:41.500 --> 00:25:43.690
+have of your site. And
+I think few people have
+
+532
+00:25:43.690 --> 00:25:47.230
+such what they would perceive
+as lofty expectations. The idea
+
+533
+00:25:47.230 --> 00:25:49.600
+that, well, the site's running
+a little slow. There's a
+
+534
+00:25:49.600 --> 00:25:52.060
+thousand people on there, right?
+Why is it? It should
+
+535
+00:25:52.060 --> 00:25:54.100
+run as if you're the
+only person on the site.
+
+536
+00:25:54.350 --> 00:25:56.950
+It should behave the same
+all the time. I think,
+
+537
+00:25:57.250 --> 00:26:00.400
+I think consistency in terms
+of customer comfort, where the
+
+538
+00:26:00.400 --> 00:26:04.000
+customers are your employee or
+your CEO or an external
+
+539
+00:26:04.000 --> 00:26:06.880
+person, customer comfort is the
+more important thing here. Consistency
+
+540
+00:26:06.880 --> 00:26:09.520
+matters. I think that that,
+that Google does a good
+
+541
+00:26:09.520 --> 00:26:12.280
+job that I never think
+to myself. Oh, well, Google
+
+542
+00:26:12.280 --> 00:26:14.260
+is slow today because there's
+a lot of people on,
+
+543
+00:26:14.260 --> 00:26:16.810
+right. I've never ever thought
+about that for a moment.
+
+544
+00:26:16.870 --> 00:26:19.000
+I've always felt like, especially
+with Gmail as an example,
+
+545
+00:26:19.000 --> 00:26:21.790
+that I'm all alone. Yeah.
+On my own private little,
+
+546
+00:26:21.790 --> 00:26:24.370
+yeah. Google server. And I
+visualize this one little guy,
+
+547
+00:26:24.670 --> 00:26:27.370
+my little private server in
+the sky. I know it's
+
+548
+00:26:27.370 --> 00:26:29.830
+not the case. It's probably
+fragmented all over it. Doesn't
+
+549
+00:26:30.160 --> 00:26:31.390
+I also think that a
+lot of people think they're
+
+550
+00:26:31.390 --> 00:26:33.190
+always all alone on the
+internet. They rarely think of
+
+551
+00:26:33.190 --> 00:26:34.930
+what other people are there.
+And that's why they complain
+
+552
+00:26:34.930 --> 00:26:37.930
+the site is slow. Right.
+They never consider the idea
+
+553
+00:26:37.930 --> 00:26:39.640
+that maybe it's a thousand
+people, you know, it's all
+
+554
+00:26:39.640 --> 00:26:42.250
+those other people that are
+causing the problem. Right. It
+
+555
+00:26:42.250 --> 00:26:45.060
+just, so I don't think
+people think like that, cause
+
+556
+00:26:45.060 --> 00:26:49.950
+it's probably don't. And so
+talk about managing expectation. You'll
+
+557
+00:26:49.950 --> 00:26:51.600
+see that there are some
+sites out there that will
+
+558
+00:26:51.600 --> 00:26:53.190
+let you know how many
+people are on the site
+
+559
+00:26:53.190 --> 00:26:56.070
+right now. Oh, I love
+that. And that's really forums
+
+560
+00:26:56.070 --> 00:26:58.830
+where they say there's 27
+other people reading, reading this
+
+561
+00:26:58.830 --> 00:27:02.240
+right now. I should do
+that on my, on my
+
+562
+00:27:02.240 --> 00:27:05.090
+blog blogs, Absolutely fruit idea.
+And really what you're doing
+
+563
+00:27:05.090 --> 00:27:06.920
+is saying, well, how many
+active sessions, what was the
+
+564
+00:27:06.920 --> 00:27:09.080
+last page you looked at?
+I guess session count in
+
+565
+00:27:09.080 --> 00:27:11.270
+asp.net would be the best
+way to do That would
+
+566
+00:27:11.270 --> 00:27:14.240
+be a way I do
+think like last page viewed,
+
+567
+00:27:14.240 --> 00:27:15.800
+if you were keeping track
+of that and sort of
+
+568
+00:27:15.800 --> 00:27:17.330
+a global level so that
+you know, what page they
+
+569
+00:27:17.330 --> 00:27:20.750
+were on, but the feeling
+of people being aware that
+
+570
+00:27:20.750 --> 00:27:22.670
+there's other people on the
+site, I think it also
+
+571
+00:27:22.670 --> 00:27:24.110
+makes them more tolerant of
+the fact that there may
+
+572
+00:27:24.110 --> 00:27:25.970
+be performance problems, right. It
+would be a really, really
+
+573
+00:27:25.970 --> 00:27:28.280
+fun thing for the blog
+software to take a blog,
+
+574
+00:27:28.310 --> 00:27:30.920
+take a blog like dusk
+blog or subtext and make
+
+575
+00:27:30.920 --> 00:27:33.320
+it more social by saying
+there are this many people
+
+576
+00:27:33.320 --> 00:27:35.840
+on the site and then
+click on that and have
+
+577
+00:27:35.840 --> 00:27:38.300
+a list of the pages
+that they're currently looking at
+
+578
+00:27:38.660 --> 00:27:40.400
+so that I can go
+look at those pages too.
+
+579
+00:27:40.850 --> 00:27:43.370
+Well, this has been done
+before. I'm sure it has.
+
+580
+00:27:43.370 --> 00:27:44.900
+I'm sure we could find
+the software for, I mean,
+
+581
+00:27:44.900 --> 00:27:47.300
+great. Just put this on
+your list for task blog
+
+582
+00:27:47.360 --> 00:27:50.390
+on a side bar, what
+pages are currently being viewed?
+
+583
+00:27:50.450 --> 00:27:51.950
+I got to do that
+tonight. That's a great idea,
+
+584
+00:27:52.280 --> 00:27:53.780
+But that breaks. So there's
+a, there's, there's an, here's
+
+585
+00:27:53.780 --> 00:27:55.520
+an example. Now we'll get
+back to the whole point
+
+586
+00:27:55.520 --> 00:27:56.900
+here where you and I
+always end up just chatting
+
+587
+00:27:56.900 --> 00:28:00.470
+about randomness. We'll call this
+the random show with Richard Campbell.
+
+588
+00:28:01.340 --> 00:28:04.520
+That that would be an
+interesting problem to solve. Yeah.
+
+589
+00:28:04.550 --> 00:28:08.210
+Because how would that fundamentally
+change the way the site
+
+590
+00:28:08.750 --> 00:28:12.020
+works? And Tom's blog is
+an interesting application because we
+
+591
+00:28:12.020 --> 00:28:13.820
+don't have a database. A
+lot of people, a lot
+
+592
+00:28:13.820 --> 00:28:15.110
+of people know this, but
+a lot of people don't,
+
+593
+00:28:15.500 --> 00:28:18.260
+everything in DAS blog is
+stored in XML. So, so
+
+594
+00:28:18.260 --> 00:28:20.360
+what are some things that
+you might guess Richard are,
+
+595
+00:28:20.360 --> 00:28:23.060
+are difficult for DAS blog
+to do that other other
+
+596
+00:28:23.060 --> 00:28:27.350
+websites might take completely for
+granted? Hm. If you have
+
+597
+00:28:27.350 --> 00:28:28.970
+a little thing in the
+corner, there there's a little
+
+598
+00:28:28.970 --> 00:28:31.730
+badge and you decided to
+have, have the badge or
+
+599
+00:28:31.760 --> 00:28:34.140
+not have the badge. What
+kind of things should I
+
+600
+00:28:34.140 --> 00:28:36.260
+be? I think the customers
+Per, per user is going
+
+601
+00:28:36.260 --> 00:28:39.230
+to be a problem. Okay.
+I think how I'm, I'm
+
+602
+00:28:39.230 --> 00:28:40.790
+curious, I don't know the
+answer to this. I mean,
+
+603
+00:28:40.790 --> 00:28:44.180
+how are multiple people going
+to simultaneously add comments to
+
+604
+00:28:44.180 --> 00:28:45.830
+things? So you're going to
+have to keep them separate.
+
+605
+00:28:45.830 --> 00:28:47.420
+So we, yeah, I actually
+have to have a, we
+
+606
+00:28:47.420 --> 00:28:51.470
+have one file per post,
+actually one file per day,
+
+607
+00:28:51.590 --> 00:28:55.670
+right? So there's a, a
+file that is the date,
+
+608
+00:28:55.690 --> 00:28:59.270
+the current date dot XML
+and all of the posts
+
+609
+00:28:59.270 --> 00:29:01.760
+for that day are in
+that file. And then there's
+
+610
+00:29:01.760 --> 00:29:05.120
+a separate parallel file just
+for comments, but we basically
+
+611
+00:29:05.120 --> 00:29:06.890
+put them in an in
+memory queue and we have
+
+612
+00:29:06.890 --> 00:29:09.530
+a have to go and
+get in line. So we
+
+613
+00:29:09.530 --> 00:29:12.320
+have to serialize on that.
+You've written your own version
+
+614
+00:29:12.320 --> 00:29:15.140
+of SQL servers, lazy writer.
+Yep. You have a transaction
+
+615
+00:29:15.140 --> 00:29:17.150
+manager that's taking in all
+those, those things in the
+
+616
+00:29:17.150 --> 00:29:19.700
+first place and the lazy
+writer spooling them. It is.
+
+617
+00:29:19.790 --> 00:29:23.480
+And it's always immediate. It's
+very, very fast, but it
+
+618
+00:29:23.480 --> 00:29:26.720
+is a point of serialization.
+And this is another really
+
+619
+00:29:26.720 --> 00:29:31.640
+interesting thing. When, when doing
+scale and thinking about how
+
+620
+00:29:31.640 --> 00:29:34.010
+expensive is it to read
+versus how expensive is it
+
+621
+00:29:34.010 --> 00:29:37.460
+to write the idea that
+I might have to get
+
+622
+00:29:37.460 --> 00:29:40.340
+in line in order to
+write. Right. Well, and I
+
+623
+00:29:40.340 --> 00:29:45.220
+think these are classic scaling
+problems where this is never
+
+624
+00:29:45.220 --> 00:29:49.090
+an issue until it is
+an issue until enough people
+
+625
+00:29:49.090 --> 00:29:50.590
+are using the site at
+the same time and you
+
+626
+00:29:50.590 --> 00:29:53.080
+get these random bugs and
+they're relatively tough to recruit
+
+627
+00:29:53.310 --> 00:29:56.670
+Dos blog has actually, because
+more people are reading my
+
+628
+00:29:56.670 --> 00:29:58.410
+blog in the last couple
+of years, the us blog
+
+629
+00:29:58.410 --> 00:30:01.140
+has, has found a lot
+of really interesting bugs that
+
+630
+00:30:01.140 --> 00:30:05.180
+you just don't find unless
+people hit your site simultaneously.
+
+631
+00:30:05.400 --> 00:30:07.620
+And that's been really interesting.
+So what we ended up
+
+632
+00:30:07.620 --> 00:30:10.890
+doing is people will put
+stuff up and then I'll
+
+633
+00:30:10.890 --> 00:30:12.030
+just say, all right, well,
+how are we going to
+
+634
+00:30:12.030 --> 00:30:14.730
+load test this? Well, we're
+an open source project and
+
+635
+00:30:14.730 --> 00:30:17.100
+we're kind of not as
+organized as we could be
+
+636
+00:30:17.100 --> 00:30:18.990
+and we don't have any
+formal votes. So we throw
+
+637
+00:30:18.990 --> 00:30:20.340
+it up on my blog
+and see if my blog
+
+638
+00:30:20.370 --> 00:30:22.320
+tips over. Yes. If you're
+to have blog that can
+
+639
+00:30:22.320 --> 00:30:24.810
+survive it, most of the
+customers of DAS blog are
+
+640
+00:30:24.810 --> 00:30:26.640
+going to survive as well.
+Exactly. Yeah. That's kind of
+
+641
+00:30:26.640 --> 00:30:30.060
+the idea. So back to
+my original question, it turns
+
+642
+00:30:30.060 --> 00:30:34.350
+out that if you put
+a blog stats widget, it
+
+643
+00:30:34.350 --> 00:30:38.160
+just says, how many posts,
+how many comments and let
+
+644
+00:30:38.160 --> 00:30:42.600
+something harmless most commented posts,
+right? Seems like a trivial
+
+645
+00:30:42.600 --> 00:30:45.030
+thing. I'd like to have
+a badge and a corner
+
+646
+00:30:45.030 --> 00:30:46.800
+that says most commented posts.
+Just think about this from
+
+647
+00:30:46.800 --> 00:30:49.200
+a business person's perspective, right?
+You paid me to write
+
+648
+00:30:49.200 --> 00:30:51.180
+DAS blog. We'll say you're
+the business guy. And you
+
+649
+00:30:51.180 --> 00:30:53.940
+say, Hey, programmer, Scott, I
+need you to put up
+
+650
+00:30:54.180 --> 00:30:57.000
+most commented posts. And then
+you can have a top
+
+651
+00:30:57.000 --> 00:31:01.770
+10 list. And I go,
+ah, yeah, we store all
+
+652
+00:31:01.770 --> 00:31:03.930
+of our posts and XML.
+I have to go through
+
+653
+00:31:04.020 --> 00:31:06.930
+every single file on, let
+me just do it. It'll
+
+654
+00:31:06.930 --> 00:31:08.730
+be fine. It'll be fine.
+What could be the problem?
+
+655
+00:31:08.760 --> 00:31:14.040
+Well, so six years later
+and 1800 XML files later,
+
+656
+00:31:14.070 --> 00:31:19.410
+right? Suddenly I realize programmers,
+Scott realizes that we have
+
+657
+00:31:19.410 --> 00:31:23.550
+no database, right? And that
+arbitrarily querying 1800 files is
+
+658
+00:31:23.550 --> 00:31:26.160
+difficult. So then what do
+you start doing? Well, you
+
+659
+00:31:26.160 --> 00:31:28.860
+make a big index, you
+start caching stuff, you're carrying
+
+660
+00:31:28.860 --> 00:31:32.340
+an aggregate and basically chasing
+your tail. So at some
+
+661
+00:31:32.340 --> 00:31:35.070
+point, DAS blog will have
+to move to a there's
+
+662
+00:31:35.070 --> 00:31:37.320
+something like leucine, where we
+can cash all of this
+
+663
+00:31:37.320 --> 00:31:39.720
+stuff and have an index
+of some kind. We have
+
+664
+00:31:39.720 --> 00:31:43.680
+a very internal custom index
+that was built under pressure
+
+665
+00:31:44.040 --> 00:31:46.500
+because things started When you
+were having this problem with
+
+666
+00:31:46.500 --> 00:31:48.750
+performance creep to the top
+of the, so that's your
+
+667
+00:31:48.750 --> 00:31:51.210
+list. A lot of people
+have blogs, that's on their
+
+668
+00:31:51.210 --> 00:31:54.150
+blog and we build it
+and we have to, can
+
+669
+00:31:54.150 --> 00:31:58.680
+we catch it? The problem
+is the building requires looking
+
+670
+00:31:58.680 --> 00:32:00.660
+at every single file on
+the hard drive. And it
+
+671
+00:32:00.660 --> 00:32:03.900
+takes about 60 seconds on
+my machine, which then times
+
+672
+00:32:03.900 --> 00:32:06.960
+out The, the query times
+that query times out. Yeah.
+
+673
+00:32:07.260 --> 00:32:08.680
+And if I do it
+in a, in a, in
+
+674
+00:32:08.680 --> 00:32:11.340
+a background thread, not as
+part yet, not as kicked
+
+675
+00:32:11.340 --> 00:32:14.100
+off as part of a
+page view, then that thread
+
+676
+00:32:14.100 --> 00:32:17.700
+can take the whole machine
+down. Cause it's just frantically
+
+677
+00:32:17.700 --> 00:32:20.490
+opening all these files And
+it's not a file handle.
+
+678
+00:32:20.490 --> 00:32:23.340
+Pounding must be unbelievable. Well,
+and it's not just 1800
+
+679
+00:32:23.340 --> 00:32:27.210
+files, six years, times, 365
+days a year, but it's
+
+680
+00:32:27.540 --> 00:32:30.930
+1800 times two. Right? Cause
+you've got posts in one
+
+681
+00:32:30.930 --> 00:32:34.410
+file and comments and anonymously.
+So then this really harmless
+
+682
+00:32:34.410 --> 00:32:38.340
+idea of most commented posts,
+popular post blogs that's becomes
+
+683
+00:32:38.340 --> 00:32:41.710
+almost and most Painful part
+of the whole app. Yeah.
+
+684
+00:32:41.710 --> 00:32:43.540
+And then it makes me
+wish I had a database,
+
+685
+00:32:44.410 --> 00:32:46.900
+but that's the kind of
+thing where if you, if
+
+686
+00:32:46.900 --> 00:32:51.250
+you didn't build up this,
+a clean architecture that expected
+
+687
+00:32:51.250 --> 00:32:54.610
+that ahead of time, which
+we didn't a business guy
+
+688
+00:32:54.610 --> 00:32:57.730
+asks what seems to be
+a fairly innocuous question that
+
+689
+00:32:57.730 --> 00:33:00.130
+he's seen elsewhere. Oh yeah,
+everyone else has this. Why
+
+690
+00:33:00.130 --> 00:33:02.860
+don't we, why don't we
+not? That's kind of unique
+
+691
+00:33:02.860 --> 00:33:04.870
+to touch blog, but I
+think that people find themselves
+
+692
+00:33:04.870 --> 00:33:08.350
+in those kinds of situations.
+So at this, this banking
+
+693
+00:33:08.350 --> 00:33:11.500
+software company that I worked
+at, it was very transactional
+
+694
+00:33:11.500 --> 00:33:14.200
+based. And you'd go to
+the transfer money page and
+
+695
+00:33:14.200 --> 00:33:16.480
+you transfer money that you'd
+go to the balancers page
+
+696
+00:33:16.480 --> 00:33:17.890
+and you look at your
+balances and it was very
+
+697
+00:33:17.890 --> 00:33:20.590
+one page, one transaction. And
+then the kind of the
+
+698
+00:33:20.720 --> 00:33:24.400
+whole portal thing started happening
+at the early two thousands.
+
+699
+00:33:24.430 --> 00:33:27.100
+And people wanted to have
+widgets that they could drag
+
+700
+00:33:27.100 --> 00:33:30.880
+around like, like live.com where
+you've got, you know, half
+
+701
+00:33:30.880 --> 00:33:34.840
+a dozen gadgets in the
+weather. And then this thing
+
+702
+00:33:34.840 --> 00:33:40.030
+becomes 10 transactions per page
+to go and get information
+
+703
+00:33:40.030 --> 00:33:44.350
+like mortgage rates and balances
+from other accounts and history,
+
+704
+00:33:44.380 --> 00:33:48.310
+That sort of dashboard composite
+of a view. So suddenly
+
+705
+00:33:48.760 --> 00:33:52.810
+this one page one transaction
+model becomes one page 12,
+
+706
+00:33:52.810 --> 00:33:56.950
+15 transactions. This is really
+common dash blog, another perfect
+
+707
+00:33:56.950 --> 00:34:00.280
+example. You give them a
+macro language and you let
+
+708
+00:34:00.280 --> 00:34:04.060
+them start talking arbitrarily against
+your database. And then one
+
+709
+00:34:04.060 --> 00:34:08.650
+page one post turns into
+multiple posts And you get
+
+710
+00:34:08.650 --> 00:34:12.310
+into dead locking scenarios where
+two or three of these
+
+711
+00:34:12.310 --> 00:34:16.390
+aggregate things run at once
+and they conflict with each
+
+712
+00:34:16.390 --> 00:34:18.940
+other. You've absolutely nailed it.
+What's the problem with this
+
+713
+00:34:18.970 --> 00:34:21.100
+at this bank and company
+was that we got to
+
+714
+00:34:21.100 --> 00:34:24.040
+go and get in line.
+So we may start out
+
+715
+00:34:24.040 --> 00:34:27.070
+as 10 threads, but everybody
+has to merge onto the
+
+716
+00:34:27.940 --> 00:34:33.400
+freeway conceptual singletons Way in
+the app where when we
+
+717
+00:34:33.400 --> 00:34:36.100
+reach into this, we must
+reach it in the same
+
+718
+00:34:36.100 --> 00:34:39.400
+order. And we must wait
+and turn to we're all
+
+719
+00:34:39.400 --> 00:34:42.760
+finished. You never feel like
+conceptual singletons at the time,
+
+720
+00:34:42.970 --> 00:34:46.120
+but they inevitably end up
+like that. Yeah. I know.
+
+721
+00:34:46.460 --> 00:34:48.790
+I also think that the
+serialization description is a good
+
+722
+00:34:48.790 --> 00:34:51.220
+way of describing that is
+we need to serialize this
+
+723
+00:34:51.220 --> 00:34:54.790
+entire block of behavior. And
+so, you know, you've got
+
+724
+00:34:54.790 --> 00:34:57.640
+to look at it as
+a whole. I tend towards
+
+725
+00:34:57.640 --> 00:34:59.770
+the database view on these
+sorts of things as well.
+
+726
+00:34:59.770 --> 00:35:02.320
+Right. And there were, there
+were definitely times in SQL
+
+727
+00:35:02.320 --> 00:35:04.330
+server where the right thing
+to do was to turn
+
+728
+00:35:04.330 --> 00:35:08.650
+up the serialization level, make
+it more restrictive because that
+
+729
+00:35:08.650 --> 00:35:10.660
+forced people into order. And
+it actually turned out to
+
+730
+00:35:10.660 --> 00:35:14.290
+be faster than fighting the
+contention. Right. I've ever been
+
+731
+00:35:14.290 --> 00:35:15.550
+trying to do it to
+say, okay, What did they
+
+732
+00:35:15.550 --> 00:35:17.830
+say that the, the optimal
+number of threads in any
+
+733
+00:35:17.830 --> 00:35:20.980
+system is one. Yes. And
+it's funny how things like
+
+734
+00:35:20.980 --> 00:35:26.290
+that are the case. Also
+deferred execution is really important.
+
+735
+00:35:26.590 --> 00:35:29.410
+Yeah. Well not making stuff
+synchronous. It didn't actually need
+
+736
+00:35:29.410 --> 00:35:33.250
+to be synchronous. Exactly. An
+example. And I keep coming
+
+737
+00:35:33.250 --> 00:35:34.750
+back to tusk blog because
+I come back to the
+
+738
+00:35:34.750 --> 00:35:38.460
+projects that I worked on
+Clemens Vassar's realized very early
+
+739
+00:35:38.460 --> 00:35:41.460
+on that writing to the
+log was important, but not
+
+740
+00:35:41.460 --> 00:35:43.380
+as important to getting the
+page back to the user.
+
+741
+00:35:43.380 --> 00:35:46.320
+Right. So he was very,
+very good at these fire
+
+742
+00:35:46.320 --> 00:35:48.540
+and forget threads, spin ups,
+where he would just say,
+
+743
+00:35:48.810 --> 00:35:51.210
+alright, we just had a
+referral show up. We just
+
+744
+00:35:51.210 --> 00:35:54.570
+had a track back or
+whatever, right. Handle that. And
+
+745
+00:35:54.870 --> 00:35:57.750
+there is a possibility that
+it might not work, but
+
+746
+00:35:57.750 --> 00:36:00.960
+you have to ask yourself
+if this transaction fails, does
+
+747
+00:36:00.960 --> 00:36:03.530
+that mean that the users
+should lose out? Yeah. Do
+
+748
+00:36:03.530 --> 00:36:05.390
+I really need to end?
+Do I need to let
+
+749
+00:36:05.390 --> 00:36:07.910
+the user wait while I
+make sure that transaction completes?
+
+750
+00:36:07.940 --> 00:36:11.150
+Yeah. It's not actually critical
+to the deliverable. It is
+
+751
+00:36:11.150 --> 00:36:13.940
+critical to the net result.
+That means two different things.
+
+752
+00:36:13.940 --> 00:36:17.600
+And I think we don't
+pretend to prior tries our
+
+753
+00:36:17.600 --> 00:36:20.960
+work properly, where everything comes
+out at the same priority.
+
+754
+00:36:21.440 --> 00:36:22.820
+What are some of the
+kinds of problems that you
+
+755
+00:36:22.820 --> 00:36:25.040
+guys are bumping into? Cause
+you're, you're working for a
+
+756
+00:36:25.040 --> 00:36:27.890
+company that makes a scale
+appliance and you must be
+
+757
+00:36:27.890 --> 00:36:29.900
+talking to customers. You gotta
+tell me some kind of
+
+758
+00:36:29.900 --> 00:36:31.940
+war story that you guys
+are seeing in the wild
+
+759
+00:36:31.940 --> 00:36:34.520
+without telling me the names.
+What's the, what are the
+
+760
+00:36:34.580 --> 00:36:37.400
+one of the classic asp.net
+mistakes people are making when
+
+761
+00:36:37.400 --> 00:36:40.280
+trying to scale? Well, I
+mean, certainly I think they're
+
+762
+00:36:40.280 --> 00:36:44.840
+finding that they're, they're battling
+back and forth on overusing
+
+763
+00:36:44.840 --> 00:36:49.820
+technology, like, like caching and
+or even folks that have
+
+764
+00:36:49.820 --> 00:36:52.250
+gone mad and stripped every
+ounce of view state out
+
+765
+00:36:52.250 --> 00:36:54.050
+of their page and then
+are frustrated with their rate
+
+766
+00:36:54.050 --> 00:36:56.540
+of development. Like there is
+that sort of we're in
+
+767
+00:36:56.540 --> 00:36:58.790
+the, This battle. That's really
+interesting. So you're saying that
+
+768
+00:36:58.790 --> 00:37:01.130
+people are getting, they're getting
+frustrated with view state because
+
+769
+00:37:01.150 --> 00:37:03.260
+they don't necessarily have the
+metrics to prove that it's
+
+770
+00:37:03.260 --> 00:37:06.380
+the problem that they feel
+that this is so much
+
+771
+00:37:06.800 --> 00:37:11.300
+Gut behavior for performer performance
+tuning, right. Not using empirical
+
+772
+00:37:11.300 --> 00:37:14.360
+data saying we have a
+mandate to re minimum the
+
+773
+00:37:14.370 --> 00:37:16.700
+maximum amount of view state
+in our pages, 20 K.
+
+774
+00:37:17.060 --> 00:37:20.540
+I love that totally arbitrary
+number. Yeah. You know why,
+
+775
+00:37:20.540 --> 00:37:22.820
+why 20? And this page
+is bad cause it's got
+
+776
+00:37:22.850 --> 00:37:25.550
+22 K of Houston. Well,
+don't even know what's in
+
+777
+00:37:25.550 --> 00:37:28.130
+view state. Why it's there?
+How much less, how to
+
+778
+00:37:28.130 --> 00:37:30.080
+dial it back for the
+most part, most folks we've
+
+779
+00:37:30.080 --> 00:37:32.390
+seen that are trying to
+reduce the state. Their only
+
+780
+00:37:32.510 --> 00:37:35.810
+mechanism is turn view, state
+off on that control. Now
+
+781
+00:37:35.830 --> 00:37:38.810
+turn it off on this
+control and yeah, No I
+
+782
+00:37:38.810 --> 00:37:41.180
+like to do is I
+turn it off completely and
+
+783
+00:37:41.180 --> 00:37:43.160
+then turn it off, Turn
+it on. Which again is
+
+784
+00:37:43.160 --> 00:37:46.340
+again, I think that's the
+logical default, but it's not
+
+785
+00:37:46.340 --> 00:37:48.380
+the way that it works.
+It should default that way.
+
+786
+00:37:48.650 --> 00:37:49.850
+Well, and that was a,
+I think that's a really
+
+787
+00:37:49.850 --> 00:37:52.400
+tough thing because you just
+made the ju the juxtaposition
+
+788
+00:37:52.400 --> 00:37:56.450
+between performance versus speed of
+development. Right? Well, Microsoft, now
+
+789
+00:37:56.450 --> 00:37:58.520
+that I'm trying to understand
+what they think about. They
+
+790
+00:37:58.520 --> 00:38:03.140
+have to make that distinction
+between speed of development versus,
+
+791
+00:38:04.370 --> 00:38:08.240
+you know, the expectation of
+the developer. They, they wanted
+
+792
+00:38:08.240 --> 00:38:10.040
+asp.net to just be one
+of those things, right? You
+
+793
+00:38:10.040 --> 00:38:11.600
+can drag a button onto
+a page and it works,
+
+794
+00:38:11.990 --> 00:38:15.440
+Right. It needs to just
+work Pitt a success. I
+
+795
+00:38:15.440 --> 00:38:17.210
+fall into the pit of
+success. Even if you screw
+
+796
+00:38:17.210 --> 00:38:19.040
+it up, it just works.
+If I had to go
+
+797
+00:38:19.040 --> 00:38:21.440
+and then click the view
+state on, on that control
+
+798
+00:38:21.680 --> 00:38:24.470
+to make that work. Now,
+it's now it's an obstacle.
+
+799
+00:38:24.470 --> 00:38:27.770
+How many support calls and
+so much Of, of Microsoft's
+
+800
+00:38:27.770 --> 00:38:31.880
+behavior is focused on the
+first 10 times a customer
+
+801
+00:38:31.880 --> 00:38:34.220
+uses a particular, not the
+last thousand and not the
+
+802
+00:38:34.220 --> 00:38:37.900
+last thousand. I also that
+one of my favorite defaults
+
+803
+00:38:37.900 --> 00:38:39.490
+and I talk about this
+in sessions all the time
+
+804
+00:38:39.490 --> 00:38:42.280
+that people don't know about,
+but B when you really
+
+805
+00:38:42.280 --> 00:38:44.350
+think about it, realize it's
+a good default, but seems
+
+806
+00:38:44.350 --> 00:38:51.040
+totally nonsensical is asp.net default
+worker process restart is 23
+
+807
+00:38:51.040 --> 00:38:55.450
+hours. That's the default setting
+for a cold install of
+
+808
+00:38:55.450 --> 00:38:59.710
+IIS. Every treaty three hours
+restart the worker process. Really?
+
+809
+00:38:59.920 --> 00:39:03.990
+That is 20 minutes for
+ISX book for restarting the
+
+810
+00:39:03.990 --> 00:39:07.800
+work process for restarting the
+app pool recycling the app
+
+811
+00:39:07.800 --> 00:39:09.990
+pool. And I asked six,
+but a fallback pool. It
+
+812
+00:39:09.990 --> 00:39:13.350
+was a, that was 20
+minutes now, 23 hours. And
+
+813
+00:39:13.350 --> 00:39:15.510
+which, again, it's one of
+those goof, but there's a
+
+814
+00:39:15.510 --> 00:39:18.720
+default, but the point is
+he had to pick it
+
+815
+00:39:19.080 --> 00:39:23.130
+and I bet they killed
+Arguing over what is the
+
+816
+00:39:23.130 --> 00:39:26.820
+default one? Should we restart
+at all though? Well, I
+
+817
+00:39:26.820 --> 00:39:28.320
+mean, that is the point.
+This is why do we
+
+818
+00:39:28.320 --> 00:39:31.740
+have this guaranteed default of
+restarting the app? What happened?
+
+819
+00:39:31.740 --> 00:39:36.180
+Was it early on asp.net
+was a mashup of calm
+
+820
+00:39:36.180 --> 00:39:39.330
+objects that people wrote and
+remember all the calm, visible,
+
+821
+00:39:39.330 --> 00:39:43.170
+and how add calm reference
+was so important. And lots
+
+822
+00:39:43.170 --> 00:39:49.170
+of people had those managed
+unmanaged, unholy hybrids, bridges. Yeah.
+
+823
+00:39:49.410 --> 00:39:52.380
+That, yeah. Everyone had the
+bridge project in 2003 that
+
+824
+00:39:52.380 --> 00:39:55.660
+they had to make and
+they would leak. So you
+
+825
+00:39:55.830 --> 00:39:57.750
+re restart Only way to
+know you were going to
+
+826
+00:39:57.750 --> 00:40:00.150
+get your memory back. Yeah,
+I don't, I don't know,
+
+827
+00:40:00.150 --> 00:40:02.160
+but the idea of, of,
+of, of a fresh restart,
+
+828
+00:40:02.160 --> 00:40:04.290
+but ultimately if you can
+restart the worker process and
+
+829
+00:40:04.290 --> 00:40:07.500
+not lose anybody, right. Which
+calls back to the idea
+
+830
+00:40:07.500 --> 00:40:10.890
+of having out of product
+session, state, Generally everything that
+
+831
+00:40:10.890 --> 00:40:14.370
+is stateful in a, in
+a context where he's not
+
+832
+00:40:14.370 --> 00:40:16.410
+going to get lost. Right.
+I mean, really we'd like
+
+833
+00:40:16.410 --> 00:40:18.990
+to do that restart in
+a sort of seamless way
+
+834
+00:40:18.990 --> 00:40:22.290
+where nothing was running it
+at that moment, we, we
+
+835
+00:40:22.320 --> 00:40:24.420
+queued up the threads. We
+do that. We restart the
+
+836
+00:40:24.420 --> 00:40:26.760
+process and then we unload
+the threads and everything keeps
+
+837
+00:40:26.760 --> 00:40:28.920
+going and it doesn't work
+that way, but it'd be
+
+838
+00:40:28.920 --> 00:40:31.260
+nice if it did. I've
+got folks trying to use
+
+839
+00:40:31.260 --> 00:40:33.130
+the appliance, do those sorts
+of tricks. I want to
+
+840
+00:40:33.130 --> 00:40:35.250
+catch the whole site on
+the appliance and restart the
+
+841
+00:40:35.250 --> 00:40:38.700
+web server. The customers never
+see it. I see what
+
+842
+00:40:38.700 --> 00:40:41.940
+you're saying. Yeah. We used
+to do, you know, bleed
+
+843
+00:40:42.030 --> 00:40:45.090
+bleeding off of sites. Right?
+So if you've got 10,
+
+844
+00:40:45.090 --> 00:40:48.000
+15 web servers in what
+you can do is update
+
+845
+00:40:48.000 --> 00:40:51.150
+you rolling up Yes. Where
+you set the server to
+
+846
+00:40:51.150 --> 00:40:53.790
+take no new sessions. And
+so gradually all of the
+
+847
+00:40:53.790 --> 00:40:56.190
+sessions expire off and then
+that servers available do the
+
+848
+00:40:56.190 --> 00:40:58.260
+update on, and you get
+to a certain point where
+
+849
+00:40:58.260 --> 00:41:00.750
+now you flop because the
+other set of servers and
+
+850
+00:41:00.750 --> 00:41:03.150
+then bleed out the other
+lead out the rest. Amazing
+
+851
+00:41:03.150 --> 00:41:05.460
+to me, we were doing
+this kind of stuff. And
+
+852
+00:41:05.580 --> 00:41:08.670
+in 97, 96, and I
+don't mean to be a,
+
+853
+00:41:09.300 --> 00:41:13.350
+an elitist or anything, but
+I am continually surprised how
+
+854
+00:41:13.350 --> 00:41:16.980
+many people would rather just
+go in on Sunday morning
+
+855
+00:41:16.980 --> 00:41:20.160
+at 2:00 AM and kick the
+feet Number of customers off,
+
+856
+00:41:20.400 --> 00:41:22.680
+but still kick them off.
+Right. But somebody is having
+
+857
+00:41:22.680 --> 00:41:25.410
+a lousy experience, but bleeding,
+you know, you'd get a
+
+858
+00:41:25.410 --> 00:41:29.730
+really good, you get a
+really good IP load balancer,
+
+859
+00:41:29.730 --> 00:41:32.550
+like an F know a
+local director. You can bleed
+
+860
+00:41:32.550 --> 00:41:35.390
+sessions off really, quite nicely.
+Yep. Well then there's that,
+
+861
+00:41:35.420 --> 00:41:38.660
+there's also that app offline
+thing that asp.net has where
+
+862
+00:41:38.660 --> 00:41:41.540
+there's that, that HTML file
+that you can put in
+
+863
+00:41:41.540 --> 00:41:45.470
+the root that will keep
+it from accepting any new
+
+864
+00:41:45.470 --> 00:41:48.530
+sessions. Right. But most people
+just copy files over and
+
+865
+00:41:48.860 --> 00:41:50.660
+half my files over and
+let the users have a
+
+866
+00:41:50.660 --> 00:41:52.850
+wacky experience for a few
+minutes and go from there.
+
+867
+00:41:53.120 --> 00:41:56.060
+And I just, yeah, I'm
+up in part of the
+
+868
+00:41:56.060 --> 00:41:58.760
+research we've done searching around
+strange and so forth, finding
+
+869
+00:41:58.760 --> 00:42:01.970
+out how many customers actually
+do have good instrumentation around
+
+870
+00:42:01.970 --> 00:42:04.250
+session and say, yeah, we're
+running at about a 5%
+
+871
+00:42:04.250 --> 00:42:07.070
+session loss, but we don't
+have enough complaints to bother
+
+872
+00:42:07.070 --> 00:42:09.830
+to fix it. 5% session,
+5% of you saying, we'll
+
+873
+00:42:09.830 --> 00:42:13.190
+get one in 20 users,
+lose their session in the
+
+874
+00:42:13.190 --> 00:42:16.790
+course of a day. Yeah.
+But we actually just, cause
+
+875
+00:42:16.790 --> 00:42:18.350
+we know that doesn't mean
+we're going to do something
+
+876
+00:42:18.350 --> 00:42:21.770
+about it. We're actually measuring
+the number of calls we're
+
+877
+00:42:21.770 --> 00:42:24.980
+getting as our metric of
+happiness. I was working at,
+
+878
+00:42:24.980 --> 00:42:28.790
+this is another large bank
+and we were having a
+
+879
+00:42:28.790 --> 00:42:31.610
+pretty crazy day. And we
+were basically working on the
+
+880
+00:42:31.610 --> 00:42:34.730
+engine of the car while
+it was going downhill a
+
+881
+00:42:34.730 --> 00:42:37.730
+hundred miles an hour on
+fire with a brick wall
+
+882
+00:42:37.760 --> 00:42:39.710
+at the bottom of the
+Hill being chased by ninjas
+
+883
+00:42:39.740 --> 00:42:43.210
+who were also on fire.
+So we're, We're trying to
+
+884
+00:42:43.210 --> 00:42:45.550
+work on this thing. And
+we look at, at the
+
+885
+00:42:45.550 --> 00:42:47.800
+perf monitor, we're trying to
+figure out, you know, how
+
+886
+00:42:47.800 --> 00:42:50.170
+many people are having a
+bad experience. It was like
+
+887
+00:42:50.590 --> 00:42:54.010
+five or 6% errors. So
+like five or 6% of
+
+888
+00:42:54.100 --> 00:42:57.610
+pages were resulting in it
+like a 500 error, right.
+
+889
+00:42:58.000 --> 00:42:59.980
+An internal server. And they
+were saying, well, you know,
+
+890
+00:42:59.980 --> 00:43:02.980
+no one's calling. Yeah. That's
+the math, that's the real
+
+891
+00:43:02.980 --> 00:43:06.400
+match. Right. A second 5%
+of people are having not
+
+892
+00:43:06.400 --> 00:43:10.390
+just a weird experience, but
+a wholly and completely bad
+
+893
+00:43:10.390 --> 00:43:13.600
+experience, complete failure, complete and
+utter failure. Why is that
+
+894
+00:43:13.600 --> 00:43:16.750
+acceptable? What happens if you
+walk into a bank and
+
+895
+00:43:16.750 --> 00:43:19.690
+talk to a teller and
+he's like, Oh, I'll be
+
+896
+00:43:19.690 --> 00:43:24.070
+happy to. And he falls
+over and you're like, Oh,
+
+897
+00:43:24.310 --> 00:43:26.590
+I was just thinking just
+one door, doesn't open for
+
+898
+00:43:26.590 --> 00:43:29.620
+one and 20. I got
+halfway there. And the teller
+
+899
+00:43:29.880 --> 00:43:33.130
+just kind of talking nonsense
+and fell over the teller,
+
+900
+00:43:33.130 --> 00:43:36.370
+walks away, right. Mid transaction.
+That teller walks away. Doesn't
+
+901
+00:43:36.370 --> 00:43:41.020
+come back. I think I
+like my language, something horrible
+
+902
+00:43:41.020 --> 00:43:45.610
+happens. And you've had that
+happen. I was at, I
+
+903
+00:43:45.610 --> 00:43:48.430
+had, I had a really
+bad experience in Detroit that
+
+904
+00:43:48.430 --> 00:43:51.760
+was at this restaurant. And
+I had, I walked away.
+
+905
+00:43:51.760 --> 00:43:54.250
+I was the one that
+I looked at the waitress
+
+906
+00:43:54.250 --> 00:43:57.610
+and I was just like,
+I don't know what happened
+
+907
+00:43:57.610 --> 00:44:00.520
+there. Obviously we've gotten off
+on the wrong foot and
+
+908
+00:44:00.520 --> 00:44:02.980
+there's no way that I
+can recover from this transaction.
+
+909
+00:44:03.310 --> 00:44:05.350
+So I'm going to roll
+back, just roll him back
+
+910
+00:44:06.910 --> 00:44:10.780
+To go to another restaurant.
+And does that mean I'm
+
+911
+00:44:10.780 --> 00:44:14.320
+ever going to visit this
+restaurant again? Probably not. Probably
+
+912
+00:44:14.320 --> 00:44:17.070
+not. Well, and of course
+now you get into the
+
+913
+00:44:17.070 --> 00:44:19.930
+whole customer game of, you
+know, you tell, you tell
+
+914
+00:44:19.930 --> 00:44:22.390
+somebody, although you're crazy this
+way because of your bloody
+
+915
+00:44:22.390 --> 00:44:24.550
+blog that you only tell
+a few people, you know,
+
+916
+00:44:24.550 --> 00:44:26.080
+when you do something right.
+We tell a lot of
+
+917
+00:44:26.080 --> 00:44:27.760
+people with something wrong. I
+have a song. I can
+
+918
+00:44:27.760 --> 00:44:33.000
+just think about how many
+bad experiences people have Online.
+
+919
+00:44:33.480 --> 00:44:37.530
+But I also wonder if
+that's an accepted part of
+
+920
+00:44:37.530 --> 00:44:41.390
+the practice too. It's getting
+worse. I put a Macintosh
+
+921
+00:44:41.390 --> 00:44:43.490
+in my, in my kitchen
+and I made it a
+
+922
+00:44:43.490 --> 00:44:46.970
+kiosk for the wife. And
+she's mad at me because
+
+923
+00:44:46.970 --> 00:44:50.210
+of bunch of sites, actually
+not just don't work well
+
+924
+00:44:50.210 --> 00:44:52.580
+on Safari, but they'll sniff
+that you're on a Mac
+
+925
+00:44:53.360 --> 00:44:56.660
+and they'll say, Oh, well
+this site only the library
+
+926
+00:44:56.660 --> 00:45:00.170
+in art city only works
+at <inaudible> Period. That's an
+
+927
+00:45:00.170 --> 00:45:05.450
+acceptable decision Rather than excluding
+one browser for being funny,
+
+928
+00:45:06.050 --> 00:45:08.900
+we will, you, we will
+pick one browser. Yes. And
+
+929
+00:45:08.900 --> 00:45:11.270
+all others are shoot. So
+then what does she do?
+
+930
+00:45:11.270 --> 00:45:13.100
+She comes to me and
+she says, Hey, this matters.
+
+931
+00:45:13.850 --> 00:45:17.290
+Yeah. Interesting. No, no, no,
+no. The website side. Yeah.
+
+932
+00:45:18.160 --> 00:45:20.390
+But no, no, I don't
+want a Mac anymore because
+
+933
+00:45:20.390 --> 00:45:22.490
+I can't get, I can't
+check out books at the
+
+934
+00:45:22.490 --> 00:45:27.080
+library. Now It's so far
+removed from the actual problem.
+
+935
+00:45:27.110 --> 00:45:29.450
+Like what a great way
+to transfer the problem over
+
+936
+00:45:29.900 --> 00:45:32.900
+how many people believe that
+the internet has these, these
+
+937
+00:45:32.900 --> 00:45:37.100
+significant unreliability problems simply because
+people are figuring not enough
+
+938
+00:45:37.100 --> 00:45:40.700
+people complaining. Well, actually I
+have a very nice readership
+
+939
+00:45:40.730 --> 00:45:43.850
+and who, whenever they see
+an exception on my blog,
+
+940
+00:45:43.880 --> 00:45:45.680
+they'll give me a screenshot.
+So I'll get a yellow
+
+941
+00:45:45.680 --> 00:45:47.810
+screen of death screenshot a
+couple of times a week.
+
+942
+00:45:47.990 --> 00:45:50.000
+And I've got a particular
+macro that does one of
+
+943
+00:45:50.000 --> 00:45:51.980
+the little ads that pays
+for the bandwidth and the
+
+944
+00:45:51.980 --> 00:45:54.980
+blog that shows up in
+the, on the corner every
+
+945
+00:45:54.980 --> 00:45:58.250
+once in a while, throws
+an exception. And without fail,
+
+946
+00:45:58.250 --> 00:46:02.600
+my monitoring system is a
+kind individual from overseas who
+
+947
+00:46:02.600 --> 00:46:04.700
+sends me this thing. And
+then I sent yeah, yeah,
+
+948
+00:46:04.730 --> 00:46:07.220
+that happens sometimes. Right? I
+know I need to go
+
+949
+00:46:07.220 --> 00:46:11.150
+back and fix the macro
+and remove that call stack
+
+950
+00:46:11.150 --> 00:46:13.370
+that shows up, but you
+hit refresh and it goes
+
+951
+00:46:13.370 --> 00:46:17.030
+away. Right. So, ah, who
+has the, well it's already,
+
+952
+00:46:17.030 --> 00:46:18.810
+I've become, You become part
+of it. Well, and that's
+
+953
+00:46:18.810 --> 00:46:21.110
+certainly part of the problem.
+I've been the tech support
+
+954
+00:46:21.110 --> 00:46:23.750
+guy where we measured the
+significance of a problem and
+
+955
+00:46:23.750 --> 00:46:25.820
+whether or not it would
+persist long enough that someone
+
+956
+00:46:25.820 --> 00:46:29.030
+would actually complete a call
+that if it was, if,
+
+957
+00:46:29.030 --> 00:46:32.420
+if this fixed itself within
+60 seconds and we didn't
+
+958
+00:46:32.420 --> 00:46:34.490
+answer the phone by the
+fifth ring until the fifth
+
+959
+00:46:34.490 --> 00:46:37.070
+ring, then we were okay.
+Because by the time we
+
+960
+00:46:37.070 --> 00:46:39.530
+actually got out, they answered
+the call. They'd already hit
+
+961
+00:46:39.530 --> 00:46:43.460
+refresh. And it had gone
+away. Huh? Well, Richard, this,
+
+962
+00:46:43.700 --> 00:46:46.130
+this, the show didn't go
+exactly. As I thought it
+
+963
+00:46:46.130 --> 00:46:48.320
+would never does with you.
+And I am afraid. I'm
+
+964
+00:46:48.320 --> 00:46:50.780
+afraid. Not willing to try
+this again. Cause I don't
+
+965
+00:46:50.780 --> 00:46:53.060
+know if I can call
+this scalability with Richard Campbell. I
+
+966
+00:46:53.060 --> 00:46:55.850
+think I'm going to call
+it war stories, war stories.
+
+967
+00:46:56.630 --> 00:46:58.880
+Well, Richard Campbell, thank you very
+much for taking the time
+
+968
+00:46:58.880 --> 00:47:00.770
+to sit down with me
+here at dev teach and
+
+969
+00:47:00.900 --> 00:47:03.650
+your product is what's the
+name of your product? I
+
+970
+00:47:03.650 --> 00:47:06.620
+know the company is strange
+Companies, strange loop networks, strange
+
+971
+00:47:06.710 --> 00:47:11.750
+networks.com and the product is
+called the <inaudible> for application
+
+972
+00:47:11.750 --> 00:47:15.920
+scaler Applications together, 1000 Strange
+loop. Then we now have
+
+973
+00:47:15.920 --> 00:47:18.230
+a web services scale or
+two called the Ws 1000.
+
+974
+00:47:19.010 --> 00:47:21.230
+Very great. And I suppose
+the, if a Ws 2000
+
+975
+00:47:21.230 --> 00:47:23.060
+comes out, it's going to
+be that much better. That
+
+976
+00:47:23.060 --> 00:47:26.210
+much bigger. Interestingly enough. You're
+right. We may have one
+
+977
+00:47:26.210 --> 00:47:28.430
+soon because we've got people
+who are using it so
+
+978
+00:47:28.430 --> 00:47:31.360
+much. They won in excess
+Of 64 gigs of Ram
+
+979
+00:47:31.360 --> 00:47:33.400
+in it. Wow. I should
+be a marketer. I just
+
+980
+00:47:33.400 --> 00:47:35.950
+gave you the name. You
+just walked into my naming
+
+981
+00:47:35.950 --> 00:47:38.920
+strategy perfectly fantastic. Well, this
+has been another episode of
+
+982
+00:47:38.920 --> 00:47:40.990
+Hanselminutes and we'll see you
+again next week.
+

@@ -1,0 +1,3292 @@
+WEBVTT FILE
+
+1
+00:00:00.990 --> 00:00:04.110
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:04.110 --> 00:00:07.440
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:07.440 --> 00:00:11.700
+Tellerik create compelling app experiences
+across any screen with the
+
+4
+00:00:11.700 --> 00:00:16.560
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
+
+5
+00:00:16.560 --> 00:00:20.250
+leading UI tools with cloud
+services to simplify the entire
+
+6
+00:00:20.250 --> 00:00:24.750
+app development cycle Tellerik offers
+everything.net developers need to build
+
+7
+00:00:24.750 --> 00:00:34.110
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform
+
+8
+00:00:47.360 --> 00:00:52.910
+From Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+9
+00:00:52.910 --> 00:00:58.070
+web developer and technologist Scott
+Hanselman It's Ryan mounting show
+
+10
+00:00:58.070 --> 00:01:02.030
+number four 15. In this
+episode, Scott talks with Steven
+
+11
+00:01:02.030 --> 00:01:06.590
+Edward Continuous integration and easy
+deployment possible. Yeah, In the
+
+12
+00:01:06.590 --> 00:01:11.900
+cloud. Hi, this is Scott
+Hanselman. This is another episode
+
+13
+00:01:11.900 --> 00:01:14.690
+of Hansel minutes. I'm talking
+with Steven, Edward, how are
+
+14
+00:01:14.690 --> 00:01:18.170
+you? Hey, how's it going,
+Scott? I'm pretty good. I'm
+
+15
+00:01:18.170 --> 00:01:21.320
+learning a lot of stuff
+from exploring your GitHub repository
+
+16
+00:01:21.320 --> 00:01:25.100
+here. You are all about
+continuous integration. Are you now?
+
+17
+00:01:25.730 --> 00:01:28.310
+I love continuous integration and
+the thing is, people don't
+
+18
+00:01:28.310 --> 00:01:31.670
+realize how easy it is.
+Basically, if you have to
+
+19
+00:01:31.670 --> 00:01:35.630
+do something twice, it should
+be automated, right? Absolutely. You
+
+20
+00:01:35.630 --> 00:01:38.450
+know, this, this validation of
+like, Hey, is something working
+
+21
+00:01:38.450 --> 00:01:40.670
+or not? You should just
+know, like right at Marino,
+
+22
+00:01:40.670 --> 00:01:44.930
+right at check-in I noticed
+particularly your resume. I went
+
+23
+00:01:44.930 --> 00:01:46.310
+up and looked at your
+resume. I know it's always
+
+24
+00:01:46.310 --> 00:01:48.530
+weird to start a show
+when you're talking to a
+
+25
+00:01:48.530 --> 00:01:50.720
+guest where like I looked
+at your resume, but what
+
+26
+00:01:50.780 --> 00:01:53.030
+what's kind of Rocky and
+cool about your resume is
+
+27
+00:01:53.030 --> 00:01:56.180
+that you use this thing
+called Jason resume. You basically
+
+28
+00:01:56.180 --> 00:02:00.950
+took adjacent schema and you
+compile your resume into HTML
+
+29
+00:02:01.790 --> 00:02:03.890
+or PDF or whatever. And
+this is something built in
+
+30
+00:02:03.890 --> 00:02:07.220
+node, right? Yeah. So I
+was actually it's proving hacker
+
+31
+00:02:07.220 --> 00:02:10.160
+news. And I saw like
+someone posted like this little
+
+32
+00:02:10.190 --> 00:02:14.060
+open source project for building
+a resume to Jason. And
+
+33
+00:02:14.060 --> 00:02:17.000
+it's a, it's powered by
+node. And essentially it's just
+
+34
+00:02:17.000 --> 00:02:20.420
+a command line interface. And
+you just run this, this
+
+35
+00:02:20.420 --> 00:02:24.020
+package that they've included in
+this interface, and it'll just
+
+36
+00:02:24.230 --> 00:02:27.920
+scan through this Jaison schema
+and compile it into whatever
+
+37
+00:02:27.920 --> 00:02:29.660
+format you want. And it
+can be HTML. It could
+
+38
+00:02:29.660 --> 00:02:32.660
+be marked out. It could
+be PDF. And the cool
+
+39
+00:02:32.660 --> 00:02:34.880
+part is you can just
+take that and, you know,
+
+40
+00:02:34.970 --> 00:02:37.640
+just source control it and
+then hook it up to
+
+41
+00:02:37.910 --> 00:02:40.760
+continuous integration and deploy, right?
+Like every time you change
+
+42
+00:02:40.770 --> 00:02:43.790
+a resume. So it's pretty
+clever actually. And this is,
+
+43
+00:02:43.860 --> 00:02:46.460
+so this is a node.
+So I would say NPM
+
+44
+00:02:46.460 --> 00:02:51.530
+node, package manager, install, resume
+dash CLI CLI command line
+
+45
+00:02:51.530 --> 00:02:53.870
+interface. Yeah. You want to
+make sure we do it
+
+46
+00:02:53.870 --> 00:02:57.440
+globally so you can use
+it anywhere. Okay. And then,
+
+47
+00:02:57.620 --> 00:02:59.430
+you know, you make your
+Jason file and got all
+
+48
+00:02:59.430 --> 00:03:01.510
+out all this up on
+your GitHub. But, but what
+
+49
+00:03:01.540 --> 00:03:02.950
+I thought was cool about
+it was that you did
+
+50
+00:03:02.950 --> 00:03:06.790
+some stuff in Azure that,
+you know, like after, after
+
+51
+00:03:06.790 --> 00:03:09.190
+the fact I realized this
+is pretty obvious, but it
+
+52
+00:03:09.190 --> 00:03:12.280
+was really clean. You basically
+got Azure websites to compile
+
+53
+00:03:12.280 --> 00:03:15.840
+this for you. Yep, Exactly.
+So the cool part about
+
+54
+00:03:15.840 --> 00:03:18.810
+it is that in a
+lot of people don't realize
+
+55
+00:03:18.810 --> 00:03:20.850
+the Azure websites, like the
+name is kind of slowly,
+
+56
+00:03:20.850 --> 00:03:23.100
+it's not just websites. It's
+like, it's really like an
+
+57
+00:03:23.100 --> 00:03:25.590
+app engine, right? So you
+can take this thing and
+
+58
+00:03:25.590 --> 00:03:28.650
+you could say, Hey, can
+you go through the steps
+
+59
+00:03:28.680 --> 00:03:30.810
+I'm going to define for
+you when you check in
+
+60
+00:03:31.260 --> 00:03:34.140
+and the steps could be
+anything. And in this case,
+
+61
+00:03:34.380 --> 00:03:35.940
+we know the steps that
+we need to do to
+
+62
+00:03:35.940 --> 00:03:37.860
+build our resume. We know
+that we need to, you
+
+63
+00:03:37.860 --> 00:03:40.080
+know, make sure the schema
+is correct. We need to
+
+64
+00:03:40.080 --> 00:03:42.720
+run a certain command that
+will come, that will compile
+
+65
+00:03:42.720 --> 00:03:44.790
+it. And we need to
+output it to a static
+
+66
+00:03:44.790 --> 00:03:47.160
+webpage. So what we'll do
+is we'll just, I'll put
+
+67
+00:03:47.160 --> 00:03:49.410
+it to like a static
+index, HTML, put it in
+
+68
+00:03:49.410 --> 00:03:52.130
+the right spot on the
+Azure website. And then, so
+
+69
+00:03:52.140 --> 00:03:53.640
+we know we do a
+check in, it builds that
+
+70
+00:03:53.640 --> 00:03:55.860
+and you end XHTML. So
+when you do it get
+
+71
+00:03:55.860 --> 00:03:58.500
+pushed, you should be able
+to see the change happen
+
+72
+00:03:58.500 --> 00:04:01.170
+on your website when you
+refresh. So you made an
+
+73
+00:04:01.170 --> 00:04:03.270
+Azure website, you're using again,
+the, what they call the
+
+74
+00:04:03.270 --> 00:04:08.700
+X plat or cross-platform CLI.
+And so that, that cross-platform
+
+75
+00:04:08.700 --> 00:04:12.330
+CLI is actually pretty awesome
+because you can run it
+
+76
+00:04:12.330 --> 00:04:15.270
+from anywhere like it, literally,
+if node runs on the
+
+77
+00:04:15.270 --> 00:04:17.220
+thing, you can run it
+on a raspberry PI. Like
+
+78
+00:04:17.220 --> 00:04:19.020
+that's how, like, that's how
+simple it is. Yeah. If
+
+79
+00:04:19.030 --> 00:04:21.150
+you can, I did not
+know that. I assume you
+
+80
+00:04:21.150 --> 00:04:25.950
+know that because you try
+that try that It's actually
+
+81
+00:04:25.950 --> 00:04:29.250
+kinda cool, you know, as
+long, and you know, I
+
+82
+00:04:29.250 --> 00:04:31.770
+don't think the actual CLI
+has any native components to
+
+83
+00:04:31.770 --> 00:04:34.350
+it, which is pretty nice.
+So yeah, you can run
+
+84
+00:04:34.350 --> 00:04:36.570
+it from Unix. You can
+run from red hat or
+
+85
+00:04:36.570 --> 00:04:39.030
+whatever you're using. So that's
+pretty nice. So that one
+
+86
+00:04:39.030 --> 00:04:42.810
+of the things where this
+goes beyond just regular put
+
+87
+00:04:42.810 --> 00:04:45.840
+a note app up into
+Azure was that you started
+
+88
+00:04:45.870 --> 00:04:49.110
+digging into what we call
+kudu, right. Which is the
+
+89
+00:04:49.120 --> 00:04:52.410
+deployment system behind Azure website.
+Yeah. It's actually behind mobile
+
+90
+00:04:52.410 --> 00:04:55.890
+services too. So this thing
+could do is like this
+
+91
+00:04:56.280 --> 00:05:02.220
+mechanism that really just follows
+either generates instructions or you
+
+92
+00:05:02.220 --> 00:05:04.380
+takes your instructions that you
+want. And that's based on
+
+93
+00:05:04.380 --> 00:05:08.610
+a script and a munch
+on the steps. And then
+
+94
+00:05:08.700 --> 00:05:11.940
+after it's done with that,
+it'll move your, your stuff
+
+95
+00:05:11.970 --> 00:05:15.600
+from a certain area like
+directory on your website to
+
+96
+00:05:15.600 --> 00:05:19.200
+the deployment directory, the site,
+the directory that's actually served
+
+97
+00:05:19.200 --> 00:05:25.620
+up by IIS serving the
+web service. So those steps
+
+98
+00:05:25.620 --> 00:05:27.930
+are defined by scripts. So
+you could really talk to
+
+99
+00:05:27.930 --> 00:05:31.440
+do anything or it can,
+Azure websites will actually sniff
+
+100
+00:05:31.440 --> 00:05:33.210
+and see, Oh, are you
+using Ruby? Or are you
+
+101
+00:05:33.210 --> 00:05:37.530
+using Python? That will actually
+just make one for you.
+
+102
+00:05:37.530 --> 00:05:40.680
+If you don't know what
+you want. And Azure websites
+
+103
+00:05:40.680 --> 00:05:45.300
+has a, what's it called
+a Cygwin installed. So you
+
+104
+00:05:45.300 --> 00:05:49.550
+can use shell scripts to
+run, but you used a
+
+105
+00:05:49.560 --> 00:05:51.960
+command. You did a real,
+real basic. You basically have
+
+106
+00:05:51.960 --> 00:05:54.600
+like a effectively a batch
+file that runs. Yup. You
+
+107
+00:05:54.600 --> 00:05:56.400
+could do a batch file.
+You could do a batch
+
+108
+00:05:56.400 --> 00:06:00.620
+file. Like you mentioned, you
+could also do a JavaScript
+
+109
+00:06:00.620 --> 00:06:03.980
+of node since nodes installed
+on all the boxes already.
+
+110
+00:06:04.400 --> 00:06:07.940
+So you could, the command
+could just be node, deploy
+
+111
+00:06:07.970 --> 00:06:11.660
+dot JS instead of if
+you prefer to use JavaScript.
+
+112
+00:06:11.660 --> 00:06:14.540
+And then, which is a
+little nicer than batch, but
+
+113
+00:06:14.780 --> 00:06:17.090
+for this case, it was
+actually really easy. So the
+
+114
+00:06:17.090 --> 00:06:20.780
+example that, that I, that
+I took out was essentially
+
+115
+00:06:20.870 --> 00:06:25.010
+the Azure CLI will actually
+generate a kind of like
+
+116
+00:06:25.010 --> 00:06:26.750
+this script for you. So
+you could say like, Hey,
+
+117
+00:06:26.750 --> 00:06:28.820
+Azure, CLI can you just
+make me a script for
+
+118
+00:06:28.820 --> 00:06:30.740
+Python? Or can you make
+me a strip for node?
+
+119
+00:06:31.070 --> 00:06:32.600
+Or can you just make
+me a script for static
+
+120
+00:06:32.600 --> 00:06:35.660
+website? You make that script.
+And then from there you
+
+121
+00:06:35.660 --> 00:06:39.800
+can just kind of start
+playing with it. And one
+
+122
+00:06:39.800 --> 00:06:42.290
+of the easiest or most
+interesting ways to play with
+
+123
+00:06:42.290 --> 00:06:45.530
+it is by just adding
+tests in there. So say
+
+124
+00:06:45.530 --> 00:06:48.050
+you got a unit test
+framework. You could just, you
+
+125
+00:06:48.050 --> 00:06:49.910
+know, say, well, here are
+the commands to run the
+
+126
+00:06:49.910 --> 00:06:52.430
+test and just do it.
+And then it'll just deploy.
+
+127
+00:06:54.220 --> 00:06:57.820
+So when you say Azure
+site deployment script, it spits
+
+128
+00:06:57.820 --> 00:07:00.640
+out a script. You can
+get the default script that
+
+129
+00:07:00.640 --> 00:07:02.920
+they'll give you. Right. But
+you said dash dash basic.
+
+130
+00:07:03.400 --> 00:07:05.800
+Yeah. So I did dash
+desk basic for, I'm pretty
+
+131
+00:07:05.800 --> 00:07:09.130
+sure for resume for, so
+for the resume, it's just
+
+132
+00:07:09.400 --> 00:07:12.730
+outputting a static index, HTML,
+right? With all my resume
+
+133
+00:07:12.730 --> 00:07:16.720
+information, all the, all the
+nice formatting, all the things
+
+134
+00:07:16.720 --> 00:07:19.600
+that I need is there,
+but there's nothing dynamic about
+
+135
+00:07:19.600 --> 00:07:21.160
+it. You look at my
+resume, it's not going to
+
+136
+00:07:21.160 --> 00:07:24.190
+change based on who you
+are or whatever. So there's
+
+137
+00:07:24.190 --> 00:07:26.920
+no server for that. But
+if you were to do
+
+138
+00:07:26.920 --> 00:07:29.430
+like node, you would say,
+Hey, well I want dash
+
+139
+00:07:29.470 --> 00:07:32.320
+node because that's what I'm
+making a note, a website,
+
+140
+00:07:33.280 --> 00:07:37.300
+and it'll just generate the
+default deployment for node. And
+
+141
+00:07:37.330 --> 00:07:40.090
+what I really like about
+it is that it's super
+
+142
+00:07:40.090 --> 00:07:43.450
+obvious where you should, where
+you should change. Right. You
+
+143
+00:07:43.450 --> 00:07:46.420
+should say, well, here's where
+it's going to deploy. So
+
+144
+00:07:46.450 --> 00:07:49.210
+maybe I want to run
+some validation before that. And
+
+145
+00:07:49.210 --> 00:07:52.360
+you just do the commands
+that you want. Scott, you're
+
+146
+00:07:52.360 --> 00:07:55.540
+familiar with like Travis CIS,
+Right? Yeah. I have used,
+
+147
+00:07:55.540 --> 00:07:57.610
+I used app purveyor for
+most of my stuff, because
+
+148
+00:07:57.610 --> 00:07:59.770
+most of my stuff's in.net,
+but Travis, CIA has kind
+
+149
+00:07:59.770 --> 00:08:03.580
+of a continuous integration service
+in the cloud. Yep, Exactly.
+
+150
+00:08:03.580 --> 00:08:06.550
+It's the same thing. Really.
+It's just, it's really focused
+
+151
+00:08:06.550 --> 00:08:11.020
+for Linux development. So, but
+it's the same idea where
+
+152
+00:08:11.020 --> 00:08:13.510
+these guys will just take,
+give you a little script
+
+153
+00:08:13.510 --> 00:08:15.130
+and says, okay, well, here's
+what we're going to run.
+
+154
+00:08:15.820 --> 00:08:18.100
+Tell us how to run
+if you're doing node, for
+
+155
+00:08:18.100 --> 00:08:20.650
+example, it as well. Here's
+the things, the two, three
+
+156
+00:08:20.650 --> 00:08:22.480
+things are required. Like the
+command that you need to
+
+157
+00:08:22.480 --> 00:08:25.720
+run so that we can
+actually run your, you run
+
+158
+00:08:25.720 --> 00:08:27.760
+your build. And a lot
+of the things that is
+
+159
+00:08:27.760 --> 00:08:32.530
+builds like linting, or minifying,
+or, or even running, like
+
+160
+00:08:32.530 --> 00:08:36.430
+test with your unit test
+framework of choice. When do
+
+161
+00:08:36.430 --> 00:08:38.950
+you think that you should
+move from having in this
+
+162
+00:08:38.950 --> 00:08:42.760
+case, Azure deployment scripts doing
+your build, which is what
+
+163
+00:08:42.760 --> 00:08:46.780
+you're doing here in the
+resume example to an actual,
+
+164
+00:08:46.780 --> 00:08:50.500
+proper continuous integration server where
+the build happens elsewhere. And
+
+165
+00:08:50.500 --> 00:08:52.480
+then the deployment happens into
+Azure. Cause I think with
+
+166
+00:08:52.480 --> 00:08:54.910
+these get deployed systems, whether
+it be at Heroku or
+
+167
+00:08:54.930 --> 00:08:56.670
+whether it be at Azure,
+there's a little bit of
+
+168
+00:08:56.670 --> 00:09:01.110
+confusion about responsibility sometimes. Yep.
+And people, they move from
+
+169
+00:09:01.110 --> 00:09:03.660
+a basic website with a
+commit, some code into Azure
+
+170
+00:09:03.660 --> 00:09:06.120
+with get, and then they
+get frustrated that it's not
+
+171
+00:09:06.120 --> 00:09:07.860
+doing all the build right
+there. And you have to
+
+172
+00:09:07.860 --> 00:09:12.030
+ask yourself, when is it
+the website's responsibility to build
+
+173
+00:09:12.030 --> 00:09:16.260
+itself in production versus having
+a continuous integration server elsewhere?
+
+174
+00:09:16.260 --> 00:09:20.510
+Did that work well? So,
+you know, The way things
+
+175
+00:09:20.510 --> 00:09:22.220
+are set up right now,
+I don't see a reason
+
+176
+00:09:22.220 --> 00:09:25.940
+why he can't either use
+two different, two different ones.
+
+177
+00:09:25.940 --> 00:09:29.930
+Like for example, you can
+take the same repository and
+
+178
+00:09:29.930 --> 00:09:32.420
+say, well, I have my
+dev branch or I have
+
+179
+00:09:32.420 --> 00:09:36.560
+my, you know, predeployment branch
+or whatever, and point those
+
+180
+00:09:36.560 --> 00:09:39.590
+to different web instances. And
+they can be called websites,
+
+181
+00:09:39.590 --> 00:09:42.470
+but really their compute instances
+in the cloud, they don't
+
+182
+00:09:42.470 --> 00:09:45.890
+necessarily have to be responsible
+for hosting or production. But
+
+183
+00:09:45.890 --> 00:09:47.960
+what they can do is
+they can still run that
+
+184
+00:09:47.960 --> 00:09:52.610
+continuous integration build and run
+that validation. And afterwards there's
+
+185
+00:09:52.610 --> 00:09:54.740
+nothing stopping you from saying,
+okay, well, we created, we
+
+186
+00:09:54.740 --> 00:09:57.740
+did that now let's go
+ahead and deploy that to
+
+187
+00:09:57.740 --> 00:10:01.280
+the production site. So I
+think the point that it
+
+188
+00:10:01.280 --> 00:10:04.040
+would make sense is where
+it doesn't really make much
+
+189
+00:10:04.040 --> 00:10:07.550
+sense to have your production
+server be building your stuff.
+
+190
+00:10:07.940 --> 00:10:09.920
+You can get away with
+it. But once you start
+
+191
+00:10:09.920 --> 00:10:12.260
+to hit, you know, a
+scalable amount of traffic to
+
+192
+00:10:12.260 --> 00:10:16.860
+where that compute takes away
+from your servicing ability, it's
+
+193
+00:10:16.860 --> 00:10:18.860
+just obvious at that point,
+you're like, well, there's two
+
+194
+00:10:18.860 --> 00:10:21.290
+things you could either make,
+stand up your own server,
+
+195
+00:10:21.290 --> 00:10:24.440
+which is kind of a
+pain. You could also use
+
+196
+00:10:24.440 --> 00:10:26.750
+one of these services just
+to make sure that it's
+
+197
+00:10:26.750 --> 00:10:32.420
+not meant for production Up
+on your GitHub. You've got
+
+198
+00:10:32.450 --> 00:10:37.010
+a repository called Azure dev
+ops labs, and you basically
+
+199
+00:10:37.010 --> 00:10:39.620
+have four labs up there
+breaking up four different scenarios.
+
+200
+00:10:39.620 --> 00:10:41.090
+I thought it would be
+cool to go over those.
+
+201
+00:10:41.630 --> 00:10:44.180
+Yeah. So if you know,
+what's hilarious about this is
+
+202
+00:10:44.180 --> 00:10:46.850
+that, you know, I write
+everything on get hub just
+
+203
+00:10:46.880 --> 00:10:49.760
+because, but this was really
+for just the internal, the
+
+204
+00:10:49.760 --> 00:10:52.190
+internal Ted team, like, and
+within Microsoft, I was giving
+
+205
+00:10:52.190 --> 00:10:58.070
+a presentation, Ted Ted is
+the technology engagement, you know,
+
+206
+00:10:58.070 --> 00:11:02.300
+it's so funny. We always
+throw these, these acronyms With
+
+207
+00:11:02.310 --> 00:11:04.130
+Ted is that you work
+for them. I know that
+
+208
+00:11:04.130 --> 00:11:07.640
+they do global evangelism with
+like large scale companies, but
+
+209
+00:11:07.670 --> 00:11:09.770
+you know, you always forget
+the acronym, but you're in
+
+210
+00:11:09.770 --> 00:11:11.870
+the Bay area, right? Yeah.
+I'm in the Bay area
+
+211
+00:11:11.900 --> 00:11:14.690
+and I'm actually on the
+developer experience team. And so
+
+212
+00:11:14.690 --> 00:11:16.370
+they asked me, Hey, you
+know, Steven, can you give
+
+213
+00:11:16.370 --> 00:11:20.750
+a talk on Azure dev
+ops and from, you know,
+
+214
+00:11:20.750 --> 00:11:23.570
+from a perspective that I
+would from, you know, from,
+
+215
+00:11:23.630 --> 00:11:25.580
+you know, since I'm in
+the Bay and I'm like,
+
+216
+00:11:25.610 --> 00:11:27.670
+Oh, well, that's great. So
+I'll go ahead and, and,
+
+217
+00:11:27.710 --> 00:11:29.300
+you know, write this thing
+up and I'll just go
+
+218
+00:11:29.300 --> 00:11:30.980
+and put and get hub
+anyways, just in case I
+
+219
+00:11:30.980 --> 00:11:33.230
+want to reuse it or
+whatever. And I guess someone
+
+220
+00:11:33.230 --> 00:11:36.530
+else found it. It was
+never really intended to, to,
+
+221
+00:11:36.980 --> 00:11:40.580
+to, you know, for, it
+was for public audiences, but
+
+222
+00:11:40.580 --> 00:11:43.160
+I never, Hey man, it's
+got a URL it's public
+
+223
+00:11:43.220 --> 00:11:45.590
+right there. Right. It's got,
+it has stars on good
+
+224
+00:11:45.590 --> 00:11:48.050
+hubs. I get up there
+for, I will call you
+
+225
+00:11:48.050 --> 00:11:49.880
+and we will do a
+show about it because I
+
+226
+00:11:49.880 --> 00:11:51.860
+found it to be very
+useful. I mean, it may
+
+227
+00:11:51.860 --> 00:11:54.910
+be rough, but it's useful
+here because I learned from
+
+228
+00:11:54.910 --> 00:11:57.160
+the resume, how to do
+real, you know, real basic
+
+229
+00:11:57.430 --> 00:12:00.550
+build. But here you're all
+like, let's start with the,
+
+230
+00:12:00.550 --> 00:12:03.340
+I as the, as, as
+the infrastructure, as a service,
+
+231
+00:12:03.640 --> 00:12:06.580
+you're doing some automation with
+X Platt making virtual machines.
+
+232
+00:12:06.960 --> 00:12:10.020
+Yup, exactly. So, you know,
+what's cool. Is that, so
+
+233
+00:12:10.410 --> 00:12:13.440
+like I mentioned before, there's
+a cross platform steel line.
+
+234
+00:12:13.470 --> 00:12:16.110
+So what is, what is
+that? It's just basically a
+
+235
+00:12:16.140 --> 00:12:18.780
+command line interface that you
+can control your, your cloud
+
+236
+00:12:18.780 --> 00:12:22.920
+resources, things like your Azure
+apps. So like your websites,
+
+237
+00:12:23.190 --> 00:12:26.580
+platform services, as well as
+infrastructure things like virtual machines.
+
+238
+00:12:26.850 --> 00:12:28.950
+So this lab takes us
+through like, Hey, well, how
+
+239
+00:12:28.950 --> 00:12:32.730
+do you create these virtual
+machines just through your COI?
+
+240
+00:12:33.030 --> 00:12:35.430
+And then not only just
+using the command line interface
+
+241
+00:12:35.430 --> 00:12:38.520
+because that's not interesting. The
+interesting part is, well, how
+
+242
+00:12:38.520 --> 00:12:42.510
+do I define my service
+in code? Why would you
+
+243
+00:12:42.510 --> 00:12:44.400
+want to do this? Well,
+the reason why you want
+
+244
+00:12:44.400 --> 00:12:46.380
+to define your service that
+you'd like to do that
+
+245
+00:12:46.380 --> 00:12:49.860
+is because you can actually
+take this code and source
+
+246
+00:12:49.860 --> 00:12:51.750
+control that say that you
+have a team of three
+
+247
+00:12:51.750 --> 00:12:54.780
+people and they want to
+stand up their own instance
+
+248
+00:12:54.780 --> 00:12:57.750
+of the service for their
+own development purposes. Well, you
+
+249
+00:12:57.750 --> 00:13:00.630
+can take a configuration file.
+You could say, well, John's
+
+250
+00:13:00.630 --> 00:13:02.940
+instance is going to be
+these three machines and it's
+
+251
+00:13:02.940 --> 00:13:05.160
+going to use this network,
+but you can configure that,
+
+252
+00:13:05.430 --> 00:13:10.320
+but the same architecture, the
+infrastructure needed for that service
+
+253
+00:13:10.320 --> 00:13:12.750
+can just be coded away.
+And then you can just
+
+254
+00:13:12.750 --> 00:13:14.610
+save that and you can
+change it as you need,
+
+255
+00:13:14.610 --> 00:13:17.940
+if things change or you
+say that you wonder, Hey,
+
+256
+00:13:17.940 --> 00:13:20.520
+well, why don't we, why
+do we only use three
+
+257
+00:13:20.520 --> 00:13:23.940
+virtual machines for, for an
+instance of the service and
+
+258
+00:13:23.940 --> 00:13:26.280
+not for like we used
+to, well, you just go
+
+259
+00:13:26.280 --> 00:13:28.860
+back through your, your, your
+checking history and you can
+
+260
+00:13:28.860 --> 00:13:32.490
+see why someone changed something.
+So as your service, the
+
+261
+00:13:32.490 --> 00:13:35.700
+shape of your service infrastructure
+changes, you literally have a
+
+262
+00:13:35.700 --> 00:13:38.790
+history of that. So it's
+super powerful. And I think
+
+263
+00:13:38.790 --> 00:13:41.220
+that's the biggest gain. And
+what you'll see this walkthrough
+
+264
+00:13:41.280 --> 00:13:43.530
+do is actually do something
+interesting. And I'll actually use
+
+265
+00:13:43.530 --> 00:13:47.850
+JavaScript and node to do
+your, your programming for the
+
+266
+00:13:48.090 --> 00:13:51.420
+infrastructure and traditional you'll usually
+see batch script or batch
+
+267
+00:13:51.420 --> 00:13:54.060
+script for this. So I
+think, I thought that was
+
+268
+00:13:54.060 --> 00:13:56.880
+really cool. There's actually this
+cool library called Azure scripty,
+
+269
+00:13:57.360 --> 00:14:00.510
+and it's on red on
+NPM. And it just is
+
+270
+00:14:00.510 --> 00:14:04.590
+fantastic on parsing the command
+line arguments in and out.
+
+271
+00:14:04.920 --> 00:14:06.630
+And it makes it super
+easy to be like, well,
+
+272
+00:14:06.930 --> 00:14:09.390
+the first argument is going
+to be virtual machine. So
+
+273
+00:14:09.480 --> 00:14:11.340
+what are the virtual machine
+names? You know, things like
+
+274
+00:14:11.340 --> 00:14:13.620
+that. I think that was
+made by Glen block who
+
+275
+00:14:13.620 --> 00:14:15.650
+used to work here For
+us sunblock made it. And
+
+276
+00:14:15.650 --> 00:14:18.150
+I was like, yeah. And
+then you can, you can
+
+277
+00:14:18.150 --> 00:14:20.970
+take that to the next
+level with something like Azure
+
+278
+00:14:20.970 --> 00:14:23.190
+resource manager. And I guess
+you can switch back and
+
+279
+00:14:23.190 --> 00:14:25.440
+forth with the command line.
+You can say Azure config,
+
+280
+00:14:25.740 --> 00:14:28.590
+you can go mode arm,
+which is the resource manager
+
+281
+00:14:28.590 --> 00:14:31.710
+kind of declarative way. And
+then is it mode at
+
+282
+00:14:31.890 --> 00:14:34.890
+ASM, which is more of
+the proceeds, It's the smarter
+
+283
+00:14:34.890 --> 00:14:38.370
+procedure way. And I don't
+think the resource managers gone
+
+284
+00:14:38.400 --> 00:14:42.360
+out publicly. How's that? Yeah,
+No, it's a, I'm looking
+
+285
+00:14:42.360 --> 00:14:45.660
+at the documentation right here
+using the Azure cross-platform command
+
+286
+00:14:45.660 --> 00:14:48.090
+line interface. Yep. It's a
+real similar kind of idea
+
+287
+00:14:48.090 --> 00:14:50.940
+where you've got a Jason
+file that expresses, you know,
+
+288
+00:14:50.960 --> 00:14:53.690
+here's what a, you know,
+I don't know, a Steven
+
+289
+00:14:53.690 --> 00:14:56.310
+app looks like, and it's
+got two web servers in
+
+290
+00:14:56.310 --> 00:14:58.730
+it and a Mongo DB
+and a Reddis and it's
+
+291
+00:14:58.730 --> 00:15:02.630
+basically a declarative expression of
+what your resource looks like,
+
+292
+00:15:02.630 --> 00:15:04.940
+and it can make that
+in chunks. So you can
+
+293
+00:15:04.940 --> 00:15:09.940
+automate pretty significant deployments that
+way. Oh. And then it'll
+
+294
+00:15:09.940 --> 00:15:13.870
+make a, you know, it,
+that declarative way. It's really
+
+295
+00:15:13.870 --> 00:15:17.680
+cool in my opinion, because
+it kind of, it kind
+
+296
+00:15:17.680 --> 00:15:20.260
+of, doesn't just force you
+to do this. Oh. You
+
+297
+00:15:20.260 --> 00:15:21.880
+know, and now I want
+you to check to see
+
+298
+00:15:21.880 --> 00:15:23.710
+if this is here. It,
+you know, it's a little
+
+299
+00:15:23.710 --> 00:15:29.410
+higher level, which So I
+can do automation with, with
+
+300
+00:15:29.410 --> 00:15:32.980
+scripting. I can do kind
+of declarative automation, but what
+
+301
+00:15:32.980 --> 00:15:35.080
+is chef and why would
+I want to do something
+
+302
+00:15:35.080 --> 00:15:38.380
+like that? That seems more
+sophisticated. So chef is definitely
+
+303
+00:15:38.390 --> 00:15:40.960
+more sophisticated. So I was
+asked, Hey, Steven, can you
+
+304
+00:15:40.960 --> 00:15:43.000
+do a talk about chef
+as well? And I was
+
+305
+00:15:43.000 --> 00:15:46.510
+like, Oh man, you know,
+I think I've, I've, I've
+
+306
+00:15:46.540 --> 00:15:48.790
+only seen this thing twice.
+I actually decided to play
+
+307
+00:15:48.790 --> 00:15:52.690
+around with it. And so
+the way it works is
+
+308
+00:15:52.690 --> 00:15:56.110
+actually kind of neat is
+that chef offers is completely
+
+309
+00:15:56.110 --> 00:15:58.960
+open source. You can run
+their chef server if you
+
+310
+00:15:58.960 --> 00:16:00.970
+want, and you can just
+take it. You don't even
+
+311
+00:16:00.970 --> 00:16:03.250
+have to pay him a
+dime, but you can. The
+
+312
+00:16:03.250 --> 00:16:05.260
+easiest thing to do as
+well, go on the chef
+
+313
+00:16:05.260 --> 00:16:09.610
+website and create this chef
+server, which basically is on
+
+314
+00:16:09.610 --> 00:16:13.150
+their cloud and just runs
+this little instance that manages
+
+315
+00:16:13.180 --> 00:16:17.140
+other servers. And really it
+came out and real, super
+
+316
+00:16:17.140 --> 00:16:22.630
+popular in Linux development. And
+so chef each stuff, each
+
+317
+00:16:22.630 --> 00:16:26.590
+instance in a chef deployment
+has its own age. And
+
+318
+00:16:26.590 --> 00:16:28.720
+the cool part about this
+walkthrough is that it kind
+
+319
+00:16:28.720 --> 00:16:31.450
+of shows you, it kind
+of highlights the fact that
+
+320
+00:16:31.870 --> 00:16:34.450
+when you make virtual machines
+on Azure, you can just
+
+321
+00:16:34.480 --> 00:16:38.410
+check a box that says,
+Hey, I want, I want
+
+322
+00:16:38.770 --> 00:16:40.960
+chef to manage this machine.
+And what you do is
+
+323
+00:16:40.960 --> 00:16:44.050
+you just pass the special,
+a particular file. And I
+
+324
+00:16:44.200 --> 00:16:46.540
+actually forgot the exact name
+of it, But these are
+
+325
+00:16:46.570 --> 00:16:48.930
+VM extensions, right? This is
+a way of saying that
+
+326
+00:16:48.930 --> 00:16:50.920
+I'm going to make a
+virtual machine. And when it
+
+327
+00:16:50.920 --> 00:16:53.110
+comes up, I already want
+chef on the thing I
+
+328
+00:16:53.110 --> 00:16:55.930
+want it prepped. Yep, exactly.
+And that's why, and that's
+
+329
+00:16:55.930 --> 00:16:57.490
+what you're saying. So the
+cool part about it is
+
+330
+00:16:57.490 --> 00:17:00.670
+after you, after you actually
+created that virtual machine, go
+
+331
+00:17:00.670 --> 00:17:03.520
+back to your chef website
+or your chef app, the,
+
+332
+00:17:04.000 --> 00:17:05.920
+the one that runs on
+chef.com or that you run
+
+333
+00:17:05.920 --> 00:17:09.010
+personally, and you'll see it
+pop up as a chef
+
+334
+00:17:09.010 --> 00:17:12.460
+managed instance, which is really
+cool. So then that allows
+
+335
+00:17:12.460 --> 00:17:14.500
+you to do a variety
+of things like, Hey, you
+
+336
+00:17:14.500 --> 00:17:18.040
+want these particular, this particular
+server installed. If you want
+
+337
+00:17:18.040 --> 00:17:20.470
+Mongo DB installed on these
+machines, or if you want
+
+338
+00:17:20.470 --> 00:17:23.290
+whatever, like it will just
+do it for you. So
+
+339
+00:17:23.290 --> 00:17:25.930
+it makes it, it makes
+life easier. It's all Ruby
+
+340
+00:17:25.930 --> 00:17:29.200
+based, which was, which is
+kind of interesting as well,
+
+341
+00:17:29.470 --> 00:17:32.650
+but it's super popular and
+the open source community for
+
+342
+00:17:33.070 --> 00:17:36.640
+just as management And you
+can, it's kind of, they
+
+343
+00:17:36.640 --> 00:17:40.570
+take the, the, the metaphor
+of chef, like really far.
+
+344
+00:17:41.050 --> 00:17:42.880
+It was like, the thing
+was slugging. The chef for
+
+345
+00:17:42.880 --> 00:17:45.760
+Azure is knife. And you
+want to make something, you
+
+346
+00:17:45.760 --> 00:17:49.550
+make a cookbook, you know,
+these cookbook recipe. Yeah. It's
+
+347
+00:17:49.560 --> 00:17:52.050
+pretty cool. Like the metaphor
+works though, but you can
+
+348
+00:17:52.050 --> 00:17:54.750
+end up with basically a
+here's how I set up
+
+349
+00:17:54.750 --> 00:17:58.200
+my machine file, set up
+a windows package, use this
+
+350
+00:17:58.200 --> 00:18:01.170
+cookbook, run this batch file,
+set up this PowerShell script
+
+351
+00:18:01.170 --> 00:18:04.170
+and then start this service.
+Yep. And then another a
+
+352
+00:18:04.170 --> 00:18:06.600
+w w I have a
+thing on Azure, Friday about
+
+353
+00:18:07.560 --> 00:18:10.320
+octopus deploy, which is kind
+of a more windows Z
+
+354
+00:18:10.590 --> 00:18:13.890
+more dot neti deployment system.
+That's also can be set
+
+355
+00:18:13.890 --> 00:18:17.100
+up as a VM extension
+and these VM extensions, basically,
+
+356
+00:18:17.100 --> 00:18:19.770
+like I said, when the
+VM starts up, it has
+
+357
+00:18:19.770 --> 00:18:23.580
+the extension already. And that's
+your hook into, you know,
+
+358
+00:18:23.580 --> 00:18:26.310
+what they call desired state
+configuration, right? Like I want
+
+359
+00:18:26.310 --> 00:18:29.780
+this set up this way
+in that state. That's interesting.
+
+360
+00:18:29.780 --> 00:18:32.630
+And this octopus deploy, is
+that a, was that controlled
+
+361
+00:18:32.630 --> 00:18:37.010
+by central server? Just octopuses
+and tentacles, same kind of
+
+362
+00:18:37.010 --> 00:18:39.320
+thing. Yeah. So you've got
+a lot of really cool
+
+363
+00:18:39.320 --> 00:18:42.020
+options. I think the point
+is, and you'd probably agree
+
+364
+00:18:42.260 --> 00:18:45.680
+that you should probably graduate
+from a batch file pretty
+
+365
+00:18:45.680 --> 00:18:49.760
+fast. Yes. That should not
+be your primary, Primary way
+
+366
+00:18:49.760 --> 00:18:54.590
+of deploying. I agree. Okay.
+Now I like, I like
+
+367
+00:18:54.590 --> 00:18:57.050
+websites more. I would have
+to say than virtual machines.
+
+368
+00:18:57.050 --> 00:18:59.180
+I don't like to maintain
+virtual machines and keep them
+
+369
+00:18:59.180 --> 00:19:03.290
+alive. Absolutely. I prefer to
+do continuous delivery using Azure
+
+370
+00:19:03.290 --> 00:19:07.160
+websites. I, I, you know,
+I, to this day, I
+
+371
+00:19:07.160 --> 00:19:10.040
+still like really, really push
+and hope that the team
+
+372
+00:19:10.070 --> 00:19:11.570
+like says, Hey, you know
+what? It'd be better if
+
+373
+00:19:11.570 --> 00:19:14.870
+we call this something else.
+Because people, customers always talk
+
+374
+00:19:14.870 --> 00:19:16.650
+to it's like, well, it's
+just the rental websites. Right.
+
+375
+00:19:16.650 --> 00:19:18.500
+And it's like, no, it
+does so many more things.
+
+376
+00:19:18.950 --> 00:19:22.130
+It's literally just a compute
+instance. It's what, what used
+
+377
+00:19:22.130 --> 00:19:24.740
+to be, I think they're
+falling out of favor, falling
+
+378
+00:19:24.740 --> 00:19:28.460
+into favor out and for,
+in place a web, what
+
+379
+00:19:28.460 --> 00:19:30.710
+was it called? Web liberals.
+Yeah. Well, there's the show
+
+380
+00:19:30.710 --> 00:19:32.900
+there. I, the way I
+like I look at it
+
+381
+00:19:32.930 --> 00:19:35.930
+is there's an actually I
+have a slide on this
+
+382
+00:19:35.930 --> 00:19:39.350
+somewhere. Virtual machines are like
+owning your own car. You
+
+383
+00:19:39.350 --> 00:19:40.850
+have to maintain it. You
+have to deal with it.
+
+384
+00:19:41.300 --> 00:19:43.610
+And websites are like, you
+know, renting a car where
+
+385
+00:19:43.610 --> 00:19:45.980
+you can trash it, but
+you can return the car.
+
+386
+00:19:46.820 --> 00:19:48.950
+And then software as a
+service is like a limo
+
+387
+00:19:50.000 --> 00:19:52.040
+get driven around and just
+get driven around and do
+
+388
+00:19:52.040 --> 00:19:54.020
+whatever you want to do.
+Yeah. That's pretty good comparisons.
+
+389
+00:19:54.020 --> 00:19:57.380
+Pretty accurate. So what does
+Atlassian and how does that
+
+390
+00:19:57.380 --> 00:20:01.070
+relate to continuous delivery in
+Azure websites? The awesome thing
+
+391
+00:20:01.070 --> 00:20:03.140
+about this. When I wrote
+this, I was like, let
+
+392
+00:20:03.140 --> 00:20:05.450
+me pick something that people
+don't know that they could
+
+393
+00:20:05.450 --> 00:20:10.610
+do. So the cool part
+about these especially source control
+
+394
+00:20:10.610 --> 00:20:14.420
+services, like at Lassie and
+owns bit bucket, their ALM
+
+395
+00:20:14.420 --> 00:20:16.310
+company, they're based out of
+Australia, but they've got a
+
+396
+00:20:16.310 --> 00:20:21.350
+big office here too. And
+basically these guys create tools
+
+397
+00:20:21.350 --> 00:20:27.020
+to, to build software people,
+to organize people, organize engineering,
+
+398
+00:20:27.020 --> 00:20:31.070
+task, organize your code, everything,
+start to finish. Now these
+
+399
+00:20:31.070 --> 00:20:34.190
+guys run their own build
+services. I, I think they,
+
+400
+00:20:34.250 --> 00:20:37.430
+they actually just hook into
+AWS. So you're required to
+
+401
+00:20:37.430 --> 00:20:40.550
+have AWS accounts. They don't
+actually run that infrastructure as
+
+402
+00:20:40.550 --> 00:20:43.760
+well as HipChat, which is
+like, Hey, a chat service
+
+403
+00:20:43.760 --> 00:20:46.190
+where you could chat between
+like your teammates. And it's
+
+404
+00:20:46.190 --> 00:20:50.980
+a lot easier, more task
+management. JIRA is their continuous
+
+405
+00:20:50.980 --> 00:20:54.490
+integration service. And Bitbucket is
+their equivalent to get hub.
+
+406
+00:20:54.760 --> 00:20:57.220
+Cool. Thing about big bucket
+is that it's free. Like
+
+407
+00:20:57.220 --> 00:21:01.590
+it's free. I haven't repose
+even. Yeah. So yeah. Talk
+
+408
+00:21:01.590 --> 00:21:03.090
+to serfs. They'll use, but
+that's the only reason I'll
+
+409
+00:21:03.090 --> 00:21:07.760
+use bit bucket. Otherwise they
+have some like, yeah, but
+
+410
+00:21:07.760 --> 00:21:10.170
+they won't pay the $10.
+I will eat it. You
+
+411
+00:21:10.170 --> 00:21:14.600
+don't understand. I know very
+early stage guys that are
+
+412
+00:21:15.300 --> 00:21:17.460
+there, are there anything like
+get hub with like a
+
+413
+00:21:17.460 --> 00:21:20.480
+student account or something? They
+think people, you know, I
+
+414
+00:21:20.520 --> 00:21:22.230
+need it. Like when people
+say I'm a very early
+
+415
+00:21:22.230 --> 00:21:24.810
+stage startup, that means that
+they just registered the domain.
+
+416
+00:21:25.440 --> 00:21:27.270
+This is the thing about
+the Bay. I was complaining
+
+417
+00:21:27.270 --> 00:21:29.550
+about this online awhile back
+where it's like, you registered
+
+418
+00:21:29.550 --> 00:21:31.470
+the domain and you get
+to walk around calling yourself
+
+419
+00:21:31.470 --> 00:21:34.950
+a founder. Yeah. And that's
+every, everybody has their own
+
+420
+00:21:34.950 --> 00:21:36.930
+sort of powder out here.
+You get, you get real
+
+421
+00:21:36.930 --> 00:21:39.990
+thick on it. Yeah. You,
+you registered a domain for
+
+422
+00:21:39.990 --> 00:21:41.850
+$15. I don't think you
+get to call yourself a
+
+423
+00:21:41.850 --> 00:21:44.430
+founder. Okay. So when you
+go, when you go into
+
+424
+00:21:44.430 --> 00:21:46.410
+Bitbucket, you create a repo.
+This is kind of like
+
+425
+00:21:46.440 --> 00:21:49.350
+visual studio online, right? Yeah.
+It's very similar to that.
+
+426
+00:21:49.350 --> 00:21:51.540
+So VF online is the
+same thing and says, Hey,
+
+427
+00:21:51.540 --> 00:21:54.840
+well, here's a get repository.
+Here's a link. You can
+
+428
+00:21:54.870 --> 00:21:57.750
+create these. You can create
+the repository to go outside
+
+429
+00:21:57.750 --> 00:22:00.690
+of issues and like pull
+requests. Do you do a
+
+430
+00:22:00.690 --> 00:22:03.240
+few things there? I'm actually
+not sure if it was
+
+431
+00:22:03.240 --> 00:22:07.650
+just studio supports pull request,
+but it's the same idea.
+
+432
+00:22:07.650 --> 00:22:10.530
+It's, it's just this little
+private area for your team
+
+433
+00:22:10.530 --> 00:22:14.100
+to build software. So it's
+not necessarily the same spirit
+
+434
+00:22:14.100 --> 00:22:16.860
+of get hub where it's
+a social thing. It's more
+
+435
+00:22:16.860 --> 00:22:19.200
+of, Hey, I have me
+and four friends and this
+
+436
+00:22:19.200 --> 00:22:22.620
+is what we're building. So
+at Lausanne, it's the same
+
+437
+00:22:22.620 --> 00:22:25.650
+thing. So you create like
+repository and then afterwards, after
+
+438
+00:22:25.650 --> 00:22:29.940
+you create that repository, it's
+super easy to hook that
+
+439
+00:22:29.940 --> 00:22:32.400
+up to your Azure website.
+So say that you got
+
+440
+00:22:32.400 --> 00:22:35.610
+like a Python website or
+you have a node website,
+
+441
+00:22:35.990 --> 00:22:39.810
+PHP website, or even.net. It's
+really easy. So you would
+
+442
+00:22:39.810 --> 00:22:41.760
+just basically go into Azure
+and you say, well, I
+
+443
+00:22:41.760 --> 00:22:45.660
+want a new website and
+literally ask you, where is
+
+444
+00:22:45.660 --> 00:22:48.330
+your source? And you have
+different options. You could even
+
+445
+00:22:48.330 --> 00:22:50.700
+deploy it from Dropbox to
+which I'm not exactly sure
+
+446
+00:22:50.700 --> 00:22:54.390
+how that works. Dropbox is
+actually clever because the Dropbox
+
+447
+00:22:54.390 --> 00:22:58.440
+stuff is still using. Get
+underneath. What we do is
+
+448
+00:22:58.440 --> 00:23:01.470
+we pull it out of
+Dropbox, stick it in a
+
+449
+00:23:01.470 --> 00:23:04.680
+local, get repository, and then
+use the standard, get deployment
+
+450
+00:23:04.680 --> 00:23:07.170
+the ways before, and people
+get freaked out about the
+
+451
+00:23:07.170 --> 00:23:10.380
+idea of a Dropbox deployment,
+but ultimately for doing, you
+
+452
+00:23:10.380 --> 00:23:13.500
+know, things with designers or
+quick prototyping, it's a really
+
+453
+00:23:13.500 --> 00:23:15.450
+nice way to do things.
+And you've still got get,
+
+454
+00:23:15.720 --> 00:23:17.820
+which means you still have
+the ability to do rollback.
+
+455
+00:23:18.270 --> 00:23:20.310
+Oh, so that's interesting. So
+if I have like a
+
+456
+00:23:20.310 --> 00:23:23.790
+designer that's, you know, or
+kind of assets, or, you
+
+457
+00:23:23.790 --> 00:23:26.400
+know, just modifying some CSS
+or whatever, they can just
+
+458
+00:23:26.400 --> 00:23:28.980
+drop it in there without
+having okay. That makes a
+
+459
+00:23:28.980 --> 00:23:31.080
+lot of sense. Yeah. I
+was wondering if we had
+
+460
+00:23:31.080 --> 00:23:33.600
+that, so, but anyway, so
+you just click on Bitbucket
+
+461
+00:23:33.600 --> 00:23:35.850
+and you say, okay, well
+then it will literally ask
+
+462
+00:23:35.850 --> 00:23:39.690
+you or what's what repository
+and the coolest part I
+
+463
+00:23:39.690 --> 00:23:42.090
+think is that we have
+branch, we go into branch
+
+464
+00:23:42.120 --> 00:23:45.230
+granularity as well. So we
+don't just assume master. So
+
+465
+00:23:45.230 --> 00:23:47.180
+you could say like I
+have my dev branch or
+
+466
+00:23:47.180 --> 00:23:50.870
+have my Steven Branch, just my
+branch of the code for
+
+467
+00:23:50.870 --> 00:23:53.840
+this product instead of just
+a master deployment. And then
+
+468
+00:23:53.840 --> 00:23:57.410
+you can actually, when you
+check into that branch, it'll,
+
+469
+00:23:58.400 --> 00:24:00.620
+there's these things and get
+hub has the two, but
+
+470
+00:24:00.680 --> 00:24:04.310
+you can register any third
+party app. And this case
+
+471
+00:24:04.310 --> 00:24:09.320
+it's Azure can say, register
+a callback, registered an endpoint.
+
+472
+00:24:09.680 --> 00:24:14.420
+And when the user pushes
+to that repository, give me
+
+473
+00:24:14.420 --> 00:24:16.660
+a call, let me know,
+tell me, End point is
+
+474
+00:24:16.840 --> 00:24:20.140
+like a URL basically you're
+yeah. Basically, or URL. And
+
+475
+00:24:20.140 --> 00:24:24.370
+you're saying, so in this
+case, Azures goes to Atlassian
+
+476
+00:24:24.370 --> 00:24:29.860
+Bitbucket, and they're like, Hey,
+Bitbucket called this URL when
+
+477
+00:24:29.950 --> 00:24:33.760
+I push to the repository
+and it just doesn't, and
+
+478
+00:24:33.760 --> 00:24:35.950
+that tells Azure websites, Hey,
+you know, it's like a
+
+479
+00:24:35.950 --> 00:24:38.230
+vacuum, just like suck all
+this code up out of
+
+480
+00:24:38.230 --> 00:24:41.050
+this repository at the latest
+command. And the cool part
+
+481
+00:24:41.050 --> 00:24:43.120
+is you get this metadata
+too. So you got like
+
+482
+00:24:43.120 --> 00:24:46.810
+the metadata, like, Hey, well,
+who's author who deployed it.
+
+483
+00:24:47.890 --> 00:24:50.860
+Cause it did a post
+to do that. Exactly. Posted
+
+484
+00:24:50.860 --> 00:24:53.410
+you a little envelope of
+here's what's going on Some
+
+485
+00:24:53.410 --> 00:24:56.450
+metadata about that, that command.
+And now the coolest, the
+
+486
+00:24:56.460 --> 00:24:59.650
+thing is, is that now
+someone breaks your built now,
+
+487
+00:24:59.650 --> 00:25:01.870
+you know, who did it.
+Yep. And then you get
+
+488
+00:25:01.870 --> 00:25:03.970
+the, some buddies of mine
+have a thing called the
+
+489
+00:25:03.970 --> 00:25:07.360
+siren of shame. And it
+basically, it's a big police
+
+490
+00:25:07.360 --> 00:25:10.450
+siren that you said in
+your, in your, in your
+
+491
+00:25:10.450 --> 00:25:12.730
+cube farm. And it goes
+off when somebody breaks through,
+
+492
+00:25:13.450 --> 00:25:14.770
+I always thought it would
+be cool to have like
+
+493
+00:25:14.770 --> 00:25:18.010
+gauntlet, like elf shot the
+food. And it would just
+
+494
+00:25:18.010 --> 00:25:23.200
+announce like, you know, Edward
+wrote a bill. I noticed
+
+495
+00:25:23.200 --> 00:25:26.380
+also in your, in, in
+that particular example with the
+
+496
+00:25:26.380 --> 00:25:31.240
+Atlassian, you, again, you again,
+exploit the deployment scripts in
+
+497
+00:25:31.240 --> 00:25:35.680
+this case you run grunt.
+Yep. Exactly. So grunt is
+
+498
+00:25:35.680 --> 00:25:39.400
+actually, so if you're familiar
+with node, it's like your
+
+499
+00:25:39.400 --> 00:25:46.180
+default defacto build infrastructure, like
+build task engine. Well, the,
+
+500
+00:25:46.180 --> 00:25:49.390
+the, the hipsters will say
+gulp is the, the spiritual
+
+501
+00:25:49.390 --> 00:25:52.600
+successor to grunt. Will they
+not? Yes. And you know,
+
+502
+00:25:52.870 --> 00:25:55.930
+yes, they would say that.
+But the thing is that
+
+503
+00:25:55.930 --> 00:25:59.770
+when you have, when you
+have like literally any library
+
+504
+00:25:59.770 --> 00:26:02.320
+you can think of, we'll
+probably like have some type
+
+505
+00:26:02.320 --> 00:26:06.840
+of support for God. Right.
+So, and so yeah, you
+
+506
+00:26:06.850 --> 00:26:08.740
+could be, it could be
+indie or it'd be hipster
+
+507
+00:26:08.740 --> 00:26:10.870
+and be like this. Okay.
+So the haters may say
+
+508
+00:26:10.870 --> 00:26:14.140
+that, but we like, we
+like grant. Yeah. I like
+
+509
+00:26:14.140 --> 00:26:18.280
+it anyways. So, so the
+cool part is, is that
+
+510
+00:26:19.570 --> 00:26:21.640
+great? Yeah. So grants like
+you're similar and also you
+
+511
+00:26:21.640 --> 00:26:23.260
+can compare it to something
+like ms. Build it's the
+
+512
+00:26:23.260 --> 00:26:27.280
+same, same idea. So what
+you basically do is what
+
+513
+00:26:27.280 --> 00:26:29.830
+we're going to do on
+the steps for the installation
+
+514
+00:26:29.830 --> 00:26:32.110
+is, Hey, we're just going
+to tell you, remember that
+
+515
+00:26:32.110 --> 00:26:34.390
+we have node installed because
+we have no to of
+
+516
+00:26:34.390 --> 00:26:36.790
+NPM. And because we have
+those two things, we could
+
+517
+00:26:36.790 --> 00:26:39.040
+do whatever we want as
+far as you know, And
+
+518
+00:26:39.040 --> 00:26:41.530
+we have no installed because
+we're Azure. Not because we're
+
+519
+00:26:41.530 --> 00:26:44.400
+a node app. Yeah. Not
+because we know that Because
+
+520
+00:26:44.400 --> 00:26:47.010
+we're Azure, Azure just has
+it by default. So all
+
+521
+00:26:47.010 --> 00:26:48.840
+I really got to do
+is just say, well, NPM
+
+522
+00:26:48.840 --> 00:26:52.890
+install, grind, and install the
+CLI. And then from that
+
+523
+00:26:52.890 --> 00:26:56.040
+point on any plugins, grunt
+has these different plugins, like
+
+524
+00:26:56.790 --> 00:27:00.150
+this case. I think I
+grabbed the Abilify pro plugin
+
+525
+00:27:00.180 --> 00:27:02.730
+as well as I think
+that there's some modification. There's
+
+526
+00:27:02.730 --> 00:27:04.980
+other things too. Like you
+can grab like the mocha
+
+527
+00:27:04.980 --> 00:27:08.400
+plugin and it'll do it'll
+plug in. And I think
+
+528
+00:27:08.410 --> 00:27:10.080
+actually do it in this
+walk through our ad mocha
+
+529
+00:27:10.410 --> 00:27:13.320
+and you add mocha and
+the two. So to run
+
+530
+00:27:13.320 --> 00:27:16.050
+your, to run your unit
+tests and MOCA is just
+
+531
+00:27:16.080 --> 00:27:18.000
+a unit test framework. And
+I know you're about to
+
+532
+00:27:18.000 --> 00:27:22.160
+tell me about three different
+unit test frameworks, but I'm
+
+533
+00:27:22.160 --> 00:27:25.100
+just learning. I just, I,
+every time I mentioned grunt,
+
+534
+00:27:25.100 --> 00:27:26.960
+someone jumps in and tells
+me I shouldn't be using
+
+535
+00:27:26.960 --> 00:27:28.970
+it. That's the thing that
+there's so many cool libraries
+
+536
+00:27:28.970 --> 00:27:31.640
+out there that there's always,
+as soon as I learn
+
+537
+00:27:31.640 --> 00:27:35.270
+one, there's another one I
+should use instead as it
+
+538
+00:27:35.270 --> 00:27:40.340
+relates to grunt. So the
+MOCA is basically your unit
+
+539
+00:27:40.340 --> 00:27:43.520
+test harness. So think about,
+I want to test this
+
+540
+00:27:43.520 --> 00:27:46.640
+build or not this build,
+but this function and it's
+
+541
+00:27:46.640 --> 00:27:50.210
+actually kind of cute. I
+think something in Ruby does
+
+542
+00:27:50.210 --> 00:27:53.000
+the same thing. It's based
+off some Ruby library as
+
+543
+00:27:53.000 --> 00:27:57.140
+well, but basically it says,
+describe there's a described function.
+
+544
+00:27:57.140 --> 00:27:58.760
+And then there's like an
+it function. So you say
+
+545
+00:27:58.760 --> 00:28:01.880
+like describe hound, what is
+the name of the function?
+
+546
+00:28:02.210 --> 00:28:04.550
+And then within that function,
+I have another function called
+
+547
+00:28:04.610 --> 00:28:08.000
+it. And it's like, should
+return a list of recipes
+
+548
+00:28:08.000 --> 00:28:12.500
+or whatever. So it's actually
+kind of cool, Fluent BDD
+
+549
+00:28:12.500 --> 00:28:15.440
+behavior driven. Yep. Kind of
+a thing. And all of
+
+550
+00:28:15.440 --> 00:28:17.870
+this goes into your deployment
+script. So kind of bringing
+
+551
+00:28:17.870 --> 00:28:20.480
+it all back to the
+beginning of the conversation. These
+
+552
+00:28:20.480 --> 00:28:22.760
+are all things you could
+potentially do as part of
+
+553
+00:28:22.760 --> 00:28:26.510
+a deployment. I can, I
+can minify I can compress.
+
+554
+00:28:26.690 --> 00:28:28.910
+I can build, I can
+run my tests. And then
+
+555
+00:28:28.910 --> 00:28:31.460
+presumably if the test fails,
+will there be an error
+
+556
+00:28:31.460 --> 00:28:33.740
+level that's thrown back? That
+would cause that deployment to
+
+557
+00:28:33.740 --> 00:28:36.770
+fail. Yeah. So what's cool
+is that you can take
+
+558
+00:28:36.770 --> 00:28:39.440
+the, just go into the
+batch file and you see
+
+559
+00:28:39.440 --> 00:28:43.010
+that if something fails, there's
+like this already baked and
+
+560
+00:28:43.010 --> 00:28:45.500
+like, this is the failure
+branch. So all you have
+
+561
+00:28:45.500 --> 00:28:48.440
+to do is check that
+error level of, you know,
+
+562
+00:28:48.440 --> 00:28:51.350
+Hey, try to do this
+command and it failed, or
+
+563
+00:28:51.350 --> 00:28:53.600
+you got an, you got
+a nonzero error. So you
+
+564
+00:28:53.600 --> 00:28:55.850
+just go over, you know,
+if the error is not
+
+565
+00:28:55.850 --> 00:28:58.640
+equal to zero, then go
+to that failure block and
+
+566
+00:28:58.640 --> 00:29:01.010
+it'll just break the build.
+Like the build will just
+
+567
+00:29:01.010 --> 00:29:04.880
+stop. And so interesting about
+that. So remember we have
+
+568
+00:29:04.880 --> 00:29:07.010
+the metadata around that. So
+you'll get is a nice
+
+569
+00:29:07.010 --> 00:29:10.040
+little dialogue and Asher that
+with the big acts that
+
+570
+00:29:10.040 --> 00:29:14.000
+says this build deployment failed,
+and then you'll see the
+
+571
+00:29:14.000 --> 00:29:17.150
+person, the author, and you'll
+see the actual commit ID.
+
+572
+00:29:17.390 --> 00:29:19.250
+So you could look inside
+there and I can see,
+
+573
+00:29:19.250 --> 00:29:20.720
+like, if I want to
+break the build, or you
+
+574
+00:29:20.720 --> 00:29:22.670
+can just click that, that
+ID and it'll show you
+
+575
+00:29:22.670 --> 00:29:26.240
+the depth of why that
+build failed. So you get
+
+576
+00:29:26.240 --> 00:29:28.760
+a lot of good stuff
+right. From like, you know,
+
+577
+00:29:28.760 --> 00:29:31.400
+right from your web browser.
+So it's really nice. And
+
+578
+00:29:31.400 --> 00:29:33.980
+then later on you put
+in new Relic and then
+
+579
+00:29:33.980 --> 00:29:37.340
+you push traffic to the
+site except you, now you
+
+580
+00:29:37.340 --> 00:29:40.580
+went into visual studio and
+you used the, the web
+
+581
+00:29:40.580 --> 00:29:43.750
+recorder. You basically like pounded
+on your Azure website to
+
+582
+00:29:43.750 --> 00:29:47.250
+see if your performance is
+up to snuff. Exactly. So
+
+583
+00:29:47.250 --> 00:29:50.970
+it's really easy. Actually. I
+think, I think these guys
+
+584
+00:29:50.970 --> 00:29:53.850
+in Europe look like they
+they're really clever and really
+
+585
+00:29:53.850 --> 00:29:56.880
+flick. I think they're like
+monkey patching or something, your
+
+586
+00:29:56.880 --> 00:30:01.260
+website to actually get their
+plugin to work. Yeah. New
+
+587
+00:30:01.260 --> 00:30:02.970
+Relic is pretty amazing. They,
+like you said, they'll do,
+
+588
+00:30:02.970 --> 00:30:06.900
+what's called monkey patching on
+node, but on a.net, they
+
+589
+00:30:06.900 --> 00:30:09.300
+actually plug in as a,
+as a profiler. So they
+
+590
+00:30:09.300 --> 00:30:13.670
+end there as a runtime
+CLR profile. And so the,
+
+591
+00:30:13.670 --> 00:30:15.750
+the cool thing is, you
+know, right from there, you
+
+592
+00:30:15.750 --> 00:30:18.690
+just install it and you
+it's like magic and you'll
+
+593
+00:30:18.690 --> 00:30:21.690
+get you just, you can
+go into visual studio. And
+
+594
+00:30:21.720 --> 00:30:23.220
+that's like the last, I
+think that's a little one
+
+595
+00:30:23.220 --> 00:30:25.440
+of my last labs, but
+you're going to visual studio
+
+596
+00:30:25.620 --> 00:30:26.790
+and you'll say, Hey, if
+I want to run a
+
+597
+00:30:26.790 --> 00:30:29.760
+load test and you could
+like low testing, like this
+
+598
+00:30:29.760 --> 00:30:32.430
+was actually something that I
+think is really awesome vs
+
+599
+00:30:32.430 --> 00:30:34.740
+online. So if someone ever
+asks me like, Hey, what
+
+600
+00:30:34.850 --> 00:30:37.680
+would you use it? This
+is like, it's the main
+
+601
+00:30:37.680 --> 00:30:40.770
+reason because all the other,
+like at least a month
+
+602
+00:30:40.770 --> 00:30:42.210
+ago or two, like, I
+think I'm about to go
+
+603
+00:30:42.210 --> 00:30:45.630
+on. I checked like the
+solutions or the, the, the
+
+604
+00:30:45.750 --> 00:30:49.260
+tools out there for low
+testing. Isn't as great as
+
+605
+00:30:49.260 --> 00:30:52.920
+what this offers. So the
+cool thing is you can
+
+606
+00:30:52.920 --> 00:30:54.660
+actually go into visual studio.
+You can say, Hey, I
+
+607
+00:30:54.660 --> 00:30:57.900
+want to record a web
+test. And what's a little
+
+608
+00:30:57.900 --> 00:31:00.690
+bit of a shame is
+that it's kind of stuck
+
+609
+00:31:00.720 --> 00:31:07.740
+under, C-sharp like a C
+sharp project we're as, although
+
+610
+00:31:07.770 --> 00:31:10.890
+there are some things that
+are specific for like profiling
+
+611
+00:31:10.890 --> 00:31:13.440
+on.net. For the most part,
+you can get a lot
+
+612
+00:31:13.440 --> 00:31:16.410
+of value out of it
+by just creating a load
+
+613
+00:31:17.070 --> 00:31:20.220
+performance test right out of
+the box. But it's kind
+
+614
+00:31:20.220 --> 00:31:21.540
+of set up as a
+C sharp thing. But if
+
+615
+00:31:21.540 --> 00:31:23.850
+you kind of throw it
+out to the side, you
+
+616
+00:31:23.850 --> 00:31:25.770
+could say, well, I'm gonna
+make a new test. And
+
+617
+00:31:25.770 --> 00:31:28.290
+you just record with your
+clicks and your actions on
+
+618
+00:31:28.290 --> 00:31:30.660
+a page, you can go
+through your whole web app
+
+619
+00:31:30.690 --> 00:31:32.700
+and just do the same
+thing, go through everyone, like
+
+620
+00:31:32.730 --> 00:31:35.760
+change, you know, enter whatever
+you want, do whatever you
+
+621
+00:31:35.760 --> 00:31:39.660
+want. And then that's all
+recorded. And what you do
+
+622
+00:31:39.660 --> 00:31:41.490
+is you just create a
+new load test and BS
+
+623
+00:31:41.520 --> 00:31:43.410
+and say, Hey, I want
+you to run those steps
+
+624
+00:31:44.310 --> 00:31:47.940
+however many times. And it'll
+actually do things like modify
+
+625
+00:31:47.940 --> 00:31:50.760
+the time difference between your
+steps so that it's like
+
+626
+00:31:50.940 --> 00:31:54.690
+normalized. So pretend that you
+have like a thousand people
+
+627
+00:31:54.690 --> 00:31:56.880
+or 10,000 people, or a
+hundred thousand people using your
+
+628
+00:31:56.880 --> 00:31:59.640
+website, they all use a
+website in slightly different ways.
+
+629
+00:31:59.640 --> 00:32:01.320
+Right? So it kinda like
+puts a little bit of
+
+630
+00:32:01.320 --> 00:32:06.330
+normalized randomness between all those
+people or all those instances.
+
+631
+00:32:06.360 --> 00:32:09.660
+And you can take that
+test and run it in
+
+632
+00:32:09.660 --> 00:32:13.110
+Azure. And why is that
+cool? All in via phone
+
+633
+00:32:13.110 --> 00:32:15.690
+line, but via phone lines
+running on Azure, you basically
+
+634
+00:32:15.690 --> 00:32:18.240
+take, you can take as
+many machines as you need
+
+635
+00:32:18.330 --> 00:32:21.780
+to pound on your website.
+Whereas like the low test
+
+636
+00:32:21.780 --> 00:32:24.000
+is I found that like
+simple ones online. It's like,
+
+637
+00:32:24.030 --> 00:32:25.740
+Oh, just give us your
+link. And we'll do like
+
+638
+00:32:26.250 --> 00:32:28.800
+get 200 requests on it.
+You know, you know, a
+
+639
+00:32:28.800 --> 00:32:31.380
+few thousand times, which isn't
+really that helpful. But in
+
+640
+00:32:31.380 --> 00:32:34.590
+this case, we were doing
+a variety of simulated actions
+
+641
+00:32:34.590 --> 00:32:36.510
+that a user would do.
+And you can even simulate
+
+642
+00:32:36.510 --> 00:32:38.910
+user agents. So you could
+say like, Oh, I have
+
+643
+00:32:39.170 --> 00:32:45.260
+25% Chrome, 25% Safari, 25%.
+So you could, you could
+
+644
+00:32:45.260 --> 00:32:47.600
+do a lot of stuff
+that you're, that you wouldn't
+
+645
+00:32:47.600 --> 00:32:49.760
+normally be able to do.
+And this is like secret
+
+646
+00:32:49.760 --> 00:32:52.970
+sauce in there. Like, I
+really love this stuff. So
+
+647
+00:32:52.970 --> 00:32:55.370
+it's, it's a bit old
+bulky that's, that's the only
+
+648
+00:32:55.370 --> 00:32:57.770
+downside of it. So you
+have to like install visual
+
+649
+00:32:57.770 --> 00:32:59.660
+studio and you have to
+think you have to have
+
+650
+00:32:59.660 --> 00:33:02.840
+this particular skew. So it's
+really, it's kind of hidden
+
+651
+00:33:02.840 --> 00:33:05.300
+behind this like walled garden
+a bit, but it's actually
+
+652
+00:33:05.300 --> 00:33:08.980
+really useful. Very cool. Well,
+people can learn all about
+
+653
+00:33:08.980 --> 00:33:12.970
+you. It's at your blog@stevenedward.com.
+I'll be sure to link
+
+654
+00:33:12.970 --> 00:33:16.270
+folks to your GitHub repo
+and these very useful DevOps
+
+655
+00:33:16.270 --> 00:33:18.670
+labs. Awesome. Thank you so
+much, Scott, for having me.
+
+656
+00:33:18.880 --> 00:33:20.740
+Yeah. Thanks for letting me
+know all about how continuous
+
+657
+00:33:20.740 --> 00:33:24.700
+integration, but I appreciate it.
+Awesome. This has been another
+
+658
+00:33:24.700 --> 00:33:27.790
+episode of Hansel minutes. We'll
+see you again next week.
+

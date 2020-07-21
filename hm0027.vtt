@@ -1,0 +1,2416 @@
+WEBVTT FILE
+
+1
+00:00:12.240 --> 00:00:16.590
+From Hanselman it's dot com.
+It's Hanselman. It's a weekly
+
+2
+00:00:16.590 --> 00:00:21.180
+discussion with web developer and
+technologists. Scott Hanselman hosted by
+
+3
+00:00:21.180 --> 00:00:26.280
+Carl Franklin. This is Jeff Macio
+Lake announcing show number 27.
+
+4
+00:00:26.430 --> 00:00:32.700
+Recorded Tuesday August 1st, 2006. Support for
+Hansel minutes is provided by
+
+5
+00:00:32.700 --> 00:00:37.200
+COVID Smith tools, makers of
+code Smith and extensible template
+
+6
+00:00:37.200 --> 00:00:42.120
+based code generator for dotnet
+Hanselman its listeners. Get $100
+
+7
+00:00:42.120 --> 00:00:45.690
+off COVID Smith professional with
+coupon code H M 100
+
+8
+00:00:46.050 --> 00:00:52.650
+online@covidsmithtools.com and don't forget to
+visit Peter bloom.com. Start with
+
+9
+00:00:52.650 --> 00:01:01.320
+better controls finish with better
+sites online@peterblum.com. Support is also
+
+10
+00:01:01.320 --> 00:01:06.030
+provided by dotnet developers journal.
+The world's leading.net developer magazine
+
+11
+00:01:06.480 --> 00:01:12.840
+online at www dot <inaudible>
+dot com. In this episode,
+
+12
+00:01:13.020 --> 00:01:22.200
+Scott talks with Carl about.net
+reflection. Hi, this is Carl Franklin.
+
+13
+00:01:22.200 --> 00:01:24.840
+You're listening to Hansel minutes.
+I'm here with Scott Hanselman
+
+14
+00:01:24.840 --> 00:01:28.200
+is we always are a,
+this week. Scotty, what are
+
+15
+00:01:28.200 --> 00:01:33.030
+we talking about? reflection.net reflection.
+The, the, the most abused
+
+16
+00:01:33.030 --> 00:01:36.660
+thing within the framework, right?
+It's the, you know, I've
+
+17
+00:01:36.660 --> 00:01:38.880
+got a nail and every
+my hammer looks like reflection.
+
+18
+00:01:39.360 --> 00:01:42.900
+Yeah. I've I know that
+there are vast performance differences
+
+19
+00:01:42.900 --> 00:01:47.970
+between different elements of what
+we call reflection. So this
+
+20
+00:01:47.970 --> 00:01:51.420
+ought to be a good
+show. So what, what, what
+
+21
+00:01:51.420 --> 00:01:54.420
+kind of things have you
+used reflection for yourself? Well,
+
+22
+00:01:54.510 --> 00:01:58.440
+actually I've used reflection to
+create plugins. It's nice to
+
+23
+00:01:58.440 --> 00:02:02.730
+be able to just dynamically
+load in assembly and examine
+
+24
+00:02:02.730 --> 00:02:05.370
+it for types and for
+interfaces in particular. And if
+
+25
+00:02:05.370 --> 00:02:09.450
+those interfaces exist on a
+class, I would instantiate the
+
+26
+00:02:09.450 --> 00:02:14.940
+class with another call, cast
+it to my interface and
+
+27
+00:02:15.450 --> 00:02:18.930
+start calling the members of
+that interface. Right. So at
+
+28
+00:02:18.930 --> 00:02:21.930
+that point, your reflection is
+done and you've cashed that
+
+29
+00:02:21.930 --> 00:02:25.830
+interface. Yes. Right? So reflection
+of course is the kind
+
+30
+00:02:25.830 --> 00:02:29.850
+of the introspection, the runtime
+valuation of what a, what
+
+31
+00:02:29.850 --> 00:02:34.470
+an assembly class, a type
+can do. You can basically
+
+32
+00:02:34.470 --> 00:02:37.710
+say for some type of,
+I've got the Karl class
+
+33
+00:02:37.710 --> 00:02:38.880
+and I want to say,
+give me all of the
+
+34
+00:02:38.880 --> 00:02:41.180
+members of this class, give
+me all the properties of
+
+35
+00:02:41.180 --> 00:02:44.970
+the constructors. I can get
+all that information without knowing
+
+36
+00:02:44.970 --> 00:02:48.240
+anything ahead of time. Not
+knowing anything, compile time about
+
+37
+00:02:48.240 --> 00:02:50.070
+that class. It's the kind
+of stuff you had to
+
+38
+00:02:50.070 --> 00:02:53.670
+be done box to do
+with calm, right? Yeah. Back
+
+39
+00:02:53.670 --> 00:02:55.710
+in the day was hard.
+Now it's not hard. And
+
+40
+00:02:55.710 --> 00:02:58.860
+this is where we get
+into trouble. Reflections, abused a
+
+41
+00:02:58.870 --> 00:03:02.110
+lot. There's a lot of
+really powerful things that you
+
+42
+00:03:02.110 --> 00:03:04.630
+can do with reflection. Of
+course, the idea is that
+
+43
+00:03:04.630 --> 00:03:08.320
+if you can ask questions
+about an object without having
+
+44
+00:03:08.320 --> 00:03:11.410
+seen the object before you
+can do things like, you
+
+45
+00:03:11.410 --> 00:03:14.410
+know, object, relational mapping, save
+the object into the database,
+
+46
+00:03:14.410 --> 00:03:17.410
+you can do things like
+an hibernate to map the
+
+47
+00:03:17.410 --> 00:03:20.320
+object to tables in the
+database where you get in
+
+48
+00:03:20.320 --> 00:03:23.260
+trouble is when your objects
+get larger and larger, and
+
+49
+00:03:23.260 --> 00:03:25.840
+then you get collections of
+objects and you still find
+
+50
+00:03:25.840 --> 00:03:28.270
+yourself poking around in reflection.
+So if you had an
+
+51
+00:03:28.270 --> 00:03:31.630
+object, the Karl object had
+50, 60, a hundred properties
+
+52
+00:03:32.050 --> 00:03:34.810
+and you had a collection
+full of a hundred Karl
+
+53
+00:03:34.810 --> 00:03:37.780
+objects. You start doing the
+math, you know, a number
+
+54
+00:03:37.780 --> 00:03:40.900
+of objects, times X number
+of properties. And it gets
+
+55
+00:03:40.900 --> 00:03:44.550
+really expensive. Yeah. And if
+you walk the object hierarchy,
+
+56
+00:03:44.550 --> 00:03:47.880
+you could be going down
+lots of paths, right? Exactly.
+
+57
+00:03:48.040 --> 00:03:51.270
+If you've got an object
+that's just by itself asking
+
+58
+00:03:51.270 --> 00:03:53.670
+questions about its properties is
+pretty straightforward, but if you've
+
+59
+00:03:53.670 --> 00:03:56.310
+got an object, like you
+mentioned, that ha is part
+
+60
+00:03:56.310 --> 00:04:01.110
+of a larger object hierarchy
+asking it about itself it's
+
+61
+00:04:01.110 --> 00:04:04.380
+parents and walking the tree
+can become very, very expensive.
+
+62
+00:04:05.280 --> 00:04:07.980
+There's some really good articles
+up at MSDN, a shrink
+
+63
+00:04:07.980 --> 00:04:10.560
+stir slash H one K
+has gotten a good article
+
+64
+00:04:10.590 --> 00:04:15.870
+about common performance pitfalls buried
+within that MSDN article. There's
+
+65
+00:04:15.870 --> 00:04:19.380
+a particularly interesting figure called
+what is slow in reflection
+
+66
+00:04:19.410 --> 00:04:23.250
+at shrink stir slash H
+two three. And this talks
+
+67
+00:04:23.250 --> 00:04:26.760
+about what aspects of reflection
+are pretty, pretty fast, pretty
+
+68
+00:04:26.760 --> 00:04:29.490
+light. And what's very costly.
+A lot of people don't
+
+69
+00:04:29.490 --> 00:04:31.440
+take the time to measure
+this stuff. And really when
+
+70
+00:04:31.440 --> 00:04:34.290
+you're using reflection, if you
+do one thing, measure your
+
+71
+00:04:34.290 --> 00:04:37.560
+code profiling becomes so important
+when you're using reflection, Let's
+
+72
+00:04:37.560 --> 00:04:43.080
+summarize what's fast and what's
+costly, Right? So object dot,
+
+73
+00:04:43.110 --> 00:04:44.970
+get type, you know, asking
+an object. What it's type
+
+74
+00:04:44.970 --> 00:04:48.390
+is pretty, pretty lightweight objects,
+no, there types, you can
+
+75
+00:04:48.390 --> 00:04:51.780
+ask them very quickly. I'm
+asking objects. If this type
+
+76
+00:04:51.780 --> 00:04:55.620
+is equivalent to that type
+are pretty straightforward. Getting the
+
+77
+00:04:55.620 --> 00:04:58.620
+type of a member pretty
+straightforward. These are all very
+
+78
+00:04:58.620 --> 00:05:03.060
+lightweight methods where you get
+in trouble is like get
+
+79
+00:05:03.060 --> 00:05:07.110
+custom attributes. So asking an
+object for any particular custom
+
+80
+00:05:07.110 --> 00:05:09.360
+attributes that live on that
+object. And when you really
+
+81
+00:05:09.360 --> 00:05:12.210
+get into trouble, like you
+mentioned, is get custom attributes
+
+82
+00:05:12.210 --> 00:05:15.600
+when you pass in true
+for Recurse walks the entire
+
+83
+00:05:15.600 --> 00:05:18.420
+object tree. That's about the
+most expensive thing you can
+
+84
+00:05:18.420 --> 00:05:21.570
+possibly do in reflection is
+ask, ask the object. Do
+
+85
+00:05:21.570 --> 00:05:23.490
+you have any custom attributes
+and ask all of your
+
+86
+00:05:23.490 --> 00:05:25.740
+children, do they have any
+custom attributes and roll them
+
+87
+00:05:25.740 --> 00:05:28.980
+up Now? Is that just
+because of the scale of
+
+88
+00:05:29.070 --> 00:05:31.920
+the number of properties and
+trees that you possibly get
+
+89
+00:05:32.040 --> 00:05:35.340
+as your object get bigger?
+Or is it because that
+
+90
+00:05:35.340 --> 00:05:39.900
+there's some sort of inefficient
+mechanism that searches these things?
+
+91
+00:05:41.040 --> 00:05:43.110
+I think that it, those
+are the kinds of things
+
+92
+00:05:43.110 --> 00:05:47.340
+that traverse the, the, the
+depth of the object hierarchy.
+
+93
+00:05:47.400 --> 00:05:49.530
+Yeah. And it's going to
+have to, it has to
+
+94
+00:05:49.530 --> 00:05:51.780
+ask not only what attributes
+exist, but then it has
+
+95
+00:05:51.780 --> 00:05:55.260
+to resolve the types of
+those attributes. Okay. So typically
+
+96
+00:05:55.260 --> 00:05:57.920
+you would put a custom
+attribute, right? You're for a,
+
+97
+00:05:57.920 --> 00:06:00.950
+you know, get custom attributes.
+You want to know what
+
+98
+00:06:00.950 --> 00:06:02.660
+are some attributes that I
+put on that may be
+
+99
+00:06:02.660 --> 00:06:05.990
+in various and sundry assemblies
+that can get pretty expensive.
+
+100
+00:06:05.990 --> 00:06:09.920
+If those assemblies haven't been
+resolved yet, most often though,
+
+101
+00:06:09.920 --> 00:06:13.130
+people are using reflection for
+custom attributes. They have an
+
+102
+00:06:13.130 --> 00:06:16.160
+object and they want to
+add the Carl funky database
+
+103
+00:06:16.790 --> 00:06:21.170
+attribute asking for that as
+expensive now asking for it's
+
+104
+00:06:21.170 --> 00:06:23.140
+not necessarily a bad thing.
+Yeah. I was going to
+
+105
+00:06:23.140 --> 00:06:26.170
+say, isn't it only when
+you use the, Recurse a
+
+106
+00:06:26.170 --> 00:06:28.390
+bit that it gets expensive.
+I mean, what if you're
+
+107
+00:06:28.390 --> 00:06:31.510
+just looking at an object
+that has 15, 20 properties,
+
+108
+00:06:31.510 --> 00:06:32.860
+you want to get an
+attribute on one of those
+
+109
+00:06:32.860 --> 00:06:36.100
+properties, If you do it
+once it's no problem what
+
+110
+00:06:36.100 --> 00:06:37.960
+you want to measure. What
+you want to profile is
+
+111
+00:06:38.080 --> 00:06:40.180
+am I doing this all
+the time in the course
+
+112
+00:06:40.180 --> 00:06:43.290
+of a standard running of
+my application, Right? If, if
+
+113
+00:06:43.300 --> 00:06:46.120
+the, if hitting a regular
+Page and an asp.net application
+
+114
+00:06:46.120 --> 00:06:49.720
+involves 50 reflection calls, you
+need to ask yourself how
+
+115
+00:06:49.720 --> 00:06:52.750
+CPU bound do I want
+things to be? If you've
+
+116
+00:06:52.750 --> 00:06:56.350
+got an asp.net page that
+does 50 reflection calls just
+
+117
+00:06:56.380 --> 00:07:00.220
+in standard business, just to
+the standard path, through that
+
+118
+00:07:00.220 --> 00:07:03.970
+page calls, reflection, it might
+work fine, 10, 20, a
+
+119
+00:07:03.970 --> 00:07:06.430
+hundred users concurrently. But when
+you start getting into big
+
+120
+00:07:06.430 --> 00:07:10.180
+scale, you have to ask
+yourself, is this value added?
+
+121
+00:07:10.180 --> 00:07:13.150
+So then you wanna think
+about caching. The example that
+
+122
+00:07:13.150 --> 00:07:16.680
+I can give is, is
+DAS blog, right? DAS, blogs,
+
+123
+00:07:16.690 --> 00:07:19.150
+and inherited from code that
+was inherited. That was inherited
+
+124
+00:07:19.150 --> 00:07:22.120
+from another guy. Does blogs
+got a really interesting template
+
+125
+00:07:22.120 --> 00:07:25.120
+language, right? You've done the
+templates on, on your blog,
+
+126
+00:07:25.150 --> 00:07:29.380
+your intellectual hedonism blog in
+the blog templates. We've got
+
+127
+00:07:29.380 --> 00:07:32.560
+our own, you know, macro
+language. So we say angle
+
+128
+00:07:32.560 --> 00:07:36.130
+bracket percent, title percent angle
+bracket. And then what we
+
+129
+00:07:36.130 --> 00:07:38.800
+do is we parse that
+template. We do some caching,
+
+130
+00:07:39.250 --> 00:07:43.600
+and then I look for
+a property called title within
+
+131
+00:07:43.600 --> 00:07:47.740
+the macros class. Problem is
+previous versions of DAS blog.
+
+132
+00:07:48.460 --> 00:07:53.200
+We will go and interrogate
+that macro object. Do you
+
+133
+00:07:53.200 --> 00:07:55.750
+have a property called title?
+Tell me about that property.
+
+134
+00:07:55.750 --> 00:07:58.900
+What kind of type does
+return, yada, yada, yada, and
+
+135
+00:07:58.930 --> 00:08:03.940
+then call it dynamically every
+single page view for every
+
+136
+00:08:03.940 --> 00:08:06.520
+single item on that page.
+So if your front page
+
+137
+00:08:06.520 --> 00:08:08.440
+of your blog has 20
+items, we're going to do
+
+138
+00:08:08.440 --> 00:08:11.770
+a reflection costs 20 times.
+This has typically been the
+
+139
+00:08:11.770 --> 00:08:15.430
+most complicated part of this
+particular blog software. Yeah, the
+
+140
+00:08:15.430 --> 00:08:18.070
+most scary. And, but it
+worked so no one ever
+
+141
+00:08:18.070 --> 00:08:21.580
+looked at it last night,
+about 2:00 AM. I was looking
+
+142
+00:08:21.580 --> 00:08:23.740
+at it, trying to chase
+down a totally different thing
+
+143
+00:08:24.190 --> 00:08:28.000
+and realize, well, this is
+just stupid, the type itself,
+
+144
+00:08:28.000 --> 00:08:31.150
+in this particular instance, in
+this use of reflection, isn't
+
+145
+00:08:31.150 --> 00:08:34.150
+changing, the title is going
+to be the same place.
+
+146
+00:08:34.150 --> 00:08:37.210
+It is every single time.
+Right. Right. All those macros
+
+147
+00:08:37.210 --> 00:08:40.240
+within your template and dash
+blog, aren't changing. So are
+
+148
+00:08:40.240 --> 00:08:42.820
+you planning on changing the
+way that that works or
+
+149
+00:08:42.820 --> 00:08:45.850
+did you, or, Well, so
+that was about 2:00 AM when
+
+150
+00:08:45.850 --> 00:08:49.270
+I figured that out. So
+about four 30 last night,
+
+151
+00:08:49.270 --> 00:08:53.860
+or this morning when I
+figured out just cashing, that
+
+152
+00:08:53.860 --> 00:08:55.590
+would be the right thing
+to do. It took a
+
+153
+00:08:55.590 --> 00:08:58.680
+little thought because we have
+expressions and sub expressions and
+
+154
+00:08:58.680 --> 00:09:03.210
+the DAS block, the DAS
+blog, macro language supports passing
+
+155
+00:09:03.210 --> 00:09:06.240
+in parameters. So it's pretty
+complicated. Basically. We're letting you
+
+156
+00:09:06.240 --> 00:09:10.470
+call functions from our, from
+our template engine. So basically
+
+157
+00:09:10.470 --> 00:09:12.690
+I just started filling up
+a hash table. There was
+
+158
+00:09:12.690 --> 00:09:15.360
+some threading issues and I
+started keeping track of this
+
+159
+00:09:15.360 --> 00:09:19.230
+stuff. So we were interrogating
+and allowing the, the template
+
+160
+00:09:19.230 --> 00:09:23.910
+developer to look at fields,
+properties, and methods. So it
+
+161
+00:09:23.910 --> 00:09:26.760
+was a very flexible way
+of doing things. So these
+
+162
+00:09:26.760 --> 00:09:30.090
+things in reflection, all derived
+from a thing called member
+
+163
+00:09:30.090 --> 00:09:33.390
+info, right? Information about the
+member in a class, right?
+
+164
+00:09:33.420 --> 00:09:37.230
+So we also support custom
+macros. So DAS blog knows
+
+165
+00:09:37.230 --> 00:09:40.890
+that you might want to
+call a macro on a
+
+166
+00:09:40.890 --> 00:09:43.890
+class that didn't ship with
+us blog. So we'll go
+
+167
+00:09:43.890 --> 00:09:47.160
+in and resolve all that
+stuff for you once we've
+
+168
+00:09:47.160 --> 00:09:49.440
+done it, though, we needed
+to catch that. So we
+
+169
+00:09:49.440 --> 00:09:54.060
+cashed this member info object.
+Now deriving from, from member
+
+170
+00:09:54.060 --> 00:09:56.790
+info are the three different
+kinds of things. The class
+
+171
+00:09:56.790 --> 00:10:00.630
+can have. You've got your
+methods, fields and properties. So
+
+172
+00:10:00.630 --> 00:10:02.370
+you got a property info,
+a method and phone, a
+
+173
+00:10:02.370 --> 00:10:05.370
+field info. And then we
+just keep track of those
+
+174
+00:10:05.370 --> 00:10:08.040
+on properties and fields. You
+call get value and you
+
+175
+00:10:08.040 --> 00:10:10.230
+say, Hey, give me the
+value of that property. Give
+
+176
+00:10:10.230 --> 00:10:12.570
+me the value of that
+field, all done kind of
+
+177
+00:10:12.570 --> 00:10:15.810
+dynamically. And then on methods
+we say method, you know,
+
+178
+00:10:15.810 --> 00:10:19.170
+I think it's invoke member.
+Now we cash all I've
+
+179
+00:10:19.170 --> 00:10:24.210
+cash, all that now. And
+we spend more time executing
+
+180
+00:10:24.270 --> 00:10:27.480
+code and less time interrogating
+code. It was a really
+
+181
+00:10:27.480 --> 00:10:30.810
+silly thing to have to
+have never caught. But I
+
+182
+00:10:30.810 --> 00:10:32.520
+think that, that, that happens
+a lot when people start
+
+183
+00:10:32.520 --> 00:10:35.160
+using reflection because you get
+it working. Yeah. And then
+
+184
+00:10:35.160 --> 00:10:38.460
+you never really visited again.
+You never come back. Cashing
+
+185
+00:10:38.460 --> 00:10:40.890
+your member info is a
+really, really quick way to
+
+186
+00:10:40.890 --> 00:10:44.490
+get, get some performance benefits
+when you're using reflection. It'd
+
+187
+00:10:44.490 --> 00:10:47.670
+be nice. If there was
+a cache built into the
+
+188
+00:10:47.670 --> 00:10:49.980
+reflection system, when it, then
+you wouldn't have to do
+
+189
+00:10:49.980 --> 00:10:52.140
+any of that, it would,
+but you know, reflection is
+
+190
+00:10:52.140 --> 00:10:53.640
+one of those things where
+they want to make it
+
+191
+00:10:53.640 --> 00:10:55.620
+work for everybody. So I
+think they set it up
+
+192
+00:10:55.860 --> 00:10:59.340
+to be as truly as
+late bound as possible. Right.
+
+193
+00:10:59.340 --> 00:11:01.860
+It makes sense that you
+never know something might have
+
+194
+00:11:01.860 --> 00:11:04.350
+changed, but you brought up
+where you bring up a
+
+195
+00:11:04.350 --> 00:11:06.090
+really interesting point. So this
+is going to get a
+
+196
+00:11:06.090 --> 00:11:09.270
+little more advanced. Maybe we'll
+blow a few, few minds
+
+197
+00:11:09.270 --> 00:11:12.090
+here. Cause I found this
+really interesting. So you know
+
+198
+00:11:12.090 --> 00:11:14.550
+about the code Dom, right?
+The ability to kind of
+
+199
+00:11:14.550 --> 00:11:20.010
+emit code at runtime. Yes.
+So there's, you can use
+
+200
+00:11:20.010 --> 00:11:22.380
+reflection or you can use
+the code dominant vs. Live
+
+201
+00:11:22.380 --> 00:11:26.700
+2004. I think it was
+Josh Holmes. Did a talk
+
+202
+00:11:26.970 --> 00:11:30.450
+on reflection versus the code
+dumb at shrink stir slash
+
+203
+00:11:30.480 --> 00:11:33.900
+H one V as in
+Victor and has an interesting
+
+204
+00:11:33.900 --> 00:11:36.660
+discussion about when one might
+use reflection and one might
+
+205
+00:11:36.660 --> 00:11:39.660
+use the code dumb. A
+lot of times people spend
+
+206
+00:11:40.140 --> 00:11:45.330
+reflection, CPU cycles, accessing properties.
+Basically you have a property
+
+207
+00:11:45.330 --> 00:11:47.670
+called Fu that could be
+on an object, but you
+
+208
+00:11:47.670 --> 00:11:51.390
+just don't know enough about
+that object at runtime. Your
+
+209
+00:11:51.390 --> 00:11:54.760
+example of using interfaces is
+always appropriate, right? To think
+
+210
+00:11:54.760 --> 00:11:57.190
+about, am I using reflection
+or should I be using
+
+211
+00:11:57.190 --> 00:12:00.370
+interfaces? Yeah. Right. Cause once
+you get that interface, you
+
+212
+00:12:00.370 --> 00:12:02.560
+use reflection to get the
+interface. And once you've discovered
+
+213
+00:12:02.560 --> 00:12:06.580
+that, Oh, the Karl object
+implements. I Fu alright, I'll
+
+214
+00:12:06.580 --> 00:12:08.770
+hang on to an IFU
+reference and then I'm fast,
+
+215
+00:12:08.770 --> 00:12:11.950
+fast, fast. Yep. That's great.
+So sometimes you want to
+
+216
+00:12:11.950 --> 00:12:13.600
+look at reflection code and
+see if an interface would
+
+217
+00:12:13.600 --> 00:12:18.010
+be more appropriate, but there's
+a thing called fast property
+
+218
+00:12:18.010 --> 00:12:19.930
+accessor's and there's a number
+of people who've been doing
+
+219
+00:12:19.930 --> 00:12:22.870
+work on this. There's a
+really great article at code
+
+220
+00:12:22.870 --> 00:12:26.440
+project. That's at shrink stir
+slash <inaudible>. So check this
+
+221
+00:12:26.440 --> 00:12:30.100
+out. Some of the situations
+that you might want to
+
+222
+00:12:30.100 --> 00:12:32.590
+retrieve the value of an
+object property, or maybe a
+
+223
+00:12:32.590 --> 00:12:37.150
+field where you don't necessarily
+know enough about that member
+
+224
+00:12:37.150 --> 00:12:40.450
+until runtime would be like
+maybe writing a shorter or
+
+225
+00:12:40.450 --> 00:12:42.940
+a comparer to do a
+sorting of an array. You've
+
+226
+00:12:42.940 --> 00:12:45.070
+got a collection of objects
+and they're all different. You
+
+227
+00:12:45.070 --> 00:12:47.170
+might want to do some
+sorting, some dynamic sorting on
+
+228
+00:12:47.170 --> 00:12:51.550
+that. Perhaps you might want
+to do filtering based on
+
+229
+00:12:51.550 --> 00:12:55.840
+values of particular members or
+serialization. Right. You know, there's
+
+230
+00:12:55.840 --> 00:12:58.450
+the XNL serializer, but a
+lot of people write their
+
+231
+00:12:58.450 --> 00:13:01.480
+own sterilizers. We've written a
+couple of serializers at Karelian
+
+232
+00:13:01.480 --> 00:13:06.220
+that serialized objects into formats
+that are not a XML
+
+233
+00:13:06.370 --> 00:13:08.740
+like them, value pairs and
+things like that. So there's
+
+234
+00:13:08.740 --> 00:13:12.280
+article up at code project
+talks about getting property. Typically
+
+235
+00:13:12.340 --> 00:13:16.540
+getting talks about getting the
+value of a property of
+
+236
+00:13:16.540 --> 00:13:20.230
+an object. So ordinarily, you'd
+say like type of Carl
+
+237
+00:13:20.650 --> 00:13:23.260
+dot get property, and then
+you'd put in a string,
+
+238
+00:13:23.260 --> 00:13:25.270
+the name of the property.
+So if the coral object
+
+239
+00:13:25.270 --> 00:13:27.970
+had a foo, you'd say
+type of Karl, get property
+
+240
+00:13:28.300 --> 00:13:31.450
+Fu you get back a
+property info. So this is
+
+241
+00:13:31.450 --> 00:13:36.130
+a generic reflection object that
+knows about that particular property.
+
+242
+00:13:36.190 --> 00:13:39.250
+And that operation get property
+is expensive, right? The act,
+
+243
+00:13:39.340 --> 00:13:43.000
+the asking of that, all
+the guests, the guests. Exactly.
+
+244
+00:13:43.000 --> 00:13:45.190
+Now the next thing is
+once you've got a hold
+
+245
+00:13:45.190 --> 00:13:48.250
+of that property, you have
+to go and say, get
+
+246
+00:13:48.250 --> 00:13:50.050
+the value of that property.
+And this is where it
+
+247
+00:13:50.050 --> 00:13:52.750
+gets a little confusing because
+in reflection, everything takes twice
+
+248
+00:13:52.750 --> 00:13:54.940
+as it's twice as hard
+as if you did it
+
+249
+00:13:54.940 --> 00:13:58.840
+by yourself. Ordinarily you just
+say Carl dot Fu. And
+
+250
+00:13:58.840 --> 00:14:03.310
+in one line you've said,
+give me the property value
+
+251
+00:14:03.310 --> 00:14:06.490
+of the Carl object called
+Fu and reflection. You have
+
+252
+00:14:06.490 --> 00:14:08.950
+to get the property itself,
+kind of get the handle
+
+253
+00:14:08.950 --> 00:14:12.160
+to the method and then
+get the value from it.
+
+254
+00:14:12.250 --> 00:14:14.440
+So you say, get property,
+you get a property info.
+
+255
+00:14:14.470 --> 00:14:17.620
+You say, get value. So,
+you know, this works fine.
+
+256
+00:14:17.620 --> 00:14:18.790
+When you have to do
+it in a loop, it
+
+257
+00:14:18.790 --> 00:14:23.500
+gets really, really slow. So
+with this reflection dot emit,
+
+258
+00:14:23.560 --> 00:14:27.430
+this is a namespace within
+the.net framework that allows you
+
+259
+00:14:27.430 --> 00:14:32.050
+to generate code dynamically. So
+this article up on code
+
+260
+00:14:32.050 --> 00:14:35.080
+project that I'm talking about,
+this shrink stir slash <inaudible>
+
+261
+00:14:35.440 --> 00:14:39.760
+has a really interesting way
+of doing things. Basically he's
+
+262
+00:14:39.760 --> 00:14:48.430
+dynamically generating a property accessor
+at runtime, emitting the, the
+
+263
+00:14:48.430 --> 00:14:52.160
+get of that into a
+tiny little assembly. That's just
+
+264
+00:14:52.160 --> 00:14:57.320
+specific for you. And then
+letting you call that and
+
+265
+00:14:57.320 --> 00:14:59.810
+it's strongly typed. So basically
+you're, you're taking those two
+
+266
+00:14:59.810 --> 00:15:04.100
+lines, compiling them up and
+saying, really give me the
+
+267
+00:15:04.100 --> 00:15:08.510
+actual handle to the foo
+on the Carl object, and
+
+268
+00:15:08.510 --> 00:15:11.720
+then I'll cash it. And
+it's faster than reflection, right?
+
+269
+00:15:11.720 --> 00:15:14.720
+And it's faster than reflection.
+Exactly. It's about 30 to
+
+270
+00:15:14.720 --> 00:15:18.500
+50 times faster. Wow. Now
+it's still only about as
+
+271
+00:15:18.500 --> 00:15:22.570
+half as fast as using
+compile code, but it's, it's
+
+272
+00:15:22.610 --> 00:15:26.210
+pretty darn interesting. Yeah. I'll
+say there's another great article
+
+273
+00:15:26.210 --> 00:15:29.780
+at code project at shrink
+stir slash H 28. That's
+
+274
+00:15:29.780 --> 00:15:35.990
+about fast dynamic property accessories
+with C-sharp and this one
+
+275
+00:15:35.990 --> 00:15:38.960
+is really interesting. He's done
+a very nice job measuring
+
+276
+00:15:38.960 --> 00:15:42.770
+and quantifying what's what's fast
+and what's not. And he
+
+277
+00:15:42.770 --> 00:15:48.530
+creates an interface called I
+property accessor. This interface has
+
+278
+00:15:48.530 --> 00:15:52.340
+a get and a set.
+Okay. So this is a
+
+279
+00:15:52.440 --> 00:15:55.400
+little interface that he's going
+to use and he will
+
+280
+00:15:55.400 --> 00:16:00.140
+create implementations of I property
+accessor that know how to
+
+281
+00:16:00.140 --> 00:16:04.540
+get and set one kind
+of property. I got it.
+
+282
+00:16:04.540 --> 00:16:05.980
+So he's got to get
+her instead of for each
+
+283
+00:16:05.980 --> 00:16:08.980
+time. Right. So he'll get
+it. He'll have an I
+
+284
+00:16:08.980 --> 00:16:11.650
+property accessor, one instance of
+an eye property, et cetera,
+
+285
+00:16:11.800 --> 00:16:16.150
+for each type property combination.
+So if the Carl object
+
+286
+00:16:16.150 --> 00:16:19.030
+had five properties and he
+needed to get to each
+
+287
+00:16:19.030 --> 00:16:22.690
+of them, he would end
+up with five instances of
+
+288
+00:16:22.690 --> 00:16:27.130
+anti property accessor and a
+hash table somewhere. Nate makes
+
+289
+00:16:27.130 --> 00:16:29.800
+sense. Yeah. So he's actually
+getting one eye property access
+
+290
+00:16:29.800 --> 00:16:33.340
+or per property. That's pretty
+cool. Yeah. It's pretty clever.
+
+291
+00:16:33.340 --> 00:16:36.010
+So he actually walks you
+step by step through how
+
+292
+00:16:36.010 --> 00:16:39.910
+he's admitting the I L
+and then cashing these automatically.
+
+293
+00:16:39.910 --> 00:16:42.700
+He deals with certain types
+and you can extend his
+
+294
+00:16:42.700 --> 00:16:45.730
+stuff to support different types
+that your properties might be
+
+295
+00:16:45.730 --> 00:16:50.380
+returning. He's using things like
+the defined dynamic assembly in
+
+296
+00:16:50.380 --> 00:16:52.480
+the module builder and things
+like that. And this will
+
+297
+00:16:52.480 --> 00:16:55.600
+work in dotnet one, one,
+one as well as a,
+
+298
+00:16:55.600 --> 00:16:58.090
+as well as in two.
+Oh, So speaking of two,
+
+299
+00:16:58.090 --> 00:17:01.900
+Oh, what's different about reflection
+in <inaudible> than in one,
+
+300
+00:17:01.910 --> 00:17:05.860
+two or one, one rather.
+So Roy or Trove has
+
+301
+00:17:05.860 --> 00:17:08.170
+got a couple of things
+about that. It's shrink stir
+
+302
+00:17:08.170 --> 00:17:12.430
+slash H one w and
+has got some articles about
+
+303
+00:17:12.430 --> 00:17:16.750
+what has changed. And then
+at shrink stir slash H
+
+304
+00:17:16.750 --> 00:17:21.430
+two O there's information about
+what is updated in reflection
+
+305
+00:17:21.460 --> 00:17:24.100
+2.0, the thing, some of
+the things that are really
+
+306
+00:17:24.100 --> 00:17:27.010
+interesting from a security standpoint
+is the notion that you
+
+307
+00:17:27.010 --> 00:17:31.420
+could load an assembly just
+for purposes of reflection. Yeah.
+
+308
+00:17:31.480 --> 00:17:34.300
+So basically you could load
+something in a reflection, only
+
+309
+00:17:34.480 --> 00:17:37.390
+context. You could load an
+assembly and ask questions about
+
+310
+00:17:37.390 --> 00:17:40.360
+it, about its attributes information,
+but you couldn't actually execute
+
+311
+00:17:40.360 --> 00:17:43.300
+the code. This allows for
+some of the loader restrictions
+
+312
+00:17:43.300 --> 00:17:47.590
+to be relaxed and lets
+you reflect over the objects,
+
+313
+00:17:47.590 --> 00:17:51.420
+get information about them. You
+can also reflect over the
+
+314
+00:17:51.420 --> 00:17:54.120
+method body. This is a
+new thing, a method info
+
+315
+00:17:54.120 --> 00:17:55.890
+we talked about when you
+get ahold of a method,
+
+316
+00:17:55.890 --> 00:17:58.830
+but now there's a new
+method called get method, body.
+
+317
+00:17:59.130 --> 00:18:03.030
+This actually gives you the
+IFL back from that particular
+
+318
+00:18:03.030 --> 00:18:08.160
+method. So you're actually getting
+a byte stream of the
+
+319
+00:18:08.220 --> 00:18:12.540
+intermediate language. You could do
+all sorts of stuff, manipulating
+
+320
+00:18:12.540 --> 00:18:15.920
+your code dynamically. This is
+pretty advanced stuff. I would
+
+321
+00:18:15.920 --> 00:18:19.160
+just, my mind just went
+to a couple of places
+
+322
+00:18:19.160 --> 00:18:22.070
+where I could use that.
+That's really cool. Are there
+
+323
+00:18:22.070 --> 00:18:26.720
+any performance differences between a
+reflection two Oh and 1.1,
+
+324
+00:18:27.730 --> 00:18:30.530
+The word on the street
+that, that two Oh, is
+
+325
+00:18:30.530 --> 00:18:33.290
+something like 30 to 40%
+faster, but I personally only
+
+326
+00:18:33.290 --> 00:18:37.040
+have anecdotal evidence, but it
+is faster than, than one
+
+327
+00:18:37.100 --> 00:18:40.310
+than one X. How, how
+much faster? I don't know
+
+328
+00:18:41.060 --> 00:18:43.040
+that just because it's a
+little faster though. It doesn't
+
+329
+00:18:43.040 --> 00:18:45.230
+mean that one. It has
+carte blanche to go and
+
+330
+00:18:45.230 --> 00:18:48.680
+be evil with it. Sure.
+Right. Reflection. Is she so
+
+331
+00:18:48.680 --> 00:18:51.080
+abused right now? And that's
+really what if you get
+
+332
+00:18:51.080 --> 00:18:54.230
+one thing out of this
+particular podcasts measure, measure, measure
+
+333
+00:18:54.350 --> 00:18:56.720
+really all day long use
+as much as you can
+
+334
+00:18:56.960 --> 00:18:59.450
+to find out, am I
+doing the right thing, a
+
+335
+00:18:59.450 --> 00:19:02.210
+balance, you're going to use
+a little reflection. Sometimes you'll
+
+336
+00:19:02.210 --> 00:19:05.750
+use interfaces. Sometimes you'll use
+Kodama or reflection, not admit
+
+337
+00:19:06.110 --> 00:19:10.250
+to, to talk about, to
+talk to your objects. We've
+
+338
+00:19:10.250 --> 00:19:14.120
+seen Rocky latkas csla.net by
+any chance. Yeah. That's good
+
+339
+00:19:14.120 --> 00:19:16.910
+stuff. He uses reflection on
+reflection in that. Yeah. He
+
+340
+00:19:16.910 --> 00:19:20.390
+uses reflection to do a
+multi multilevel undo, which I
+
+341
+00:19:20.390 --> 00:19:24.710
+thought was a brilliant use
+of reflection. I'm really mind-bending
+
+342
+00:19:24.710 --> 00:19:28.220
+stuff that you can do
+with reflection. For me working
+
+343
+00:19:28.220 --> 00:19:32.600
+at a financial services company,
+we want the balance between
+
+344
+00:19:33.230 --> 00:19:36.260
+ease of development, where reflection
+makes things easier. If we
+
+345
+00:19:36.260 --> 00:19:40.070
+can serialize objects and scale
+to be really well balanced,
+
+346
+00:19:40.310 --> 00:19:42.620
+you don't want to pay
+for it every single day
+
+347
+00:19:42.680 --> 00:19:46.070
+on every single transaction, just
+because you saved the developer
+
+348
+00:19:46.100 --> 00:19:48.920
+10 minutes. Sure. But at
+this, you know, at the
+
+349
+00:19:48.920 --> 00:19:51.770
+same time though, if it
+takes a developer two weeks
+
+350
+00:19:51.770 --> 00:19:54.500
+to fix something, to make
+it faster, you have to
+
+351
+00:19:54.500 --> 00:19:57.860
+really balance those things out.
+We use a combination of
+
+352
+00:19:57.860 --> 00:20:00.350
+reflection and cogeneration that to
+get the scale that we
+
+353
+00:20:00.350 --> 00:20:04.220
+need to. And that involves
+using all of those three
+
+354
+00:20:04.220 --> 00:20:08.300
+tools where one would ordinarily
+use just reflection and some
+
+355
+00:20:08.300 --> 00:20:10.400
+of those slower APIs, like
+when we were talking about
+
+356
+00:20:10.400 --> 00:20:13.520
+what are the slow APIs
+get a custom attributes is
+
+357
+00:20:13.520 --> 00:20:15.460
+just one of them. All
+of the get API are
+
+358
+00:20:15.530 --> 00:20:19.760
+pretty costly. Activator create instance
+is pretty expensive as well
+
+359
+00:20:19.760 --> 00:20:22.820
+as a invoke member. These
+are the kinds of things
+
+360
+00:20:22.820 --> 00:20:25.790
+you want to cash. I
+always thought about activator is
+
+361
+00:20:25.790 --> 00:20:28.700
+one of those things that,
+you know, the, the Uber
+
+362
+00:20:28.700 --> 00:20:32.210
+geeks used because, you know,
+create instance because, you know,
+
+363
+00:20:32.210 --> 00:20:35.510
+in VB we have all
+sorts of ways to create
+
+364
+00:20:35.510 --> 00:20:37.970
+objects and run them. I
+mean, why would you activate
+
+365
+00:20:37.970 --> 00:20:42.470
+or create instance over new,
+for example? Okay. So activate
+
+366
+00:20:42.470 --> 00:20:45.110
+or create instances the really
+late bound. I want an
+
+367
+00:20:45.110 --> 00:20:47.560
+instance of an object and
+all I have is assembly
+
+368
+00:20:47.560 --> 00:20:50.860
+qualified name. So activated to
+create instances what you would
+
+369
+00:20:50.860 --> 00:20:53.380
+typically use in a plugin
+pattern. If I want to
+
+370
+00:20:53.380 --> 00:20:56.380
+have an I plugin object
+and I've got three different
+
+371
+00:20:56.380 --> 00:20:59.860
+guys, who've created three different
+assemblies in different languages, but
+
+372
+00:20:59.860 --> 00:21:03.730
+they all implement my I
+plugin interface. I would get
+
+373
+00:21:03.730 --> 00:21:07.450
+their assembly qualified names. That's
+the class comma and the
+
+374
+00:21:07.450 --> 00:21:12.430
+assembly name. So Karl dot
+plugin comma Franklins would be
+
+375
+00:21:12.430 --> 00:21:15.070
+in the Franklins dot DLL.
+I would put that in
+
+376
+00:21:15.070 --> 00:21:18.310
+my config file, I would
+say activate or create instance.
+
+377
+00:21:18.310 --> 00:21:20.950
+And I would hand it
+my assembly qualified name, and
+
+378
+00:21:20.950 --> 00:21:24.190
+then run around with reflection
+inside those types, finding the
+
+379
+00:21:24.190 --> 00:21:27.910
+one that implements I plugin.
+Once I find that, then
+
+380
+00:21:27.910 --> 00:21:31.120
+I know how to, you
+know, get, get I plugins
+
+381
+00:21:31.120 --> 00:21:33.340
+very, very quickly and then
+I can hang onto them.
+
+382
+00:21:33.700 --> 00:21:35.950
+So then the reflection cost
+is pretty, is pretty low.
+
+383
+00:21:35.950 --> 00:21:39.010
+Now using new of course
+is you have to know
+
+384
+00:21:39.010 --> 00:21:41.650
+the object at compile time.
+You have to bind to
+
+385
+00:21:41.650 --> 00:21:45.190
+it with, with reflection and
+with a plugin style architecture
+
+386
+00:21:45.190 --> 00:21:50.140
+or provider architecture. There is
+no actual.net assembly reference to
+
+387
+00:21:50.140 --> 00:21:53.640
+that type. Everything's incredibly late
+bound. It seems like performance
+
+388
+00:21:53.700 --> 00:21:57.600
+is a big concern of
+yours. Are there any, any
+
+389
+00:21:57.630 --> 00:22:00.840
+lists to go to where
+people talk about, you know,
+
+390
+00:22:00.840 --> 00:22:05.190
+here's the top 10 tips
+for improving performance with reflection,
+
+391
+00:22:05.790 --> 00:22:08.400
+that kind of stuff. An
+article from last July is
+
+392
+00:22:08.400 --> 00:22:10.530
+a really good one. The
+shrink stir slash H one
+
+393
+00:22:10.560 --> 00:22:15.060
+K if you're really, really
+concerned about getting some hardcore
+
+394
+00:22:15.060 --> 00:22:18.450
+reflection, there's some new stuff
+that Daniel <inaudible> is doing
+
+395
+00:22:18.810 --> 00:22:22.650
+with link on reflection at
+shrink stir slash H one
+
+396
+00:22:22.650 --> 00:22:26.430
+Q it's pretty hardcore. Okay.
+If you are confused by
+
+397
+00:22:26.430 --> 00:22:28.980
+this whole podcast and you
+want information about reflection, just
+
+398
+00:22:28.980 --> 00:22:33.000
+generally take a look at
+M O'Reilly's programming C-sharp chapter
+
+399
+00:22:33.000 --> 00:22:35.340
+18. You can get a
+copy of that at Trunkster
+
+400
+00:22:35.340 --> 00:22:38.100
+slash H one S Oh,
+they have a whole chapter
+
+401
+00:22:38.100 --> 00:22:42.030
+online. Yeah, I think so.
+Great. And then if you're
+
+402
+00:22:42.030 --> 00:22:44.760
+into reflection already, and you're
+looking at method and photos
+
+403
+00:22:44.760 --> 00:22:47.910
+and poking around and calling
+things dynamically, take a look
+
+404
+00:22:47.910 --> 00:22:51.600
+at Roy Rove's method info
+visualizer. Right. Remember how visual
+
+405
+00:22:51.600 --> 00:22:55.170
+studios got plugable visualizers, right?
+He's got one for a
+
+406
+00:22:55.560 --> 00:23:00.030
+visualizing methods that are dynamic
+within your debug sessions that
+
+407
+00:23:00.300 --> 00:23:04.590
+shrink stir slash H one
+X Roy's done a lot
+
+408
+00:23:04.590 --> 00:23:07.200
+of stuff with reflection. He's
+also got a, a, something
+
+409
+00:23:07.200 --> 00:23:10.260
+on deep reflection. Doesn't he?
+He does. He did a
+
+410
+00:23:10.260 --> 00:23:14.160
+talk at a, at tech
+ed on deep reflection. It
+
+411
+00:23:14.160 --> 00:23:17.490
+was a 400 level talk
+and it's at shrink stir
+
+412
+00:23:17.490 --> 00:23:23.220
+slash <inaudible>. What does that
+mean? Deep reflection. Anyway, He
+
+413
+00:23:23.220 --> 00:23:25.830
+was just basically saying, we're
+going to dig deep into
+
+414
+00:23:25.830 --> 00:23:29.580
+reflection. He went into an
+aisle, they debugger, he showed
+
+415
+00:23:29.580 --> 00:23:34.020
+the debugger visualizer. It was
+pretty, pretty hardcore. This was
+
+416
+00:23:34.020 --> 00:23:37.620
+at tech ed Israel this
+last year. So the point
+
+417
+00:23:37.620 --> 00:23:39.930
+here is that I've spent
+a lot of time looking
+
+418
+00:23:39.930 --> 00:23:42.000
+at DAS blog code. I
+spent a lot of time
+
+419
+00:23:42.360 --> 00:23:43.860
+over the last couple of
+weeks, looking at a lot
+
+420
+00:23:43.860 --> 00:23:47.840
+of Kirlian code where we
+did reflection when you're doing
+
+421
+00:23:48.410 --> 00:23:51.230
+things that are typically outside
+the scope of, of your
+
+422
+00:23:51.230 --> 00:23:53.330
+average developer. And you start
+getting into a little bit
+
+423
+00:23:53.330 --> 00:23:58.610
+more senior dev where you're
+doing dynamic plugins, cogeneration, dynamic
+
+424
+00:23:58.610 --> 00:24:02.420
+object, serialization, you start getting
+into reflection. It's really, really
+
+425
+00:24:02.420 --> 00:24:05.870
+powerful, but don't take these
+methods for granted. They're very
+
+426
+00:24:05.870 --> 00:24:08.580
+expensive. But if, if a
+method is going to be
+
+427
+00:24:08.590 --> 00:24:11.510
+deterministic, if it's always going
+to return that this type
+
+428
+00:24:11.510 --> 00:24:14.900
+has the same attributes every
+time or that method info
+
+429
+00:24:15.350 --> 00:24:17.030
+is going to be the
+same every time you ask
+
+430
+00:24:17.030 --> 00:24:21.020
+for it, consider measuring then
+doing some caching, measuring again.
+
+431
+00:24:21.350 --> 00:24:23.810
+If the caching adds the
+performance you need, then you
+
+432
+00:24:23.810 --> 00:24:26.480
+know, maybe you're free and
+clear. Otherwise you might want
+
+433
+00:24:26.480 --> 00:24:29.930
+to think about using the
+results of your reflection to
+
+434
+00:24:29.930 --> 00:24:34.160
+do some emitting of I'll
+actually generate the code at,
+
+435
+00:24:34.940 --> 00:24:37.910
+at runtime. We do that
+with our object serialization, we've
+
+436
+00:24:37.910 --> 00:24:41.060
+got a three or 400
+times 300, three or 400
+
+437
+00:24:41.060 --> 00:24:45.410
+X performance boost. When we
+went from a reflection based
+
+438
+00:24:45.410 --> 00:24:48.230
+serializer to an, a reflection
+on a Mitt based one.
+
+439
+00:24:48.910 --> 00:24:50.810
+If you look at like
+the way the XML serializer
+
+440
+00:24:50.810 --> 00:24:53.810
+works, if that used reflection
+every single time you serialized,
+
+441
+00:24:53.810 --> 00:24:55.670
+it would kill you. Yeah.
+But we know that the
+
+442
+00:24:55.670 --> 00:25:00.070
+XML serializer actually generates code.
+That's an impressive number. Yeah.
+
+443
+00:25:00.160 --> 00:25:01.660
+Oh yeah. This was the
+thing. I mean, if they're,
+
+444
+00:25:01.660 --> 00:25:04.600
+if you're using reflection just
+by itself, kind of raw,
+
+445
+00:25:04.630 --> 00:25:08.020
+and you're doing stuff in
+loops for loops, I'm going
+
+446
+00:25:08.020 --> 00:25:11.200
+on and on with like
+reflection, you have just a
+
+447
+00:25:11.200 --> 00:25:13.360
+chunk of code. That's just
+begging to be optimized. There's
+
+448
+00:25:13.360 --> 00:25:16.240
+virtually, virtually everything with reflection
+can be squeezed a little
+
+449
+00:25:16.240 --> 00:25:20.200
+harder and get some more,
+some more performance out of
+
+450
+00:25:20.200 --> 00:25:22.540
+it. All right. And we'll
+keep watching your blog for
+
+451
+00:25:22.840 --> 00:25:26.410
+a new revelations about reflection,
+performance improvements as they come
+
+452
+00:25:26.410 --> 00:25:29.170
+up. Oh yeah. I'm, I'm
+always looking for this kind
+
+453
+00:25:29.170 --> 00:25:30.640
+of stuff. And I'm always
+trying to figure out whether
+
+454
+00:25:30.640 --> 00:25:32.860
+I should use like the
+code Dom, which lets you
+
+455
+00:25:33.460 --> 00:25:36.940
+produce any high level dotnet
+language or whether you want
+
+456
+00:25:36.940 --> 00:25:39.420
+to use like reflection dot
+emit and a method, a,
+
+457
+00:25:39.420 --> 00:25:42.880
+an object called the method
+builder lets you actually dynamically
+
+458
+00:25:42.880 --> 00:25:46.300
+generate methods and memory. You
+know, the code Dom will
+
+459
+00:25:46.300 --> 00:25:51.490
+create DLLs, create EFCs reflection
+dot emit, lets you get
+
+460
+00:25:51.490 --> 00:25:53.590
+down to the little bit
+kind of the surgical level
+
+461
+00:25:53.620 --> 00:25:57.430
+and generate the actual methods
+and entry points and objects
+
+462
+00:25:57.640 --> 00:26:00.160
+at a very low level.
+So reflections on emit you
+
+463
+00:26:00.160 --> 00:26:03.550
+would typically use when you
+want really tight control over
+
+464
+00:26:03.550 --> 00:26:06.940
+your IUL. When you understand
+I L well Kodama is
+
+465
+00:26:06.940 --> 00:26:08.440
+the kind of thing you'd
+use to write your own
+
+466
+00:26:08.440 --> 00:26:11.470
+cogeneration tool or if you
+want to write code and
+
+467
+00:26:11.470 --> 00:26:15.970
+have it come out as
+either C-sharp or vb.net. Does
+
+468
+00:26:15.970 --> 00:26:18.340
+that make sense? Yeah, it
+does. I'm not, I'm not
+
+469
+00:26:18.340 --> 00:26:20.320
+those words. I'm not anxious
+to go out and learn
+
+470
+00:26:20.320 --> 00:26:23.380
+how to write high L
+though. You know, then again
+
+471
+00:26:23.380 --> 00:26:25.930
+he is though That guy
+or that person who's that
+
+472
+00:26:25.930 --> 00:26:29.080
+guy or gal who's listening
+to this show more empowered
+
+473
+00:26:29.080 --> 00:26:32.710
+to have one child with
+reflection. Yeah. Well Scott, if
+
+474
+00:26:32.710 --> 00:26:35.260
+I had to reflect over
+this past half hour, I'd
+
+475
+00:26:35.260 --> 00:26:38.590
+say it was a pretty,
+pretty good show. Wouldn't you
+
+476
+00:26:38.590 --> 00:26:42.310
+have cool. I know I'm
+just vibrating with information that
+
+477
+00:26:42.310 --> 00:26:44.340
+I want to share about
+reflection. I'm realizing that this
+
+478
+00:26:44.340 --> 00:26:47.430
+show was just not, not
+complete enough. It was probably
+
+479
+00:26:47.430 --> 00:26:49.440
+another half an hour to
+go into more detail about
+
+480
+00:26:49.440 --> 00:26:51.690
+like the new dynamic method
+stuff and gotten it to,
+
+481
+00:26:51.690 --> 00:26:54.890
+Oh, that's another shot as
+an alternative. Yeah. That's another
+
+482
+00:26:54.890 --> 00:26:57.920
+show. We'll save it until
+then. We'll speak to you
+
+483
+00:26:57.920 --> 00:27:10.880
+next week. <inaudible>.
+

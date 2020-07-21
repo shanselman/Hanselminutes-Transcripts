@@ -1,0 +1,2916 @@
+WEBVTT FILE
+
+1
+00:00:15.840 --> 00:00:19.380
+A weekly discussion with web
+developer and technologist Scott Hanselman.
+
+2
+00:00:19.890 --> 00:00:26.280
+This is Lauren's Ryan announcing
+show recorded live Thursday, April 26th, 2012.
+
+3
+00:00:26.850 --> 00:00:30.450
+Support for Hanselman it's provided
+by teller offering the best
+
+4
+00:00:30.450 --> 00:00:35.550
+in developer tools and support
+online at <inaudible> dot com
+
+5
+00:00:36.300 --> 00:00:40.290
+and by Franklin net training
+developers to work smarter and
+
+6
+00:00:40.290 --> 00:00:43.110
+now offering gesture pack. It's
+a powerful, just to recording
+
+7
+00:00:43.110 --> 00:00:50.190
+and recognition system for Microsoft
+connect for windows developers.com. In
+
+8
+00:00:50.190 --> 00:00:53.310
+this episode, Scott talks with
+Matt howling about how the
+
+9
+00:00:53.310 --> 00:01:00.350
+code implemented the gets distributed
+source control system. Hi, this
+
+10
+00:01:00.350 --> 00:01:02.300
+is Scott Hanselman. This is
+another episode of Hansel minutes.
+
+11
+00:01:02.330 --> 00:01:05.780
+And today I'm talking to
+Matt Holly, who is an
+
+12
+00:01:05.780 --> 00:01:09.860
+infrastructure fellow at the Microsoft.
+You work in the TFS
+
+13
+00:01:09.860 --> 00:01:13.940
+department, is that right? Yep.
+Copex recently moved under the
+
+14
+00:01:13.940 --> 00:01:17.060
+TFS team. And so now
+I'm with the TFS team
+
+15
+00:01:17.060 --> 00:01:21.050
+I was previously not, but
+now, And you roll your
+
+16
+00:01:21.050 --> 00:01:24.980
+roll up. You, you answer
+to ultimately Brian, Harry who's
+
+17
+00:01:24.980 --> 00:01:27.680
+in charge of kind of
+all of TFS. Yes, yes
+
+18
+00:01:27.680 --> 00:01:31.850
+we do. Now You said
+that sounded a little like,
+
+19
+00:01:31.850 --> 00:01:33.770
+Oh yeah, I guess so
+he's still, you guys still
+
+20
+00:01:33.770 --> 00:01:35.750
+getting used to a culture
+change moving over to that
+
+21
+00:01:35.750 --> 00:01:39.380
+team, The culture change coming
+over. One of my biggest
+
+22
+00:01:39.380 --> 00:01:43.280
+concerns I had was kind
+of the, the, how copex
+
+23
+00:01:43.280 --> 00:01:45.710
+would be felt within CFS
+team and, you know, being
+
+24
+00:01:45.710 --> 00:01:49.070
+over here for four months.
+Now, I can definitely say
+
+25
+00:01:49.070 --> 00:01:52.610
+that isn't the case anymore.
+Brian Harry has definitely been
+
+26
+00:01:53.250 --> 00:01:56.480
+a great advocate of cope
+flex and is put a
+
+27
+00:01:56.480 --> 00:02:00.560
+renewed faith in investment within
+copex. And so, you know,
+
+28
+00:02:00.620 --> 00:02:02.840
+we're doing a lot of
+cool stuff coming out, you
+
+29
+00:02:02.840 --> 00:02:05.330
+know, get support recently, we're
+doing a UI refresh and
+
+30
+00:02:05.330 --> 00:02:07.760
+a lot of new stuff
+coming up over the next
+
+31
+00:02:07.760 --> 00:02:10.400
+year or so. Did you
+think that this was where
+
+32
+00:02:10.400 --> 00:02:14.000
+code Plex was going to
+go to die? I didn't
+
+33
+00:02:14.000 --> 00:02:15.680
+think it was going to
+go here to die. I
+
+34
+00:02:15.680 --> 00:02:18.200
+just didn't know what was,
+how, how it would be
+
+35
+00:02:18.200 --> 00:02:22.310
+over in TFS. It seemed
+like the, the, the two
+
+36
+00:02:22.310 --> 00:02:26.540
+teams were distinctly different, but
+you know, definitely coming over
+
+37
+00:02:26.540 --> 00:02:30.170
+here. It was, it was
+a shock in my mind
+
+38
+00:02:30.680 --> 00:02:33.270
+to find out that it
+wasn't in the, the, the
+
+39
+00:02:33.300 --> 00:02:37.760
+similarities between the two teams
+and how they're, how both
+
+40
+00:02:37.760 --> 00:02:41.540
+copex was approaching, you know,
+software development, how TFS is
+
+41
+00:02:41.540 --> 00:02:45.800
+now approaching software development Because
+the copex team was agile.
+
+42
+00:02:45.870 --> 00:02:48.560
+Are they not? I mean,
+I remember I was looking
+
+43
+00:02:48.560 --> 00:02:51.500
+at the <inaudible> site and
+thinking to myself, wow, this
+
+44
+00:02:51.500 --> 00:02:54.470
+thing hasn't changed. It looks
+really old. And I wonder
+
+45
+00:02:54.470 --> 00:02:57.290
+if they're doing anything at
+all. And then someone said,
+
+46
+00:02:57.290 --> 00:02:59.000
+well, look at the date
+and the corner. And it
+
+47
+00:02:59.170 --> 00:03:02.500
+was like three days before.
+And you guys were like
+
+48
+00:03:02.560 --> 00:03:08.070
+deploying weekly. Yeah, we, we
+follow the lean model over
+
+49
+00:03:08.070 --> 00:03:12.270
+here now. So we do
+a release weekly, or at
+
+50
+00:03:12.270 --> 00:03:14.760
+least we attempt to re
+we attempt to release weekly.
+
+51
+00:03:15.120 --> 00:03:19.530
+So far, we've been doing
+that successfully. We've, you know,
+
+52
+00:03:19.530 --> 00:03:25.380
+use Kanban style approach to
+our backlog and work items
+
+53
+00:03:25.380 --> 00:03:28.440
+and bugs and, you know,
+user stories and feature requests
+
+54
+00:03:28.440 --> 00:03:30.840
+and whatnot to track it
+and to follow the swim
+
+55
+00:03:30.840 --> 00:03:34.440
+lanes and whatnot. But yeah,
+it's, we're, we're total lean
+
+56
+00:03:34.440 --> 00:03:38.280
+and we, we go and
+we push stuff out as
+
+57
+00:03:38.280 --> 00:03:41.760
+quickly as possible. Very cool.
+And most recently, as you
+
+58
+00:03:41.850 --> 00:03:45.690
+pointed out there briefly that
+you now support kit, so
+
+59
+00:03:45.840 --> 00:03:50.160
+copex is a, is a,
+a source forge, not like
+
+60
+00:03:50.160 --> 00:03:51.690
+SourceForge the one that we
+know about, but as a
+
+61
+00:03:51.690 --> 00:03:54.390
+forge for storing your source,
+there's a place to host
+
+62
+00:03:54.810 --> 00:04:00.660
+and manage open source projects
+that now supports TFS mercurial
+
+63
+00:04:00.690 --> 00:04:04.380
+also known as HG and
+get. So you have three
+
+64
+00:04:04.380 --> 00:04:10.980
+different source backends to manage
+here. I, I guess I
+
+65
+00:04:10.980 --> 00:04:13.920
+imagine a whole bunch of
+like when the TFS support
+
+66
+00:04:13.920 --> 00:04:15.600
+came out, I figured, okay,
+there's a whole pile of
+
+67
+00:04:15.600 --> 00:04:19.560
+TFS boxes in the sky.
+Are these in hosting? Are
+
+68
+00:04:19.560 --> 00:04:23.250
+these in Azure? Are these
+virtual machines? So right now
+
+69
+00:04:23.260 --> 00:04:28.320
+our TFS boxes are actually
+on premise boxes. And, you
+
+70
+00:04:28.320 --> 00:04:34.080
+know, we have four different
+application tiers and one gigantic
+
+71
+00:04:34.410 --> 00:04:38.400
+SQL backend, obviously with a
+mirror pair. So those are
+
+72
+00:04:38.430 --> 00:04:42.630
+currently sitting on premise. The,
+the obvious future goal is
+
+73
+00:04:42.630 --> 00:04:44.940
+to, for us to move
+to the cloud with some
+
+74
+00:04:44.940 --> 00:04:46.710
+of the new TFS is
+your stuff that they've been
+
+75
+00:04:46.710 --> 00:04:50.160
+pushing out and get closely
+more integrated with the TFS
+
+76
+00:04:50.160 --> 00:04:54.840
+preview environment to host projects
+out there to, to eliminate
+
+77
+00:04:54.840 --> 00:04:58.290
+the on premise hosting that
+we have for TFS right
+
+78
+00:04:58.290 --> 00:05:04.950
+now. And then you support
+each we're get now, that's
+
+79
+00:05:04.950 --> 00:05:06.540
+what I want to dig
+into. I want to understand
+
+80
+00:05:06.810 --> 00:05:09.870
+how that was done. Is
+that upon your, just a
+
+81
+00:05:09.870 --> 00:05:12.000
+bunch of customer services you
+wrote is that in the
+
+82
+00:05:12.000 --> 00:05:15.180
+cloud and, and how do
+you back it up the
+
+83
+00:05:15.180 --> 00:05:18.990
+same way? I mean, it's
+so different from TFS, Right?
+
+84
+00:05:19.020 --> 00:05:22.320
+So it is stored or
+hosted out in Azure, rather.
+
+85
+00:05:23.730 --> 00:05:27.330
+It is, it is in
+a windows as environments set
+
+86
+00:05:27.330 --> 00:05:31.920
+up with an extra large
+instance that, you know, we,
+
+87
+00:05:31.920 --> 00:05:34.830
+we built out a set
+of custom APIs that the
+
+88
+00:05:34.830 --> 00:05:39.120
+copex website actually talks to.
+And then we also host
+
+89
+00:05:39.120 --> 00:05:43.200
+the, the get HTTP backend
+or the, the smart HTTPS
+
+90
+00:05:43.890 --> 00:05:49.470
+backend protocol via, you know,
+within IIS. And so we
+
+91
+00:05:49.470 --> 00:05:53.940
+actually serve everything via I
+S and then on top
+
+92
+00:05:53.940 --> 00:05:55.830
+of that, our source API
+APIs are, you know, our
+
+93
+00:05:55.830 --> 00:05:59.390
+rest API that we actually
+to are custom built, that
+
+94
+00:05:59.390 --> 00:06:02.570
+we utilize live, get to
+live, to get to sharp
+
+95
+00:06:02.600 --> 00:06:05.720
+on the back end to
+actually do like 95% of
+
+96
+00:06:05.720 --> 00:06:08.390
+our interactions are 98, somewhere
+in that range. There's only
+
+97
+00:06:08.390 --> 00:06:10.850
+like three commands that we
+used to use to shell
+
+98
+00:06:10.850 --> 00:06:14.890
+out to the executable. Okay.
+So there's a lot, there's
+
+99
+00:06:14.890 --> 00:06:16.900
+a lot said there, so
+let's deconstruct that and let's
+
+100
+00:06:16.900 --> 00:06:21.100
+back up. So get as
+a distributed source control system,
+
+101
+00:06:21.760 --> 00:06:25.330
+and any someone who's using
+get has a complete history
+
+102
+00:06:25.330 --> 00:06:27.400
+of the project on their
+local machine. And then they
+
+103
+00:06:27.400 --> 00:06:30.130
+push up to other, you
+know, they can push and
+
+104
+00:06:30.130 --> 00:06:32.680
+pull between each other people
+of color get kind of
+
+105
+00:06:32.680 --> 00:06:35.830
+FTP for source code. So
+there's an, is there an
+
+106
+00:06:35.830 --> 00:06:40.420
+on the wire protocol, that's
+an understood protocol. So with
+
+107
+00:06:40.450 --> 00:06:44.020
+get, there's a, there's a
+couple there's, you know, obviously
+
+108
+00:06:44.020 --> 00:06:49.210
+over HTTP HTTPS, and that's
+the protocol we've used, there's
+
+109
+00:06:49.210 --> 00:06:52.510
+other protocols, you know, there's
+like the get and SSH
+
+110
+00:06:52.540 --> 00:06:57.670
+protocol, basically that is more
+commonly used in, in like
+
+111
+00:06:57.670 --> 00:07:02.590
+Linux-based environments. We've chosen obviously
+the HDB HTPs because we're
+
+112
+00:07:02.590 --> 00:07:05.980
+sitting on the windows stack
+and it, it makes most
+
+113
+00:07:05.980 --> 00:07:09.910
+sense for us to easily
+host from within, I asked
+
+114
+00:07:09.910 --> 00:07:14.320
+that way. Okay. And, and
+that protocol is, is that
+
+115
+00:07:14.320 --> 00:07:16.090
+something that you needed to
+go and create, or you're
+
+116
+00:07:16.090 --> 00:07:19.780
+just talking that protocol straight
+to get, you know, like
+
+117
+00:07:19.780 --> 00:07:21.250
+how do you make a
+good server, I guess is
+
+118
+00:07:21.250 --> 00:07:24.130
+my question, Right? So what
+we do is we actually
+
+119
+00:07:24.130 --> 00:07:27.790
+utilize, you know, the CGI
+scripting, basically an I S
+
+120
+00:07:27.820 --> 00:07:34.510
+to map a wildcard scripts
+into the HDTV backend executable.
+
+121
+00:07:34.930 --> 00:07:37.390
+And so every time a
+request comes in that is
+
+122
+00:07:37.810 --> 00:07:40.690
+get based, it will act,
+or actually any request that
+
+123
+00:07:40.690 --> 00:07:43.750
+comes in will actually get
+pumped over to the, the
+
+124
+00:07:43.750 --> 00:07:48.640
+get HTTP backend. And granted,
+there's a few ancillary setups
+
+125
+00:07:48.640 --> 00:07:50.320
+that we have to do
+as far as setting some
+
+126
+00:07:50.320 --> 00:07:54.400
+environment variables to basically say
+here's where my, you know,
+
+127
+00:07:54.400 --> 00:07:58.870
+repo list is. Or my
+repo repository directory is, and
+
+128
+00:07:59.530 --> 00:08:02.140
+a few other configuration settings
+that off the top of
+
+129
+00:08:02.140 --> 00:08:04.210
+my head, I don't remember
+they are, but there's like
+
+130
+00:08:04.210 --> 00:08:07.270
+two environment settings, but yeah,
+it's, everything comes in. It's
+
+131
+00:08:07.270 --> 00:08:10.300
+served by, I'm pumped out
+to an executable that is
+
+132
+00:08:10.300 --> 00:08:15.580
+distributed via they get installer
+and it runs that way.
+
+133
+00:08:16.540 --> 00:08:21.160
+So IAS is still supports
+these older CGI bin kind
+
+134
+00:08:21.160 --> 00:08:24.580
+of things. Like we know
+that it does asp.net. I've
+
+135
+00:08:24.580 --> 00:08:27.280
+seen, I S host Ruby.
+We know it does know
+
+136
+00:08:27.290 --> 00:08:32.740
+now PHP, so you can
+use older style CGI kind
+
+137
+00:08:32.740 --> 00:08:36.670
+of just common gateway interfaces
+with CGI stands for and
+
+138
+00:08:36.670 --> 00:08:42.100
+shell out to hosted, hosted
+executable. Yeah. I mean, that's
+
+139
+00:08:42.100 --> 00:08:44.650
+exactly what we're doing. We're
+just any requests that comes
+
+140
+00:08:44.650 --> 00:08:47.080
+in and go, and actually
+execute this, you know, get
+
+141
+00:08:47.080 --> 00:08:50.170
+HDTV backend <inaudible> Do you
+know how it makes that
+
+142
+00:08:50.170 --> 00:08:53.440
+transfer of like, here's the,
+Hey CJ, you know, like,
+
+143
+00:08:53.620 --> 00:08:57.630
+I guess CGI is that,
+that the interface such that
+
+144
+00:08:57.630 --> 00:09:00.480
+it can hand off the,
+the, the HDP connection, right.
+
+145
+00:09:00.480 --> 00:09:03.750
+It's handing the socket over
+to that executable at this
+
+146
+00:09:03.750 --> 00:09:07.550
+point. Right. How was it
+brokering that? Yeah, I'm honestly,
+
+147
+00:09:07.550 --> 00:09:09.560
+I'm not entirely sure. You'd
+probably have to talk with
+
+148
+00:09:09.800 --> 00:09:12.800
+someone. The, I S I
+asked him, I've never really
+
+149
+00:09:12.800 --> 00:09:16.310
+investigated that in depth. Was
+that hard to figure out?
+
+150
+00:09:16.340 --> 00:09:17.990
+I mean, were you surprised
+that I asked would do
+
+151
+00:09:17.990 --> 00:09:20.300
+that? I'm a little surprised,
+like, I know that it's,
+
+152
+00:09:20.330 --> 00:09:23.030
+I just it's so old
+school, I guess, in my
+
+153
+00:09:23.030 --> 00:09:27.860
+mind, From how we've been
+hosting mackarel, it wasn't that
+
+154
+00:09:27.860 --> 00:09:31.280
+big of a change because
+we do, we host McCarroll
+
+155
+00:09:31.520 --> 00:09:33.740
+in the same manner where,
+you know, it's actually, we're
+
+156
+00:09:33.740 --> 00:09:37.430
+actually executing a Python script
+or Python Dexi from mercurial.
+
+157
+00:09:38.020 --> 00:09:39.830
+And so we tried to
+figure out a way to
+
+158
+00:09:39.830 --> 00:09:42.830
+doing the same thing with
+Getz. And we, we found
+
+159
+00:09:42.830 --> 00:09:45.860
+that, you know, this good
+HDB backend, that ECC is
+
+160
+00:09:45.890 --> 00:09:49.280
+exactly the, you know, the
+backend piece that we needed.
+
+161
+00:09:49.610 --> 00:09:52.850
+And so we set out
+based on some tutorials that
+
+162
+00:09:52.850 --> 00:09:58.400
+people had for setting up
+running, get servers under Linux
+
+163
+00:09:58.400 --> 00:10:02.210
+and Apache, and tried to
+map that those, that knowledge
+
+164
+00:10:02.210 --> 00:10:06.800
+to hosting and windows under
+IAS. And so there was
+
+165
+00:10:06.800 --> 00:10:10.280
+a, you know, a decent
+amount of investigation and finding
+
+166
+00:10:10.280 --> 00:10:14.750
+the right environment variables. And
+then, you know, if we
+
+167
+00:10:14.750 --> 00:10:17.330
+had to set up any
+iOS rewrite rules, we could
+
+168
+00:10:17.540 --> 00:10:21.410
+using ISR rewrite, How are
+you debugging this kind of
+
+169
+00:10:21.410 --> 00:10:23.930
+stuff? Was this using like
+Wireshark and looking at the
+
+170
+00:10:23.930 --> 00:10:26.210
+traffic on the wire, or
+was there much kind of,
+
+171
+00:10:28.700 --> 00:10:31.640
+I came in a little
+late to hosting it, so
+
+172
+00:10:31.640 --> 00:10:35.090
+I'm not exactly sure what,
+you know, Jonathan, who's the
+
+173
+00:10:35.090 --> 00:10:37.220
+dev lead for Coplex. He
+had, he had done the
+
+174
+00:10:37.220 --> 00:10:42.110
+original investigation into this and
+got the preliminary workings. I
+
+175
+00:10:42.110 --> 00:10:43.790
+think a lot of it
+was just kind of plug
+
+176
+00:10:43.790 --> 00:10:46.400
+and play and seeing what,
+what happened or what didn't,
+
+177
+00:10:47.270 --> 00:10:50.420
+you know, from the, the
+get command line on, on
+
+178
+00:10:50.420 --> 00:10:53.600
+your client's side, you can
+enable curl debugging. And so
+
+179
+00:10:53.600 --> 00:10:56.420
+you can actually see everything
+that's going across the wire,
+
+180
+00:10:56.420 --> 00:10:59.660
+all the, the, you know,
+the heteros and whatnot, and
+
+181
+00:11:00.230 --> 00:11:01.700
+just right there in your
+command window. So you can
+
+182
+00:11:01.700 --> 00:11:03.800
+see what it's actually doing,
+going across the wire that
+
+183
+00:11:03.800 --> 00:11:06.110
+way. And so we use
+that a lot to try
+
+184
+00:11:06.110 --> 00:11:08.010
+and debug some of the
+other issues we had, we
+
+185
+00:11:08.020 --> 00:11:11.900
+were having as far as
+authentication and just kind of
+
+186
+00:11:11.930 --> 00:11:16.130
+it for redirection purposes in
+some cases. And so that's
+
+187
+00:11:16.130 --> 00:11:18.690
+what we utilize the most
+on the client side to
+
+188
+00:11:18.740 --> 00:11:23.000
+be, to debug the server
+itself. What were some of
+
+189
+00:11:23.000 --> 00:11:25.460
+the challenges, like what, what
+broke and what did you
+
+190
+00:11:25.460 --> 00:11:27.110
+sit on? Anything going, man,
+I don't know why it's
+
+191
+00:11:27.110 --> 00:11:32.210
+acting like this. Some of
+the issues we had, you
+
+192
+00:11:32.210 --> 00:11:34.460
+know, actually we didn't have
+that many issues getting get
+
+193
+00:11:34.460 --> 00:11:38.810
+HDB backend up and running
+once. You know, we, we,
+
+194
+00:11:39.020 --> 00:11:40.730
+I think the biggest part
+was trying to figure out
+
+195
+00:11:40.730 --> 00:11:44.480
+these two environment variables, one,
+the repository location into the,
+
+196
+00:11:44.990 --> 00:11:49.370
+basically just enabling it within
+the server. Once we figured
+
+197
+00:11:49.370 --> 00:11:52.820
+those out, it was, you
+know, really easy to get
+
+198
+00:11:52.820 --> 00:11:54.730
+it going. And it kind
+of just worked out of
+
+199
+00:11:54.730 --> 00:11:59.740
+the box. We had a
+lot more investigation purposes when
+
+200
+00:11:59.740 --> 00:12:03.400
+it came down to authentication
+because we needed to integrate
+
+201
+00:12:03.400 --> 00:12:10.180
+it with copex authentication, your
+username and password. So we,
+
+202
+00:12:10.180 --> 00:12:12.730
+we had to figure out,
+you know, across the wire,
+
+203
+00:12:12.730 --> 00:12:15.190
+what exactly is it sending
+it back and forth? You
+
+204
+00:12:15.190 --> 00:12:17.980
+know, which end points is
+it hitting when it goes
+
+205
+00:12:17.980 --> 00:12:20.410
+in there? How can we
+determine, is this a push
+
+206
+00:12:20.410 --> 00:12:23.140
+as a pool? And so
+there was actually, you know,
+
+207
+00:12:23.140 --> 00:12:26.020
+about a week's worth of
+investigation time, just trying to
+
+208
+00:12:26.020 --> 00:12:29.230
+figure that piece out. Of
+course, that was obviously once
+
+209
+00:12:29.230 --> 00:12:32.610
+it was set up And
+then the decision was made
+
+210
+00:12:32.610 --> 00:12:37.080
+to use code plexes, basic
+authentication rather than using SSH,
+
+211
+00:12:37.110 --> 00:12:40.020
+because that's the infrastructure that
+we have kind of set
+
+212
+00:12:40.020 --> 00:12:41.880
+up already and it fits
+in with the code Plex
+
+213
+00:12:41.890 --> 00:12:45.060
+style. So you can just
+log in to get directly
+
+214
+00:12:45.060 --> 00:12:50.900
+from, from your code flex
+user ID. In reality, you
+
+215
+00:12:50.910 --> 00:12:53.010
+know, there's been a lot
+of talk recently about, you
+
+216
+00:12:53.010 --> 00:12:56.250
+know, Coplex wanting us or,
+you know, people wanting us
+
+217
+00:12:56.250 --> 00:12:58.980
+to say John Coplex and
+it really comes down to
+
+218
+00:12:58.980 --> 00:13:03.270
+the fact that we would
+re really like to have
+
+219
+00:13:03.270 --> 00:13:06.900
+Olaf support or some type
+of OSTP support with, you
+
+220
+00:13:06.900 --> 00:13:10.080
+know, get clients. So that
+way they could, you know,
+
+221
+00:13:10.080 --> 00:13:12.810
+use a token that, you
+know, they can authenticate with,
+
+222
+00:13:12.810 --> 00:13:14.820
+and then they don't have
+to actually use any usernames
+
+223
+00:13:14.820 --> 00:13:18.750
+passwords or, you know, SSH
+keys, you know, SSA just
+
+224
+00:13:18.750 --> 00:13:21.990
+notoriously hard to set up
+on windows. And granted, there's
+
+225
+00:13:21.990 --> 00:13:24.750
+some really easy tutorials out
+there to get it working
+
+226
+00:13:24.750 --> 00:13:28.440
+under the bash script or
+the bash shell. But even
+
+227
+00:13:28.440 --> 00:13:31.370
+then, it's still kind of,
+you know, it's still hard
+
+228
+00:13:31.440 --> 00:13:36.480
+for windows users to utilize
+those, those capabilities When you're
+
+229
+00:13:36.480 --> 00:13:39.810
+using a get under HTP
+like this and you're hosting
+
+230
+00:13:39.810 --> 00:13:42.960
+it, how does you know
+where that's storing the stuff,
+
+231
+00:13:42.990 --> 00:13:45.690
+where is the actual get
+database and how do you
+
+232
+00:13:45.690 --> 00:13:48.690
+control? Like, are you just
+shelling get out in the
+
+233
+00:13:48.690 --> 00:13:51.450
+right folder that, you know,
+that user's code is in?
+
+234
+00:13:53.250 --> 00:13:56.070
+Yeah. I mean, it's, I
+think what the request comes
+
+235
+00:13:56.070 --> 00:13:58.470
+in, we don't have any
+mappings set up that says,
+
+236
+00:13:58.470 --> 00:14:02.460
+you know, when asp.net ASP,
+net web stack that get,
+
+237
+00:14:03.120 --> 00:14:05.030
+that request comes in there,
+it needs to go to
+
+238
+00:14:05.040 --> 00:14:07.920
+a specific folder, the good
+age to be back in
+
+239
+00:14:07.920 --> 00:14:11.310
+with the environment variable saying,
+here's my route parent repo
+
+240
+00:14:11.310 --> 00:14:14.700
+folder. It will map directly
+to that. And then the,
+
+241
+00:14:14.700 --> 00:14:19.620
+the get hub backhand actually
+operates based on that directory.
+
+242
+00:14:19.620 --> 00:14:23.550
+If it's a get repository,
+granted, we, we host everything
+
+243
+00:14:23.550 --> 00:14:26.040
+as bare repositories, so it
+doesn't need to do anything.
+
+244
+00:14:26.040 --> 00:14:29.010
+Specialist's figuring things out. But
+so if you look at
+
+245
+00:14:29.010 --> 00:14:31.020
+it, you know, if you're
+looking at your local repo
+
+246
+00:14:31.020 --> 00:14:34.290
+after you cloned, you'd see
+a doc get folder, what
+
+247
+00:14:34.470 --> 00:14:37.650
+their repositories are is basically
+just that dot get folder
+
+248
+00:14:38.490 --> 00:14:40.830
+without any of the source
+code actually listed. And so
+
+249
+00:14:40.830 --> 00:14:43.740
+it's, you know, it's extracted
+out basically. And so that
+
+250
+00:14:43.740 --> 00:14:46.570
+enables you to, to host
+things a lot more easily
+
+251
+00:14:46.640 --> 00:14:50.910
+and, you know, do some
+stuff. And when you're doing
+
+252
+00:14:51.140 --> 00:14:53.030
+in a way that's got
+a scale, which is the
+
+253
+00:14:53.030 --> 00:14:55.520
+part that's going to be
+interesting for code flex. Like
+
+254
+00:14:55.520 --> 00:14:57.470
+if you look at GitHub,
+right, they're having no trouble
+
+255
+00:14:57.500 --> 00:15:00.500
+scaling, I assume they're just
+scaling out as far as
+
+256
+00:15:00.500 --> 00:15:02.900
+they, they need to. And
+they don't have any repositories
+
+257
+00:15:02.930 --> 00:15:05.060
+that have gotten big enough
+to be a problem. I
+
+258
+00:15:05.060 --> 00:15:08.150
+mean, I've no one's ever
+talked about, get scale too
+
+259
+00:15:08.150 --> 00:15:12.050
+much. You're just going to
+add more Azure instances when
+
+260
+00:15:12.050 --> 00:15:15.640
+you need to scale. So
+right now is kind of
+
+261
+00:15:15.640 --> 00:15:17.860
+where our hands are a
+bit tied because we are
+
+262
+00:15:18.820 --> 00:15:23.590
+we're utilizing Azure drives. And
+so you can only have,
+
+263
+00:15:24.100 --> 00:15:30.430
+so as your drives are
+basically blobstore, you know, mounted
+
+264
+00:15:30.430 --> 00:15:34.120
+drives basically. And so all
+of the, the, you know,
+
+265
+00:15:34.120 --> 00:15:37.030
+everything is mounted from a
+blob store, you know, one
+
+266
+00:15:37.570 --> 00:15:42.130
+gigabyte or one terabyte sized
+drive, and it's, it basically
+
+267
+00:15:42.130 --> 00:15:45.100
+maps it in windows as
+a physical drive. And so
+
+268
+00:15:45.100 --> 00:15:46.990
+that's how we've actually done
+it. The problem with Azure
+
+269
+00:15:46.990 --> 00:15:48.700
+drive right now is the
+fact that you can only
+
+270
+00:15:48.700 --> 00:15:52.420
+have one read ride instance
+mounted at a single time.
+
+271
+00:15:52.780 --> 00:15:55.660
+And so we are limited
+to a single instance running
+
+272
+00:15:56.500 --> 00:16:00.460
+and so scaling out for
+that single instance, actually isn't
+
+273
+00:16:00.460 --> 00:16:04.540
+going to work. So our
+thoughts are around using basically,
+
+274
+00:16:04.900 --> 00:16:08.020
+you know, multiple instances that
+have their own set of,
+
+275
+00:16:09.370 --> 00:16:12.790
+you know, Azure drives, mounted
+and whatnot, and then utilizing
+
+276
+00:16:12.790 --> 00:16:17.800
+like the ARR, the application
+requests routing the servers to
+
+277
+00:16:17.800 --> 00:16:21.220
+actually do some, you know,
+unique routing to specific get
+
+278
+00:16:21.220 --> 00:16:24.850
+servers down the road. Okay.
+So if I understand this,
+
+279
+00:16:24.940 --> 00:16:27.610
+you, you can take Azure
+blob storage and you can
+
+280
+00:16:27.610 --> 00:16:34.240
+Mount it as a drive.
+And then the maximum size
+
+281
+00:16:34.240 --> 00:16:37.510
+is a terabyte. I'm not
+sure if that's the maximum
+
+282
+00:16:37.510 --> 00:16:39.610
+size, that's what we've set
+it up to be, which
+
+283
+00:16:39.610 --> 00:16:44.800
+is fairly, it's actually fairly
+large, you know, speaking from
+
+284
+00:16:45.220 --> 00:16:51.190
+over, I think 45 to
+5,000 repositories, maybe more McCrell
+
+285
+00:16:51.190 --> 00:16:55.480
+repositories, you know, we've barely
+even touched a hundred gigs
+
+286
+00:16:56.080 --> 00:16:59.200
+for that many repositories. So
+I, I think, you know,
+
+287
+00:16:59.200 --> 00:17:01.030
+a terabyte is going to
+last us quite a while
+
+288
+00:17:01.030 --> 00:17:04.630
+for a single get instance.
+Basically That's sort of seems
+
+289
+00:17:04.630 --> 00:17:06.700
+kind of small. I'm surprised
+I would have, I would
+
+290
+00:17:06.700 --> 00:17:10.660
+have thought this would have
+been larger, I guess. I
+
+291
+00:17:10.660 --> 00:17:12.670
+think a lot of it
+comes down to the, the
+
+292
+00:17:12.670 --> 00:17:16.030
+way they get is storing
+all of its meta information,
+
+293
+00:17:16.030 --> 00:17:19.030
+as far as, as you
+know, highly compressed and very
+
+294
+00:17:19.030 --> 00:17:21.820
+small in grand, you can
+have some good repositories are
+
+295
+00:17:21.850 --> 00:17:25.690
+quite large. If you store,
+you know, blob files within
+
+296
+00:17:25.690 --> 00:17:30.700
+it or large blob files,
+but ultimately it actually is
+
+297
+00:17:30.700 --> 00:17:33.100
+fairly small. The other nice
+thing is anytime you do
+
+298
+00:17:33.100 --> 00:17:36.730
+a fork, we actually use
+hard linking within the usher
+
+299
+00:17:36.730 --> 00:17:40.030
+drive instances. So every fork
+you do is actually fairly
+
+300
+00:17:40.030 --> 00:17:43.300
+quick, forget as well as
+it doesn't take up any
+
+301
+00:17:43.300 --> 00:17:46.510
+additional space until you actually
+start making modifications to Europe,
+
+302
+00:17:46.630 --> 00:17:50.490
+right. Your forks repository. So
+we on, on drive space
+
+303
+00:17:50.490 --> 00:17:57.800
+that way. Oh, okay. And
+do you push your, your
+
+304
+00:17:57.800 --> 00:17:59.810
+feedback back to the Azure
+team? Like how do you,
+
+305
+00:18:00.080 --> 00:18:02.270
+if you're finding that something
+that, that it's doing is
+
+306
+00:18:02.270 --> 00:18:04.030
+not working for you, how
+do you, what do you,
+
+307
+00:18:04.050 --> 00:18:05.450
+what do you do? Do
+you just call them up
+
+308
+00:18:05.450 --> 00:18:07.100
+and say, Hey, we want,
+like, if you needed more
+
+309
+00:18:07.100 --> 00:18:08.690
+than a terabyte, you would
+just work with them and
+
+310
+00:18:08.690 --> 00:18:13.580
+say, this is important. You
+know, I, we, we would
+
+311
+00:18:13.580 --> 00:18:15.950
+probably just manipulate our code.
+I mean, we've written code
+
+312
+00:18:15.950 --> 00:18:18.680
+that says, give me a
+terabyte of data. I'm not
+
+313
+00:18:18.680 --> 00:18:20.150
+sure off the top of
+my head. I'm not sure
+
+314
+00:18:20.150 --> 00:18:22.700
+what the max size as
+your drive that you can
+
+315
+00:18:22.700 --> 00:18:26.000
+have, but we, we just
+pulled out a terabyte just
+
+316
+00:18:26.000 --> 00:18:30.560
+because we feel that's probably
+a safe estimate. I'm just
+
+317
+00:18:30.560 --> 00:18:32.570
+trying to understand the relationship
+between you and the Azure
+
+318
+00:18:32.570 --> 00:18:35.510
+team. Cause like, So we,
+we have been in talks
+
+319
+00:18:35.510 --> 00:18:39.620
+with the Azure team to
+figure out a better scaling
+
+320
+00:18:39.620 --> 00:18:45.920
+solution then using usher drive,
+there isn't currently anything in
+
+321
+00:18:45.920 --> 00:18:49.010
+the pipeline that I'm aware
+of, that that would enable
+
+322
+00:18:49.010 --> 00:18:51.740
+us to do this a
+lot easier, but you know,
+
+323
+00:18:51.800 --> 00:18:54.920
+any support issues that we
+have, they've been fairly responsive
+
+324
+00:18:55.910 --> 00:18:59.600
+to, to, to getting things
+done. We've also got, you
+
+325
+00:18:59.600 --> 00:19:02.360
+know, since we are within
+TFS team, they're actually fairly
+
+326
+00:19:02.390 --> 00:19:06.470
+integrated with them since TFS,
+previous hosted at nature. And
+
+327
+00:19:06.470 --> 00:19:09.530
+so, you know, we also
+have another channel for people
+
+328
+00:19:09.530 --> 00:19:12.330
+to listen to that way
+as if for any major,
+
+329
+00:19:15.920 --> 00:19:18.170
+What do you have to
+do in the complex backend
+
+330
+00:19:18.170 --> 00:19:20.870
+to tell it that you're
+going to use TFS for
+
+331
+00:19:20.870 --> 00:19:23.900
+issue tracking and discussions and
+things like that, but not
+
+332
+00:19:23.900 --> 00:19:30.680
+for shortage control Whenever you're
+on good or McCurry work
+
+333
+00:19:30.680 --> 00:19:35.000
+items are actually stored with
+SQL server. So only if
+
+334
+00:19:35.000 --> 00:19:37.220
+you're a TFS project, do
+you both your work items,
+
+335
+00:19:37.250 --> 00:19:41.600
+your sourcing troll actually store
+be stored in TFS. So
+
+336
+00:19:41.600 --> 00:19:45.140
+I'll get that straight. So
+that actually kind of makes
+
+337
+00:19:45.140 --> 00:19:48.680
+the, the conversation about how
+do we, you know, determine
+
+338
+00:19:48.680 --> 00:19:50.870
+which one we do. And
+it's basically, we have kind
+
+339
+00:19:50.870 --> 00:19:53.900
+of, you know, different providers.
+So we've got, you know,
+
+340
+00:19:53.900 --> 00:19:59.120
+the source control provider and
+a work item provider basically.
+
+341
+00:19:59.150 --> 00:20:02.450
+And then instances of, you
+know, a TFS or a
+
+342
+00:20:02.450 --> 00:20:06.200
+SQL for workout and providers
+that we figure out, you
+
+343
+00:20:06.200 --> 00:20:08.990
+know, we know which one
+you are, obviously based on
+
+344
+00:20:09.360 --> 00:20:12.060
+some data we have in
+the database. So at, at
+
+345
+00:20:12.110 --> 00:20:15.110
+runtime, we go, Hey, if
+your TFS use this provider,
+
+346
+00:20:15.380 --> 00:20:18.830
+if you're, you know, using,
+get them recurring, I'll use
+
+347
+00:20:18.830 --> 00:20:21.740
+the SQL provider. And we
+do the same process for
+
+348
+00:20:21.740 --> 00:20:23.930
+source control as well. You
+know, we know if your
+
+349
+00:20:23.930 --> 00:20:27.770
+TFS McCrell or gets, we
+can say use TFS or
+
+350
+00:20:27.770 --> 00:20:31.970
+use McArdle use get providers
+basically. Cause I think that
+
+351
+00:20:31.970 --> 00:20:35.510
+that's really interesting that it
+shows like, I guess what
+
+352
+00:20:35.510 --> 00:20:39.590
+I'm saying is people thought
+that how would TFS live
+
+353
+00:20:39.590 --> 00:20:43.010
+in a world where there's
+get, and here is a
+
+354
+00:20:43.010 --> 00:20:45.080
+code Plex, almost like a,
+you guys have made it
+
+355
+00:20:45.080 --> 00:20:49.000
+like a TFS playground where
+you're trying new stuff before
+
+356
+00:20:49.000 --> 00:20:51.400
+you put it in TFS.
+And it's like, here's TFS
+
+357
+00:20:51.820 --> 00:20:53.800
+with all the, you know,
+the user tracking, the stuff
+
+358
+00:20:53.800 --> 00:20:57.250
+that get doesn't do sitting
+alongside get plus you've got
+
+359
+00:20:57.250 --> 00:21:00.640
+material and then you've got
+the subversion bridge. So really
+
+360
+00:21:00.640 --> 00:21:03.130
+you have four source control
+systems, but you're all using
+
+361
+00:21:04.930 --> 00:21:08.440
+the TFS stuff for the
+backend, for the work items
+
+362
+00:21:08.440 --> 00:21:12.630
+and bug tracking. Again, only
+if you're a TFS project,
+
+363
+00:21:12.720 --> 00:21:16.980
+do we use TFS projects
+for work items? So, you
+
+364
+00:21:16.980 --> 00:21:20.820
+know, McCarroll and Goetz are
+in the SQL store, so,
+
+365
+00:21:20.910 --> 00:21:22.890
+Oh, I see. So you're
+making it look like you're
+
+366
+00:21:22.890 --> 00:21:27.210
+using TFS, but you're not,
+Well, I don't think we're
+
+367
+00:21:27.210 --> 00:21:29.730
+attempting to make it look
+like it. I hope not.
+
+368
+00:21:29.790 --> 00:21:31.290
+Yeah. Well, I guess what
+I'm saying is that the
+
+369
+00:21:31.650 --> 00:21:34.890
+work items behave and move
+and open and close and
+
+370
+00:21:34.890 --> 00:21:37.380
+do all the different stuff
+that they do, no matter
+
+371
+00:21:37.380 --> 00:21:39.630
+what kind you have, like
+code flex looks like code
+
+372
+00:21:39.630 --> 00:21:42.780
+flex, no matter what source
+control you choose. Yes, exactly.
+
+373
+00:21:42.960 --> 00:21:46.140
+And that, that was the,
+the entire intentions we wanted
+
+374
+00:21:46.140 --> 00:21:50.010
+to make things look seamless
+regardless of what source control
+
+375
+00:21:50.010 --> 00:21:54.620
+system that, you know, the
+project owner actually chose. It,
+
+376
+00:21:54.620 --> 00:21:58.020
+it just really comes down
+to how w how do
+
+377
+00:21:58.110 --> 00:22:01.800
+contributors contribute back and how
+do they get to your
+
+378
+00:22:01.800 --> 00:22:05.920
+source code that varies depending
+on if your TFS or
+
+379
+00:22:05.920 --> 00:22:10.560
+mercurial or, Hmm. Cause see,
+I'm trying to imagine that
+
+380
+00:22:11.040 --> 00:22:13.380
+a lot of people think
+of TFS is just being
+
+381
+00:22:13.380 --> 00:22:17.970
+the source control that they
+don't like. And, but, but
+
+382
+00:22:17.970 --> 00:22:20.130
+I personally have found that
+the bug tracking and the
+
+383
+00:22:20.340 --> 00:22:24.240
+work item stuff is works
+just fine. So I'm trying
+
+384
+00:22:24.240 --> 00:22:26.760
+to figure out if I
+were going to use TFS
+
+385
+00:22:27.480 --> 00:22:30.320
+for like my scrum and
+for my, for my, my
+
+386
+00:22:30.390 --> 00:22:33.990
+life, my life cycle management,
+but use a different source
+
+387
+00:22:33.990 --> 00:22:35.790
+control. What, what would that
+look like? And I think
+
+388
+00:22:35.790 --> 00:22:39.460
+it would, it would look
+kinda like copex. I mean,
+
+389
+00:22:39.540 --> 00:22:41.970
+I knew it would be
+great to, to obviously use
+
+390
+00:22:41.970 --> 00:22:45.120
+that the biggest reasons that
+we don't, you know, spin
+
+391
+00:22:45.120 --> 00:22:49.080
+up a project for, you
+know, getting material projects on
+
+392
+00:22:49.080 --> 00:22:53.100
+code blacks to utilize work
+items is that it's a
+
+393
+00:22:53.100 --> 00:22:55.560
+bit of a heavy process
+right now, you know, anybody
+
+394
+00:22:55.560 --> 00:22:58.950
+that comes in and creates
+a TFS project realizes that
+
+395
+00:22:58.950 --> 00:23:01.740
+there can be up to
+a 15 minute delay from
+
+396
+00:23:01.740 --> 00:23:04.200
+when you create your project
+to when your work items
+
+397
+00:23:04.200 --> 00:23:06.690
+and your source control is
+actually working. And that's because
+
+398
+00:23:06.690 --> 00:23:10.230
+of a backend process that
+we have that we're actually
+
+399
+00:23:10.230 --> 00:23:14.850
+setting up a new TFS
+project in a collection that
+
+400
+00:23:14.850 --> 00:23:19.980
+can take several minutes. So
+for material and get projects,
+
+401
+00:23:19.980 --> 00:23:23.010
+we want that process to
+be as quick as possible.
+
+402
+00:23:24.000 --> 00:23:27.990
+And so we've created a
+new repository for both of
+
+403
+00:23:27.990 --> 00:23:31.260
+those are, are fairly fast.
+I mean, they're, you know,
+
+404
+00:23:31.680 --> 00:23:33.630
+we can do it right
+in line versus an ad
+
+405
+00:23:33.630 --> 00:23:37.590
+hoc process, but at the
+same time, just utilizing SQL
+
+406
+00:23:38.250 --> 00:23:41.340
+to store all of the
+work items makes it so
+
+407
+00:23:41.340 --> 00:23:46.700
+there's no setup there as
+well. I see. How big
+
+408
+00:23:46.700 --> 00:23:47.990
+do you think that this
+was scale? I mean, it
+
+409
+00:23:47.990 --> 00:23:50.390
+seems like a pretty straightforward
+system and since they don't
+
+410
+00:23:50.390 --> 00:23:54.110
+have to, there's no referential
+integrity, they can refer, you
+
+411
+00:23:54.110 --> 00:23:55.940
+know, get projects don't really
+refer to each other. And
+
+412
+00:23:55.940 --> 00:23:59.050
+that kind of ref external
+way that subversion does. You
+
+413
+00:23:59.060 --> 00:24:01.280
+could potentially scale this as
+much as you want and
+
+414
+00:24:01.660 --> 00:24:05.440
+Oh, absolutely. Yeah. That's our
+hope is that, you know,
+
+415
+00:24:05.440 --> 00:24:09.790
+Azure is going to provide,
+you know, a significant state
+
+416
+00:24:09.940 --> 00:24:13.090
+scale to what our on
+premise servers could do and
+
+417
+00:24:13.090 --> 00:24:15.580
+that we could, you know,
+once we figure out how
+
+418
+00:24:15.580 --> 00:24:19.780
+to scale the instance, the
+usher drive instance, or use
+
+419
+00:24:19.780 --> 00:24:23.590
+some other, you know, technology,
+then you know, that's going
+
+420
+00:24:23.590 --> 00:24:25.990
+to be enabled us to
+really just kind of scale
+
+421
+00:24:25.990 --> 00:24:30.430
+out versus, you know, or
+scale up versus scale out.
+
+422
+00:24:30.610 --> 00:24:34.450
+So Have you found Azure
+to work pretty well? I
+
+423
+00:24:34.450 --> 00:24:38.290
+mean, personally as a developer,
+I was initially kind of
+
+424
+00:24:38.290 --> 00:24:42.610
+not, not digging it, but
+it's getting better. It is
+
+425
+00:24:42.610 --> 00:24:47.050
+getting better personally. I wish
+the tooling Visier tooling would
+
+426
+00:24:47.050 --> 00:24:49.930
+work in devil Evan beta,
+but it doesn't right now.
+
+427
+00:24:49.930 --> 00:24:51.880
+So there's times where I
+have to switch. Cause right
+
+428
+00:24:51.880 --> 00:24:54.040
+now I do all my
+development in dev 11 beta.
+
+429
+00:24:54.700 --> 00:24:56.440
+But if I need to
+do anything with my major
+
+430
+00:24:56.440 --> 00:24:58.630
+projects, I actually need to
+switch over to dev tend
+
+431
+00:24:58.630 --> 00:25:01.060
+to do any configuration because
+it's the only supported there.
+
+432
+00:25:01.810 --> 00:25:04.810
+So, but you know, that's
+a personal side rant, I
+
+433
+00:25:04.810 --> 00:25:08.350
+guess, but yeah, I mean,
+it's, it's worked great, you
+
+434
+00:25:08.350 --> 00:25:11.800
+know, just kind of learning
+all about Azure and the
+
+435
+00:25:11.800 --> 00:25:15.670
+right ways of hosting different
+things and getting things set
+
+436
+00:25:15.670 --> 00:25:19.600
+up. It's been a good
+learning experience and really makes
+
+437
+00:25:19.600 --> 00:25:21.580
+you think of how can
+I make this. So it
+
+438
+00:25:21.580 --> 00:25:25.810
+scales a lot easier with,
+with the code that I
+
+439
+00:25:25.810 --> 00:25:28.270
+have, whereas before, you know,
+he kind of thought about,
+
+440
+00:25:28.480 --> 00:25:30.160
+you know, I've got one
+or two boxes, you know,
+
+441
+00:25:30.160 --> 00:25:33.160
+that's my scale. And then,
+Oh, I need to add
+
+442
+00:25:33.160 --> 00:25:34.900
+another couple of boxes. What
+do I need to do
+
+443
+00:25:34.900 --> 00:25:36.520
+now? Type of thing. So
+you always have to go
+
+444
+00:25:36.520 --> 00:25:38.920
+back and modify Cub with
+Azure. It just kinda makes
+
+445
+00:25:38.920 --> 00:25:41.440
+that you don't have to
+think about that because each
+
+446
+00:25:41.440 --> 00:25:45.250
+instance just kind of spins
+up and starts working. Like
+
+447
+00:25:45.250 --> 00:25:47.470
+I said, though, we didn't
+have that ability, but there's
+
+448
+00:25:47.470 --> 00:25:49.990
+your drive, but I wish
+we would. So we're thinking
+
+449
+00:25:49.990 --> 00:25:53.320
+of different ways to make
+that process a lot easier.
+
+450
+00:25:54.210 --> 00:25:56.980
+What do you, what do
+you personally think the differences
+
+451
+00:25:56.980 --> 00:26:01.090
+between Azure or the cloud
+and, and just having the
+
+452
+00:26:01.090 --> 00:26:08.380
+stuff at a, at a
+holster, You know, honestly, there's
+
+453
+00:26:08.380 --> 00:26:11.830
+no real big difference for
+me other than, I guess,
+
+454
+00:26:12.430 --> 00:26:15.010
+you know, it takes a
+little bit of time for
+
+455
+00:26:15.010 --> 00:26:18.310
+your instance to get spun
+up in Azure. Whereas if
+
+456
+00:26:18.580 --> 00:26:20.860
+you're on premise or whatever,
+you just basically do a
+
+457
+00:26:21.370 --> 00:26:24.100
+copy of your code from
+a file share out to,
+
+458
+00:26:24.340 --> 00:26:26.380
+or a zip file or
+whatever out to the actual
+
+459
+00:26:26.380 --> 00:26:30.340
+server and deploy it basically
+that way, you know, But
+
+460
+00:26:30.340 --> 00:26:32.260
+you mentioned the idea that,
+Oh, I just want to
+
+461
+00:26:32.260 --> 00:26:35.170
+go and get one more
+box with a host or
+
+462
+00:26:35.260 --> 00:26:37.100
+you have to either buy
+that box and go and
+
+463
+00:26:37.100 --> 00:26:41.080
+put it. Yeah, yeah, exactly.
+And so that makes it
+
+464
+00:26:41.080 --> 00:26:44.160
+a lot from that aspect
+makes a lot more difficult
+
+465
+00:26:44.160 --> 00:26:47.580
+to, to scale and to
+obtain new hardware with this
+
+466
+00:26:47.580 --> 00:26:49.500
+year. It's just kind of
+like, well, I want to
+
+467
+00:26:49.500 --> 00:26:51.720
+add one more instance. So
+you just bump your instance
+
+468
+00:26:51.720 --> 00:26:54.000
+count and it just, you
+know, everything kind of gets
+
+469
+00:26:54.000 --> 00:26:58.070
+taken for you are taken
+care of for you. Yeah.
+
+470
+00:26:59.330 --> 00:27:00.710
+What do you, what do
+you have in the, in
+
+471
+00:27:00.710 --> 00:27:04.310
+the, in the queue for
+copex in the next couple
+
+472
+00:27:04.310 --> 00:27:05.750
+of months? What can you,
+what can you tell me?
+
+473
+00:27:05.750 --> 00:27:07.550
+What's features? Cause if you're
+doing this, if you're putting
+
+474
+00:27:07.550 --> 00:27:10.490
+stuff out every week, you're
+not just fixing bugs. Right?
+
+475
+00:27:11.150 --> 00:27:13.910
+Right. Now we are trying
+to wrap up our UI
+
+476
+00:27:13.910 --> 00:27:16.390
+refresh. And depending on when
+this actually hits the airwaves,
+
+477
+00:27:16.400 --> 00:27:18.440
+it may or may not
+be released. We're targeting the
+
+478
+00:27:18.440 --> 00:27:21.470
+end of April for a
+release of our UI refresh.
+
+479
+00:27:22.960 --> 00:27:25.280
+And that's something that if
+you look back at kind
+
+480
+00:27:25.280 --> 00:27:27.890
+of Brian Harry's blog, and
+I think we actually blocked
+
+481
+00:27:27.890 --> 00:27:30.380
+about it to, you know,
+a couple, it was about
+
+482
+00:27:30.380 --> 00:27:33.940
+a month ago, right after
+we announced get support, we,
+
+483
+00:27:33.940 --> 00:27:37.010
+we, you know, said, Hey,
+look, check it out. Here's
+
+484
+00:27:37.010 --> 00:27:40.100
+some screenshots of what we're
+thinking. And so that's actually
+
+485
+00:27:40.100 --> 00:27:42.560
+coming fairly soon and we're
+trying to wrap up all
+
+486
+00:27:42.560 --> 00:27:45.740
+of the, what we consider,
+you know, tier one pages
+
+487
+00:27:45.740 --> 00:27:49.580
+to, to look nice and,
+and, and look all, I
+
+488
+00:27:49.580 --> 00:27:56.430
+guess, Metro, and you know,
+not green basically. So that's,
+
+489
+00:27:56.450 --> 00:27:59.990
+that's coming real soon and
+we're really happy about that.
+
+490
+00:27:59.990 --> 00:28:03.260
+And so that's our next,
+next big feature. Anything beyond
+
+491
+00:28:03.260 --> 00:28:05.840
+that? I'm not entirely sure
+because we've been focused so
+
+492
+00:28:05.840 --> 00:28:08.990
+much on, on the UI
+refresh after the good stuff
+
+493
+00:28:09.020 --> 00:28:12.350
+that I do know that
+we're going to start working
+
+494
+00:28:12.350 --> 00:28:17.170
+on some pull requests, updates
+to make it easier for
+
+495
+00:28:17.180 --> 00:28:21.470
+users to do stuff. So
+that's in the queue. Anything
+
+496
+00:28:21.470 --> 00:28:23.180
+beyond that, you know, it's
+too far out, we, you
+
+497
+00:28:23.180 --> 00:28:26.450
+know, we're a fairly lean
+team, so we're actually thinking
+
+498
+00:28:26.450 --> 00:28:31.490
+in three weeks, three weeks
+out anyways. So When you're
+
+499
+00:28:31.490 --> 00:28:33.650
+releasing every week, what kind
+of things are you, are
+
+500
+00:28:33.650 --> 00:28:36.710
+you just fixing bugs or
+are you going into your,
+
+501
+00:28:37.520 --> 00:28:39.320
+your issue tracker and going
+on the things that are
+
+502
+00:28:39.320 --> 00:28:41.930
+the most voted on? Cause
+I've noticed that code flex
+
+503
+00:28:41.930 --> 00:28:43.850
+has done that for a
+long time. You've always done
+
+504
+00:28:43.850 --> 00:28:47.060
+the feature that more people
+have voted on. Do, do
+
+505
+00:28:47.210 --> 00:28:49.970
+you just pull off of
+that queue? Yeah. Get was
+
+506
+00:28:49.970 --> 00:28:53.060
+our number one, feature number
+one or number two, one
+
+507
+00:28:53.060 --> 00:28:55.040
+of those, it was, you
+know, right up there at
+
+508
+00:28:55.040 --> 00:28:57.170
+the top of things. So
+we are definitely looking at
+
+509
+00:28:57.170 --> 00:29:01.940
+our, our public feature requests
+lists that everybody votes up
+
+510
+00:29:01.940 --> 00:29:05.000
+on. So we we've done
+that. We've looked at, we
+
+511
+00:29:05.000 --> 00:29:08.330
+pull from there, we, we
+pull bugs from our public
+
+512
+00:29:08.330 --> 00:29:10.640
+lists and we pull bugs
+from our internal test team
+
+513
+00:29:10.640 --> 00:29:14.120
+or, you know, Twitter reports
+or support requests. And so,
+
+514
+00:29:14.360 --> 00:29:17.030
+you know, we, we pull
+all those things. Then we
+
+515
+00:29:17.030 --> 00:29:20.030
+triage them and we, we
+try and fix all P
+
+516
+00:29:20.030 --> 00:29:23.300
+one bugs. You know, the,
+the, the bugs that are
+
+517
+00:29:23.300 --> 00:29:28.190
+blocking users from functioning every
+week. And other than that,
+
+518
+00:29:28.190 --> 00:29:31.080
+we start looking at user
+stories or feature requests and
+
+519
+00:29:31.220 --> 00:29:33.710
+try and roll those in
+and week by week basis.
+
+520
+00:29:33.710 --> 00:29:37.790
+And, you know, the, the
+only problems we've had is
+
+521
+00:29:37.790 --> 00:29:41.650
+that, you know, any long
+running feature requests, we don't
+
+522
+00:29:41.650 --> 00:29:44.380
+get to push those out
+as frequently because they can
+
+523
+00:29:44.380 --> 00:29:46.750
+take quite a lot longer.
+But you know, how we
+
+524
+00:29:46.750 --> 00:29:49.570
+actually do development is that,
+you know, all those features
+
+525
+00:29:49.570 --> 00:29:53.230
+are, are mostly out in
+production as it is. It's
+
+526
+00:29:53.230 --> 00:29:56.200
+just that they're not enabled
+yet. For instance, get was
+
+527
+00:29:56.200 --> 00:29:58.720
+sitting out in production for
+about a month before we
+
+528
+00:29:58.720 --> 00:30:02.470
+actually enabled it while we
+finished up everything around it.
+
+529
+00:30:02.500 --> 00:30:05.260
+So, you know, if you
+got into, you know, we
+
+530
+00:30:05.260 --> 00:30:08.140
+can start our previous server,
+you actually had done, you
+
+531
+00:30:08.140 --> 00:30:10.840
+know, created a get project
+prior to us actually releasing
+
+532
+00:30:10.840 --> 00:30:14.290
+for several weeks. But you
+know, that's something that's not
+
+533
+00:30:14.290 --> 00:30:17.980
+accessible externally, but, you know,
+that's, that's how we actually
+
+534
+00:30:17.980 --> 00:30:21.070
+approach doing, you know, long
+running features that we continuously
+
+535
+00:30:21.070 --> 00:30:25.270
+work on, you know, our
+master branch and, and then,
+
+536
+00:30:25.450 --> 00:30:28.780
+you know, just hide features
+are disabled them until they're,
+
+537
+00:30:28.990 --> 00:30:31.450
+until we think they're ready
+for the public to consume
+
+538
+00:30:31.450 --> 00:30:34.770
+them. Some people have said
+that they wish that the
+
+539
+00:30:34.770 --> 00:30:36.930
+code flex itself would be
+open sourced. Cause I think
+
+540
+00:30:36.930 --> 00:30:39.120
+they want to run their
+own internal code Plex. Have
+
+541
+00:30:39.120 --> 00:30:41.790
+you guys ever talked about
+that internally? That's been a
+
+542
+00:30:41.790 --> 00:30:44.610
+conversation that's come up time
+and time again. And when
+
+543
+00:30:44.610 --> 00:30:48.300
+it really comes down to
+is that to set copex
+
+544
+00:30:48.300 --> 00:30:52.560
+up is not an easy
+task. And so, you know,
+
+545
+00:30:52.560 --> 00:30:57.270
+that's, we've always kind of,
+you know, asked why customers
+
+546
+00:30:57.270 --> 00:31:00.030
+want the source for cope
+flex. And usually it's, you
+
+547
+00:31:00.030 --> 00:31:02.460
+know, we want the same
+type of thing in our
+
+548
+00:31:02.460 --> 00:31:04.050
+company. And so, you know,
+we'll have a little bit
+
+549
+00:31:04.050 --> 00:31:06.390
+of discussions with them and
+ultimately it comes down to,
+
+550
+00:31:07.710 --> 00:31:09.570
+you know, I, I'm not
+entirely sure that this would
+
+551
+00:31:09.570 --> 00:31:12.840
+be the right fit for
+your company internally at Microsoft.
+
+552
+00:31:12.840 --> 00:31:15.390
+We've had several teams that
+have requested the same thing.
+
+553
+00:31:15.390 --> 00:31:17.160
+And, you know, since we're
+at the Microsoft, they can
+
+554
+00:31:17.160 --> 00:31:18.600
+take a look at the
+source code and try and
+
+555
+00:31:18.600 --> 00:31:21.750
+set it up on their
+own. We've never really seen
+
+556
+00:31:21.780 --> 00:31:25.830
+a successful deployment. So, and
+not saying that nobody else
+
+557
+00:31:25.830 --> 00:31:28.230
+could deploy code blocks. I'm
+just saying that the, the
+
+558
+00:31:28.230 --> 00:31:31.740
+amount of infrastructure and knowledge
+around code Plex doesn't really
+
+559
+00:31:31.740 --> 00:31:35.430
+make it. So it's a
+good open source process. Yeah.
+
+560
+00:31:35.820 --> 00:31:37.650
+It's I think that people
+like the idea of it,
+
+561
+00:31:37.650 --> 00:31:41.130
+but maybe not the actual
+implementation of it. Right. Yeah.
+
+562
+00:31:41.130 --> 00:31:42.810
+I mean, it's to really
+think about it. You know,
+
+563
+00:31:42.810 --> 00:31:46.140
+we've got, you know, a
+significant amount of infrastructure actually
+
+564
+00:31:46.140 --> 00:31:50.970
+run in between, you know,
+our various web servers, SVM
+
+565
+00:31:50.970 --> 00:31:55.350
+bridge servers, our TFS servers
+are mercurial and get servers.
+
+566
+00:31:55.380 --> 00:31:59.820
+And now our ARR service
+I was talking about. So
+
+567
+00:31:59.820 --> 00:32:03.090
+there's quite a significant amount
+of infrastructure that goes into
+
+568
+00:32:03.090 --> 00:32:06.000
+play. And it's not something
+that you could set up
+
+569
+00:32:06.000 --> 00:32:10.560
+and run very easily in
+a development environments without knowing
+
+570
+00:32:10.560 --> 00:32:13.320
+the nitty gritty details of
+how everything actually works together.
+
+571
+00:32:13.830 --> 00:32:16.950
+Yeah. Cool. Well, I think
+we're all gonna look forward
+
+572
+00:32:16.950 --> 00:32:20.730
+to seeing that the continued
+improvements and the refresh, and
+
+573
+00:32:20.730 --> 00:32:22.650
+is there a, I guess
+on the blog now there's
+
+574
+00:32:22.770 --> 00:32:24.720
+there's release notes, so you
+can go and see the
+
+575
+00:32:24.720 --> 00:32:27.120
+code flex blog and see
+regularly what's being updated and
+
+576
+00:32:27.120 --> 00:32:30.840
+what's being improved. Yup. Yup.
+We, every time we do
+
+577
+00:32:30.840 --> 00:32:34.140
+a release, we put out
+there the bug fixes that
+
+578
+00:32:34.140 --> 00:32:39.030
+we've done or any new
+features that we've added. Yeah.
+
+579
+00:32:39.080 --> 00:32:42.040
+It's a, it's been pretty
+Good recently, so, Well, I'm
+
+580
+00:32:42.040 --> 00:32:43.720
+glad, I'm glad things are
+working out well over on
+
+581
+00:32:43.720 --> 00:32:47.860
+the TFS team. Yeah. Are
+we cool? Thanks a lot.
+
+582
+00:32:48.190 --> 00:32:51.010
+This has been another episode
+of Hansel minutes. We'll see
+
+583
+00:32:51.010 --> 00:32:51.880
+you again next week.
+

@@ -1,0 +1,2702 @@
+WEBVTT FILE
+
+1
+00:00:09.050 --> 00:00:12.800
+From Hanselman it's dot com
+it's Hansel minutes. Or we
+
+2
+00:00:12.800 --> 00:00:16.730
+leave discussion with web developer
+and technologists. Scott Hanselman posted
+
+3
+00:00:16.730 --> 00:00:20.840
+by call Franklin. This is
+Lawrence Ryan announcing show number 14,
+
+4
+00:00:20.840 --> 00:00:26.510
+recorded Monday, April 17th, 2006. Support for
+Hanselman. It is provided by
+
+5
+00:00:26.510 --> 00:00:30.890
+COVID Smith tools, makers of
+coach Smith, an extensible template
+
+6
+00:00:30.890 --> 00:00:34.340
+based code generator for.net. And
+you can get a hundred
+
+7
+00:00:34.340 --> 00:00:37.220
+bucks off with coupon code
+H M 100, just for
+
+8
+00:00:37.220 --> 00:00:43.340
+listening to Hansel minutes online@covidsmithtools.com.
+Support is also provided by
+
+9
+00:00:43.370 --> 00:00:47.630
+Peter bloom.com started with better
+controls finish with better sites
+
+10
+00:00:47.960 --> 00:00:57.860
+online@peterblumdotcomandby.net developers journal the world's
+leading.net developer magazine online at
+
+11
+00:00:57.860 --> 00:01:03.740
+www dot <inaudible> dot com.
+In this episode, the focus
+
+12
+00:01:03.740 --> 00:01:10.850
+is cogeneration <inaudible>. Hey, it's
+Carl Franklin here again with Scott
+
+13
+00:01:10.850 --> 00:01:13.880
+Hanselman for another great episode
+of Hansel minutes. Hi Scott,
+
+14
+00:01:13.910 --> 00:01:15.740
+how are you doing this
+week? How are you, sir?
+
+15
+00:01:15.770 --> 00:01:18.200
+I'm doing all right. Great
+cogeneration. That's what we're here
+
+16
+00:01:18.200 --> 00:01:20.270
+to talk about What it's
+all about. I was going
+
+17
+00:01:20.270 --> 00:01:22.220
+to generate the whole show,
+but I just couldn't get
+
+18
+00:01:22.220 --> 00:01:26.540
+the speech synthesis to work
+correctly. So I'm here. Very
+
+19
+00:01:26.540 --> 00:01:30.890
+good. So how'd you get
+started with cogeneration? Well, about
+
+20
+00:01:30.890 --> 00:01:33.830
+five years ago, when I
+started here at Carilion, we
+
+21
+00:01:33.830 --> 00:01:38.060
+had what I call a
+third class access layer into
+
+22
+00:01:38.060 --> 00:01:41.420
+our application. Basically, we had
+one function that was like
+
+23
+00:01:41.420 --> 00:01:44.990
+the dot execute function, just
+like SQL server has got
+
+24
+00:01:44.990 --> 00:01:47.840
+a dot execute, right? You
+basically pay all this money
+
+25
+00:01:47.840 --> 00:01:50.300
+for the SQL server license
+and you get dot execute,
+
+26
+00:01:50.330 --> 00:01:52.310
+and then you can put
+in whatever magic string that
+
+27
+00:01:52.310 --> 00:01:55.700
+you want, you know, select
+star from whatever. And then
+
+28
+00:01:55.700 --> 00:01:58.910
+people will build a second
+class interface on top of
+
+29
+00:01:58.910 --> 00:02:03.410
+that. That's what I think
+it was ado. You're not
+
+30
+00:02:03.410 --> 00:02:06.380
+passing strongly typed objects around,
+you're passing an object, like
+
+31
+00:02:06.590 --> 00:02:09.350
+an object of type bowl.
+Like I think of a
+
+32
+00:02:09.350 --> 00:02:11.870
+dataset as being a bowl.
+It's not really something, right.
+
+33
+00:02:11.900 --> 00:02:13.400
+I could give you an
+author or I could give
+
+34
+00:02:13.400 --> 00:02:16.220
+you an employee or show
+you an account with a
+
+35
+00:02:16.220 --> 00:02:18.170
+data set. It's like, it's
+a bowl that you put
+
+36
+00:02:18.170 --> 00:02:22.130
+an object right inside. Right.
+But the problem with those
+
+37
+00:02:22.130 --> 00:02:25.250
+kinds of interfaces, like the
+third class one where you
+
+38
+00:02:25.250 --> 00:02:27.950
+passing a magic string or
+the second class one, like
+
+39
+00:02:27.950 --> 00:02:29.630
+a dataset is that you
+really don't know things are
+
+40
+00:02:29.630 --> 00:02:33.800
+going to break until you
+compile. Yes. So we built
+
+41
+00:02:33.800 --> 00:02:37.400
+that second class and then
+code generated a first class
+
+42
+00:02:37.400 --> 00:02:40.790
+interface on top of our
+dot execute method, because what
+
+43
+00:02:40.790 --> 00:02:44.270
+happened at Karelian is that
+we had a really fantastic
+
+44
+00:02:44.300 --> 00:02:48.350
+runtime environment, but we had
+a lousy development environment and
+
+45
+00:02:48.500 --> 00:02:52.040
+we really wanted to take
+advantage of IntelliSense. It seems
+
+46
+00:02:52.040 --> 00:02:56.540
+like a silly thing, but
+IntelliSense means developer productivity. But
+
+47
+00:02:56.540 --> 00:02:59.740
+it also means if the,
+if the environment enough to
+
+48
+00:02:59.740 --> 00:03:02.050
+give you IntelliSense, then the
+compiler will know enough to
+
+49
+00:03:02.050 --> 00:03:04.900
+throw an error. Yeah. If
+someone changes a data type
+
+50
+00:03:04.900 --> 00:03:07.660
+or renames a property, I
+want it to break immediately.
+
+51
+00:03:07.690 --> 00:03:10.600
+Right? So we kind of
+adopted a break early break
+
+52
+00:03:10.630 --> 00:03:14.110
+often way of thinking. If
+so, we do a lot
+
+53
+00:03:14.110 --> 00:03:18.790
+of cogeneration based on custom
+XML schemas, and we annotate
+
+54
+00:03:18.790 --> 00:03:21.700
+those Schemos with additional information.
+So we actually have schema
+
+55
+00:03:21.700 --> 00:03:25.930
+with stuff that's along for
+the ride, other attributes. So
+
+56
+00:03:25.930 --> 00:03:28.840
+we're not using excess D
+dot exe. We needed something
+
+57
+00:03:28.840 --> 00:03:32.740
+a little more complicated and
+we ended up turning to
+
+58
+00:03:32.770 --> 00:03:35.800
+code Smith. And I've got
+a little bit of information
+
+59
+00:03:35.800 --> 00:03:38.440
+about how we use code
+Smith up on my blog.
+
+60
+00:03:38.440 --> 00:03:39.880
+You can just go to
+my blog and search for
+
+61
+00:03:39.880 --> 00:03:42.370
+COVID Smith has I think
+at least a dozen different
+
+62
+00:03:42.370 --> 00:03:44.320
+articles about this kind of
+stuff over the last several
+
+63
+00:03:44.320 --> 00:03:46.620
+years. Just a note, by
+the way about the, you
+
+64
+00:03:46.620 --> 00:03:49.440
+know, the sponsorship of the
+show is by code Smith
+
+65
+00:03:49.440 --> 00:03:52.860
+tools. And the reason is
+that we wanted to do
+
+66
+00:03:52.860 --> 00:03:55.110
+a show on co-generation. We
+thought, you know, Oh yeah,
+
+67
+00:03:55.110 --> 00:03:57.000
+we could, we could ask
+COVID Smith if they want
+
+68
+00:03:57.000 --> 00:03:58.800
+to be a sponsor because
+we use their stuff. So
+
+69
+00:03:59.910 --> 00:04:02.040
+it just was fortuitous that
+it worked out that way.
+
+70
+00:04:02.430 --> 00:04:04.740
+Sure. And what today we'll
+be talking about not just
+
+71
+00:04:04.740 --> 00:04:08.000
+COVID Smith talking about cogeneration
+in general, but yeah. In
+
+72
+00:04:08.010 --> 00:04:12.030
+the interest of full disclosure
+sponsoring this show and they
+
+73
+00:04:12.030 --> 00:04:15.330
+also we're we're customers of
+them. So we love, we
+
+74
+00:04:15.330 --> 00:04:19.140
+like coach Smith, right? So
+for us, we wanted to
+
+75
+00:04:19.140 --> 00:04:23.100
+use this XML schema as
+a, as a domain specific
+
+76
+00:04:23.100 --> 00:04:26.460
+language. Cause we wanted to
+generate these, these domain objects.
+
+77
+00:04:26.670 --> 00:04:28.920
+And I've given talks about
+this kind of stuff at,
+
+78
+00:04:29.280 --> 00:04:31.320
+at tech ed. And for
+us, it was like I
+
+79
+00:04:31.320 --> 00:04:34.020
+said, about break early break
+off. And like you heard
+
+80
+00:04:34.020 --> 00:04:36.720
+in the continuous integration show,
+we want to be able
+
+81
+00:04:36.720 --> 00:04:39.000
+to make a change and
+have things break because if
+
+82
+00:04:39.000 --> 00:04:40.980
+it breaks during compile time,
+it means it'll be less
+
+83
+00:04:40.980 --> 00:04:46.440
+likely to break during production
+time. Right. So we started
+
+84
+00:04:46.440 --> 00:04:49.710
+out generating just these domain
+objects, pretty basic kind of
+
+85
+00:04:49.710 --> 00:04:51.630
+stuff. And then we started
+getting deeper and deeper into
+
+86
+00:04:51.630 --> 00:04:56.220
+code gen because really anything
+that is repeatable, you might
+
+87
+00:04:56.370 --> 00:04:59.940
+be looking at as a
+potential code generation candidate. Yeah.
+
+88
+00:05:00.900 --> 00:05:04.140
+So like I recently posted
+about code generating data access
+
+89
+00:05:04.140 --> 00:05:10.200
+layer was coachSmith@shrinks.com slash <inaudible>.
+And this was a situation
+
+90
+00:05:10.200 --> 00:05:14.850
+where we had a fairly
+regular database with some very
+
+91
+00:05:14.850 --> 00:05:20.010
+well-named stored procedures. So based
+on the naming of those
+
+92
+00:05:20.010 --> 00:05:24.450
+stored procedures and some inference
+about the underlying table structure.
+
+93
+00:05:24.450 --> 00:05:27.420
+So if you had like
+a get books or retrieve
+
+94
+00:05:27.480 --> 00:05:30.630
+books or read books type
+of a stored procedure, you
+
+95
+00:05:30.630 --> 00:05:33.240
+probably have a books access
+layer, or at the very
+
+96
+00:05:33.240 --> 00:05:35.490
+least you have an entity
+called books that you're trying
+
+97
+00:05:35.490 --> 00:05:38.190
+to get out of the
+system. Right? So we could
+
+98
+00:05:38.190 --> 00:05:42.210
+then generate a pretty friendly
+looking data, access layer using
+
+99
+00:05:42.630 --> 00:05:45.270
+a cogeneration tool. Now there's
+lots of different ones out
+
+100
+00:05:45.270 --> 00:05:47.070
+there, but we, you happened
+to use code Smith in
+
+101
+00:05:47.070 --> 00:05:51.120
+this particular instance, code Smith
+is kind of like, I
+
+102
+00:05:51.120 --> 00:05:54.840
+look@itaskindoflikeasp.net. Because if you look
+at the code that you
+
+103
+00:05:54.840 --> 00:05:57.410
+write in code Smith, it's
+a lot like when write
+
+104
+00:05:57.500 --> 00:06:01.280
+an asp.net page where it's
+all in one on one
+
+105
+00:06:01.280 --> 00:06:04.820
+page, if you look@anasp.net page,
+there's that little thing at
+
+106
+00:06:04.820 --> 00:06:07.940
+the top with the angle
+bracket percent and the different
+
+107
+00:06:07.940 --> 00:06:11.060
+declarations at the top code
+Smith has got declarations like
+
+108
+00:06:11.060 --> 00:06:14.150
+that. And you remember an
+asp.net, you'd write some like
+
+109
+00:06:14.240 --> 00:06:18.050
+HTML and then you'd say
+less than percent and you'd
+
+110
+00:06:18.050 --> 00:06:20.630
+go, here's some code and
+then you'd close it up.
+
+111
+00:06:20.660 --> 00:06:22.940
+So basically you had this
+little yellow area, which was
+
+112
+00:06:22.940 --> 00:06:25.880
+the jump into code and
+then jump out. Right? So
+
+113
+00:06:25.910 --> 00:06:28.880
+COVID Smith is like that.
+Their markup language looks exactly
+
+114
+00:06:28.880 --> 00:06:34.250
+like writing ASP, either classic
+APRA, asp.net, where you'll say
+
+115
+00:06:34.700 --> 00:06:39.560
+public class. And then you'd
+jump into a cogeneration snippet
+
+116
+00:06:39.620 --> 00:06:41.480
+and you might say public
+class and then say less
+
+117
+00:06:41.480 --> 00:06:45.460
+than percent. And then here's
+where class name happens and
+
+118
+00:06:45.480 --> 00:06:49.070
+maybe class name is an
+input parameter. Okay. So we
+
+119
+00:06:49.070 --> 00:06:53.120
+wanted our data access layer
+to say something like using
+
+120
+00:06:53.150 --> 00:06:58.070
+some database equals new database
+and then say, read, read
+
+121
+00:06:58.070 --> 00:07:02.540
+author, read Fu and where
+the name of the database
+
+122
+00:07:02.540 --> 00:07:05.030
+and the reading of the
+what right? Reading Fu re
+
+123
+00:07:05.300 --> 00:07:08.750
+reading of this particular now
+were unknown. So in our
+
+124
+00:07:08.750 --> 00:07:11.810
+template and all that's up
+there@drinksor.com slash E four zero,
+
+125
+00:07:12.080 --> 00:07:15.800
+our code Smith class says
+public class. And then we
+
+126
+00:07:15.800 --> 00:07:18.830
+jump into the code Smith
+area and we say, source
+
+127
+00:07:18.830 --> 00:07:23.840
+database.name. And then we can,
+that generates the, the name
+
+128
+00:07:23.840 --> 00:07:26.960
+of that particular class. So
+it's almost as if you're
+
+129
+00:07:26.960 --> 00:07:28.910
+writing the code and then
+every once in a while
+
+130
+00:07:28.910 --> 00:07:32.150
+you jump into the, and
+here's where something gets generated
+
+131
+00:07:32.150 --> 00:07:35.390
+from some input. Yeah. Okay.
+Now at a very simple
+
+132
+00:07:35.390 --> 00:07:37.340
+level, that's really just kind
+of, you know, doing a
+
+133
+00:07:37.400 --> 00:07:39.380
+search and replace, right? You
+could do the same thing
+
+134
+00:07:39.380 --> 00:07:42.800
+with any basic templating language.
+It's real similar to like
+
+135
+00:07:42.800 --> 00:07:44.780
+C plus plus templates. And
+some of the stuff that
+
+136
+00:07:45.050 --> 00:07:47.930
+Chris cells did long time
+ago with his gen X
+
+137
+00:07:48.290 --> 00:07:51.380
+tool, which was actually ahead
+of its time. But what's
+
+138
+00:07:51.380 --> 00:07:54.080
+cool about coach Smith is
+that you can have arbitrary
+
+139
+00:07:54.110 --> 00:07:56.900
+large complex data types come
+in. It's not just about
+
+140
+00:07:56.900 --> 00:07:59.780
+saying here's a string and
+here's an ant and do
+
+141
+00:07:59.780 --> 00:08:02.270
+some search and replace. They
+include a thing called a
+
+142
+00:08:02.270 --> 00:08:06.440
+schema Explorer where they basically
+give you a Dom over
+
+143
+00:08:06.500 --> 00:08:10.310
+the database. Huh? So you
+could say for each schema
+
+144
+00:08:10.340 --> 00:08:13.640
+in source database dot commands
+and then have a function
+
+145
+00:08:13.640 --> 00:08:17.120
+for each of your stored
+procs. So basically rather than
+
+146
+00:08:17.510 --> 00:08:20.090
+basically you're doing reflection over
+your database, right? It's like
+
+147
+00:08:20.090 --> 00:08:22.730
+using the state of SQL
+database management objects. And they've
+
+148
+00:08:22.730 --> 00:08:26.510
+given you this friendly Explorer
+over that input language. So
+
+149
+00:08:26.520 --> 00:08:29.690
+in this example where we're,
+Cogenic something directly from SQL
+
+150
+00:08:30.950 --> 00:08:36.260
+as many cogeneration tools do,
+we're using the SQL introspection
+
+151
+00:08:36.290 --> 00:08:38.180
+and we're looking at the
+database and saying, Oh right,
+
+152
+00:08:38.180 --> 00:08:40.280
+well, I'm going to have
+a class for each table,
+
+153
+00:08:40.280 --> 00:08:42.020
+or I'm going to have
+a method for each store
+
+154
+00:08:42.020 --> 00:08:45.470
+proc or whatever you want
+to do. And they extract
+
+155
+00:08:45.470 --> 00:08:48.710
+all that away from you.
+Awesome. Now they include a
+
+156
+00:08:48.710 --> 00:08:52.040
+whole bunch of different templates.
+But the thing that I
+
+157
+00:08:52.040 --> 00:08:55.230
+liked the most about coach
+Smith is the freeness that
+
+158
+00:08:55.230 --> 00:08:58.800
+people offer their own templates
+up. There's a whole community
+
+159
+00:08:58.800 --> 00:09:03.900
+about it. There's a really
+cool series of templates called.net
+
+160
+00:09:03.960 --> 00:09:14.190
+tiers and@thecommunitysiteatcovidsmithtoolsatshrinks.com slash E four
+nine, and a.net tiers are
+
+161
+00:09:14.190 --> 00:09:17.730
+code Smith templates to do
+our mapping. So then this
+
+162
+00:09:17.730 --> 00:09:21.060
+will take the existing SQL
+server database. And it'll generate
+
+163
+00:09:21.180 --> 00:09:24.720
+this application block for using
+your applications. So this does
+
+164
+00:09:24.720 --> 00:09:27.030
+all of your, kind of
+your crud write, create, read,
+
+165
+00:09:27.030 --> 00:09:30.480
+update, delete type stuff, recognizes
+whether or not a query
+
+166
+00:09:30.480 --> 00:09:33.870
+uses a foreign key or
+a primary key and handles
+
+167
+00:09:33.870 --> 00:09:35.970
+all that kind of stuff
+for you. And it'll generate
+
+168
+00:09:35.970 --> 00:09:38.090
+web services and all sorts
+of stuff. There are a
+
+169
+00:09:38.090 --> 00:09:40.730
+lot of templates out there
+for free. Oh Yeah. There's
+
+170
+00:09:40.730 --> 00:09:43.910
+a ridiculous amount of templates
+for free. Like, like Paul,
+
+171
+00:09:43.910 --> 00:09:46.490
+Wilson's got this Wilson Orr
+mapper. Like if you don't
+
+172
+00:09:46.490 --> 00:09:49.400
+like, dotnet tears, you want
+to do Paul Wilson stuff, then
+
+173
+00:09:49.400 --> 00:09:51.440
+you can use his stuff.
+And he's the, they've got
+
+174
+00:09:51.470 --> 00:09:55.790
+a fellow who's made templates
+for code Smith at, or.com/
+
+175
+00:09:56.060 --> 00:09:59.600
+<inaudible> there's ones out there
+for an hibernate, you know?
+
+176
+00:09:59.600 --> 00:10:04.640
+So whatever particular or mapper
+you're into. Yeah. You can
+
+177
+00:10:04.650 --> 00:10:07.790
+find potentially coach Smith templates.
+Right. Sounds like it's easy
+
+178
+00:10:07.790 --> 00:10:10.910
+to make the templates too.
+Oh, making the templates is
+
+179
+00:10:10.910 --> 00:10:14.320
+totally easy. The it's it's
+pretty straight forward. The, the,
+
+180
+00:10:14.320 --> 00:10:17.930
+the tricky part is where
+is your declaration coming from?
+
+181
+00:10:18.020 --> 00:10:20.660
+Oh, you're going to be
+code generating from the database.
+
+182
+00:10:21.050 --> 00:10:24.560
+What if the database doesn't
+exist? Right. Maybe, maybe you
+
+183
+00:10:24.560 --> 00:10:26.450
+want to Kogan the database
+as well. And that's where
+
+184
+00:10:26.450 --> 00:10:29.300
+you're going into some really
+interesting problems around domain specific
+
+185
+00:10:29.300 --> 00:10:33.320
+language. What's going to be
+the authoritative source of your
+
+186
+00:10:33.320 --> 00:10:38.270
+domain model. Yeah. Right. So
+UML Not really where it's
+
+187
+00:10:38.270 --> 00:10:41.030
+at. So a lot of
+people will write some domain
+
+188
+00:10:41.030 --> 00:10:44.840
+specific language. You could, That's
+another show right there. Yeah.
+
+189
+00:10:44.870 --> 00:10:46.760
+Domain. Well, we should get
+Chris sells. Cause I talked
+
+190
+00:10:46.760 --> 00:10:48.770
+to Chris cells about that
+before on I'm done at
+
+191
+00:10:48.770 --> 00:10:51.410
+rock rocks, right? Yeah. I
+remember I actually, I listened
+
+192
+00:10:51.410 --> 00:10:55.100
+to that two weeks ago.
+Yep. And so you could
+
+193
+00:10:55.100 --> 00:10:59.060
+write in XML or some
+other format, how you want
+
+194
+00:10:59.060 --> 00:11:01.310
+your model to look, you
+could think about your model
+
+195
+00:11:01.310 --> 00:11:05.120
+abstractly and then generate your
+database. Or if you're a
+
+196
+00:11:05.120 --> 00:11:08.570
+very database focused person and
+you want to really tune
+
+197
+00:11:08.570 --> 00:11:10.820
+the database a certain way,
+you could do that. So
+
+198
+00:11:10.820 --> 00:11:12.560
+it really depends on whether
+you want to go from
+
+199
+00:11:12.560 --> 00:11:16.210
+the top down at the
+bottom up. Okay. Now, if
+
+200
+00:11:16.250 --> 00:11:18.350
+you, if you talked to
+Rocky also about the CLSC
+
+201
+00:11:18.350 --> 00:11:22.160
+stuff, didn't right now, there's
+actually a whole series of
+
+202
+00:11:22.160 --> 00:11:24.470
+templates. I actually didn't know
+this. And I got Rocky's
+
+203
+00:11:24.680 --> 00:11:28.130
+latest book on CLSC in
+the mail just a day
+
+204
+00:11:28.130 --> 00:11:35.180
+before yesterday, I'm at shrink
+stir.com/ <inaudible>. So shrinks or.com
+
+205
+00:11:35.210 --> 00:11:39.890
+<inaudible> there are a series
+of vb.net and C-sharp versions
+
+206
+00:11:39.950 --> 00:11:44.630
+of templates for running within
+coach Smith. So You'll be
+
+207
+00:11:44.630 --> 00:11:48.860
+able to generate the business
+objects that he showed us
+
+208
+00:11:48.860 --> 00:11:50.480
+how to write on DNR
+TV a couple of weeks
+
+209
+00:11:50.480 --> 00:11:52.640
+ago. Exactly. So you're going
+to get the, kind of
+
+210
+00:11:52.640 --> 00:11:58.480
+the Rocky gestalt, his view
+of things done as code
+
+211
+00:11:58.480 --> 00:12:01.830
+Smith templates, The Rocky zeitgeists,
+as long as we're using
+
+212
+00:12:01.980 --> 00:12:06.330
+obscure German words that quoted
+by Gerta Very nice. Yes.
+
+213
+00:12:06.330 --> 00:12:09.390
+The Zen of the Zen
+of LACA, that's probably from
+
+214
+00:12:09.390 --> 00:12:13.020
+taxi. I'm not sure. Yeah.
+There's a whole community around
+
+215
+00:12:13.020 --> 00:12:16.470
+these things up at <inaudible>
+dot com slash <inaudible>. And
+
+216
+00:12:16.560 --> 00:12:19.740
+it's been a really interesting
+to watch these, this community
+
+217
+00:12:19.740 --> 00:12:22.080
+kind of expand over the
+years. I remember when it
+
+218
+00:12:22.080 --> 00:12:24.210
+used to be just, Hey,
+here's a cool way to
+
+219
+00:12:24.210 --> 00:12:28.590
+do strongly type collections. Right.
+Right. And now that matters
+
+220
+00:12:28.590 --> 00:12:32.100
+less and less, but people
+are giving you collections of
+
+221
+00:12:32.100 --> 00:12:36.240
+how to make.net, nuke modules,
+all sorts of stuff. And
+
+222
+00:12:36.240 --> 00:12:39.000
+then now I'm, you know,
+Rob Howard, the guy behind
+
+223
+00:12:39.000 --> 00:12:43.410
+community server is working with
+behind ASP net. Well, yeah,
+
+224
+00:12:43.680 --> 00:12:47.190
+he's a, he's a powerhouse
+is supporting code Smith tools
+
+225
+00:12:47.190 --> 00:12:49.780
+and as a part of
+that, that group. Yeah. So
+
+226
+00:12:50.100 --> 00:12:52.110
+it's pretty cool stuff. So
+one of the cool things
+
+227
+00:12:52.110 --> 00:12:55.050
+that I found out from
+you, Carl was that for
+
+228
+00:12:55.050 --> 00:12:58.710
+Hanselman his listeners, there's actually
+a custom coupon code for
+
+229
+00:12:58.710 --> 00:13:01.890
+a hundred bucks off. What
+does that code? Hm. 100.
+
+230
+00:13:01.950 --> 00:13:03.600
+You can go up and
+get a hundred dollars off
+
+231
+00:13:03.600 --> 00:13:06.430
+of coach Smith professional, which
+is pretty awesome. Yeah. The
+
+232
+00:13:06.480 --> 00:13:09.450
+regular version, I guess the
+intro version is 99 bucks
+
+233
+00:13:09.450 --> 00:13:12.120
+and three 99 for the
+professional version. So it's like
+
+234
+00:13:12.150 --> 00:13:16.440
+25% off. Yeah. It's totally
+25% off. Yeah. The professional
+
+235
+00:13:16.440 --> 00:13:19.890
+version has got like integration
+with the IDE. It's got
+
+236
+00:13:19.890 --> 00:13:24.180
+an API, it's got merging
+support. It's got real degeneration.
+
+237
+00:13:24.720 --> 00:13:26.790
+Now, one of the things
+that I really like about
+
+238
+00:13:27.050 --> 00:13:30.270
+the code Smith from the
+continuous integration point of view
+
+239
+00:13:30.270 --> 00:13:33.360
+is we actually, Regene all
+of our code during our
+
+240
+00:13:33.360 --> 00:13:35.760
+continuous integration. So we've integrated
+it with our Nat build.
+
+241
+00:13:36.540 --> 00:13:40.260
+So the professional edition includes
+direct support for the code
+
+242
+00:13:40.260 --> 00:13:43.110
+Smith API. So we just
+built a nap, a nap
+
+243
+00:13:43.140 --> 00:13:47.610
+task around code Smith, just
+called code gen. And we
+
+244
+00:13:47.610 --> 00:13:50.760
+generate everything all, you know,
+every single time that's totally
+
+245
+00:13:50.760 --> 00:13:54.060
+star Trek, man, is it
+star Trek? Totally. We want
+
+246
+00:13:54.060 --> 00:13:57.090
+to, we really want to
+break everything every single time.
+
+247
+00:13:57.450 --> 00:14:00.720
+We've even, we've even we
+dropped the database, Regan, everything
+
+248
+00:14:00.720 --> 00:14:02.880
+all over and we want
+to start our tests nice
+
+249
+00:14:03.160 --> 00:14:07.260
+and fresh from the very
+beginning. Wow. That's great. Yeah.
+
+250
+00:14:07.260 --> 00:14:10.710
+They've got a pretty cool
+a demo on the dotnet
+
+251
+00:14:10.710 --> 00:14:13.770
+tear stuff on how to
+generate a data access layer
+
+252
+00:14:13.770 --> 00:14:19.140
+in 15 minutes@shrinks.com slash E
+four F tier stuff is
+
+253
+00:14:19.140 --> 00:14:23.190
+kind of cool because it
+includes enterprise library integration. Excellent.
+
+254
+00:14:23.490 --> 00:14:27.360
+Yeah. So Code Smith, the
+one size fits all cogeneration
+
+255
+00:14:27.360 --> 00:14:29.790
+tool. I would say that
+there's a commitment to cogeneration,
+
+256
+00:14:29.790 --> 00:14:32.010
+no matter what tool that
+you're using. I know that
+
+257
+00:14:32.010 --> 00:14:33.960
+it took us a couple
+of weeks to really kind
+
+258
+00:14:33.960 --> 00:14:37.830
+of get it and understand
+that code Smith was the,
+
+259
+00:14:37.860 --> 00:14:41.370
+the middleman between the declaration
+that described our objects and
+
+260
+00:14:41.400 --> 00:14:44.370
+the generated code that we
+wanted. We had tried kind
+
+261
+00:14:44.370 --> 00:14:48.330
+of attempts at co-generation before
+using XSLT, but it was
+
+262
+00:14:48.330 --> 00:14:51.860
+the debugging tools, the integrated
+studio, the rich community. I
+
+263
+00:14:51.860 --> 00:14:54.560
+mean, that was the stuff
+that mattered to us, right.
+
+264
+00:14:54.620 --> 00:14:57.080
+About coach Smith. Anyway, that's
+pretty, it's pretty cheap if
+
+265
+00:14:57.080 --> 00:14:58.610
+you think about it. I
+mean, if you generate one
+
+266
+00:14:58.610 --> 00:15:01.190
+data access layer, it's pretty
+much paid for itself. Absolutely.
+
+267
+00:15:01.220 --> 00:15:03.470
+But you know, things that
+are harder to do that,
+
+268
+00:15:03.470 --> 00:15:05.420
+I probably wouldn't try to
+do, like if you wanted
+
+269
+00:15:05.420 --> 00:15:10.400
+to generate an entire UI,
+you totally could, but there's
+
+270
+00:15:10.400 --> 00:15:14.390
+nothing about MCOs. Smith has
+really focused on generation at
+
+271
+00:15:14.390 --> 00:15:18.800
+the, at the template level.
+They support batch generation where
+
+272
+00:15:18.800 --> 00:15:21.260
+you can actually give it
+an XML file and say,
+
+273
+00:15:21.650 --> 00:15:23.960
+I want these 15 templates
+generated in each. You could
+
+274
+00:15:23.960 --> 00:15:26.690
+generate whole projects. And that's
+what the CSA stuff does.
+
+275
+00:15:26.690 --> 00:15:29.270
+And some of the more
+complicated things. Right. But it
+
+276
+00:15:29.270 --> 00:15:32.760
+doesn't force you to do
+things a certain way. It's,
+
+277
+00:15:32.760 --> 00:15:36.260
+it's very open because it's
+open and because it's open,
+
+278
+00:15:36.290 --> 00:15:39.920
+it is a little overwhelming,
+right. When someone says, can
+
+279
+00:15:39.920 --> 00:15:41.390
+you do that? Yeah, you
+can totally do that. You
+
+280
+00:15:41.390 --> 00:15:43.580
+can do whatever you want
+to. Right. So there are
+
+281
+00:15:43.580 --> 00:15:46.160
+a number of other ones
+that are a little, I
+
+282
+00:15:46.160 --> 00:15:48.230
+wouldn't say less open, but
+they give you kind of
+
+283
+00:15:48.230 --> 00:15:50.690
+more directly out of the
+box. Maybe a little more
+
+284
+00:15:50.690 --> 00:15:54.320
+direction. Yeah. They hold your
+hand. Right. I would agree.
+
+285
+00:15:54.320 --> 00:15:55.640
+That's a very good way
+to put it. So like,
+
+286
+00:15:55.640 --> 00:15:57.860
+one of them that people
+just rave about is called
+
+287
+00:15:57.980 --> 00:16:02.330
+LLB El gen. They rave
+about everything except the name
+
+288
+00:16:02.540 --> 00:16:07.280
+LLB El gen LLB, El
+Jen. Okay. And this one
+
+289
+00:16:07.280 --> 00:16:12.950
+is at trickster.com/e four five,
+and has a, a really
+
+290
+00:16:12.950 --> 00:16:17.030
+cool designer, you know, surface,
+you sit down and you
+
+291
+00:16:17.030 --> 00:16:19.850
+go file new project. And
+that seems very cool. It
+
+292
+00:16:19.850 --> 00:16:23.360
+generates a catalog by looking
+at any database. So it
+
+293
+00:16:23.370 --> 00:16:28.760
+supports like SQL access, whatever
+ado. Yeah. Whatever old ADB
+
+294
+00:16:28.760 --> 00:16:31.490
+database you want to look
+at. And then you say,
+
+295
+00:16:31.760 --> 00:16:33.860
+I want to generate entities.
+So then you can say,
+
+296
+00:16:33.860 --> 00:16:36.230
+well, I want to make
+entities based on tables. I
+
+297
+00:16:36.230 --> 00:16:39.500
+want to make them based
+on, on views. And then
+
+298
+00:16:39.500 --> 00:16:41.390
+like, for example, I'm looking
+at a database right now
+
+299
+00:16:41.390 --> 00:16:44.930
+where I'm going to generate
+customer, employee financials and things
+
+300
+00:16:44.930 --> 00:16:48.320
+like that. Yeah. I can
+select each of these rows
+
+301
+00:16:48.320 --> 00:16:50.360
+and say, all right, I'm
+going to generate all that
+
+302
+00:16:50.360 --> 00:16:53.210
+hit, add to project. And
+then a miracle happens and
+
+303
+00:16:53.210 --> 00:16:57.800
+then fantastic amounts of code
+get created. Okay. Now, from
+
+304
+00:16:57.800 --> 00:17:00.710
+a holding your hand standpoint,
+it did everything. It handled
+
+305
+00:17:00.710 --> 00:17:04.700
+the complete entity generation of
+the whole thing. It will
+
+306
+00:17:04.700 --> 00:17:08.030
+generate code for compact framework.
+It'll generate code for visual,
+
+307
+00:17:08.030 --> 00:17:11.870
+through to you 2003, 2005.
+When you say generate, it
+
+308
+00:17:11.870 --> 00:17:15.350
+says pick a configuration. And
+it has these adapters. They're
+
+309
+00:17:15.350 --> 00:17:18.710
+like 15 different adapters. And
+it can be a little
+
+310
+00:17:18.710 --> 00:17:22.010
+daunting because it's like, you've
+got this big dialogue with
+
+311
+00:17:22.010 --> 00:17:24.680
+a bunch of options and
+you say, start generator right
+
+312
+00:17:24.860 --> 00:17:27.500
+now. When you, what you
+get out of the code
+
+313
+00:17:27.500 --> 00:17:32.540
+is fantastic. You get a
+whole complete project done. If
+
+314
+00:17:32.540 --> 00:17:35.660
+you want to modify it
+and change the way the
+
+315
+00:17:35.660 --> 00:17:38.480
+code gets generated, it can
+be a little confusing. So
+
+316
+00:17:38.480 --> 00:17:42.260
+it's not really template driven
+then, or it is, but
+
+317
+00:17:42.260 --> 00:17:46.490
+the templates are kind of
+buried a little bit in
+
+318
+00:17:46.490 --> 00:17:50.460
+my opinion. But if you
+want do just straight or
+
+319
+00:17:50.460 --> 00:17:53.010
+mapping, like your primary focus
+is I want to get
+
+320
+00:17:53.010 --> 00:17:56.310
+this field map to that
+in the database. And you
+
+321
+00:17:56.310 --> 00:17:58.920
+want to do complex relational
+mapping. Like I've got an
+
+322
+00:17:58.950 --> 00:18:00.990
+object that's going to come
+from this table and that
+
+323
+00:18:00.990 --> 00:18:03.660
+table. And I want to
+have custom properties and all
+
+324
+00:18:03.660 --> 00:18:07.080
+sorts of stuff. It's, it's
+pretty powerful people, people rave
+
+325
+00:18:07.080 --> 00:18:10.740
+about it, but it does
+have a definite black box
+
+326
+00:18:10.890 --> 00:18:13.530
+black box kind of view.
+You can get into it.
+
+327
+00:18:13.530 --> 00:18:15.810
+And, and the, the help
+is fantastic. There's a great
+
+328
+00:18:15.810 --> 00:18:18.660
+deal of help on how
+to do it. Messing with
+
+329
+00:18:18.660 --> 00:18:21.120
+the generated code. I've just
+found to be a little,
+
+330
+00:18:21.420 --> 00:18:24.060
+a little confusing. All right,
+well, there's also community behind
+
+331
+00:18:24.060 --> 00:18:27.450
+it. And the code that
+it generates is pretty cool
+
+332
+00:18:27.570 --> 00:18:30.720
+and you can get different
+adapters. So you definitely think
+
+333
+00:18:30.720 --> 00:18:32.520
+this is worth checking out.
+If you're going to be
+
+334
+00:18:32.520 --> 00:18:36.660
+doing entity relationship mapping, and
+you're not too worried about
+
+335
+00:18:37.650 --> 00:18:41.940
+if you don't really care
+about having the absolute control
+
+336
+00:18:41.940 --> 00:18:44.580
+at the, at the very
+low level, right. And you
+
+337
+00:18:44.580 --> 00:18:46.620
+just want to get a
+customer out of a database.
+
+338
+00:18:47.130 --> 00:18:48.720
+I think that it would
+be a really great way
+
+339
+00:18:48.720 --> 00:18:52.620
+to start. Okay. It's a
+different philosophy. I'm not, it's,
+
+340
+00:18:52.620 --> 00:18:55.800
+it's, it's no it's apples
+and oranges. Really. I liked
+
+341
+00:18:56.460 --> 00:18:59.310
+the API support in code
+Smith. I like the ability
+
+342
+00:18:59.310 --> 00:19:02.850
+to generate my own dowel,
+but, but it took me
+
+343
+00:19:02.850 --> 00:19:04.920
+a week to get into
+that, that low level. Once
+
+344
+00:19:04.920 --> 00:19:08.910
+I did that, though, we
+generate user controls. We generate
+
+345
+00:19:08.910 --> 00:19:12.930
+asp.net pages. We generate custom
+to a user controls. We
+
+346
+00:19:12.930 --> 00:19:15.930
+even generated visual studio addins
+with code Smith. I mean,
+
+347
+00:19:16.260 --> 00:19:18.570
+we went nuts. I mean,
+you can generate, we generated
+
+348
+00:19:18.660 --> 00:19:22.680
+user controls. It's pretty cool.
+Cool. This one is really
+
+349
+00:19:22.680 --> 00:19:26.580
+focused on entity relationship. Alright,
+mapping. We get it. Okay.
+
+350
+00:19:26.820 --> 00:19:30.030
+Now another one that is,
+that is free and a
+
+351
+00:19:30.030 --> 00:19:33.720
+lot less feature rich, but
+still pretty cool is called
+
+352
+00:19:33.720 --> 00:19:38.190
+codas. This is free. It's
+by Sean McCormack and it's
+
+353
+00:19:38.190 --> 00:19:42.900
+at shrinks.com/ <inaudible>. Sean McCormick is
+a really cool guy. He
+
+354
+00:19:42.900 --> 00:19:46.950
+was an actually an Arabic
+language translator for the air
+
+355
+00:19:46.950 --> 00:19:49.920
+force. No kid Cormac is
+actually our family name, my
+
+356
+00:19:49.920 --> 00:19:52.890
+grandmother's name. And that's a
+Scottish name, I hope. Huh?
+
+357
+00:19:53.250 --> 00:19:56.760
+So he has got this
+thing called codas. And you
+
+358
+00:19:56.760 --> 00:20:00.030
+can see that, like I
+said, that shrinks.com/ <inaudible>. And
+
+359
+00:20:00.060 --> 00:20:03.420
+it has the ability to
+generate a data access framework
+
+360
+00:20:03.450 --> 00:20:06.180
+and hibernate frameworks and has
+its own kind of weird
+
+361
+00:20:06.180 --> 00:20:10.230
+funky templating language. That's based
+on like pound signs and
+
+362
+00:20:10.230 --> 00:20:13.470
+stuff, but he generates end
+unit tests for the entire
+
+363
+00:20:13.470 --> 00:20:15.300
+thing. So that's another thing
+to think about when you're
+
+364
+00:20:15.300 --> 00:20:18.950
+doing cogeneration generate everything. You
+really should generate the test
+
+365
+00:20:18.950 --> 00:20:21.840
+as well, generate the tests.
+Definitely. I like his stuff
+
+366
+00:20:21.870 --> 00:20:24.690
+because it comes with his
+point of view right out
+
+367
+00:20:24.690 --> 00:20:26.490
+of the bat. And I've
+always liked the way that
+
+368
+00:20:26.490 --> 00:20:29.970
+Sean, thanks. He's the guy
+behind Zane bug, which is
+
+369
+00:20:29.970 --> 00:20:33.810
+an alternative and unit running
+tool and his stuff. He
+
+370
+00:20:33.810 --> 00:20:36.420
+would generate the visual studio
+solution, the end unit test
+
+371
+00:20:36.420 --> 00:20:38.880
+and the Nat build file
+for you and then run
+
+372
+00:20:38.880 --> 00:20:41.340
+off and nap the whole
+thing and build it. So
+
+373
+00:20:41.340 --> 00:20:43.620
+for people who are in
+the end unit Nat, take
+
+374
+00:20:43.620 --> 00:20:45.510
+a look at at least
+at the codes that he
+
+375
+00:20:45.510 --> 00:20:49.180
+generates and maybe steal it
+because it's really nice. Okay.
+
+376
+00:20:49.480 --> 00:20:58.240
+Now there's a website called
+cogeneration.net. Yeah. tracer.com/e foresee. Fantastic
+
+377
+00:20:58.480 --> 00:21:01.840
+place to just think about
+all things gen great resource.
+
+378
+00:21:02.200 --> 00:21:05.290
+And now we've been talking
+about cogeneration that takes some
+
+379
+00:21:05.290 --> 00:21:08.770
+domain specific language, whether that
+be the database itself or
+
+380
+00:21:08.770 --> 00:21:12.040
+an XML file or whatever,
+and generating code, but there
+
+381
+00:21:12.040 --> 00:21:17.220
+are larger cogeneration frameworks that
+will round trip stuff, right.
+
+382
+00:21:17.220 --> 00:21:19.960
+Where you're going to generate
+a whole lot of code,
+
+383
+00:21:20.110 --> 00:21:23.050
+make a tiny change. And
+you want your cogeneration process
+
+384
+00:21:23.050 --> 00:21:25.690
+to keep track of, Oh,
+he added a column. How
+
+385
+00:21:25.690 --> 00:21:27.000
+am I going to do
+the versioning stuff? Yeah. Yeah.
+
+386
+00:21:27.000 --> 00:21:29.910
+That seems to be the
+trick. Right? A very complicated
+
+387
+00:21:29.910 --> 00:21:32.880
+thing to do, stuff like
+that. You want to look
+
+388
+00:21:32.880 --> 00:21:36.960
+at larger cogeneration frameworks that
+are really more sophisticated. They
+
+389
+00:21:36.960 --> 00:21:41.190
+tend to be a little
+more complicated to learn, but
+
+390
+00:21:41.220 --> 00:21:47.370
+particularly I like declare it
+shrinks.com/e four B their chief
+
+391
+00:21:47.370 --> 00:21:53.100
+architect Andrea's ivr@hisblogisatstringer.com slash E
+four D as in David.
+
+392
+00:21:53.460 --> 00:21:57.030
+And again, their website is
+that shrinks your.com/e four B
+
+393
+00:21:57.030 --> 00:22:01.950
+as in Bob, they've got
+a whole philosophy of cogeneration
+
+394
+00:22:01.950 --> 00:22:05.850
+that is really interesting to
+watch. I saw some of
+
+395
+00:22:05.850 --> 00:22:09.660
+their stuff for their 4.0
+beta a while back. And
+
+396
+00:22:09.660 --> 00:22:13.170
+it was pretty impressed. Their
+integration within visual studio 2005
+
+397
+00:22:13.170 --> 00:22:16.290
+is pretty, pretty sweet. Yeah.
+I've been impressed by their
+
+398
+00:22:16.290 --> 00:22:19.650
+tools as well. And they'll
+generate up into the presentation
+
+399
+00:22:19.650 --> 00:22:21.330
+layer for you. So, and
+they're one of the few
+
+400
+00:22:21.330 --> 00:22:23.310
+ones that you can just
+basically point it at an
+
+401
+00:22:23.310 --> 00:22:26.250
+existing database and they'll just
+generate the whole app for
+
+402
+00:22:26.250 --> 00:22:29.750
+you. Yeah. And it's, it's
+pretty cool. And they, they,
+
+403
+00:22:29.750 --> 00:22:31.920
+they, they build it into
+the whole life cycle. So
+
+404
+00:22:32.070 --> 00:22:34.530
+you'll make a change to
+the entire domain and then
+
+405
+00:22:34.530 --> 00:22:38.100
+region the application. And then
+they'll, they'll automatically generate the
+
+406
+00:22:38.100 --> 00:22:41.940
+scripts for SQL to, to
+note that, well, I've, I've
+
+407
+00:22:41.940 --> 00:22:43.710
+upgraded from one version to
+another, so I need to
+
+408
+00:22:43.710 --> 00:22:46.380
+migrate my data forward. Wow.
+Cool. And I thought that
+
+409
+00:22:46.380 --> 00:22:48.720
+that was a pretty cool,
+their integration with the visual
+
+410
+00:22:48.720 --> 00:22:52.680
+studio is pretty much on
+I'm unparalleled, but again, you're
+
+411
+00:22:52.680 --> 00:22:56.650
+buying into their point of
+view to some extent. Well,
+
+412
+00:22:56.650 --> 00:22:58.170
+I, it sounds like you
+have to do that no
+
+413
+00:22:58.170 --> 00:23:00.510
+matter what tool you choose.
+Yeah. You really are. You're
+
+414
+00:23:00.510 --> 00:23:04.980
+invested The code generator yourself.
+Right. But, you know, I
+
+415
+00:23:04.980 --> 00:23:09.600
+like coach Smith because the
+I'm a control freak. Yes.
+
+416
+00:23:09.630 --> 00:23:11.520
+I really want that very,
+very low, low, are we
+
+417
+00:23:11.520 --> 00:23:14.610
+all? I mean, especially Hanselman
+it's listeners. I got imagine.
+
+418
+00:23:14.730 --> 00:23:18.480
+Yeah. I'm more of a
+control enthusiast. I'll freak. And
+
+419
+00:23:18.480 --> 00:23:21.270
+then of course there's the
+Microsoft DSL tools that we've
+
+420
+00:23:21.270 --> 00:23:24.270
+been hearing about. Oh yeah.
+The domain specific language tools
+
+421
+00:23:24.480 --> 00:23:27.120
+Chris was talking about herself.
+Yeah. That stuff is going
+
+422
+00:23:27.120 --> 00:23:30.230
+to be part of the
+whole software factories world. And
+
+423
+00:23:30.960 --> 00:23:40.350
+the details are@shrinkerdotcomslashefourgasingordonandthewholesoftwarefactoriesconceptofdrinker.com slash E
+four I Three visits the
+
+424
+00:23:40.350 --> 00:23:45.210
+software factories idea. What's that
+all about? Well, so there's
+
+425
+00:23:45.230 --> 00:23:48.230
+the software factors kind of
+sounds like someone's just forcing
+
+426
+00:23:48.230 --> 00:23:49.960
+you to kind of turn
+the crank. Doesn't it, That's
+
+427
+00:23:49.960 --> 00:23:52.270
+great. Just sitting stamping. I
+work in a software factory,
+
+428
+00:23:52.270 --> 00:23:56.080
+stamping out potato chips. So
+they say, and I tend
+
+429
+00:23:56.080 --> 00:23:58.600
+to agree with them that
+software factories is really extending
+
+430
+00:23:58.600 --> 00:24:06.130
+the model driven development and
+building. They feel that the
+
+431
+00:24:06.130 --> 00:24:08.110
+folks on the other side,
+right? So the set of
+
+432
+00:24:08.110 --> 00:24:12.040
+all people who aren't them
+like the rational unified process
+
+433
+00:24:12.040 --> 00:24:14.470
+and all the different model
+driven hardcore types are just
+
+434
+00:24:14.470 --> 00:24:17.620
+a little too inflexible. And
+rather than taking that kind
+
+435
+00:24:17.620 --> 00:24:21.370
+of one size fits all,
+they believe that you should
+
+436
+00:24:21.370 --> 00:24:25.300
+have collections of domain specific
+languages. And this was a
+
+437
+00:24:25.300 --> 00:24:27.280
+lot what we did. I
+mean, Karelian the company I
+
+438
+00:24:27.280 --> 00:24:30.460
+work for. We do financial
+services stuff. So when we
+
+439
+00:24:30.460 --> 00:24:33.100
+were trying to solve the
+problem, we wrote a DSL,
+
+440
+00:24:33.100 --> 00:24:36.490
+a domain specific language that
+was specific to finance. All
+
+441
+00:24:36.490 --> 00:24:40.750
+right. I'm not trying to
+solve a generic object, relational
+
+442
+00:24:40.750 --> 00:24:43.900
+mapping problem. I'm trying to
+get bank accounts out of
+
+443
+00:24:43.900 --> 00:24:49.660
+a mainframe. Sure. So some
+of these really broad ways
+
+444
+00:24:49.660 --> 00:24:51.670
+of thinking about things weren't
+specific. So we tried to
+
+445
+00:24:51.670 --> 00:24:57.610
+build a software factory tailored
+towards finance, a series of
+
+446
+00:24:57.970 --> 00:25:05.140
+tools, design tools, processes, plugins
+that were specific to our
+
+447
+00:25:05.140 --> 00:25:10.180
+domain. So software factories is
+kind of less about Microsoft
+
+448
+00:25:10.180 --> 00:25:13.660
+and more about the little
+pieces that you would plug
+
+449
+00:25:13.690 --> 00:25:16.690
+together to make, make an
+application. So Like a domain
+
+450
+00:25:16.690 --> 00:25:21.870
+specific toolkit maybe. Well, there
+you go. Yeah, exactly. And
+
+451
+00:25:21.940 --> 00:25:24.340
+we're talking about generating more
+than just source code, right?
+
+452
+00:25:24.610 --> 00:25:29.800
+Generating tests, generating config files,
+documentation. Oh yeah, totally. Like
+
+453
+00:25:29.800 --> 00:25:32.860
+at Kirlian we use, we
+use code Smith to generate
+
+454
+00:25:32.860 --> 00:25:36.220
+word ML, you know, that
+you can generate XML that
+
+455
+00:25:36.460 --> 00:25:40.720
+opens in word. Yeah. So
+we not only generate that
+
+456
+00:25:40.720 --> 00:25:43.900
+code word of mouth. Yeah.
+We generate not only the
+
+457
+00:25:44.090 --> 00:25:46.390
+like end doc, we like
+run end doc on the
+
+458
+00:25:46.390 --> 00:25:49.960
+open source tool to build
+our documentation, but we generate
+
+459
+00:25:50.020 --> 00:25:53.380
+wisdom files for web services.
+And then we generate word
+
+460
+00:25:53.380 --> 00:25:55.450
+of mill. So then we'll
+take our models and we'll
+
+461
+00:25:55.450 --> 00:26:00.670
+do self-documenting models. And rather
+than having somebody write up
+
+462
+00:26:00.700 --> 00:26:03.850
+240 pages in word, we
+generate all of that. And
+
+463
+00:26:03.850 --> 00:26:06.400
+that's kind of part of
+the whole, the whole factory
+
+464
+00:26:06.460 --> 00:26:09.850
+right now. The factory is
+an ideal. Of course, everyone
+
+465
+00:26:09.850 --> 00:26:12.520
+knows that the reality is
+kind of a MacGyver ask
+
+466
+00:26:13.030 --> 00:26:16.480
+magic land, like a Rube
+Goldberg and thing without, you
+
+467
+00:26:16.480 --> 00:26:19.600
+know, the man jumps into
+the, the, the tub and
+
+468
+00:26:19.600 --> 00:26:21.240
+then the rats thing fall
+down on the bill and
+
+469
+00:26:21.250 --> 00:26:23.980
+bowling ball. And Yeah. And
+when you're nine levels deep,
+
+470
+00:26:23.980 --> 00:26:25.600
+you say, and why do
+we choose to do this?
+
+471
+00:26:25.870 --> 00:26:28.150
+And that's just, that's just
+part of reality. And that's
+
+472
+00:26:28.150 --> 00:26:31.090
+kinda what the software factory
+stuff is trying to acknowledge
+
+473
+00:26:31.090 --> 00:26:35.170
+that you can't get this
+beautiful, perfect thing at a
+
+474
+00:26:35.170 --> 00:26:39.220
+20,000 foot view. Right. But
+if you recognize that this
+
+475
+00:26:39.220 --> 00:26:43.350
+is a process cogeneration, the
+model generating the tests, generally
+
+476
+00:26:43.350 --> 00:26:46.170
+the database cogent in the
+unit testing every database, and
+
+477
+00:26:46.170 --> 00:26:51.300
+each of those dis perhaps
+requires a separate tool you
+
+478
+00:26:51.300 --> 00:26:53.730
+might use, you know, declare
+it to generate your UI.
+
+479
+00:26:53.760 --> 00:26:55.890
+And you might end up
+using code Smiths to generate
+
+480
+00:26:55.890 --> 00:26:57.600
+some tests. I mean, you
+just don't know how your
+
+481
+00:26:57.600 --> 00:27:00.270
+factory is going to fit
+together. But the, the real
+
+482
+00:27:00.270 --> 00:27:04.230
+question is what is the
+D the authoritative source for
+
+483
+00:27:04.230 --> 00:27:06.710
+what you're trying to solve.
+Come back to this. Now,
+
+484
+00:27:06.710 --> 00:27:09.080
+this is what you start
+out with this idea of
+
+485
+00:27:09.080 --> 00:27:13.490
+the authoritative source. I guess
+that's pretty central to the
+
+486
+00:27:13.490 --> 00:27:16.720
+cogeneration as an idea, In
+my opinion, it is, I
+
+487
+00:27:16.720 --> 00:27:18.440
+I've always felt like you
+should be able to throw
+
+488
+00:27:18.440 --> 00:27:21.560
+away a lot of stuff
+and cogent as much as
+
+489
+00:27:21.560 --> 00:27:24.380
+you can. Yeah. There's actually
+a really interesting thing going
+
+490
+00:27:24.380 --> 00:27:30.080
+on at a guy named
+Gareth's blog@shrinksor.com slash <inaudible>. And
+
+491
+00:27:30.080 --> 00:27:34.160
+he's asking the question, can
+you code gen everything? And,
+
+492
+00:27:34.430 --> 00:27:36.950
+you know, he is decided,
+and I would have tendency
+
+493
+00:27:36.950 --> 00:27:38.780
+to agree with him that
+you really can't. I think
+
+494
+00:27:38.780 --> 00:27:42.380
+the number he came up
+with was something like 75%,
+
+495
+00:27:42.500 --> 00:27:46.760
+you know, who knows. But
+I think that if you've
+
+496
+00:27:46.760 --> 00:27:50.150
+written code twice, maybe it
+goes in a library. If
+
+497
+00:27:50.150 --> 00:27:51.890
+you've written it three times,
+maybe it should have been
+
+498
+00:27:51.890 --> 00:27:54.740
+generated. You know what I
+mean? You need to decide
+
+499
+00:27:54.740 --> 00:27:57.650
+what your rule of thumb
+is. But I do know
+
+500
+00:27:57.650 --> 00:28:01.280
+this with ado, with SQL
+and the way that it's
+
+501
+00:28:01.280 --> 00:28:03.920
+things are going, if you
+are not, Cogenic at the
+
+502
+00:28:03.920 --> 00:28:06.740
+very minimum, your data access
+layer. Yeah. You are very
+
+503
+00:28:06.740 --> 00:28:09.470
+likely wasting some time and
+you really ought to take
+
+504
+00:28:09.470 --> 00:28:12.170
+some time and look at
+some of these applications that
+
+505
+00:28:12.170 --> 00:28:15.710
+allow you to generate your
+business object layer. At some
+
+506
+00:28:15.710 --> 00:28:18.380
+point, whether it be Rocky
+stuff or declare it or
+
+507
+00:28:18.380 --> 00:28:22.490
+codas or code Smith, or,
+you know, there, there is
+
+508
+00:28:22.700 --> 00:28:26.510
+much more interesting problems to
+be solved than getting authors
+
+509
+00:28:26.510 --> 00:28:29.900
+out of database. I agree.
+Who's the, who's the genius
+
+510
+00:28:29.900 --> 00:28:35.150
+behind code Smith. Eric, Eric Smith
+has got a blog at
+
+511
+00:28:35.150 --> 00:28:38.720
+<inaudible> dot com slash E
+four E and he is
+
+512
+00:28:38.720 --> 00:28:41.510
+the guy that basically turned
+the whole idea into the
+
+513
+00:28:41.510 --> 00:28:45.670
+coach Smith tools company. Okay.
+Yeah. So Scott, whose blogs
+
+514
+00:28:45.670 --> 00:28:48.020
+should we be reading when
+it comes to cogeneration? Who's
+
+515
+00:28:48.050 --> 00:28:50.960
+who's thinking about this every
+day, Besides the kind of
+
+516
+00:28:50.960 --> 00:28:53.810
+the portal for cogeneration at
+co-generation dot net <inaudible> dot
+
+517
+00:28:53.810 --> 00:28:57.230
+com slash E foresee. Definitely
+the, the kind of the
+
+518
+00:28:57.230 --> 00:29:02.810
+grandam of cogeneration will be
+Kathleen Dollard and her website@jen.net.com.
+
+519
+00:29:02.810 --> 00:29:06.680
+That's a shrink stir.com/e four
+J she's done a lot
+
+520
+00:29:06.680 --> 00:29:09.020
+of the really hard thinking
+about the problem and, you
+
+521
+00:29:09.020 --> 00:29:11.750
+know, should, is someone should,
+you should definitely be watching.
+
+522
+00:29:12.080 --> 00:29:15.200
+I think a chief architect
+of declare it Andres, I
+
+523
+00:29:15.200 --> 00:29:17.840
+agree our, his blog at
+<inaudible> dot com slash E
+
+524
+00:29:17.870 --> 00:29:21.590
+four D and then the
+guy behind code Smith is
+
+525
+00:29:21.590 --> 00:29:26.630
+Eric Smith. And his blog is
+at shrinker.com/e four E. I
+
+526
+00:29:26.630 --> 00:29:28.820
+think those are, those are
+a good start. I'm sure
+
+527
+00:29:28.820 --> 00:29:32.480
+I've missed dozens and dozens
+of people because cogeneration is
+
+528
+00:29:32.480 --> 00:29:35.480
+such a huge and exciting
+thing to be looking at.
+
+529
+00:29:35.840 --> 00:29:38.720
+So apologies to those, I
+mean, there's tools I could
+
+530
+00:29:38.720 --> 00:29:43.180
+have covered. You can see
+those cool tools@thecogeneration.net Website, but
+
+531
+00:29:43.300 --> 00:29:45.820
+these are ones that I've,
+that I've looked at that
+
+532
+00:29:45.820 --> 00:29:50.470
+I feel good about. Yeah.
+Generate some code is the,
+
+533
+00:29:50.500 --> 00:29:53.260
+is the, the takeaway for
+today. And we should also
+
+534
+00:29:53.260 --> 00:29:55.840
+mention that, you know, your
+blog is a great place
+
+535
+00:29:55.840 --> 00:29:59.020
+for after show discussions about
+this kind of stuff. So,
+
+536
+00:29:59.530 --> 00:30:02.860
+so go to computers and.com
+for the latest on this.
+
+537
+00:30:03.280 --> 00:30:05.860
+Totally. That would be cool.
+Thank you. Alright, well, that's
+
+538
+00:30:05.860 --> 00:30:09.280
+a show, so thanks for
+listening as always, if you
+
+539
+00:30:09.280 --> 00:30:11.740
+have any suggestions, send them
+to us and we'll see
+
+540
+00:30:11.740 --> 00:30:13.840
+you next week on Hansen
+minutes.
+

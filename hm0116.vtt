@@ -1,0 +1,3071 @@
+WEBVTT FILE
+
+1
+00:00:12.060 --> 00:00:17.460
+From Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+2
+00:00:17.460 --> 00:00:22.590
+web developer and technologists. Scott
+Hanselman posted by Carl Franklin. This
+
+3
+00:00:22.590 --> 00:00:27.450
+is Lawrence Ryan announcing show number
+one 16 recorded live Thursday,
+
+4
+00:00:27.480 --> 00:00:33.720
+June 5th, 2008. Support for Hanselman it's
+just provided by. Tellerik already
+
+5
+00:00:33.720 --> 00:00:37.860
+controls the most comprehensive suite
+of components for windows forms
+
+6
+00:00:37.860 --> 00:00:47.730
+and asp.net web applications. online@wwwdottelerik.com
+and by the code better
+
+7
+00:00:47.730 --> 00:00:51.600
+blog network, delivering tried and
+true solutions to real world
+
+8
+00:00:51.600 --> 00:00:59.070
+problems for building better software
+online@covid.com. Support is also provided
+
+9
+00:00:59.070 --> 00:01:03.870
+by dot developers journal the
+world's leading.net developer magazine online
+
+10
+00:01:03.870 --> 00:01:09.270
+at www dot <inaudible> dot
+com. In this episode from
+
+11
+00:01:09.270 --> 00:01:12.870
+tech ed Scott talks with
+anneal Nori and Murali Krishna
+
+12
+00:01:12.870 --> 00:01:20.100
+Prisaad from Microsoft velocity team
+about distributed caching. Hi, this
+
+13
+00:01:20.100 --> 00:01:22.050
+is Scott Hanselman, and this
+is another episode of Hansel
+
+14
+00:01:22.050 --> 00:01:24.660
+minutes. I'm recording live from
+the floor of tech ed
+
+15
+00:01:24.660 --> 00:01:27.930
+2008 here in Orlando, Florida.
+I'm lucky enough to sit
+
+16
+00:01:27.930 --> 00:01:30.900
+down with the Neil Norrie
+and Murali Krishna Prisaad from
+
+17
+00:01:30.900 --> 00:01:35.220
+SQL server group. Working on
+velocity. Velocity is a new
+
+18
+00:01:35.520 --> 00:01:38.520
+product that was announced here
+at tech ed 2008. And
+
+19
+00:01:38.520 --> 00:01:40.910
+you know, what is, what
+is velocity? Oh, well lastly
+
+20
+00:01:40.910 --> 00:01:44.960
+is they distributed cash? It's
+primarily the goal is to
+
+21
+00:01:44.960 --> 00:01:50.810
+really provide high performance scale
+and availability for applications. So
+
+22
+00:01:50.810 --> 00:01:52.430
+this is a high performance
+cash that I can, I'm
+
+23
+00:01:52.430 --> 00:01:54.920
+gonna put my objects into
+this cash. What am I
+
+24
+00:01:54.920 --> 00:01:57.500
+going to put into this
+cash? You can put any
+
+25
+00:01:57.500 --> 00:02:00.770
+kind of object in cash.
+For example, could put a
+
+26
+00:02:00.770 --> 00:02:05.060
+CLR object or XML document
+or some blob or anything.
+
+27
+00:02:05.480 --> 00:02:07.490
+The key thing is that,
+you know, it's no pun
+
+28
+00:02:07.490 --> 00:02:10.490
+intended, but you know, it
+needs to be identified by
+
+29
+00:02:10.490 --> 00:02:12.560
+a key. So as long
+as you actually have an
+
+30
+00:02:12.560 --> 00:02:15.380
+identifier, then you can identify
+it and then we can
+
+31
+00:02:15.380 --> 00:02:18.560
+pull the data. So This
+is a giant distributed hash
+
+32
+00:02:18.560 --> 00:02:23.180
+table. That's right. So this
+is a giant distributed cash.
+
+33
+00:02:23.210 --> 00:02:25.520
+And the kind of the
+only requirement that we have
+
+34
+00:02:25.520 --> 00:02:27.590
+is that the object VC
+replaceable, so that we can
+
+35
+00:02:27.590 --> 00:02:29.900
+store it across the machines.
+So you an ethic, we
+
+36
+00:02:29.900 --> 00:02:31.850
+take a bunch of machines.
+We use the memory on
+
+37
+00:02:31.850 --> 00:02:33.800
+all the machines and provide
+you the illusion of a
+
+38
+00:02:33.800 --> 00:02:37.700
+single unified cache. So this
+sounds like the asp.net out
+
+39
+00:02:37.700 --> 00:02:40.670
+of process, session, state service.
+It's similar to that, except
+
+40
+00:02:40.670 --> 00:02:42.500
+that the fact that we
+can actually scale better by
+
+41
+00:02:42.500 --> 00:02:45.110
+adding new machines and your
+application, do you not to
+
+42
+00:02:45.110 --> 00:02:47.150
+be partitioned in any way
+we can do all that
+
+43
+00:02:47.150 --> 00:02:49.940
+stuff for you? Okay. So
+when I'm doing an asp.net
+
+44
+00:02:49.940 --> 00:02:51.650
+application, which I think is
+one of the more common
+
+45
+00:02:51.650 --> 00:02:53.870
+kinds of applications that would
+use a technology like this,
+
+46
+00:02:54.700 --> 00:02:57.700
+I in the past would
+use either out of prox
+
+47
+00:02:57.700 --> 00:03:00.760
+session, state or SQL based
+session state That is correct
+
+48
+00:03:00.820 --> 00:03:03.880
+out of processing state really
+just is one service. It's
+
+49
+00:03:03.880 --> 00:03:06.550
+a window service that runs
+on one machine and there's
+
+50
+00:03:06.550 --> 00:03:09.040
+no way to cluster it
+or, or spread it out.
+
+51
+00:03:10.240 --> 00:03:12.730
+That is correct. So in
+fact, one of the shortcomings
+
+52
+00:03:12.730 --> 00:03:14.110
+off the out of state
+proxy is the fact that
+
+53
+00:03:14.110 --> 00:03:16.000
+it runs on a single
+machine. If the machine goes
+
+54
+00:03:16.000 --> 00:03:17.980
+down, you lose your services,
+right? And you would have
+
+55
+00:03:17.980 --> 00:03:20.320
+to manually partition it if
+you need it to. Whereas
+
+56
+00:03:20.320 --> 00:03:23.200
+with this distributed caching technology,
+you get actually two benefits.
+
+57
+00:03:23.590 --> 00:03:26.320
+First of all, we provide
+an automatic session state provider.
+
+58
+00:03:26.620 --> 00:03:29.650
+So if you just change
+your ASP configuration to point
+
+59
+00:03:29.650 --> 00:03:31.930
+to us, we didn't take
+care of putting your sessions
+
+60
+00:03:31.960 --> 00:03:35.620
+into the distributed cache and
+scaling your session state completely,
+
+61
+00:03:35.620 --> 00:03:37.960
+and also making it fail
+safe. So one of the
+
+62
+00:03:37.960 --> 00:03:40.060
+reasons people put things in
+SQL server is because they
+
+63
+00:03:40.060 --> 00:03:42.730
+don't want to lose their
+state. Right? And with the
+
+64
+00:03:42.730 --> 00:03:46.120
+distributed cache, you get the
+in memory kind of performance
+
+65
+00:03:46.120 --> 00:03:48.940
+of it, as well as
+the failure, a failure of
+
+66
+00:03:48.940 --> 00:03:51.700
+fail-safe things that sequel server
+provides, right? Because everyone wants
+
+67
+00:03:51.700 --> 00:03:53.620
+to use the out of
+proxy, sequel server stuff. But
+
+68
+00:03:53.620 --> 00:03:56.250
+we always say, I don't
+want the performance hit. Yeah.
+
+69
+00:03:56.250 --> 00:03:59.970
+Not only the performance, even
+with SQL server, the fact
+
+70
+00:03:59.970 --> 00:04:02.400
+that, you know, as soon
+as you have a lot
+
+71
+00:04:02.400 --> 00:04:06.720
+of concurrent users really hitting
+the asp.net application, so then,
+
+72
+00:04:06.720 --> 00:04:08.970
+you know, you have actually
+the scale and then you
+
+73
+00:04:08.970 --> 00:04:12.360
+know, that those kinds of
+problems and the other problem
+
+74
+00:04:12.360 --> 00:04:15.150
+is that in case if
+SQL server happens to go
+
+75
+00:04:15.150 --> 00:04:19.800
+down, then you have actual
+availability issues. So I have
+
+76
+00:04:19.800 --> 00:04:22.800
+seen actually a lot of
+customers using SQL server with
+
+77
+00:04:22.800 --> 00:04:25.470
+service broker and then, you
+know, pushing those things to
+
+78
+00:04:25.470 --> 00:04:27.540
+go to the other SQL
+servers. So they are sort
+
+79
+00:04:27.540 --> 00:04:30.180
+of building some kind of
+a distributed SQL server pro.
+
+80
+00:04:30.990 --> 00:04:32.940
+Yeah. It's very difficult. When
+I was working in banking,
+
+81
+00:04:32.940 --> 00:04:35.160
+we were building, we don't
+think about availability. We scale
+
+82
+00:04:35.160 --> 00:04:37.590
+them out or fail over.
+It was, we ended up
+
+83
+00:04:37.590 --> 00:04:41.400
+building a little mini product
+to do distributed caching. And
+
+84
+00:04:41.400 --> 00:04:43.380
+that's not the business that
+we're in, we're in banking.
+
+85
+00:04:43.800 --> 00:04:47.220
+Yep. Yeah, absolutely. And I
+think we are looking at
+
+86
+00:04:47.220 --> 00:04:51.560
+actually latencies, which are almost
+like, you know, probably an
+
+87
+00:04:51.560 --> 00:04:54.000
+order of magnitude better than
+actually what you can hit
+
+88
+00:04:54.000 --> 00:04:56.880
+SQL server, because we are
+looking at two to three
+
+89
+00:04:56.880 --> 00:05:01.440
+millisecond latencies, as opposed to
+like 20 millisecond access that
+
+90
+00:05:01.440 --> 00:05:03.810
+typically, you know, you get
+it in our database systems.
+
+91
+00:05:04.050 --> 00:05:06.960
+Wow. That's the other big
+benefit that you get with
+
+92
+00:05:06.960 --> 00:05:11.970
+all the asp.net applications can
+leverage that benefits. So one
+
+93
+00:05:11.970 --> 00:05:13.980
+thing, one other thing to
+add is it's not limited
+
+94
+00:05:13.980 --> 00:05:16.530
+to just the session stage.
+We can also, we have
+
+95
+00:05:16.530 --> 00:05:18.690
+the caching API, so we
+can use that to actually
+
+96
+00:05:18.690 --> 00:05:21.870
+cash any of your ASP
+data as well. So this
+
+97
+00:05:21.870 --> 00:05:24.300
+is very similar to if
+people are familiar with the
+
+98
+00:05:24.300 --> 00:05:27.210
+system web caching or the
+enterprise caching block, our APS
+
+99
+00:05:27.210 --> 00:05:30.210
+are very similar to that.
+So your application can kind
+
+100
+00:05:30.210 --> 00:05:32.250
+of use our APIs and
+you can now scale your
+
+101
+00:05:32.250 --> 00:05:35.010
+apps as well, that way.
+So what does this look
+
+102
+00:05:35.010 --> 00:05:37.440
+like? Exactly. Let's say I've
+already got an existing web
+
+103
+00:05:37.440 --> 00:05:39.780
+server. Let's say that I've
+got 10 web servers in
+
+104
+00:05:39.780 --> 00:05:43.080
+a farm and I'm using
+in-process session right now. And
+
+105
+00:05:43.080 --> 00:05:46.050
+I use the system dot
+web dot caching. And because
+
+106
+00:05:46.050 --> 00:05:48.240
+I'm using in process session,
+let's say that I've set
+
+107
+00:05:48.240 --> 00:05:51.270
+up, what's called node affinity.
+So I'm trying to force
+
+108
+00:05:51.270 --> 00:05:53.910
+people to stay on a
+particular note. And one of
+
+109
+00:05:53.910 --> 00:05:56.040
+the things that happens with
+node affinity when web services
+
+110
+00:05:56.040 --> 00:05:58.280
+that you end up having
+a pile up where you've
+
+111
+00:05:58.280 --> 00:06:00.320
+got too many people on
+a certain note, that is
+
+112
+00:06:00.320 --> 00:06:02.810
+correct. That's a scale problem.
+And I'm now reaching the
+
+113
+00:06:02.810 --> 00:06:05.690
+point where I'm going to
+need more servers, even though
+
+114
+00:06:05.690 --> 00:06:08.330
+they're not all working effectively.
+That is correct. What do
+
+115
+00:06:08.330 --> 00:06:11.090
+I install to make velocity
+speed up that scenario? In
+
+116
+00:06:11.090 --> 00:06:13.730
+fact, precisely the distributed caching,
+the elastic and help you
+
+117
+00:06:13.730 --> 00:06:16.100
+in this scenario. Okay? Because
+the moment you put the
+
+118
+00:06:16.100 --> 00:06:19.520
+caching tier in behind for
+storing your session data, you
+
+119
+00:06:19.520 --> 00:06:21.740
+don't have to have sticky
+routing or node affinity to
+
+120
+00:06:21.740 --> 00:06:24.800
+your web servers anymore. You
+can actually hit any of
+
+121
+00:06:24.800 --> 00:06:27.380
+the SP nodes and they
+can sense because it's a
+
+122
+00:06:27.380 --> 00:06:30.170
+distributed cache. All the astronauts
+nodes can see that session
+
+123
+00:06:30.170 --> 00:06:33.380
+data. So you can, you
+can scale your sessions that
+
+124
+00:06:33.380 --> 00:06:36.080
+way. And all you have
+to do is first install
+
+125
+00:06:36.080 --> 00:06:38.840
+velocity, obviously in the caching
+tier. And then you just
+
+126
+00:06:38.840 --> 00:06:41.480
+have to change the configuration
+and ASP session state provided
+
+127
+00:06:41.480 --> 00:06:44.900
+to point to velocity and
+give a pioneer to one
+
+128
+00:06:44.900 --> 00:06:47.060
+of the nodes in velocity
+so that we can talk
+
+129
+00:06:47.060 --> 00:06:48.860
+to the cluster. That's all
+it needs to be done.
+
+130
+00:06:48.920 --> 00:06:51.740
+No, you should change here.
+Do I need more machines
+
+131
+00:06:51.740 --> 00:06:53.180
+or can I put them
+on the web service as
+
+132
+00:06:53.180 --> 00:06:54.740
+well? You can put them
+on the same tier. The
+
+133
+00:06:54.740 --> 00:06:56.940
+only requirement is obviously you
+need to make sure that
+
+134
+00:06:56.950 --> 00:06:59.150
+you have enough memory on
+the machines, a little bit
+
+135
+00:06:59.150 --> 00:07:00.980
+computing part. We don't use
+a lot of CPU, but
+
+136
+00:07:01.130 --> 00:07:03.440
+we need some computing power
+and the network. You've got
+
+137
+00:07:03.440 --> 00:07:06.890
+to make sure that we
+have enough network capacity available
+
+138
+00:07:06.890 --> 00:07:11.950
+in your network card. I
+actually think that conceptually there
+
+139
+00:07:11.950 --> 00:07:14.410
+is going to be a
+caching tier emerging, you know,
+
+140
+00:07:14.420 --> 00:07:16.660
+in the multi-tiered stack. Yeah.
+Yeah. I think that in
+
+141
+00:07:16.660 --> 00:07:18.790
+the, in the memcache D
+space and the open source
+
+142
+00:07:18.790 --> 00:07:21.850
+space, people who use things
+like memcache D scale-out software
+
+143
+00:07:21.850 --> 00:07:25.990
+a lot she's off the
+serious caching definitely requires machines
+
+144
+00:07:25.990 --> 00:07:29.170
+dedicated to doing just that.
+To me, actually, caching tier
+
+145
+00:07:29.180 --> 00:07:31.900
+can be physical or logical,
+really, you know, in the
+
+146
+00:07:31.900 --> 00:07:34.600
+sense that if it is
+logical, then you would actually
+
+147
+00:07:34.600 --> 00:07:38.410
+mix it with your, you
+know, web servers. You don't
+
+148
+00:07:38.410 --> 00:07:42.460
+need to really have separate
+physical boxes that we can
+
+149
+00:07:42.460 --> 00:07:45.850
+actually support the configuration are.
+You could actually have a
+
+150
+00:07:45.850 --> 00:07:49.840
+physical tier, which actually dedicated
+boxes with lots of memory.
+
+151
+00:07:50.380 --> 00:07:52.780
+And, you know, you can
+put actually caches in that
+
+152
+00:07:52.780 --> 00:07:56.680
+caching tier that you specify,
+depending on, you know, how
+
+153
+00:07:56.680 --> 00:07:58.990
+high end your application is.
+You may choose one or
+
+154
+00:07:58.990 --> 00:08:01.660
+the other, Right? Every application
+scales a little differently. Some
+
+155
+00:08:01.660 --> 00:08:04.600
+applications may be putting a
+great deal of small objects
+
+156
+00:08:04.600 --> 00:08:07.870
+into a cash while others
+may put large objects one
+
+157
+00:08:07.870 --> 00:08:12.190
+or two. Yeah, I think
+with that is other, there
+
+158
+00:08:12.190 --> 00:08:16.210
+is other kinds of data
+let's say not session state,
+
+159
+00:08:16.240 --> 00:08:20.700
+but you know, more Merida,
+only kinds of data, Right?
+
+160
+00:08:20.710 --> 00:08:22.870
+Data that might be shared,
+not on a session basis,
+
+161
+00:08:22.900 --> 00:08:26.290
+but information like mortgage rates
+that's being shared throughout the
+
+162
+00:08:26.290 --> 00:08:29.920
+application. Well, those kinds of
+configurations, we also actually allow
+
+163
+00:08:29.950 --> 00:08:33.790
+you to have an embedded
+configuration where you can actually
+
+164
+00:08:33.790 --> 00:08:38.110
+have the cash sit in
+your app, domain And process.
+
+165
+00:08:39.550 --> 00:08:43.030
+And since that doesn't change
+that often, we don't need
+
+166
+00:08:43.030 --> 00:08:45.730
+to really synchronize that much,
+you know, between these applications.
+
+167
+00:08:46.420 --> 00:08:48.700
+So you can, you're saying
+that you can tell velocity
+
+168
+00:08:48.700 --> 00:08:51.490
+that this information is not
+necessarily needed to be updated
+
+169
+00:08:51.490 --> 00:08:54.430
+to the real time like
+a session state might need
+
+170
+00:08:54.430 --> 00:08:57.060
+to be. Yeah, you can
+configure, You know, we have
+
+171
+00:08:57.060 --> 00:09:01.770
+a notion of a named
+Cassius where you specify the
+
+172
+00:09:01.770 --> 00:09:03.600
+name for the cache and
+then in a bunch of
+
+173
+00:09:03.600 --> 00:09:06.440
+nodes, you know, that actually
+participate in that Interesting. That's
+
+174
+00:09:06.440 --> 00:09:08.750
+a very common scenario is
+system dot web dot cashing,
+
+175
+00:09:08.750 --> 00:09:12.410
+except I have to go
+and fetch the data, offer
+
+176
+00:09:12.410 --> 00:09:14.270
+each of my 10 nodes
+if I have 10 web
+
+177
+00:09:14.270 --> 00:09:17.600
+servers and they all have
+a little in-process cash that's
+
+178
+00:09:17.600 --> 00:09:19.790
+right. I do still have
+to retrieve it 10 times.
+
+179
+00:09:19.940 --> 00:09:22.910
+Yeah. You hear here, we're
+here. Basically. What happens is
+
+180
+00:09:22.910 --> 00:09:25.820
+that as soon as you
+say this named cash spread
+
+181
+00:09:25.820 --> 00:09:29.420
+across, you know, these five
+web servers and you will
+
+182
+00:09:29.420 --> 00:09:32.330
+say it's a replicated cash.
+So as soon as you
+
+183
+00:09:32.330 --> 00:09:35.000
+put one page in one
+of these, we would automatically
+
+184
+00:09:35.000 --> 00:09:37.610
+propagate it actually onto the,
+all the other, in a
+
+185
+00:09:37.610 --> 00:09:40.820
+web server processes. Your application
+can read it as if
+
+186
+00:09:40.820 --> 00:09:43.930
+it's local cash tomb. So
+that way you get actually
+
+187
+00:09:43.940 --> 00:09:48.680
+nice read scale. This brings
+us kind of nicely into
+
+188
+00:09:48.800 --> 00:09:51.230
+the types of caches we
+support. Okay. So we really
+
+189
+00:09:51.230 --> 00:09:54.110
+have two main configurations of
+the caches. One is called
+
+190
+00:09:54.110 --> 00:09:56.870
+the partition cache. Okay. And
+what that means is that
+
+191
+00:09:56.870 --> 00:09:58.700
+if you take a bunch
+of machines and you give
+
+192
+00:09:58.700 --> 00:10:01.190
+us a bunch of key
+value pairs, we will distribute
+
+193
+00:10:01.190 --> 00:10:03.950
+it across the machine set
+across the cluster. Okay. So
+
+194
+00:10:03.950 --> 00:10:05.390
+what that gives you is
+the ability to kind of
+
+195
+00:10:05.390 --> 00:10:07.970
+scale up on your data
+volume and your reader and
+
+196
+00:10:07.970 --> 00:10:10.520
+your requests as well across
+the machines. So if you
+
+197
+00:10:10.520 --> 00:10:12.920
+have one gig memory on
+10 machines, you get effectively
+
+198
+00:10:12.920 --> 00:10:15.960
+10 gigs to cash, right?
+The other option that another
+
+199
+00:10:15.960 --> 00:10:18.710
+was just explaining the replicated
+cash model, where if you
+
+200
+00:10:18.710 --> 00:10:20.870
+have a lot of requests
+for small amount of data,
+
+201
+00:10:20.900 --> 00:10:22.610
+you want to copy the
+data over to all the
+
+202
+00:10:22.610 --> 00:10:24.590
+machines so that you can
+get faster access to them.
+
+203
+00:10:24.830 --> 00:10:27.440
+So those are the two
+main kind of cash types
+
+204
+00:10:27.440 --> 00:10:30.050
+that we have. And there
+is another option in the
+
+205
+00:10:30.050 --> 00:10:33.290
+partition cash is if you
+have a cash tier separately
+
+206
+00:10:33.290 --> 00:10:36.800
+from your client, if you're
+frequently accessing some objects, you
+
+207
+00:10:36.800 --> 00:10:38.930
+don't want to take the
+head of the network overhead
+
+208
+00:10:38.930 --> 00:10:42.170
+and the desalinization serialization. So
+we also have the notion
+
+209
+00:10:42.170 --> 00:10:43.970
+of a local cash that
+you can keep in your
+
+210
+00:10:43.970 --> 00:10:46.100
+client. It's like the LBNL
+to Cassius that we have
+
+211
+00:10:46.100 --> 00:10:49.940
+in processing. So that you
+had said before, about, about
+
+212
+00:10:49.940 --> 00:10:52.340
+the idea of either a
+logical or a physical caching
+
+213
+00:10:52.340 --> 00:10:55.670
+tier in my experience with
+distributed caching products and third
+
+214
+00:10:55.670 --> 00:10:59.270
+party products, I've had to
+set up multiple network cards.
+
+215
+00:10:59.270 --> 00:11:00.770
+So for example, if I
+was going to put the
+
+216
+00:11:00.770 --> 00:11:03.920
+cash on the same web
+server, that's serving pages, one
+
+217
+00:11:03.920 --> 00:11:07.910
+network card is external and
+is serving the pages outside.
+
+218
+00:11:07.940 --> 00:11:10.310
+Do you know to the
+reverse proxy and on, and
+
+219
+00:11:10.310 --> 00:11:13.890
+the second network cards, basically
+a separate back plane. This
+
+220
+00:11:13.890 --> 00:11:17.150
+is put together only for
+the purpose of the caching
+
+221
+00:11:17.150 --> 00:11:20.750
+to chat between themselves. I
+certainly wouldn't want my, my
+
+222
+00:11:20.750 --> 00:11:23.300
+replication of the cash to
+be happening on the same.
+
+223
+00:11:23.780 --> 00:11:26.510
+Sub-net that's being served to
+the outside world. Is that,
+
+224
+00:11:26.510 --> 00:11:30.320
+is that correct? Yeah, that
+is kind of correct, but
+
+225
+00:11:30.320 --> 00:11:32.690
+it also depends on the
+cash configuration, right? If you
+
+226
+00:11:32.690 --> 00:11:35.090
+have a replicated cash, yes.
+There's going to be a
+
+227
+00:11:35.090 --> 00:11:37.190
+lot of data transfer because
+any change to one of
+
+228
+00:11:37.190 --> 00:11:38.690
+the caches is going to
+get for effect the other
+
+229
+00:11:38.690 --> 00:11:40.910
+caches. Okay. But it also
+comes with, are you going
+
+230
+00:11:40.910 --> 00:11:43.430
+to change your data very
+frequently or not? The way
+
+231
+00:11:43.430 --> 00:11:45.140
+we have set up our
+caches is that we don't,
+
+232
+00:11:45.140 --> 00:11:47.540
+we are not that very
+chatty the, if the caches
+
+233
+00:11:47.540 --> 00:11:49.910
+are not, if they're not,
+not much updates happening, the
+
+234
+00:11:49.910 --> 00:11:53.060
+Cassius don't necessarily talk between
+themselves other than to make
+
+235
+00:11:53.320 --> 00:11:56.200
+that our life. Right. If
+you have replicated, if you
+
+236
+00:11:56.200 --> 00:11:58.180
+have a lot of rights
+happening to the cash, or
+
+237
+00:11:58.180 --> 00:12:00.940
+if you have replication, a
+lot of, if you have
+
+238
+00:12:00.940 --> 00:12:03.760
+the replicated cash setup, then
+yes, you would probably need
+
+239
+00:12:03.760 --> 00:12:06.760
+a separate Metro card if
+your website, if it's right
+
+240
+00:12:06.760 --> 00:12:10.300
+once or right. Occasionally read
+often the network traffic is
+
+241
+00:12:10.300 --> 00:12:12.340
+not that cheap network. Traffic
+is not that chatty. That
+
+242
+00:12:12.340 --> 00:12:14.110
+is great. And certainly if
+I'm writing to a cash,
+
+243
+00:12:14.110 --> 00:12:15.940
+a great deal, I might
+want to ask myself when
+
+244
+00:12:15.940 --> 00:12:18.130
+it begins to thrash, do
+I really need a cash
+
+245
+00:12:18.130 --> 00:12:22.360
+or do I need another
+precisely? Precisely. Yeah. Okay. So
+
+246
+00:12:22.360 --> 00:12:24.430
+what exactly is this? You
+had said I could store
+
+247
+00:12:24.430 --> 00:12:27.160
+this in process in a,
+in an abdomen. So there's
+
+248
+00:12:27.160 --> 00:12:30.220
+some DLLs that get loaded
+and there's a namespace that
+
+249
+00:12:30.220 --> 00:12:32.940
+I can refer to. Yeah,
+that's correct. So it's basically,
+
+250
+00:12:33.450 --> 00:12:38.370
+we, we view, we view
+velocity to be hostable in
+
+251
+00:12:38.400 --> 00:12:41.700
+many hosting environment is without
+net is one example. It
+
+252
+00:12:41.700 --> 00:12:43.860
+could be IAS, you know,
+so you're not really running
+
+253
+00:12:43.860 --> 00:12:47.910
+asp.net. For example, you know,
+you may be running a
+
+254
+00:12:47.940 --> 00:12:50.190
+PHP application and then, you
+know, you may want to
+
+255
+00:12:50.190 --> 00:12:54.270
+really have a PHP application
+in accessing that It's really
+
+256
+00:12:54.270 --> 00:12:56.040
+any application that can talk
+to the CLR. So I
+
+257
+00:12:56.040 --> 00:12:58.890
+could use iron, Ruby and
+Ruby on iron Ruby on
+
+258
+00:12:58.890 --> 00:13:00.600
+rails and talk to things.
+It's just a dotted line,
+
+259
+00:13:00.670 --> 00:13:03.780
+My component for velocity. Okay.
+And so you, all you
+
+260
+00:13:03.780 --> 00:13:06.030
+really need is there is
+a client component that you
+
+261
+00:13:06.030 --> 00:13:08.670
+would actually include it actually
+as part of your app.
+
+262
+00:13:09.210 --> 00:13:11.550
+And there is a run
+time component in the case
+
+263
+00:13:11.550 --> 00:13:13.920
+of embittered case, you know,
+the runtime is also running
+
+264
+00:13:14.190 --> 00:13:17.220
+as part of your process
+in case of cash service,
+
+265
+00:13:17.250 --> 00:13:20.670
+the runtime actually is running.
+This is very modular. This
+
+266
+00:13:20.670 --> 00:13:22.680
+is something I can run
+server and client together, or
+
+267
+00:13:22.680 --> 00:13:25.920
+I can move them away.
+Yeah. I mean, in fact,
+
+268
+00:13:25.980 --> 00:13:28.980
+the architecture, you know, if
+you have time, you can
+
+269
+00:13:28.980 --> 00:13:31.500
+go into more details that
+we have time, my friends.
+
+270
+00:13:31.680 --> 00:13:35.340
+So, so is even internally,
+you know, all the distributed
+
+271
+00:13:35.340 --> 00:13:39.450
+components is highly modular. For
+example, we actually see that,
+
+272
+00:13:39.870 --> 00:13:42.570
+you know, there could be,
+you know, low latency networks
+
+273
+00:13:42.570 --> 00:13:44.910
+and then there could be
+just vanilla, you know, our
+
+274
+00:13:44.910 --> 00:13:47.670
+TCP IP and on my
+internet, you know, internal local
+
+275
+00:13:47.670 --> 00:13:52.380
+networks. So we can actually
+layer our availability framework, availability
+
+276
+00:13:52.380 --> 00:13:55.530
+platform on top of, you
+know, different kinds of underlying,
+
+277
+00:13:55.800 --> 00:13:59.010
+you know, transport protocols. So
+we have done it. We
+
+278
+00:13:59.010 --> 00:14:02.310
+have architected in a fashion
+that we can plug in
+
+279
+00:14:02.310 --> 00:14:06.090
+all different kinds of transport.
+Let me add to that.
+
+280
+00:14:06.090 --> 00:14:07.830
+Actually, that's a very good
+point that it's bringing up.
+
+281
+00:14:07.830 --> 00:14:10.140
+So we have a separate
+transport layer, which abstracts, or
+
+282
+00:14:10.230 --> 00:14:12.660
+as he said, TCP, IP
+InfiniBand, or any other kind
+
+283
+00:14:12.660 --> 00:14:16.080
+of transport. And the availability
+itself is also isolated from
+
+284
+00:14:16.080 --> 00:14:18.660
+the transport itself so that
+we can actually lay it
+
+285
+00:14:18.660 --> 00:14:21.810
+on any kind of clustering
+technology that we have. And
+
+286
+00:14:22.240 --> 00:14:25.440
+Andy about that also are
+other parts of the architecture,
+
+287
+00:14:25.440 --> 00:14:28.590
+including our data manager, the
+object management itself is modularized
+
+288
+00:14:28.590 --> 00:14:30.450
+so that you can plug
+in different. Like if you
+
+289
+00:14:30.450 --> 00:14:33.150
+want transactions, you can have
+a transactional kind of object
+
+290
+00:14:33.150 --> 00:14:35.370
+management blood van. Right, right.
+Now it's an in memory
+
+291
+00:14:35.370 --> 00:14:37.860
+object manager, you can have
+different kinds of object managers
+
+292
+00:14:37.890 --> 00:14:40.050
+like then to give you
+different functionality. So you don't
+
+293
+00:14:40.050 --> 00:14:42.480
+take the code head off
+like one big gigantic monolith
+
+294
+00:14:42.510 --> 00:14:45.960
+code block that does every
+possible thing. Right? You think
+
+295
+00:14:45.960 --> 00:14:47.220
+that the way that you
+guys are running, this is
+
+296
+00:14:47.220 --> 00:14:49.680
+representative of kind of a
+new openness at Microsoft because
+
+297
+00:14:49.680 --> 00:14:53.570
+I'm hearing things like modular
+extensible, And I've personally been
+
+298
+00:14:53.570 --> 00:14:55.910
+in meetings where you guys
+have been meeting with like
+
+299
+00:14:55.940 --> 00:14:59.540
+the asp.net team and the
+S team. You're not necessarily,
+
+300
+00:14:59.570 --> 00:15:00.860
+I mean, I just think
+this is cool because you're
+
+301
+00:15:00.860 --> 00:15:02.600
+not building this in a
+vacuum and then coming out
+
+302
+00:15:02.600 --> 00:15:04.880
+with it, you're making sure
+that it works with SQL
+
+303
+00:15:04.880 --> 00:15:06.440
+server. It works with IAS,
+or should they just peanut
+
+304
+00:15:06.450 --> 00:15:09.770
+net. Do you feel that
+there's a culture change? That's
+
+305
+00:15:09.770 --> 00:15:11.600
+enabling you guys to do
+this, or is this just
+
+306
+00:15:11.600 --> 00:15:13.280
+what made sense to you
+when you started the project?
+
+307
+00:15:13.630 --> 00:15:16.480
+I think there is some
+sense of culture change that
+
+308
+00:15:16.480 --> 00:15:19.540
+I see part of it
+is because, you know, for
+
+309
+00:15:19.540 --> 00:15:22.660
+me in my personally, you
+know, I came to Microsoft
+
+310
+00:15:22.660 --> 00:15:25.390
+five years ago and I
+worked in the industry, you
+
+311
+00:15:25.390 --> 00:15:28.090
+know, doing different kinds of
+technologies. And I worked with
+
+312
+00:15:28.090 --> 00:15:30.580
+different kinds of customers. You
+know, you hear different customer
+
+313
+00:15:30.580 --> 00:15:33.370
+point pain pinpoint. So I
+view things, you know, from
+
+314
+00:15:33.370 --> 00:15:35.950
+their perspective. So you still
+remember what it was like
+
+315
+00:15:35.950 --> 00:15:39.250
+on the outside? No, I
+actually worked in a database
+
+316
+00:15:40.210 --> 00:15:43.060
+building database systems. Then I
+went and built apps. Then
+
+317
+00:15:43.060 --> 00:15:45.970
+I realized how painful, you
+know, using database systems were.
+
+318
+00:15:46.420 --> 00:15:48.490
+And then you'll end up
+actually building some of this
+
+319
+00:15:48.550 --> 00:15:51.760
+caching kind of infrastructures. Now
+I have an opportunity to
+
+320
+00:15:51.760 --> 00:15:54.370
+go and build it in
+a fashion that applications can
+
+321
+00:15:54.370 --> 00:15:58.000
+actually use them in a
+more painless fashion. And also
+
+322
+00:15:58.060 --> 00:16:01.150
+I'm a big believer that,
+you know, there's lots of
+
+323
+00:16:01.150 --> 00:16:04.120
+heterogeneity of where is the
+exist and then we need
+
+324
+00:16:04.120 --> 00:16:06.460
+to go and then actually
+embrace that rather than walk
+
+325
+00:16:06.460 --> 00:16:09.670
+away from that. Very cool.
+And one of the things
+
+326
+00:16:09.670 --> 00:16:12.520
+that I wanted to talk
+about, we mentioned about the
+
+327
+00:16:12.520 --> 00:16:16.750
+modularity. So it's not in,
+we won, but most we
+
+328
+00:16:16.750 --> 00:16:19.690
+won. We are really planning
+to put a much richer
+
+329
+00:16:19.690 --> 00:16:22.420
+data manager in the cash
+so that you can link
+
+330
+00:16:22.420 --> 00:16:28.540
+queries directly Link over distributed
+object, Link over distributed objects.
+
+331
+00:16:28.900 --> 00:16:32.050
+Well, you heard it here
+first. That's cool. Yeah. And,
+
+332
+00:16:32.050 --> 00:16:34.030
+and, and the, the way,
+the reason is that, you
+
+333
+00:16:34.030 --> 00:16:36.880
+know, it's very natural already.
+We are seeing people are
+
+334
+00:16:36.880 --> 00:16:39.400
+saying, yeah, I can do
+this key based access. What
+
+335
+00:16:39.400 --> 00:16:41.560
+can I actually do the
+inner tag based access? Can
+
+336
+00:16:41.560 --> 00:16:43.960
+I actually order those things?
+So the people are really
+
+337
+00:16:43.960 --> 00:16:46.840
+already asking little bit or,
+you know, little bit by
+
+338
+00:16:46.840 --> 00:16:50.320
+little bit, but in a
+richer database functionalities. So query
+
+339
+00:16:50.320 --> 00:16:52.300
+is a natural thing that
+we want to support it.
+
+340
+00:16:52.720 --> 00:16:54.430
+And as soon as you
+really say, I want to
+
+341
+00:16:54.430 --> 00:16:58.090
+support query, guess what? The
+objects are actually scattered across
+
+342
+00:16:58.090 --> 00:17:00.730
+multiple boxes and you don't
+even know where they are.
+
+343
+00:17:01.480 --> 00:17:07.390
+So we have to really
+run distributed federated queries. And
+
+344
+00:17:07.390 --> 00:17:10.990
+we have other projects that
+we're working on, really building
+
+345
+00:17:11.080 --> 00:17:15.760
+very lightweight, modular storage engines,
+as well as in a
+
+346
+00:17:15.760 --> 00:17:18.730
+query engine. So we want
+to integrate those things with
+
+347
+00:17:19.330 --> 00:17:22.570
+velocity. Okay. We're just going
+to take one second and
+
+348
+00:17:22.570 --> 00:17:24.250
+thank our sponsors. We're going
+to come back and hear
+
+349
+00:17:24.250 --> 00:17:28.840
+a little bit more about
+velocity. Hi, this is Scott
+
+350
+00:17:28.840 --> 00:17:31.210
+Hanselman with a word from
+our sponsor. Do you know
+
+351
+00:17:31.210 --> 00:17:34.420
+how to build web 2.0
+Ajax applications with web 1.0
+
+352
+00:17:34.420 --> 00:17:36.640
+components? You really can't. If
+you want to do the
+
+353
+00:17:36.640 --> 00:17:40.570
+next generation web applications you'll
+need next generation components. Just
+
+354
+00:17:40.570 --> 00:17:42.310
+like the ones that our
+friends at Telerik have got
+
+355
+00:17:42.310 --> 00:17:45.610
+their rad controls for ESPN
+and Ajax. It's a huge
+
+356
+00:17:45.640 --> 00:17:48.940
+pack of web controls built
+on top of asp.net. Ajax.
+
+357
+00:17:49.350 --> 00:17:53.040
+That'll add previously impossible performance
+interactivity to your next project.
+
+358
+00:17:53.520 --> 00:17:57.570
+The new controls mirror, the
+Ajax API from asp.net. So
+
+359
+00:17:57.570 --> 00:18:00.990
+development is really straightforward. The
+client scripts are shared. So
+
+360
+00:18:00.990 --> 00:18:03.390
+loading time is not a
+problem. If you just set
+
+361
+00:18:03.390 --> 00:18:05.370
+a couple of properties and
+you'll be able to automatically
+
+362
+00:18:05.370 --> 00:18:09.030
+bind a web services for
+a really efficient operation, the
+
+363
+00:18:09.030 --> 00:18:12.420
+new rad editor from ESPN
+Ajax, Telerik loads up to
+
+364
+00:18:12.420 --> 00:18:15.270
+four times faster than before.
+And the new rad grid
+
+365
+00:18:15.270 --> 00:18:18.780
+handles thousands of records and
+just milliseconds, but as always,
+
+366
+00:18:18.780 --> 00:18:21.390
+it's best to try for
+yourself. So you can visit
+
+367
+00:18:21.420 --> 00:18:24.630
+<inaudible> dot com slash ASP,
+net Ajax, and download a
+
+368
+00:18:24.630 --> 00:18:28.350
+trial. Thanks a lot. This
+week's Hansel minutes is brought
+
+369
+00:18:28.350 --> 00:18:32.850
+to you by code better.com.
+The code better.com blog network
+
+370
+00:18:32.910 --> 00:18:35.310
+it's made up of over
+20 industry leaders and speakers
+
+371
+00:18:35.700 --> 00:18:38.430
+who were passionate about delivering
+tried and true solutions to
+
+372
+00:18:38.430 --> 00:18:41.940
+real world problems for building
+better software. These guys are
+
+373
+00:18:41.940 --> 00:18:43.800
+not only our sponsor this
+week, but they're also my
+
+374
+00:18:43.800 --> 00:18:47.370
+friends, the code better blog
+network. It's where industry leaders
+
+375
+00:18:47.370 --> 00:18:50.640
+blog. You can find them
+at. COVID better.com as well
+
+376
+00:18:50.640 --> 00:18:54.540
+as devilish dev L I
+C I O dot U
+
+377
+00:18:54.540 --> 00:18:58.830
+S. So we're back talking
+about velocity and MK. You
+
+378
+00:18:58.830 --> 00:19:01.370
+wanted to add something. Yeah.
+So one more thing to
+
+379
+00:19:01.370 --> 00:19:03.620
+add when we talked about
+the model reality is that
+
+380
+00:19:03.770 --> 00:19:07.220
+the whole velocity clustering technology
+is actually built, and we
+
+381
+00:19:07.220 --> 00:19:10.700
+share it with the SQL
+server, the data services technology,
+
+382
+00:19:11.180 --> 00:19:12.800
+you may have heard about
+it, which is the SQL
+
+383
+00:19:12.800 --> 00:19:17.180
+server in the cloud and
+this DS that's right. And
+
+384
+00:19:17.180 --> 00:19:19.880
+that can host pretty much
+thousands of machines and run
+
+385
+00:19:20.060 --> 00:19:22.610
+at that time. That's my
+next question, because it's easy
+
+386
+00:19:22.610 --> 00:19:24.350
+to say that you can
+do caching on one machine
+
+387
+00:19:24.350 --> 00:19:26.150
+or 10, but then he
+started talking about orders of
+
+388
+00:19:26.150 --> 00:19:28.400
+magnitude and things get a
+lot more Interesting. Right? So
+
+389
+00:19:28.400 --> 00:19:30.470
+that's where in fact, the
+interesting thing was that we
+
+390
+00:19:30.500 --> 00:19:32.390
+partnered with them early on
+to make sure that we
+
+391
+00:19:32.390 --> 00:19:34.190
+don't build yet another thing.
+And then we kind of
+
+392
+00:19:34.190 --> 00:19:36.800
+reuse the stack and it
+has helped us in many
+
+393
+00:19:36.800 --> 00:19:39.620
+ways that we've been able
+to sort of bring it,
+
+394
+00:19:39.680 --> 00:19:43.280
+bring the SSDs kind of
+technology as an enterprise product.
+
+395
+00:19:43.580 --> 00:19:46.220
+And we now have the
+clustering technology that can help
+
+396
+00:19:46.220 --> 00:19:49.220
+us scale now, thousands of
+machines. So how has SSDs
+
+397
+00:19:49.760 --> 00:19:51.890
+stretched? You guys maybe a
+little farther than you thought?
+
+398
+00:19:51.890 --> 00:19:54.290
+Was there anything, when you,
+when you started using, when
+
+399
+00:19:54.290 --> 00:19:57.020
+they started using you, I
+assume that they broke you
+
+400
+00:19:57.020 --> 00:19:59.330
+at some point and you
+must've. Right. So there are
+
+401
+00:19:59.330 --> 00:20:02.600
+interesting things, right? SSTs is
+a service. So you don't
+
+402
+00:20:02.600 --> 00:20:04.880
+need to build all the,
+kind of the fancy tools.
+
+403
+00:20:04.880 --> 00:20:07.580
+So you don't need the
+fancy administration API because you
+
+404
+00:20:07.580 --> 00:20:09.350
+can write both scripts so
+you can write other scripts
+
+405
+00:20:09.410 --> 00:20:11.810
+to manage them. And the
+second thing is when you
+
+406
+00:20:11.810 --> 00:20:14.450
+build it out to large
+scale, you can make some
+
+407
+00:20:14.450 --> 00:20:16.940
+assumptions like, Hey, I'll have
+a master cluster. That's running
+
+408
+00:20:16.940 --> 00:20:19.460
+somewhere, right. Just separate from
+my rest of the data
+
+409
+00:20:19.460 --> 00:20:21.590
+cluster. But if you have
+to scale it down to
+
+410
+00:20:21.590 --> 00:20:23.600
+like three machines, you can't
+say I'm going to have
+
+411
+00:20:23.600 --> 00:20:26.330
+a separate master cluster. That's
+kind of controlling these three
+
+412
+00:20:26.330 --> 00:20:29.120
+machines. So those were some
+of the interesting challenges that
+
+413
+00:20:29.120 --> 00:20:31.550
+we kind of brought about.
+And it was a very
+
+414
+00:20:31.550 --> 00:20:33.650
+good kind of interaction where
+they were able to scale
+
+415
+00:20:33.650 --> 00:20:35.630
+down their technology and we
+were able to kind of
+
+416
+00:20:35.750 --> 00:20:38.300
+scale up our technology. So
+it kind of worked both
+
+417
+00:20:38.300 --> 00:20:41.270
+ways. Yeah. Interesting. And do
+you have a sense of
+
+418
+00:20:41.270 --> 00:20:43.280
+when, how big it can
+get? I mean, I sure
+
+419
+00:20:43.280 --> 00:20:45.470
+there's, you've done the math
+at some point, you figured
+
+420
+00:20:45.470 --> 00:20:48.370
+out how the things scales.
+Is there a limit To
+
+421
+00:20:48.370 --> 00:20:50.410
+how big something like this
+could get a w and
+
+422
+00:20:50.410 --> 00:20:52.210
+what would the, what would
+the first bottleneck be if
+
+423
+00:20:52.210 --> 00:20:55.330
+you started going thousands, tens
+of thousands, hundreds of thousands
+
+424
+00:20:55.720 --> 00:20:59.230
+with the bottleneck be at
+the network, you know, or,
+
+425
+00:20:59.260 --> 00:21:01.420
+you know, what, where would
+you stop? Yeah, actually one
+
+426
+00:21:01.420 --> 00:21:03.820
+of the current bottlenecks, for
+example, that we know about
+
+427
+00:21:03.820 --> 00:21:06.610
+is some of the routing
+routing infrastructure, because we have
+
+428
+00:21:06.610 --> 00:21:09.520
+routing tables in the client
+and that's something we working
+
+429
+00:21:09.520 --> 00:21:11.650
+on to make it much
+more kind of flexible and
+
+430
+00:21:11.650 --> 00:21:14.050
+scalable. Because once you get
+into $10,000, you don't want
+
+431
+00:21:14.050 --> 00:21:15.820
+your clients to be hitting
+10,000. You don't have to
+
+432
+00:21:15.820 --> 00:21:18.160
+have whatever you're going to
+have gigantic routing table three
+
+433
+00:21:18.160 --> 00:21:21.340
+81, that, so those are
+some technologies that perfect. That's
+
+434
+00:21:21.340 --> 00:21:23.440
+exactly what happened to us
+at my, at my last
+
+435
+00:21:23.440 --> 00:21:25.870
+job we worked in, in
+banking. We, we, we had,
+
+436
+00:21:25.900 --> 00:21:28.240
+we moved our routing from
+a centralized route, which was
+
+437
+00:21:28.240 --> 00:21:31.000
+a single point of failure
+to client side route. And
+
+438
+00:21:31.000 --> 00:21:32.650
+then every client had to
+keep track of all the
+
+439
+00:21:32.650 --> 00:21:35.260
+nodes that were a member
+of this thing. And then
+
+440
+00:21:35.260 --> 00:21:37.120
+suddenly, you know, you get
+into a hundred of those
+
+441
+00:21:37.120 --> 00:21:39.880
+and right, right, exactly. It's
+a lot more complicated. So
+
+442
+00:21:39.880 --> 00:21:41.920
+we have some interesting technologies
+to kind of have all
+
+443
+00:21:41.930 --> 00:21:44.260
+the slices of the routing
+table being updated and also
+
+444
+00:21:44.260 --> 00:21:46.240
+some sort of complaint based
+updates and all that sort
+
+445
+00:21:46.240 --> 00:21:47.900
+of, but you don't flood
+the back into just say,
+
+446
+00:21:47.900 --> 00:21:49.390
+Oh, give me the routing.
+Dave will give me kind
+
+447
+00:21:49.390 --> 00:21:51.520
+of all that stuff. That's
+one thing we're looking at.
+
+448
+00:21:51.760 --> 00:21:53.950
+And the other interesting things
+also come in the geo
+
+449
+00:21:53.950 --> 00:21:56.290
+distribution. Those are some things
+we were working on to
+
+450
+00:21:56.290 --> 00:21:58.300
+say, Hey, if you want
+to have multiple caches spread
+
+451
+00:21:58.300 --> 00:22:00.430
+across, if you have 10,000
+nodes, presumably they are across
+
+452
+00:22:00.430 --> 00:22:03.430
+the cluster across the country.
+So how well to kind
+
+453
+00:22:03.430 --> 00:22:05.650
+of coordinate those caches now
+when you're building something like
+
+454
+00:22:05.650 --> 00:22:07.750
+this and designing it, or
+you're doing it in a
+
+455
+00:22:07.990 --> 00:22:10.750
+protocol nonspecific way, because as
+you're starting to describe these
+
+456
+00:22:10.750 --> 00:22:13.210
+things, I'm thinking to myself,
+well, they could use DNS
+
+457
+00:22:13.240 --> 00:22:16.600
+or they could use, you
+know, there's different TCP specific
+
+458
+00:22:16.600 --> 00:22:18.610
+things that one could use
+that have solved some of
+
+459
+00:22:18.610 --> 00:22:21.340
+these problems with like a
+routing table, but then you
+
+460
+00:22:21.340 --> 00:22:24.930
+wouldn't be able to plug
+in different things underneath. Yeah.
+
+461
+00:22:24.960 --> 00:22:28.500
+We were definitely, you know,
+doing it in a protocol
+
+462
+00:22:28.500 --> 00:22:31.560
+agnostic fashion so that we
+do want to really plug
+
+463
+00:22:31.560 --> 00:22:35.940
+into different mechanisms and know,
+for example, that it's not
+
+464
+00:22:35.940 --> 00:22:38.700
+quite relevant, but sort of
+relevant is how do you
+
+465
+00:22:38.700 --> 00:22:41.700
+really bring in a data
+into actually the cash itself?
+
+466
+00:22:42.150 --> 00:22:44.370
+You know, so we are
+looking at different kinds of
+
+467
+00:22:44.370 --> 00:22:50.370
+really synchronization techniques. We working
+with the, our sister project
+
+468
+00:22:50.730 --> 00:22:53.310
+in the group, which are
+looking at Microsoft sync technologies.
+
+469
+00:22:53.730 --> 00:22:58.640
+They're, they're doing synchronization across
+a variety of protocols and
+
+470
+00:22:58.640 --> 00:23:03.030
+then transport technologies. So we
+will be leveraging those guys.
+
+471
+00:23:03.960 --> 00:23:06.570
+So I only worked at
+Microsoft for what is it
+
+472
+00:23:06.570 --> 00:23:10.770
+now, eight months. And it's
+so big. And there's so
+
+473
+00:23:10.770 --> 00:23:12.900
+many different projects. I feel
+like if I spun up
+
+474
+00:23:12.900 --> 00:23:16.410
+my own project, that inevitably
+someone would be doing the
+
+475
+00:23:16.410 --> 00:23:19.080
+exact same thing. Now you're
+in the SQL server, your
+
+476
+00:23:19.080 --> 00:23:22.020
+SQL server group, they call
+it data services, data platform.
+
+477
+00:23:22.040 --> 00:23:24.510
+How do you make sure
+that someone's not thinking of
+
+478
+00:23:24.510 --> 00:23:26.910
+the same ideas in some
+other group or in Microsoft
+
+479
+00:23:26.910 --> 00:23:30.360
+research somewhere? So Microsoft is
+a large company. So obviously
+
+480
+00:23:30.360 --> 00:23:32.580
+you're going to have multiple
+people or multiple groups building
+
+481
+00:23:32.580 --> 00:23:35.100
+similar technology and distributed caching
+is not new. There are
+
+482
+00:23:35.100 --> 00:23:37.500
+multiple projects that are going
+on, which everybody does. So
+
+483
+00:23:37.500 --> 00:23:39.000
+one of the things that
+are trying to do is
+
+484
+00:23:39.000 --> 00:23:41.130
+to start to work with
+the different groups, understand the
+
+485
+00:23:41.130 --> 00:23:43.650
+pain points and see how
+well our technology can kind
+
+486
+00:23:43.650 --> 00:23:45.830
+of fit in the stack.
+For example, if you've talked
+
+487
+00:23:45.830 --> 00:23:49.550
+to MSN life, they have
+disagreed cash technology. We are
+
+488
+00:23:49.550 --> 00:23:53.690
+trying to see msn.com and
+of.com and live.com and others.
+
+489
+00:23:53.720 --> 00:23:55.490
+And we are trying to
+see how well our cash
+
+490
+00:23:55.490 --> 00:23:57.740
+can fit there and what
+can we help them out
+
+491
+00:23:57.740 --> 00:24:00.350
+with? Like, if you give
+better administration tools, for example,
+
+492
+00:24:00.350 --> 00:24:03.110
+and things like that. And
+also, as we said, better
+
+493
+00:24:03.500 --> 00:24:05.700
+integration with the rest of
+the stack, like asp.net and
+
+494
+00:24:05.720 --> 00:24:07.580
+get better with them. So
+it kind of makes it
+
+495
+00:24:07.580 --> 00:24:10.520
+natural for people to start
+using this cash. So you'd
+
+496
+00:24:10.520 --> 00:24:12.140
+like this to be built
+in at some point, this
+
+497
+00:24:12.140 --> 00:24:14.570
+should be part of the
+whole base class leverage be
+
+498
+00:24:14.570 --> 00:24:18.190
+system dot velocity or something.
+Yeah, probably I think we
+
+499
+00:24:18.190 --> 00:24:20.530
+would like it to be
+no more if we could
+
+500
+00:24:20.530 --> 00:24:24.040
+list it used everywhere. And,
+you know, just to really
+
+501
+00:24:24.040 --> 00:24:28.840
+extend the point that MKS
+had talking to MSN very
+
+502
+00:24:28.840 --> 00:24:31.540
+early on in the project,
+there are not only just
+
+503
+00:24:31.540 --> 00:24:33.820
+MSN. We went and talked
+to, we talked to the
+
+504
+00:24:33.820 --> 00:24:36.640
+research guys, we just talked
+to connect the systems division.
+
+505
+00:24:36.640 --> 00:24:39.790
+We talked to developer division
+because I see all of
+
+506
+00:24:39.790 --> 00:24:44.860
+these guys as the consumers
+of a cash. And we
+
+507
+00:24:44.860 --> 00:24:47.740
+actually discussed quite a bit
+about, you know, is this
+
+508
+00:24:47.740 --> 00:24:50.500
+an in memory database? That,
+is it the cash, You
+
+509
+00:24:50.500 --> 00:24:52.660
+have a memory database. Right.
+I remember that about 10
+
+510
+00:24:52.660 --> 00:24:54.970
+years ago, there was a
+complex team at a thing
+
+511
+00:24:54.970 --> 00:24:57.070
+called IMD and it didn't
+quite work out very well.
+
+512
+00:24:57.250 --> 00:25:01.420
+Yeah. So, and in fact,
+people used to call velocity
+
+513
+00:25:01.420 --> 00:25:03.310
+as an eye MDB, and
+then people used to get
+
+514
+00:25:03.310 --> 00:25:05.830
+confused about it saying that,
+you know, why are you
+
+515
+00:25:05.830 --> 00:25:07.660
+guys doing this? You know,
+we did it 10 years
+
+516
+00:25:07.660 --> 00:25:11.830
+ago, but the reality is
+that the whole industry, and
+
+517
+00:25:11.830 --> 00:25:14.860
+then the technology, the community
+has moved on, you know,
+
+518
+00:25:14.860 --> 00:25:17.800
+10 years ago, IMDBs were
+done for different reasons, then
+
+519
+00:25:18.100 --> 00:25:21.640
+why I want to do
+things in memory now. So
+
+520
+00:25:22.180 --> 00:25:25.210
+it is an in memory
+database, you know, eventually velocity
+
+521
+00:25:25.210 --> 00:25:28.060
+will be in marrow database,
+but it's very different kind
+
+522
+00:25:28.060 --> 00:25:30.340
+of in memory database. It
+is not there to just
+
+523
+00:25:30.340 --> 00:25:33.430
+accelerate SQL server. It is
+there to speed up your
+
+524
+00:25:33.430 --> 00:25:36.160
+applications. Yeah. I think that's
+a really interesting point because
+
+525
+00:25:36.160 --> 00:25:38.140
+if you look at the
+Facebooks and the Twitters and
+
+526
+00:25:38.140 --> 00:25:42.040
+the big giant places that
+are struggling to scale, they
+
+527
+00:25:42.040 --> 00:25:44.500
+are using, you know, memory
+Cassius to make it happen.
+
+528
+00:25:44.500 --> 00:25:47.500
+I mean, a memory Cassius
+becoming an almost required thing.
+
+529
+00:25:47.770 --> 00:25:50.350
+If you're going to take
+something to, to internet scale.
+
+530
+00:25:50.830 --> 00:25:55.600
+Absolutely. And even, even from
+a technology perspective, we are
+
+531
+00:25:55.600 --> 00:25:59.020
+looking at not only Ram
+in overtime, if I have
+
+532
+00:25:59.020 --> 00:26:02.650
+actually flash, can I back
+this up with flash because
+
+533
+00:26:02.920 --> 00:26:07.540
+flash slash Ram also that
+will give you like, you
+
+534
+00:26:07.540 --> 00:26:12.640
+know, 64 gig, 128 gigs
+of actually NV Ram. And
+
+535
+00:26:12.640 --> 00:26:14.830
+it will smoothly, you know,
+go from actually memory to
+
+536
+00:26:14.830 --> 00:26:16.810
+flash rather than hitting. Oh,
+so like you were saying
+
+537
+00:26:16.810 --> 00:26:18.550
+L one and L two
+cash, you'd add an L
+
+538
+00:26:18.550 --> 00:26:22.420
+three cash and you'd bake
+you'd make ready boost for
+
+539
+00:26:22.420 --> 00:26:26.770
+velocity. Absolutely. And so these
+are some of the projects
+
+540
+00:26:26.770 --> 00:26:30.130
+that we are concurrently working
+on. So to me, these
+
+541
+00:26:30.130 --> 00:26:35.980
+are technologies that are used
+everywhere and people expect them
+
+542
+00:26:36.230 --> 00:26:39.890
+over time. Yeah. Big teams.
+When I, I mean, I've,
+
+543
+00:26:40.020 --> 00:26:42.220
+I've talked to you guys
+over the last month or
+
+544
+00:26:42.220 --> 00:26:44.670
+two about velocity I've only
+ever seen you guys. I've
+
+545
+00:26:44.670 --> 00:26:47.160
+only ever seen you two,
+is it just you guys?
+
+546
+00:26:48.020 --> 00:26:50.690
+Well, we actually do, this
+is another interesting thing that
+
+547
+00:26:50.690 --> 00:26:54.350
+we do, you know, it's
+a distributed development. So we
+
+548
+00:26:54.350 --> 00:26:56.690
+have like three or four
+people here. We have like
+
+549
+00:26:56.690 --> 00:27:00.320
+about 15 people in India.
+And so we partner with
+
+550
+00:27:00.860 --> 00:27:04.760
+other teams elsewhere. So it's
+a completely distributed development, you
+
+551
+00:27:04.760 --> 00:27:07.880
+know, I'm a big believer
+in this talent everywhere. Let's
+
+552
+00:27:07.880 --> 00:27:11.120
+go tap into those people.
+And it's a small groups.
+
+553
+00:27:11.180 --> 00:27:15.470
+The total is about 20
+or 2020 people. That's not
+
+554
+00:27:15.470 --> 00:27:18.050
+very big. Yeah. More and
+more. I've been seeing Microsoft
+
+555
+00:27:18.050 --> 00:27:21.350
+embrace what Amazon used to
+call the two pizza team.
+
+556
+00:27:21.830 --> 00:27:23.720
+If you can feed the
+team with two pizzas and
+
+557
+00:27:23.720 --> 00:27:26.030
+that's the right size, anything
+bigger than that. And it's
+
+558
+00:27:26.030 --> 00:27:29.600
+too complicated. It's interesting. I
+think that people think that
+
+559
+00:27:29.660 --> 00:27:31.790
+a Microsoft comes out with
+a product, they have a
+
+560
+00:27:31.790 --> 00:27:35.720
+hundred minions that descend on
+the thing and we have
+
+561
+00:27:35.720 --> 00:27:37.490
+a lot fewer people than
+you think. Yeah. But one
+
+562
+00:27:37.490 --> 00:27:38.990
+interesting thing to add is
+we get a lot of
+
+563
+00:27:38.990 --> 00:27:41.270
+support, like the cost part
+of the data platform, we
+
+564
+00:27:41.270 --> 00:27:44.330
+get same marketing support. There's
+a separate team or product
+
+565
+00:27:44.330 --> 00:27:47.660
+development support. Yeah, exactly. So
+those are kind of the
+
+566
+00:27:47.660 --> 00:27:50.360
+supporting technology, which help a
+lot. Right. So your individual
+
+567
+00:27:50.360 --> 00:27:52.610
+team doesn't have to be
+that big. So you guys
+
+568
+00:27:52.630 --> 00:27:55.430
+announced to velocity of tech,
+Edwin, can we see previews?
+
+569
+00:27:55.430 --> 00:27:57.920
+And when can we start
+playing with this? Well, we
+
+570
+00:27:57.920 --> 00:28:00.380
+have a CTP available right
+now. Okay. So we can
+
+571
+00:28:00.380 --> 00:28:02.210
+download this right now and
+start playing with it. Yes.
+
+572
+00:28:02.540 --> 00:28:06.200
+And we would love to
+really get more feedback and
+
+573
+00:28:06.560 --> 00:28:08.000
+you know, this is the
+right time for us to
+
+574
+00:28:08.000 --> 00:28:11.030
+really shape, you know, velocity,
+the based on the feedback
+
+575
+00:28:11.030 --> 00:28:13.340
+that we get back. And
+then we plan to do
+
+576
+00:28:13.340 --> 00:28:18.080
+another CTP for PDC, which
+is in October and then
+
+577
+00:28:18.080 --> 00:28:21.110
+probably no, get it out
+by sometime early next year.
+
+578
+00:28:21.920 --> 00:28:23.750
+Again, this is another thing
+that I want to really
+
+579
+00:28:23.750 --> 00:28:27.590
+do is ship frequently so
+that, you know, we get
+
+580
+00:28:27.590 --> 00:28:30.530
+more feedback and this is
+what we want to really
+
+581
+00:28:30.530 --> 00:28:33.560
+preserve the compatibility, of course,
+so that you don't have
+
+582
+00:28:33.560 --> 00:28:36.080
+to really throw away our
+applications whenever we share. So
+
+583
+00:28:36.080 --> 00:28:38.360
+you anticipate someone should be
+able to download the CTP,
+
+584
+00:28:38.390 --> 00:28:40.910
+take their existing application and
+in an hour or so,
+
+585
+00:28:41.630 --> 00:28:44.120
+start using velocity and seeing
+if it makes a difference,
+
+586
+00:28:44.870 --> 00:28:47.930
+We actually already announced it.
+People are already started doing
+
+587
+00:28:47.930 --> 00:28:51.410
+it. People have already put,
+you know, blog posts. And
+
+588
+00:28:51.410 --> 00:28:53.120
+then they said, Oh, I
+downloaded it. You know, I
+
+589
+00:28:53.120 --> 00:28:55.820
+ran it and people are
+already using it, which is
+
+590
+00:28:55.820 --> 00:28:58.040
+very gratifying. Where do you
+want the feedback to go?
+
+591
+00:28:58.040 --> 00:29:02.600
+The velocity blog? Yeah. So
+if you go to msdn.microsoft.com/data,
+
+592
+00:29:03.110 --> 00:29:04.460
+we have the last two
+links there so that our
+
+593
+00:29:04.460 --> 00:29:06.830
+blogs and forum posts there,
+it'd be great if you
+
+594
+00:29:06.830 --> 00:29:09.980
+can post requirements and what
+you find issues. And I
+
+595
+00:29:09.980 --> 00:29:12.290
+assume you're watching the blogs
+to make sure if anyone
+
+596
+00:29:12.290 --> 00:29:15.230
+blogs about philosophy, whether their
+success or failure, then they'll
+
+597
+00:29:15.230 --> 00:29:17.000
+watch that as well. Yes.
+And in fact, we have
+
+598
+00:29:17.000 --> 00:29:18.920
+these email alerts where if
+you don't answer a question
+
+599
+00:29:18.920 --> 00:29:21.140
+in the forum within 10
+minutes, 15 minutes, you keep
+
+600
+00:29:21.140 --> 00:29:24.890
+getting emails. So definitely this
+place to ask your question,
+
+601
+00:29:24.890 --> 00:29:28.130
+then you'll be looking at
+those yourselves. Absolutely, absolutely. And
+
+602
+00:29:28.130 --> 00:29:30.020
+testing. And some, some things
+to add is like the
+
+603
+00:29:30.020 --> 00:29:32.360
+CDP one itself right now
+we have a cash service
+
+604
+00:29:32.360 --> 00:29:34.490
+model where you have, and
+the partitioned cash as the
+
+605
+00:29:34.490 --> 00:29:37.610
+cash type and CDP two,
+we're looking at availability and
+
+606
+00:29:37.610 --> 00:29:40.010
+other, some of the new
+functionality is there. I assume
+
+607
+00:29:40.050 --> 00:29:42.040
+at some point you'll put
+a up on your blog
+
+608
+00:29:42.070 --> 00:29:44.230
+To give an idea of
+the schedule that Anil was
+
+609
+00:29:44.230 --> 00:29:47.080
+talking about licensing towns and
+other things. Very cool. Well,
+
+610
+00:29:47.080 --> 00:29:48.640
+thanks so much for taking
+the time to sit down
+
+611
+00:29:48.640 --> 00:29:50.830
+with me here today and
+I'll be sure to check
+
+612
+00:29:50.830 --> 00:29:54.700
+out philosophy. Thank you, Scott.
+Thanks God. All right. This
+
+613
+00:29:54.700 --> 00:29:56.320
+has been another episode of
+Hansel minutes. We'll see you
+
+614
+00:29:56.320 --> 00:29:56.980
+again next week.
+

@@ -1,0 +1,2961 @@
+WEBVTT FILE
+
+1
+00:00:12.110 --> 00:00:17.690
+From hanselminutes.gov. It's Hansel minutes,
+our weekly discussion with web
+
+2
+00:00:17.690 --> 00:00:22.520
+developer and technologist and Scott
+Hanselman. This is Lawrence Ryan announcing
+
+3
+00:00:22.540 --> 00:00:27.350
+show number two 57. Recorded
+live Thursday, March 17th Thousand 11.
+
+4
+00:00:28.160 --> 00:00:32.960
+Support for Hanselman Telerik rad
+controls, the most comprehensive suite
+
+5
+00:00:32.960 --> 00:00:37.280
+of components for windows forms
+and asp.net web applications. Online
+
+6
+00:00:37.280 --> 00:00:44.360
+app www.telerik.com. In this episode,
+Scott talks with Jim Evans
+
+7
+00:00:44.570 --> 00:00:50.480
+about selenium for web automation
+testing. Hi, this is Scott
+
+8
+00:00:50.480 --> 00:00:52.640
+Hanselman and this is another
+episode of Hansel minutes. And
+
+9
+00:00:52.640 --> 00:00:55.640
+today I am talking to
+Jim Evans from the selenium
+
+10
+00:00:56.270 --> 00:00:59.810
+web application testing system. How's
+it going, Jim? Pretty well.
+
+11
+00:00:59.810 --> 00:01:03.290
+How are you? Very well.
+Very well. Thanks for coming
+
+12
+00:01:03.290 --> 00:01:06.470
+on and talking to me
+about this, I use selenium.
+
+13
+00:01:06.710 --> 00:01:09.650
+I want to say 2004,
+2005. It was a long
+
+14
+00:01:09.650 --> 00:01:11.780
+time ago. I actually thought
+it was like 10 years,
+
+15
+00:01:11.780 --> 00:01:14.630
+but then I realized that
+on the internet five years
+
+16
+00:01:14.630 --> 00:01:17.390
+is basically 10 years. It's
+just, it's a long time
+
+17
+00:01:17.390 --> 00:01:20.480
+ago. Yeah, the project's been
+around for a long time.
+
+18
+00:01:21.080 --> 00:01:24.200
+We we've gone to, we
+we're, we're working on some
+
+19
+00:01:24.200 --> 00:01:27.860
+real innovations or some real
+improvements of the system right
+
+20
+00:01:27.860 --> 00:01:32.360
+now. The selenium one project
+has been out for saline.
+
+21
+00:01:32.360 --> 00:01:34.520
+One dot O the one
+dot over version has been
+
+22
+00:01:34.520 --> 00:01:38.720
+out for about a year
+or so after an extended
+
+23
+00:01:38.720 --> 00:01:41.570
+beta period. And right now
+we're working on the 2.0
+
+24
+00:01:41.570 --> 00:01:45.890
+release, which is a, which
+is combines a lot of
+
+25
+00:01:45.890 --> 00:01:50.330
+different elements and is a,
+is in beta right now.
+
+26
+00:01:51.710 --> 00:01:53.870
+And when this, when this
+started, this was a thought
+
+27
+00:01:53.870 --> 00:01:56.360
+worker type thing. I think
+it was Jason Huggins. It
+
+28
+00:01:56.360 --> 00:01:58.760
+started thinking about this in
+terms of a test runner
+
+29
+00:01:58.760 --> 00:02:01.610
+that would use JavaScript for
+the, for the testing. Is
+
+30
+00:02:01.610 --> 00:02:03.950
+that right? That's right. That's
+right. It was Jason Huggins
+
+31
+00:02:03.950 --> 00:02:08.150
+who started the whole thing
+back at, at ThoughtWorks and,
+
+32
+00:02:08.480 --> 00:02:13.820
+and moved on to, to
+Google eventually and, and other
+
+33
+00:02:13.910 --> 00:02:17.680
+and other things, and kind
+of took the, the, the
+
+34
+00:02:17.870 --> 00:02:20.360
+concept of the, of the,
+of the project with him
+
+35
+00:02:21.110 --> 00:02:24.740
+worked on a selenium team
+inside of Google and has
+
+36
+00:02:24.740 --> 00:02:28.130
+since moved on to other
+things. But yeah, it was
+
+37
+00:02:28.130 --> 00:02:30.980
+a, it was a ThoughtWorks
+project. Of course it's been
+
+38
+00:02:30.980 --> 00:02:33.260
+open sourced and it is
+an open source project and,
+
+39
+00:02:34.060 --> 00:02:38.510
+and that's where we are
+today. So, so let's start
+
+40
+00:02:38.720 --> 00:02:42.620
+where I think many people
+saw selenium first, myself included
+
+41
+00:02:42.620 --> 00:02:44.750
+and then kind of work
+our way through it. When
+
+42
+00:02:44.750 --> 00:02:49.070
+I saw it originally, it
+was basically all in the,
+
+43
+00:02:49.130 --> 00:02:51.020
+you know, in the browser
+and it, it almost made
+
+44
+00:02:51.020 --> 00:02:53.660
+it look like it chopped
+up your browser into frame.
+
+45
+00:02:53.660 --> 00:02:55.940
+So you'd have your web
+application and then you'd have
+
+46
+00:02:55.940 --> 00:02:58.760
+like a runner across the
+top. And you'd write your
+
+47
+00:02:58.760 --> 00:03:04.210
+tests using effectively tables, HTML
+tables, and kind of describe
+
+48
+00:03:04.240 --> 00:03:07.440
+what you wanted done, Right?
+That was the original, that
+
+49
+00:03:07.440 --> 00:03:11.790
+was the original concept and
+the original implementation of the
+
+50
+00:03:11.790 --> 00:03:17.040
+selenium project. Then a couple
+of years later, we got
+
+51
+00:03:17.040 --> 00:03:21.600
+a, I believe it was
+Patrick Lightbody and others who
+
+52
+00:03:21.600 --> 00:03:26.730
+worked on separating that out
+to create what eventually became
+
+53
+00:03:26.730 --> 00:03:31.710
+known as selenium, remote control
+or selenium RC, which abstracted
+
+54
+00:03:31.710 --> 00:03:38.010
+out those, those tabled commands
+into a, a language. Basically
+
+55
+00:03:38.010 --> 00:03:40.110
+you could write them using
+any language you want it
+
+56
+00:03:40.110 --> 00:03:45.000
+to being C-sharp or Ruby
+or Java or Python or
+
+57
+00:03:45.600 --> 00:03:48.450
+any number of programming languages.
+If you could, if there
+
+58
+00:03:48.450 --> 00:03:52.500
+was a way to export
+it into that programming language,
+
+59
+00:03:53.070 --> 00:03:55.980
+you could use it there.
+And that, that was kind
+
+60
+00:03:55.980 --> 00:03:57.420
+of the one that a
+lot of people have used
+
+61
+00:03:57.840 --> 00:04:02.640
+since then. The, the big,
+the big difference there is
+
+62
+00:04:02.640 --> 00:04:05.880
+that there is a Java
+server that was created that
+
+63
+00:04:05.880 --> 00:04:08.610
+essentially stood in as a
+proxy that you would talk
+
+64
+00:04:08.610 --> 00:04:12.570
+to, to a T that
+would then drive the browsers
+
+65
+00:04:12.570 --> 00:04:16.590
+using that, that JavaScript framework.
+This was more advanced than
+
+66
+00:04:16.590 --> 00:04:20.310
+that initial HTML table format.
+Absolutely. Yeah. And it also,
+
+67
+00:04:20.310 --> 00:04:22.710
+of course, using that, it
+gave you the, the advantages
+
+68
+00:04:22.710 --> 00:04:25.140
+of running in a traditional
+programming language so that you
+
+69
+00:04:25.140 --> 00:04:27.990
+could take advantage of things
+like, you know, a unit
+
+70
+00:04:27.990 --> 00:04:30.120
+test run or a unit
+test framework to run your
+
+71
+00:04:30.120 --> 00:04:34.980
+tests. So you could, you
+know, take advantage of, of
+
+72
+00:04:35.040 --> 00:04:39.480
+reusable code and, and things
+like that. Yeah. I think
+
+73
+00:04:39.480 --> 00:04:42.000
+that one of the things
+that's interesting about selenium that
+
+74
+00:04:42.070 --> 00:04:46.440
+I, in my opinion may
+have is both a strength
+
+75
+00:04:46.440 --> 00:04:49.050
+and a weakness, at least
+in as far as adoption,
+
+76
+00:04:49.050 --> 00:04:52.530
+amongst like windows and.net people.
+Was that when you hear
+
+77
+00:04:52.530 --> 00:04:54.930
+that, Oh, well, the remote
+control server is in Java.
+
+78
+00:04:55.590 --> 00:04:58.320
+There might be managers or
+bosses or opinionated people who
+
+79
+00:04:58.320 --> 00:04:59.940
+might say, well, I don't
+want any part of that.
+
+80
+00:04:59.970 --> 00:05:02.340
+That's just not what we
+do here, but they don't
+
+81
+00:05:02.340 --> 00:05:05.010
+realize that they can be
+writing in Java or Python
+
+82
+00:05:05.010 --> 00:05:08.820
+or.net or PHP or whatever.
+And when they're doing their
+
+83
+00:05:08.820 --> 00:05:14.280
+tests. Yeah, that's true. Well,
+that brings us to, to
+
+84
+00:05:14.280 --> 00:05:20.340
+the selenium two project, which
+in about, in a parallel
+
+85
+00:05:20.640 --> 00:05:25.590
+in effort, there's a gentleman
+named Simon Stewart who worked
+
+86
+00:05:25.590 --> 00:05:31.890
+on a competing project inside
+Google called web driver. And,
+
+87
+00:05:32.370 --> 00:05:35.640
+and the WebDriver project took
+a completely different approach to
+
+88
+00:05:35.640 --> 00:05:39.030
+driving the browser. And we'll
+get into more of the,
+
+89
+00:05:39.030 --> 00:05:40.860
+of exactly how that works
+in a little bit, but
+
+90
+00:05:41.160 --> 00:05:45.030
+as the selenium folks and
+the WebDriver folks began to
+
+91
+00:05:45.030 --> 00:05:49.650
+talk together, it became pretty
+obvious that the project should
+
+92
+00:05:49.650 --> 00:05:54.360
+merge. And so they did.
+And so now selenium two
+
+93
+00:05:54.360 --> 00:05:57.860
+is the merging of the
+traditional selenium project, the web
+
+94
+00:05:57.860 --> 00:06:04.540
+driver project. Hmm. So the
+selenium. So if you can
+
+95
+00:06:04.540 --> 00:06:07.540
+think of the selenium brand,
+so to speak, if you
+
+96
+00:06:07.540 --> 00:06:10.390
+will, is a little bit
+like a, to draw an
+
+97
+00:06:10.390 --> 00:06:12.610
+analogy would be a little
+bit like the macro S
+
+98
+00:06:12.610 --> 00:06:17.200
+brand, the, the remote control
+or RC and selenium one
+
+99
+00:06:17.200 --> 00:06:20.470
+would be a little like
+the carbon UI framework. And
+
+100
+00:06:20.470 --> 00:06:22.810
+the web driver API would
+be a little like the
+
+101
+00:06:22.810 --> 00:06:28.060
+Coco framework, the newer, more
+capable framework to draw a.net
+
+102
+00:06:28.060 --> 00:06:31.990
+analogy. It might be like.net
+UI types where the, where
+
+103
+00:06:31.990 --> 00:06:34.570
+the selenium one or selenium
+RC framework would be a
+
+104
+00:06:34.570 --> 00:06:38.830
+little like windows forms. And
+the, the WebDriver API would
+
+105
+00:06:38.830 --> 00:06:43.660
+be a little bit like
+a WPF. So let's, let's,
+
+106
+00:06:43.660 --> 00:06:46.360
+let's start for let's, let's
+assume that people have never
+
+107
+00:06:46.360 --> 00:06:48.940
+done anything with selenium. Where,
+where do I start? And
+
+108
+00:06:48.970 --> 00:06:51.220
+let's assume that I wanted
+to test my web application.
+
+109
+00:06:51.220 --> 00:06:54.400
+I've had an existing web
+application written in whatever. Maybe
+
+110
+00:06:54.400 --> 00:06:57.610
+I wrote it in.net and
+I need to enter in
+
+111
+00:06:57.610 --> 00:07:00.340
+some texts. I need to
+submit a form. And I
+
+112
+00:07:00.340 --> 00:07:03.740
+need to confirm that that
+actually happened. What's the general
+
+113
+00:07:03.740 --> 00:07:06.190
+a way that I would
+go about doing that Well,
+
+114
+00:07:06.190 --> 00:07:08.590
+using the selenium to API,
+what you would do is
+
+115
+00:07:08.590 --> 00:07:11.140
+you would download if, if
+you were whatever language you're
+
+116
+00:07:11.140 --> 00:07:13.510
+using, the way selenium two
+works. Let me back up
+
+117
+00:07:13.510 --> 00:07:15.430
+a little bit before we
+get to that straight example
+
+118
+00:07:15.790 --> 00:07:18.850
+and explain that the selenium
+two or the web driver
+
+119
+00:07:18.850 --> 00:07:24.890
+approach takes basically a best
+fit approach for how to
+
+120
+00:07:24.890 --> 00:07:29.230
+defend Tampa, Florida. For example,
+to drive I E we
+
+121
+00:07:29.230 --> 00:07:32.920
+use the calm automation API
+to drive I E for
+
+122
+00:07:32.920 --> 00:07:36.460
+Firefox, we use a Firefox
+extension and talk to the
+
+123
+00:07:36.460 --> 00:07:42.400
+Firefox extension to drive Firefox
+and so on. So we
+
+124
+00:07:42.400 --> 00:07:46.900
+do these in a language
+independent way. The calm automation
+
+125
+00:07:47.110 --> 00:07:49.360
+part in, in IEP is
+written in C plus plus
+
+126
+00:07:49.390 --> 00:07:53.620
+the, the, the Firefox extension
+is written in JavaScript and,
+
+127
+00:07:54.100 --> 00:07:58.690
+and, and with an HTML
+page and so on. And
+
+128
+00:07:58.690 --> 00:08:01.270
+so what we have is
+we have different language bindings
+
+129
+00:08:01.270 --> 00:08:04.870
+that talk to those language
+independent ways are those language
+
+130
+00:08:04.870 --> 00:08:10.510
+independent pieces. So you can
+use C-sharp Python, Ruby, Java
+
+131
+00:08:10.870 --> 00:08:13.420
+to write your test cases
+in and write to the
+
+132
+00:08:13.420 --> 00:08:17.410
+web driver or the selenium
+to API. We kind of
+
+133
+00:08:17.410 --> 00:08:21.820
+use those terms interchangeably and
+write to those in the
+
+134
+00:08:21.820 --> 00:08:28.300
+API that is idiomatic of
+your language. So to, so
+
+135
+00:08:28.420 --> 00:08:31.120
+what you would do then
+in order to perform the
+
+136
+00:08:31.120 --> 00:08:34.000
+test that you were talking
+about, you would in the.net
+
+137
+00:08:34.000 --> 00:08:38.320
+case, you would download the,
+the assemblies, the, the zip
+
+138
+00:08:38.320 --> 00:08:43.000
+file. We don't have a
+new get package yet, but
+
+139
+00:08:43.000 --> 00:08:46.450
+you would download the zip
+file, unzip it, add references
+
+140
+00:08:46.450 --> 00:08:50.260
+to the WebDriver or the
+selenium assemblies into your test
+
+141
+00:08:50.260 --> 00:08:55.000
+project. And in visual studio,
+start writing your tests, where
+
+142
+00:08:55.140 --> 00:08:59.780
+would instantiate I E navigate
+to the page and, and
+
+143
+00:09:00.000 --> 00:09:02.730
+find the element on the
+page and, and interact with
+
+144
+00:09:02.730 --> 00:09:08.390
+it. Do I have the
+remote selenium selenium remote control
+
+145
+00:09:08.390 --> 00:09:11.690
+application running to automate E
+or does this do the
+
+146
+00:09:11.690 --> 00:09:17.030
+assembly? Just do it automatically?
+Yeah. API does not require
+
+147
+00:09:17.030 --> 00:09:20.210
+the selenium server anymore. That
+was another advance in the,
+
+148
+00:09:20.780 --> 00:09:23.450
+in the use of the
+selenium to project in the
+
+149
+00:09:23.450 --> 00:09:29.000
+merger with the WebDriver API,
+the web driver technology simply
+
+150
+00:09:29.870 --> 00:09:33.170
+simply works with the browser.
+It drives the browser directly.
+
+151
+00:09:33.470 --> 00:09:35.960
+It doesn't require the Java
+server in the middle anymore.
+
+152
+00:09:36.890 --> 00:09:40.190
+And can I write the
+same code in C sharp
+
+153
+00:09:40.190 --> 00:09:43.040
+or whatever, like said idiomatic
+to my language and I
+
+154
+00:09:43.040 --> 00:09:48.350
+can run a Safari. Safari
+support is a little bit
+
+155
+00:09:48.350 --> 00:09:50.720
+lagging right now. We're working
+on that. That's one of
+
+156
+00:09:50.720 --> 00:09:52.790
+the active things that we're
+working on for the, for
+
+157
+00:09:52.790 --> 00:09:57.380
+the selenium to API. One
+of the things that you
+
+158
+00:09:57.380 --> 00:09:59.810
+can do. And one of
+the ways that we're trying
+
+159
+00:09:59.810 --> 00:10:02.090
+to help people migrate from
+because we have a lot
+
+160
+00:10:02.090 --> 00:10:05.510
+of people who have a
+very large investment in selenium,
+
+161
+00:10:05.510 --> 00:10:07.790
+one test cases it's been
+around for a long time,
+
+162
+00:10:07.790 --> 00:10:10.280
+as you, as you mentioned.
+And there are lots and
+
+163
+00:10:10.280 --> 00:10:12.020
+lots of people who have
+lots and lots of test
+
+164
+00:10:12.020 --> 00:10:16.250
+cases written with selenium one.
+So one of the ways
+
+165
+00:10:16.250 --> 00:10:19.700
+that we are helping to
+people to migrate is that
+
+166
+00:10:19.760 --> 00:10:22.130
+in, in the, one of
+the things that we have
+
+167
+00:10:22.130 --> 00:10:27.200
+is, is a WebDriver back
+to selenium, which, which lets
+
+168
+00:10:27.200 --> 00:10:34.130
+people use, use the selenium
+commands, but use the web
+
+169
+00:10:34.130 --> 00:10:38.020
+driver backend. So it's, WebDriver
+the WebDriver API. That's, that's
+
+170
+00:10:38.030 --> 00:10:42.830
+actually driving the browsers, but
+your, but your test cases
+
+171
+00:10:42.830 --> 00:10:45.110
+don't have to change. So
+that helps you migrate from
+
+172
+00:10:45.110 --> 00:10:47.900
+one to the other. Now,
+in the case of the
+
+173
+00:10:47.930 --> 00:10:52.530
+Java language bindings, we have
+a, we also have a
+
+174
+00:10:52.530 --> 00:10:55.010
+selenium backed web driver. So
+it goes the other way,
+
+175
+00:10:55.640 --> 00:10:57.770
+which allows you to continue
+to do things like Safari
+
+176
+00:10:57.770 --> 00:11:02.240
+testing until we can get
+the Safari driver completed. Mm,
+
+177
+00:11:02.300 --> 00:11:04.760
+okay. So I th I
+wonder if we may have
+
+178
+00:11:04.760 --> 00:11:09.440
+confused people because some people
+may have jumped in and
+
+179
+00:11:09.440 --> 00:11:13.070
+looked at selenium like I
+did years ago, and think
+
+180
+00:11:13.070 --> 00:11:17.690
+of it selenium one as
+a way to write tests
+
+181
+00:11:17.720 --> 00:11:22.820
+that automate your browser in
+HTML tables, where you have
+
+182
+00:11:22.820 --> 00:11:25.220
+a table for a verb
+and a table now, and
+
+183
+00:11:25.220 --> 00:11:27.080
+you're referring to in the
+table for the, you know,
+
+184
+00:11:27.080 --> 00:11:30.170
+the column for the expected
+result rather. And those are
+
+185
+00:11:30.170 --> 00:11:32.570
+what we call selenium selenium
+one test. Is that correct?
+
+186
+00:11:33.260 --> 00:11:35.960
+Well, those are, those are
+typically referred to as Celanese
+
+187
+00:11:35.960 --> 00:11:39.150
+tests or the Celanese and
+models. Yeah. It's an, it's
+
+188
+00:11:39.160 --> 00:11:40.820
+kind of, it's kind of
+a, it's kind of really
+
+189
+00:11:40.820 --> 00:11:45.260
+a, a, a DSL or
+domain specific language that, that,
+
+190
+00:11:45.320 --> 00:11:50.510
+that is that, that is
+related to testing web applications.
+
+191
+00:11:50.510 --> 00:11:53.260
+And it can be expressed
+in HTML tables or can
+
+192
+00:11:53.260 --> 00:11:55.600
+also be expressed in a
+programming language as it is
+
+193
+00:11:55.600 --> 00:11:59.920
+in the selenium RC, API,
+or selenium one API. There's
+
+194
+00:11:59.920 --> 00:12:02.230
+pretty much a, there's pretty
+close to a one to
+
+195
+00:12:02.230 --> 00:12:05.470
+one mapping between the, the,
+the commands that you would
+
+196
+00:12:05.470 --> 00:12:08.860
+find in the table and
+the commands or the, the,
+
+197
+00:12:08.950 --> 00:12:12.610
+the methods on the selenium
+object. If you're talking in
+
+198
+00:12:12.640 --> 00:12:16.690
+the.net version of the methods
+on the selenium object, pretty
+
+199
+00:12:16.690 --> 00:12:18.370
+much map one to one
+to the commands in the,
+
+200
+00:12:18.370 --> 00:12:22.680
+in the HTML language, if
+you will. Alright, that's, that's
+
+201
+00:12:22.710 --> 00:12:25.750
+where I was actually going
+with that. So the, the
+
+202
+00:12:25.770 --> 00:12:28.050
+one that people may have
+seen of the, of the
+
+203
+00:12:28.050 --> 00:12:31.200
+HTML they've seen it years
+ago, like I did, it's
+
+204
+00:12:31.200 --> 00:12:34.680
+a, it's a basic, basically
+a DSL, but it's effectively
+
+205
+00:12:34.740 --> 00:12:38.370
+expressing the same exact thing.
+So I've got lots of
+
+206
+00:12:38.370 --> 00:12:41.700
+choices I can use pretty,
+pretty much any language, you
+
+207
+00:12:41.700 --> 00:12:44.010
+know, in the style of
+the language, I choose be
+
+208
+00:12:44.010 --> 00:12:47.400
+it Ruby or C sharp
+or HTML tables, and that
+
+209
+00:12:47.400 --> 00:12:51.750
+will be expressed and interpreted,
+and then put my browser
+
+210
+00:12:51.750 --> 00:12:54.390
+kind of on a, on
+puppet strings Here. If you're
+
+211
+00:12:54.390 --> 00:12:57.720
+using the selenium one API.
+Yes. Now the selenium two
+
+212
+00:12:57.720 --> 00:13:02.250
+API is, is, is, is
+vastly different. It's much more
+
+213
+00:13:02.250 --> 00:13:05.340
+of a, of an object
+oriented API. It's much. I
+
+214
+00:13:05.340 --> 00:13:07.260
+find it to be much
+more elegant and much more
+
+215
+00:13:07.260 --> 00:13:11.550
+expressive than the sort of
+the traditional selenium one API.
+
+216
+00:13:12.750 --> 00:13:15.120
+It's it, you know, there
+is a driver object that
+
+217
+00:13:15.120 --> 00:13:18.120
+refers to the browser itself,
+which has properties and methods
+
+218
+00:13:18.120 --> 00:13:22.200
+of things like go to
+URL, or in the case
+
+219
+00:13:22.200 --> 00:13:24.690
+of the.net, it's a URL
+property. That's both settable and
+
+220
+00:13:24.690 --> 00:13:27.750
+gettable. If you set it,
+it navigates the browser to
+
+221
+00:13:27.750 --> 00:13:32.850
+that URL off of the
+driver off of the web
+
+222
+00:13:32.850 --> 00:13:37.110
+driver object, you have a
+find element or find elements
+
+223
+00:13:37.290 --> 00:13:40.140
+method, which would find you
+a web element, which is
+
+224
+00:13:40.140 --> 00:13:43.440
+a, or a collection of
+web elements. And those elements
+
+225
+00:13:43.440 --> 00:13:46.800
+have properties and methods of
+things. Like, for example, click
+
+226
+00:13:47.220 --> 00:13:53.340
+clear, submit, send keys, things
+of that nature. So like
+
+227
+00:13:53.340 --> 00:13:55.170
+I said, it's a much
+more, it's, it's a much
+
+228
+00:13:55.170 --> 00:13:59.040
+more, if you're a.net programmer
+or a Java programmer, it's,
+
+229
+00:14:00.060 --> 00:14:03.090
+it's, it's much more natural
+to work in something that
+
+230
+00:14:03.090 --> 00:14:07.560
+has this type, this kind
+of API. So this was,
+
+231
+00:14:07.560 --> 00:14:10.980
+this was a significant direction
+change for you guys, but
+
+232
+00:14:10.980 --> 00:14:14.010
+it sounds like, yeah, but
+it sounds like it definitely
+
+233
+00:14:14.010 --> 00:14:17.010
+adds something that is worthwhile
+to take kind of take
+
+234
+00:14:17.010 --> 00:14:19.680
+the hit that you're going
+to have to take. Yeah.
+
+235
+00:14:19.950 --> 00:14:23.730
+It's all about, it's all
+about making things more maintainable,
+
+236
+00:14:23.730 --> 00:14:28.050
+making things, you know, a
+little bit more natural feeling
+
+237
+00:14:28.050 --> 00:14:36.900
+to the, the, to the
+natural feeling, to the language
+
+238
+00:14:36.900 --> 00:14:42.630
+that you're actually working in.
+Is that, is that, is
+
+239
+00:14:42.630 --> 00:14:44.550
+that difficult? I mean, I
+think that it's, it's a,
+
+240
+00:14:44.550 --> 00:14:47.940
+it's a, certainly a admirable
+thing to say. I want
+
+241
+00:14:47.940 --> 00:14:50.820
+Ruby people to feel good
+about Ruby and what they're
+
+242
+00:14:50.840 --> 00:14:54.530
+doing while they're writing tests
+in our, in our world.
+
+243
+00:14:55.010 --> 00:14:57.440
+But is it, is it
+possible to make something like
+
+244
+00:14:57.890 --> 00:15:02.530
+to use your term idiomatic?
+Yeah, actually it is. And,
+
+245
+00:15:02.530 --> 00:15:05.530
+and we worked very hard
+to make it. So, like
+
+246
+00:15:05.530 --> 00:15:08.830
+for example, you know, I'm,
+I'm pretty much, I'm pretty
+
+247
+00:15:08.830 --> 00:15:14.050
+much responsible for the.net language
+bindings, which, you know, seem
+
+248
+00:15:14.050 --> 00:15:18.970
+very.net. Like, you know, the,
+the, the, the, the properties
+
+249
+00:15:18.970 --> 00:15:23.530
+are appropriately Pascal cased and,
+and, and the, you know,
+
+250
+00:15:23.530 --> 00:15:26.410
+if, if you're looking at
+using IntelliSense in visual studio,
+
+251
+00:15:26.410 --> 00:15:30.430
+you'll see things that, you
+know, that, that look familiar
+
+252
+00:15:30.430 --> 00:15:32.980
+to you, or that look
+natural to you as a
+
+253
+00:15:33.220 --> 00:15:37.870
+C sharp developer, for example,
+but the Java bindings, for
+
+254
+00:15:37.870 --> 00:15:41.320
+example, you'll find obviously they
+don't have properties. They have
+
+255
+00:15:41.320 --> 00:15:49.150
+only methods. They are camel
+cased, like Java libraries are.
+
+256
+00:15:49.150 --> 00:15:52.720
+And, and so again, it's
+about providing a very natural
+
+257
+00:15:52.720 --> 00:16:02.080
+feeling API with which to,
+with which to work. Hi,
+
+258
+00:16:02.080 --> 00:16:04.210
+this is Scott coming to
+you from another place in
+
+259
+00:16:04.210 --> 00:16:07.600
+time. Are you using agile
+practices to manage your software
+
+260
+00:16:07.600 --> 00:16:09.880
+development? There's lots of tools
+in the market that manage
+
+261
+00:16:09.880 --> 00:16:11.800
+the steps of a project,
+but most of them focus
+
+262
+00:16:11.800 --> 00:16:15.130
+on individual roles, get ready
+for a solution that caters
+
+263
+00:16:15.130 --> 00:16:17.680
+for the success of the
+whole team guys at Tellerik
+
+264
+00:16:17.710 --> 00:16:21.490
+introduced team pulse. It's an
+agile project management tool. That'll
+
+265
+00:16:21.490 --> 00:16:24.700
+help you gather ideas, estimate
+plan, track progress in a
+
+266
+00:16:24.700 --> 00:16:28.660
+common workspace. Finally, companies, regardless
+of their size can use
+
+267
+00:16:28.660 --> 00:16:31.000
+a lightweight and convenient tool
+that makes all the stakeholders
+
+268
+00:16:31.000 --> 00:16:34.000
+work as a United team.
+Even if they're in different
+
+269
+00:16:34.000 --> 00:16:37.630
+countries by combining intuitive user
+interface and the power server
+
+270
+00:16:37.630 --> 00:16:40.570
+light team poles removes the
+roadblocks that you typically face
+
+271
+00:16:40.570 --> 00:16:43.600
+and applying agile in an
+effective manner, no more lost
+
+272
+00:16:43.600 --> 00:16:47.950
+data, no disparate systems, no
+lack of critical analytics regarding
+
+273
+00:16:47.950 --> 00:16:51.070
+the health and philosophy project.
+See if yourself get a
+
+274
+00:16:51.070 --> 00:16:56.290
+free copy for five users
+in one project at tellerik.com/team
+
+275
+00:16:56.290 --> 00:17:00.790
+pulse. And please do thank
+Tellerik for supporting Hansel minutes
+
+276
+00:17:00.790 --> 00:17:05.650
+on their Facebook fan page,
+facebook.com/t L E R I
+
+277
+00:17:05.650 --> 00:17:09.130
+K color. We do appreciate
+it. They wouldn't be a
+
+278
+00:17:09.130 --> 00:17:14.380
+Hansel minutes if there wasn't,
+Tellerik helping us. So if
+
+279
+00:17:14.380 --> 00:17:17.170
+I, if we put this
+in nougat, which of course,
+
+280
+00:17:17.200 --> 00:17:18.550
+and I'm happy to help
+you with that too. I'm
+
+281
+00:17:18.640 --> 00:17:20.230
+sure. It's just one of
+those things you're getting around
+
+282
+00:17:20.230 --> 00:17:23.230
+to someone will be able
+to literally just say, like
+
+283
+00:17:23.260 --> 00:17:27.280
+file new project, bring this
+down and start writing tests
+
+284
+00:17:27.670 --> 00:17:29.950
+hit F five and there
+they've got their browser on
+
+285
+00:17:29.950 --> 00:17:33.220
+a string and it should
+be that simple. Yeah. Now
+
+286
+00:17:33.220 --> 00:17:36.580
+why would someone want to
+use this over a competitor?
+
+287
+00:17:36.640 --> 00:17:39.400
+A example competitor would be
+like the test stuff that
+
+288
+00:17:39.400 --> 00:17:41.620
+you can get in some
+of the skews of visual
+
+289
+00:17:41.620 --> 00:17:46.900
+studio or water, a web
+application testing in Ruby, or
+
+290
+00:17:46.900 --> 00:17:53.240
+for a.net person, Watson web
+application testing in.net. Well, you
+
+291
+00:17:53.240 --> 00:18:00.050
+know, the, the, for example,
+the, the, the water, let
+
+292
+00:18:00.050 --> 00:18:01.970
+me, let me speak to
+water because I probably know
+
+293
+00:18:01.970 --> 00:18:05.720
+that when best as it
+happens, you know, water is
+
+294
+00:18:05.720 --> 00:18:08.930
+kind of starting to work
+on there too dot over
+
+295
+00:18:08.930 --> 00:18:13.550
+version and a Yari Bokken,
+who is a contributor on
+
+296
+00:18:13.550 --> 00:18:20.990
+the, on the selenium team
+for, for, for Ruby has
+
+297
+00:18:20.990 --> 00:18:26.510
+actually created a, a gym
+called water WebDriver water, hyphen
+
+298
+00:18:26.510 --> 00:18:30.800
+web driver. And it is
+the water API that is
+
+299
+00:18:30.800 --> 00:18:36.830
+backed by, by the web
+driver technology. And so what
+
+300
+00:18:36.830 --> 00:18:40.250
+you're seeing is a little
+bit of a convergence of,
+
+301
+00:18:40.310 --> 00:18:48.590
+of sort of these disparate
+technologies for browser automation in,
+
+302
+00:18:48.590 --> 00:18:55.250
+in uses building blocks to
+build other things, Brett Peddicord
+
+303
+00:18:55.250 --> 00:19:00.110
+calls it, innovating at the
+API level. If I can,
+
+304
+00:19:00.590 --> 00:19:03.590
+if I can quote him,
+that's his term Bread Peddicord
+
+305
+00:19:03.590 --> 00:19:05.930
+of course being the primary
+on, on water for people
+
+306
+00:19:05.930 --> 00:19:10.460
+who aren't familiar. Yes. And,
+and so, you know, he,
+
+307
+00:19:11.480 --> 00:19:16.680
+so the, the, the water
+2.0 version, I believe they,
+
+308
+00:19:16.690 --> 00:19:19.790
+they're still talking about it,
+but may in fact be
+
+309
+00:19:19.850 --> 00:19:24.500
+the water WebDriver Jim, that,
+that yard he's done really,
+
+310
+00:19:24.530 --> 00:19:29.450
+really great work on what
+it is not quite, quite
+
+311
+00:19:29.450 --> 00:19:32.660
+as far along for example,
+but there's been some talk
+
+312
+00:19:32.660 --> 00:19:36.380
+in the, in the Wadden
+community of, of doing the
+
+313
+00:19:36.380 --> 00:19:38.930
+same thing, because when you,
+when you talk about doing
+
+314
+00:19:38.930 --> 00:19:43.970
+things like cross browser automation,
+why should we have five
+
+315
+00:19:43.970 --> 00:19:47.900
+different projects that all attempt
+to maintain ways of talking
+
+316
+00:19:47.900 --> 00:19:50.930
+to five different browsers? If
+we have one that does
+
+317
+00:19:50.930 --> 00:19:54.440
+it pretty well, and you,
+and provides an API on
+
+318
+00:19:54.440 --> 00:19:58.430
+what you can build on,
+Right? I mean, so selenium
+
+319
+00:19:58.430 --> 00:20:02.690
+was sufficiently different from water
+spices years ago with its
+
+320
+00:20:02.690 --> 00:20:06.680
+use of tables that one
+could pick what made them,
+
+321
+00:20:07.130 --> 00:20:11.570
+what made them happy, but
+now being a, any of
+
+322
+00:20:11.570 --> 00:20:15.470
+the nomadic language that automates
+the prouder, the difference between
+
+323
+00:20:15.470 --> 00:20:19.610
+it and water from a
+cursory glance is, is getting
+
+324
+00:20:19.670 --> 00:20:22.670
+more and more difficult to,
+to kind of call out.
+
+325
+00:20:23.630 --> 00:20:27.080
+Yeah, it really is. And,
+and really the, the advantage
+
+326
+00:20:27.110 --> 00:20:29.630
+that water brings in my
+opinion, and what in, and
+
+327
+00:20:29.630 --> 00:20:34.100
+those types of, of automation
+projects bring to the table
+
+328
+00:20:34.370 --> 00:20:36.890
+is their API. Their API
+is, is, is pretty darn
+
+329
+00:20:36.890 --> 00:20:42.620
+elegant. And it, you know,
+it's very user friendly for
+
+330
+00:20:42.650 --> 00:20:48.460
+developers of, of tests in
+the.net language is not net
+
+331
+00:20:48.460 --> 00:20:51.070
+languages in the case of,
+of, of Wadden and the,
+
+332
+00:20:51.070 --> 00:20:53.740
+and the Ruby language in
+the case of water, those
+
+333
+00:20:53.740 --> 00:20:59.920
+APIs are really quite well
+well-defined. And, and so it
+
+334
+00:20:59.920 --> 00:21:03.790
+makes sense to use them,
+but again, why, why would
+
+335
+00:21:03.790 --> 00:21:06.130
+we, why would we want
+to ha why were the
+
+336
+00:21:06.130 --> 00:21:08.230
+water project or the Watson
+project want to have to
+
+337
+00:21:08.230 --> 00:21:12.910
+manage the, the mechanics of
+talking to I E talking
+
+338
+00:21:12.910 --> 00:21:16.330
+to Firefox, talking to Chrome,
+talking to opera, and all
+
+339
+00:21:16.330 --> 00:21:19.750
+of those things, when the
+WebDriver project could give you
+
+340
+00:21:20.050 --> 00:21:25.930
+the same thing for relatively
+a small, a relatively small
+
+341
+00:21:25.930 --> 00:21:29.130
+amount of effort. So help
+me understand, maybe I, maybe
+
+342
+00:21:29.130 --> 00:21:32.010
+I missed it, or I'm
+confused, but where does, who
+
+343
+00:21:32.010 --> 00:21:34.860
+owns web driver and where
+does that come from? As
+
+344
+00:21:34.860 --> 00:21:37.320
+it relates to selenium, did
+that come out of selenium?
+
+345
+00:21:38.320 --> 00:21:41.010
+Yeah. Web driver. It was,
+was a competing project to
+
+346
+00:21:41.010 --> 00:21:46.560
+selenium, but they hadn't had
+merged the project, the selenium
+
+347
+00:21:46.560 --> 00:21:50.220
+project and the WebDriver project
+have merged. And I use
+
+348
+00:21:50.220 --> 00:21:54.570
+WebDriver colloquially to mean the
+selenium to API. Like I
+
+349
+00:21:54.570 --> 00:21:57.450
+said, I think I use
+those terms interchangeably. I probably
+
+350
+00:21:57.450 --> 00:22:00.300
+should get out of the
+habit of doing that, but,
+
+351
+00:22:00.510 --> 00:22:05.610
+but the WebDriver API or
+the selenium two API typically
+
+352
+00:22:05.610 --> 00:22:09.360
+are, are referring to the
+same thing. I see. I
+
+353
+00:22:09.360 --> 00:22:12.270
+see. And are you all
+friendly? I mean, is there
+
+354
+00:22:12.270 --> 00:22:14.010
+a, is there a such
+thing as like a beef
+
+355
+00:22:14.040 --> 00:22:17.310
+between different groups or is
+everyone on the same side,
+
+356
+00:22:17.310 --> 00:22:19.350
+just trying to make it
+easier to test things within
+
+357
+00:22:19.350 --> 00:22:21.870
+a browser? Well, I think
+ultimately that's what we all
+
+358
+00:22:21.870 --> 00:22:25.170
+want is to make things
+easy. There's I think there's
+
+359
+00:22:25.170 --> 00:22:29.430
+a great relationship between the
+selenium team and the water
+
+360
+00:22:29.460 --> 00:22:34.650
+team, the Watson team. We
+really haven't had much more
+
+361
+00:22:34.650 --> 00:22:37.800
+than a cursory interaction with,
+but those are they're nice
+
+362
+00:22:37.800 --> 00:22:40.920
+guys. Jarons at, John's a
+nice guy. I've had the
+
+363
+00:22:41.160 --> 00:22:45.210
+pleasure of talking with him
+via email and, and, you
+
+364
+00:22:45.210 --> 00:22:49.350
+know, we we've, we've discussed
+the possibility of, of in
+
+365
+00:22:49.350 --> 00:22:51.510
+a future version of what
+in being based on web.
+
+366
+00:22:51.510 --> 00:22:53.220
+And I were also, but
+it's been nothing more than,
+
+367
+00:22:53.340 --> 00:22:56.730
+you know, brief conversations at
+this point. It definitely sounds
+
+368
+00:22:56.730 --> 00:22:59.220
+like only good things could
+happen, though. Yeah. Well, one
+
+369
+00:22:59.220 --> 00:23:02.400
+of the longterm projects of
+the, of the selenium two
+
+370
+00:23:02.400 --> 00:23:05.520
+or the WebDriver project is,
+is kind of to create
+
+371
+00:23:05.520 --> 00:23:09.120
+a browser automation standard. It,
+it is crazy that we
+
+372
+00:23:09.120 --> 00:23:12.120
+have, you know, just a
+small team of developers really
+
+373
+00:23:12.120 --> 00:23:14.760
+there's, there's less than 10
+people who are super active
+
+374
+00:23:15.420 --> 00:23:19.980
+in, in, in, in maintaining
+the, the selenium to code
+
+375
+00:23:19.980 --> 00:23:24.030
+base. And for that smaller
+team to be trying to
+
+376
+00:23:24.210 --> 00:23:27.990
+support every browser on every
+platform is really kind of
+
+377
+00:23:27.990 --> 00:23:31.290
+crazy. So one of the
+things we're we're starting to
+
+378
+00:23:31.290 --> 00:23:33.180
+do is to reach out
+to some of the browser
+
+379
+00:23:33.180 --> 00:23:38.490
+vendors themselves, to have them
+produce and maintain their own
+
+380
+00:23:38.490 --> 00:23:45.590
+drivers. There is a, a
+WebDriver compliant Chrome driver that
+
+381
+00:23:45.590 --> 00:23:49.550
+is checked in as part
+of the chromium tree that
+
+382
+00:23:49.550 --> 00:23:52.280
+should be available with the
+next version of Chrome, I
+
+383
+00:23:52.280 --> 00:23:57.380
+believe, or real soon. Now
+opera corporation has opened sourced
+
+384
+00:23:57.380 --> 00:24:00.410
+and released their, their driver
+for the opera browser as
+
+385
+00:24:00.410 --> 00:24:05.390
+well. So, so these are,
+you know, Mozilla has bought
+
+386
+00:24:05.390 --> 00:24:10.310
+into the concept is my
+understanding, but we haven't gotten
+
+387
+00:24:10.310 --> 00:24:13.820
+as far as, as having
+them generate any code for
+
+388
+00:24:13.820 --> 00:24:17.720
+the project yet. So, but
+we're, we're trying to, trying
+
+389
+00:24:17.720 --> 00:24:23.600
+to sort of help browser
+vendors to encourage browser vendors,
+
+390
+00:24:23.600 --> 00:24:26.990
+to, to start thinking about
+creating their own drivers and
+
+391
+00:24:26.990 --> 00:24:29.030
+making it easier for us
+to build tools on top
+
+392
+00:24:29.030 --> 00:24:33.430
+of those, on those of
+those technologies. Do you talk
+
+393
+00:24:33.430 --> 00:24:35.200
+to the <inaudible> team or
+does that, how does that,
+
+394
+00:24:35.230 --> 00:24:37.870
+how does that work out?
+Well, we'd love to talk
+
+395
+00:24:37.870 --> 00:24:40.750
+to the <inaudible> team. I
+haven't had any, any contact
+
+396
+00:24:40.750 --> 00:24:44.440
+with them directly outside of,
+I have spoken with one
+
+397
+00:24:44.440 --> 00:24:47.860
+of their developer evangelists, but
+I haven't spoken with anybody
+
+398
+00:24:47.860 --> 00:24:51.820
+directly on the team to
+any, to any great length,
+
+399
+00:24:52.150 --> 00:24:53.770
+but I'd love to talk
+to them. I'd love to,
+
+400
+00:24:53.820 --> 00:24:56.260
+to, to figure out if
+there's something we can do
+
+401
+00:24:56.260 --> 00:24:59.560
+to, to make that easier.
+None of the core selenium
+
+402
+00:24:59.560 --> 00:25:03.460
+developers are, are super strong
+C plus plus programmers. I
+
+403
+00:25:03.460 --> 00:25:07.330
+know I'm not, I've been
+responsible for the IAE driver,
+
+404
+00:25:07.330 --> 00:25:10.870
+the unmanaged code piece, the
+native code piece. And it's
+
+405
+00:25:10.870 --> 00:25:13.220
+been a challenge to, to,
+to try to, to, to
+
+406
+00:25:13.250 --> 00:25:16.210
+make sure I'm doing everything
+exactly right. So I'd love
+
+407
+00:25:16.210 --> 00:25:18.760
+to have a chat with
+them. Cool. I'll try to
+
+408
+00:25:18.760 --> 00:25:22.600
+facilitate a conversation. That'd be
+great. One of the things
+
+409
+00:25:22.600 --> 00:25:24.790
+I think is interesting is
+when I hit a selenium
+
+410
+00:25:24.820 --> 00:25:28.630
+hq.org, one of the there's
+like step zero, step one,
+
+411
+00:25:28.630 --> 00:25:31.810
+step two. And in step
+one, they say, get this
+
+412
+00:25:31.810 --> 00:25:35.410
+selenium IDE, which is this
+Firefox add in that effectively,
+
+413
+00:25:35.410 --> 00:25:40.060
+jumpstarts your experience? It's kind
+of the, the gateway drug.
+
+414
+00:25:40.360 --> 00:25:42.850
+Cause, you know, if, if
+you basically said, step one,
+
+415
+00:25:42.850 --> 00:25:46.270
+open notepad and type this
+syntax that would maybe turn
+
+416
+00:25:46.270 --> 00:25:49.750
+a lot of people off.
+So you basically sell them
+
+417
+00:25:49.750 --> 00:25:54.400
+on this recorder to get
+them excited before you encourage
+
+418
+00:25:54.400 --> 00:25:56.500
+them to move away from
+the recorder and work on
+
+419
+00:25:56.620 --> 00:25:59.920
+the things a little more
+directly. And I'm interested in
+
+420
+00:25:59.920 --> 00:26:02.590
+that because I, I wrote
+the, I think it was
+
+421
+00:26:02.590 --> 00:26:07.180
+the original water recorder that
+would basically automate IAE and
+
+422
+00:26:07.180 --> 00:26:10.600
+watch what I did and
+then write out water, Ruby
+
+423
+00:26:10.600 --> 00:26:13.810
+code. And, you know, it
+really got people excited about
+
+424
+00:26:13.810 --> 00:26:15.520
+water at the company that
+I was working at at
+
+425
+00:26:15.520 --> 00:26:17.710
+the time. And it kind
+of jump-started things, but people
+
+426
+00:26:17.710 --> 00:26:20.920
+quickly learned that a recorder
+is, can only go so
+
+427
+00:26:20.920 --> 00:26:23.950
+far. I know that there
+are a lot of strong
+
+428
+00:26:23.950 --> 00:26:26.380
+opinions about that when I
+put the water recorder out
+
+429
+00:26:26.380 --> 00:26:29.320
+there and it actually still
+lives on surprisingly, another guys
+
+430
+00:26:29.320 --> 00:26:32.110
+picked it up. There was
+a lot of strong feelings
+
+431
+00:26:32.110 --> 00:26:35.470
+like recorders for web testing
+are a bad idea. And
+
+432
+00:26:35.470 --> 00:26:37.960
+I see a lot of
+discussion both ways. I know
+
+433
+00:26:37.960 --> 00:26:40.840
+that on the Microsoft side,
+inside of visual studio, there's
+
+434
+00:26:40.840 --> 00:26:43.440
+a recorder as well. What,
+what do you think about
+
+435
+00:26:43.440 --> 00:26:47.420
+that idea and where it
+fits into testing? Well, I
+
+436
+00:26:47.420 --> 00:26:50.840
+can certainly understand the appeal
+of a, of a record
+
+437
+00:26:50.840 --> 00:26:56.390
+and playback mechanism, but it's
+been my experience and that
+
+438
+00:26:56.450 --> 00:27:00.710
+record and playback doesn't usually
+mean record and playback. It
+
+439
+00:27:00.710 --> 00:27:03.140
+usually means record, play it
+back once and then fix
+
+440
+00:27:03.140 --> 00:27:07.820
+it when it, when it
+inevitably breaks. You know, I,
+
+441
+00:27:08.600 --> 00:27:11.630
+as, as a, as a
+method for getting people involved
+
+442
+00:27:11.630 --> 00:27:16.310
+and started with, with test
+automation technologies, I can certainly
+
+443
+00:27:16.310 --> 00:27:20.150
+see the benefit in that,
+but the real benefits of
+
+444
+00:27:20.150 --> 00:27:23.360
+test automation, in my opinion,
+and in my experience have
+
+445
+00:27:23.360 --> 00:27:27.140
+been, once you break free
+of the stuff that's generated
+
+446
+00:27:27.140 --> 00:27:33.530
+by the, by the, the
+record mechanism and, and start
+
+447
+00:27:33.530 --> 00:27:37.280
+to start to work with
+the, the, the raw code
+
+448
+00:27:37.280 --> 00:27:42.080
+that, that usually is generated
+by them in whatever language
+
+449
+00:27:42.080 --> 00:27:46.430
+that that generated code is.
+So you're, you're, you're for
+
+450
+00:27:46.430 --> 00:27:48.350
+it for jump-starting, but kind
+of a little else is
+
+451
+00:27:48.350 --> 00:27:51.860
+what I'm hearing you say.
+Yeah, pretty much. I I've
+
+452
+00:27:51.890 --> 00:27:55.130
+I've I have pretty much
+tried to steer away from,
+
+453
+00:27:55.160 --> 00:28:01.310
+from record and playback tools
+through, throughout my career. And,
+
+454
+00:28:01.340 --> 00:28:06.110
+and I, I try to
+discourage them whenever I'm working
+
+455
+00:28:06.110 --> 00:28:10.310
+on a project with, with
+other, with other testers, but
+
+456
+00:28:10.910 --> 00:28:14.270
+I can't, I can't slam
+someone who doesn't know how
+
+457
+00:28:14.270 --> 00:28:17.300
+to code for, for, you
+know, giving them the ability
+
+458
+00:28:17.300 --> 00:28:21.320
+to, to write a quick
+test, you know, to be
+
+459
+00:28:21.320 --> 00:28:23.960
+able to point and click,
+and it can be useful.
+
+460
+00:28:23.960 --> 00:28:27.860
+They can especially be useful
+for learning an API. For
+
+461
+00:28:27.860 --> 00:28:32.510
+example, if you're recording, if
+you're recording and want to
+
+462
+00:28:32.510 --> 00:28:35.690
+figure out, well, how do
+I locate this element in
+
+463
+00:28:35.690 --> 00:28:39.770
+this web page using the
+API of selenium or using
+
+464
+00:28:39.770 --> 00:28:44.120
+the API of water, for
+example, you know, you can,
+
+465
+00:28:44.150 --> 00:28:46.340
+you can look at the
+code generated by the recorder
+
+466
+00:28:46.340 --> 00:28:48.350
+and say, Oh, okay. So
+that's how I do it.
+
+467
+00:28:49.670 --> 00:28:52.280
+But the important thing to
+me is to take that
+
+468
+00:28:52.280 --> 00:28:54.890
+knowledge and not continue to
+use it in the recorder.
+
+469
+00:28:54.890 --> 00:28:58.790
+If you can, let's write
+the script, you know, as,
+
+470
+00:28:58.790 --> 00:29:04.130
+as, as code directly. So
+one of the things that
+
+471
+00:29:04.130 --> 00:29:07.280
+I thought was really interesting
+about selenium is this notion
+
+472
+00:29:07.280 --> 00:29:11.810
+of this grid, because the
+initial complaint that people get
+
+473
+00:29:11.900 --> 00:29:16.130
+when they start doing browser
+automation testing is I have
+
+474
+00:29:16.130 --> 00:29:17.840
+lots of different kinds of
+projects I want to test
+
+475
+00:29:17.840 --> 00:29:20.690
+on. And they basically start
+by trying to make their
+
+476
+00:29:20.690 --> 00:29:24.410
+own computer, do everything. They
+install every browser and they
+
+477
+00:29:24.410 --> 00:29:27.350
+try to get multiple versions
+running side by side, and
+
+478
+00:29:27.350 --> 00:29:30.290
+they kind of struggle to
+get a breadth of tests.
+
+479
+00:29:31.550 --> 00:29:34.340
+And then of course those
+tests are slow because, you
+
+480
+00:29:34.340 --> 00:29:37.760
+know, you can only drive
+a browser so fast. Then
+
+481
+00:29:37.790 --> 00:29:39.950
+they started kind of getting,
+it's almost like the, the
+
+482
+00:29:39.950 --> 00:29:43.270
+multiple stages of, as you
+work through this process in
+
+483
+00:29:43.270 --> 00:29:46.240
+your head, some people try
+to get tests running without
+
+484
+00:29:46.240 --> 00:29:49.180
+the browser. And then they
+kind of realize, well, that
+
+485
+00:29:49.180 --> 00:29:51.490
+won't tell me how the
+browser is going to behave.
+
+486
+00:29:52.120 --> 00:29:54.190
+What is the grid do?
+And how does that make
+
+487
+00:29:54.190 --> 00:29:58.800
+my life easier? Well, what
+the selenium grid does and,
+
+488
+00:29:58.980 --> 00:30:02.760
+and we're, we're currently working
+on the next version of
+
+489
+00:30:02.760 --> 00:30:05.670
+the selenium grid as well.
+There's been some code that's
+
+490
+00:30:05.670 --> 00:30:08.550
+just recently been checked into
+the project to advance the
+
+491
+00:30:08.550 --> 00:30:14.940
+selenium grid into the selenium
+two world. That what it
+
+492
+00:30:14.940 --> 00:30:19.440
+does is it allows you
+to take a number of
+
+493
+00:30:19.440 --> 00:30:25.230
+machines and running a, a
+selenium agent or a selenium
+
+494
+00:30:26.940 --> 00:30:32.490
+server is probably the, the
+technically correct word coordinate execution
+
+495
+00:30:32.490 --> 00:30:36.270
+of tests among those many
+machines, each one, having a
+
+496
+00:30:36.270 --> 00:30:39.030
+server or an agent on
+it, and then reporting the
+
+497
+00:30:39.030 --> 00:30:42.930
+results back into the grid.
+The grid controller that is,
+
+498
+00:30:44.820 --> 00:30:46.680
+Is this almost like building
+like a, making a build
+
+499
+00:30:46.680 --> 00:30:49.020
+farm, I mean, are these,
+are these machines that are
+
+500
+00:30:49.020 --> 00:30:51.630
+these my, my friend's machines,
+or am I going to
+
+501
+00:30:51.630 --> 00:30:56.160
+dedicate machines to the grid?
+Well, you, you, you could
+
+502
+00:30:56.160 --> 00:30:59.760
+approach it either way. You
+know, you could approach it
+
+503
+00:30:59.760 --> 00:31:02.880
+in such a way that,
+that, That, you know, you,
+
+504
+00:31:03.630 --> 00:31:06.900
+you could, There was one
+project that I worked on,
+
+505
+00:31:06.900 --> 00:31:11.640
+where we had everyone enrolled
+in the, in the project
+
+506
+00:31:11.640 --> 00:31:13.980
+and they ran the agent
+on their, on their machines
+
+507
+00:31:13.990 --> 00:31:16.560
+at the end of the
+day. And we use their
+
+508
+00:31:16.560 --> 00:31:22.560
+machines as test machine resources
+overnight. But typically what you
+
+509
+00:31:22.560 --> 00:31:24.360
+would want to do or
+is, is you would have
+
+510
+00:31:25.920 --> 00:31:31.890
+machines dedicated to running tests
+and, and they don't have
+
+511
+00:31:31.890 --> 00:31:34.290
+to be physical machines. They
+could very easily be virtual
+
+512
+00:31:34.290 --> 00:31:41.280
+machines as well. Ah, interesting.
+So having a, I could
+
+513
+00:31:41.280 --> 00:31:44.580
+have a single machine just
+filled with different virtual machines
+
+514
+00:31:45.240 --> 00:31:47.520
+in order to get around
+the versioning issue, as well
+
+515
+00:31:47.520 --> 00:31:50.160
+as I assume, max and
+other, other kinds of machines.
+
+516
+00:31:50.670 --> 00:31:52.790
+And you basically just kind
+of call upon them. You,
+
+517
+00:31:52.790 --> 00:31:56.130
+you request like a web
+farm, I need a Mac
+
+518
+00:31:56.280 --> 00:31:58.980
+Firefox instance and it figures
+it out and runs it.
+
+519
+00:31:58.980 --> 00:32:02.460
+And then reports back, Right?
+In, in the selenium to
+
+520
+00:32:02.460 --> 00:32:05.100
+API, we have the concept
+of a, of a capabilities
+
+521
+00:32:06.160 --> 00:32:10.710
+object, which, which we can,
+which we can basically find
+
+522
+00:32:10.710 --> 00:32:12.930
+out what the capabilities are
+of a, of a given
+
+523
+00:32:12.930 --> 00:32:16.500
+browser that we've instantiated so
+that we can know whether
+
+524
+00:32:16.500 --> 00:32:19.170
+it's say, for example, it
+supports JavaScript or whether it's,
+
+525
+00:32:20.430 --> 00:32:23.700
+whether it has certain w
+whether you need to use
+
+526
+00:32:23.700 --> 00:32:26.460
+native events from the OS
+to do your mouse clicks
+
+527
+00:32:26.460 --> 00:32:30.300
+and keystrokes, or whether we're
+using synthetic ones, things of
+
+528
+00:32:30.300 --> 00:32:35.340
+that nature. So, so, so
+yes, we, we, we, you
+
+529
+00:32:35.340 --> 00:32:38.010
+know, essentially that's, that's what
+you would be using the
+
+530
+00:32:38.010 --> 00:32:42.670
+grid for. And then my,
+and my last question is
+
+531
+00:32:43.420 --> 00:32:45.100
+there are those people, there
+are a number of people,
+
+532
+00:32:45.100 --> 00:32:48.910
+myself included who started with
+basic browser testing early on,
+
+533
+00:32:48.910 --> 00:32:51.850
+and then gave up a
+couple of years ago when
+
+534
+00:32:51.880 --> 00:32:56.110
+ax apps started becoming very
+eight, you know, Ajax and
+
+535
+00:32:56.260 --> 00:32:58.060
+kind of said, well, I
+guess it's just really hard
+
+536
+00:32:58.060 --> 00:33:00.730
+to test applications that have
+lots of interactions and crazy
+
+537
+00:33:00.730 --> 00:33:04.000
+Ajax and jQuery type stuff.
+What is selenium do anything
+
+538
+00:33:04.000 --> 00:33:07.870
+special to make that easier?
+Well, we do have some,
+
+539
+00:33:08.490 --> 00:33:11.260
+some, there are some techniques
+that you can use, but
+
+540
+00:33:11.260 --> 00:33:14.290
+you would want to use
+them probably no matter what
+
+541
+00:33:14.290 --> 00:33:17.050
+technology you would be, you
+you'd be using whether it's
+
+542
+00:33:17.050 --> 00:33:21.070
+selenium or something else. Some
+of the techniques include things
+
+543
+00:33:21.070 --> 00:33:24.520
+like you, you want to,
+you would do things like
+
+544
+00:33:25.330 --> 00:33:28.210
+one of the common things
+is I have an Ajax
+
+545
+00:33:28.210 --> 00:33:33.640
+page that, that when the
+Ajax request comes back, it
+
+546
+00:33:33.640 --> 00:33:37.210
+then populates with some elements
+on the page. You know,
+
+547
+00:33:37.210 --> 00:33:39.070
+I get some links populated
+on the page or whatever,
+
+548
+00:33:39.340 --> 00:33:42.190
+and I want to be
+able to, to then, to,
+
+549
+00:33:42.250 --> 00:33:45.640
+to not have to interact
+with the page until this
+
+550
+00:33:45.640 --> 00:33:48.820
+particular link shows up, for
+example. So one of the
+
+551
+00:33:48.820 --> 00:33:51.280
+things, one of the techniques
+that you would use is
+
+552
+00:33:51.280 --> 00:33:55.510
+you, you would essentially pull
+the page for waiting for
+
+553
+00:33:55.510 --> 00:33:57.370
+that to come back and
+waiting for that, for that
+
+554
+00:33:57.370 --> 00:34:02.800
+element to exist on the
+page. And so that's essentially
+
+555
+00:34:02.800 --> 00:34:04.660
+one of the techniques that,
+that you would use. And,
+
+556
+00:34:04.660 --> 00:34:10.900
+and there are some, there
+are some helper classes and
+
+557
+00:34:10.900 --> 00:34:15.280
+helper methods in, in the
+selenium project that make that
+
+558
+00:34:15.280 --> 00:34:18.970
+a little bit easier to
+work with the selenium. One
+
+559
+00:34:18.970 --> 00:34:22.030
+API also has some direct
+things that are things like,
+
+560
+00:34:22.030 --> 00:34:28.030
+wait until present, wait until,
+wait until text. I believe
+
+561
+00:34:28.030 --> 00:34:31.450
+is the name of it,
+or wait until contains text.
+
+562
+00:34:31.450 --> 00:34:34.150
+Page contains text. I've forgotten
+exactly the names of those,
+
+563
+00:34:35.080 --> 00:34:38.680
+but so the, the, the
+techniques are similar in the
+
+564
+00:34:38.680 --> 00:34:41.290
+selenium to API, you would
+essentially want to pull for
+
+565
+00:34:41.290 --> 00:34:43.000
+the condition that you want.
+And like I said, there
+
+566
+00:34:43.000 --> 00:34:46.060
+are some helper methods that
+make that, that make constructing
+
+567
+00:34:46.060 --> 00:34:53.560
+those weight functions a little
+easier. Cool. So is selenium
+
+568
+00:34:53.650 --> 00:34:56.500
+hq.org, the place that people
+can go to find out
+
+569
+00:34:56.770 --> 00:34:59.920
+pretty much everything, all things
+selenium. Yeah. We're in the
+
+570
+00:34:59.920 --> 00:35:01.690
+middle of a, of a
+little bit of a revamp
+
+571
+00:35:01.690 --> 00:35:05.110
+of that because we are
+updating the documentation for the
+
+572
+00:35:05.110 --> 00:35:09.640
+selenium two dot O project.
+The 2.0 beta three is
+
+573
+00:35:09.640 --> 00:35:12.610
+eminent for, for sure exactly
+when we're going to, when
+
+574
+00:35:12.610 --> 00:35:14.800
+it's going to be available,
+the other place that they
+
+575
+00:35:14.800 --> 00:35:16.960
+can go, if they're interested,
+they can go. If they're
+
+576
+00:35:16.960 --> 00:35:27.280
+interested in, in looking@theprojectitselfisgoingtobeatselenium.google code.com.
+And that's the, the project
+
+577
+00:35:27.280 --> 00:35:30.790
+hosting page for the, for
+the source code also has
+
+578
+00:35:30.790 --> 00:35:37.350
+the issue tracker and, and,
+and so on. Cool. Well,
+
+579
+00:35:37.470 --> 00:35:40.200
+I appreciate That. It sounds
+like it's, it's great to
+
+580
+00:35:40.200 --> 00:35:43.410
+know that it's still around.
+I keep bringing up the
+
+581
+00:35:43.410 --> 00:35:44.910
+age of it, because I
+think that a lot of
+
+582
+00:35:44.910 --> 00:35:48.000
+times people look at older
+projects with a kind of
+
+583
+00:35:48.330 --> 00:35:50.550
+combination of reverence, but at
+the same time, well, I
+
+584
+00:35:50.550 --> 00:35:52.710
+guess it's done. And it
+sounds like you guys are
+
+585
+00:35:52.710 --> 00:35:56.450
+just getting started. No, it's
+extremely active and where we're
+
+586
+00:35:56.450 --> 00:35:59.270
+always looking for contributors and
+people who want to come
+
+587
+00:35:59.270 --> 00:36:03.920
+and help out. So come
+visit us at, at <inaudible>
+
+588
+00:36:03.920 --> 00:36:07.250
+dot com and bring us
+on the mailing lists and
+
+589
+00:36:07.610 --> 00:36:10.520
+IRC channels and all the
+links are up there. So
+
+590
+00:36:12.140 --> 00:36:14.420
+Very cool. All right. Well,
+thanks so much. This has
+
+591
+00:36:14.420 --> 00:36:16.970
+been another episode of Hanselminutes
+and we'll see you again
+
+592
+00:36:16.970 --> 00:36:17.450
+next week.
+

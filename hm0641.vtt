@@ -1,0 +1,3202 @@
+WEBVTT FILE
+
+1
+00:00:00.600 --> 00:00:02.460
+Hey friends, this is Scott.
+I want you to know
+
+2
+00:00:02.460 --> 00:00:04.890
+how much I appreciate you
+as listeners. And I hope
+
+3
+00:00:04.890 --> 00:00:08.130
+you appreciate my sponsors because
+they make the show possible.
+
+4
+00:00:08.820 --> 00:00:12.780
+Raygun provides full stack error,
+crash, and performance monitoring for
+
+5
+00:00:12.780 --> 00:00:16.080
+tech teams. Whether you're a
+software engineer looking to diagnose
+
+6
+00:00:16.080 --> 00:00:18.900
+and resolve issues with greater
+speed and accuracy or a
+
+7
+00:00:18.900 --> 00:00:21.420
+product manager drowning in bug
+reports, or maybe you're just
+
+8
+00:00:21.420 --> 00:00:25.890
+concerned. You're losing customers to
+poor quality online experiences. Raygun
+
+9
+00:00:25.890 --> 00:00:28.830
+can provide you with the
+answers, get full stack error
+
+10
+00:00:28.830 --> 00:00:31.830
+and performance monitoring in one
+place. The next time you're
+
+11
+00:00:31.830 --> 00:00:34.440
+struggling to replicate errors and
+performance issues and your code
+
+12
+00:00:34.440 --> 00:00:38.610
+base think Raygun head over
+to raygun.com. That's R a
+
+13
+00:00:38.610 --> 00:00:41.880
+Y G U n.com and
+get up and running within
+
+14
+00:00:41.880 --> 00:00:45.090
+minutes and dramatically improve your
+online experiences of your users.
+
+15
+00:00:58.590 --> 00:01:00.600
+Hi, this is Scott Hanselman.
+This is another episode of
+
+16
+00:01:00.600 --> 00:01:03.360
+Hansel minutes. And today I'm
+talking with Laura, Frank. She
+
+17
+00:01:03.360 --> 00:01:05.640
+is the director of engineering
+at CloudBees. How are you?
+
+18
+00:01:06.410 --> 00:01:08.330
+Hey, Scott. I'm doing really
+well. How are you doing?
+
+19
+00:01:09.080 --> 00:01:11.870
+I'm doing okay. I'm excited
+to talk to you because
+
+20
+00:01:11.870 --> 00:01:15.350
+you have expertise in containers
+that goes back kind of
+
+21
+00:01:15.350 --> 00:01:18.050
+to the beginning. Like, were
+you there when Docker was
+
+22
+00:01:18.770 --> 00:01:22.910
+brought out, announced To the
+days of yore? Yeah, I
+
+23
+00:01:22.910 --> 00:01:27.800
+started using Docker in 2013,
+which is, it really was
+
+24
+00:01:27.800 --> 00:01:30.560
+just like a couple months
+after Solomon made the, I
+
+25
+00:01:30.560 --> 00:01:33.860
+guess, announcement or shared the
+project at pike con during
+
+26
+00:01:33.860 --> 00:01:36.650
+that like very famous lightning
+talk, the most famous lightning
+
+27
+00:01:36.650 --> 00:01:40.790
+talk that ever was. So
+I remember very distinctly. I
+
+28
+00:01:40.790 --> 00:01:43.730
+was working, working at HP
+at the time, working on
+
+29
+00:01:43.730 --> 00:01:46.850
+HP cloud back when they
+have HP cloud public cloud
+
+30
+00:01:47.300 --> 00:01:49.820
+and someone shared the link
+of the talk and our
+
+31
+00:01:49.820 --> 00:01:53.570
+IRC channel and thought like,
+Oh, this thing sounds pretty
+
+32
+00:01:53.570 --> 00:01:57.710
+cool. And I was like,
+does sound pretty cool. And
+
+33
+00:01:58.190 --> 00:02:02.120
+from there, you know, X,
+X, Y, Z happened, we
+
+34
+00:02:02.120 --> 00:02:05.210
+had a, a mutual colleague
+that ended up going to
+
+35
+00:02:05.210 --> 00:02:08.960
+century link to start a
+team in the labs department
+
+36
+00:02:08.960 --> 00:02:11.930
+to do research and development.
+The topic was Docker and
+
+37
+00:02:11.930 --> 00:02:14.480
+like a bunch of us
+from, from HP went over
+
+38
+00:02:14.480 --> 00:02:17.660
+there to start working on
+developer tools. So it happened
+
+39
+00:02:17.690 --> 00:02:21.590
+really, really quick, but yeah,
+I've been very, I've been
+
+40
+00:02:21.590 --> 00:02:26.300
+steeped in the container world
+since, since about 2013. Is
+
+41
+00:02:26.300 --> 00:02:28.160
+that one of those things
+where you see a technology,
+
+42
+00:02:28.160 --> 00:02:29.780
+you hear about a new
+project and you're like, Oh
+
+43
+00:02:29.990 --> 00:02:32.960
+yeah, I need to be
+all over that. And then
+
+44
+00:02:32.960 --> 00:02:35.580
+you just jump in or
+were you already in, in
+
+45
+00:02:35.930 --> 00:02:39.650
+satellite projects or things in
+the area around it? Yeah,
+
+46
+00:02:39.650 --> 00:02:43.250
+I was in the developer
+tool space. I was working
+
+47
+00:02:43.250 --> 00:02:45.470
+on the infrastructure team at
+HP cloud. So it was
+
+48
+00:02:45.470 --> 00:02:50.900
+very much into the, you
+know, cloud migration story tools
+
+49
+00:02:50.900 --> 00:02:54.500
+that made it easier for
+developers to start doing work
+
+50
+00:02:54.500 --> 00:02:58.040
+in the cloud things that
+made developers more productive. So
+
+51
+00:02:58.520 --> 00:03:02.620
+it was in sort of
+a adjacent space. The one
+
+52
+00:03:02.650 --> 00:03:05.950
+interesting thing about me though,
+is that I'm really boring
+
+53
+00:03:06.040 --> 00:03:11.410
+and I don't, don't love
+risks. I grew up in
+
+54
+00:03:11.410 --> 00:03:17.290
+the Midwest, my dad's a
+mechanic, you know, financial stability.
+
+55
+00:03:17.290 --> 00:03:20.710
+Wasn't, wasn't really something that
+I had a lot of
+
+56
+00:03:20.710 --> 00:03:23.410
+when I was not, not
+necessarily not when I was
+
+57
+00:03:23.410 --> 00:03:25.480
+young, but when I was
+in college, like putting myself
+
+58
+00:03:25.480 --> 00:03:30.820
+through school, the idea of
+joining a startup or working
+
+59
+00:03:30.820 --> 00:03:33.940
+on a very early project
+with a lot of risk
+
+60
+00:03:33.940 --> 00:03:38.020
+involved is just not my
+cup of tea, but I
+
+61
+00:03:38.020 --> 00:03:40.900
+don't know there was something,
+something about it that made
+
+62
+00:03:40.900 --> 00:03:45.370
+me feel very confident and
+safe about the future. So
+
+63
+00:03:45.370 --> 00:03:47.020
+I just, I just kind
+of went with it. I
+
+64
+00:03:47.020 --> 00:03:50.860
+really trusted my colleagues as
+well. And I knew that,
+
+65
+00:03:51.280 --> 00:03:54.320
+that we could build something
+cool with the project and
+
+66
+00:03:54.340 --> 00:03:57.490
+we ended up doing quite
+a bit of cool stuff
+
+67
+00:03:57.490 --> 00:04:00.570
+and I'm still here. So
+Yeah, it sounds like it
+
+68
+00:04:00.570 --> 00:04:02.040
+was a big bet, but
+it's a bet that paid
+
+69
+00:04:02.040 --> 00:04:04.530
+off. It did. Yeah. I
+wish I could, you know,
+
+70
+00:04:04.530 --> 00:04:06.960
+that question, like, if you
+could tell your past self
+
+71
+00:04:06.960 --> 00:04:09.810
+something, I would be like,
+listen, it's going to be
+
+72
+00:04:09.810 --> 00:04:13.920
+fine. And are you, you're
+still a member of the
+
+73
+00:04:13.920 --> 00:04:17.730
+mobi projects, technical steering committee.
+I am, yeah, I've been,
+
+74
+00:04:18.210 --> 00:04:20.880
+I was elected. I think
+this was probably about a
+
+75
+00:04:20.880 --> 00:04:23.250
+year ago. The elections were
+in it's a two, a
+
+76
+00:04:23.250 --> 00:04:25.860
+two year term. So I'm,
+I'm happily sitting on the
+
+77
+00:04:25.860 --> 00:04:29.220
+technical steering committee for Moby
+project. I'm a member of
+
+78
+00:04:29.220 --> 00:04:31.680
+the Docker captains group. So
+this is a group that
+
+79
+00:04:32.190 --> 00:04:34.560
+this dates all the way
+back to 2015. I think
+
+80
+00:04:34.560 --> 00:04:38.700
+we were kind of formally
+announced at DockerCon EU in
+
+81
+00:04:38.700 --> 00:04:41.490
+Barcelona, which dr. Connie will
+be in Barcelona this year
+
+82
+00:04:41.490 --> 00:04:44.160
+again, which is pretty cool.
+It was sort of an
+
+83
+00:04:44.160 --> 00:04:46.050
+aggregate group of people who
+were doing a lot of
+
+84
+00:04:46.050 --> 00:04:51.750
+blogging, speaking community, organizing people
+who had sort of stepped,
+
+85
+00:04:51.780 --> 00:04:54.840
+stepped up and had a
+bit of a loud voice
+
+86
+00:04:54.870 --> 00:04:58.800
+around Docker using Docker or
+different things you could do
+
+87
+00:04:58.800 --> 00:05:01.500
+with Docker. So I'm really
+happy to be part of
+
+88
+00:05:01.500 --> 00:05:03.630
+that group as well. And
+the, the people that I've
+
+89
+00:05:03.660 --> 00:05:06.000
+been able to meet or
+help get started with containers
+
+90
+00:05:06.000 --> 00:05:10.110
+has been really rewarding. There,
+could you Detangle the names
+
+91
+00:05:10.110 --> 00:05:12.420
+a little bit for a
+second? Like when I see
+
+92
+00:05:12.420 --> 00:05:16.800
+the Docker icon, it's a,
+it's like a, it's a
+
+93
+00:05:16.800 --> 00:05:19.460
+whale, right? So is that
+Moby Dick? Is that meant
+
+94
+00:05:19.470 --> 00:05:21.600
+to imply? It's like Moby,
+but he's got containers on
+
+95
+00:05:21.600 --> 00:05:24.600
+his back. So he's like
+a ship. Yeah. He's so
+
+96
+00:05:24.600 --> 00:05:26.940
+that's mobi, his, his name
+is not Moby Dick. It's
+
+97
+00:05:26.940 --> 00:05:31.500
+going to be doc Moby
+doc. That's actually awesome. I
+
+98
+00:05:31.500 --> 00:05:34.650
+did not know that I'm
+a counterpart as well. I
+
+99
+00:05:34.650 --> 00:05:38.490
+can't decide if it's a
+wife or a sister or
+
+100
+00:05:38.490 --> 00:05:40.620
+maybe just a coincidence that
+they have the same last
+
+101
+00:05:40.620 --> 00:05:44.250
+name, but her name is
+Molly dock. And what is
+
+102
+00:05:44.340 --> 00:05:46.920
+okay, is this, is, this
+was like for another project.
+
+103
+00:05:48.180 --> 00:05:51.030
+She's just, she's just there.
+I think I'm not sure
+
+104
+00:05:51.030 --> 00:05:55.590
+if people, anyone who is
+not like really, really deep
+
+105
+00:05:55.590 --> 00:05:58.010
+into the Docker world or
+hasn't attended to Docker con
+
+106
+00:05:58.030 --> 00:06:02.030
+knows. I think, I think
+mobi just like being blue
+
+107
+00:06:02.540 --> 00:06:04.580
+and like being, I think
+he's just like very cool.
+
+108
+00:06:06.290 --> 00:06:09.660
+So, so it's nice. Like
+it's nice to have a
+
+109
+00:06:09.680 --> 00:06:15.070
+girl whale as well. Okay.
+So the Moby project is
+
+110
+00:06:15.070 --> 00:06:18.790
+like, what's the difference between
+Moby and Docker though? Like
+
+111
+00:06:18.790 --> 00:06:21.640
+Chrome is to chromium as
+Docker is to mobi. I'm
+
+112
+00:06:21.670 --> 00:06:25.540
+so glad you asked. So
+this was, this was announced
+
+113
+00:06:25.540 --> 00:06:28.900
+in Austin, the foundation of
+the Moby project. And it,
+
+114
+00:06:29.320 --> 00:06:32.080
+I think it just wasn't
+announced very well. And there
+
+115
+00:06:32.080 --> 00:06:35.320
+were lots of cleanup tasks,
+I should say, like PR
+
+116
+00:06:35.320 --> 00:06:38.230
+tasks afterwards to kind of
+detangle it. So I'm glad
+
+117
+00:06:38.230 --> 00:06:41.650
+we can talk about it
+here. So Docker inc is
+
+118
+00:06:41.680 --> 00:06:47.710
+a corporation that sells Docker
+the product. And then for
+
+119
+00:06:47.710 --> 00:06:51.580
+a long time, there was
+github.com/docker and Docker was an
+
+120
+00:06:51.610 --> 00:06:56.770
+open source project behind the
+product that Docker inc sold.
+
+121
+00:06:57.040 --> 00:07:01.750
+So there was just this
+natural cloud, like clashing interests,
+
+122
+00:07:01.780 --> 00:07:05.440
+I guess, because the open
+source, you know, let's say
+
+123
+00:07:05.440 --> 00:07:08.530
+for example, Microsoft is a
+huge contributor to the Docker
+
+124
+00:07:08.950 --> 00:07:12.070
+old, the days of your
+Docker opensource project, which they
+
+125
+00:07:12.070 --> 00:07:16.720
+were like, maybe Microsoft wants
+to productize some of it.
+
+126
+00:07:16.720 --> 00:07:19.390
+And then they're pushing, or
+even Docker inc wants to,
+
+127
+00:07:19.570 --> 00:07:21.430
+you know, they're productizing it.
+And then they pushed up
+
+128
+00:07:21.430 --> 00:07:23.890
+into the open source project.
+So it's just a conflict
+
+129
+00:07:23.890 --> 00:07:26.800
+of interest to solve that
+problem. And to make it
+
+130
+00:07:26.800 --> 00:07:31.090
+really clear that Docker inc
+is a company with corporate
+
+131
+00:07:31.090 --> 00:07:34.270
+interests and that there are
+open source components that are
+
+132
+00:07:34.300 --> 00:07:38.410
+kind of going into going
+into the product, everything that's
+
+133
+00:07:38.440 --> 00:07:40.900
+open source and that's like
+a builder or a plumber
+
+134
+00:07:40.900 --> 00:07:45.670
+component is now in the
+Moby project. That's stuff like
+
+135
+00:07:46.030 --> 00:07:50.890
+container D the runtime, all
+of those low-level components to
+
+136
+00:07:51.850 --> 00:07:55.030
+that are kind of consumed
+by the upstream or I
+
+137
+00:07:55.030 --> 00:08:00.460
+guess, downstream Docker product. Okay.
+So let me see if
+
+138
+00:08:00.460 --> 00:08:05.020
+I understand this then. So,
+so mobi has this library
+
+139
+00:08:05.050 --> 00:08:08.920
+of backend components, like all
+the different, like backend containerized
+
+140
+00:08:08.920 --> 00:08:12.370
+stuff, networking and volume management
+and logging and stuff. And
+
+141
+00:08:12.370 --> 00:08:15.820
+then there's a framework to
+assemble all of that and
+
+142
+00:08:15.880 --> 00:08:19.030
+deploy and test those artifacts.
+Yeah. But in all of
+
+143
+00:08:19.030 --> 00:08:25.360
+that, the collision of those
+things are Docker. Okay. Could
+
+144
+00:08:25.360 --> 00:08:29.290
+I go and take Moby
+and turn into like Scott
+
+145
+00:08:29.290 --> 00:08:32.890
+Docker and sell it? Totally.
+If I, if I was
+
+146
+00:08:32.890 --> 00:08:35.560
+clever. Yeah. You taught, if
+you had a bunch of
+
+147
+00:08:35.560 --> 00:08:38.950
+time on your hands and
+a couple of red bulls,
+
+148
+00:08:39.340 --> 00:08:43.390
+you, you totally could. So
+it's just a, it's just
+
+149
+00:08:43.390 --> 00:08:45.700
+a matter it's typing. It's
+all it is. It's just,
+
+150
+00:08:45.700 --> 00:08:47.790
+if you have an attorney
+to type it out, then
+
+151
+00:08:48.250 --> 00:08:49.960
+I should tell my, I
+should tell my kids that
+
+152
+00:08:50.040 --> 00:08:51.730
+like, I want to be
+a programmer. It's just typing.
+
+153
+00:08:51.970 --> 00:08:54.730
+It's not a big deal.
+Okay. So then what is
+
+154
+00:08:55.440 --> 00:09:02.550
+kit? Yeah. Linux kit is
+really interesting project. So Linux
+
+155
+00:09:02.550 --> 00:09:05.490
+kit is like, I'm trying
+to think of how I
+
+156
+00:09:05.490 --> 00:09:10.050
+can explain this. It's sort
+of like making your own
+
+157
+00:09:10.050 --> 00:09:13.740
+operating system or making your
+own distribution of Linux, but
+
+158
+00:09:13.740 --> 00:09:16.580
+like all in containers. Well,
+so the reason I, the
+
+159
+00:09:16.580 --> 00:09:19.700
+reason I ask is that
+there's all these Linuxes right.
+
+160
+00:09:19.850 --> 00:09:21.770
+And like, I'm running windows
+10, but I felt like
+
+161
+00:09:21.770 --> 00:09:25.070
+for Lennox's that I run
+on it. And you know,
+
+162
+00:09:25.070 --> 00:09:28.040
+every once in a while
+I'll call some native API
+
+163
+00:09:28.040 --> 00:09:30.110
+and I'll get like, Oh,
+you're missing lib, blah, blah,
+
+164
+00:09:30.110 --> 00:09:33.080
+blah. You know, you dummy
+go get lib, blah, blah,
+
+165
+00:09:33.080 --> 00:09:34.970
+blah. And then it's a
+whole thing. And there's this
+
+166
+00:09:34.970 --> 00:09:39.470
+whole dance of like, does
+my app support the APIs
+
+167
+00:09:39.680 --> 00:09:42.050
+at the native level that
+I, that my app needs.
+
+168
+00:09:43.040 --> 00:09:45.620
+And then sometimes I'll go
+and put together a Docker
+
+169
+00:09:45.620 --> 00:09:47.390
+container for my app and
+it'll be like, Oh, it's
+
+170
+00:09:47.390 --> 00:09:49.760
+800 megs. You're an idiot.
+And then I'll do it
+
+171
+00:09:49.760 --> 00:09:51.590
+again. And it's like, Oh,
+it's 40 megs. You're a
+
+172
+00:09:51.590 --> 00:09:54.050
+genius. And I have no
+idea like what happened. And
+
+173
+00:09:54.050 --> 00:09:56.420
+I really just want to
+know how do I ship
+
+174
+00:09:56.510 --> 00:09:59.180
+the smallest Linux that does
+just the functions of my
+
+175
+00:09:59.180 --> 00:10:03.590
+app call. Yep. Lennox gets
+a great project to appear
+
+176
+00:10:03.590 --> 00:10:07.110
+in to, to, to solve
+that specific problem. So the,
+
+177
+00:10:07.110 --> 00:10:09.200
+the kind of premise, and
+I guess the, like the
+
+178
+00:10:09.200 --> 00:10:13.070
+tagline kind of description for
+Linux kit is you basically
+
+179
+00:10:13.520 --> 00:10:17.390
+building your own destroyed Linux
+specifically for whatever workload that
+
+180
+00:10:17.390 --> 00:10:20.030
+you're going to run on
+top of it. So I
+
+181
+00:10:20.030 --> 00:10:23.360
+think that's kind of a
+general struggle in the container
+
+182
+00:10:23.360 --> 00:10:26.960
+world and kind of there's
+like, you know, on one
+
+183
+00:10:26.960 --> 00:10:30.860
+end containers are really appealing
+to people because there's this
+
+184
+00:10:30.860 --> 00:10:33.560
+promise of like cut out
+all the fat only have
+
+185
+00:10:33.560 --> 00:10:37.130
+what you need to run.
+Your application. Dependency management is
+
+186
+00:10:37.130 --> 00:10:42.350
+great. Everything is super tiny.
+There's, you know, optimization of
+
+187
+00:10:42.350 --> 00:10:45.410
+images, optimize your Docker file,
+optimize everything. So that it's
+
+188
+00:10:45.410 --> 00:10:49.070
+the smallest, small, small thing.
+On the other hand, there's
+
+189
+00:10:49.070 --> 00:10:52.370
+like developer productivity and wanting
+to make kind of like
+
+190
+00:10:52.370 --> 00:10:56.600
+the silver bullet image that
+will do pretty much anything
+
+191
+00:10:56.600 --> 00:10:59.150
+that the consumer, the developer
+on the other end wants
+
+192
+00:10:59.150 --> 00:11:01.640
+to do. There's really not
+a way to make those
+
+193
+00:11:01.670 --> 00:11:04.850
+types of images, super, super
+tiny and strip away everything.
+
+194
+00:11:04.850 --> 00:11:06.980
+Cause you never, you can't
+really predict the use case
+
+195
+00:11:06.980 --> 00:11:10.550
+of whoever might be consuming
+it. So for those people
+
+196
+00:11:10.550 --> 00:11:15.890
+that are really concerned about
+running the absolute smallest thing,
+
+197
+00:11:16.310 --> 00:11:21.350
+I'm getting really, really deep
+down into the plumbing stuff.
+
+198
+00:11:22.340 --> 00:11:24.320
+That's what LA Linux kit,
+as a project for you,
+
+199
+00:11:24.740 --> 00:11:28.490
+if you're interested in running
+containers as a, maybe as
+
+200
+00:11:28.490 --> 00:11:31.820
+a developer use case, or
+just like to help you
+
+201
+00:11:31.820 --> 00:11:34.010
+in your daily work, or
+even if you're running them
+
+202
+00:11:34.190 --> 00:11:38.270
+in production, it might not
+be, I think it's a
+
+203
+00:11:38.270 --> 00:11:39.800
+cool project to look into,
+but it might not be
+
+204
+00:11:39.800 --> 00:11:44.840
+like immediately actionable for, for
+that particular use case. Okay.
+
+205
+00:11:45.110 --> 00:11:47.330
+So I'm hearing that, you
+know, if my app works
+
+206
+00:11:47.330 --> 00:11:50.300
+great on a boon to,
+or on Alpine and you
+
+207
+00:11:50.300 --> 00:11:52.250
+know, I don't have the
+patience or the interest to
+
+208
+00:11:52.250 --> 00:11:54.880
+go and dig into Linux,
+that's okay. Like I shouldn't
+
+209
+00:11:54.880 --> 00:11:57.240
+feel bad. Yeah. You shouldn't
+feel bad. I think, you
+
+210
+00:11:57.240 --> 00:12:00.630
+know, even in my circle
+and I'm pretty into the,
+
+211
+00:12:00.690 --> 00:12:04.440
+like the container power user,
+I only know personally a
+
+212
+00:12:04.440 --> 00:12:08.550
+handful of people that even
+experiment with Linux kit. And
+
+213
+00:12:08.550 --> 00:12:11.700
+I don't mean to make
+it sound like not approachable,
+
+214
+00:12:11.700 --> 00:12:14.730
+but it is like a,
+it's a building block and
+
+215
+00:12:14.730 --> 00:12:18.090
+kind of like a underground
+plumbing sort of tool. It's
+
+216
+00:12:18.090 --> 00:12:23.100
+not it's, I think there's
+a very small subset of
+
+217
+00:12:23.100 --> 00:12:26.400
+developers that are working on
+problems that are well solved
+
+218
+00:12:26.400 --> 00:12:29.580
+by Lennox. Get, I think
+Docker, the people who work
+
+219
+00:12:29.580 --> 00:12:33.180
+at Docker are great examples
+of those kinds of people
+
+220
+00:12:33.180 --> 00:12:36.510
+working in that space. But
+for a lot of us,
+
+221
+00:12:36.510 --> 00:12:40.080
+even when I was, I'm
+now at director level don't
+
+222
+00:12:40.080 --> 00:12:43.110
+code day to day necessarily
+anymore. But even when I
+
+223
+00:12:43.110 --> 00:12:47.730
+was coding a lot using
+Docker a lot, I probably
+
+224
+00:12:47.730 --> 00:12:51.930
+wouldn't have touched Linux get
+very frequently. It's good to
+
+225
+00:12:51.930 --> 00:12:54.330
+know that it exists. And
+maybe if I were an
+
+226
+00:12:54.330 --> 00:12:57.720
+engineering person at Netflix, I'd
+make like Netflix OSS and
+
+227
+00:12:57.720 --> 00:13:00.360
+it would be like just
+the perfect little Linux for
+
+228
+00:13:00.510 --> 00:13:04.050
+Netflix and we'd all use
+it. But the average Joe
+
+229
+00:13:04.050 --> 00:13:05.700
+and Jane do not need
+to worry about that. So
+
+230
+00:13:05.700 --> 00:13:09.270
+that's good to know. Yeah.
+My final thought about Moby
+
+231
+00:13:09.270 --> 00:13:11.940
+project and like these plumber
+components, I think it's easy
+
+232
+00:13:12.210 --> 00:13:15.300
+if you are a developer,
+like getting started with Docker
+
+233
+00:13:15.300 --> 00:13:17.010
+or maybe you're even using
+it every day and you
+
+234
+00:13:17.010 --> 00:13:19.980
+see all these like really
+cool projects coming out of
+
+235
+00:13:20.010 --> 00:13:24.450
+Moby, like build kit, Linux,
+kit, infer kit, and it
+
+236
+00:13:24.450 --> 00:13:27.180
+can kind of cause you
+shame maybe to think like,
+
+237
+00:13:27.210 --> 00:13:29.850
+Oh, I'm not using them.
+Am I not like, am
+
+238
+00:13:29.850 --> 00:13:33.600
+I not smart? Or, you
+know, what's, is this for
+
+239
+00:13:33.600 --> 00:13:34.980
+me? Is this not for
+me? Am I not a
+
+240
+00:13:34.980 --> 00:13:38.730
+great developer? Like, no, you're,
+you're great. These are really
+
+241
+00:13:38.730 --> 00:13:42.360
+low level components and they're
+not, don't feel bad if
+
+242
+00:13:42.360 --> 00:13:44.430
+it's not something that you're
+touching every day. Like you're
+
+243
+00:13:44.430 --> 00:13:48.750
+doing fine. Yeah. I think
+we appreciate that because there's
+
+244
+00:13:48.750 --> 00:13:50.760
+a lot of, there's a
+lot of words and there's
+
+245
+00:13:50.760 --> 00:13:52.680
+a lot of nouns that
+are being turned into project
+
+246
+00:13:52.680 --> 00:13:54.960
+names. And if you hear
+about a noun and you're
+
+247
+00:13:54.960 --> 00:13:56.640
+like, Oh no, I have
+to learn that now. Now,
+
+248
+00:13:56.640 --> 00:13:59.190
+too. I just learned this
+other noun. It can be
+
+249
+00:13:59.190 --> 00:14:01.290
+a little bit overwhelming. It's
+so hard to know what
+
+250
+00:14:01.290 --> 00:14:04.080
+to pay attention to. I
+think in this, particularly in
+
+251
+00:14:04.080 --> 00:14:06.840
+this space, like the cloud
+native space, the container space,
+
+252
+00:14:06.840 --> 00:14:09.600
+it's like, you know, I
+think JavaScript has a bad
+
+253
+00:14:09.600 --> 00:14:13.860
+reputation of, you know, there's
+something shiny every day. That's
+
+254
+00:14:13.860 --> 00:14:16.410
+like, I think a bit
+unfair because there's lots of
+
+255
+00:14:16.890 --> 00:14:20.790
+that happens everywhere, regardless of
+what language or what, what,
+
+256
+00:14:21.210 --> 00:14:23.130
+how deep in the stack
+you are. So it's certainly
+
+257
+00:14:23.130 --> 00:14:27.810
+happening in the container space,
+super low level. There's often
+
+258
+00:14:27.870 --> 00:14:29.850
+a bunch of new shiny
+stuff all the time. It's
+
+259
+00:14:29.850 --> 00:14:31.740
+easy to get distracted or
+not quite know where to
+
+260
+00:14:31.740 --> 00:14:38.310
+focus. So Docker was released
+for the first time, like
+
+261
+00:14:38.310 --> 00:14:41.760
+you said, in March of
+2013. So even though it
+
+262
+00:14:41.760 --> 00:14:44.760
+took over the world, it's
+only five years old, which
+
+263
+00:14:44.760 --> 00:14:48.060
+is crazy. It's a baby.
+Yeah, exactly. Like my, you
+
+264
+00:14:48.060 --> 00:14:49.830
+know, I had a five
+year old and you know,
+
+265
+00:14:49.890 --> 00:14:52.130
+his whole brain wasn't even
+to the rest of his
+
+266
+00:14:52.130 --> 00:14:55.430
+body, even now he's 12
+and he's still like marginally
+
+267
+00:14:55.430 --> 00:15:00.690
+fun. It's still not attached
+a couple of years. Yeah.
+
+268
+00:15:00.720 --> 00:15:03.880
+When he's in his twenties.
+So, but you, you, the
+
+269
+00:15:03.880 --> 00:15:05.770
+way people talk about Docker,
+you would think it like
+
+270
+00:15:05.770 --> 00:15:11.050
+invented the container. Yeah, totally
+did not. Yeah. I think
+
+271
+00:15:11.050 --> 00:15:14.290
+that's, I think back to
+one of the first talks
+
+272
+00:15:14.290 --> 00:15:18.640
+that I gave, or maybe
+even like the first large
+
+273
+00:15:18.640 --> 00:15:24.160
+conference talk that I gave
+was Ruby comp 2014 about
+
+274
+00:15:24.280 --> 00:15:28.300
+using like how to develop
+a rails application in Docker
+
+275
+00:15:28.300 --> 00:15:31.600
+or with Docker and my
+first slide or maybe my
+
+276
+00:15:31.600 --> 00:15:33.520
+second slide after the like,
+hi, my name is Laura
+
+277
+00:15:33.520 --> 00:15:37.150
+slide was doc. A Docker
+is not a container and
+
+278
+00:15:37.150 --> 00:15:41.890
+Docker didn't invent containers. They
+never had, you know, the
+
+279
+00:15:41.890 --> 00:15:44.740
+narrative might change, but they
+still won't have invented containers.
+
+280
+00:15:44.860 --> 00:15:48.330
+Containers have been around components
+of containerization have been around
+
+281
+00:15:48.330 --> 00:15:52.900
+and for decades really. And
+they're just sort of making
+
+282
+00:15:52.900 --> 00:15:56.320
+it really easy to use
+as a developer. And I
+
+283
+00:15:56.320 --> 00:15:59.950
+think even now, you know,
+five years and that I
+
+284
+00:15:59.950 --> 00:16:02.920
+think that point still gets,
+gets missed, especially with people
+
+285
+00:16:02.920 --> 00:16:06.580
+who are, are joining the
+conversation now and have missed
+
+286
+00:16:06.580 --> 00:16:10.210
+the historical context. So I'm
+always happy to talk in
+
+287
+00:16:10.210 --> 00:16:14.470
+that kind of explain the
+history. Well, so Docker is
+
+288
+00:16:14.470 --> 00:16:17.950
+five years old, but Linux
+containers came out like nine
+
+289
+00:16:17.950 --> 00:16:22.210
+years ago, but open VZ
+came, which was a virtualization
+
+290
+00:16:22.660 --> 00:16:25.180
+technology for the next was
+like 13 years ago. But
+
+291
+00:16:25.390 --> 00:16:27.940
+all of this is still
+even older than that. Yeah.
+
+292
+00:16:27.970 --> 00:16:31.090
+Yeah. The it's always the
+same stuff, kind of repackaged
+
+293
+00:16:31.090 --> 00:16:35.620
+and repurposed. And I think
+containerization and in what we
+
+294
+00:16:35.620 --> 00:16:40.000
+call a container is sort
+of the culmination of quite
+
+295
+00:16:40.000 --> 00:16:44.290
+a few principles or few
+patterns that have existed in
+
+296
+00:16:44.290 --> 00:16:47.050
+computing for a long time.
+Maybe they haven't been super
+
+297
+00:16:47.590 --> 00:16:51.700
+widespread or very well supported
+things like C groups made
+
+298
+00:16:51.700 --> 00:16:56.740
+things a lot easier. Namespaces
+et cetera. Those like very
+
+299
+00:16:56.890 --> 00:17:01.090
+building blocks of containers. They
+often go kind of under
+
+300
+00:17:01.090 --> 00:17:04.390
+the radar because they're wrapped
+in this nice, like whale
+
+301
+00:17:04.420 --> 00:17:07.540
+blue whale that is easy
+to interact with. And it's
+
+302
+00:17:07.540 --> 00:17:10.330
+really easy to focus on
+the blue whale. And you
+
+303
+00:17:10.330 --> 00:17:12.760
+know, it doesn't matter if
+I'm using Docker every day.
+
+304
+00:17:12.760 --> 00:17:17.490
+If I understand like what
+happened 15 years ago or
+
+305
+00:17:17.500 --> 00:17:21.700
+how containers were had evolved
+over time, I think, and
+
+306
+00:17:21.700 --> 00:17:24.790
+that's fine. I think it's,
+I think it's always interesting
+
+307
+00:17:24.790 --> 00:17:28.420
+though, to kind of look
+back and see the patterns
+
+308
+00:17:28.420 --> 00:17:31.930
+that tend to repeat themselves
+over time. I'm very interested
+
+309
+00:17:31.930 --> 00:17:34.960
+in those. So Hey friends,
+this is Scott, you know,
+
+310
+00:17:34.960 --> 00:17:37.150
+listening to podcasts is a
+great way to keep up
+
+311
+00:17:37.150 --> 00:17:40.240
+to date on technology since
+we're always learning as software
+
+312
+00:17:40.240 --> 00:17:43.180
+people. And you can also
+find a job by listening
+
+313
+00:17:43.180 --> 00:17:45.430
+to a podcast. If you
+check out our new sponsor
+
+314
+00:17:45.430 --> 00:17:51.480
+hired.com, that's H I R
+E d.com/hansel minutes on hire.com.
+
+315
+00:17:51.480 --> 00:17:54.690
+Software engineers can get interview
+requests from companies that want
+
+316
+00:17:54.690 --> 00:17:57.300
+to hire you. Each offer
+will have the salary and
+
+317
+00:17:57.300 --> 00:18:00.330
+the equity upfront. You can
+view those interview requests and,
+
+318
+00:18:00.780 --> 00:18:03.150
+you know, accept project, change
+the offer before even talking
+
+319
+00:18:03.150 --> 00:18:04.860
+to a company. It's a
+great way to find out
+
+320
+00:18:04.860 --> 00:18:07.710
+what's out there and maybe
+make a move they're working
+
+321
+00:18:07.710 --> 00:18:11.580
+with over 6,000 companies from
+startups to large companies from
+
+322
+00:18:11.580 --> 00:18:15.000
+14 major tech hubs throughout
+North America and Europe. What's
+
+323
+00:18:15.000 --> 00:18:17.970
+great about this is it's
+totally free for software engineers.
+
+324
+00:18:18.330 --> 00:18:21.480
+And if you get a
+job through hire.com, that'll ordinarily
+
+325
+00:18:21.480 --> 00:18:24.270
+give you a $300. Thank
+you bonus. But if you
+
+326
+00:18:24.270 --> 00:18:26.820
+use our special link, they'll
+double that bonus. So you
+
+327
+00:18:26.820 --> 00:18:30.300
+will actually get paid $600
+when you accept that job.
+
+328
+00:18:30.630 --> 00:18:32.430
+Now, if you're not looking
+for a job, but you
+
+329
+00:18:32.430 --> 00:18:36.330
+know, someone who is refer
+them to hire.com/hansel minutes, and
+
+330
+00:18:36.330 --> 00:18:40.500
+they'll give you a lead
+bonus, a $1,337 bonus when
+
+331
+00:18:40.500 --> 00:18:44.910
+they accept a job. So
+check them out at hired.com/hansel
+
+332
+00:18:44.910 --> 00:18:48.750
+minutes. So for someone who
+is trying to find that
+
+333
+00:18:48.750 --> 00:18:51.240
+balance between what we just
+talked about, which is you
+
+334
+00:18:51.240 --> 00:18:53.160
+don't have to learn everything
+and here's a whole list
+
+335
+00:18:53.160 --> 00:18:55.170
+of words. And now you
+can forget all of those
+
+336
+00:18:55.170 --> 00:18:58.410
+and just use Docker. And
+on the other hand, though,
+
+337
+00:18:58.470 --> 00:19:01.860
+all the cool historical context
+and the where containers came
+
+338
+00:19:01.860 --> 00:19:04.170
+from as a concept, et
+cetera, et cetera, where do
+
+339
+00:19:04.170 --> 00:19:06.390
+you decide when to stop?
+If, if you're listening to
+
+340
+00:19:06.390 --> 00:19:09.000
+this podcast and you're like,
+wow, they're halfway through. I'm
+
+341
+00:19:09.000 --> 00:19:10.380
+still not sure if I'm
+supposed to use Docker or
+
+342
+00:19:10.380 --> 00:19:12.560
+not. What do we tell
+them? If you've never used
+
+343
+00:19:12.560 --> 00:19:16.870
+a container before don't get
+bogged down with all of
+
+344
+00:19:16.870 --> 00:19:21.680
+the historical context. It's like,
+if you think that you
+
+345
+00:19:21.680 --> 00:19:24.440
+might be interested in cake,
+I wouldn't recommend that you
+
+346
+00:19:24.440 --> 00:19:26.690
+go to the store and
+like, look at the history
+
+347
+00:19:26.690 --> 00:19:29.090
+of flower and think about
+all the different kinds of
+
+348
+00:19:29.090 --> 00:19:31.070
+sugar that you want. I
+would just recommend going to
+
+349
+00:19:31.070 --> 00:19:33.170
+the bakery and picking out
+something that looks good and
+
+350
+00:19:33.170 --> 00:19:37.070
+trying it first. Then when
+you want to make changes
+
+351
+00:19:37.070 --> 00:19:40.100
+to maybe like, Oh, maybe
+that's a buttercream. I don't
+
+352
+00:19:40.100 --> 00:19:41.630
+really care for it. And
+I want to have Italian
+
+353
+00:19:41.630 --> 00:19:45.350
+buttercream and stuff. Then I
+think that's the time to,
+
+354
+00:19:45.360 --> 00:19:47.720
+to dig a bit deeper,
+a little bit underneath the
+
+355
+00:19:47.720 --> 00:19:51.110
+surface. But if you're happy
+with that cupcake then, and
+
+356
+00:19:51.110 --> 00:19:54.080
+it's working for you, like
+we're all humans. We have
+
+357
+00:19:54.290 --> 00:19:58.250
+only, we have limited time.
+We have limited keystrokes. There's
+
+358
+00:19:58.760 --> 00:20:02.030
+probably something else that you
+could, you could do if
+
+359
+00:20:02.030 --> 00:20:04.850
+it's not interesting to you
+don't feel pressured to dig
+
+360
+00:20:04.850 --> 00:20:08.030
+into the nitty gritty details.
+So what's all this talk
+
+361
+00:20:08.030 --> 00:20:10.880
+of container Wars though. Like,
+did, is, is there a
+
+362
+00:20:10.880 --> 00:20:17.450
+war? Did we win? Sure.
+I think we won. I
+
+363
+00:20:17.450 --> 00:20:20.300
+could be wrong. I don't
+feel like I had lost.
+
+364
+00:20:20.330 --> 00:20:24.050
+I think that's good. So
+I think there, so maybe
+
+365
+00:20:24.050 --> 00:20:27.050
+here, here's a little bit
+of history lesson. So Docker
+
+366
+00:20:27.080 --> 00:20:30.620
+is, I would say the
+market leader or like market
+
+367
+00:20:30.620 --> 00:20:34.940
+share leader for sure on
+containers. And I think that's,
+
+368
+00:20:35.060 --> 00:20:38.030
+they're not the only container
+runtime, I think right now
+
+369
+00:20:38.030 --> 00:20:41.030
+it's a, a solid container
+product. And that's what maybe
+
+370
+00:20:41.030 --> 00:20:45.110
+an important distinction is like
+Docker inc is a corporation
+
+371
+00:20:45.140 --> 00:20:48.100
+that has a product. And
+that product is there's a
+
+372
+00:20:48.100 --> 00:20:50.800
+lot of internal stuff. Like
+the container runtime that goes
+
+373
+00:20:50.800 --> 00:20:53.290
+into Docker, but there are
+other container runtimes out there.
+
+374
+00:20:53.290 --> 00:20:56.740
+And I think this must've
+been two or three years
+
+375
+00:20:56.740 --> 00:20:59.650
+ago, but Coro S and
+it still exists today, but
+
+376
+00:20:59.680 --> 00:21:03.400
+Coriolis came out with rocket,
+our KT unsure what the
+
+377
+00:21:03.670 --> 00:21:06.040
+correct pronunciation is. And I
+think I've never asked. So
+
+378
+00:21:06.040 --> 00:21:09.310
+I'll just keep, keep saying
+rocket, maybe it's I don't
+
+379
+00:21:09.310 --> 00:21:13.060
+know. But they, they came
+up with their container runtime
+
+380
+00:21:13.060 --> 00:21:16.600
+to sort of not, I
+wouldn't say compete with Docker
+
+381
+00:21:16.660 --> 00:21:20.650
+maybe in some ways, but
+to sort of complete the
+
+382
+00:21:20.650 --> 00:21:25.690
+story perhaps, or just offer
+an alternative. So that was
+
+383
+00:21:25.690 --> 00:21:27.880
+sort of the start of
+this, like, Oh, you know,
+
+384
+00:21:27.880 --> 00:21:32.590
+I feel like there's, there's
+like militant forking on GitHub
+
+385
+00:21:32.590 --> 00:21:35.230
+of like, we're forking this
+repo and like, we're going
+
+386
+00:21:35.230 --> 00:21:37.330
+to build something else. And
+in a lot of ways,
+
+387
+00:21:37.330 --> 00:21:40.150
+rocket felt like that. It
+was like, Oh wow. You
+
+388
+00:21:40.150 --> 00:21:44.470
+know, everyone, the community had
+really gotten behind Docker. And
+
+389
+00:21:44.470 --> 00:21:47.920
+then now there's this thing
+that's like causing some, some
+
+390
+00:21:47.920 --> 00:21:50.800
+turbulence in the container space.
+So that's sort of where
+
+391
+00:21:50.800 --> 00:21:53.110
+we started with the container
+Wars. And I think now
+
+392
+00:21:53.800 --> 00:21:56.290
+when we look at the
+landscape around us, it's really
+
+393
+00:21:56.290 --> 00:22:00.040
+clear that we've, we've evolved
+to the orchestration Wars and
+
+394
+00:22:00.040 --> 00:22:04.240
+that's where most people spend
+their energy is, did Kubernetes
+
+395
+00:22:04.240 --> 00:22:09.570
+with swarm, like who's the
+winner. And Okay. So let
+
+396
+00:22:09.570 --> 00:22:11.940
+me see if I understand
+this then. So Coro S
+
+397
+00:22:11.970 --> 00:22:15.540
+is this lightweight distro built
+around containers that was done
+
+398
+00:22:15.540 --> 00:22:17.580
+by the chorus folks? And
+they did it, they did
+
+399
+00:22:17.580 --> 00:22:22.020
+rocket built on top of
+our KT or rocket, but
+
+400
+00:22:22.020 --> 00:22:23.970
+this is all sitting on
+Linux containers though. Right. You'd
+
+401
+00:22:23.970 --> 00:22:25.530
+need C groups and you
+need all the Linux, these
+
+402
+00:22:25.530 --> 00:22:28.590
+stuff anyway. Right. So this
+is just like not to
+
+403
+00:22:28.590 --> 00:22:31.560
+be, I use this analogy
+a lot. There's a whole,
+
+404
+00:22:31.710 --> 00:22:34.740
+you know, VHS versus Betamax.
+Like it's still a cassette
+
+405
+00:22:34.740 --> 00:22:38.240
+tape. It's got like a
+magnetic spool inside. Yeah. Yeah.
+
+406
+00:22:38.310 --> 00:22:42.840
+So they're not Mentally different,
+not fundamentally different. There's like
+
+407
+00:22:42.840 --> 00:22:46.560
+some distinctions. And I actually,
+you know, it's so funny
+
+408
+00:22:46.560 --> 00:22:49.620
+like this, this, this rocket
+versus Docker, I think it
+
+409
+00:22:49.620 --> 00:22:52.860
+took up so much of
+my, like bandwidth at that
+
+410
+00:22:52.860 --> 00:22:54.990
+time, you know, it was
+like the most important thing.
+
+411
+00:22:54.990 --> 00:22:56.940
+And I'm thinking back right
+now and I think, wow,
+
+412
+00:22:56.940 --> 00:23:01.560
+what even were we so
+mad about? I can't even
+
+413
+00:23:01.770 --> 00:23:07.680
+particularly remember the specifics, but,
+but yeah. So Docker used
+
+414
+00:23:07.680 --> 00:23:12.630
+to be based on Linux
+containers. LXC if, so, if
+
+415
+00:23:12.630 --> 00:23:15.340
+you haven't heard the term
+LXE, that's like the, the
+
+416
+00:23:15.450 --> 00:23:18.960
+Linux container and Docker just
+built on top of LXE
+
+417
+00:23:19.100 --> 00:23:24.240
+and use the, their basic
+functionality of containers and added
+
+418
+00:23:24.240 --> 00:23:25.980
+some stuff on top of
+it. And it was like,
+
+419
+00:23:25.980 --> 00:23:28.890
+okay, we're, we're putting the
+nice, like the frosting on
+
+420
+00:23:28.890 --> 00:23:31.650
+it and, and making it
+easier for developers to use,
+
+421
+00:23:32.490 --> 00:23:34.050
+but you're right. A lot
+of the stuff like at
+
+422
+00:23:34.050 --> 00:23:37.680
+the LXE level was shared,
+it was a couple, I
+
+423
+00:23:37.680 --> 00:23:41.370
+would say two years after
+Docker started that they actually
+
+424
+00:23:41.370 --> 00:23:43.890
+got rid of LXE and
+they started running on their
+
+425
+00:23:43.890 --> 00:23:50.300
+own runtime. So that was
+also, yeah. So that's like,
+
+426
+00:23:50.300 --> 00:23:52.550
+when we talk about the
+container Wars, a lot of
+
+427
+00:23:52.580 --> 00:23:55.070
+what that are, you know,
+what that actually means. It's
+
+428
+00:23:55.070 --> 00:24:00.050
+not like Docker necessarily. It's
+like the container runtime Wars,
+
+429
+00:24:00.050 --> 00:24:04.460
+like is versus lift container
+and like what container runtime
+
+430
+00:24:04.980 --> 00:24:09.620
+are we using? But what's
+interesting. And I think when
+
+431
+00:24:09.620 --> 00:24:13.970
+we did beyond containers with
+Tracy, a couple months back,
+
+432
+00:24:14.360 --> 00:24:17.480
+we touched on this as
+well, about how, you know,
+
+433
+00:24:17.660 --> 00:24:21.170
+things that we interact with
+often. And that seems to
+
+434
+00:24:21.170 --> 00:24:23.270
+be the most important thing.
+It's like, just give it
+
+435
+00:24:23.960 --> 00:24:27.230
+maybe six months or a
+year. And, and that little
+
+436
+00:24:27.230 --> 00:24:30.260
+piece of tech becomes abstracted
+away from us. And I
+
+437
+00:24:30.260 --> 00:24:33.170
+think that's really what happens.
+Like no one thinks about
+
+438
+00:24:33.320 --> 00:24:36.260
+if they start up a
+container, what runtime it's using,
+
+439
+00:24:36.560 --> 00:24:39.740
+or like, if it's using
+Aleksi or something else, what
+
+440
+00:24:39.740 --> 00:24:41.620
+you're focusing on. No, I
+just needed it to work
+
+441
+00:24:41.860 --> 00:24:44.320
+and I need, cause we're
+betting our companies on this
+
+442
+00:24:44.320 --> 00:24:46.960
+technology. Right. I just want
+it to work. Yeah, exactly.
+
+443
+00:24:46.960 --> 00:24:50.170
+So, and we've seen that.
+I mean, we've seen that
+
+444
+00:24:50.170 --> 00:24:53.350
+commoditization not, and it's not
+just in tech, it's like
+
+445
+00:24:53.350 --> 00:24:57.070
+everything. I mean, when you
+buy an <inaudible> instance on
+
+446
+00:24:57.070 --> 00:25:01.960
+AWS, like you're getting electricity,
+but you don't, you don't
+
+447
+00:25:01.960 --> 00:25:04.060
+think about like, Oh, I
+have to pay the electric
+
+448
+00:25:04.060 --> 00:25:07.660
+bill for the data center.
+Electricity is a commodity and
+
+449
+00:25:07.660 --> 00:25:11.410
+it just like, it comes
+with it. When you, when
+
+450
+00:25:11.410 --> 00:25:14.980
+you pay for a, you
+know, con I don't know,
+
+451
+00:25:15.010 --> 00:25:16.960
+running, if you run a
+container on AWS, or if
+
+452
+00:25:16.960 --> 00:25:21.700
+you are using a hosted
+or managed orchestration service, you're
+
+453
+00:25:21.700 --> 00:25:24.370
+getting a container on time,
+that's packaged in it. You
+
+454
+00:25:24.370 --> 00:25:28.780
+just don't necessarily see it
+or think about it. So
+
+455
+00:25:28.780 --> 00:25:34.120
+I think so, Sorry, help
+me understand though, move it
+
+456
+00:25:34.120 --> 00:25:36.310
+up, move it up to
+orchestration though. Then are we
+
+457
+00:25:36.310 --> 00:25:38.230
+going to not think about
+that? Like, will I, is
+
+458
+00:25:38.230 --> 00:25:39.940
+there a world where I
+don't even think the Kubernetes
+
+459
+00:25:39.940 --> 00:25:43.990
+exists? I think so. And
+I think that world is,
+
+460
+00:25:44.200 --> 00:25:47.290
+I think that's, I think
+the natural progression is maybe
+
+461
+00:25:47.290 --> 00:25:50.860
+a bit paused because we
+are as an industry, just
+
+462
+00:25:50.860 --> 00:25:55.360
+like so captivated by Kubernetes.
+And we think it's the
+
+463
+00:25:55.360 --> 00:25:58.390
+most amazing thing ever and
+can't imagine our lives without
+
+464
+00:25:58.390 --> 00:26:01.450
+it. So I think that's
+gonna S it's stalling a
+
+465
+00:26:01.450 --> 00:26:04.570
+bit the commoditization, but I
+think we're, I think we're
+
+466
+00:26:04.570 --> 00:26:08.800
+going to get there where
+if you're what you really
+
+467
+00:26:08.800 --> 00:26:12.100
+want is you want an
+application that's running, that's distributed
+
+468
+00:26:12.100 --> 00:26:14.560
+and highly available. Like, that's
+the thing that we're going
+
+469
+00:26:14.560 --> 00:26:19.000
+after here. So whether that's
+Kubernetes or like something else
+
+470
+00:26:19.030 --> 00:26:22.690
+it as a developer, it's
+probably not the most relevant
+
+471
+00:26:22.690 --> 00:26:26.200
+thing to you. If you
+are, of course, like a
+
+472
+00:26:27.040 --> 00:26:29.590
+reliability engineer, someone who is
+on call or supporting the
+
+473
+00:26:29.590 --> 00:26:31.930
+systems like then, then the
+question's a little bit different
+
+474
+00:26:31.960 --> 00:26:34.870
+and maybe it is more
+important, but I think it
+
+475
+00:26:34.870 --> 00:26:41.920
+will be a year until
+we have other patterns that
+
+476
+00:26:41.920 --> 00:26:46.290
+sort of wrap Kubernetes and
+maybe abstract Kubernetes away. I
+
+477
+00:26:46.290 --> 00:26:49.110
+think people will start thinking
+about, like, I don't think
+
+478
+00:26:49.110 --> 00:26:52.620
+people will be talking about
+pods or, you know, parts
+
+479
+00:26:52.620 --> 00:26:56.610
+of the Kubernetes syntax, like
+their, their yamble declarations deployment
+
+480
+00:26:56.610 --> 00:27:00.660
+declarations necessarily anymore. I think
+it's going to be a,
+
+481
+00:27:01.020 --> 00:27:04.830
+maybe one level up, like
+just generally here's my application.
+
+482
+00:27:04.830 --> 00:27:06.630
+And then there needs to
+be some service that takes
+
+483
+00:27:06.630 --> 00:27:09.780
+that application and says, okay,
+well, I'm going to translate
+
+484
+00:27:09.780 --> 00:27:11.760
+that into this thing so
+it can run on Kubernetes,
+
+485
+00:27:11.790 --> 00:27:16.820
+but it could run somewhere
+else. Well, now you've got,
+
+486
+00:27:16.880 --> 00:27:20.240
+and then you've got Istio
+to sit on top of
+
+487
+00:27:20.240 --> 00:27:26.630
+Kubernetes to connect microservices. We
+just rearranging deck chairs on
+
+488
+00:27:26.630 --> 00:27:28.340
+the Titanic and we're just
+going to go and squish
+
+489
+00:27:28.340 --> 00:27:30.200
+it all together. And like,
+someone's going to write some
+
+490
+00:27:30.200 --> 00:27:33.440
+thing that takes Istio plus
+Kubernetes plus Docker, and turns
+
+491
+00:27:33.440 --> 00:27:37.190
+it all into a monolith
+again. Yeah. I'm wait. I'm
+
+492
+00:27:37.190 --> 00:27:41.120
+ready. I'm ready for it.
+I mean like how, how
+
+493
+00:27:41.120 --> 00:27:42.620
+distributed this is the thing
+I have to get before.
+
+494
+00:27:42.620 --> 00:27:45.140
+It's just like, come on.
+Can we just write like
+
+495
+00:27:45.140 --> 00:27:47.540
+a big old C application?
+Yeah, Yeah. You know, what's
+
+496
+00:27:47.540 --> 00:27:51.170
+so interesting. And I guess
+this is not totally related
+
+497
+00:27:51.170 --> 00:27:55.970
+to microservices and containers, but
+you know, I work in
+
+498
+00:27:56.330 --> 00:28:00.110
+the CACD world. So I'm
+really interested in automation. I
+
+499
+00:28:00.110 --> 00:28:03.920
+see a lot of companies
+source. Like I don't see
+
+500
+00:28:03.920 --> 00:28:06.140
+their source code specifically, but
+I see how they organize
+
+501
+00:28:06.140 --> 00:28:09.620
+it. And the Monarch rainbow
+is getting a lot of
+
+502
+00:28:09.860 --> 00:28:13.460
+traction now. So if you,
+if you've not heard the
+
+503
+00:28:13.460 --> 00:28:16.610
+term before, so we have,
+we have microservices, which is
+
+504
+00:28:16.610 --> 00:28:20.150
+this architectural abstraction of putting,
+you know, business logic in
+
+505
+00:28:20.150 --> 00:28:23.570
+little chunks and making them,
+you know, available via API
+
+506
+00:28:23.570 --> 00:28:26.630
+and having all these little
+services. And usually it's that
+
+507
+00:28:26.630 --> 00:28:30.020
+one service corresponds to one
+repo on GitHub or whatever
+
+508
+00:28:30.020 --> 00:28:33.440
+your SEM provider is. But
+it's really hard then when
+
+509
+00:28:33.440 --> 00:28:35.660
+you're trying to automate and
+actually like run stuff in
+
+510
+00:28:35.660 --> 00:28:41.060
+production to have like hundred
+repos in your, your source
+
+511
+00:28:41.060 --> 00:28:43.910
+code management tool. So what
+a lot of companies have
+
+512
+00:28:43.910 --> 00:28:47.810
+done and actually some, some
+quite prominent ones are, they
+
+513
+00:28:47.810 --> 00:28:50.060
+just like said, no, everything's
+just in a folder. It's
+
+514
+00:28:50.060 --> 00:28:54.680
+just been one repo. So
+now we're seeing like, I
+
+515
+00:28:54.680 --> 00:28:57.380
+mean, everything's a pendulum we
+swing one way and then,
+
+516
+00:28:57.440 --> 00:28:59.650
+you know, it's like, Oh,
+we gotta, gotta start swinging
+
+517
+00:28:59.670 --> 00:29:02.000
+the other way, but I'm
+definitely seeing some movement in
+
+518
+00:29:02.000 --> 00:29:06.020
+that, that other direction we're
+seeing the, you know, monolith
+
+519
+00:29:06.020 --> 00:29:12.740
+first, the monolith first, first
+method that Martin follower wrote
+
+520
+00:29:12.740 --> 00:29:16.040
+about. I think it's not
+even really that recent. I
+
+521
+00:29:16.040 --> 00:29:17.750
+think it was like a
+year ago when he wrote
+
+522
+00:29:17.750 --> 00:29:20.720
+that blog post that I,
+I find to be very
+
+523
+00:29:20.720 --> 00:29:22.970
+captivating. And I share it
+often with people who are
+
+524
+00:29:24.050 --> 00:29:30.020
+struggling with microservices. But I
+think, you know, this, I
+
+525
+00:29:30.020 --> 00:29:32.930
+think there's this, this representation
+of the world where everyone's
+
+526
+00:29:32.930 --> 00:29:36.020
+using containers and everyone has
+everything in microservices and everyone's
+
+527
+00:29:36.020 --> 00:29:38.540
+using Kubernetes. And if you're
+not doing it, you're too
+
+528
+00:29:38.540 --> 00:29:42.850
+late. I think that's just
+really not. And if you're
+
+529
+00:29:42.850 --> 00:29:45.280
+listening to this podcast and
+you're not using containers and
+
+530
+00:29:45.280 --> 00:29:48.250
+you feel bad about it,
+please, don't I care about
+
+531
+00:29:48.250 --> 00:29:51.820
+you. I don't think that
+you're doing anything wrong. Don't
+
+532
+00:29:51.820 --> 00:29:56.890
+feel bad. I think in
+reality, it's, it's something, I
+
+533
+00:29:56.890 --> 00:29:59.860
+think the last statistic I
+read and I can't remember
+
+534
+00:29:59.860 --> 00:30:01.300
+the source of it all,
+I'll rack my brain and
+
+535
+00:30:01.300 --> 00:30:04.540
+try to find it. It
+was something like 10% of
+
+536
+00:30:04.720 --> 00:30:08.260
+developers or it professionals are
+actually using containers in production.
+
+537
+00:30:08.470 --> 00:30:11.050
+I think that's really different
+from the story that we're
+
+538
+00:30:11.080 --> 00:30:16.230
+told or the perception. Maybe
+I appreciate that because it's
+
+539
+00:30:16.230 --> 00:30:19.230
+overwhelming, right? Like even just
+now people are listening and
+
+540
+00:30:19.230 --> 00:30:22.170
+they're like, okay, Docker, Kubernetes,
+and sits on top of
+
+541
+00:30:22.170 --> 00:30:25.260
+that. Istio sits on top
+of that. And then Istio
+
+542
+00:30:25.260 --> 00:30:27.780
+uses Envoy and mixer and
+pilot and Citadel. And it's
+
+543
+00:30:27.780 --> 00:30:31.380
+just like, now, now, now,
+now, now, yeah. I just
+
+544
+00:30:31.380 --> 00:30:34.950
+want to make hello world
+scale. You know, that's all
+
+545
+00:30:34.950 --> 00:30:37.110
+I really wanted to do.
+You know, now I've got
+
+546
+00:30:37.110 --> 00:30:40.800
+containerized distributed, hello world. And
+then while we are recording
+
+547
+00:30:40.800 --> 00:30:43.560
+this podcast, I don't know
+if you know about this,
+
+548
+00:30:43.560 --> 00:30:48.750
+but Google cloud just announced
+K native, like 20 minutes
+
+549
+00:30:48.750 --> 00:30:54.180
+ago, which is serverless Google
+cloud on top of Kubernetes
+
+550
+00:30:54.480 --> 00:30:58.200
+on Google cloud. Like they're
+announcing it. They're in the
+
+551
+00:30:58.200 --> 00:31:00.990
+process of announcing it like
+this moment, you know, and
+
+552
+00:31:00.990 --> 00:31:04.110
+again, serverless then what's so
+funny about serverless. Is it
+
+553
+00:31:04.260 --> 00:31:07.860
+aims to hide it? All
+right. Like that's the whole
+
+554
+00:31:07.860 --> 00:31:10.290
+idea of serverless is like
+build all this stuff, all
+
+555
+00:31:10.290 --> 00:31:12.870
+these nouns and that we're
+going to hide everything and
+
+556
+00:31:12.870 --> 00:31:14.400
+pretend it doesn't exist. And
+we're going to put a
+
+557
+00:31:14.400 --> 00:31:16.710
+slider bar in front of
+it. And then we're going
+
+558
+00:31:16.710 --> 00:31:19.200
+to attach that slider bar
+to your credit card. And
+
+559
+00:31:19.200 --> 00:31:24.060
+that's serverless. That's wild. It
+is. I mean, there's a
+
+560
+00:31:24.060 --> 00:31:28.830
+new shiny object every day,
+I think it'll but yeah.
+
+561
+00:31:28.860 --> 00:31:31.500
+I mean, your point, your
+point I think is, is
+
+562
+00:31:31.560 --> 00:31:36.570
+SU really solid it's, it's
+that it's, it's overwhelming and
+
+563
+00:31:36.570 --> 00:31:38.910
+now we're just, we're combining
+a bunch of stuff together
+
+564
+00:31:38.910 --> 00:31:41.640
+and it's really hard to
+know what to pay attention
+
+565
+00:31:41.640 --> 00:31:46.200
+to. What's going to stick
+like is yeah. Is serverless
+
+566
+00:31:46.200 --> 00:31:48.750
+going to stick? Are containers
+going to stick? I think
+
+567
+00:31:48.750 --> 00:31:51.570
+the answer we've found to
+be yes, but like, but
+
+568
+00:31:51.570 --> 00:31:55.080
+maybe no, because you know,
+you, if you're using a
+
+569
+00:31:55.080 --> 00:32:01.290
+serverless architecture, some serverless service
+serverless as a service or
+
+570
+00:32:01.290 --> 00:32:03.060
+functions as a service, I
+guess is a good way
+
+571
+00:32:03.060 --> 00:32:05.630
+to talk about it. It
+could be running on Kubernetes.
+
+572
+00:32:05.640 --> 00:32:07.830
+Like it could be running
+on, I don't know, a
+
+573
+00:32:07.830 --> 00:32:10.920
+mainframe in your parents' basement.
+I think the point is
+
+574
+00:32:10.920 --> 00:32:15.540
+like, you shouldn't have to
+care. So it's really about
+
+575
+00:32:15.570 --> 00:32:18.780
+what part of the problem
+space you have access to,
+
+576
+00:32:18.780 --> 00:32:21.720
+or even want to have
+access to. Like, if I'm
+
+577
+00:32:21.960 --> 00:32:25.470
+running, if I'm, if I'm
+teaching a course on rails
+
+578
+00:32:25.470 --> 00:32:28.230
+development and I have a
+bunch of students that are
+
+579
+00:32:28.530 --> 00:32:31.680
+running their app on Heroku,
+I don't care. And they
+
+580
+00:32:31.680 --> 00:32:34.980
+shouldn't care what Heroku is
+using under the covers to,
+
+581
+00:32:35.410 --> 00:32:37.680
+to make that possible for
+them to enable them to
+
+582
+00:32:37.680 --> 00:32:41.720
+do that. If I'm a
+site reliability engineer at Heroku,
+
+583
+00:32:41.720 --> 00:32:44.960
+obviously I have a different
+opinion about it. I think
+
+584
+00:32:44.960 --> 00:32:47.600
+it's just really all about
+what's relevant to you. What
+
+585
+00:32:47.600 --> 00:32:50.690
+are you trying to accomplish?
+What's the right match for
+
+586
+00:32:50.690 --> 00:32:53.750
+what you're trying to accomplish.
+And I think it's, it's
+
+587
+00:32:53.750 --> 00:32:57.380
+hard as a, as a
+technologist to not get really
+
+588
+00:32:57.380 --> 00:32:59.450
+distracted and kind of focus
+on what's ahead of you.
+
+589
+00:32:59.900 --> 00:33:02.150
+I'm certainly guilty of it.
+I like the cool new,
+
+590
+00:33:02.510 --> 00:33:06.620
+new stuff. I get really
+fixated on like minutiae of
+
+591
+00:33:06.620 --> 00:33:09.740
+projects. And I dig really
+deep into them for my
+
+592
+00:33:09.740 --> 00:33:14.330
+own personal enjoyment, but, but
+I try, you know, it's,
+
+593
+00:33:14.900 --> 00:33:18.320
+it's hard to stay focused,
+but it is important. Otherwise
+
+594
+00:33:18.320 --> 00:33:20.510
+it's just, you know, you
+feel overwhelmed and then you
+
+595
+00:33:20.510 --> 00:33:23.330
+go into a shame spiral
+about not using all the
+
+596
+00:33:23.540 --> 00:33:27.520
+stuff that you should be
+using. Well, in the short
+
+597
+00:33:27.520 --> 00:33:30.310
+term, though, we know that
+we can use containers and
+
+598
+00:33:30.310 --> 00:33:33.370
+we can use Docker and
+we can probably feel free
+
+599
+00:33:33.370 --> 00:33:36.700
+to pick a container orchestrator
+that makes us happy, makes
+
+600
+00:33:36.700 --> 00:33:38.620
+our company happy. And we
+can always swap it out
+
+601
+00:33:38.620 --> 00:33:40.900
+for another one in the
+future. Yeah. I think the
+
+602
+00:33:40.930 --> 00:33:44.050
+one thing that's really great
+about the container ecosystem in
+
+603
+00:33:44.050 --> 00:33:47.890
+general is that gee, you
+know, generally speaking, and of
+
+604
+00:33:47.890 --> 00:33:50.920
+course there are exceptions to
+this, but pretty much everything
+
+605
+00:33:50.920 --> 00:33:54.520
+that you do has a,
+an interface that matches another
+
+606
+00:33:54.520 --> 00:33:58.000
+tool. So for example, if
+you're using Kubernetes and you
+
+607
+00:33:58.000 --> 00:34:01.780
+have a deployment and you
+have, you know, services that
+
+608
+00:34:01.780 --> 00:34:05.200
+you're declaring, you're exposing a
+port you're mounting volumes, all
+
+609
+00:34:05.200 --> 00:34:08.710
+of those things map to
+something else like this, the
+
+610
+00:34:08.710 --> 00:34:12.670
+equivalent, the functional equivalent in
+a different orchestration tool, because
+
+611
+00:34:12.670 --> 00:34:14.920
+more or less those tools
+are solving the same problem.
+
+612
+00:34:15.280 --> 00:34:17.530
+The problem set is pretty
+well defined. They just have
+
+613
+00:34:17.530 --> 00:34:21.190
+different implementations of the solution.
+So you can move kind
+
+614
+00:34:21.190 --> 00:34:23.980
+of easily back and forth
+if you, if you need
+
+615
+00:34:23.980 --> 00:34:28.300
+to. It's the same goes
+for, for many of the
+
+616
+00:34:28.300 --> 00:34:33.790
+components that are, are using
+common interfaces. So swapping out
+
+617
+00:34:33.790 --> 00:34:39.310
+a storage plugin, for example,
+networking interface, or networking, plugins,
+
+618
+00:34:39.460 --> 00:34:43.170
+et cetera, those things have
+commonly defined interfaces. So the,
+
+619
+00:34:43.240 --> 00:34:46.630
+the vendor lock in is
+not so not so scary
+
+620
+00:34:46.660 --> 00:34:51.100
+in the container world. Cool.
+Well, I appreciate you taking
+
+621
+00:34:51.100 --> 00:34:53.500
+the time to help me
+get my head around all
+
+622
+00:34:53.500 --> 00:34:55.330
+of this, because it's overwhelming
+to me, Like we had
+
+623
+00:34:55.330 --> 00:34:59.020
+just like a therapy session
+for everyone who feels overwhelmed
+
+624
+00:34:59.020 --> 00:35:01.900
+by the state of containers.
+Like we should put some
+
+625
+00:35:01.900 --> 00:35:05.920
+like suiting music behind this
+whole podcast. That is a
+
+626
+00:35:05.920 --> 00:35:07.810
+good idea. We should call
+it though. This was, this
+
+627
+00:35:07.810 --> 00:35:10.750
+was container catharsis is the
+title. Yeah. It's like, it
+
+628
+00:35:10.750 --> 00:35:13.690
+will be okay if you
+feel overwhelmed. That's fine. Everyone
+
+629
+00:35:13.690 --> 00:35:17.050
+is overwhelmed. I'm overwhelmed. And
+I've been, I've been in
+
+630
+00:35:17.050 --> 00:35:19.840
+the container world for five
+years already. So I can
+
+631
+00:35:19.840 --> 00:35:22.300
+just imagine what someone was
+starting out. Must feel like
+
+632
+00:35:23.290 --> 00:35:27.940
+it's okay. It'll be fine.
+Cool. Well, people can check
+
+633
+00:35:27.940 --> 00:35:31.420
+you out and your product
+at cloud B's B E
+
+634
+00:35:31.420 --> 00:35:35.680
+s.com and learn about a
+continuous software and delivery and
+
+635
+00:35:35.680 --> 00:35:38.280
+container, you know, container smarts,
+dev ops, and Jenkins and
+
+636
+00:35:38.280 --> 00:35:41.100
+all those great things. And
+they can follow you on
+
+637
+00:35:41.100 --> 00:35:43.170
+Twitter as well. I'll put
+links in the show notes.
+
+638
+00:35:43.230 --> 00:35:45.450
+Thanks so much for chatting
+with me today. Thanks so
+
+639
+00:35:45.450 --> 00:35:48.660
+much, Scott. This has been
+another episode of Hansel minutes
+
+640
+00:35:48.690 --> 00:36:10.610
+and we'll see you again.
+Next <inaudible>.
+

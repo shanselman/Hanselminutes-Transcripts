@@ -1,0 +1,2972 @@
+WEBVTT FILE
+
+1
+00:00:00.390 --> 00:00:02.220
+Hey friends, we have a
+new sponsor today, and I
+
+2
+00:00:02.220 --> 00:00:04.410
+want to make sure that
+you support them because they
+
+3
+00:00:04.410 --> 00:00:09.330
+make Hansel minutes possible. Raven
+DB, it's a document database
+
+4
+00:00:09.330 --> 00:00:13.830
+that's non-relational and fully transactional.
+It's available for windows and
+
+5
+00:00:13.830 --> 00:00:18.630
+Linux with official client API
+APIs for.net. The JVM go
+
+6
+00:00:18.630 --> 00:00:22.470
+Ruby, no JS and Python.
+Raven DB is designed for
+
+7
+00:00:22.470 --> 00:00:26.070
+high performance handling tens of
+thousands of requests, even on
+
+8
+00:00:26.070 --> 00:00:29.370
+a single node. Now, Raven
+DB is capable of on
+
+9
+00:00:29.370 --> 00:00:33.870
+the fly optimization, dynamic indexes,
+and much more. It has
+
+10
+00:00:33.870 --> 00:00:36.660
+a fully loaded gooey, which
+means it's simpler to operate
+
+11
+00:00:36.690 --> 00:00:39.360
+and you don't need, you
+know, arcane incantations on the
+
+12
+00:00:39.360 --> 00:00:42.030
+command line. It just works.
+It's fast and it's right.
+
+13
+00:00:42.570 --> 00:00:48.390
+Download your free community edition@ravendb.net.
+That's R a V E
+
+14
+00:00:48.390 --> 00:01:05.660
+N db.net. Hope you check
+it out. <inaudible> Hi, this
+
+15
+00:01:05.660 --> 00:01:08.150
+is Scott Hanselman. This is
+another episode of Hansel minutes.
+
+16
+00:01:08.180 --> 00:01:11.240
+And today I'm talking with
+dr. Nicole Forsgren. How are
+
+17
+00:01:11.240 --> 00:01:15.320
+you? I'm great. How are
+you? Lovely. And I'm here
+
+18
+00:01:15.320 --> 00:01:19.490
+reading your report. You've just
+released a report called accelerate
+
+19
+00:01:19.970 --> 00:01:22.970
+the state of dev ops
+strategies for a new economy.
+
+20
+00:01:22.970 --> 00:01:25.610
+And you know, the first
+thing that I see when
+
+21
+00:01:25.610 --> 00:01:27.440
+I scroll down and I
+look at the bottom, there's
+
+22
+00:01:27.440 --> 00:01:31.550
+a series of sponsors. I
+usually assume that a dev
+
+23
+00:01:31.550 --> 00:01:34.490
+ops or any kind of
+a research document, like this
+
+24
+00:01:34.490 --> 00:01:36.680
+would be sponsored by someone
+that's trying to sell me
+
+25
+00:01:36.680 --> 00:01:40.490
+their thing, but I see
+Amazon and I see Azure
+
+26
+00:01:40.490 --> 00:01:42.860
+and Google cloud and a
+bunch of other cloud people
+
+27
+00:01:43.550 --> 00:01:46.940
+that seems like a big
+deal. I know. Right? So
+
+28
+00:01:47.060 --> 00:01:51.050
+the interesting thing, and the
+really unique thing about this
+
+29
+00:01:51.080 --> 00:01:54.320
+report is that it's not
+a vendor report, right? This
+
+30
+00:01:54.320 --> 00:01:57.740
+is not just a typical
+vendor report. This is rigorous
+
+31
+00:01:57.740 --> 00:02:01.310
+research. It's like rigorous academic
+level research. I used to
+
+32
+00:02:01.310 --> 00:02:04.130
+be a professor. I have
+a PhD and it's vendor
+
+33
+00:02:04.130 --> 00:02:07.730
+and tool agnostic. You'll actually
+notice several competitors on this
+
+34
+00:02:07.730 --> 00:02:11.270
+report. Like you note AWS
+Azure, Google cloud is our
+
+35
+00:02:11.270 --> 00:02:14.390
+collaborator and our diamond sponsor.
+And so as you kind
+
+36
+00:02:14.390 --> 00:02:17.300
+of scroll through the report,
+as you probably also noticed,
+
+37
+00:02:17.600 --> 00:02:21.590
+it talks about capabilities, it
+talks about practices. It talks
+
+38
+00:02:21.590 --> 00:02:25.580
+about strategies to drive high
+performance. It doesn't ever talk
+
+39
+00:02:25.580 --> 00:02:29.690
+about a particular tool. It
+doesn't talk about particular things
+
+40
+00:02:29.690 --> 00:02:31.670
+except a couple of places
+where we might list like
+
+41
+00:02:31.670 --> 00:02:34.910
+an example, right? It talks
+about ways to get better.
+
+42
+00:02:35.450 --> 00:02:39.800
+It's never trying to sell
+you anything. When someone looks
+
+43
+00:02:39.800 --> 00:02:41.990
+at a report like this,
+I think that we, as
+
+44
+00:02:42.530 --> 00:02:45.350
+the audience, we, as the
+people who are listening, don't
+
+45
+00:02:45.350 --> 00:02:47.300
+really have a way to
+judge whether a report is
+
+46
+00:02:47.300 --> 00:02:49.040
+good or not. We might
+look at it and say,
+
+47
+00:02:49.040 --> 00:02:52.100
+well, this is well-designed or
+this looks pretty, or, but
+
+48
+00:02:52.100 --> 00:02:54.650
+sometimes these reports can be
+disguised. Like you say, as
+
+49
+00:02:54.680 --> 00:02:56.780
+a vendor, a vendor could
+create it to try to
+
+50
+00:02:56.780 --> 00:03:00.130
+sell me something, but there
+is a nontrivial amount of
+
+51
+00:03:00.130 --> 00:03:02.710
+research behind this, this isn't
+opinion that we're looking at,
+
+52
+00:03:02.710 --> 00:03:06.030
+correct. Right. This is pretty
+solid. So what we actually
+
+53
+00:03:06.030 --> 00:03:08.570
+do, this is a five
+or six month process. And,
+
+54
+00:03:08.570 --> 00:03:10.980
+and again, right, as I
+mentioned, this is academic research.
+
+55
+00:03:11.340 --> 00:03:15.000
+So the team behind this
+is myself, Jess, humble, gene
+
+56
+00:03:15.000 --> 00:03:19.410
+Kim. And we actually roll
+this into academic research. This
+
+57
+00:03:19.410 --> 00:03:23.040
+is published in peer review,
+and we have also rolled
+
+58
+00:03:23.040 --> 00:03:25.530
+this. This is year five
+for us. The core team,
+
+59
+00:03:25.800 --> 00:03:29.040
+the first four years of
+research have also been published
+
+60
+00:03:29.070 --> 00:03:31.980
+in the book accelerate, in
+addition to all of the
+
+61
+00:03:31.980 --> 00:03:35.940
+academic research that we've also
+published. So Right. And accelerate,
+
+62
+00:03:35.940 --> 00:03:38.520
+we're going to have a
+link to this, the science
+
+63
+00:03:38.520 --> 00:03:42.570
+behind DevOps with, as you
+said yourself, as humble and
+
+64
+00:03:42.570 --> 00:03:45.480
+gene Kim published by it
+revolution out of Portland, Oregon,
+
+65
+00:03:45.480 --> 00:03:48.910
+where I am. Yeah. So,
+and I guess to answer,
+
+66
+00:03:48.920 --> 00:03:50.560
+you know, the, the second
+half of what you're saying,
+
+67
+00:03:50.760 --> 00:03:52.680
+you're right. It can be
+really difficult to kind of
+
+68
+00:03:53.130 --> 00:03:55.500
+figure out if someone's trying
+to sell you something. Or
+
+69
+00:03:55.500 --> 00:03:58.140
+if it's real research, we
+do our best to be
+
+70
+00:03:58.290 --> 00:04:02.220
+really clear about what it
+is that we're asking, what
+
+71
+00:04:02.220 --> 00:04:04.980
+it is that we're doing.
+We have a methods section
+
+72
+00:04:05.040 --> 00:04:08.010
+at the back of every
+research report that we've put
+
+73
+00:04:08.010 --> 00:04:11.220
+out in the book. Part
+two is all research, right?
+
+74
+00:04:11.220 --> 00:04:13.380
+Which is funny. Cause some
+people say, Oh, I didn't
+
+75
+00:04:13.380 --> 00:04:15.090
+care about the research. I
+just wanted to know what
+
+76
+00:04:15.090 --> 00:04:17.430
+to do. And some people
+say, Oh, the findings are
+
+77
+00:04:17.430 --> 00:04:19.680
+nice, but I've read the
+reports. I really, really loved
+
+78
+00:04:19.680 --> 00:04:23.250
+part two because it told
+me exactly what to do
+
+79
+00:04:23.250 --> 00:04:26.160
+for survey methods or what
+to do for system measures
+
+80
+00:04:26.160 --> 00:04:28.770
+or what methods you were
+using it this morning. I
+
+81
+00:04:28.770 --> 00:04:32.820
+got a DM and Twitter
+from someone saying, what clustering
+
+82
+00:04:32.820 --> 00:04:35.700
+analysis method did you use?
+And why did you select
+
+83
+00:04:35.700 --> 00:04:37.380
+that one? And I need
+to know how to dig
+
+84
+00:04:37.380 --> 00:04:40.260
+into this. So we really
+do follow, you know, really
+
+85
+00:04:40.260 --> 00:04:44.550
+rigorous methods that are not
+only rigorous, but methodologically appropriate
+
+86
+00:04:44.550 --> 00:04:47.910
+for the questions that we're
+asking. So, so not to
+
+87
+00:04:47.910 --> 00:04:50.550
+put too fine, a point
+on it. This is not
+
+88
+00:04:51.090 --> 00:04:53.370
+someone put out a survey
+monkey and then went into
+
+89
+00:04:53.370 --> 00:04:55.320
+Excel and made some charts.
+I'm looking at the end
+
+90
+00:04:55.320 --> 00:04:57.630
+here. And there is an
+actual whole section of the
+
+91
+00:04:57.630 --> 00:05:02.250
+report that talks about your
+statistical analysis methods, structural equation
+
+92
+00:05:02.250 --> 00:05:07.020
+modeling and extensive footnotes on
+the research and the validation
+
+93
+00:05:07.020 --> 00:05:09.870
+guidelines. Right? And I love
+that you point that out,
+
+94
+00:05:09.870 --> 00:05:13.290
+right? Structural equation modeling. We're
+also very, very careful to
+
+95
+00:05:13.290 --> 00:05:18.600
+make explicit distinctions between what
+things are summarization, right? Descriptive
+
+96
+00:05:18.600 --> 00:05:22.290
+analysis. So we have things
+about demographics and firmographics. What
+
+97
+00:05:22.290 --> 00:05:26.550
+percentage of the industry responded
+where we are very careful
+
+98
+00:05:26.550 --> 00:05:29.790
+to point out which things
+are correlations, which things are
+
+99
+00:05:29.790 --> 00:05:34.650
+predictions, because we do take
+this a step beyond just
+
+100
+00:05:34.650 --> 00:05:38.280
+correlation, which things can you
+do that have been statistically
+
+101
+00:05:38.280 --> 00:05:44.520
+shown to drive performance improvements
+across different areas of your
+
+102
+00:05:44.520 --> 00:05:47.010
+business. Oh, and by can
+I like skip to a
+
+103
+00:05:47.010 --> 00:05:50.910
+spoiler? This is so my
+favorite thing, can I just
+
+104
+00:05:50.910 --> 00:05:53.370
+like dig into it because
+this is what so everyone's
+
+105
+00:05:53.370 --> 00:05:54.960
+like, Oh, but this isn't
+going to work for me.
+
+106
+00:05:55.010 --> 00:05:57.890
+Right. Our analysis for the
+last couple of years. And
+
+107
+00:05:57.890 --> 00:06:00.080
+in particular this year, I
+went ahead and just dove
+
+108
+00:06:00.080 --> 00:06:05.120
+into it even harder this
+year we found statistically industry
+
+109
+00:06:05.120 --> 00:06:09.380
+doesn't matter, right? In a
+predictive way, there is no
+
+110
+00:06:09.380 --> 00:06:14.270
+statistical evidence to say that
+industry matters. So if anyone
+
+111
+00:06:14.270 --> 00:06:17.540
+out there is saying, or
+their management is saying, Oh,
+
+112
+00:06:17.540 --> 00:06:20.420
+well, this won't work for
+us. These practices or principles,
+
+113
+00:06:20.420 --> 00:06:23.630
+whether you want to call
+them digital transformation or DevOps
+
+114
+00:06:23.660 --> 00:06:26.360
+or agile, you know, it
+won't work for us because
+
+115
+00:06:26.360 --> 00:06:28.670
+I work in highly regulated
+fields. You know, I work
+
+116
+00:06:28.670 --> 00:06:32.060
+in finance. I work in
+telecom. I work in healthcare.
+
+117
+00:06:32.720 --> 00:06:35.810
+This won't work for us
+because we, we are highly
+
+118
+00:06:35.810 --> 00:06:39.650
+regulated. No, you know what?
+I have data across. Well,
+
+119
+00:06:39.650 --> 00:06:42.800
+first of all, I have
+over 30,000 data points around
+
+120
+00:06:42.800 --> 00:06:45.980
+the world in dozens of
+industries. And I've run this
+
+121
+00:06:45.980 --> 00:06:49.910
+analysis and I did the
+most rigorous statistical control methods
+
+122
+00:06:49.910 --> 00:06:53.030
+that I could do in
+our predictive models. And there
+
+123
+00:06:53.030 --> 00:06:57.530
+was no statistical evidence that
+it matters. And I didn't
+
+124
+00:06:57.560 --> 00:07:00.350
+even just group it into
+highly regulated or nine highly
+
+125
+00:07:00.350 --> 00:07:02.660
+regulated because then someone could
+come back and say, Oh,
+
+126
+00:07:02.660 --> 00:07:06.950
+but we're more special. Right?
+We're more highly regulated. I
+
+127
+00:07:07.010 --> 00:07:12.440
+tested per industry. I tested
+technology separately, financial services, separately,
+
+128
+00:07:12.650 --> 00:07:17.420
+government, separately, healthcare and pharma,
+separately insurance separately, telecom separately.
+
+129
+00:07:17.690 --> 00:07:22.150
+There's no significance there. How
+can we, as, as non
+
+130
+00:07:22.150 --> 00:07:27.670
+PhDs, except that stuff that
+is intuitively correct is in
+
+131
+00:07:27.670 --> 00:07:32.560
+fact demonstrably wrong. Like I
+used to work in banking
+
+132
+00:07:32.650 --> 00:07:36.130
+and I would tell you
+that my gut says that
+
+133
+00:07:36.340 --> 00:07:39.400
+it's highly regulated environment and,
+you know, velocity and those
+
+134
+00:07:39.400 --> 00:07:41.970
+things and matter. And these
+things won't work for us.
+
+135
+00:07:41.980 --> 00:07:44.350
+And my wife works in
+healthcare. But when you then
+
+136
+00:07:44.350 --> 00:07:46.180
+show the data that says,
+it's not the case, why
+
+137
+00:07:46.180 --> 00:07:47.770
+do we think these things?
+Why do we feel them
+
+138
+00:07:47.770 --> 00:07:50.380
+in our gut and then
+find them not true? Well,
+
+139
+00:07:50.380 --> 00:07:53.140
+so it's really interesting, right?
+It's so interesting. You say
+
+140
+00:07:53.140 --> 00:07:57.100
+that because so often people
+will come back and they
+
+141
+00:07:57.100 --> 00:07:59.920
+will say, you know, it's
+so great to see this
+
+142
+00:07:59.920 --> 00:08:03.370
+data because it helps me
+confirm what I see and
+
+143
+00:08:03.370 --> 00:08:05.470
+what I know to be
+true. And that'll have people
+
+144
+00:08:05.470 --> 00:08:07.930
+come back and they'll say,
+Oh, this is so interesting
+
+145
+00:08:07.930 --> 00:08:11.140
+because it's the opposite of
+what I see. Right? And
+
+146
+00:08:11.140 --> 00:08:14.680
+so sometimes people accuse me
+of just doing confirmation bias,
+
+147
+00:08:14.950 --> 00:08:18.040
+but we see surprises come
+up in the data, right?
+
+148
+00:08:18.070 --> 00:08:23.920
+Like we really follow the
+classic scientific method. We generate
+
+149
+00:08:24.400 --> 00:08:31.030
+hypothesis first, right? Based on
+industry experience, based on the
+
+150
+00:08:31.030 --> 00:08:33.850
+academic literature, based on a
+lot of things that we
+
+151
+00:08:33.850 --> 00:08:37.060
+want to test. And then
+we have like full rigorous
+
+152
+00:08:37.060 --> 00:08:39.640
+research design to figure out
+what data we need to
+
+153
+00:08:39.640 --> 00:08:42.760
+collect in order to test
+these hypotheses. And then we
+
+154
+00:08:42.760 --> 00:08:44.590
+go collect the data and
+then I go through several
+
+155
+00:08:44.590 --> 00:08:45.880
+steps to kind of test
+it. And then we do
+
+156
+00:08:45.880 --> 00:08:49.960
+test it. And so we
+do have this situation where
+
+157
+00:08:50.470 --> 00:08:57.270
+sometimes these biases or pre
+suppositions are confirmed and sometimes
+
+158
+00:08:57.270 --> 00:09:00.420
+they're totally flipped on their
+head. Right? One of my
+
+159
+00:09:00.420 --> 00:09:06.210
+favorites is the idea that
+speed and stability are a
+
+160
+00:09:06.210 --> 00:09:09.750
+trade off. Now, some people
+have this firmly, firmly held
+
+161
+00:09:09.750 --> 00:09:12.660
+belief that in order to
+be stable, we have to
+
+162
+00:09:12.660 --> 00:09:16.830
+slow down. We have to,
+but there's another core set
+
+163
+00:09:16.830 --> 00:09:19.440
+of people that at least
+for a decade now have
+
+164
+00:09:19.440 --> 00:09:23.400
+said, no, I really believe
+in my heart that if
+
+165
+00:09:23.400 --> 00:09:26.610
+we go faster, we will
+be more stable. So how
+
+166
+00:09:26.610 --> 00:09:29.400
+do, how do we reconcile
+these two stories and how
+
+167
+00:09:29.400 --> 00:09:32.700
+can, how can two groups
+of people believe something differently?
+
+168
+00:09:33.420 --> 00:09:36.270
+How can we have two
+stories simultaneously? So one story
+
+169
+00:09:36.270 --> 00:09:40.680
+says, I have to slow
+down to be safe and
+
+170
+00:09:40.680 --> 00:09:43.620
+to be stable. And, and
+that story, that story makes
+
+171
+00:09:43.620 --> 00:09:46.830
+sense. Right? I can perceive,
+I can envision a story
+
+172
+00:09:46.830 --> 00:09:51.000
+where slower releases are more
+safe because I can check
+
+173
+00:09:51.000 --> 00:09:55.140
+it. I can test it.
+I can reassure myself. Now,
+
+174
+00:09:55.170 --> 00:09:58.560
+there's also another story that
+we can envision that says,
+
+175
+00:09:59.430 --> 00:10:02.790
+if I go faster, it's
+safer and it's more stable
+
+176
+00:10:02.790 --> 00:10:06.630
+because going faster means slower
+release, smaller releases. I mean,
+
+177
+00:10:07.020 --> 00:10:11.820
+write smaller bits, smaller risk,
+right? I'm introducing smaller pieces
+
+178
+00:10:11.820 --> 00:10:16.500
+and smaller risks. So it's
+actually more sustainable, but their
+
+179
+00:10:16.500 --> 00:10:20.010
+intention, these are opposite stories.
+What we found over the
+
+180
+00:10:20.010 --> 00:10:23.460
+last five years is that
+speed and stability move in
+
+181
+00:10:23.460 --> 00:10:27.150
+tandem. The highest performers get
+both. There is no trade
+
+182
+00:10:27.150 --> 00:10:29.360
+off. Yeah. And you point
+out here in the report
+
+183
+00:10:29.390 --> 00:10:32.990
+that this is not a
+surprise this year, this is
+
+184
+00:10:32.990 --> 00:10:35.870
+five years in a row
+that your cluster analysis has
+
+185
+00:10:35.870 --> 00:10:41.540
+shown the relationship between throughput
+and stability. Right. And this
+
+186
+00:10:41.540 --> 00:10:44.000
+is something that we let
+the data drive, right. We,
+
+187
+00:10:44.000 --> 00:10:47.030
+we did have this hypothesis,
+well, an early on, right.
+
+188
+00:10:47.030 --> 00:10:50.090
+We're like, I wonder which
+story is correct. Right. I
+
+189
+00:10:50.090 --> 00:10:53.450
+wonder, I genuinely am curious.
+And it was funny because
+
+190
+00:10:53.450 --> 00:10:54.980
+you know, gene and jazz
+would come in there. Like,
+
+191
+00:10:54.980 --> 00:10:56.840
+I, I think I know
+what it is. And I'm
+
+192
+00:10:56.840 --> 00:10:58.880
+like, that's cool. I'm going
+to let the data, tell
+
+193
+00:10:58.880 --> 00:11:02.030
+me Well, and speaking of
+the data, you, you, you
+
+194
+00:11:02.030 --> 00:11:05.660
+point out the data, the
+spread from the kind of
+
+195
+00:11:05.660 --> 00:11:08.870
+the elite people that have
+their, their dev ops experience,
+
+196
+00:11:08.870 --> 00:11:12.830
+their CIC D kind of
+really dialed in versus the
+
+197
+00:11:12.830 --> 00:11:14.480
+folks that are the, what
+we would call the low
+
+198
+00:11:14.480 --> 00:11:17.540
+performers and no disrespect to
+them. But we've all worked
+
+199
+00:11:17.540 --> 00:11:23.150
+there where, you know, FTP
+every few months into production
+
+200
+00:11:23.150 --> 00:11:26.450
+is your deployment strategy. You
+point out some pretty crazy
+
+201
+00:11:26.450 --> 00:11:29.540
+statistics. I just want to
+read these really briefly, 46
+
+202
+00:11:29.540 --> 00:11:36.410
+times more frequent code deployments,
+2,555 times faster lead time
+
+203
+00:11:36.410 --> 00:11:39.590
+from commit to deploy. That's
+a, that's a number we
+
+204
+00:11:39.590 --> 00:11:44.030
+get to talk about. Yeah.
+That makes me very uncomfortable.
+
+205
+00:11:44.600 --> 00:11:47.240
+That means that someone might
+check something in, in January
+
+206
+00:11:47.240 --> 00:11:49.640
+and not see it in
+production until March or July.
+
+207
+00:11:50.180 --> 00:11:53.680
+And the elite performance have
+a much lower change rate.
+
+208
+00:11:53.980 --> 00:11:57.540
+They're less likely to fail.
+Right. And now when we
+
+209
+00:11:57.540 --> 00:12:01.830
+think about that though, it's
+because when you do introduce
+
+210
+00:12:01.830 --> 00:12:07.140
+code, you're introducing very, very
+small pieces of code. So
+
+211
+00:12:07.890 --> 00:12:12.390
+that introduction is small. It
+has a small blast radius.
+
+212
+00:12:13.020 --> 00:12:15.660
+Oh, that's what touches, right.
+It touches much less of
+
+213
+00:12:15.660 --> 00:12:18.660
+your code base. When we
+think about making a change
+
+214
+00:12:18.660 --> 00:12:20.940
+to code. Right. I mean,
+I use, I was a
+
+215
+00:12:20.940 --> 00:12:23.970
+developer for a little while.
+Right. We all think, Oh,
+
+216
+00:12:23.970 --> 00:12:26.470
+I'm going to introduce this
+piece of code. How it's
+
+217
+00:12:26.490 --> 00:12:29.760
+not going to break anything.
+Of course it always breaks
+
+218
+00:12:29.760 --> 00:12:33.360
+something. Right. If I introduce
+a one line change, how
+
+219
+00:12:33.390 --> 00:12:35.850
+likely is that to break
+something? It depends on the
+
+220
+00:12:35.850 --> 00:12:37.890
+line. It depends on the
+line. Okay. But if I
+
+221
+00:12:37.890 --> 00:12:41.100
+introduce a hundred line or
+a thousand line change, how
+
+222
+00:12:41.130 --> 00:12:43.320
+likely is that to break
+something Well, and then that's
+
+223
+00:12:43.320 --> 00:12:45.300
+where you start getting into,
+like you say, the blast
+
+224
+00:12:45.300 --> 00:12:47.100
+radius. I mean, you throw
+a pebble into a problem
+
+225
+00:12:48.610 --> 00:12:51.000
+And how big is the
+blast and how big is
+
+226
+00:12:51.000 --> 00:12:53.850
+the change and how big
+is your downtime? So the
+
+227
+00:12:53.880 --> 00:12:57.360
+other thing that we discovered
+this year, so we discovered
+
+228
+00:12:57.360 --> 00:13:00.090
+these elite performers that are
+very much like the high
+
+229
+00:13:00.090 --> 00:13:04.020
+performers in previous years. Right?
+They're optimizing speed and stability
+
+230
+00:13:04.020 --> 00:13:06.330
+because, Oh, Oh, I have
+so many things I want
+
+231
+00:13:06.330 --> 00:13:10.110
+to talk about. So I'll
+start with my high performers
+
+232
+00:13:10.110 --> 00:13:14.280
+and my elite performers, the
+highest performers really are this
+
+233
+00:13:14.280 --> 00:13:17.790
+group that is optimizing on
+speed and stability. They're what
+
+234
+00:13:17.790 --> 00:13:21.570
+we call high-performers in previous
+years, right? They're this group
+
+235
+00:13:21.570 --> 00:13:24.660
+that is continuing to push
+the bar. They're continuing to
+
+236
+00:13:24.660 --> 00:13:27.750
+move forward. They don't make
+excuses. They're doing well. Year
+
+237
+00:13:27.750 --> 00:13:30.180
+over year, over year, we
+have this high performance group
+
+238
+00:13:30.180 --> 00:13:34.680
+as well. Okay. They're 46%
+of the market of the
+
+239
+00:13:34.680 --> 00:13:39.990
+industry, or sorry, 48%. I
+love this because it's this
+
+240
+00:13:40.050 --> 00:13:45.960
+incredible signal that high performance
+is available to everyone. We're
+
+241
+00:13:45.960 --> 00:13:49.410
+seeing this huge shift in
+the industry that this is
+
+242
+00:13:49.410 --> 00:13:55.080
+achievable. It all comes down
+to execution, right? Trent, you
+
+243
+00:13:55.080 --> 00:13:58.080
+actually have a, I'm looking
+at the report right now
+
+244
+00:13:58.080 --> 00:14:01.140
+on page 20, you, you
+are showing the performance metrics
+
+245
+00:14:01.140 --> 00:14:06.720
+over time, 2016, 2017, 2018.
+And it's, it's accelerating that
+
+246
+00:14:06.720 --> 00:14:09.570
+movement. People are moving from
+low to high to elite
+
+247
+00:14:09.570 --> 00:14:12.450
+are moving forward and becoming
+better at this. And the
+
+248
+00:14:12.450 --> 00:14:16.740
+time to restore service and
+incidents, their failure rates, these
+
+249
+00:14:16.740 --> 00:14:19.800
+things are changing. They are
+failing fast and failing often,
+
+250
+00:14:19.800 --> 00:14:24.240
+and they're getting their sites
+back up faster, Right? So
+
+251
+00:14:24.930 --> 00:14:28.050
+the high group is continuing
+to grow. It's continuing to
+
+252
+00:14:28.050 --> 00:14:32.130
+improve. The elites are the
+best are staying at the
+
+253
+00:14:32.130 --> 00:14:35.940
+top of their game. The
+low performers though, are starting
+
+254
+00:14:35.940 --> 00:14:41.790
+to fall behind at increasingly
+larger rates. Right? The change
+
+255
+00:14:41.790 --> 00:14:44.670
+failure rate is getting higher.
+And we think it's because
+
+256
+00:14:44.670 --> 00:14:48.420
+of increasing complexity in our
+systems, right? When you do
+
+257
+00:14:48.420 --> 00:14:52.700
+go down, you go down
+hard, you the systems, or
+
+258
+00:14:52.700 --> 00:14:55.280
+is it the people in
+their processes? It could be
+
+259
+00:14:55.280 --> 00:14:57.920
+some of both right. The
+processes. Aren't great. We can't
+
+260
+00:14:57.920 --> 00:15:02.060
+keep up right. Our practices.
+Aren't great. And so, and
+
+261
+00:15:02.060 --> 00:15:05.570
+when you combine those two
+that's even harder, right? So
+
+262
+00:15:05.570 --> 00:15:09.830
+we discovered this additional group
+at the bottom of this
+
+263
+00:15:09.890 --> 00:15:13.880
+low performance group, and we
+called them misguided performers. And
+
+264
+00:15:14.060 --> 00:15:16.100
+at first I had to
+convince my team a little
+
+265
+00:15:16.100 --> 00:15:18.950
+bit about why I wanted
+to name them misguided because
+
+266
+00:15:18.950 --> 00:15:20.870
+they were like, Oh, that's
+not very nice. And I'm
+
+267
+00:15:20.870 --> 00:15:24.590
+like, yeah, but that's why
+it's kind of perfect. Right?
+
+268
+00:15:24.590 --> 00:15:27.020
+It's like, when you make
+your mom mad, like there's
+
+269
+00:15:27.020 --> 00:15:29.570
+making your mom mad and
+then there's disappointing your mom,
+
+270
+00:15:29.750 --> 00:15:33.880
+right. Don't disappoint. Like the
+worst thing you can do.
+
+271
+00:15:34.810 --> 00:15:37.870
+So the misguided performance, let
+me describe them again. This
+
+272
+00:15:37.870 --> 00:15:40.750
+is very, this is completely
+data driven. Okay. And by
+
+273
+00:15:40.750 --> 00:15:43.450
+the way, I will point
+out this is 5% of
+
+274
+00:15:43.450 --> 00:15:45.940
+our data. So this is
+a nontrivial group, right? This
+
+275
+00:15:45.940 --> 00:15:49.570
+is a good, solid set
+they're deploying between once every
+
+276
+00:15:49.570 --> 00:15:51.880
+six months. So their lead
+time for changes is also
+
+277
+00:15:51.880 --> 00:15:55.900
+between once every six months.
+So this like a reasonable
+
+278
+00:15:55.900 --> 00:15:57.970
+cadence right there, there's going
+to be a whole bunch
+
+279
+00:15:57.970 --> 00:16:01.390
+of people out there probably
+in highly regulated fields in
+
+280
+00:16:01.390 --> 00:16:06.580
+government. They're like, yeah, that
+seems good. Their change failure
+
+281
+00:16:06.580 --> 00:16:10.480
+rate is actually better than
+our lowest performers. When they
+
+282
+00:16:10.480 --> 00:16:13.330
+introduce a change to the
+system, they only fail between
+
+283
+00:16:13.330 --> 00:16:17.440
+16 and 30% of the
+time. So they're like sweet.
+
+284
+00:16:17.470 --> 00:16:22.240
+We're doing pretty well, probably
+because they have instituted strong
+
+285
+00:16:22.240 --> 00:16:28.390
+policies and extra testing, extra
+quality control, right? So like
+
+286
+00:16:28.420 --> 00:16:31.450
+I'm imagining this story. Not
+even imagining. I work with
+
+287
+00:16:31.450 --> 00:16:34.270
+clients, I work with customers.
+I work with organizations that
+
+288
+00:16:34.270 --> 00:16:37.090
+say, we're going to take
+a slow and steady approach.
+
+289
+00:16:37.090 --> 00:16:40.480
+We have this cautious approach
+to releasing software. It's slow,
+
+290
+00:16:40.480 --> 00:16:44.560
+but we have instituted so
+many guardrails around it. Okay.
+
+291
+00:16:45.130 --> 00:16:48.880
+But when they go down,
+they are deploying such large,
+
+292
+00:16:49.150 --> 00:16:51.490
+large pieces of software that
+when they go down, they
+
+293
+00:16:51.490 --> 00:16:55.990
+go down hard. They're down
+between one and six months.
+
+294
+00:16:56.290 --> 00:16:58.300
+And people look at me
+and they make this face
+
+295
+00:16:58.300 --> 00:17:00.580
+like one in six months
+to call you're crazy. Your
+
+296
+00:17:00.580 --> 00:17:06.220
+analysis is wrong. It's not
+though, because think about healthcare.gov.
+
+297
+00:17:07.270 --> 00:17:10.900
+Think about Sony, right? Like
+when Sony was hacked four
+
+298
+00:17:10.900 --> 00:17:13.990
+times in a row, right?
+When they had security breaches,
+
+299
+00:17:14.410 --> 00:17:17.950
+customers might be able to
+access the system between like
+
+300
+00:17:18.520 --> 00:17:23.860
+hours or days later. But
+how long are we fixing
+
+301
+00:17:23.860 --> 00:17:28.300
+systems on the backend? Right?
+We are having to fix
+
+302
+00:17:28.330 --> 00:17:33.970
+systems and infrastructure and restore
+data for weeks or months.
+
+303
+00:17:35.050 --> 00:17:41.140
+This is a nontrivial problem.
+So when you spend months
+
+304
+00:17:41.470 --> 00:17:44.680
+getting ready to release software,
+as we just talked about,
+
+305
+00:17:44.980 --> 00:17:48.940
+you were releasing this huge
+piece of change into the
+
+306
+00:17:48.960 --> 00:17:53.910
+system, that you can no
+longer understand the implications of
+
+307
+00:17:54.500 --> 00:17:58.190
+Ish. When you said that
+the things can go down
+
+308
+00:17:58.190 --> 00:18:01.280
+for that long. I just,
+I went to, because I
+
+309
+00:18:01.280 --> 00:18:03.590
+would just assume that that
+was an outlier. Like I
+
+310
+00:18:03.590 --> 00:18:07.550
+remember healthcare.gov. I remember Sony.
+I remember the early, early
+
+311
+00:18:07.550 --> 00:18:10.730
+days of Xbox live, but
+now we, as customers are
+
+312
+00:18:10.730 --> 00:18:13.040
+used to outages being a
+couple of hours. I mean,
+
+313
+00:18:13.070 --> 00:18:15.890
+even, I think it was
+get lab many, many, many
+
+314
+00:18:15.890 --> 00:18:18.710
+years ago, I think deleted
+a production database. But even
+
+315
+00:18:18.710 --> 00:18:21.230
+that was still measured in,
+you know, a day or
+
+316
+00:18:21.380 --> 00:18:24.890
+a day and a half
+months seemed unconscionable. But I
+
+317
+00:18:24.890 --> 00:18:27.110
+mean, think of it. There
+are still websites right now
+
+318
+00:18:27.110 --> 00:18:29.870
+that have planned outages for
+a whole day on a
+
+319
+00:18:29.870 --> 00:18:33.200
+weekend. You mentioned that I
+literally saw a tweet about
+
+320
+00:18:33.200 --> 00:18:35.930
+this. And someone said it's
+2018. And my bank is
+
+321
+00:18:35.930 --> 00:18:38.630
+still down for like six
+hours once a month. And
+
+322
+00:18:39.080 --> 00:18:41.600
+you're not getting five, nine,
+six hours down a month.
+
+323
+00:18:42.320 --> 00:18:45.740
+Right. And those are planned
+outages. What happens when you
+
+324
+00:18:45.740 --> 00:18:48.800
+have an unplanned outage? And
+again, this is, this is
+
+325
+00:18:48.800 --> 00:18:52.070
+not customer facing downtime. This
+is what happens when you're
+
+326
+00:18:52.070 --> 00:18:55.010
+down, something happens and you
+have to go down. Yes,
+
+327
+00:18:55.010 --> 00:18:58.490
+the customers might be back
+up in a day, but
+
+328
+00:18:58.490 --> 00:19:01.070
+how long does it take
+the rest of the team
+
+329
+00:19:01.070 --> 00:19:04.550
+to pull your entirety of
+your system and your infrastructure
+
+330
+00:19:04.550 --> 00:19:08.210
+and your data back online.
+And, but, and, but still,
+
+331
+00:19:08.210 --> 00:19:10.370
+you would say that if
+you were, if a seat,
+
+332
+00:19:10.370 --> 00:19:12.440
+if we could grab a
+CPO for like a small
+
+333
+00:19:12.440 --> 00:19:14.960
+credit union and then just
+drop them on this, this
+
+334
+00:19:14.960 --> 00:19:19.310
+podcast right now, they would
+probably, you know, harrumph and
+
+335
+00:19:19.310 --> 00:19:21.590
+they would say, well, you
+know, it's important to be
+
+336
+00:19:21.590 --> 00:19:24.200
+cautious, it's money. We're talking
+about blah, blah, blah, highly
+
+337
+00:19:24.200 --> 00:19:28.670
+regulated, blah, blah, blah, safety
+of the customer. Sure. Safety,
+
+338
+00:19:28.690 --> 00:19:30.830
+the customer. How much is
+it costing you to be
+
+339
+00:19:30.830 --> 00:19:34.040
+down like this? Because also
+when you're down, let's think
+
+340
+00:19:34.040 --> 00:19:38.810
+about risk exposure, security. And
+if you can own there
+
+341
+00:19:38.960 --> 00:19:41.240
+to also relate to things
+in here, if it takes
+
+342
+00:19:41.240 --> 00:19:45.080
+you months to get a
+change through what happens to
+
+343
+00:19:45.080 --> 00:19:48.920
+your security posture, when you
+need to get a patch
+
+344
+00:19:48.950 --> 00:19:54.410
+through compliance, update through a
+security patch through, and it
+
+345
+00:19:54.410 --> 00:19:57.530
+takes you months to get
+through. And then what's the
+
+346
+00:19:57.530 --> 00:20:01.700
+difference between your regular change
+process and your emergency change
+
+347
+00:20:01.730 --> 00:20:05.240
+process? It's well, one thing
+I might think about which
+
+348
+00:20:05.240 --> 00:20:07.070
+actually you touch on a
+little bit in the report,
+
+349
+00:20:07.070 --> 00:20:09.770
+as well as the idea
+of manual work versus automated
+
+350
+00:20:09.770 --> 00:20:12.080
+work, a lot of people
+would argue that those downtimes
+
+351
+00:20:12.080 --> 00:20:16.580
+are, are a time for
+manual tasks that require a
+
+352
+00:20:16.580 --> 00:20:20.540
+great deal of attention to
+detail. Sure. And we all
+
+353
+00:20:20.540 --> 00:20:25.310
+know that manual work, particularly
+in times of stress and
+
+354
+00:20:25.370 --> 00:20:28.970
+overwork and burnout is where
+we tend to see more
+
+355
+00:20:29.030 --> 00:20:32.090
+mistakes happen and by no
+fault of the people working.
+
+356
+00:20:32.690 --> 00:20:35.810
+So then you're only introducing
+more risk and more error.
+
+357
+00:20:36.410 --> 00:20:39.200
+And by the way, the
+thing I just mentioned when
+
+358
+00:20:39.200 --> 00:20:45.500
+we are introducing changes in
+emergency situations, the emergency changes
+
+359
+00:20:45.500 --> 00:20:47.680
+that we're trying to introduce
+into the system as quickly
+
+360
+00:20:47.680 --> 00:20:50.800
+as we can to recover
+from failure. The big difference
+
+361
+00:20:50.800 --> 00:20:55.300
+there is we usually skip
+testing, which is the time
+
+362
+00:20:55.300 --> 00:20:58.320
+that we should not be
+skipping testing. Ooh, that's a
+
+363
+00:20:58.320 --> 00:21:02.400
+tough one. I've been in
+the data center at the
+
+364
+00:21:02.400 --> 00:21:04.860
+bank when that happened. If
+it's such a, okay, everyone
+
+365
+00:21:04.890 --> 00:21:07.620
+let's test, you know, Ooh,
+that's tough, Right? I mean,
+
+366
+00:21:07.620 --> 00:21:09.930
+I've, I've been working on
+systems that are down at
+
+367
+00:21:09.930 --> 00:21:14.190
+hospitals and were hours away
+from evacuating and ICU. And
+
+368
+00:21:14.190 --> 00:21:18.510
+we're desperately trying to Institute
+emergency changes. And right then
+
+369
+00:21:18.510 --> 00:21:20.100
+it's like, we have to
+get this change and we
+
+370
+00:21:20.100 --> 00:21:22.830
+don't have time for tests.
+And suddenly we're like, Oh
+
+371
+00:21:22.830 --> 00:21:25.140
+my gosh, we don't, we
+don't have time for tests
+
+372
+00:21:25.950 --> 00:21:28.950
+like we're dear God and
+heaven, please let this change
+
+373
+00:21:28.950 --> 00:21:32.820
+work. Right. A big thank
+you to our sponsors because
+
+374
+00:21:32.820 --> 00:21:34.860
+they make the show possible.
+And I hope that you
+
+375
+00:21:34.860 --> 00:21:38.790
+support them the way they
+support us progress. Software is
+
+376
+00:21:38.790 --> 00:21:41.790
+the creator of the most
+comprehensive developer toolkit for building
+
+377
+00:21:41.790 --> 00:21:45.840
+modern apps on the market.
+Today Tellerik dev craft with
+
+378
+00:21:45.840 --> 00:21:49.620
+more than 1100 tellerik.net and
+Kendo, UI JavaScript components and
+
+379
+00:21:49.620 --> 00:21:53.460
+controls. You can easily build
+modern high-performance web mobile and
+
+380
+00:21:53.460 --> 00:21:56.790
+desktop apps, as well as
+chatbots. The tool set also
+
+381
+00:21:56.790 --> 00:22:01.050
+includes reporting solutions, automated testing,
+and productivity tools, and come
+
+382
+00:22:01.050 --> 00:22:04.170
+to the range of support
+options. New this year is
+
+383
+00:22:04.170 --> 00:22:07.560
+a free online training program
+for all license holders, with
+
+384
+00:22:07.560 --> 00:22:11.490
+this alongside thousands of demos
+and source code available, comprehensive
+
+385
+00:22:11.490 --> 00:22:14.610
+documentation and a full assortment
+of visual studio templates, you'll
+
+386
+00:22:14.610 --> 00:22:17.070
+be up and running with
+the progress Tellerik and Kendo
+
+387
+00:22:17.070 --> 00:22:20.790
+UI controls in no time,
+download a free 30 day
+
+388
+00:22:20.790 --> 00:22:26.910
+trial today at tellerik.com/hanselman that's
+T E L E R
+
+389
+00:22:27.000 --> 00:22:35.130
+I k.com/hanselman. Your elites are
+doing very little manual testing.
+
+390
+00:22:35.160 --> 00:22:37.920
+They're doing a lot less
+manual testing than the highs
+
+391
+00:22:37.920 --> 00:22:41.160
+and the mediums. It's, it's
+a very, an elite performer
+
+392
+00:22:41.160 --> 00:22:43.470
+and the dev ops space
+is a very automated group
+
+393
+00:22:44.820 --> 00:22:48.240
+Or their aunt, or they're
+doing it very strategically. They
+
+394
+00:22:48.240 --> 00:22:55.290
+have incredibly efficient test suites.
+They have great parallelization so
+
+395
+00:22:55.290 --> 00:22:59.550
+that they can be very,
+very strategic about exploratory testing,
+
+396
+00:23:00.120 --> 00:23:05.820
+manual testing, where it matters,
+right, are low performers. And
+
+397
+00:23:05.820 --> 00:23:08.490
+especially our medium performers. If
+you don't have those test
+
+398
+00:23:08.490 --> 00:23:11.850
+suites in place, you're then
+having to do manual testing,
+
+399
+00:23:11.850 --> 00:23:16.350
+right? You're having to bang
+on the system everywhere. But
+
+400
+00:23:16.350 --> 00:23:19.200
+if you have these incredible
+test suites in place, that
+
+401
+00:23:19.200 --> 00:23:22.440
+by the way, have been
+developed by developers and by
+
+402
+00:23:22.440 --> 00:23:26.820
+testers, because when developers help
+write tests, we write better
+
+403
+00:23:26.850 --> 00:23:30.030
+and more testable code, right?
+When we know that it's
+
+404
+00:23:30.030 --> 00:23:32.250
+going to need to be
+tested, rewrite more testable code.
+
+405
+00:23:33.420 --> 00:23:35.970
+But if we have everyone
+having to do all of
+
+406
+00:23:35.970 --> 00:23:40.260
+our tests manually, that's just
+not scalable. And these are
+
+407
+00:23:40.260 --> 00:23:42.420
+best practices though. One of
+the things that I feel
+
+408
+00:23:42.420 --> 00:23:45.410
+like people aren't recognizing is
+that we are standing on
+
+409
+00:23:45.410 --> 00:23:48.140
+the shoulders of giants for
+a reason, like a lot
+
+410
+00:23:48.140 --> 00:23:52.280
+of these things that people,
+these characteristics of elite performers
+
+411
+00:23:52.670 --> 00:23:57.950
+are best practices. And the
+people who are identifiably, demonstrably,
+
+412
+00:23:57.950 --> 00:24:02.810
+medium and low performers are,
+are shunning best practices, right.
+
+413
+00:24:02.870 --> 00:24:07.060
+Explicitly, and, and they're paying
+the price, Right. And you
+
+414
+00:24:07.060 --> 00:24:10.180
+know, it's not always their
+fault or, you know, they're
+
+415
+00:24:10.180 --> 00:24:13.990
+just scrambling to try to
+keep up. Yeah. You have
+
+416
+00:24:13.990 --> 00:24:16.990
+a quote here where you
+say the teams that adopt
+
+417
+00:24:17.080 --> 00:24:21.250
+essential cloud characteristics are 23
+times more likely to be
+
+418
+00:24:21.250 --> 00:24:24.610
+elite performers. What are cloud
+characteristics and why is it,
+
+419
+00:24:25.630 --> 00:24:27.520
+You know, I love this
+part of the report. So
+
+420
+00:24:27.520 --> 00:24:29.590
+I'm going to give a
+tiny bit of context. I
+
+421
+00:24:30.400 --> 00:24:32.920
+so often when we do
+this research and I, I
+
+422
+00:24:32.920 --> 00:24:35.590
+will point this out too.
+We do point out that
+
+423
+00:24:35.890 --> 00:24:37.750
+to kind of work into
+the section of the report.
+
+424
+00:24:37.750 --> 00:24:41.080
+We ask questions about where
+people are. Are they in
+
+425
+00:24:41.080 --> 00:24:42.640
+the cloud? Are they not
+in the cloud? And we
+
+426
+00:24:42.640 --> 00:24:45.340
+say, you know, the fact
+that we, as an industry
+
+427
+00:24:45.340 --> 00:24:48.370
+are unclear about if we're
+in the cloud or not
+
+428
+00:24:48.370 --> 00:24:52.930
+can explain why so many
+reports and vendor reports don't
+
+429
+00:24:52.930 --> 00:24:57.130
+reflect our experience. And so
+when we're doing research and
+
+430
+00:24:57.130 --> 00:25:00.160
+even internal to our own
+organizations, when we're doing metrics
+
+431
+00:25:00.220 --> 00:25:04.510
+and monitoring and reporting, it's
+so important to make sure
+
+432
+00:25:04.510 --> 00:25:07.420
+we have good, solid definitions
+of what it is that
+
+433
+00:25:07.420 --> 00:25:09.370
+we think we're reporting on
+and what it is we
+
+434
+00:25:09.370 --> 00:25:11.920
+think we're measuring. And so
+one thing we did in
+
+435
+00:25:11.920 --> 00:25:15.010
+the report is I included
+sort of a gotcha question.
+
+436
+00:25:15.100 --> 00:25:18.940
+Honestly, we started by asking
+if people are in the
+
+437
+00:25:18.940 --> 00:25:22.300
+cloud, just a simple question,
+right? If you're PR if
+
+438
+00:25:22.300 --> 00:25:24.640
+the primary service or application
+that you're working on is
+
+439
+00:25:24.640 --> 00:25:26.830
+in the cloud, how much
+do you agree with that
+
+440
+00:25:26.830 --> 00:25:32.290
+statement? And then we moved
+on to a very solid
+
+441
+00:25:32.290 --> 00:25:35.800
+definition of what cloud computing
+is. And we pulled that
+
+442
+00:25:35.800 --> 00:25:40.270
+from nest, right? National Institute
+of standards, the technology, because
+
+443
+00:25:40.330 --> 00:25:42.910
+they have a definition of
+what it actually means to
+
+444
+00:25:42.910 --> 00:25:45.580
+be doing cloud computing. And
+it pulls down to five
+
+445
+00:25:45.910 --> 00:25:49.150
+essential characteristics. And so then
+we asked people if they
+
+446
+00:25:49.240 --> 00:25:52.180
+do these five things for
+the primary service or application
+
+447
+00:25:52.180 --> 00:25:56.080
+that they work on, and
+only 22% of people who
+
+448
+00:25:56.350 --> 00:25:59.710
+previously said that they're working
+in the cloud are actually
+
+449
+00:25:59.710 --> 00:26:04.960
+doing these five things. And
+I think this helps illuminate
+
+450
+00:26:04.960 --> 00:26:07.810
+what's happening when people say,
+well, you know, we moved
+
+451
+00:26:07.810 --> 00:26:09.220
+to the cloud, but we
+don't see any of the
+
+452
+00:26:09.220 --> 00:26:11.230
+benefits that people say come
+from the cloud. And we're
+
+453
+00:26:11.230 --> 00:26:14.500
+like, okay. Yeah, like you
+can't just say you're in
+
+454
+00:26:14.500 --> 00:26:16.930
+the cloud and it doesn't
+work. Right. I think Corey
+
+455
+00:26:16.930 --> 00:26:19.060
+Quinn had this hilarious tweet
+the other day saying like,
+
+456
+00:26:19.060 --> 00:26:20.800
+you can't just like throw
+a sticker on your data
+
+457
+00:26:20.800 --> 00:26:23.410
+center and say that you're
+in the cloud now. So
+
+458
+00:26:23.530 --> 00:26:27.400
+these five characteristics of what
+actually makes cloud computing or
+
+459
+00:26:27.400 --> 00:26:32.140
+this. So the first is
+on demand, self service. You
+
+460
+00:26:32.140 --> 00:26:37.030
+can provision resources as needed
+automatically without human interaction. Can
+
+461
+00:26:37.030 --> 00:26:39.730
+you, you can't put in
+a ticket if you use
+
+462
+00:26:39.730 --> 00:26:44.640
+a ticket fail, sorry, love
+you. Fail. Number, number two,
+
+463
+00:26:45.060 --> 00:26:50.850
+broad network access capabilities are
+available through anything. Mobile phones,
+
+464
+00:26:50.880 --> 00:26:55.170
+tablets, laptops, workstations, right? Kate
+broad network access. Number three
+
+465
+00:26:55.170 --> 00:26:58.830
+is resource pooling. Resources are
+pooled in like a multitenant
+
+466
+00:26:58.830 --> 00:27:02.730
+model. Okay. So physical virtual
+resources are dynamically assigned and
+
+467
+00:27:02.730 --> 00:27:09.090
+reassigned on demand. Number four,
+rapid elasticity. So that most
+
+468
+00:27:09.090 --> 00:27:10.890
+people think about this when
+we think about the cloud,
+
+469
+00:27:10.890 --> 00:27:13.230
+right? So we can think
+about like bursting and stuff.
+
+470
+00:27:14.130 --> 00:27:17.100
+And then number five is
+measured service. So here is
+
+471
+00:27:17.100 --> 00:27:19.650
+where our cloud systems can
+kind of automatically control and
+
+472
+00:27:19.650 --> 00:27:22.590
+optimize resource use. And again,
+this is where kind of
+
+473
+00:27:22.590 --> 00:27:25.770
+the bursting comes, right? And
+the resource usage can be
+
+474
+00:27:25.770 --> 00:27:30.090
+monitored controlled and reported for
+transparency. This, this one's also
+
+475
+00:27:30.090 --> 00:27:33.400
+really nice, right? Because of
+the reporting aspect, The, the,
+
+476
+00:27:33.400 --> 00:27:37.220
+the, the elasticity aspect of
+things. I love that word
+
+477
+00:27:37.220 --> 00:27:40.760
+in the context of the
+cloud, the idea that, you
+
+478
+00:27:40.760 --> 00:27:44.030
+know, provision and release stuff
+that I could that's scaling,
+
+479
+00:27:44.030 --> 00:27:47.270
+isn't a life event like
+it used to be Right?
+
+480
+00:27:47.360 --> 00:27:50.030
+Oh yeah. I was. I
+mean, I remember those days.
+
+481
+00:27:50.090 --> 00:27:51.590
+I love how you say
+that it's not a life
+
+482
+00:27:51.590 --> 00:27:57.740
+event. I work@acompanycallediteighthundred.com. Like literally
+it was eight zero, zero.com.
+
+483
+00:27:58.070 --> 00:27:59.690
+You probably should not go
+there now because I have
+
+484
+00:27:59.690 --> 00:28:01.610
+no idea what's there, but
+this was back in the
+
+485
+00:28:01.610 --> 00:28:03.530
+early days of the internet
+when it was like everything
+
+486
+00:28:03.530 --> 00:28:08.270
+had three, three letter domains,
+right? Like, Oh yeah. I
+
+487
+00:28:08.270 --> 00:28:13.070
+worked@eighthundreddotcomandiworkedatgear.com. When Nick, when you
+could actually like, have that
+
+488
+00:28:13.070 --> 00:28:16.190
+idea for a noun and
+use all the vowels and
+
+489
+00:28:16.190 --> 00:28:18.350
+consonants, you didn't have to
+remove a vowel to be
+
+490
+00:28:18.350 --> 00:28:22.970
+creative. And I remember when
+we, we went and sold
+
+491
+00:28:23.000 --> 00:28:26.480
+three DVDs for a dollar
+that was our big black
+
+492
+00:28:26.480 --> 00:28:31.310
+Friday sale and scaling from
+three machines to six, like
+
+493
+00:28:31.310 --> 00:28:35.390
+involved driving down to PC
+micro center and getting the
+
+494
+00:28:35.390 --> 00:28:39.170
+machines and racking them. Like
+it was rapid elasticity was
+
+495
+00:28:39.170 --> 00:28:41.570
+scaling in a week and
+a half, two week period.
+
+496
+00:28:42.110 --> 00:28:45.020
+And it was extremely stressful
+and it was, but it
+
+497
+00:28:45.020 --> 00:28:47.570
+was the way that we
+did DevOps 20 years ago.
+
+498
+00:28:48.560 --> 00:28:52.430
+Oh yeah. Well, and back
+then, it was much more
+
+499
+00:28:52.430 --> 00:28:55.610
+difficult, right? Like it was
+a lot harder. We, we
+
+500
+00:28:55.610 --> 00:28:59.540
+didn't really have, you know,
+distributed systems set up the
+
+501
+00:28:59.540 --> 00:29:01.430
+way we do now. I
+mean, I used to work
+
+502
+00:29:01.430 --> 00:29:03.710
+in data centers. My first
+job was on a mainframe.
+
+503
+00:29:04.100 --> 00:29:06.110
+So I, I mean, I,
+I feel this, I was
+
+504
+00:29:06.110 --> 00:29:09.380
+working in labs. I was
+laying cable. So The, the,
+
+505
+00:29:09.390 --> 00:29:12.010
+the report can be, can
+be gotten online and I'm
+
+506
+00:29:12.020 --> 00:29:13.970
+gonna make sure that we
+have a link to that
+
+507
+00:29:13.970 --> 00:29:17.060
+at cloud platform, online.com. And
+there's a link to go
+
+508
+00:29:17.060 --> 00:29:18.560
+directly to that. I'll make
+a little link and I'll
+
+509
+00:29:18.560 --> 00:29:20.240
+tweet about it as well.
+But I also want to
+
+510
+00:29:20.240 --> 00:29:24.680
+point out there's even more
+depth in the book, accelerate
+
+511
+00:29:24.680 --> 00:29:28.430
+the science behind dev ops.
+It's like 200, 300 page
+
+512
+00:29:28.460 --> 00:29:31.790
+book. And you got some
+praise from people that don't
+
+513
+00:29:31.790 --> 00:29:35.810
+typically praise books. You've got
+common, Mary Poppins pick in
+
+514
+00:29:35.810 --> 00:29:40.550
+there. You've got Martin Fowler.
+Why did this book like
+
+515
+00:29:40.580 --> 00:29:43.240
+land so well? Is it
+because of the rigor of
+
+516
+00:29:43.240 --> 00:29:46.350
+the science behind it? I
+think there's a few things,
+
+517
+00:29:46.350 --> 00:29:48.870
+right. I think the rigor
+really helps because then it's
+
+518
+00:29:48.870 --> 00:29:51.900
+not just a bunch of
+like, this is, I think
+
+519
+00:29:51.900 --> 00:29:53.850
+this is a good idea.
+I think this is kind
+
+520
+00:29:53.850 --> 00:29:57.900
+of an opinion. I know.
+Yeah. The rigor really convinced
+
+521
+00:29:57.900 --> 00:30:00.600
+Martin, you know, we've, he's
+been following our work for
+
+522
+00:30:00.600 --> 00:30:03.360
+the last few years and
+I will actually say he,
+
+523
+00:30:03.720 --> 00:30:05.610
+he was sort of a
+big nudge in writing it.
+
+524
+00:30:05.700 --> 00:30:08.580
+I bumped into him at
+a conference and he pulled
+
+525
+00:30:08.580 --> 00:30:10.020
+me aside and he said,
+you've got to write this
+
+526
+00:30:10.020 --> 00:30:12.390
+book. And I'm like, dude,
+I know. Right. I'm busy.
+
+527
+00:30:12.780 --> 00:30:14.220
+And he goes, no, if
+you don't write it, I
+
+528
+00:30:14.220 --> 00:30:17.310
+will. I was like, Whoa,
+what? So he was kidding.
+
+529
+00:30:17.880 --> 00:30:19.620
+I probably bumped into you.
+And he's like, you need
+
+530
+00:30:19.620 --> 00:30:24.350
+to write this. And you're
+like, dude, I know, I
+
+531
+00:30:24.570 --> 00:30:27.870
+don't know. He was so
+funny. Well, and then I,
+
+532
+00:30:27.940 --> 00:30:30.390
+I told him later that
+you know, his threat to
+
+533
+00:30:30.390 --> 00:30:33.450
+write the book and if
+I didn't, he would, he
+
+534
+00:30:33.450 --> 00:30:35.070
+goes, I was kidding. And
+I was like, well, it's
+
+535
+00:30:35.070 --> 00:30:37.500
+probably good. I didn't know
+you were kidding because that's
+
+536
+00:30:37.500 --> 00:30:41.520
+what kicked my button to
+get there. The case of
+
+537
+00:30:41.520 --> 00:30:43.380
+Sal, Ron has turned in
+our direction. We'd better get
+
+538
+00:30:43.380 --> 00:30:46.650
+this book out before Fowler
+writes it for us. Exactly.
+
+539
+00:30:46.830 --> 00:30:49.530
+So, and it's interesting because
+that also made sure that
+
+540
+00:30:49.530 --> 00:30:51.690
+I had a really, really
+solid section in the back.
+
+541
+00:30:51.690 --> 00:30:54.900
+So the interesting thing is
+some people love the whole
+
+542
+00:30:54.900 --> 00:30:57.900
+book. Some people really love
+part. So we have three
+
+543
+00:30:57.900 --> 00:31:02.070
+parts. Part. One is everything
+that we have found. It's
+
+544
+00:31:02.460 --> 00:31:05.400
+so the, the findings, the
+results, Right? What we found
+
+545
+00:31:05.430 --> 00:31:08.970
+the research and transformation. Yep.
+The research and transformation part
+
+546
+00:31:08.970 --> 00:31:12.210
+two is the science behind
+it. My nerd moment came
+
+547
+00:31:12.210 --> 00:31:14.610
+when my PhD advisor texted
+me and she said, this
+
+548
+00:31:14.610 --> 00:31:19.050
+is like a beautiful take
+on kind of an elegant
+
+549
+00:31:19.050 --> 00:31:22.860
+take on survey measures and
+how to do them and
+
+550
+00:31:22.950 --> 00:31:24.630
+how to lay it out
+the right way, but also
+
+551
+00:31:24.630 --> 00:31:26.760
+how it relates to a
+few other people have actually
+
+552
+00:31:26.760 --> 00:31:28.800
+DMD me, which I think
+I'm a little proud of
+
+553
+00:31:28.800 --> 00:31:32.040
+too, how to relate it
+to system measures. So if
+
+554
+00:31:32.040 --> 00:31:34.230
+you're in an organization and
+you want to capture measures
+
+555
+00:31:34.230 --> 00:31:36.300
+out of systems, cause that's
+actually what I started from
+
+556
+00:31:37.050 --> 00:31:40.260
+doing like systems and log
+analysis and how to think
+
+557
+00:31:40.260 --> 00:31:42.600
+about measures this way, how
+to relate them and how
+
+558
+00:31:42.600 --> 00:31:44.490
+to measure things and how
+to think about them and
+
+559
+00:31:44.490 --> 00:31:47.670
+put data together and analyze
+it in a good holistic
+
+560
+00:31:47.670 --> 00:31:51.030
+way. Some people really love
+that. Cause like they've read
+
+561
+00:31:51.030 --> 00:31:53.880
+the reports or they're like,
+I already know what I'm
+
+562
+00:31:53.880 --> 00:31:56.670
+doing, but I need to
+think about measurement in an
+
+563
+00:31:56.670 --> 00:32:01.440
+organization and communicating measurement. And
+then part three is a
+
+564
+00:32:01.440 --> 00:32:04.110
+case study from ING. So
+how to put all of
+
+565
+00:32:04.110 --> 00:32:07.560
+this into practice. And that
+was actually contributed by Steve
+
+566
+00:32:07.560 --> 00:32:09.990
+bell and Karen Whitley bell. They
+were very, very lovely and
+
+567
+00:32:09.990 --> 00:32:12.480
+gracious. They were early readers
+to the book and they
+
+568
+00:32:12.480 --> 00:32:15.600
+said, you know, you really,
+it might help people to
+
+569
+00:32:15.930 --> 00:32:18.930
+be able to visualize what
+this looks like in practice.
+
+570
+00:32:19.440 --> 00:32:23.280
+And I said, you know,
+my, I think I am
+
+571
+00:32:23.280 --> 00:32:26.880
+best served writing about the
+science and I've, I've helped
+
+572
+00:32:26.880 --> 00:32:29.370
+organizations through this and we
+were on a phone call
+
+573
+00:32:29.370 --> 00:32:31.860
+and they said, we'd be
+willing to write it for
+
+574
+00:32:31.860 --> 00:32:34.080
+you. And I was like,
+Oh my gosh, what? Yes.
+
+575
+00:32:34.110 --> 00:32:37.170
+Thank you. So yeah, it
+was, it was fantastic. So
+
+576
+00:32:37.170 --> 00:32:38.730
+it was nice that it
+kind of came together in
+
+577
+00:32:38.730 --> 00:32:42.500
+those three parts. Right? Yeah.
+And some people love that
+
+578
+00:32:42.500 --> 00:32:45.320
+part the best because they
+can see it and feel
+
+579
+00:32:45.320 --> 00:32:47.270
+it. And the way that,
+that Steven care and have
+
+580
+00:32:47.270 --> 00:32:49.190
+written, it is really like
+a day in the life.
+
+581
+00:32:49.220 --> 00:32:52.210
+It's walking through one on
+one Point out also, just
+
+582
+00:32:52.210 --> 00:32:55.120
+as we close those podcast
+here, that you would think
+
+583
+00:32:55.120 --> 00:32:57.760
+that a books with this
+much work behind it, which
+
+584
+00:32:57.760 --> 00:32:59.800
+meant this much science would
+be very expensive and you'd
+
+585
+00:32:59.800 --> 00:33:02.860
+be spending 50, 60 bucks
+on it. But you can
+
+586
+00:33:02.860 --> 00:33:04.870
+go up on Amazon right
+now. And the Kindle version
+
+587
+00:33:04.870 --> 00:33:06.970
+of this book is very
+modestly priced or you can
+
+588
+00:33:06.970 --> 00:33:09.640
+get it in paperback. And
+I think it's just a
+
+589
+00:33:09.640 --> 00:33:12.550
+fantastic resource. This is not
+a pamphlet. This is 300
+
+590
+00:33:12.550 --> 00:33:17.020
+pages of really, really thoughtful
+research by some experienced folks
+
+591
+00:33:17.020 --> 00:33:19.120
+in the space. And I
+really appreciate you coming on
+
+592
+00:33:19.120 --> 00:33:21.850
+the show with me today.
+Yeah. Thanks for having me.
+
+593
+00:33:21.850 --> 00:33:25.390
+It's been great to chat.
+This has been another episode
+
+594
+00:33:25.390 --> 00:33:27.730
+of Hansel minutes and we'll
+see you again next week.
+

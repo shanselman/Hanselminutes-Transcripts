@@ -1,0 +1,3812 @@
+WEBVTT FILE
+
+1
+00:00:12.770 --> 00:00:17.630
+Hansel minutes.com. It's Hansel minutes,
+a weekly discussion with web
+
+2
+00:00:17.630 --> 00:00:22.940
+developer and technologists. Scott Hanselman
+hosted by Carl frankly. This
+
+3
+00:00:22.940 --> 00:00:27.110
+is Lawrence Ryan announcing show number
+one 66. Recorded live Friday,
+
+4
+00:00:27.320 --> 00:00:32.900
+June 19th, 2009. Support for Hanselman it's
+just provided by Tellerik rad
+
+5
+00:00:32.900 --> 00:00:36.590
+controls, the most comprehensive suite
+of components for windows forms
+
+6
+00:00:36.590 --> 00:00:47.360
+and asp.net web applications. online@wwwdottelerikdotcomandby.net
+developers journal the world's leading.net
+
+7
+00:00:47.360 --> 00:00:53.840
+developer magazine online at www
+dot <inaudible> dot com. In
+
+8
+00:00:53.840 --> 00:00:57.890
+this episode, Scott talks about
+windows presentation foundation with Ian
+
+9
+00:00:57.890 --> 00:01:01.820
+Griffith. Hi, this is Scott
+Hanselman, and this is another
+
+10
+00:01:01.820 --> 00:01:03.770
+episode of Hansel minutes. And
+I'm sitting down here in
+
+11
+00:01:03.770 --> 00:01:06.350
+Norway at the Norwegian developers
+conference, and I've got Ian
+
+12
+00:01:06.350 --> 00:01:10.100
+Griffiss with me, who is
+a freelance WPF consultant and
+
+13
+00:01:10.100 --> 00:01:13.820
+also a Pluralsight instructor and
+course author. Thanks for chatting
+
+14
+00:01:13.820 --> 00:01:17.030
+with me today. Thanks for
+having me on I'm continually
+
+15
+00:01:17.630 --> 00:01:20.720
+trying to understand WPF and
+I, I started with my
+
+16
+00:01:20.720 --> 00:01:25.010
+baby smash application, which I
+wrote incorrectly, and then I'm
+
+17
+00:01:25.010 --> 00:01:27.410
+trying to make it more
+correct. And now I'm working
+
+18
+00:01:27.410 --> 00:01:31.430
+on another WPF project. I'm
+calling shoe box scan, where
+
+19
+00:01:31.430 --> 00:01:34.250
+someone could basically talk to
+a scanner and put a
+
+20
+00:01:34.250 --> 00:01:36.560
+bunch of photos from their
+shoe box and then do
+
+21
+00:01:36.560 --> 00:01:38.930
+some work. And you just
+spent the last hour with
+
+22
+00:01:38.930 --> 00:01:42.920
+me, kind of correcting my
+mistakes and we hit an
+
+23
+00:01:42.920 --> 00:01:46.100
+interesting wall. And I think
+that that's a nice kind
+
+24
+00:01:46.100 --> 00:01:47.750
+of metaphor for what I
+think a lot of people
+
+25
+00:01:47.750 --> 00:01:50.960
+who are using WPF are
+doing well. I really thought
+
+26
+00:01:50.960 --> 00:01:52.910
+about it in terms of
+wind forms. And in terms
+
+27
+00:01:52.910 --> 00:01:58.370
+of when 32, you went
+with me, very kindly running,
+
+28
+00:01:58.370 --> 00:02:02.120
+screaming against the wall until
+we finally hit it. Maybe
+
+29
+00:02:02.270 --> 00:02:04.610
+talk to this a little
+bit about what we tried
+
+30
+00:02:04.610 --> 00:02:07.040
+to do and what went
+wrong and now what I'm
+
+31
+00:02:07.040 --> 00:02:09.140
+going to have to do
+to go forward. So this
+
+32
+00:02:09.140 --> 00:02:13.310
+is A very common pattern
+in WPF application developments. And
+
+33
+00:02:14.030 --> 00:02:16.160
+as I tend to tell
+people, when I hit see
+
+34
+00:02:16.160 --> 00:02:18.530
+this sort of thing, I
+found all the WPF apps
+
+35
+00:02:18.530 --> 00:02:20.000
+I've worked on a fall
+and into one of two
+
+36
+00:02:20.000 --> 00:02:23.900
+categories. One is where I
+build a separate class that
+
+37
+00:02:23.900 --> 00:02:26.720
+manages all the interactions stuff
+that's completely separate from the
+
+38
+00:02:26.720 --> 00:02:29.750
+code behind and the XAML.
+And then there's the applications
+
+39
+00:02:29.750 --> 00:02:32.780
+where I wish that's what
+I'd done. And we're in
+
+40
+00:02:32.780 --> 00:02:35.180
+the formal one because that's
+the path of least resistance,
+
+41
+00:02:35.270 --> 00:02:37.910
+right? You sit down in
+front of the visual studio
+
+42
+00:02:37.910 --> 00:02:40.280
+designer and wonder why there's
+amyloid. If it doesn't seem
+
+43
+00:02:40.280 --> 00:02:41.840
+to do very much, but
+then you get used to
+
+44
+00:02:41.840 --> 00:02:45.200
+that and you start writing
+code and you think, okay,
+
+45
+00:02:45.200 --> 00:02:47.050
+I've got to get a
+bitmap on the screen. I'll
+
+46
+00:02:47.090 --> 00:02:48.890
+use this image tag that
+seems to work, Oh, I
+
+47
+00:02:48.890 --> 00:02:51.410
+can make it do stuff.
+I can resize it. I
+
+48
+00:02:51.410 --> 00:02:53.780
+can maybe have extra stuff
+led on top of it
+
+49
+00:02:53.780 --> 00:02:56.630
+to represent the scans and
+your example. I can drag
+
+50
+00:02:56.630 --> 00:03:00.070
+stuff out and everything ends
+up kind of getting baked
+
+51
+00:03:00.160 --> 00:03:04.390
+into the view. You start
+using WPS visual tree, which
+
+52
+00:03:04.390 --> 00:03:07.180
+is the structure that represents
+what's on the screen to
+
+53
+00:03:07.180 --> 00:03:11.140
+hold your application state. And
+it can either be what
+
+54
+00:03:11.140 --> 00:03:13.150
+you might think of as
+a model state, the underlying
+
+55
+00:03:13.150 --> 00:03:16.210
+ideas that are part of
+the application, or it might
+
+56
+00:03:16.210 --> 00:03:18.370
+be more transient stuff. That's
+not really part of the
+
+57
+00:03:18.370 --> 00:03:21.370
+model like which things are
+selected right now. Am I
+
+58
+00:03:21.370 --> 00:03:23.500
+in the middle of a
+drag operation? Do I have
+
+59
+00:03:23.500 --> 00:03:25.180
+a Dawn is lit up
+because this is the thing
+
+60
+00:03:25.180 --> 00:03:27.760
+I'm dealing with right now.
+And all of these things
+
+61
+00:03:27.820 --> 00:03:30.310
+can live in the view,
+because that seems to be
+
+62
+00:03:30.310 --> 00:03:32.700
+the obvious thing to do,
+right? To put this into
+
+63
+00:03:32.700 --> 00:03:34.910
+the context of the application
+so that people who are,
+
+64
+00:03:34.910 --> 00:03:37.590
+of course, can't see this,
+cause we're on a podcast.
+
+65
+00:03:38.040 --> 00:03:40.320
+I'm trying to make an
+application where I can scan
+
+66
+00:03:40.620 --> 00:03:44.010
+the entire scanner Platon, which
+has a number of pictures
+
+67
+00:03:44.010 --> 00:03:46.590
+on it. And then I
+want to drag rubber bands
+
+68
+00:03:46.590 --> 00:03:49.350
+around them. So I might
+have five or 10 pictures
+
+69
+00:03:49.740 --> 00:03:53.160
+that are being scanned in
+one pass. I've been holding
+
+70
+00:03:53.160 --> 00:03:55.020
+all of those in like
+what you said, the visual
+
+71
+00:03:55.020 --> 00:04:01.410
+tree. I've got 10 little
+small wallet, sized pictures. They're
+
+72
+00:04:01.410 --> 00:04:04.080
+held very nicely in the
+visual tree. I figured they're
+
+73
+00:04:04.080 --> 00:04:06.360
+inside of a canvas and
+I'll spin through them later.
+
+74
+00:04:06.990 --> 00:04:08.760
+And that's not a good
+idea is what you're saying.
+
+75
+00:04:08.970 --> 00:04:11.550
+It's almost always a bad
+idea in the long run,
+
+76
+00:04:11.910 --> 00:04:14.190
+what tends to happen and
+exactly what we saw happen
+
+77
+00:04:14.220 --> 00:04:15.960
+just now, as we were
+walking through it is you
+
+78
+00:04:15.960 --> 00:04:18.540
+suddenly get to a point
+where things just seem to
+
+79
+00:04:18.540 --> 00:04:22.920
+be impossible. It's like the
+complexity has exploded because you're
+
+80
+00:04:22.920 --> 00:04:24.930
+having to try and hold
+in your head. What it
+
+81
+00:04:24.930 --> 00:04:27.840
+was you meant by this
+particular thing in this place.
+
+82
+00:04:27.840 --> 00:04:29.910
+And the visual triggers like,
+ah, there's a, there's a
+
+83
+00:04:29.910 --> 00:04:32.730
+content control there. The signifies,
+this particular thing to my
+
+84
+00:04:32.730 --> 00:04:36.480
+app. And obviously you're trying
+to write code that's embodying
+
+85
+00:04:36.660 --> 00:04:40.020
+relatively straightforward concepts. So we
+have the idea which was,
+
+86
+00:04:40.440 --> 00:04:42.240
+we want to make sure
+when they use a drags
+
+87
+00:04:42.300 --> 00:04:44.820
+and outline onto the image
+that they're inside the image,
+
+88
+00:04:45.630 --> 00:04:47.160
+I mean, we could drag
+the image all the way
+
+89
+00:04:47.160 --> 00:04:49.710
+off the form and often
+to space. And I said,
+
+90
+00:04:49.710 --> 00:04:51.900
+I want to bound that
+inside of this. So we
+
+91
+00:04:51.900 --> 00:04:55.200
+only had really two places.
+There was the XAML and
+
+92
+00:04:55.200 --> 00:04:57.420
+there was the code behind
+and that's everything we were
+
+93
+00:04:57.420 --> 00:04:59.790
+doing. And that was the
+only interaction was just you
+
+94
+00:04:59.790 --> 00:05:02.580
+and I trying to get
+these animals to do what
+
+95
+00:05:02.910 --> 00:05:04.890
+we could get it to
+do. There was only code
+
+96
+00:05:04.890 --> 00:05:07.410
+behind. We had no other
+classes And that that's a
+
+97
+00:05:07.410 --> 00:05:09.390
+problem for a couple of
+reasons. One of which is
+
+98
+00:05:09.390 --> 00:05:12.330
+it makes the code really
+hard to follow the 30
+
+99
+00:05:12.330 --> 00:05:15.150
+quite simple ideas you want
+to represent. Don't look that
+
+100
+00:05:15.150 --> 00:05:16.860
+simple. When you come to
+write the code, you end
+
+101
+00:05:16.860 --> 00:05:18.690
+up with all sorts of
+stuff that is dealing with
+
+102
+00:05:19.020 --> 00:05:21.060
+either putting things into the
+view or taking them back
+
+103
+00:05:21.060 --> 00:05:23.310
+out again, to get back
+to the information you first
+
+104
+00:05:23.310 --> 00:05:26.940
+thought of and yeah, you
+just get, and also the
+
+105
+00:05:26.940 --> 00:05:29.340
+other problem is you got
+a lack of testability. How
+
+106
+00:05:29.340 --> 00:05:31.590
+on earth would you write
+a unit test to say
+
+107
+00:05:31.650 --> 00:05:34.770
+that the user can't drag
+something outside of the bounds
+
+108
+00:05:34.770 --> 00:05:36.240
+of the image there it's,
+that's not going to be
+
+109
+00:05:36.240 --> 00:05:38.490
+a particularly easy thing to
+do. You're probably going to
+
+110
+00:05:38.490 --> 00:05:41.640
+end up having to use
+something like an automated test
+
+111
+00:05:41.640 --> 00:05:45.660
+framework with UI automation support.
+It's a feed fake input
+
+112
+00:05:45.660 --> 00:05:47.130
+into the UI. And that's,
+that's a bit of a
+
+113
+00:05:47.130 --> 00:05:49.890
+nightmare. That's not the right
+way to go about testing
+
+114
+00:05:49.890 --> 00:05:52.440
+some code, which should ultimately
+be no more complex than
+
+115
+00:05:52.950 --> 00:05:55.050
+this number is no less
+than zero. This number is
+
+116
+00:05:55.050 --> 00:05:57.530
+no greater than that bound.
+So clearly code's in the
+
+117
+00:05:57.530 --> 00:06:01.720
+wrong place. Once again, I
+found myself writing WPF code
+
+118
+00:06:02.260 --> 00:06:05.260
+in a wind form, state
+of mind, right? Until you
+
+119
+00:06:05.260 --> 00:06:08.710
+finally said, all right, we've
+got to stop. It's nice
+
+120
+00:06:08.710 --> 00:06:11.020
+that we got it working
+80%, but everything we've done
+
+121
+00:06:11.020 --> 00:06:13.360
+is wrong. So then you
+said, we need to do
+
+122
+00:06:13.360 --> 00:06:15.490
+a view model and we
+hear this term more and
+
+123
+00:06:15.490 --> 00:06:18.340
+more because we're hearing it
+in the asp.net MVC world
+
+124
+00:06:18.340 --> 00:06:21.430
+of view model. And, and
+I'm hearing it in WPF.
+
+125
+00:06:21.730 --> 00:06:25.120
+Maybe explain the concept of
+view model versus just the
+
+126
+00:06:25.120 --> 00:06:27.640
+model and just the view
+within the context of WPF
+
+127
+00:06:27.640 --> 00:06:30.640
+for our listeners. Okay. So
+just to add to the
+
+128
+00:06:30.640 --> 00:06:33.040
+confusion, there's at least two
+popular names. As this thing
+
+129
+00:06:33.040 --> 00:06:34.900
+goes by. Some people call
+it the view model. Some
+
+130
+00:06:34.900 --> 00:06:38.590
+people call it the presenter.
+And more generally you sometimes
+
+131
+00:06:38.590 --> 00:06:41.860
+hear this, this idea refer
+to a separated presentation. I
+
+132
+00:06:41.860 --> 00:06:43.780
+think that's the term that
+the prison guys use for
+
+133
+00:06:43.780 --> 00:06:47.590
+this exact same concept. Prison
+prison is the, I think
+
+134
+00:06:47.590 --> 00:06:50.200
+it's technically application guidance, but
+it's actually a bunch of
+
+135
+00:06:50.200 --> 00:06:54.100
+code that you can download
+for doing competent applications in
+
+136
+00:06:54.130 --> 00:06:56.410
+WPF and silver lines. For
+those of us who don't
+
+137
+00:06:56.410 --> 00:07:01.390
+speak English, composite would be
+composite applications that are composed
+
+138
+00:07:01.390 --> 00:07:05.440
+of other. Yeah. It's particularly
+aimed at teams where you've
+
+139
+00:07:05.440 --> 00:07:07.840
+got a lot of different
+teams putting pieces into a
+
+140
+00:07:07.840 --> 00:07:10.000
+single application and you want
+it all to work in
+
+141
+00:07:10.000 --> 00:07:12.130
+concert. It tries to deal
+with those sorts of integration
+
+142
+00:07:12.130 --> 00:07:15.490
+problems. So it's not unique
+to that style of app
+
+143
+00:07:15.520 --> 00:07:18.250
+though. The view model concept
+works in pretty much any
+
+144
+00:07:18.250 --> 00:07:21.850
+UI. And the idea is
+this, your model typically contains
+
+145
+00:07:21.850 --> 00:07:24.310
+things that are specific to
+your domain. So whatever you're
+
+146
+00:07:24.310 --> 00:07:27.010
+trying to work with that,
+that lives in whatever ideas
+
+147
+00:07:27.010 --> 00:07:28.810
+your application tries to deal
+with those live in the
+
+148
+00:07:28.810 --> 00:07:33.040
+model. But most user interfaces
+have stuff that has nothing
+
+149
+00:07:33.040 --> 00:07:35.050
+really to do with the
+model. That's much more to
+
+150
+00:07:35.050 --> 00:07:37.900
+do with the interaction. Some
+of the classic example is
+
+151
+00:07:37.900 --> 00:07:41.170
+a drawing program. You take
+something like Adobe illustrator that
+
+152
+00:07:41.170 --> 00:07:43.300
+has the model, which is
+the drawing, the shapes that
+
+153
+00:07:43.300 --> 00:07:45.910
+are in the drawing, but
+it also, the program has
+
+154
+00:07:45.910 --> 00:07:48.220
+the ability to let you
+select an item in the
+
+155
+00:07:48.220 --> 00:07:50.920
+drawing. And it lights up
+with the donors and other
+
+156
+00:07:50.920 --> 00:07:53.260
+things you can drag around.
+Things in the toolbar will
+
+157
+00:07:53.260 --> 00:07:56.200
+change. And that's more to
+do with the structure of
+
+158
+00:07:56.200 --> 00:07:58.960
+the interaction. What happens when
+the user starts to push
+
+159
+00:07:58.960 --> 00:08:01.750
+a mouse button down, what
+state changes occur, because you
+
+160
+00:08:01.750 --> 00:08:04.540
+have state machines, things like
+drag operations. If you look
+
+161
+00:08:04.540 --> 00:08:07.660
+at something like multitouch interfaces,
+where you're dragging a bit
+
+162
+00:08:07.660 --> 00:08:09.610
+map around with your finger,
+then you put a second
+
+163
+00:08:09.610 --> 00:08:11.530
+thing to down to resize
+it, to do that kind
+
+164
+00:08:11.530 --> 00:08:15.790
+of squeeze thing, your, your
+interactions are going between different
+
+165
+00:08:15.790 --> 00:08:18.370
+States. And you've got to
+have somewhere for that state
+
+166
+00:08:18.370 --> 00:08:21.160
+to live. You've got to
+have somewhere for the extra
+
+167
+00:08:21.160 --> 00:08:23.980
+information that needs to appear
+on screen that during the
+
+168
+00:08:23.980 --> 00:08:26.620
+interactions that doesn't belong in
+the underlying model, there has
+
+169
+00:08:26.620 --> 00:08:28.570
+to be a place for
+that to live. And people
+
+170
+00:08:28.570 --> 00:08:31.090
+seem to default to putting
+it in the view because
+
+171
+00:08:31.090 --> 00:08:33.850
+nothing really drives them to
+put it anywhere else. And
+
+172
+00:08:33.880 --> 00:08:35.650
+this is the thing that
+is kind of not really
+
+173
+00:08:35.650 --> 00:08:37.540
+understood that there has to
+be a place for that
+
+174
+00:08:37.540 --> 00:08:39.430
+to live. And that's what
+the view model is for.
+
+175
+00:08:39.430 --> 00:08:41.830
+It's a separate class that
+is the home for those
+
+176
+00:08:41.830 --> 00:08:43.780
+sorts of things. In other
+words, that you've mentioned a
+
+177
+00:08:43.780 --> 00:08:45.640
+couple of times that we
+haven't defined yet as the,
+
+178
+00:08:45.640 --> 00:08:48.400
+as an adult learner. And
+there's really a, this word
+
+179
+00:08:48.400 --> 00:08:50.620
+is a little overloaded because
+there's the notion of an,
+
+180
+00:08:50.620 --> 00:08:53.710
+a Dorner in WPF, but
+then there's also the general
+
+181
+00:08:53.920 --> 00:08:56.100
+concept of something that being
+adorned. Like you made the
+
+182
+00:08:56.100 --> 00:08:59.490
+comment in a, about Photoshop
+that I've got some item
+
+183
+00:08:59.490 --> 00:09:01.920
+on the screen. And when
+I click on it, perhaps
+
+184
+00:09:01.920 --> 00:09:05.130
+there's going to have a
+resize handles or it's going
+
+185
+00:09:05.130 --> 00:09:07.050
+to have a little lollipop
+sticking out the top that
+
+186
+00:09:07.050 --> 00:09:10.110
+I can grab and then
+rotate where I've adorned this
+
+187
+00:09:10.110 --> 00:09:12.750
+item. It's not part of
+the model. It's not really
+
+188
+00:09:12.750 --> 00:09:15.090
+part of the view or
+it's transiently part of the
+
+189
+00:09:15.090 --> 00:09:17.390
+view. The view Has to
+show it, but the view
+
+190
+00:09:17.390 --> 00:09:19.090
+shouldn't be the thing that
+knows that it's supposed to
+
+191
+00:09:19.730 --> 00:09:23.600
+Hence a model for the
+view or view model. Yeah,
+
+192
+00:09:23.630 --> 00:09:25.850
+It's exactly it. Yeah. And
+just to talk a little
+
+193
+00:09:25.850 --> 00:09:28.760
+more about the Adorno thing,
+I mean, in general, what
+
+194
+00:09:28.760 --> 00:09:30.710
+you said is the basic
+idea of an adorned, the
+
+195
+00:09:30.710 --> 00:09:33.680
+WPF that happens to provide
+some infrastructure, to solve some
+
+196
+00:09:33.680 --> 00:09:35.540
+of the common problems, cause
+you want your donors to
+
+197
+00:09:35.540 --> 00:09:37.820
+float to the top, but
+you also want them to
+
+198
+00:09:37.820 --> 00:09:39.890
+follow around the things that
+are dawning as you zoom
+
+199
+00:09:39.890 --> 00:09:41.900
+in and pan and rotate.
+And it just provides a
+
+200
+00:09:41.900 --> 00:09:43.850
+little bit of infrastructure to
+try and make that easier.
+
+201
+00:09:44.690 --> 00:09:47.240
+But it's, it's a more
+broad concept than that. As
+
+202
+00:09:47.240 --> 00:09:50.000
+you say, most programs that
+support interactive selection have something
+
+203
+00:09:50.000 --> 00:09:54.260
+like that. So about, about
+an hour into our exercise,
+
+204
+00:09:54.260 --> 00:09:56.660
+working on our little scanning
+application, which I'm going to
+
+205
+00:09:56.660 --> 00:09:59.180
+put up on OncoPLEX and
+I've had a number of
+
+206
+00:09:59.180 --> 00:10:02.660
+other people helped me with
+on, on Twitter. It's still
+
+207
+00:10:02.660 --> 00:10:05.030
+not quite there. I think
+the, you actually said I
+
+208
+00:10:05.030 --> 00:10:09.800
+was basically screwed and pretty
+much what am I going
+
+209
+00:10:09.800 --> 00:10:11.090
+to have to do to
+fix this right now? You
+
+210
+00:10:11.090 --> 00:10:12.590
+and I ended up with,
+I think about five different
+
+211
+00:10:12.590 --> 00:10:14.720
+functions that were all in
+the code behind, and we
+
+212
+00:10:14.720 --> 00:10:17.780
+really got close. And the
+point where you said I
+
+213
+00:10:17.780 --> 00:10:21.200
+was in trouble was where
+I, you know, we have
+
+214
+00:10:21.200 --> 00:10:23.600
+our, our scan and the
+scan looks great. I can
+
+215
+00:10:23.600 --> 00:10:26.480
+drag rubber, you know, rubber
+bands or what I'm calling
+
+216
+00:10:26.480 --> 00:10:34.220
+rubber bands. I mean, user
+scalable, rotatable, transparent rectangles that
+
+217
+00:10:34.220 --> 00:10:36.410
+I could say, scan this
+area and this area and
+
+218
+00:10:36.410 --> 00:10:38.780
+this area. And then we
+started dragging it around. We
+
+219
+00:10:38.780 --> 00:10:41.000
+had a little preview window
+that was showing how this
+
+220
+00:10:41.000 --> 00:10:42.710
+was going to get cropped.
+And then we drug it
+
+221
+00:10:43.100 --> 00:10:45.770
+right off of the form
+and kind of off into
+
+222
+00:10:46.070 --> 00:10:49.820
+non-client area. And you said,
+Oh, I could see the
+
+223
+00:10:49.820 --> 00:10:52.520
+wheels turning in your head.
+And you're like, yeah, there's
+
+224
+00:10:52.880 --> 00:10:55.700
+constraining this, getting this to
+behave correctly is going to
+
+225
+00:10:55.700 --> 00:10:58.880
+require you. You said rewrite.
+And I'm hoping you meant
+
+226
+00:10:58.880 --> 00:11:01.640
+refactor this application. Yeah. I
+mean, it's, it's a, it's
+
+227
+00:11:01.640 --> 00:11:03.230
+a, it's a restructuring. It's
+not going to be a
+
+228
+00:11:03.230 --> 00:11:07.280
+complete rewrites. Really. It's a
+question of moving the logic
+
+229
+00:11:07.280 --> 00:11:09.230
+around, but quite a lot
+of that logic is probably
+
+230
+00:11:09.230 --> 00:11:10.880
+going to have to change.
+And the good news is
+
+231
+00:11:10.880 --> 00:11:12.980
+it's going to look simple
+when you're done. Cause the
+
+232
+00:11:12.980 --> 00:11:15.410
+problem is right now, you've
+got decisions that code is
+
+233
+00:11:15.410 --> 00:11:18.920
+taking, which has thoroughly intermingled
+with stuff the only had
+
+234
+00:11:18.920 --> 00:11:20.780
+to do because you were
+dealing with the visual. Sure.
+
+235
+00:11:20.780 --> 00:11:22.550
+It is very a, that
+would describe the code. You
+
+236
+00:11:22.550 --> 00:11:24.500
+and I wrote is very
+intimate in that we are
+
+237
+00:11:24.500 --> 00:11:28.070
+very much poking around inside
+the view, trying to bend
+
+238
+00:11:28.070 --> 00:11:31.160
+it to our will. Yes.
+And that's absolutely what we
+
+239
+00:11:31.160 --> 00:11:33.620
+don't really want to do.
+So this is one of
+
+240
+00:11:33.620 --> 00:11:36.650
+the things I think that
+is holding WPF back is
+
+241
+00:11:36.650 --> 00:11:39.440
+that there's, it's unclear to
+a lot of people, at
+
+242
+00:11:39.440 --> 00:11:41.780
+least from the point of
+view of the tooling. I
+
+243
+00:11:41.780 --> 00:11:45.290
+mean, when you say file
+new WPF application, there's nothing
+
+244
+00:11:45.290 --> 00:11:48.080
+that says, and here now
+make a view model, right?
+
+245
+00:11:48.080 --> 00:11:53.950
+So there's no guidance there.
+How, how someone supposed to
+
+246
+00:11:53.950 --> 00:11:57.240
+know this? I that's a
+very, I don't, unfortunately I
+
+247
+00:11:57.240 --> 00:11:59.190
+don't have an answer to
+that. Other than maybe we
+
+248
+00:11:59.190 --> 00:12:01.500
+could record podcasts talking about
+this sort of thing and
+
+249
+00:12:01.500 --> 00:12:04.540
+maybe produce demo applications that
+show how it's done There.
+
+250
+00:12:04.540 --> 00:12:07.470
+Isn't this holding WPF back.
+Okay. I think, I think
+
+251
+00:12:07.470 --> 00:12:09.480
+it may be, although it
+does sort of depend on
+
+252
+00:12:09.480 --> 00:12:11.280
+what kind of thing you're
+building with it. I mean,
+
+253
+00:12:11.280 --> 00:12:13.920
+dev ten's got stuff that's
+coming, that's going to make
+
+254
+00:12:14.040 --> 00:12:16.590
+some of the classic line
+of business application type data,
+
+255
+00:12:16.590 --> 00:12:18.990
+binding scenarios, easy to use.
+And I think, I think
+
+256
+00:12:18.990 --> 00:12:21.330
+actually probably in that world
+carrying on working, like you
+
+257
+00:12:21.330 --> 00:12:23.880
+think you're a windows forms
+may actually work just fine.
+
+258
+00:12:24.060 --> 00:12:26.340
+So long as you're building
+the kind of application that
+
+259
+00:12:26.490 --> 00:12:27.870
+would have worked the same
+way as it does in
+
+260
+00:12:27.870 --> 00:12:30.180
+windows box. Is this my
+problem? Is this an issue
+
+261
+00:12:30.180 --> 00:12:32.670
+that I'm writing apps that
+aren't typical apps? I mean,
+
+262
+00:12:32.670 --> 00:12:37.380
+I'm not writing data, binding
+HR, human resources management applications,
+
+263
+00:12:37.380 --> 00:12:41.820
+I'm writing either baby smash
+or you know, obscure a
+
+264
+00:12:41.820 --> 00:12:45.840
+scanner application. Am I picking
+the exact wrong scenarios for
+
+265
+00:12:45.840 --> 00:12:48.090
+WPS? Well, no, I, this,
+this is the interesting thing.
+
+266
+00:12:48.090 --> 00:12:50.370
+I think you're picking exactly
+the kinds of scenarios that
+
+267
+00:12:50.370 --> 00:12:53.130
+WPF makes possible so long
+as you set about it
+
+268
+00:12:53.130 --> 00:12:54.870
+in the right way. Okay.
+This is the kind of
+
+269
+00:12:54.870 --> 00:12:57.150
+thing that would be really
+difficult to do. And windows
+
+270
+00:12:57.150 --> 00:12:59.430
+forms because of the kind
+of graphic stuff you require,
+
+271
+00:12:59.910 --> 00:13:01.680
+what you would have ended
+up doing is writing your
+
+272
+00:13:01.680 --> 00:13:04.830
+own slim small version of
+WPF. This is part of
+
+273
+00:13:04.830 --> 00:13:07.020
+the reason that people like
+me were very enthusiastic about
+
+274
+00:13:07.020 --> 00:13:08.820
+WPF. Cause he looked at
+it and went, wow, this
+
+275
+00:13:08.820 --> 00:13:10.470
+does all the sorts of
+stuff. I've had a right
+
+276
+00:13:10.470 --> 00:13:13.530
+time and time again in
+my own windows forms, Give
+
+277
+00:13:13.530 --> 00:13:15.840
+you that. That's a good
+point. I haven't had to
+
+278
+00:13:15.840 --> 00:13:19.050
+do a lot of thinking
+about graphics until the very
+
+279
+00:13:19.050 --> 00:13:21.900
+end of this scanner thing.
+I mean, ultimately my image
+
+280
+00:13:21.900 --> 00:13:25.410
+control was handling resizing of
+the image. We've dropped these
+
+281
+00:13:25.410 --> 00:13:28.380
+resizable rubber bands on top
+of it. And they really
+
+282
+00:13:28.380 --> 00:13:30.930
+kind of just worked once
+we got them in the
+
+283
+00:13:30.930 --> 00:13:33.240
+right place yet once they
+were. So talk about that,
+
+284
+00:13:33.240 --> 00:13:35.730
+actually that's an interesting point
+that the notion of the
+
+285
+00:13:35.730 --> 00:13:40.140
+visual tree and we had
+these adorning layers on top
+
+286
+00:13:40.140 --> 00:13:42.720
+of an image, these rubber
+band dibbles, scalable areas on
+
+287
+00:13:42.720 --> 00:13:44.730
+top of the image and
+yeah, And we had asked
+
+288
+00:13:44.730 --> 00:13:47.220
+WPF to resize the image
+for us, but we hadn't
+
+289
+00:13:47.220 --> 00:13:49.050
+managed to ask it in
+such a way that it
+
+290
+00:13:49.050 --> 00:13:51.750
+knew that we also wanted
+the Adorno's resized at the
+
+291
+00:13:51.750 --> 00:13:54.210
+same time, What was happening
+was I'd have a scan
+
+292
+00:13:54.210 --> 00:13:56.280
+say of like Ian's head
+shot. And then I would
+
+293
+00:13:56.280 --> 00:14:01.410
+resize the application. The headshot
+would resize, but all my
+
+294
+00:14:01.410 --> 00:14:05.580
+selection rang, rectangles stayed small.
+Right? And I said to
+
+295
+00:14:05.580 --> 00:14:08.610
+myself, gosh, isn't this the
+kind of stuff WPF is
+
+296
+00:14:08.610 --> 00:14:11.430
+supposed to do for me.
+And you, you used a
+
+297
+00:14:11.430 --> 00:14:14.970
+tool called Snoop. Yeah. Now
+Snoop is awesome. Snoop lets
+
+298
+00:14:14.970 --> 00:14:16.760
+you just go and look
+at the visual tree of
+
+299
+00:14:16.770 --> 00:14:19.440
+application while it's running. So
+you can see what you've
+
+300
+00:14:19.440 --> 00:14:22.470
+got because you end up
+the visual tree changes. You
+
+301
+00:14:22.470 --> 00:14:24.450
+initialize it with XAML, but
+a whole bunch of stuff
+
+302
+00:14:24.450 --> 00:14:27.210
+can happen at runtime to
+add new things. And it's
+
+303
+00:14:27.210 --> 00:14:30.060
+often difficult to know where
+things are with relation to
+
+304
+00:14:30.060 --> 00:14:32.220
+each other. But with Snoop,
+once you attach it to
+
+305
+00:14:32.220 --> 00:14:34.710
+a process or a process
+for your American audience, we
+
+306
+00:14:34.710 --> 00:14:37.800
+can just, you can just
+move the mouse pointer over
+
+307
+00:14:37.800 --> 00:14:39.990
+the thing you want hit
+control shift, and it will
+
+308
+00:14:39.990 --> 00:14:43.110
+expand this tree view showing
+you where you are and
+
+309
+00:14:43.110 --> 00:14:45.780
+how you got there. The
+MFC people and the C
+
+310
+00:14:45.780 --> 00:14:48.750
+plus plus people. This is
+spy plus plus yes for
+
+311
+00:14:48.750 --> 00:14:51.060
+WPF. And what was funny
+is that I'd been pounding
+
+312
+00:14:51.230 --> 00:14:53.870
+head against the monitor for
+a number of hours over
+
+313
+00:14:53.870 --> 00:14:56.900
+a number of weeks in
+my spare time, you popped
+
+314
+00:14:56.900 --> 00:14:59.660
+out the right tool and
+said, Oh, and within five
+
+315
+00:14:59.660 --> 00:15:02.900
+minutes you realized that the
+thing that was doing the
+
+316
+00:15:02.900 --> 00:15:07.430
+resizing was, did not know
+about my, my rectangles. And
+
+317
+00:15:07.430 --> 00:15:09.530
+you just changed the XAML,
+you copied them in and
+
+318
+00:15:09.530 --> 00:15:12.290
+suddenly things just worked. Yeah.
+And that's one of these
+
+319
+00:15:12.290 --> 00:15:14.840
+things where with WPF, I'm
+finding that it, you know,
+
+320
+00:15:14.840 --> 00:15:19.450
+it just works until it
+completely doesn't work. And there
+
+321
+00:15:19.450 --> 00:15:21.670
+was actually also an extra
+gotcha there, which is probably
+
+322
+00:15:21.670 --> 00:15:24.010
+worth talking about very quickly,
+which is we had two
+
+323
+00:15:24.010 --> 00:15:26.230
+elements, both of which were
+sort of doing that very
+
+324
+00:15:26.230 --> 00:15:28.270
+polite, British English thing of
+standing by a doorway and
+
+325
+00:15:28.270 --> 00:15:31.060
+going no after, you know,
+after you, we had the
+
+326
+00:15:31.060 --> 00:15:33.820
+image element and the view
+box, we're both offering to
+
+327
+00:15:33.820 --> 00:15:35.590
+be as big as they
+needed to be. They're both
+
+328
+00:15:35.590 --> 00:15:37.420
+saying, well, I can stretch
+to fill whatever space you've
+
+329
+00:15:37.420 --> 00:15:39.610
+got. And the Vblocks is
+saying, well, I can resize
+
+330
+00:15:39.610 --> 00:15:41.800
+you to make you fit
+with whatever space we've got.
+
+331
+00:15:42.190 --> 00:15:43.900
+And we actually had to
+tell one of them, look,
+
+332
+00:15:43.900 --> 00:15:46.450
+just be this big. Do
+you know how to make
+
+333
+00:15:46.450 --> 00:15:49.600
+the possible out of the
+impossible? Well, the dotnet ninjas
+
+334
+00:15:49.600 --> 00:15:52.210
+at Telerik do they just
+released a huge pack of
+
+335
+00:15:52.210 --> 00:15:54.940
+web controls, all built on
+top of ESPN at Ajax,
+
+336
+00:15:55.480 --> 00:15:58.690
+that'll help you build impossibly
+fast and interactive applications in
+
+337
+00:15:58.690 --> 00:16:02.050
+no time at all. They've
+made the impossible possible in
+
+338
+00:16:02.050 --> 00:16:05.590
+desktop development. If you think
+you can't have a carousel
+
+339
+00:16:05.590 --> 00:16:08.680
+component and wind forms, well
+you can. They're windows form
+
+340
+00:16:08.710 --> 00:16:11.710
+suite features of super powerful
+grid, view control, and 32
+
+341
+00:16:11.710 --> 00:16:15.580
+other crazy desktop components. That'll
+give you a dazzling WPF
+
+342
+00:16:15.610 --> 00:16:18.700
+like features, but in wind
+forms, they do the same
+
+343
+00:16:18.700 --> 00:16:21.040
+thing in reporting solutions with
+a new design surface, like
+
+344
+00:16:21.040 --> 00:16:24.190
+nothing else looks just like
+graph paper gives you advanced
+
+345
+00:16:24.430 --> 00:16:27.610
+page layout capabilities makes it
+feel more like a graphic
+
+346
+00:16:27.610 --> 00:16:30.490
+design software than a reporting
+solution. Go check them out
+
+347
+00:16:30.490 --> 00:16:33.280
+at <inaudible> dot com and
+be at.net Ninja. And thanks
+
+348
+00:16:33.280 --> 00:16:36.310
+for listening. So that actually
+brings up an interesting point.
+
+349
+00:16:36.360 --> 00:16:37.780
+We should talk a little
+bit about some of the
+
+350
+00:16:37.780 --> 00:16:40.390
+basic elements in XAML the
+ones that are the most
+
+351
+00:16:40.390 --> 00:16:42.940
+views useful enough. I'll enumerate
+what I think they are.
+
+352
+00:16:42.940 --> 00:16:45.550
+And I'd like to understand,
+you know, if someone were
+
+353
+00:16:45.550 --> 00:16:47.710
+going to sit down in
+an application, they should think
+
+354
+00:16:47.710 --> 00:16:52.600
+about the grid. The view
+box Vbox is important. If
+
+355
+00:16:52.600 --> 00:16:55.780
+you're dealing with, with kind
+of dynamically, resizable stretchy things.
+
+356
+00:16:55.780 --> 00:16:58.270
+If you're not, then that's
+all it does. So I
+
+357
+00:16:58.270 --> 00:17:00.100
+would not count that as
+fundamental. I would say that's
+
+358
+00:17:00.100 --> 00:17:02.800
+extremely useful for specifics in
+architecture, then the grid then
+
+359
+00:17:02.800 --> 00:17:06.940
+the canvas. Yeah. The canvas
+is also important. I'd rank
+
+360
+00:17:06.940 --> 00:17:08.800
+it below the grid, but
+still important. So what else
+
+361
+00:17:08.800 --> 00:17:12.100
+am I missing here? I
+would say items control items
+
+362
+00:17:12.220 --> 00:17:14.770
+is hugely hugely important and
+we're not using it yet.
+
+363
+00:17:14.770 --> 00:17:17.170
+And we should be Okay.
+Let's talk about the grid
+
+364
+00:17:17.170 --> 00:17:19.060
+and the canvas and then
+talk about the items control
+
+365
+00:17:19.060 --> 00:17:21.100
+and how that would change
+the structure of my application.
+
+366
+00:17:21.220 --> 00:17:25.090
+Okay. So the grid is
+the single most important of
+
+367
+00:17:25.090 --> 00:17:29.770
+the layout panels and panels
+are elements in the elements
+
+368
+00:17:29.770 --> 00:17:32.500
+that do that. They contain
+multiple children and decide where
+
+369
+00:17:32.500 --> 00:17:36.040
+to put them that's their
+job. So the grid lets
+
+370
+00:17:36.040 --> 00:17:38.770
+you basically carve the space
+up into rows and columns
+
+371
+00:17:38.770 --> 00:17:41.290
+and position stuff. And it
+may not sound like much,
+
+372
+00:17:41.290 --> 00:17:42.700
+but that turns out to
+be enough to do a
+
+373
+00:17:42.700 --> 00:17:46.000
+huge range of different styles
+of layout. Canvas is for
+
+374
+00:17:46.000 --> 00:17:49.890
+a different scenario where you
+don't want dynamically lab. Well
+
+375
+00:17:49.920 --> 00:17:52.380
+that's when you want to
+say exactly where something is.
+
+376
+00:17:52.650 --> 00:17:54.750
+So in the case of
+your little rectangle things, you
+
+377
+00:17:54.750 --> 00:17:57.450
+want them to be in
+a precise, precise location because
+
+378
+00:17:57.450 --> 00:17:59.310
+they use a drill in
+there and you don't want
+
+379
+00:17:59.310 --> 00:18:02.010
+that to move just because
+you know, the window change
+
+380
+00:18:02.020 --> 00:18:04.290
+size. So the canvas is
+great for when you need
+
+381
+00:18:04.290 --> 00:18:08.450
+to be in control. Okay.
+Now right now I'm letting
+
+382
+00:18:08.480 --> 00:18:13.400
+this, the grid hold all
+of my little selection items.
+
+383
+00:18:13.430 --> 00:18:16.460
+Yes. Is that right? And,
+and they, I have no
+
+384
+00:18:16.460 --> 00:18:19.310
+other data structures that know
+about that. I don't personally
+
+385
+00:18:19.310 --> 00:18:23.780
+have a collection of selected
+photos. Yeah. The view is
+
+386
+00:18:23.780 --> 00:18:26.240
+holding this for me. And
+I figured that was convenient.
+
+387
+00:18:26.660 --> 00:18:28.910
+We want to find out
+what things are, what selections
+
+388
+00:18:28.910 --> 00:18:30.890
+you actually have. We have
+to walk through the view
+
+389
+00:18:30.920 --> 00:18:32.750
+to go and find all
+the controls in there. So
+
+390
+00:18:32.750 --> 00:18:35.330
+I don't own the data.
+Yeah. I have to interrogate
+
+391
+00:18:35.330 --> 00:18:38.570
+my view and hope that
+nothing horrible has happened. Yes.
+
+392
+00:18:38.780 --> 00:18:40.730
+And you're saying that the
+items control and then maybe
+
+393
+00:18:40.730 --> 00:18:42.440
+an item template would be
+a more appropriate way of
+
+394
+00:18:42.440 --> 00:18:44.960
+doing that, which would really
+split that logic, the showing
+
+395
+00:18:44.990 --> 00:18:47.780
+and the knowing. Yes. And
+the way I tend to
+
+396
+00:18:47.780 --> 00:18:52.040
+think about it is in
+terms of a projection, I
+
+397
+00:18:52.040 --> 00:18:54.440
+wasn't two minds about using
+that term because there's something
+
+398
+00:18:54.440 --> 00:18:56.480
+of the kind of computer
+science degree about it and
+
+399
+00:18:56.480 --> 00:18:59.480
+it may scare people off,
+but it is an important
+
+400
+00:18:59.480 --> 00:19:02.630
+concept, but isn't it Document
+view like we learned 20
+
+401
+00:19:02.630 --> 00:19:07.910
+years ago. It is. But
+the, the relationship between those
+
+402
+00:19:07.910 --> 00:19:11.060
+two things is a projection.
+It's taking information in one
+
+403
+00:19:11.060 --> 00:19:13.250
+form and converting it into
+another form, which is to
+
+404
+00:19:13.250 --> 00:19:16.910
+say the view and it's
+understanding that it is a
+
+405
+00:19:16.910 --> 00:19:19.460
+projection as the important thing
+about that is that is
+
+406
+00:19:19.460 --> 00:19:21.530
+the nature of the relationship
+between the document and the
+
+407
+00:19:21.530 --> 00:19:24.440
+view. So yes, it's the
+same idea. I use the
+
+408
+00:19:24.440 --> 00:19:26.780
+word projection, partly because that
+also gets used in things
+
+409
+00:19:26.780 --> 00:19:29.710
+like link yeah. Link to
+SQL you project data from
+
+410
+00:19:29.750 --> 00:19:32.570
+the query into the target.
+It's essentially the same idea.
+
+411
+00:19:32.570 --> 00:19:35.690
+You'll put, you're running a
+transformation. And the critical thing
+
+412
+00:19:35.690 --> 00:19:39.500
+is you have some underlying
+information and then you transform
+
+413
+00:19:39.500 --> 00:19:40.970
+that to get it into
+the view. You sort of,
+
+414
+00:19:41.330 --> 00:19:44.270
+rather than having the two
+beat closely intertwined to be
+
+415
+00:19:44.330 --> 00:19:47.630
+unpleasantly intermingled, to the extent
+that they are now, the
+
+416
+00:19:47.630 --> 00:19:50.210
+data just is. And then
+you are able to project
+
+417
+00:19:50.210 --> 00:19:52.220
+that onto the screen. And
+that's, that's the job of
+
+418
+00:19:52.220 --> 00:19:55.190
+the view and items controls
+are important when you're dealing
+
+419
+00:19:55.190 --> 00:19:57.920
+with multiple things, because they're
+what, let you take any
+
+420
+00:19:57.920 --> 00:20:01.430
+collection and project that into
+some things on the screen.
+
+421
+00:20:01.880 --> 00:20:03.770
+So what you're saying is
+that I need to have
+
+422
+00:20:04.070 --> 00:20:07.520
+a data structure that is
+not automatically drawn to the
+
+423
+00:20:07.520 --> 00:20:11.840
+screen that actually says, alright,
+selected items or selected photos
+
+424
+00:20:11.840 --> 00:20:15.560
+or, you know, some appropriately
+named thing. Yes. They might
+
+425
+00:20:15.560 --> 00:20:18.380
+have coordinates, they might have
+rotation and they might have,
+
+426
+00:20:18.440 --> 00:20:21.110
+you know, size and things
+like that really. And whether
+
+427
+00:20:21.110 --> 00:20:24.410
+or not they're selected, I
+guess, even yes. And they
+
+428
+00:20:24.920 --> 00:20:27.830
+don't say anything about how
+they are to be displayed
+
+429
+00:20:28.070 --> 00:20:31.280
+correctly. They just have, they're
+just collections of numbers, basically
+
+430
+00:20:31.280 --> 00:20:34.490
+a list of structures. Yes.
+And then, And what do
+
+431
+00:20:34.490 --> 00:20:36.770
+I do? One extra thing
+I want to point out
+
+432
+00:20:36.770 --> 00:20:39.320
+there is that the, the
+slightly tricky thing about this
+
+433
+00:20:39.320 --> 00:20:41.990
+idea is that the, this
+thing which I would call
+
+434
+00:20:41.990 --> 00:20:44.750
+the view model does not
+depend on the view. It
+
+435
+00:20:44.750 --> 00:20:46.820
+never goes and looks in
+the view. It never expects
+
+436
+00:20:46.820 --> 00:20:49.600
+to a bunch of controls.
+It's, it's, it's more passive
+
+437
+00:20:49.600 --> 00:20:51.690
+than that. Okay. I can
+talk to it. I can
+
+438
+00:20:51.690 --> 00:20:53.610
+do whatever I want. That's
+exactly. So that's the list
+
+439
+00:20:53.610 --> 00:20:55.290
+of stuff, Fire it up
+in a unit test. You
+
+440
+00:20:55.290 --> 00:20:57.090
+don't need to have a
+window there for it to
+
+441
+00:20:57.090 --> 00:20:59.730
+work, but although it has
+no dependency on the view,
+
+442
+00:20:59.970 --> 00:21:03.510
+it is very specifically for
+one particular view. That's a
+
+443
+00:21:03.510 --> 00:21:05.820
+really interesting point. We should
+kind of talk about that
+
+444
+00:21:05.820 --> 00:21:09.300
+for just a second. It
+is intimate to the view.
+
+445
+00:21:09.330 --> 00:21:11.190
+It is, it is for
+the view. It is for
+
+446
+00:21:11.190 --> 00:21:13.410
+no one else, but the
+view, but it has no
+
+447
+00:21:13.410 --> 00:21:17.580
+dependencies on the view. Exactly.
+Okay. Alright. So then I've
+
+448
+00:21:17.580 --> 00:21:20.280
+got this list that describes
+what I want to show,
+
+449
+00:21:20.400 --> 00:21:24.060
+but not how to do
+it. Yes. And to be
+
+450
+00:21:24.060 --> 00:21:27.750
+a little more specific and
+precise about that. It's not
+
+451
+00:21:27.750 --> 00:21:30.900
+saying how it should be
+rendered. It is making certain
+
+452
+00:21:30.900 --> 00:21:34.440
+commitments about what sorts of
+information will be visible. I
+
+453
+00:21:34.440 --> 00:21:37.950
+like that it's making commitments.
+It knows it's in dotnet
+
+454
+00:21:38.250 --> 00:21:39.630
+it knows it's going to
+be on the screen. At
+
+455
+00:21:39.630 --> 00:21:41.580
+some point it may make
+a commitment to, as like
+
+456
+00:21:41.640 --> 00:21:43.980
+a, let's say a coordinate
+system. Yes. Is that a
+
+457
+00:21:43.980 --> 00:21:47.520
+reasonable commitment? How far should
+it go before it's committed
+
+458
+00:21:47.520 --> 00:21:52.080
+too much. That's very tricky.
+An example would be like,
+
+459
+00:21:52.080 --> 00:21:54.840
+let's say, I'm going to
+display myself as red. Do
+
+460
+00:21:54.840 --> 00:21:57.660
+I use, you know, brush
+objects and different things that
+
+461
+00:21:57.660 --> 00:22:00.600
+are specific to WPF and
+store those and hold those?
+
+462
+00:22:00.600 --> 00:22:03.660
+Or is that knowing too
+much? I would say that
+
+463
+00:22:03.660 --> 00:22:06.600
+is right on the margins.
+I certainly have done that.
+
+464
+00:22:06.750 --> 00:22:09.420
+And I have yet to
+come across a situation where
+
+465
+00:22:09.420 --> 00:22:11.910
+I've regretted doing that. And
+yet it makes me feel
+
+466
+00:22:11.910 --> 00:22:16.410
+slightly uneasy Suddenly you're not
+just committing to basic slike
+
+467
+00:22:17.280 --> 00:22:21.150
+location, but now you're starting
+to get into, You are
+
+468
+00:22:21.150 --> 00:22:24.240
+bringing in user interface types
+or to what you're exposing
+
+469
+00:22:25.440 --> 00:22:27.000
+My own. Like, like what
+if I was decided to,
+
+470
+00:22:27.030 --> 00:22:28.980
+could I hold a button?
+Like if I made a
+
+471
+00:22:28.980 --> 00:22:31.110
+WC, now you're getting uncomfortable.
+I can tell on your
+
+472
+00:22:31.110 --> 00:22:32.910
+face. I have done that
+and I didn't enjoy it.
+
+473
+00:22:33.780 --> 00:22:35.550
+And that's actually the reason
+I did that was to
+
+474
+00:22:35.550 --> 00:22:38.610
+work around a, an interesting
+feature of Silverlight where it
+
+475
+00:22:38.610 --> 00:22:40.830
+was unable to do something
+for me. I forget exactly
+
+476
+00:22:40.830 --> 00:22:44.670
+what, but really what price
+your soul. Yeah. And actually
+
+477
+00:22:44.670 --> 00:22:46.440
+for me, I think the
+big difference there, the reason
+
+478
+00:22:46.440 --> 00:22:49.050
+the button pushes me over
+the edge is that the
+
+479
+00:22:49.050 --> 00:22:53.970
+button is an interactive user
+interface entity. Arguably a brush
+
+480
+00:22:53.970 --> 00:22:56.040
+is not a brush is
+more of a descriptive thing,
+
+481
+00:22:56.040 --> 00:22:57.960
+a brush. That's how you
+would like something to be
+
+482
+00:22:57.960 --> 00:23:00.330
+painted in. And the view
+still has the freedom to
+
+483
+00:23:00.330 --> 00:23:02.640
+decide what to do with
+that brush, where to paint
+
+484
+00:23:02.640 --> 00:23:05.430
+it. It's a slightly different
+character. A thing is a
+
+485
+00:23:05.430 --> 00:23:07.380
+bit, a bit too much
+of an, of its own
+
+486
+00:23:07.380 --> 00:23:09.870
+entity Gives us a sense
+of what you know, where
+
+487
+00:23:09.870 --> 00:23:12.390
+to stop. So I've got
+this list of stuff. And
+
+488
+00:23:12.390 --> 00:23:15.000
+I wanna, I want to
+describe exactly how to show
+
+489
+00:23:15.000 --> 00:23:17.130
+it. Now, in our example,
+I've got a list of
+
+490
+00:23:17.370 --> 00:23:20.910
+selected rectangles and I want
+to display them all over
+
+491
+00:23:20.910 --> 00:23:24.690
+this, this larger scanned image.
+How do I tell in
+
+492
+00:23:24.690 --> 00:23:26.850
+the XAML to lay this
+out appropriately? I know how
+
+493
+00:23:26.850 --> 00:23:29.190
+I did it in baby
+smash. I used an item
+
+494
+00:23:29.220 --> 00:23:32.400
+template and I did some
+data binding. Okay. It was
+
+495
+00:23:32.400 --> 00:23:35.370
+fairly inscrutable though. The data
+biting syntax, I found to
+
+496
+00:23:35.370 --> 00:23:38.430
+be a little different. Okay.
+Well, I would say in
+
+497
+00:23:38.430 --> 00:23:43.170
+your application, a fundamental idea
+of the application part of
+
+498
+00:23:43.170 --> 00:23:46.250
+the, of the whole purposes
+is to pick out points
+
+499
+00:23:46.250 --> 00:23:48.530
+and regions on the image,
+right? So I think it
+
+500
+00:23:48.530 --> 00:23:51.230
+will make sense for your
+app, for your view model
+
+501
+00:23:51.230 --> 00:23:54.800
+to be exposing coordinates of
+some kind and possibly one
+
+502
+00:23:54.800 --> 00:23:56.090
+of the jobs that you
+model is going to have
+
+503
+00:23:56.090 --> 00:23:59.810
+to do is to bridge
+between your underlying domain concept
+
+504
+00:23:59.810 --> 00:24:02.720
+of this piece of the
+photograph and deal with specific
+
+505
+00:24:02.720 --> 00:24:05.690
+issues like which coordinate, which
+kind of dots per inch
+
+506
+00:24:05.690 --> 00:24:07.190
+are we dealing with? You
+know, I've got a photograph
+
+507
+00:24:07.190 --> 00:24:10.220
+with a $400 per inch
+resolution. And I know that
+
+508
+00:24:10.220 --> 00:24:13.520
+my view is going to
+be working in WPS 96
+
+509
+00:24:13.520 --> 00:24:16.460
+dots per inch coordinate system.
+It's probably the view model's
+
+510
+00:24:16.460 --> 00:24:19.580
+job to bridge that kind
+of a gap. So probably
+
+511
+00:24:19.580 --> 00:24:21.740
+makes sense for the view
+model, the view model to
+
+512
+00:24:21.740 --> 00:24:26.480
+be exposing numbers in WPS
+coordinate system that will represent
+
+513
+00:24:26.480 --> 00:24:28.790
+where it is, what is
+rotation angle is and how
+
+514
+00:24:28.790 --> 00:24:32.090
+large it is then in
+the XAML you'd actually would
+
+515
+00:24:32.090 --> 00:24:34.930
+use a combination of an
+item template and also a,
+
+516
+00:24:34.930 --> 00:24:37.880
+an item container style. Okay.
+And this, this is just
+
+517
+00:24:37.880 --> 00:24:40.400
+kind of a, a technical
+trick that you have to
+
+518
+00:24:40.400 --> 00:24:43.310
+do because the structure would
+be this you'd have an
+
+519
+00:24:43.310 --> 00:24:47.420
+item's control bounds to your
+collection of selection areas and
+
+520
+00:24:47.420 --> 00:24:52.160
+the photograph. So whatever that
+list is, and then it's
+
+521
+00:24:52.160 --> 00:24:55.400
+going to generate a child
+of the items control for
+
+522
+00:24:55.400 --> 00:24:58.850
+each thing, it finds in
+that data source. And you
+
+523
+00:24:58.850 --> 00:25:02.060
+want to position that based
+on whatever the coordinates coming
+
+524
+00:25:02.060 --> 00:25:04.690
+out of the view model
+say, Actually, why have this
+
+525
+00:25:04.690 --> 00:25:08.200
+items control this? Exactly. And
+that's not a job for
+
+526
+00:25:08.200 --> 00:25:10.330
+the view to decide. Yeah,
+generally speaking, you could say
+
+527
+00:25:10.330 --> 00:25:12.910
+the position would be the
+views responses, But in this
+
+528
+00:25:12.910 --> 00:25:16.360
+instance, it's not because my
+model is this scanned photograph.
+
+529
+00:25:16.780 --> 00:25:19.450
+I want to find the
+selected areas, mapped them to
+
+530
+00:25:19.450 --> 00:25:21.640
+this photograph. And then I
+want to save off these
+
+531
+00:25:21.670 --> 00:25:25.420
+wallet size photographs. So this,
+this is definitely the, the
+
+532
+00:25:25.420 --> 00:25:27.820
+domain of, of the, the
+model lands through that the
+
+533
+00:25:27.820 --> 00:25:31.270
+view model. So you need
+to make sure the position
+
+534
+00:25:31.270 --> 00:25:34.150
+is handled and the slightly
+complicated thing, but the items
+
+535
+00:25:34.150 --> 00:25:39.190
+control is it generates the
+child items directly into whatever
+
+536
+00:25:39.850 --> 00:25:41.350
+panel you tell it to.
+It could be a grid,
+
+537
+00:25:41.350 --> 00:25:43.000
+could be a canvas in
+your case, it would be
+
+538
+00:25:43.000 --> 00:25:45.790
+a canvas cause you need
+the precise positioning. Right. But
+
+539
+00:25:45.790 --> 00:25:48.220
+then it, it wraps them.
+It always has a kind
+
+540
+00:25:48.220 --> 00:25:50.800
+of a rapid site. Each
+items control has a corresponding
+
+541
+00:25:50.800 --> 00:25:53.410
+rapid site. The list box
+has a list box item.
+
+542
+00:25:53.500 --> 00:25:55.570
+The tree view has tree
+view item and so on
+
+543
+00:25:55.720 --> 00:25:58.750
+because each different license control
+has its own behavior for
+
+544
+00:25:58.750 --> 00:26:01.270
+its own generated items. Right?
+Which gives you a problem.
+
+545
+00:26:01.450 --> 00:26:04.300
+Where do you set the
+canvas.top and canvas dot left
+
+546
+00:26:04.300 --> 00:26:07.720
+properties that determine where the
+thing appears on the canvas.
+
+547
+00:26:08.110 --> 00:26:10.750
+Those only work one level
+up in the tree. You
+
+548
+00:26:10.750 --> 00:26:12.280
+have to set them on
+the thing that is the
+
+549
+00:26:12.280 --> 00:26:15.100
+child of the canvas. You
+can't set them on any
+
+550
+00:26:15.100 --> 00:26:17.890
+old descendant of the canvas.
+So if I set the
+
+551
+00:26:17.890 --> 00:26:21.400
+position on something in my
+item template, that's not going
+
+552
+00:26:21.400 --> 00:26:23.800
+to work because my item
+template is actually hosted. I
+
+553
+00:26:23.800 --> 00:26:26.290
+see. So where I appear
+is really within the context
+
+554
+00:26:26.290 --> 00:26:28.750
+of my parent, my immediate
+parent. Yes. So if I'm
+
+555
+00:26:28.750 --> 00:26:30.640
+going to put all of
+these rectangles, I can't tell
+
+556
+00:26:30.640 --> 00:26:33.190
+the rectangle go to the
+left here. I have to
+
+557
+00:26:33.190 --> 00:26:35.110
+tell it, go to the
+left within the context of
+
+558
+00:26:35.110 --> 00:26:38.740
+your bounding parent. Okay. Exactly.
+So essentially what you need
+
+559
+00:26:38.740 --> 00:26:40.300
+to do is tell the
+bounty parent where it's going
+
+560
+00:26:40.300 --> 00:26:42.010
+to be, and you can
+do that. And there's a
+
+561
+00:26:42.010 --> 00:26:44.160
+thing called an item container
+that lets you do that.
+
+562
+00:26:44.190 --> 00:26:46.540
+The item container style, basically
+that says, I wanna be
+
+563
+00:26:46.540 --> 00:26:48.870
+able to set properties on
+the things you're adding to
+
+564
+00:26:48.870 --> 00:26:50.960
+my canvas and that's where
+you do it. So that
+
+565
+00:26:50.960 --> 00:26:52.640
+goes in one direction in
+the sense that I've got
+
+566
+00:26:52.640 --> 00:26:54.560
+a, I've got a collection
+of these things, I guess,
+
+567
+00:26:54.560 --> 00:26:57.350
+and it would be an
+observable collection. Yep. And then
+
+568
+00:26:57.590 --> 00:26:59.540
+I can describe in my
+styles and do some data
+
+569
+00:26:59.540 --> 00:27:02.710
+binding. And this will say
+that if I programmatically changed
+
+570
+00:27:02.710 --> 00:27:05.630
+the location of these from
+the, from the code behind
+
+571
+00:27:05.630 --> 00:27:08.870
+kind of pointing upwards towards
+the screen, then they would
+
+572
+00:27:08.870 --> 00:27:11.090
+move. But then I've got
+interactions. I'm going to go
+
+573
+00:27:11.090 --> 00:27:13.100
+and hook up mouse downs
+and mouse moves. I want
+
+574
+00:27:13.100 --> 00:27:16.310
+to drag one of these
+controls around how is that
+
+575
+00:27:16.310 --> 00:27:18.230
+going to work? I pick
+up one of these selections
+
+576
+00:27:18.230 --> 00:27:21.020
+and I drag it from
+left to right. It's what
+
+577
+00:27:21.050 --> 00:27:23.330
+is it? COVID is its
+coordinate really going to change?
+
+578
+00:27:23.630 --> 00:27:25.670
+So that's going to have
+to start in the view,
+
+579
+00:27:25.880 --> 00:27:27.140
+first of all. So you're
+going to have to add
+
+580
+00:27:27.140 --> 00:27:28.580
+an event handler and the
+view, cause that's the only
+
+581
+00:27:28.580 --> 00:27:31.130
+place where you can begin
+to get those events and
+
+582
+00:27:31.130 --> 00:27:34.070
+then you'd have your view
+model expose a function that
+
+583
+00:27:34.070 --> 00:27:35.960
+you call every time you
+get a mouse down, a
+
+584
+00:27:35.960 --> 00:27:37.970
+mouse, up a mouse move.
+Okay. So my mouse move,
+
+585
+00:27:37.970 --> 00:27:40.010
+event's gonna have one line
+which is go over here
+
+586
+00:27:40.010 --> 00:27:42.800
+and tell that guy. Yes.
+Okay. Which may seem kind
+
+587
+00:27:42.800 --> 00:27:45.470
+of annoying and pointless, but
+that means you can do
+
+588
+00:27:45.470 --> 00:27:47.510
+exactly that same one line
+of code to fake up
+
+589
+00:27:47.510 --> 00:27:49.880
+mouse input during unit testing.
+It makes it very easy
+
+590
+00:27:49.880 --> 00:27:52.220
+to predict. Interesting. Okay, good.
+So I'm going to be
+
+591
+00:27:52.220 --> 00:27:54.940
+delegating that then I can
+fake mouse moves. Exactly. Test
+
+592
+00:27:54.940 --> 00:27:57.320
+testis. Nice. Okay. So then
+what, what am I going
+
+593
+00:27:57.320 --> 00:27:59.120
+to do there? I'm going
+to take from that mouse
+
+594
+00:27:59.120 --> 00:28:01.610
+event arcs, I'm going to
+take the new X, Y
+
+595
+00:28:01.610 --> 00:28:04.610
+I'm going to poke it
+back into the view model,
+
+596
+00:28:05.150 --> 00:28:07.910
+which will then flow naturally
+back to the view automatically.
+
+597
+00:28:08.060 --> 00:28:12.050
+Exactly. Yeah. And assuming you're
+using observable properties with the,
+
+598
+00:28:12.050 --> 00:28:15.890
+I notify property change stuff.
+But I, I mentioned in
+
+599
+00:28:15.950 --> 00:28:19.550
+a talk earlier that that
+observable collection was just like
+
+600
+00:28:20.090 --> 00:28:22.610
+the best thing within WPF.
+Like that's the thing you're
+
+601
+00:28:22.610 --> 00:28:24.680
+going to find so useful
+all the time. What is
+
+602
+00:28:24.680 --> 00:28:27.980
+it? That's so great about
+observable collections. The really nice
+
+603
+00:28:27.980 --> 00:28:29.570
+thing about it is that
+it means that if you've
+
+604
+00:28:29.570 --> 00:28:32.540
+got just a collection of
+objects that are meaningful to
+
+605
+00:28:32.540 --> 00:28:35.030
+your application and you add
+or remove or change the
+
+606
+00:28:35.030 --> 00:28:37.190
+order of those things, you
+don't have to do anything
+
+607
+00:28:37.190 --> 00:28:39.800
+to make the user interface
+update itself because WPF is
+
+608
+00:28:39.800 --> 00:28:42.560
+able to capture all those
+changes. It just hooks up
+
+609
+00:28:42.560 --> 00:28:45.320
+the event, handler the items,
+controls, know how to do
+
+610
+00:28:45.320 --> 00:28:46.880
+this and then go, Oh
+look, you just added a
+
+611
+00:28:46.880 --> 00:28:49.310
+new item. I'll generate a
+new child or build a
+
+612
+00:28:49.310 --> 00:28:51.470
+new instance of the item
+template, add it to the
+
+613
+00:28:51.470 --> 00:28:54.020
+screen. So you just do
+one thing that makes perfect
+
+614
+00:28:54.020 --> 00:28:57.590
+sense, add a new object
+to selected items. And it
+
+615
+00:28:57.590 --> 00:28:59.060
+just takes care of the
+rest. There's no need to
+
+616
+00:28:59.060 --> 00:29:01.580
+do that manual sort of
+invalidate H when stuff you
+
+617
+00:29:01.580 --> 00:29:04.070
+used to have, There must
+be a catch though. I
+
+618
+00:29:04.070 --> 00:29:07.100
+mean, observable collection seemed like
+magic. I've never had any
+
+619
+00:29:07.100 --> 00:29:09.590
+threading problems with them. I'm
+always adding stuff or moving
+
+620
+00:29:09.590 --> 00:29:11.510
+stuff from them in the
+COVID and it just works.
+
+621
+00:29:11.630 --> 00:29:13.550
+That'll be because you'd never
+tried to add an object
+
+622
+00:29:13.550 --> 00:29:16.340
+from the wrong thread. I
+see. I'm getting lucky. Yeah.
+
+623
+00:29:16.350 --> 00:29:19.430
+If you, if you try
+to modify an observable collection
+
+624
+00:29:19.430 --> 00:29:21.500
+on a worker thread, you
+will get an exception that
+
+625
+00:29:21.500 --> 00:29:24.680
+says this kind of collection
+view does not support, changes
+
+626
+00:29:24.740 --> 00:29:26.630
+on a thread other than
+the one that created it.
+
+627
+00:29:26.630 --> 00:29:28.580
+It's like, well, how many
+threads are there in WPF?
+
+628
+00:29:28.580 --> 00:29:29.990
+And where are they living?
+Cause I know how this
+
+629
+00:29:29.990 --> 00:29:34.430
+works in wind forums. There's,
+It's, it's almost identical model.
+
+630
+00:29:34.430 --> 00:29:36.320
+In fact, there's one thread.
+It even has to be
+
+631
+00:29:36.320 --> 00:29:39.800
+an sta thread, the old
+comm single-threaded apartment model thread,
+
+632
+00:29:40.130 --> 00:29:43.210
+because WPF interacts with things
+like active X controls, the
+
+633
+00:29:43.210 --> 00:29:46.300
+clipboard, it just has to
+be. And that's the thread
+
+634
+00:29:46.300 --> 00:29:49.030
+that all your events will
+be raised on. That's the
+
+635
+00:29:49.090 --> 00:29:51.640
+thread that your constructors will
+be called on whenever XAML
+
+636
+00:29:51.640 --> 00:29:55.180
+is being loaded. Basically WPF
+only ever shows you things
+
+637
+00:29:55.180 --> 00:29:58.240
+on that threat. So WPF
+is intrinsically a threat single
+
+638
+00:29:58.270 --> 00:30:00.580
+threaded model. If there are
+other threads it's cause you
+
+639
+00:30:00.580 --> 00:30:03.750
+created them. I see. So
+then what is the dispatcher?
+
+640
+00:30:04.410 --> 00:30:07.380
+Matcha is essentially the message
+loop. If you're coming from
+
+641
+00:30:07.380 --> 00:30:10.410
+a wind 32 background, it
+is the object that presents
+
+642
+00:30:10.440 --> 00:30:15.090
+the programmable face of the
+message processing in WPS, The
+
+643
+00:30:15.090 --> 00:30:17.730
+actual winter that you messaged
+Luke, but it is the,
+
+644
+00:30:18.000 --> 00:30:20.310
+or is it, is it
+There's one under the covers?
+
+645
+00:30:20.310 --> 00:30:22.590
+It's a little more complicated
+than that because WPF actually
+
+646
+00:30:22.590 --> 00:30:25.890
+maintains two cues. There's the
+wind 32 queue, which is
+
+647
+00:30:25.890 --> 00:30:29.910
+an ordinary wind 32 meshes
+loop. And WPF pulls messages
+
+648
+00:30:29.910 --> 00:30:31.770
+off that and puts them
+on its own queue and
+
+649
+00:30:31.770 --> 00:30:34.170
+then deals with them in
+its own sweet time. Partly
+
+650
+00:30:34.170 --> 00:30:36.450
+because it wants to be
+able to reorder the, the
+
+651
+00:30:36.590 --> 00:30:39.240
+events as they come in.
+It will prioritize certain things
+
+652
+00:30:39.240 --> 00:30:42.570
+above input processing, for example.
+And that, by the way
+
+653
+00:30:42.570 --> 00:30:45.450
+is why you get the
+slightly bizarre repaint handling on
+
+654
+00:30:45.450 --> 00:30:47.850
+resize and WPF applications. You
+may have noticed you get
+
+655
+00:30:47.850 --> 00:30:50.190
+a little bit of blank
+space appearing temporarily when you
+
+656
+00:30:50.190 --> 00:30:53.340
+resize a window. It's cause
+it's acknowledging the resize event
+
+657
+00:30:53.340 --> 00:30:56.230
+before it actually really does
+anything with it. And the
+
+658
+00:30:56.250 --> 00:30:58.950
+paints happen slightly out of,
+out of sync with what's
+
+659
+00:30:58.950 --> 00:31:01.320
+normally there. So there is
+a one 32 message queue,
+
+660
+00:31:01.320 --> 00:31:04.140
+but it's not actually the
+main message queue and WPF,
+
+661
+00:31:04.530 --> 00:31:06.540
+but the D that's all
+kind of implementation details. The
+
+662
+00:31:06.550 --> 00:31:08.100
+dispatcher tries to hide as
+much of that as well.
+
+663
+00:31:08.300 --> 00:31:10.320
+We have, I mean, how
+much of it is all
+
+664
+00:31:10.320 --> 00:31:13.050
+new, fresh? I mean, is
+it truly the windowing system
+
+665
+00:31:13.050 --> 00:31:15.810
+for the future? Cause if,
+if Explorer in windows seven,
+
+666
+00:31:15.840 --> 00:31:20.070
+isn't written in WPF and
+office, isn't written WPF and
+
+667
+00:31:20.070 --> 00:31:23.420
+Zune, isn't written to PPF
+and media center, isn't written
+
+668
+00:31:23.430 --> 00:31:26.760
+to DCF, then what's it
+gonna take for people to
+
+669
+00:31:26.760 --> 00:31:29.220
+really believe that this is
+the next new thing? I
+
+670
+00:31:29.220 --> 00:31:32.220
+mean, it's going to take
+us writing office 20, 20
+
+671
+00:31:32.220 --> 00:31:35.730
+and WPF before people would
+go, alright, now they're serious.
+
+672
+00:31:35.760 --> 00:31:38.370
+Look explorers written in this
+thing. Well, maybe you could
+
+673
+00:31:38.370 --> 00:31:41.430
+at least write the developmental
+and 35th. Well, we are
+
+674
+00:31:41.430 --> 00:31:44.250
+doing that. That's true at
+visual studio 2010 is WPF.
+
+675
+00:31:44.430 --> 00:31:47.430
+Yeah, that's a pretty good
+start. Yes I do. I
+
+676
+00:31:47.430 --> 00:31:49.920
+mean, there was a, there
+are a couple of questions
+
+677
+00:31:49.920 --> 00:31:54.150
+you kind of folded that
+there was the WPS credibility,
+
+678
+00:31:54.150 --> 00:31:57.030
+but also is WPF genuinely
+new, Which I think applies
+
+679
+00:31:57.030 --> 00:31:58.760
+kind of as to its
+credibility. I mean, some like,
+
+680
+00:31:58.760 --> 00:32:01.080
+I know for example, that
+wind forms itself is a
+
+681
+00:32:01.080 --> 00:32:05.130
+managed kind of thunking layer
+on top of wind 32
+
+682
+00:32:05.130 --> 00:32:08.370
+itself is WPF a lie
+on top of wind forms
+
+683
+00:32:08.370 --> 00:32:11.190
+or is it It's it's,
+it's, it's a lie on
+
+684
+00:32:11.190 --> 00:32:13.500
+top of other things. So
+the employee handling is still
+
+685
+00:32:13.500 --> 00:32:15.060
+the same because there is
+only one way to get
+
+686
+00:32:15.060 --> 00:32:18.000
+mouse, keyboard, stylus input from
+windows and that's through the
+
+687
+00:32:18.000 --> 00:32:20.580
+message queue. So it has
+to interact with that, but
+
+688
+00:32:20.580 --> 00:32:24.330
+it does not use the,
+the GDI rendering system or
+
+689
+00:32:24.330 --> 00:32:27.750
+GDI plus it doesn't use
+device contexts instead. It's a
+
+690
+00:32:27.750 --> 00:32:30.000
+lie built on top of
+direct X. Okay. And that's
+
+691
+00:32:30.000 --> 00:32:31.440
+why I can get faster
+if you have a better
+
+692
+00:32:31.440 --> 00:32:34.080
+video card. Yes. And it
+also has a completely different
+
+693
+00:32:34.080 --> 00:32:36.570
+approach to composing all the
+different pieces of the UI
+
+694
+00:32:36.570 --> 00:32:38.940
+onto the screen, which is
+why you can do things
+
+695
+00:32:39.140 --> 00:32:41.780
+sort of partial transparency and
+overlap all the sorts of
+
+696
+00:32:41.780 --> 00:32:44.480
+things that we're paying to
+get right in visually interesting
+
+697
+00:32:44.480 --> 00:32:48.440
+applications and windows forms. So
+it is a genuinely new
+
+698
+00:32:48.440 --> 00:32:54.530
+rendering engine. The user in
+event input processing is based
+
+699
+00:32:54.530 --> 00:32:56.360
+on top of what was
+that before, because otherwise they
+
+700
+00:32:56.360 --> 00:32:58.820
+couldn't have got it to
+work on windows XP fundamentally.
+
+701
+00:32:59.000 --> 00:33:02.360
+Oh, I see. So as
+for the credibility, I think
+
+702
+00:33:03.380 --> 00:33:06.170
+visual studio being built in
+WPF is going to be
+
+703
+00:33:06.170 --> 00:33:09.770
+a big deal, not just
+for WPS credibility, but also
+
+704
+00:33:09.770 --> 00:33:13.400
+for WPS own good. The
+fact that developer a division
+
+705
+00:33:13.400 --> 00:33:15.620
+at Microsoft is, is building
+their own stuff on top
+
+706
+00:33:15.620 --> 00:33:17.720
+of WPF means that there's
+a lot of work is
+
+707
+00:33:17.720 --> 00:33:19.880
+going to have to be
+done. They'll find problems. They
+
+708
+00:33:19.880 --> 00:33:22.750
+probably would not have found
+otherwise, right. Making something this
+
+709
+00:33:22.750 --> 00:33:25.180
+big and this complicated, I
+mean, in the entire, the
+
+710
+00:33:25.180 --> 00:33:27.760
+editor is all WPF and
+the menus are all WPF
+
+711
+00:33:28.780 --> 00:33:30.640
+ins are going to be
+written into BPF. It's really
+
+712
+00:33:30.640 --> 00:33:32.950
+gonna make the BPF better.
+And I assume that they're
+
+713
+00:33:32.950 --> 00:33:35.980
+finding era, I think there
+was some discussion about performance.
+
+714
+00:33:35.980 --> 00:33:38.980
+They're improving font rendering. All
+of this is just going
+
+715
+00:33:38.980 --> 00:33:40.870
+to make WPF and Dutton
+at four and going forward
+
+716
+00:33:41.080 --> 00:33:44.620
+better. Yes. I mean, it,
+it really has to, and
+
+717
+00:33:44.620 --> 00:33:46.720
+it's interesting if you look
+at what's new in WPF
+
+718
+00:33:46.880 --> 00:33:48.910
+on the face of it
+in version four, there doesn't
+
+719
+00:33:48.910 --> 00:33:51.650
+seem to be a big
+kind of overarching theme. And
+
+720
+00:33:51.650 --> 00:33:53.080
+I did a talk on
+it here this week and
+
+721
+00:33:53.080 --> 00:33:55.300
+I felt a bit embarrassed
+that I was basically talking
+
+722
+00:33:55.300 --> 00:33:58.120
+about 15 unrelated things. But
+on the other hand, it's
+
+723
+00:33:58.120 --> 00:34:00.520
+kind of the sign of
+it's maturing as a platform
+
+724
+00:34:00.580 --> 00:34:02.770
+is that it's, it's lots
+of little things that kind
+
+725
+00:34:02.770 --> 00:34:04.180
+of need to do. Right.
+I mentioned it to, and
+
+726
+00:34:04.180 --> 00:34:05.950
+I was like, Hey, if
+there's a grid control and
+
+727
+00:34:05.950 --> 00:34:10.270
+then silence, but there's a
+million little things. There's lots
+
+728
+00:34:10.270 --> 00:34:12.820
+of tiny things. Yeah. So
+the text rendering there's graphics
+
+729
+00:34:12.820 --> 00:34:15.400
+performance improvements has better integration
+with direct X and X
+
+730
+00:34:15.400 --> 00:34:18.070
+and a there's does the
+ribbon control is better shell
+
+731
+00:34:18.070 --> 00:34:20.140
+integration. So you can get
+ahold of the properties of
+
+732
+00:34:20.140 --> 00:34:21.580
+stuff on the file system.
+You can find out what
+
+733
+00:34:21.580 --> 00:34:24.010
+items they are. You can
+interact properly at last with
+
+734
+00:34:24.010 --> 00:34:26.950
+windows Vista and windows seven
+dialogues. There's all sorts of
+
+735
+00:34:26.950 --> 00:34:28.840
+stuff where you probably would
+go, Oh, it didn't did
+
+736
+00:34:28.840 --> 00:34:32.110
+it, not already do that,
+but this is exactly the
+
+737
+00:34:32.110 --> 00:34:35.080
+sort of thing you would
+expect once Microsoft starts building
+
+738
+00:34:35.500 --> 00:34:38.260
+real applications on top of
+it. And I, I would
+
+739
+00:34:38.260 --> 00:34:40.930
+say that probably if you
+look at it from products,
+
+740
+00:34:40.930 --> 00:34:43.960
+like office's point of view
+that that team in Microsoft
+
+741
+00:34:43.960 --> 00:34:45.670
+could easily say, well, we're
+not gonna do it until
+
+742
+00:34:45.940 --> 00:34:48.160
+develop a division has built
+their own stuff on top
+
+743
+00:34:48.160 --> 00:34:50.290
+of it. So it has
+to happen in that Chicken
+
+744
+00:34:50.290 --> 00:34:53.440
+and the egg situation then.
+Yeah. Okay. So you were
+
+745
+00:34:53.440 --> 00:34:56.710
+a book I co wrote
+a book with Chris, which
+
+746
+00:34:56.710 --> 00:34:59.230
+is known slightly annoyingly as
+the cell's WPF book. Yeah,
+
+747
+00:34:59.410 --> 00:35:04.380
+I apologize. I, yeah. It's,
+it's a problem. Yeah. I,
+
+748
+00:35:04.380 --> 00:35:06.520
+I wrote slightly more than
+half of it. And that
+
+749
+00:35:06.520 --> 00:35:09.490
+book is called, that is
+called Fragomen WPF. It's published
+
+750
+00:35:09.490 --> 00:35:12.970
+by O'Reilly it's currently the
+second edition. We will be
+
+751
+00:35:12.970 --> 00:35:18.250
+doing a third edition for
+WPF version four. And I'm
+
+752
+00:35:18.250 --> 00:35:19.810
+working on that later this
+year. I don't have a
+
+753
+00:35:19.810 --> 00:35:21.760
+ship date for that. Yeah.
+This is now to be
+
+754
+00:35:21.760 --> 00:35:23.650
+known. I want to let
+all the listeners know that
+
+755
+00:35:23.650 --> 00:35:26.560
+this is the Griffith WTF
+book and you're also a
+
+756
+00:35:26.560 --> 00:35:28.870
+WPF consultant and people can
+find you on the web.
+
+757
+00:35:29.410 --> 00:35:34.000
+Yes. So I have a
+blog Eng and Griffith Eng
+
+758
+00:35:34.000 --> 00:35:36.460
+on tap is my blog.
+So that's Angie on tap.
+
+759
+00:35:36.460 --> 00:35:39.180
+Well, thanks. So Eng on
+tap For sitting down with
+
+760
+00:35:39.180 --> 00:35:40.950
+me here and talk to
+me about WPF. It's been
+
+761
+00:35:40.950 --> 00:35:43.770
+a pleasure. This has been
+another episode of Hansel minutes
+
+762
+00:35:43.830 --> 00:35:45.210
+and I'll see you again
+next week.
+

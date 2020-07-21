@@ -1,0 +1,3256 @@
+WEBVTT FILE
+
+1
+00:00:04.380 --> 00:00:16.670
+<inaudible> From Hanselman it's dot
+com. It's Hansel minutes, a
+
+2
+00:00:16.670 --> 00:00:21.050
+weekly discussion with web developer
+and technologists. Scott Hanselman hosted
+
+3
+00:00:21.050 --> 00:00:26.210
+by Carl Franklin. This is Lawrence Ryan
+announcing show number 84. Recorded
+
+4
+00:00:26.210 --> 00:00:31.850
+live Monday, October 8th, 2007. Support for
+Hanselman. It says provided by
+
+5
+00:00:32.060 --> 00:00:36.170
+Tellerik RIT controls. The most
+comprehensive suite of components for
+
+6
+00:00:36.170 --> 00:00:46.790
+windows forms and asp.net web
+applications. online@wwwdottelerik.com. Support is also
+
+7
+00:00:46.790 --> 00:00:50.780
+provided by dotnet developers journal.
+The world's leading dotnet developer
+
+8
+00:00:50.780 --> 00:00:57.620
+magazine online at www dot
+<inaudible> dot com. In this
+
+9
+00:00:57.620 --> 00:01:01.670
+episode, Scott chats with Steven
+tout, a Microsoft developer, working
+
+10
+00:01:01.670 --> 00:01:09.140
+on new ways to make
+concurrency programming easier with.net. Hi,
+
+11
+00:01:09.140 --> 00:01:11.150
+this is Scott Hanselman and
+this is another episode of
+
+12
+00:01:11.150 --> 00:01:13.640
+Hansel minutes, and we're sitting
+here in Microsoft in building
+
+13
+00:01:13.640 --> 00:01:17.390
+41 with Steven taupe. How's
+it going, Steven? It's going
+
+14
+00:01:17.390 --> 00:01:19.490
+very well. How are you?
+Not too bad. What are
+
+15
+00:01:19.490 --> 00:01:22.700
+you working on? I'm working
+on the parallel computing platform
+
+16
+00:01:22.700 --> 00:01:26.720
+team at Microsoft, and specifically
+on the parallel extensions to
+
+17
+00:01:26.720 --> 00:01:31.010
+the.net framework or PFX. This
+is sort of the, the
+
+18
+00:01:31.090 --> 00:01:34.100
+grander name for a few
+different technologies. Some of which
+
+19
+00:01:34.240 --> 00:01:36.800
+your listeners may have already
+heard of one of which
+
+20
+00:01:36.830 --> 00:01:40.640
+is parallel link or appealing.
+One of which is the
+
+21
+00:01:40.640 --> 00:01:43.400
+task parallel library or TPL.
+And there's a third piece.
+
+22
+00:01:43.400 --> 00:01:46.190
+We haven't really discussed much,
+but it's sort of rounding
+
+23
+00:01:46.190 --> 00:01:50.270
+out this collection of libraries
+that enables developers to better
+
+24
+00:01:50.270 --> 00:01:53.960
+take advantage of parallelism and
+concurrency in their applications. Wow.
+
+25
+00:01:54.230 --> 00:01:57.590
+That was almost like a
+practice marketing speech. That was
+
+26
+00:01:57.590 --> 00:01:59.690
+brilliant. It wasn't, but I
+will have to write it
+
+27
+00:01:59.690 --> 00:02:03.140
+down afterwards. I'll give you
+the transcript because that was
+
+28
+00:02:03.140 --> 00:02:05.780
+really deep. Thanks. So this
+is, I'm going to ask
+
+29
+00:02:05.810 --> 00:02:07.760
+ignorant questions because this is
+a big topic and I
+
+30
+00:02:07.760 --> 00:02:10.370
+want to end the topic
+by asking you during questions.
+
+31
+00:02:10.370 --> 00:02:12.890
+I want to kind of
+get my brain around exactly
+
+32
+00:02:12.890 --> 00:02:15.380
+what's going on here. So
+system dot threading, I know
+
+33
+00:02:15.380 --> 00:02:17.060
+that's a silly thing to
+go and say, you know,
+
+34
+00:02:17.060 --> 00:02:20.840
+you're talking about parallel extensions
+and concurrency and multi-pronged multicore
+
+35
+00:02:20.840 --> 00:02:23.360
+and I just said, Hey,
+what about system dot thread?
+
+36
+00:02:23.520 --> 00:02:26.180
+It's actually a fabulous question.
+In fact, we're trying to
+
+37
+00:02:26.180 --> 00:02:29.750
+think through right now, how
+to actually describe the relationship
+
+38
+00:02:29.750 --> 00:02:31.820
+with system dot threading and
+whether we're actually part of
+
+39
+00:02:31.820 --> 00:02:35.120
+system not threatening or not.
+They're at, at a core
+
+40
+00:02:35.120 --> 00:02:39.170
+level system that threading is
+all about low level manipulation
+
+41
+00:02:39.200 --> 00:02:42.920
+of, of work. So there's
+a set of synchronization, primitives
+
+42
+00:02:42.920 --> 00:02:45.590
+and systems threading. That includes
+for example, system dot threading
+
+43
+00:02:45.590 --> 00:02:48.470
+dot monitor system dot threading
+dot reader, Ryder lock system
+
+44
+00:02:48.470 --> 00:02:50.420
+dot threading that Rita rider
+lock slim, and then a
+
+45
+00:02:50.420 --> 00:02:56.390
+bunch of basically.net wrappers around
+when 32 executor objects like
+
+46
+00:02:56.870 --> 00:03:01.840
+mutexes and Semafore and, and
+the like event manual reset
+
+47
+00:03:01.840 --> 00:03:06.340
+event, auto reset event and
+whatnot. These are all relatively
+
+48
+00:03:06.370 --> 00:03:09.310
+low level primitives that developers
+have a hard time working
+
+49
+00:03:09.310 --> 00:03:12.880
+with and rationalizing and building
+higher level constructs around. And
+
+50
+00:03:12.880 --> 00:03:14.890
+we don't want people to
+force people to spend all
+
+51
+00:03:14.890 --> 00:03:17.470
+their time kind of in
+the depths of the bowels
+
+52
+00:03:17.470 --> 00:03:19.690
+of, of these programs. When
+what they really want to
+
+53
+00:03:19.690 --> 00:03:22.090
+do is say, you know,
+to express what they want
+
+54
+00:03:22.090 --> 00:03:24.520
+done, not specifically how they
+want it done in the
+
+55
+00:03:24.520 --> 00:03:26.860
+bits and the bytes. And
+so what we're trying to
+
+56
+00:03:26.860 --> 00:03:31.450
+do is create, provide those
+higher level constructs. For example,
+
+57
+00:03:31.450 --> 00:03:34.030
+you've got a system that
+threading dot thread pool, which
+
+58
+00:03:34.030 --> 00:03:36.220
+allows you to say ThreadPool
+duck, here's a work item
+
+59
+00:03:36.670 --> 00:03:39.490
+and a few other kind
+of really advanced level scenarios,
+
+60
+00:03:40.780 --> 00:03:42.670
+but some of the simplest
+things that people try and
+
+61
+00:03:42.670 --> 00:03:44.800
+do with a thread pool,
+they have to write a
+
+62
+00:03:44.800 --> 00:03:47.740
+lot of code to do.
+For example, if you say
+
+63
+00:03:47.740 --> 00:03:49.750
+ThreadPool duck user work item,
+and then you want to
+
+64
+00:03:49.750 --> 00:03:52.810
+wait on the thing that
+you cued, that that's very
+
+65
+00:03:52.810 --> 00:03:55.670
+difficult. You have to actually
+modify the delegate that you've
+
+66
+00:03:55.690 --> 00:03:57.190
+asked to use or work
+item. And then you have
+
+67
+00:03:57.190 --> 00:03:58.840
+to, in that delegate, you
+have to set some sort
+
+68
+00:03:58.840 --> 00:04:00.580
+of event and outside you
+have to wait on that
+
+69
+00:04:00.580 --> 00:04:02.500
+event to complete, but it's
+a really common pattern, but
+
+70
+00:04:02.500 --> 00:04:04.720
+it's a really common pattern.
+Similarly, we get a lot
+
+71
+00:04:04.720 --> 00:04:06.970
+of requests from people to
+want to cancel work item,
+
+72
+00:04:07.240 --> 00:04:08.950
+work items that they've queued
+that may not have run
+
+73
+00:04:08.950 --> 00:04:11.770
+yet. And so one of
+the things that we're providing
+
+74
+00:04:11.770 --> 00:04:15.160
+in this new task power
+library is the ability to
+
+75
+00:04:15.160 --> 00:04:17.620
+get back a, a reference
+to that thing that you
+
+76
+00:04:17.620 --> 00:04:20.020
+queued up and then be
+able to manipulate it in
+
+77
+00:04:20.020 --> 00:04:22.660
+some way. So you can
+say tasks dot wait, or
+
+78
+00:04:22.660 --> 00:04:26.440
+task dot cancel, and so
+forth. So we're, we're trying
+
+79
+00:04:26.440 --> 00:04:28.870
+to take these abstractions to
+kind of the next level
+
+80
+00:04:29.710 --> 00:04:33.130
+and whether we're in system
+dot threading, or in system
+
+81
+00:04:33.130 --> 00:04:35.950
+dot concurrency or whatever namespace
+we happen to be in
+
+82
+00:04:36.250 --> 00:04:38.650
+our goal is that we're
+trying to take this beyond
+
+83
+00:04:38.650 --> 00:04:40.450
+just threads. And we're trying
+to say, you're writing a
+
+84
+00:04:40.450 --> 00:04:43.600
+parallel application. You're writing an
+application that takes advantage of
+
+85
+00:04:43.600 --> 00:04:46.810
+concurrency, not you're writing an
+application that manipulates threads and
+
+86
+00:04:46.810 --> 00:04:48.660
+waits on events and that's
+sort, Okay. So let me
+
+87
+00:04:48.660 --> 00:04:51.810
+try to put this into
+something concrete and I'll use
+
+88
+00:04:51.810 --> 00:04:54.270
+an example from my own
+life. I was making a
+
+89
+00:04:54.270 --> 00:04:56.670
+WinForms application that was going
+to talk to a blood
+
+90
+00:04:56.670 --> 00:04:59.490
+sugar meter, a glucose meter
+for diabetics. It's going to
+
+91
+00:04:59.490 --> 00:05:01.260
+talk to that. And it
+was gonna be a very
+
+92
+00:05:01.260 --> 00:05:03.210
+long running thing, could have
+taken a couple of minutes
+
+93
+00:05:04.020 --> 00:05:06.060
+and I needed to have
+the progress bar update. I
+
+94
+00:05:06.060 --> 00:05:08.490
+wanted also not just the
+progress bar up getting, but
+
+95
+00:05:08.490 --> 00:05:11.070
+I want it to be
+informed when certain points certain
+
+96
+00:05:11.070 --> 00:05:13.830
+milestones have been reached within
+this kind of import process.
+
+97
+00:05:14.310 --> 00:05:17.670
+And I found that entire
+experience to be incredibly frustrating,
+
+98
+00:05:17.700 --> 00:05:19.920
+very difficult to do today.
+Cause I wasn't clear if
+
+99
+00:05:19.920 --> 00:05:21.840
+there was going to be
+just the main thread for
+
+100
+00:05:21.840 --> 00:05:25.140
+the wind forum and then
+another thread for the getting
+
+101
+00:05:25.140 --> 00:05:27.870
+of the data or whether
+that be three or four
+
+102
+00:05:27.870 --> 00:05:30.780
+threads, maybe one for the
+serial work. One for the
+
+103
+00:05:30.780 --> 00:05:35.130
+more logical wrapper around talking
+to the actual serial port.
+
+104
+00:05:35.970 --> 00:05:37.830
+And I kind of got
+myself into quite a situation
+
+105
+00:05:37.830 --> 00:05:40.590
+where basically I ended up
+just making the progress bar,
+
+106
+00:05:40.590 --> 00:05:43.320
+just go and spin, spin,
+spin, spin, spin, cause doing
+
+107
+00:05:43.320 --> 00:05:45.030
+this. What I thought was
+a very simple thing, which
+
+108
+00:05:45.030 --> 00:05:48.210
+was, let me know how
+things are going. Basically it
+
+109
+00:05:48.210 --> 00:05:51.240
+became a fire and forget
+operation. And then when I
+
+110
+00:05:51.240 --> 00:05:53.850
+eventually did come back and
+get information, I had to
+
+111
+00:05:53.850 --> 00:05:57.650
+go and say this dot
+invoke required and make sure
+
+112
+00:05:57.650 --> 00:06:00.720
+whether my button was being
+called and inappropriate threat or
+
+113
+00:06:00.720 --> 00:06:02.870
+my progress bar is being
+accessed and appropriately. Are those
+
+114
+00:06:02.870 --> 00:06:04.910
+the kinds of scenarios that
+people are bumping into that
+
+115
+00:06:04.940 --> 00:06:07.060
+you're going to try. That's
+one set of scenarios that
+
+116
+00:06:07.060 --> 00:06:08.650
+people are bumping into that,
+that we're going to try
+
+117
+00:06:08.650 --> 00:06:10.750
+and fix that This is
+a much broader initiative. We're
+
+118
+00:06:10.750 --> 00:06:13.480
+talking about fixing a much
+bigger problem We are. And
+
+119
+00:06:13.480 --> 00:06:16.540
+so that's sort of the,
+the responsiveness keeping your gooey
+
+120
+00:06:16.540 --> 00:06:20.680
+thread from being blocked, basically
+by background work, that's happening,
+
+121
+00:06:20.680 --> 00:06:23.590
+keeping your application responsive. That's
+sort of one big bucket.
+
+122
+00:06:23.920 --> 00:06:26.890
+Another big bucket we're trying
+to solve is taking advantage
+
+123
+00:06:26.890 --> 00:06:28.930
+of all of the processing
+power that that's in your
+
+124
+00:06:28.930 --> 00:06:34.120
+computer. In your typical desktop
+computer today, you've got maybe
+
+125
+00:06:34.120 --> 00:06:37.480
+one, maybe two processors, or
+of course you that fun
+
+126
+00:06:37.630 --> 00:06:39.880
+Intel commercial, where the guy's
+dancing and he splits into
+
+127
+00:06:39.880 --> 00:06:43.540
+two different people. The advertisement
+for the dual core AMD
+
+128
+00:06:43.540 --> 00:06:46.780
+obviously has dual cores as
+well. Next year, quad cores
+
+129
+00:06:46.780 --> 00:06:48.190
+are going to be common.
+A couple of times I
+
+130
+00:06:48.190 --> 00:06:51.610
+just built a quad core.
+Exactly. And it's a relatively
+
+131
+00:06:51.610 --> 00:06:53.140
+high end today, but in
+a year it will be
+
+132
+00:06:53.140 --> 00:06:56.020
+very affordable. And S you
+know, two years after that
+
+133
+00:06:56.020 --> 00:06:58.210
+eight core and two years
+after that 16 core will
+
+134
+00:06:58.210 --> 00:07:02.770
+be on everyone's desktop Steve's
+predictions, right? The new thing
+
+135
+00:07:02.770 --> 00:07:05.050
+now is 16 core machine
+on everyone's desktop. That's the
+
+136
+00:07:05.050 --> 00:07:10.570
+new mission statement. That's my
+mission statement. Okay. But most
+
+137
+00:07:10.570 --> 00:07:13.030
+applications today are just, aren't
+written to take advantage of
+
+138
+00:07:13.030 --> 00:07:17.620
+that, even if the problem
+they're solving could. And it's
+
+139
+00:07:17.620 --> 00:07:22.540
+basically because people developers aren't
+expressing their problems in a
+
+140
+00:07:22.540 --> 00:07:26.440
+way that allows them to
+be paralyzed and not through
+
+141
+00:07:26.440 --> 00:07:28.810
+no fault of their own.
+It's incredibly difficult to do.
+
+142
+00:07:29.200 --> 00:07:32.350
+And a lot of the
+stuff in, in PFX and
+
+143
+00:07:32.350 --> 00:07:34.480
+the parallel extensions to the.net
+framework could be at P
+
+144
+00:07:34.480 --> 00:07:38.320
+link or TPL are, are
+meant to address that particular
+
+145
+00:07:38.320 --> 00:07:41.680
+problem of how do we
+scale, whatever problem you're throwing
+
+146
+00:07:41.680 --> 00:07:43.750
+at this technology. How do
+we scale it to all
+
+147
+00:07:43.750 --> 00:07:45.940
+of the processors in your
+machine? How much of this
+
+148
+00:07:45.940 --> 00:07:48.190
+is being done with, and
+forgive me if I use
+
+149
+00:07:48.190 --> 00:07:50.140
+the incorrect language, cause I'm
+not a concurrency expert, but
+
+150
+00:07:50.140 --> 00:07:51.580
+how much of this is
+being done with a, from
+
+151
+00:07:51.580 --> 00:07:54.760
+a programmatic perspective, as opposed
+to a D a declarative
+
+152
+00:07:54.760 --> 00:07:56.890
+perspective. I find that what
+I'm doing a lot of
+
+153
+00:07:57.070 --> 00:08:00.280
+concurrency work, I get my
+head, my head starts to
+
+154
+00:08:00.280 --> 00:08:02.080
+ache when I start thinking
+about it as a series
+
+155
+00:08:02.080 --> 00:08:04.510
+of programmatic instructions. But if
+I just draw the tree
+
+156
+00:08:04.510 --> 00:08:07.270
+and say, okay, we branch
+part here, you know, fork
+
+157
+00:08:07.270 --> 00:08:08.980
+off here. And then we
+come back together at the
+
+158
+00:08:08.980 --> 00:08:11.260
+end. That seems like a
+very declarative thing. And if
+
+159
+00:08:11.260 --> 00:08:13.870
+I could just tell the
+system that it would figure
+
+160
+00:08:13.870 --> 00:08:16.330
+out the deal. Yeah. And
+in fact, we're sort of
+
+161
+00:08:17.500 --> 00:08:20.830
+breaking peeling can TPL apart
+into kind of describing it
+
+162
+00:08:20.830 --> 00:08:25.600
+as declarative data parallelism and
+a procedural or imperative data
+
+163
+00:08:25.600 --> 00:08:28.360
+and task parallelism with P
+link. You basically get to
+
+164
+00:08:28.360 --> 00:08:31.270
+say what data you want
+and how you want it
+
+165
+00:08:31.270 --> 00:08:32.620
+process. And you don't even
+need to go to the
+
+166
+00:08:32.620 --> 00:08:36.010
+level of branch or join
+here. You say, from this
+
+167
+00:08:36.010 --> 00:08:39.400
+data they're joined with that
+selected this, where that group
+
+168
+00:08:39.430 --> 00:08:42.220
+by this, and under the
+covers, peeling figures out, Oh,
+
+169
+00:08:42.220 --> 00:08:44.680
+you have 10 processes or
+you have 16 processors. Here's
+
+170
+00:08:44.680 --> 00:08:46.150
+how I'm going to divide
+up the work. Here's how
+
+171
+00:08:46.150 --> 00:08:47.560
+I'm going to partition it.
+Here's how I'm going to
+
+172
+00:08:47.560 --> 00:08:49.300
+process it in parallel. Here's
+how I'm going to merge
+
+173
+00:08:49.300 --> 00:08:51.130
+it and all you, and
+all you have to do
+
+174
+00:08:51.130 --> 00:08:54.130
+to achieve that is to
+add.as parallel onto your query.
+
+175
+00:08:54.370 --> 00:08:59.700
+Nice. So very, very declarative,
+very much expressing what you
+
+176
+00:08:59.700 --> 00:09:02.960
+want done, not how specifically
+you want it done. I'm
+
+177
+00:09:02.960 --> 00:09:05.030
+a really common use case
+that I ran into at
+
+178
+00:09:05.030 --> 00:09:07.760
+my last job where I
+worked in financial services was
+
+179
+00:09:08.480 --> 00:09:11.750
+we wanted to do one
+logical operation, like a get
+
+180
+00:09:11.750 --> 00:09:13.940
+accounts. We're going to go
+ask, but it turns out
+
+181
+00:09:13.940 --> 00:09:17.240
+that those accounts are spread
+across 26 different mainframes. So
+
+182
+00:09:17.240 --> 00:09:19.640
+you might have 26 mainframes
+and you say, you've got
+
+183
+00:09:20.270 --> 00:09:23.360
+three different classes of mainframes,
+right? So you've got 10
+
+184
+00:09:23.360 --> 00:09:25.250
+threads going off to those
+guys and 10 off to
+
+185
+00:09:25.250 --> 00:09:27.200
+these and four, six off
+to that. And they're all
+
+186
+00:09:27.200 --> 00:09:30.350
+different. They need to join
+up. But if I don't
+
+187
+00:09:30.350 --> 00:09:34.490
+care, who's back at 30
+seconds, whatever happened at that
+
+188
+00:09:34.490 --> 00:09:35.930
+point, that's what we've got.
+And then we would come
+
+189
+00:09:35.930 --> 00:09:39.140
+back with an incomplete dataset
+because user responsiveness was as
+
+190
+00:09:39.140 --> 00:09:42.110
+important as getting data. Absolutely.
+So we would come back
+
+191
+00:09:42.110 --> 00:09:44.340
+with records that would say
+things like, you know, I'm
+
+192
+00:09:44.600 --> 00:09:47.180
+unable to contact, you know,
+or incomplete or whatever. And
+
+193
+00:09:47.210 --> 00:09:49.700
+it was an okay experience
+because 99% of the time
+
+194
+00:09:49.700 --> 00:09:52.610
+that would be okay. Is
+that a common scenario where
+
+195
+00:09:52.610 --> 00:09:55.010
+someone wants to do something
+in parallel, but at some
+
+196
+00:09:55.010 --> 00:09:58.490
+point give up absolutely. And
+for a variety of reasons,
+
+197
+00:09:58.640 --> 00:10:02.000
+sometimes you want to do
+something in parallel because you
+
+198
+00:10:02.000 --> 00:10:04.220
+are trying a bunch of
+different approaches and any one
+
+199
+00:10:04.220 --> 00:10:06.470
+of them is good enough.
+Sometimes you want to do
+
+200
+00:10:06.470 --> 00:10:09.020
+things in parallel because you
+actually care about all the
+
+201
+00:10:09.020 --> 00:10:12.230
+responses, but in your scenario,
+you don't care enough to
+
+202
+00:10:12.380 --> 00:10:15.080
+keep the user waiting for
+too long. And those are
+
+203
+00:10:15.080 --> 00:10:17.480
+all scenarios we're trying to
+support with, with the technology
+
+204
+00:10:17.630 --> 00:10:20.460
+Providing. Wow. How do you
+model that? I mean, how,
+
+205
+00:10:20.560 --> 00:10:23.150
+cause you there's this, there's
+this bell curve of all
+
+206
+00:10:23.150 --> 00:10:24.740
+the different things that are
+out there. It might be
+
+207
+00:10:24.740 --> 00:10:27.110
+in the order of dozens
+of common scenarios, depending on
+
+208
+00:10:27.110 --> 00:10:29.330
+which, you know, the tallest
+part of the bell curve
+
+209
+00:10:29.330 --> 00:10:32.270
+that you want to, you
+want to hit, how do
+
+210
+00:10:32.270 --> 00:10:34.070
+you manage the edge cases,
+then I'm sure that you'll
+
+211
+00:10:34.070 --> 00:10:37.160
+nail the 80% solution, but
+how do you give the
+
+212
+00:10:37.160 --> 00:10:40.910
+20% person enough, enough rope
+to hang themselves with? They
+
+213
+00:10:40.910 --> 00:10:43.580
+don't just drop back into
+the basic constructs. That's a
+
+214
+00:10:43.580 --> 00:10:46.640
+wonderful question. The, the chief
+way we're doing it is
+
+215
+00:10:46.640 --> 00:10:50.000
+through different levels of obstruction.
+So at the very top
+
+216
+00:10:50.000 --> 00:10:54.020
+level, we're providing a for
+example, a parallel class and
+
+217
+00:10:54.020 --> 00:10:56.570
+the parallel class just has
+a handful of static methods
+
+218
+00:10:56.570 --> 00:11:01.100
+on it, parallel dot for
+parallel dot for each parallel.do
+
+219
+00:11:01.130 --> 00:11:05.180
+parallel dot whatever. And with
+the parallel dot for this
+
+220
+00:11:05.180 --> 00:11:07.700
+is basically a drop in
+replacement for your for-loop. So
+
+221
+00:11:07.850 --> 00:11:10.340
+instead of saying for I
+equals zero while I is
+
+222
+00:11:10.340 --> 00:11:13.010
+less than an I plus,
+plus you have your body,
+
+223
+00:11:13.340 --> 00:11:16.730
+you say parallel dot four,
+zero, and here's my body.
+
+224
+00:11:17.570 --> 00:11:21.050
+And with anonymous methods and
+Lambda expressions, you actually get
+
+225
+00:11:21.050 --> 00:11:23.960
+to express it by changing.
+Literally just that top four
+
+226
+00:11:23.960 --> 00:11:25.670
+line of your code and
+the rest of your body
+
+227
+00:11:25.670 --> 00:11:28.730
+becomes the delegate that's passed
+to this method that handles
+
+228
+00:11:28.730 --> 00:11:32.140
+it all for you. That
+parallel classes under the covers
+
+229
+00:11:32.150 --> 00:11:33.980
+built on top of, on
+top of this lower level
+
+230
+00:11:33.980 --> 00:11:37.700
+of obstruction, which is basically
+a set of classes for
+
+231
+00:11:38.390 --> 00:11:41.060
+doing this lower level work,
+similar to what you would
+
+232
+00:11:41.060 --> 00:11:43.490
+do with the ThreadPool. So
+you can say task dot
+
+233
+00:11:43.490 --> 00:11:46.490
+create, and you create this
+asynchronous body of work. You
+
+234
+00:11:46.490 --> 00:11:47.870
+get back a reference to
+it that you can either
+
+235
+00:11:47.870 --> 00:11:49.550
+wait on, or you can
+cancel, and you can wait
+
+236
+00:11:49.550 --> 00:11:53.030
+on with varying degrees of
+timeouts and, and varying degrees
+
+237
+00:11:53.050 --> 00:11:55.510
+of controls and knobs. And
+you control the number of
+
+238
+00:11:55.510 --> 00:11:58.150
+threads on which it's running.
+You can create isolated pools.
+
+239
+00:11:58.390 --> 00:11:59.830
+One of the number one
+requests that we have for
+
+240
+00:11:59.830 --> 00:12:03.400
+the thread pool is I
+really want to, you know,
+
+241
+00:12:03.430 --> 00:12:06.040
+I don't want this work
+to be part of the
+
+242
+00:12:06.040 --> 00:12:08.500
+entire application's worth asynchronous work.
+I want to create a
+
+243
+00:12:08.500 --> 00:12:10.240
+pool over here that just
+has five threads in it
+
+244
+00:12:10.240 --> 00:12:12.640
+and keep it separate from
+everything else. So we support
+
+245
+00:12:12.640 --> 00:12:14.530
+that sort of thing. And
+so we're really trying to
+
+246
+00:12:14.530 --> 00:12:17.800
+do it by providing that
+parallel class that targets the
+
+247
+00:12:17.800 --> 00:12:20.140
+80% of the cases and
+then the task and the
+
+248
+00:12:20.140 --> 00:12:22.810
+future classes and the task
+manager and everything else that
+
+249
+00:12:22.810 --> 00:12:26.050
+sort of supports everything else.
+And that the, the 80%
+
+250
+00:12:26.050 --> 00:12:28.570
+case can be built entirely
+on top of that's hot.
+
+251
+00:12:28.870 --> 00:12:32.260
+Yeah. And in fact, peeling
+is kind of another top
+
+252
+00:12:32.260 --> 00:12:35.680
+level of abstraction built on
+top of all that stuff.
+
+253
+00:12:36.300 --> 00:12:39.210
+We're sitting here also with,
+with Howard, Durking the editor
+
+254
+00:12:39.210 --> 00:12:41.400
+in chief of MSDN magazine,
+who just gave me a
+
+255
+00:12:41.400 --> 00:12:43.620
+funny look when I said
+that's hot, because this is
+
+256
+00:12:43.620 --> 00:12:45.600
+the kind of stuff that
+we really get off on
+
+257
+00:12:45.600 --> 00:12:50.280
+here at the Hansel minutes.
+Yeah. The Paris Hilton reference
+
+258
+00:12:50.310 --> 00:12:53.790
+there, that's really hot that
+parallelism and concurrency in the.net
+
+259
+00:12:53.790 --> 00:12:57.180
+framework, you know, because who
+else, but, but, but our
+
+260
+00:12:57.180 --> 00:12:59.190
+listeners and you guys, can
+I geek out with this
+
+261
+00:12:59.190 --> 00:13:01.890
+stuff about, you know, I
+don't think my son cares
+
+262
+00:13:02.310 --> 00:13:05.040
+about this. Let me take
+a conversation a little bit
+
+263
+00:13:05.040 --> 00:13:08.910
+different direction and help me
+understand when we say multi-core
+
+264
+00:13:09.180 --> 00:13:12.090
+machines. If I have a
+single process that's running on
+
+265
+00:13:12.090 --> 00:13:15.420
+a machine with four processors
+is their agility. Is there.
+
+266
+00:13:15.420 --> 00:13:18.090
+If I have multiple threads,
+are those threads jumping between?
+
+267
+00:13:18.090 --> 00:13:19.800
+And I don't quite understand
+how the hardware works. I
+
+268
+00:13:19.800 --> 00:13:22.140
+always used to think it
+was one process gets pinned
+
+269
+00:13:22.560 --> 00:13:25.290
+to a processor Only if
+you want it to. And
+
+270
+00:13:25.290 --> 00:13:27.630
+you'd actually have to express
+that either as the user
+
+271
+00:13:27.630 --> 00:13:32.040
+and for example, in task
+manager or as a developer
+
+272
+00:13:32.040 --> 00:13:36.300
+setting, threat affinity and process
+affinity for particular processors. But
+
+273
+00:13:36.360 --> 00:13:39.330
+by default, no, there is
+no affinity. If you have
+
+274
+00:13:39.330 --> 00:13:42.900
+a process that uses only
+one thread by default, that
+
+275
+00:13:42.900 --> 00:13:46.290
+process will ever only be
+wanting running on one processor
+
+276
+00:13:46.290 --> 00:13:48.210
+at a time, but it
+can certainly move around from
+
+277
+00:13:48.210 --> 00:13:52.590
+processor to processor. Ideally, it
+won't be for a lot
+
+278
+00:13:52.590 --> 00:13:56.160
+of subtle reasons, like making
+sure that the caches aren't
+
+279
+00:13:56.160 --> 00:14:01.230
+invalidated and that the memory
+that the well that cashes
+
+280
+00:14:01.230 --> 00:14:05.490
+aren't invalidated, this could enough.
+But if the process has
+
+281
+00:14:05.490 --> 00:14:08.430
+in it multiple threads, and
+let's say in your case,
+
+282
+00:14:08.430 --> 00:14:10.830
+it has four threads. Those
+for each of those four
+
+283
+00:14:10.830 --> 00:14:13.110
+threads can be running one
+on, on each processor at
+
+284
+00:14:13.110 --> 00:14:15.780
+the same time. And who
+decides that for the most
+
+285
+00:14:15.780 --> 00:14:18.600
+part, it's the operating system
+and less as a developer,
+
+286
+00:14:18.600 --> 00:14:21.030
+you go ahead and say,
+this thread here, I really
+
+287
+00:14:21.030 --> 00:14:23.910
+want it tied to processor
+three. In which case you
+
+288
+00:14:23.910 --> 00:14:26.850
+can set an offending the
+mask that says never let
+
+289
+00:14:26.850 --> 00:14:29.640
+the operating system only allow
+this thread to run a
+
+290
+00:14:29.640 --> 00:14:34.650
+processor three and Prosser force
+is available. And there's absolutely
+
+291
+00:14:34.650 --> 00:14:37.530
+nothing happening on it. Well,
+sorry, you can't run through
+
+292
+00:14:37.530 --> 00:14:40.080
+that thread three until this
+threat Intel processor three is
+
+293
+00:14:40.080 --> 00:14:42.750
+available, But given the goals
+of what you've been talking
+
+294
+00:14:42.750 --> 00:14:44.990
+about with these kind of
+parallel extensions to the dominant
+
+295
+00:14:45.000 --> 00:14:47.910
+framework, I shouldn't have to
+worry about that. An application
+
+296
+00:14:47.910 --> 00:14:50.370
+that uses these extensions on
+a single product machine will
+
+297
+00:14:50.370 --> 00:14:54.070
+just simply run better on
+a multiproduct Machine. An application
+
+298
+00:14:54.070 --> 00:14:56.890
+that uses these extensions on
+a single product machine will
+
+299
+00:14:56.890 --> 00:15:00.550
+run better with ideally with
+as many processors as you
+
+300
+00:15:00.550 --> 00:15:02.950
+can throw at it. Oh,
+really? And so the best
+
+301
+00:15:02.950 --> 00:15:05.680
+applications we see are the
+ones that basically scale linearly
+
+302
+00:15:05.680 --> 00:15:08.890
+in terms of performance, with
+the number of processors. Now
+
+303
+00:15:08.920 --> 00:15:12.490
+that comes with a variety
+of caveats, being that, for
+
+304
+00:15:12.490 --> 00:15:16.330
+example, there's this law called
+Amdahl's law that talks about
+
+305
+00:15:16.330 --> 00:15:19.720
+the relative speed ups you
+can expect in your application
+
+306
+00:15:19.720 --> 00:15:21.760
+based on how much the
+application is serial and how
+
+307
+00:15:21.760 --> 00:15:23.650
+much of it is parallel.
+And so if a very
+
+308
+00:15:23.650 --> 00:15:26.170
+small portion of your application
+is parallel, even if we
+
+309
+00:15:26.170 --> 00:15:28.390
+were to increase by a
+hundred X, the speed at
+
+310
+00:15:28.390 --> 00:15:31.270
+which that parallel section runs,
+if it's still dominated by
+
+311
+00:15:31.270 --> 00:15:34.420
+the cereal portion, you're not
+going to overall see a
+
+312
+00:15:34.450 --> 00:15:38.050
+monster. Speed-ups. However, if that
+small portion of your application
+
+313
+00:15:38.320 --> 00:15:41.320
+is working on data and
+over time you expect the
+
+314
+00:15:41.320 --> 00:15:45.160
+amount of data, your application
+is processing to grow exponentially.
+
+315
+00:15:45.400 --> 00:15:48.520
+Well, then the benefits of
+paralyzing that small portion is
+
+316
+00:15:48.520 --> 00:15:51.760
+going to make a significant
+impact or theoretically could, That
+
+317
+00:15:51.760 --> 00:15:54.250
+brings up in my mind
+two different questions. The first
+
+318
+00:15:54.250 --> 00:15:57.160
+question is I thought someone
+said that the optimal number
+
+319
+00:15:57.160 --> 00:15:59.200
+of threads in any system
+is one. Maybe that's the
+
+320
+00:15:59.200 --> 00:16:01.970
+optimal number of threads in
+any processor as well. It
+
+321
+00:16:02.120 --> 00:16:03.490
+would make sense if it
+was the optimal number of
+
+322
+00:16:03.490 --> 00:16:07.450
+threads per processor. Okay? Assuming
+that every thread is doing
+
+323
+00:16:07.450 --> 00:16:11.440
+the Mac is doing pure
+CPU, CPU bound is doing
+
+324
+00:16:11.440 --> 00:16:15.310
+pure computation. There'd be basically
+no benefit. And assuming you
+
+325
+00:16:15.310 --> 00:16:17.950
+didn't care about a gooey,
+that was responsible. One, not
+
+326
+00:16:18.760 --> 00:16:22.060
+there would be very little
+benefit to having more threads
+
+327
+00:16:22.060 --> 00:16:24.940
+because then they just be,
+the, the operating system would
+
+328
+00:16:24.940 --> 00:16:26.590
+have to context, switch them
+in and out of the
+
+329
+00:16:26.590 --> 00:16:31.480
+various processors at which point,
+each concept context, which is
+
+330
+00:16:31.480 --> 00:16:34.630
+expensive and it's expensive, not
+just because of the actual
+
+331
+00:16:34.630 --> 00:16:37.630
+operations required to save the
+thread state from the registers
+
+332
+00:16:37.630 --> 00:16:40.990
+to memory or discord. Not,
+it's also expensive in that
+
+333
+00:16:41.200 --> 00:16:43.760
+there was some state that
+the thread was using in
+
+334
+00:16:43.810 --> 00:16:45.610
+the cash and the L
+one cash and the L
+
+335
+00:16:45.610 --> 00:16:48.850
+two cash, whatever. And if
+the threat is transitioned out
+
+336
+00:16:48.850 --> 00:16:50.740
+and another threat comes in,
+it's going to start writing
+
+337
+00:16:50.740 --> 00:16:52.990
+over those caches with data
+that it cares about. And
+
+338
+00:16:52.990 --> 00:16:54.940
+then when the original thread
+comes back in, it's going
+
+339
+00:16:54.940 --> 00:16:57.220
+to have to read from
+memory rather than cash, right?
+
+340
+00:16:57.490 --> 00:17:00.670
+All this stuff. And so
+context switches are expensive, not
+
+341
+00:17:00.670 --> 00:17:02.350
+just because of the actual
+cost, but because of the
+
+342
+00:17:02.350 --> 00:17:06.340
+latent effects of it. So
+then you suspend certainly that
+
+343
+00:17:06.340 --> 00:17:09.310
+massive parallelism on a system
+that's hardware, we didn't support
+
+344
+00:17:09.310 --> 00:17:12.880
+massive parallelism would serve very
+little purpose. It would. And
+
+345
+00:17:12.880 --> 00:17:15.130
+one of the things where
+we're trying to achieve with
+
+346
+00:17:15.130 --> 00:17:17.440
+these classes is we try
+and make sure that we
+
+347
+00:17:17.440 --> 00:17:19.360
+scale the work according to
+the number of processors you
+
+348
+00:17:19.360 --> 00:17:22.120
+have. So the parallel dot
+for, if you have a
+
+349
+00:17:22.120 --> 00:17:24.850
+single CPU, we're going to
+basically do a C a
+
+350
+00:17:24.850 --> 00:17:26.500
+four loop. We're not going
+to spin up a bunch
+
+351
+00:17:26.500 --> 00:17:29.020
+of threads. One point, you
+know, if you have 16
+
+352
+00:17:29.020 --> 00:17:32.110
+processors will, in that case,
+will nicely share the work
+
+353
+00:17:32.110 --> 00:17:34.870
+amongst. And are these library
+decisions, are these managed code
+
+354
+00:17:34.870 --> 00:17:37.360
+decisions or are these type
+things, these are managed code
+
+355
+00:17:37.360 --> 00:17:41.410
+decisions. Cool, cool. So then
+my second question was, if,
+
+356
+00:17:41.800 --> 00:17:45.100
+if I'm imagining a kind
+of a typical web web
+
+357
+00:17:45.130 --> 00:17:49.030
+application scenario where a client,
+one client hits a website,
+
+358
+00:17:49.470 --> 00:17:53.130
+and when in the past
+that single thread would then
+
+359
+00:17:53.520 --> 00:17:55.410
+go to an asp.net server,
+which would then call to
+
+360
+00:17:55.410 --> 00:17:59.730
+a database, maybe I started
+doing parallelism and then one
+
+361
+00:17:59.730 --> 00:18:02.310
+person hitting my web server
+now ends up being four
+
+362
+00:18:02.310 --> 00:18:05.820
+connections to my database. And
+that becomes a standard thing
+
+363
+00:18:05.820 --> 00:18:08.280
+because I started being, you
+know, very familiar with, with
+
+364
+00:18:08.280 --> 00:18:10.770
+these technologies. It seems to
+me like that would dramatically
+
+365
+00:18:10.770 --> 00:18:14.130
+change the kind of the
+scale signature of the entire
+
+366
+00:18:14.130 --> 00:18:17.610
+application and would potentially get
+me then disk bound quicker.
+
+367
+00:18:17.610 --> 00:18:21.120
+If I'm ultimately not going
+to become CPU bound as
+
+368
+00:18:21.120 --> 00:18:23.790
+much, I'm going to become
+disc bound. But people are
+
+369
+00:18:23.790 --> 00:18:27.330
+saying already that the machines
+are fast. I mean, CPS
+
+370
+00:18:27.330 --> 00:18:29.790
+are barely working. And then
+ultimately we are IO bound.
+
+371
+00:18:30.240 --> 00:18:33.360
+So what is this kind
+of parallelism mean when it
+
+372
+00:18:33.360 --> 00:18:37.340
+comes to IO intensive operations?
+So that's sort of Two
+
+373
+00:18:37.340 --> 00:18:39.290
+different questions that I'd like
+to address the first one,
+
+374
+00:18:39.290 --> 00:18:42.290
+which is basically what is
+this parallelism stuff has to
+
+375
+00:18:42.290 --> 00:18:45.830
+do with the server and
+in general server apps today,
+
+376
+00:18:45.830 --> 00:18:49.220
+like with asp.net, they already
+have enough parallelism to satisfy
+
+377
+00:18:49.220 --> 00:18:52.190
+the CPU. So if you
+take a typical asp.net application,
+
+378
+00:18:52.190 --> 00:18:55.010
+it's getting thousands of requests
+per second, that's sort of
+
+379
+00:18:55.010 --> 00:18:57.920
+an implicit. Each of those
+requests can be treated. It
+
+380
+00:18:57.920 --> 00:19:00.290
+can be isolated if it's
+not accessing shared state or
+
+381
+00:19:00.290 --> 00:19:03.500
+anything like that, right. It's,
+it's, you're already introducing a
+
+382
+00:19:03.500 --> 00:19:07.850
+thousand different asynchronous pieces of
+work. And so unless those,
+
+383
+00:19:08.240 --> 00:19:11.630
+unless you're expecting very few
+requests into your web server
+
+384
+00:19:11.960 --> 00:19:14.420
+and unless each of those
+very few requests is doing
+
+385
+00:19:14.450 --> 00:19:18.200
+a ton of computational work
+using these types in your
+
+386
+00:19:18.200 --> 00:19:20.780
+using parallel class, for example,
+in your server application might
+
+387
+00:19:20.780 --> 00:19:22.910
+not bother you all that,
+all that much, which ties
+
+388
+00:19:22.910 --> 00:19:25.760
+into your second question, because
+like you say, a lot
+
+389
+00:19:25.760 --> 00:19:27.950
+of stuff is IO bound
+in the server world. And
+
+390
+00:19:27.950 --> 00:19:31.760
+so you take something like
+asynchronous pages and asp.net, it's
+
+391
+00:19:31.760 --> 00:19:35.630
+basically meant to limit the
+number of ThreadPool resources you're
+
+392
+00:19:35.630 --> 00:19:40.250
+consuming and maximize your throughput
+while at the same time,
+
+393
+00:19:40.250 --> 00:19:43.610
+making sure that you're basically
+making sure that you're not
+
+394
+00:19:43.820 --> 00:19:48.920
+blocking other people from requesting
+your server resources, just because
+
+395
+00:19:48.920 --> 00:19:50.600
+you're waiting for the database
+to come back or you're
+
+396
+00:19:50.600 --> 00:19:53.120
+waiting for a web service
+call to return or something
+
+397
+00:19:53.120 --> 00:19:55.520
+like that. And so a
+lot of the technologies that
+
+398
+00:19:55.520 --> 00:19:58.350
+we're working on right now,
+we're, we're focusing squarely at
+
+399
+00:19:58.850 --> 00:20:02.510
+largely desktop or at backend
+data processing, not so much
+
+400
+00:20:02.780 --> 00:20:04.700
+at the web server world,
+because for the most part,
+
+401
+00:20:04.880 --> 00:20:08.270
+your front end web applications
+are have enough concurrency to
+
+402
+00:20:08.270 --> 00:20:11.540
+go around. Interesting. So kind
+of I had my brain
+
+403
+00:20:11.570 --> 00:20:13.280
+in the kind of the
+middle part and you're hitting
+
+404
+00:20:13.280 --> 00:20:15.590
+the, the front bumper and
+the back bumper. So, you
+
+405
+00:20:15.590 --> 00:20:17.120
+know, in the front, we
+always look at things like
+
+406
+00:20:17.120 --> 00:20:19.940
+outlook is a really good
+example of a multi-threaded applications,
+
+407
+00:20:19.940 --> 00:20:22.730
+always stuff going on in
+the background and outlook on
+
+408
+00:20:22.730 --> 00:20:26.540
+the backend. If you were
+doing some very computationally intensive
+
+409
+00:20:26.780 --> 00:20:29.510
+batch processing, if you were
+doing protein folding or something
+
+410
+00:20:29.510 --> 00:20:31.400
+like that, that would be
+the time to, to do
+
+411
+00:20:31.400 --> 00:20:34.190
+that. Absolutely. We used to
+do a lot of batch
+
+412
+00:20:34.220 --> 00:20:37.460
+payment type stuff where we're
+trying to spin through, you
+
+413
+00:20:37.460 --> 00:20:40.550
+know, millions of millions of
+bill payments on the backend.
+
+414
+00:20:40.580 --> 00:20:45.050
+Yep, exactly. That's very interesting.
+And all of this would
+
+415
+00:20:45.050 --> 00:20:47.560
+be done within a single
+process. None of this is
+
+416
+00:20:47.560 --> 00:20:50.590
+parallelism through forking processes in
+the kind of, because the
+
+417
+00:20:50.590 --> 00:20:52.900
+windows process is so much
+heavier than a Unix process,
+
+418
+00:20:52.930 --> 00:20:55.330
+right. You can't just fork
+Willy nilly. You could, but
+
+419
+00:20:55.390 --> 00:20:58.450
+it would be probably a
+bad idea. Yeah, yeah. So
+
+420
+00:20:58.450 --> 00:21:00.270
+this is all, A lot
+of stuff we're working on
+
+421
+00:21:00.270 --> 00:21:02.870
+right now is within a
+single process, but the goal
+
+422
+00:21:02.890 --> 00:21:06.180
+that the resources are managed
+across the entire machine. So
+
+423
+00:21:06.180 --> 00:21:09.810
+that for example, the, the
+types that we have, the
+
+424
+00:21:09.810 --> 00:21:12.570
+underlying, all of this stuff
+in PFX, we have this
+
+425
+00:21:12.570 --> 00:21:15.930
+work stealing scheduler, which basically
+means rather than let's say
+
+426
+00:21:15.930 --> 00:21:19.020
+I was processing some image
+I was doing, I had,
+
+427
+00:21:20.040 --> 00:21:22.290
+I was doing a Ray
+tracer, for example, and I
+
+428
+00:21:22.290 --> 00:21:26.280
+had a, sort of a
+straightforward solution of how to
+
+429
+00:21:26.280 --> 00:21:29.550
+paralyze my Ray tracer processing
+because every pixel can be
+
+430
+00:21:29.550 --> 00:21:31.740
+treated independently. I'm just shooting
+a Ray of light, basically
+
+431
+00:21:31.740 --> 00:21:33.840
+from a particular pixel, seeing
+what objects that hits and
+
+432
+00:21:33.930 --> 00:21:36.330
+comes back with a color.
+I could just, if I
+
+433
+00:21:36.330 --> 00:21:38.130
+had two processors, I could
+say one processor is going
+
+434
+00:21:38.130 --> 00:21:40.080
+to do the top half
+of the image and other
+
+435
+00:21:40.080 --> 00:21:41.460
+process going to do the
+bottom half of the image,
+
+436
+00:21:41.730 --> 00:21:43.740
+or if I had four
+processors, I could split the
+
+437
+00:21:43.740 --> 00:21:46.530
+space into four and it'd
+be good to go, but
+
+438
+00:21:46.530 --> 00:21:49.410
+this is actually going to
+take longer than some other
+
+439
+00:21:49.440 --> 00:21:52.320
+methods. Because for example, in
+a typical rate trace image,
+
+440
+00:21:52.560 --> 00:21:54.660
+the top might be sky,
+or it might be all
+
+441
+00:21:54.660 --> 00:21:56.490
+black. It might be a
+color that might, might have
+
+442
+00:21:56.490 --> 00:21:58.770
+no objects that would be
+hit. And that's, there's less
+
+443
+00:21:58.770 --> 00:22:00.660
+work being spent on each
+of those rays at the
+
+444
+00:22:00.660 --> 00:22:02.520
+top. Then, for example, in
+the bottom where there's a
+
+445
+00:22:02.520 --> 00:22:06.390
+floor, that's reflecting a bunch
+of objects and whatnot. And
+
+446
+00:22:06.390 --> 00:22:08.400
+so what a work steeling
+scheduler does is it says,
+
+447
+00:22:08.850 --> 00:22:13.560
+I, it basically assumes that
+different areas of what you're
+
+448
+00:22:13.560 --> 00:22:15.660
+processing are going to take
+more or less time than
+
+449
+00:22:15.660 --> 00:22:18.570
+other areas. And so it
+sort of dynamically manages itself
+
+450
+00:22:18.570 --> 00:22:20.790
+and is able to steal
+work from other processors and
+
+451
+00:22:20.790 --> 00:22:22.770
+say, Oh, I see you've
+got a backlog. Let me
+
+452
+00:22:22.770 --> 00:22:24.630
+take some of that off
+your case. And the same
+
+453
+00:22:24.630 --> 00:22:28.890
+thing can be, can be
+done based on a CPU
+
+454
+00:22:28.890 --> 00:22:31.380
+utilization and everything going else
+going on in the machine.
+
+455
+00:22:31.590 --> 00:22:34.020
+If other things happening on
+the machine are causing a
+
+456
+00:22:34.020 --> 00:22:36.990
+particular processor to run slower
+and thus not to be
+
+457
+00:22:36.990 --> 00:22:39.090
+able to process work as
+fast as some other processor,
+
+458
+00:22:39.240 --> 00:22:41.940
+those other processors can, can
+steal work from that original
+
+459
+00:22:41.940 --> 00:22:45.450
+thread in this better balance
+Workloads across the machine. Very
+
+460
+00:22:45.450 --> 00:22:48.000
+cool. And that, that, that
+now forks says, it's interesting.
+
+461
+00:22:48.000 --> 00:22:50.040
+We worked a number of
+times here. I've split into
+
+462
+00:22:50.040 --> 00:22:53.190
+two questions there again. The
+first one being that, that
+
+463
+00:22:53.190 --> 00:22:55.380
+got me thinking about work
+partitioning. If I had an
+
+464
+00:22:55.380 --> 00:22:57.570
+image that was that size,
+it sounds like I'm not
+
+465
+00:22:57.570 --> 00:23:00.000
+going to have to think
+about how many processors and
+
+466
+00:23:00.000 --> 00:23:02.220
+therefore how I'm going to
+chop this workup. I simply
+
+467
+00:23:02.220 --> 00:23:06.150
+just kind of unleashed them,
+you know, unleash the parallelism
+
+468
+00:23:06.150 --> 00:23:08.400
+of this, this, this abstraction
+layer on that bit of
+
+469
+00:23:08.400 --> 00:23:10.410
+work. And when it's done,
+it's done Exactly. You say
+
+470
+00:23:10.410 --> 00:23:13.050
+parallel dot for, you know,
+X equals zero X is
+
+471
+00:23:13.050 --> 00:23:15.390
+less than with X plus
+plus, and then you have
+
+472
+00:23:15.390 --> 00:23:18.870
+your inner for loop for
+the Y for the height
+
+473
+00:23:18.870 --> 00:23:21.630
+and whatnot. Now we say
+that you don't have to
+
+474
+00:23:21.630 --> 00:23:24.030
+think about it, but in
+reality, you still do because
+
+475
+00:23:24.570 --> 00:23:26.580
+there are still lots of
+problems that developers are gonna
+
+476
+00:23:26.590 --> 00:23:29.430
+have to think about when
+introducing concurrency into their applications.
+
+477
+00:23:29.760 --> 00:23:32.670
+For example, in the, the
+Ray tracer example is a
+
+478
+00:23:32.670 --> 00:23:36.420
+good one because every pixel
+is independent of every other
+
+479
+00:23:36.420 --> 00:23:38.760
+pixel. And thus, it's what
+we refer to as an
+
+480
+00:23:38.760 --> 00:23:41.790
+embarrassingly parallel application, because you
+don't have to think about
+
+481
+00:23:41.790 --> 00:23:43.770
+what's happening in the body
+of the loop. But if,
+
+482
+00:23:43.770 --> 00:23:45.710
+for example, one of those
+pixels depended on one of
+
+483
+00:23:45.710 --> 00:23:47.240
+the other pixels and thus
+there were sort of loop
+
+484
+00:23:47.270 --> 00:23:50.570
+carried dependencies and enforced, ordering
+that needed to happen. We're
+
+485
+00:23:50.570 --> 00:23:52.160
+now doing these things in
+parallel. So you have to
+
+486
+00:23:52.160 --> 00:23:54.530
+be very, very careful. You
+have to manage that shared
+
+487
+00:23:54.530 --> 00:23:58.490
+state yourself. And the third
+portion of the PFX technology
+
+488
+00:23:58.490 --> 00:24:01.670
+is a set of data
+structures and coordination types that
+
+489
+00:24:01.670 --> 00:24:03.860
+we hope will make that
+sort of thing easier, but
+
+490
+00:24:03.860 --> 00:24:07.310
+it's still something that people
+will need to think about.
+
+491
+00:24:07.340 --> 00:24:10.160
+And there are, there are
+other what we're deeming parallelism
+
+492
+00:24:10.160 --> 00:24:12.380
+blockers that people will need
+to be aware of. Obviously
+
+493
+00:24:12.380 --> 00:24:15.230
+manipulation of shared state and
+mutability is one of them,
+
+494
+00:24:15.500 --> 00:24:18.170
+but there are other things,
+for example, let's say you
+
+495
+00:24:18.170 --> 00:24:20.510
+were writing a windows forms
+application you want, wanted to
+
+496
+00:24:20.720 --> 00:24:23.990
+loop over a huge number
+of controls and modify something
+
+497
+00:24:23.990 --> 00:24:26.600
+on each of the controls,
+do some computation to come
+
+498
+00:24:26.600 --> 00:24:28.340
+up with a new name
+for the control or something.
+
+499
+00:24:29.060 --> 00:24:31.310
+And you decide to go
+ahead and parallelize that because
+
+500
+00:24:31.310 --> 00:24:32.900
+the loop is taking a
+few seconds and you'd love
+
+501
+00:24:32.900 --> 00:24:36.920
+for it to take a
+second or less, but in
+
+502
+00:24:36.920 --> 00:24:40.340
+windows forms and in, in
+most of GUI programming on
+
+503
+00:24:40.340 --> 00:24:45.890
+windows, there's you have this
+sta concept single-threaded apartment and
+
+504
+00:24:47.030 --> 00:24:50.300
+controls. Can't be modified by
+threads that didn't create the
+
+505
+00:24:50.300 --> 00:24:52.700
+control. So as soon as
+you say, parallel dot four,
+
+506
+00:24:52.700 --> 00:24:55.670
+to loop over all these
+controls, now background threads are
+
+507
+00:24:55.670 --> 00:24:57.170
+going to be executing the
+body of this loop. They're
+
+508
+00:24:57.170 --> 00:24:59.660
+going to be modifying these
+foreground controls, and you're gonna
+
+509
+00:24:59.660 --> 00:25:01.750
+start getting exceptions all over.
+And that's what I had
+
+510
+00:25:01.750 --> 00:25:04.660
+to go. And then basically
+I found myself in there
+
+511
+00:25:04.840 --> 00:25:07.180
+before I touch the control,
+I have to ask myself
+
+512
+00:25:07.180 --> 00:25:09.820
+the one thread safe property
+and the crawl, is it
+
+513
+00:25:09.820 --> 00:25:12.520
+cool to be here? Exactly
+invoke required. And if it's
+
+514
+00:25:12.520 --> 00:25:14.710
+not basically, it's like, we'll
+come back later and, you
+
+515
+00:25:14.710 --> 00:25:16.390
+know, come through the back
+door, Actually. So there are
+
+516
+00:25:16.390 --> 00:25:19.570
+certainly cases where this stuff
+isn't going to be as
+
+517
+00:25:19.570 --> 00:25:22.420
+applicable or as appropriate or
+additional thought will need to
+
+518
+00:25:22.420 --> 00:25:25.570
+be added to figure out
+what exactly to do. And
+
+519
+00:25:25.570 --> 00:25:27.280
+there are other scenarios. One
+of the big ones we
+
+520
+00:25:27.280 --> 00:25:30.280
+run into is exception handling.
+And, and what does it
+
+521
+00:25:30.280 --> 00:25:34.270
+mean for a process or
+some operation to fail? If
+
+522
+00:25:34.270 --> 00:25:38.020
+you were, for example, multiplying
+every value in an array
+
+523
+00:25:38.740 --> 00:25:41.620
+by some number and computing
+something. And that computation may
+
+524
+00:25:41.620 --> 00:25:44.320
+possibly throw an exception. And
+let's say it may possibly
+
+525
+00:25:44.320 --> 00:25:47.170
+throw an exception on the
+third and the sixth item.
+
+526
+00:25:48.010 --> 00:25:50.500
+Well, if your process processor
+processing this thing, seriously, you
+
+527
+00:25:50.500 --> 00:25:53.110
+go zero one, two, you
+get to three. And it
+
+528
+00:25:53.110 --> 00:25:55.420
+throws an exception in four,
+five, six, seven, et cetera.
+
+529
+00:25:55.420 --> 00:25:59.200
+They haven't been modified, but
+in a concurrent world, if
+
+530
+00:25:59.200 --> 00:26:03.040
+you had eight processors, for
+example, zero through seven might
+
+531
+00:26:03.040 --> 00:26:06.790
+all be processed at the
+same time. And thus you
+
+532
+00:26:06.790 --> 00:26:09.250
+might actually, even if three
+throws an exception and six
+
+533
+00:26:09.250 --> 00:26:11.830
+throws an exception four and
+five may have already been
+
+534
+00:26:11.830 --> 00:26:14.710
+modified. And similarly now, rather
+than just getting this one
+
+535
+00:26:14.710 --> 00:26:17.260
+exception back now, you're getting
+the set of exceptions back,
+
+536
+00:26:17.740 --> 00:26:19.570
+which may not have been
+expected if you're reporting your
+
+537
+00:26:19.570 --> 00:26:22.300
+code from a, an inherently
+sequential world. And then how
+
+538
+00:26:22.300 --> 00:26:23.710
+do you handle those? I
+mean, do you collect them
+
+539
+00:26:23.710 --> 00:26:25.210
+all up and then make
+a decision about whether the
+
+540
+00:26:25.210 --> 00:26:27.010
+whole thing was a failure
+or not? That's our current
+
+541
+00:26:27.010 --> 00:26:29.830
+point, get into the concept
+of a, of a transaction.
+
+542
+00:26:29.920 --> 00:26:32.230
+Can you roll back those
+things? Can you wrap all
+
+543
+00:26:32.230 --> 00:26:34.780
+this and system not transaction
+scope? His actual memory is
+
+544
+00:26:34.780 --> 00:26:38.770
+a whole nother topic. Okay.
+So my second question from
+
+545
+00:26:38.770 --> 00:26:42.310
+our previous forking about 10
+minutes ago was what about
+
+546
+00:26:42.310 --> 00:26:46.770
+parallelism across machines? There's always
+this notion of build farms
+
+547
+00:26:46.770 --> 00:26:49.050
+and render farms, and it's
+a real complex, you know,
+
+548
+00:26:49.050 --> 00:26:52.710
+the common things. I'm, this
+is an ignorant question, but
+
+549
+00:26:52.740 --> 00:26:55.430
+they call these via Wolf
+clusters. There's clusters in general,
+
+550
+00:26:55.430 --> 00:26:58.580
+they will, clusters are specific
+to Linux. Okay. But yeah,
+
+551
+00:26:58.880 --> 00:27:01.280
+Concept of like, Hey, well,
+those boxes aren't doing anything.
+
+552
+00:27:01.280 --> 00:27:02.870
+I mean, I've got four
+or five machines at home
+
+553
+00:27:02.870 --> 00:27:06.220
+that aren't working too hard.
+Yup. Is it conceivable that,
+
+554
+00:27:06.220 --> 00:27:09.080
+that this kind of concept
+could be extended kind of
+
+555
+00:27:09.080 --> 00:27:13.130
+like outwards? Absolutely. And so
+there, there are various teams
+
+556
+00:27:13.130 --> 00:27:15.290
+at Microsoft working to address
+that. One of the biggest
+
+557
+00:27:15.290 --> 00:27:18.320
+ones is at the moment
+is the, the HPC team,
+
+558
+00:27:18.320 --> 00:27:20.840
+which is doing the compute
+cluster server, which allows you
+
+559
+00:27:20.840 --> 00:27:22.940
+to do exactly that you
+have some tasks that you
+
+560
+00:27:22.940 --> 00:27:26.930
+want split across a whole
+bunch of machines, and you
+
+561
+00:27:26.930 --> 00:27:30.620
+would install basically compute cluster
+server. And it is the
+
+562
+00:27:30.620 --> 00:27:32.960
+equivalent of the Beowulf clusters
+you were mentioning, but for
+
+563
+00:27:32.960 --> 00:27:36.860
+windows Basically. And my last
+question about peeling specifically, even
+
+564
+00:27:36.860 --> 00:27:39.050
+though we've, as we've mentioned
+before, appealing is just kind
+
+565
+00:27:39.050 --> 00:27:41.720
+of a member of a
+larger family of parallel technologies
+
+566
+00:27:41.720 --> 00:27:43.970
+that we're talking about. Is
+it, is it truly a
+
+567
+00:27:43.970 --> 00:27:46.850
+link based thing? I mean,
+it is based on the,
+
+568
+00:27:46.850 --> 00:27:49.580
+the basic ideas that were
+put forth when, when link
+
+569
+00:27:49.580 --> 00:27:53.180
+was introduced. So P link
+or parallel link, which is
+
+570
+00:27:53.180 --> 00:27:56.240
+the current code name for
+it is a parallel implementation
+
+571
+00:27:56.240 --> 00:27:59.840
+of the.net standard query operators.
+So link to objects is
+
+572
+00:27:59.840 --> 00:28:02.840
+basically an implementation of a
+bunch of methods on the
+
+573
+00:28:02.840 --> 00:28:06.170
+innumerable class, numeral select a
+numeral dot where a numerable
+
+574
+00:28:06.170 --> 00:28:10.910
+dot range, whatever P link
+introduces parallel innumerable. So yet
+
+575
+00:28:10.910 --> 00:28:15.230
+parallel new will innumerable.select parallel
+numerable dot were parallel, innumerable
+
+576
+00:28:15.230 --> 00:28:19.100
+dot range, et cetera. And
+it implements all those using
+
+577
+00:28:19.370 --> 00:28:23.600
+kind of all aspects of
+parallel implementations under the covers.
+
+578
+00:28:24.200 --> 00:28:29.210
+When you compile your application
+in say C or VB,
+
+579
+00:28:29.900 --> 00:28:32.620
+and you're using, for example,
+the query comprehensions where it
+
+580
+00:28:32.620 --> 00:28:36.470
+in C sharp, you say
+VAR Q equals from P
+
+581
+00:28:36.470 --> 00:28:42.710
+and people were p.name equals
+Steve select P under the
+
+582
+00:28:42.710 --> 00:28:46.670
+covers. The C-sharp compiler compiles
+that down to invocations of
+
+583
+00:28:46.670 --> 00:28:49.610
+these static methods on the
+numerable class because of how
+
+584
+00:28:49.610 --> 00:28:52.460
+link works and how the
+binding works. It searches for
+
+585
+00:28:52.460 --> 00:28:55.850
+these extension methods and it
+finds them. And the only
+
+586
+00:28:55.850 --> 00:29:00.410
+place that is currently there,
+which assistant.link and the system.link
+
+587
+00:29:00.410 --> 00:29:04.280
+done innumerable class. But if
+you say.as parallel, that basically
+
+588
+00:29:04.280 --> 00:29:07.370
+caused the C sharp compiler
+to also find the appealing
+
+589
+00:29:07.400 --> 00:29:09.350
+methods and to bind to
+those tighter than to the
+
+590
+00:29:09.350 --> 00:29:11.090
+numerable ones. And so if
+you were to look at,
+
+591
+00:29:11.090 --> 00:29:15.620
+in reflector, for example, in.net
+reflector, the compiled code, you
+
+592
+00:29:15.620 --> 00:29:18.410
+would see that rather than
+invoking innumerable.select new rule, that
+
+593
+00:29:18.410 --> 00:29:21.050
+where it was invoking parallel,
+numeral about select and where,
+
+594
+00:29:21.440 --> 00:29:25.160
+and the semantics of these
+things are almost identical with
+
+595
+00:29:25.160 --> 00:29:29.240
+the exception being where we
+really can't make them identical
+
+596
+00:29:29.840 --> 00:29:33.200
+or where we, by default
+don't make them identical because
+
+597
+00:29:33.200 --> 00:29:37.550
+of performance reasons. So for
+example, with peeling, currently our
+
+598
+00:29:37.580 --> 00:29:41.230
+current decision, our current thinking
+is that by default, we
+
+599
+00:29:41.230 --> 00:29:45.820
+won't preserve Ordering, which if
+you were to have to
+
+600
+00:29:45.820 --> 00:29:47.950
+sort the results at the
+end, because there's no guarantees
+
+601
+00:29:47.950 --> 00:29:49.450
+on how things are going
+to come back. You. Yeah.
+
+602
+00:29:49.450 --> 00:29:51.730
+So if you were to
+go with the default, that's
+
+603
+00:29:51.730 --> 00:29:54.280
+true, we allow you to
+turn on order preservation, and
+
+604
+00:29:54.280 --> 00:29:56.590
+it's possible that by the
+time we actually ship the
+
+605
+00:29:56.590 --> 00:30:00.190
+technology, we'll decide that it's
+in the best interest of
+
+606
+00:30:00.190 --> 00:30:03.310
+everyone to enable order preservation
+by default, because too many
+
+607
+00:30:03.310 --> 00:30:05.530
+people would get hung up
+on and not being there.
+
+608
+00:30:05.620 --> 00:30:07.000
+You're talking about. I mean,
+you know, you were just
+
+609
+00:30:07.000 --> 00:30:09.520
+talking, I mean, to be
+clear to the listeners, this
+
+610
+00:30:09.520 --> 00:30:12.520
+is just a typical, and
+it's just, it's just kind
+
+611
+00:30:12.520 --> 00:30:16.420
+of a scoop, no warranty
+express or implied in that
+
+612
+00:30:16.420 --> 00:30:19.800
+particular podcast, which brings me
+to my last fork for
+
+613
+00:30:19.890 --> 00:30:23.410
+question of the evening, which
+was you were talking about.
+
+614
+00:30:24.730 --> 00:30:27.730
+I, you know, I parallel
+innumerable, does that mean that
+
+615
+00:30:27.740 --> 00:30:29.740
+I'm not gonna be able
+to get free kind of
+
+616
+00:30:29.770 --> 00:30:32.620
+parallelism on data structures, like
+X elements and things? Are
+
+617
+00:30:32.620 --> 00:30:34.870
+they going to have to
+support parallelism inherently? No, they
+
+618
+00:30:34.870 --> 00:30:39.850
+will not have to support
+parallelism and implicitly. So basically
+
+619
+00:30:39.880 --> 00:30:42.790
+P link works with anything
+that implements I numerable of
+
+620
+00:30:42.790 --> 00:30:45.190
+T wow. And how's it
+going to keep them from
+
+621
+00:30:45.190 --> 00:30:48.280
+hurting themselves? I mean, I'm
+always enumerating through collections and
+
+622
+00:30:48.280 --> 00:30:50.740
+getting in trouble because someone
+got mad halfway through cause
+
+623
+00:30:50.740 --> 00:30:54.130
+they modified the collection. So
+when you're working with an
+
+624
+00:30:54.130 --> 00:30:55.870
+I and rule of T
+if we don't know anything
+
+625
+00:30:55.870 --> 00:30:58.930
+more specific about it, we
+have to internally lock as
+
+626
+00:30:58.930 --> 00:31:01.600
+we're accessing elements from the
+collection, but we try and
+
+627
+00:31:01.600 --> 00:31:03.820
+do it in an efficient
+way, for example, batching our
+
+628
+00:31:03.820 --> 00:31:07.870
+requests from it. So we
+might pull 128 elements from
+
+629
+00:31:07.870 --> 00:31:09.250
+it and then allow another
+thread to come in and
+
+630
+00:31:09.250 --> 00:31:11.470
+pull 128 elements from it
+and so forth. So you
+
+631
+00:31:11.470 --> 00:31:13.630
+kind of do a, like
+a checkout check in process.
+
+632
+00:31:13.990 --> 00:31:15.700
+That's really creative. Cause when
+I first heard that, I
+
+633
+00:31:15.700 --> 00:31:16.930
+was like, Oh no, I'm
+going to have to go
+
+634
+00:31:16.930 --> 00:31:19.600
+and implement something to make.
+This might make my classes
+
+635
+00:31:19.600 --> 00:31:22.240
+parallel. Now we work with
+any data structures that implement
+
+636
+00:31:22.240 --> 00:31:24.940
+IEnumerable. So that will include
+link tech smell. That's fantastic.
+
+637
+00:31:24.940 --> 00:31:26.950
+And then my last question
+was you said that when
+
+638
+00:31:26.950 --> 00:31:28.630
+you say as parallel at
+the end that the C
+
+639
+00:31:28.630 --> 00:31:31.330
+sharp compiler then binds, I
+think you used the word
+
+640
+00:31:31.330 --> 00:31:34.510
+binds more tightly kind of
+puts parallel on top because
+
+641
+00:31:34.510 --> 00:31:36.490
+we know when we put
+in mix ins and we
+
+642
+00:31:36.490 --> 00:31:39.580
+put in extension methods, it's
+about kind of who gets
+
+643
+00:31:39.580 --> 00:31:42.310
+there first. Did that involve
+a change in the C
+
+644
+00:31:42.310 --> 00:31:45.400
+sharp compiler? No, this is
+all playing with how link
+
+645
+00:31:45.400 --> 00:31:49.120
+was an engineer designed. Exactly.
+This is really cool. Wow,
+
+646
+00:31:49.150 --> 00:31:52.180
+great. Well, yeah, gosh, I'm
+a, I have to drink
+
+647
+00:31:52.180 --> 00:31:53.950
+this and this is pretty
+exciting. I really appreciate you
+
+648
+00:31:53.950 --> 00:31:55.250
+taking the time out of
+your day to talk to
+
+649
+00:31:55.250 --> 00:31:57.550
+her Steven. How's my pleasure.
+Thanks for coming. And this
+
+650
+00:31:57.550 --> 00:31:59.320
+has been another episode of
+Hansel minutes. We'll see you
+
+651
+00:31:59.320 --> 00:32:05.940
+again next week. <inaudible>.
+

@@ -1,0 +1,4166 @@
+WEBVTT FILE
+
+1
+00:00:12.050 --> 00:00:15.770
+From Hanselman it's dot com.
+It's Hanselman. It's a weekly
+
+2
+00:00:15.770 --> 00:00:19.550
+discussion with web developer and
+technologist Scott Hanselman posted by
+
+3
+00:00:19.550 --> 00:00:22.970
+call Franklin. This is Lawrence Ryan
+and on some show. Number
+
+4
+00:00:22.970 --> 00:00:28.730
+10 recorded Monday, March 13th, 2006. Support
+for Hanselman is provided by
+
+5
+00:00:28.730 --> 00:00:32.930
+automated QA makers of tests,
+complete providing automated testing of
+
+6
+00:00:32.930 --> 00:00:42.170
+windows.net framework, Java and web
+applications online@wwwdotautomatedqa.com. And by Peter
+
+7
+00:00:42.170 --> 00:00:50.420
+bloom.com start with better controls.
+Finish a better sites online@peterblum.com.
+
+8
+00:00:51.050 --> 00:00:54.410
+Support is also provided by.net
+developers journal. The world's leading
+
+9
+00:00:54.470 --> 00:01:00.350
+that net developer magazine online
+at www dot <inaudible> dot
+
+10
+00:01:00.350 --> 00:01:04.400
+com. In this episode, Scott
+talks about functional testing tools
+
+11
+00:01:04.430 --> 00:01:09.860
+and utilities. <inaudible>. Hi, this
+is Carl Franklin. You're listening to
+
+12
+00:01:09.860 --> 00:01:12.500
+Hansel minutes show number 10.
+Of course, I'm here with
+
+13
+00:01:12.500 --> 00:01:15.680
+Scott Hanselman and this week
+we're talking testing tools, right?
+
+14
+00:01:15.680 --> 00:01:20.690
+Scott, We are specifically a
+web testing tools testing stuff
+
+15
+00:01:20.870 --> 00:01:23.990
+when you make websites. All
+right. So basically we have
+
+16
+00:01:23.990 --> 00:01:26.990
+this great sponsor and we
+haven't talked about them at
+
+17
+00:01:26.990 --> 00:01:28.820
+all. You know, it's a
+little weird talking about a
+
+18
+00:01:28.820 --> 00:01:31.730
+sponsor's product because you don't
+want to seem like, you
+
+19
+00:01:31.730 --> 00:01:34.580
+know, Oh, well you're just
+kowtowing to the sponsor, but
+
+20
+00:01:34.580 --> 00:01:36.890
+you know, this is good
+stuff. And we took it
+
+21
+00:01:36.890 --> 00:01:39.500
+all for a spin, but
+you also tried out some
+
+22
+00:01:39.500 --> 00:01:42.530
+other testing tools. So you're
+going to talk about several.
+
+23
+00:01:43.610 --> 00:01:45.830
+Yeah. Automated QA is test
+complete is cool, but I've
+
+24
+00:01:45.830 --> 00:01:47.360
+just thrown it into a
+pile with a bunch of
+
+25
+00:01:47.360 --> 00:01:50.720
+other web testing tools like
+selenium I E unit bad
+
+26
+00:01:50.720 --> 00:01:54.620
+boy, pester cat segway, soak,
+test web recorder from MJ
+
+27
+00:01:54.620 --> 00:01:57.830
+T net. Alright man, a
+pile, you know, there's new
+
+28
+00:01:57.830 --> 00:02:00.170
+stuff coming up from the
+water team called Firewater. We'll
+
+29
+00:02:00.290 --> 00:02:02.390
+talk about them all. Alright,
+well, let's get started what's
+
+30
+00:02:02.390 --> 00:02:08.150
+first. Well, so I'm a
+web guy mostly. And when
+
+31
+00:02:08.150 --> 00:02:13.220
+I think about doing functional
+testing over the web, from
+
+32
+00:02:13.220 --> 00:02:15.440
+what I can tell, there
+is a, a number of
+
+33
+00:02:15.440 --> 00:02:18.440
+different classes of what kind
+of philosophy about how I'm
+
+34
+00:02:18.440 --> 00:02:22.310
+going to do my testing.
+There's your HTTP based test
+
+35
+00:02:22.310 --> 00:02:24.770
+tool, right? This is the
+kind that maybe sets up
+
+36
+00:02:24.770 --> 00:02:27.830
+a proxy. They don't really
+care what browser you use.
+
+37
+00:02:27.830 --> 00:02:29.690
+They set up a local
+host proxy, and then they
+
+38
+00:02:29.690 --> 00:02:33.350
+listen to the HTTP traffic,
+right. And they'll record it.
+
+39
+00:02:33.410 --> 00:02:35.540
+And like a, snooper like
+a snooper and then they'll
+
+40
+00:02:35.540 --> 00:02:39.020
+do the TiVo thing and
+they'll record and playback. And
+
+41
+00:02:39.050 --> 00:02:43.700
+these things are, are clever
+for load testing, right? Because
+
+42
+00:02:43.700 --> 00:02:45.590
+then you can just say
+they, Hey, that thing you
+
+43
+00:02:45.590 --> 00:02:47.780
+just did do it a
+lot, but now have 20
+
+44
+00:02:47.780 --> 00:02:51.710
+guys do it. But for
+functional testing, it's a little,
+
+45
+00:02:51.710 --> 00:02:54.200
+it's a little dodgy because
+sometimes you want to test
+
+46
+00:02:54.200 --> 00:02:57.170
+Java script that you've got
+in your client side. Sometimes
+
+47
+00:02:57.170 --> 00:03:01.990
+there's complicated interactions that can't
+really be seen when you
+
+48
+00:03:01.990 --> 00:03:04.090
+just looking at the underlying
+traffic. Okay. So you got
+
+49
+00:03:04.090 --> 00:03:08.980
+your HTTP based recorders. Then
+you've got JavaScript object, model
+
+50
+00:03:08.980 --> 00:03:10.990
+ones. These are ones that
+say, well, I want to
+
+51
+00:03:10.990 --> 00:03:13.900
+get basically my browser on
+a string. I want to
+
+52
+00:03:13.900 --> 00:03:16.240
+be a puppet master. And
+the JavaScript object model is
+
+53
+00:03:16.240 --> 00:03:19.450
+the best way to do
+that. Right? Those guys are
+
+54
+00:03:19.450 --> 00:03:23.980
+usually cross platform cross browser
+because they're using JavaScript to
+
+55
+00:03:23.980 --> 00:03:26.950
+do the real heavy lifting.
+Sure. Then you've got your
+
+56
+00:03:26.950 --> 00:03:30.010
+win 32. What I call
+your win? 32 spy plus
+
+57
+00:03:30.010 --> 00:03:33.310
+plus plus type of guys.
+Yeah. This is like real
+
+58
+00:03:33.310 --> 00:03:35.740
+similar to the automated QA
+guys. Although they also do
+
+59
+00:03:35.740 --> 00:03:39.640
+HTTP based traffic. This is
+where you have a, the
+
+60
+00:03:39.640 --> 00:03:43.150
+tree of all of the
+windows, not the windows in
+
+61
+00:03:43.150 --> 00:03:45.400
+the, Hey look at all
+the windows in my task
+
+62
+00:03:45.400 --> 00:03:48.430
+bar. Yeah. Sense of things.
+But in the, this little
+
+63
+00:03:48.430 --> 00:03:50.920
+button is a window and
+there's a tree of H
+
+64
+00:03:50.920 --> 00:03:54.070
+wins kind of a wind
+32 way. Yeah. That's really
+
+65
+00:03:54.070 --> 00:03:56.710
+useful because you can do
+both wind forms and web
+
+66
+00:03:56.710 --> 00:03:58.540
+forms testing. And we'll talk
+about the goods and the
+
+67
+00:03:58.540 --> 00:04:00.180
+bads about that. Now I
+know you're not a big
+
+68
+00:04:00.180 --> 00:04:04.920
+windows programmer per se, but
+yeah. So, so you're really
+
+69
+00:04:04.920 --> 00:04:08.220
+gonna focus on web testing.
+Right? I want to just
+
+70
+00:04:08.220 --> 00:04:12.420
+kind of cover the philosophies
+and some of these tools,
+
+71
+00:04:12.420 --> 00:04:15.720
+do you do windows based
+testing, which you can still
+
+72
+00:04:15.720 --> 00:04:18.060
+use to test your browser
+so you can actually still
+
+73
+00:04:18.060 --> 00:04:21.240
+do web testing with this
+philosophy. Okay. So then you've
+
+74
+00:04:21.240 --> 00:04:26.100
+got your payload based recorders.
+These are the ones that
+
+75
+00:04:26.100 --> 00:04:30.180
+kind of look at the
+HTML page and then poke
+
+76
+00:04:30.180 --> 00:04:33.240
+around in the page using
+their own object model. They'll
+
+77
+00:04:33.240 --> 00:04:35.340
+sometimes they'll take the HTML
+and they'll make it look
+
+78
+00:04:35.340 --> 00:04:40.050
+like XML and you'll do
+a X path queries on
+
+79
+00:04:40.050 --> 00:04:43.710
+the page. And that's how
+you'll find an object. Others
+
+80
+00:04:43.710 --> 00:04:46.530
+will look at the payload
+with regular expressions and say,
+
+81
+00:04:46.950 --> 00:04:49.680
+give me the text box
+called social security number, or
+
+82
+00:04:49.680 --> 00:04:52.140
+give me the button called
+Go and I'll do something
+
+83
+00:04:52.140 --> 00:04:55.470
+with it. Okay. The main
+point of classifying these different
+
+84
+00:04:55.470 --> 00:04:58.980
+things is to call out
+that an HTTP recorder is
+
+85
+00:04:58.980 --> 00:05:02.100
+not a web recorder. Okay.
+So when someone says, Oh
+
+86
+00:05:02.100 --> 00:05:05.280
+yeah, I'm recording traffic and
+playing it back. Well, what
+
+87
+00:05:05.280 --> 00:05:08.430
+exactly are you recording button
+clicks? Are you recording HDP
+
+88
+00:05:08.460 --> 00:05:11.040
+posts? So when you're picking
+a tool, you should really
+
+89
+00:05:11.040 --> 00:05:13.680
+think about that, what your,
+what your goal is and
+
+90
+00:05:13.680 --> 00:05:15.690
+whether that tool meets your
+needs. So are you saying
+
+91
+00:05:15.690 --> 00:05:18.840
+that an HTTP recorder is
+a server side recorder and
+
+92
+00:05:18.840 --> 00:05:21.780
+a web recorders client? Or,
+or what exactly are you
+
+93
+00:05:21.780 --> 00:05:24.750
+saying is the difference between
+those two? Are you trying
+
+94
+00:05:24.750 --> 00:05:28.050
+to be a puppet master
+and control the, the UI?
+
+95
+00:05:28.170 --> 00:05:31.140
+Yeah. Or are you sitting
+between the browser and the
+
+96
+00:05:31.140 --> 00:05:34.650
+server watching what goes by?
+I see. Yeah, exactly. One
+
+97
+00:05:34.650 --> 00:05:37.920
+is a sniffer. One is
+a controller. Yeah, absolutely. Absolutely.
+
+98
+00:05:38.550 --> 00:05:42.090
+So There's a really huge
+list of QA testing products
+
+99
+00:05:42.120 --> 00:05:46.530
+at <inaudible> dot com slash
+C Y eight. And some
+
+100
+00:05:46.530 --> 00:05:48.330
+of them, these tools that
+I picked came from that
+
+101
+00:05:48.330 --> 00:05:51.840
+list, certainly I'm sure we've
+missed someone. I mean, we're
+
+102
+00:05:51.840 --> 00:05:54.450
+only going to talk about
+a dozen half a dozen
+
+103
+00:05:55.620 --> 00:05:58.190
+tools, but you know, if
+you're really awesome tool is
+
+104
+00:05:58.190 --> 00:06:00.490
+not on this list. I
+apologize. But wow. I picked
+
+105
+00:06:00.490 --> 00:06:03.100
+the ones that I Good.
+Okay. This is a big
+
+106
+00:06:03.100 --> 00:06:06.730
+list. Well, yeah, it's hardcore.
+I mean, there's always someone
+
+107
+00:06:06.730 --> 00:06:08.530
+out there who's got a
+great tool to do something,
+
+108
+00:06:08.530 --> 00:06:12.160
+but what I wanted to
+do was pick enough tools
+
+109
+00:06:12.160 --> 00:06:16.000
+that cover this, these classes
+that I've come up with.
+
+110
+00:06:16.030 --> 00:06:18.610
+I mean, this is something
+I just made. Right, right.
+
+111
+00:06:18.790 --> 00:06:22.060
+But did they HDP based
+JavaScript object based window based
+
+112
+00:06:22.060 --> 00:06:24.520
+payload based. Those are the
+kind of the, from where
+
+113
+00:06:24.520 --> 00:06:27.340
+I see at the top
+level. Okay. Classification. Sure. Okay.
+
+114
+00:06:28.900 --> 00:06:33.790
+Okay. So, so automated QA,
+our sponsor has a thing
+
+115
+00:06:33.790 --> 00:06:37.870
+called test complete, and they
+are, I would say primarily
+
+116
+00:06:37.870 --> 00:06:42.520
+a windows application tester. Okay.
+But so like WinForms applications,
+
+117
+00:06:42.520 --> 00:06:45.610
+I was able to get
+a recording and playback of
+
+118
+00:06:45.610 --> 00:06:48.940
+like a calculator test in
+like 10 minutes. It was
+
+119
+00:06:48.940 --> 00:06:51.190
+pretty easy. You know, you
+just hook up a test
+
+120
+00:06:51.190 --> 00:06:54.610
+suite, you launch calculator and
+you start messing with it
+
+121
+00:06:54.610 --> 00:06:57.730
+and they record everything that
+you do because they're primarily
+
+122
+00:06:57.760 --> 00:07:00.700
+calm based. And they're kind
+of like spite plus, plus
+
+123
+00:07:00.700 --> 00:07:02.710
+I keep referring to spy
+plus, plus this is a
+
+124
+00:07:02.710 --> 00:07:05.980
+tool that comes along with
+a visual studio that lets
+
+125
+00:07:05.980 --> 00:07:09.880
+you know, the window handle
+hierarchy, Right. The different things.
+
+126
+00:07:10.210 --> 00:07:13.390
+So they have a number
+Plugins that you can test
+
+127
+00:07:13.480 --> 00:07:17.140
+WinForms applications, you can get
+into your dotnet objects. They
+
+128
+00:07:17.140 --> 00:07:19.150
+also have rappers for things
+like end unit and stuff.
+
+129
+00:07:19.150 --> 00:07:22.540
+So they really intend to
+be your complete testing suite.
+
+130
+00:07:22.660 --> 00:07:24.370
+Yeah. For whatever you're doing.
+So if you've got a
+
+131
+00:07:24.370 --> 00:07:27.160
+bunch of end unit tests
+and a wind forms control,
+
+132
+00:07:27.160 --> 00:07:30.280
+and you really want to
+simulate, somebody's pounding on this
+
+133
+00:07:30.280 --> 00:07:33.850
+thing, doing functional testing, doing
+load testing, doing whatever you
+
+134
+00:07:33.850 --> 00:07:35.920
+would use their tool. Now
+I know you're primarily a
+
+135
+00:07:35.920 --> 00:07:38.500
+web guy, but there doesn't
+seem to be a lot
+
+136
+00:07:38.500 --> 00:07:41.260
+of testing tools out there
+for windows applications. Am I
+
+137
+00:07:41.260 --> 00:07:43.900
+right? Not that I see.
+I mean, there's your big
+
+138
+00:07:43.930 --> 00:07:46.330
+guys like your soak test
+and different ones like that,
+
+139
+00:07:46.330 --> 00:07:51.100
+but they're, they're expensive and
+it's kind of complicated because
+
+140
+00:07:51.100 --> 00:07:52.960
+when you're going to go
+poking around at windows, you
+
+141
+00:07:52.960 --> 00:07:54.970
+have to ask yourself, am
+I just going to do
+
+142
+00:07:54.970 --> 00:07:58.480
+wind forms? So am I
+making a.net application? Right? Or
+
+143
+00:07:58.480 --> 00:08:01.030
+am I going to do
+any application in windows that
+
+144
+00:08:01.030 --> 00:08:03.850
+can put out a UI?
+So the automated QA guys
+
+145
+00:08:03.850 --> 00:08:06.250
+took the window handle approach,
+which means that they can
+
+146
+00:08:06.250 --> 00:08:08.320
+test anything. They can test
+Delphi, they can test C
+
+147
+00:08:08.320 --> 00:08:11.650
+plus plus MFC. They test
+finished products from the, from
+
+148
+00:08:11.650 --> 00:08:14.200
+the outside, but they also
+do. What's called white box
+
+149
+00:08:14.230 --> 00:08:17.260
+testing. Where if you know,
+your object has some, like
+
+150
+00:08:17.260 --> 00:08:19.510
+your dotnet controls have a
+static method that you want
+
+151
+00:08:19.510 --> 00:08:22.330
+to poke around and call.
+You can not only pound
+
+152
+00:08:22.330 --> 00:08:24.490
+on the buttons, but you
+can also leap inside the
+
+153
+00:08:24.490 --> 00:08:28.300
+application and call methods. You
+can do API level stuff
+
+154
+00:08:28.300 --> 00:08:32.020
+as well. Okay. So their
+tools 500 bucks without the
+
+155
+00:08:32.020 --> 00:08:36.240
+web stuff for load testing
+or 900 bucks for the
+
+156
+00:08:36.250 --> 00:08:39.280
+full kind of enterprise edition.
+Okay. So let's kind of
+
+157
+00:08:39.280 --> 00:08:42.070
+prices it outside of the,
+you know, one or two
+
+158
+00:08:42.070 --> 00:08:46.600
+guys shops unless that shop
+does, does web testing does
+
+159
+00:08:46.600 --> 00:08:50.200
+hardcore testing. Right? Initially some
+of the things that kinda
+
+160
+00:08:50.200 --> 00:08:52.960
+turned me off is that
+while it has parameter help,
+
+161
+00:08:52.990 --> 00:08:56.010
+where you can like see
+the different ha you can
+
+162
+00:08:56.010 --> 00:08:58.830
+see specific help on each
+parameter, I didn't see a
+
+163
+00:08:58.830 --> 00:09:01.470
+way to turn on IntelliSense
+and I'm kind of an
+
+164
+00:09:01.470 --> 00:09:04.470
+IntelliSense addict and I'm kind
+of had a little trouble
+
+165
+00:09:04.470 --> 00:09:08.880
+getting through it. But on
+the web testing side, they
+
+166
+00:09:08.880 --> 00:09:13.140
+take a windows based approach.
+So you basically walk around
+
+167
+00:09:13.140 --> 00:09:16.740
+inside the I E Dom,
+the document object model. And
+
+168
+00:09:16.740 --> 00:09:18.120
+you can look at it
+two ways. You can look
+
+169
+00:09:18.120 --> 00:09:21.150
+at it via a window
+or a, they call it
+
+170
+00:09:21.150 --> 00:09:23.910
+a tree approach and they
+have a tag approach. But
+
+171
+00:09:23.910 --> 00:09:27.360
+basically you write script like,
+you know, document dot, all
+
+172
+00:09:27.360 --> 00:09:32.160
+dot forms, dot button.click, okay.
+Like that. Do they record
+
+173
+00:09:32.160 --> 00:09:35.850
+scripts as well? They do
+record HDP traffic. So I
+
+174
+00:09:35.850 --> 00:09:39.120
+was able to like load
+test my blog. I brought
+
+175
+00:09:39.120 --> 00:09:41.430
+up a browser, it recorded
+all the traffic I clicked
+
+176
+00:09:41.430 --> 00:09:44.220
+around in my blog. And
+then I simulated five users
+
+177
+00:09:44.220 --> 00:09:46.410
+beating on my blog. That
+was really easy. So that
+
+178
+00:09:46.410 --> 00:09:49.170
+was doing kind of record
+and playback because their tool
+
+179
+00:09:49.170 --> 00:09:53.850
+does both HTTP based window
+based and JavaScript object based.
+
+180
+00:09:53.850 --> 00:09:57.210
+So they're actually doing kind
+of three different kinds of
+
+181
+00:09:57.210 --> 00:09:59.220
+testing of the, of the
+classes that I listed out
+
+182
+00:09:59.670 --> 00:10:03.180
+all in one tool. Right.
+But getting the brow, getting
+
+183
+00:10:03.180 --> 00:10:05.100
+them to listen to the
+browser, click and do that
+
+184
+00:10:05.100 --> 00:10:07.440
+kind of high level functional
+testing is from a recorder
+
+185
+00:10:07.440 --> 00:10:10.230
+point of view. I wasn't
+able to get working. Okay.
+
+186
+00:10:10.260 --> 00:10:14.100
+But for someone who would
+write that test themselves like
+
+187
+00:10:14.100 --> 00:10:17.130
+manually, it's pretty straightforward. You
+can do it in Delphi
+
+188
+00:10:17.130 --> 00:10:20.880
+and vb.net, and C-sharp in
+whatever you want. They've like
+
+189
+00:10:21.210 --> 00:10:24.840
+we have language plugins and
+that was pretty straightforward. It
+
+190
+00:10:24.840 --> 00:10:29.040
+looks a lot like segue,
+soak test. Okay. Segue, soak
+
+191
+00:10:29.040 --> 00:10:33.480
+test is way more expensive.
+It's $5,000. Plus segway soak
+
+192
+00:10:33.480 --> 00:10:37.140
+test is, is pretty hardcore
+pits. It's kind of like,
+
+193
+00:10:37.620 --> 00:10:39.570
+if you need to ask
+how much it is, then
+
+194
+00:10:39.570 --> 00:10:41.700
+you probably don't need it.
+Right. Cause I went up
+
+195
+00:10:41.700 --> 00:10:43.980
+on their site and we
+own soak test here at
+
+196
+00:10:43.980 --> 00:10:46.350
+Kerlin. I went up on
+their site and looked at
+
+197
+00:10:46.410 --> 00:10:48.390
+how much it costs. And
+it said, if you'd like
+
+198
+00:10:48.390 --> 00:10:50.520
+to buy, give us a
+call and we'll hook you
+
+199
+00:10:50.520 --> 00:10:52.950
+up with one of our
+sales professionals now, is that
+
+200
+00:10:52.950 --> 00:10:57.150
+mercury? Okay. So mercury WinRunner
+is from, I believe it's
+
+201
+00:10:57.150 --> 00:10:59.670
+from rational and that's another
+tool. That's something else. That's
+
+202
+00:10:59.670 --> 00:11:03.530
+something else from shrinks.com/cyc. These
+are the kind of the
+
+203
+00:11:03.530 --> 00:11:08.090
+Bentley And Mercedes have testing
+tools where an enterprise decides
+
+204
+00:11:08.090 --> 00:11:09.860
+that they're going to standardize
+on this at that, you
+
+205
+00:11:09.860 --> 00:11:14.030
+know, several tens of thousands
+of dollars as an enterprise.
+
+206
+00:11:14.330 --> 00:11:16.850
+Okay. Soak test is kind
+of like as a Pascal,
+
+207
+00:11:16.850 --> 00:11:20.450
+like language called for test
+While the automated QA guys
+
+208
+00:11:20.450 --> 00:11:23.390
+give you the choice, Like
+five different languages and you
+
+209
+00:11:23.390 --> 00:11:27.710
+can pick up segway silk
+test at shrinks.com/c Y L.
+
+210
+00:11:28.880 --> 00:11:31.790
+You said that both of
+these programs are very expensive.
+
+211
+00:11:32.480 --> 00:11:35.180
+Well, I would say that
+soak, soak tests and mercury
+
+212
+00:11:35.180 --> 00:11:39.650
+are definitely in the several
+grand per person kind of
+
+213
+00:11:39.650 --> 00:11:42.650
+a world. So if you're
+looking at like a wind
+
+214
+00:11:42.650 --> 00:11:46.100
+runner, or if you're looking
+at segway soak test, take
+
+215
+00:11:46.100 --> 00:11:49.310
+a look at automated QA
+test complete, you're going to
+
+216
+00:11:49.310 --> 00:11:54.220
+get very, very similar benefits
+for half or fifth of
+
+217
+00:11:54.220 --> 00:11:56.760
+the cost. Yeah. It looks
+like definitely cheaper. Yeah. Even
+
+218
+00:11:56.760 --> 00:12:00.440
+at their most expensive. Yeah.
+Yeah. So the, the, the,
+
+219
+00:12:00.440 --> 00:12:03.690
+the commitment to this, to
+any testing product, right, is
+
+220
+00:12:03.690 --> 00:12:06.120
+that you're going to basically
+put all of your eggs
+
+221
+00:12:06.120 --> 00:12:09.330
+in this, this testing products
+basket. One of the things
+
+222
+00:12:09.330 --> 00:12:10.920
+I liked about the test
+complete is that they'll call
+
+223
+00:12:10.920 --> 00:12:13.500
+in unit tests. They'll use
+some of the existing resources
+
+224
+00:12:13.500 --> 00:12:15.720
+that you have. So if
+you had a really complicated
+
+225
+00:12:15.720 --> 00:12:19.890
+application that had both wind
+forms and web UI, that
+
+226
+00:12:19.890 --> 00:12:20.880
+would be the kind of
+thing you want to look
+
+227
+00:12:20.880 --> 00:12:25.620
+at. Cool. So other web
+testing tools that are way
+
+228
+00:12:25.620 --> 00:12:27.690
+cheaper and as such, of
+course, you get a lot
+
+229
+00:12:27.690 --> 00:12:33.780
+less benefits. Another one is
+called S w Explorer automation
+
+230
+00:12:33.780 --> 00:12:38.760
+from Alex Ferman, and that's
+at shrinks.com/c Y E. This
+
+231
+00:12:38.760 --> 00:12:40.800
+is a tool that we
+kind of go back and
+
+232
+00:12:40.800 --> 00:12:43.890
+forth here at Kirlian about
+I'm personally a water fan,
+
+233
+00:12:43.920 --> 00:12:46.680
+w a T I R
+web application testing and Ruby.
+
+234
+00:12:46.680 --> 00:12:49.530
+We'll talk about that in
+a second. But one of
+
+235
+00:12:49.530 --> 00:12:52.710
+our QA leads here, Brent
+strange is a fan of
+
+236
+00:12:52.710 --> 00:12:56.700
+the SW Explorer automation, because
+it generates in some way
+
+237
+00:12:56.730 --> 00:13:00.000
+a C sharp code or
+Yeah. And that code in
+
+238
+00:13:00.000 --> 00:13:02.580
+some way, what do you
+mean by that? This is
+
+239
+00:13:02.580 --> 00:13:06.390
+an interesting, an interesting tool.
+He he's got a recorder,
+
+240
+00:13:06.660 --> 00:13:09.750
+right? So you, you go
+into his application, you say
+
+241
+00:13:09.750 --> 00:13:12.660
+record, and then he watches
+you actually click on the
+
+242
+00:13:12.780 --> 00:13:15.480
+page. But what you do
+is you call you create
+
+243
+00:13:15.480 --> 00:13:19.110
+what's called a scene. So
+you say on this page,
+
+244
+00:13:19.140 --> 00:13:21.570
+I am interested in these
+things because I'm on a
+
+245
+00:13:21.570 --> 00:13:24.120
+particular page. You may not
+be interested in every aspect
+
+246
+00:13:24.120 --> 00:13:26.970
+of the page, just a
+few controls. Sure. So you
+
+247
+00:13:26.970 --> 00:13:29.160
+right. Click on the controls
+and you say, I want
+
+248
+00:13:29.220 --> 00:13:32.460
+this, this and this in
+my scene, you set up
+
+249
+00:13:32.460 --> 00:13:34.440
+these scenes and then you
+can refer to them in
+
+250
+00:13:34.440 --> 00:13:38.850
+the scene as a, like
+a simpler name than, than
+
+251
+00:13:38.850 --> 00:13:41.730
+what they were. Okay. And
+then he saves out these
+
+252
+00:13:41.730 --> 00:13:44.520
+scene files in a form
+of an XML file. This
+
+253
+00:13:44.520 --> 00:13:48.780
+XML file internally has an
+X path that basically plucks
+
+254
+00:13:48.780 --> 00:13:51.180
+that control out. So when
+you were clicking on the
+
+255
+00:13:51.180 --> 00:13:53.880
+control and setting the scene,
+he was keeping track of
+
+256
+00:13:53.880 --> 00:14:00.360
+this depth, this path within
+your HTML application. And then
+
+257
+00:14:00.900 --> 00:14:03.750
+when you generate the code,
+he gives you a collection
+
+258
+00:14:03.750 --> 00:14:06.000
+of these objects that you
+were interested in the scene,
+
+259
+00:14:06.000 --> 00:14:07.230
+and then you just pulled
+them out of a hash
+
+260
+00:14:07.230 --> 00:14:10.320
+table. Okay. So good things
+about that. Is it? Yeah,
+
+261
+00:14:10.320 --> 00:14:13.320
+it's pretty straightforward to use.
+It's easy to record bad
+
+262
+00:14:13.320 --> 00:14:16.530
+things are that if he
+does tie your testing code
+
+263
+00:14:16.560 --> 00:14:21.630
+a little bit to your
+site's structure. So if you
+
+264
+00:14:21.630 --> 00:14:23.610
+move something around, if a
+button comes out of a
+
+265
+00:14:23.610 --> 00:14:25.650
+text box, you have to
+go back and then reset
+
+266
+00:14:25.650 --> 00:14:28.830
+the stage, basically go rerecord
+the scene. You don't have
+
+267
+00:14:28.830 --> 00:14:32.310
+to rerecord your, your scripts.
+You just have to change
+
+268
+00:14:32.310 --> 00:14:35.370
+this map. It's one of
+the things I like about
+
+269
+00:14:35.370 --> 00:14:37.980
+visual studio that we sometimes
+take for granted is how
+
+270
+00:14:37.980 --> 00:14:42.990
+it can, especially 2005, how
+it remembers things and changes
+
+271
+00:14:42.990 --> 00:14:45.750
+things when you change them.
+Yeah. It would be nice
+
+272
+00:14:45.750 --> 00:14:48.120
+if there was a better,
+more deterministic way for him
+
+273
+00:14:48.120 --> 00:14:51.180
+to find these controls. Yeah.
+But, but what he's doing
+
+274
+00:14:51.290 --> 00:14:53.780
+very clever, I mean, he,
+he grabs what you're doing
+
+275
+00:14:53.780 --> 00:14:56.690
+and I E and he
+creates these mapping tools. And
+
+276
+00:14:56.690 --> 00:14:59.120
+then that makes your scripts
+very simple. So you don't
+
+277
+00:14:59.120 --> 00:15:03.020
+spend time in your script,
+digging around for controls. You
+
+278
+00:15:03.020 --> 00:15:06.170
+spend the time doing what
+you want to do, but
+
+279
+00:15:06.170 --> 00:15:09.440
+again, tying it to the
+structure of the underlying document
+
+280
+00:15:09.710 --> 00:15:12.140
+seemed a little, a little
+bit interesting when I said
+
+281
+00:15:12.140 --> 00:15:15.950
+that he generates this code,
+kind of what he's generating
+
+282
+00:15:15.950 --> 00:15:19.820
+his C-sharp code, that calls
+his underlying automation stuff. So
+
+283
+00:15:19.820 --> 00:15:22.670
+he's not generating C-sharp code
+that talks to I E
+
+284
+00:15:23.330 --> 00:15:28.610
+he'll generate code that calls
+SW Explorer, automation dot, navigate.
+
+285
+00:15:28.670 --> 00:15:31.400
+I see, rather than IAE
+dot navigate, but then once
+
+286
+00:15:31.400 --> 00:15:33.620
+you're in there, you just
+say things like scene, and
+
+287
+00:15:33.620 --> 00:15:36.860
+then you pull out the
+object that you want. Interestingly,
+
+288
+00:15:36.860 --> 00:15:41.150
+also, rather than picking existing
+objects, like HTML text area
+
+289
+00:15:41.150 --> 00:15:44.750
+from ASP, or pulling them
+out of IIE or any
+
+290
+00:15:44.750 --> 00:15:46.400
+of the other places that
+have defined these, he's got
+
+291
+00:15:46.400 --> 00:15:49.460
+his own controls collection. So
+he really has a complete
+
+292
+00:15:49.460 --> 00:15:53.120
+wrapper around I E and
+then he'll generate this code
+
+293
+00:15:53.120 --> 00:15:55.190
+for you that to modify,
+and you can poke around
+
+294
+00:15:55.190 --> 00:15:58.160
+within his, his object model
+on top of it. That's
+
+295
+00:15:58.160 --> 00:16:01.880
+very cool. And that's up@ashrinkstore.com
+slash C Y E. And
+
+296
+00:16:01.880 --> 00:16:08.300
+that's $59. Pretty interesting. Mostly
+a recorder, but he gives
+
+297
+00:16:08.300 --> 00:16:11.630
+you a pretty rich object
+model. So with any recorder,
+
+298
+00:16:12.290 --> 00:16:14.660
+you're not going to do
+your complete testing only in
+
+299
+00:16:14.660 --> 00:16:16.790
+the recorder, right? The reporter's
+just going to get you
+
+300
+00:16:16.820 --> 00:16:20.870
+80% of the way there.
+Right. Jumpstart your testing. Okay.
+
+301
+00:16:20.900 --> 00:16:23.510
+So stepping over to a
+competitor, there's one called bad
+
+302
+00:16:23.510 --> 00:16:29.210
+boy at shrinker.com/c Y J.
+This is an Australian company
+
+303
+00:16:29.210 --> 00:16:32.480
+that has a very similar
+product that does recording as
+
+304
+00:16:32.480 --> 00:16:36.500
+well. SWE Explorer, automation, we'll
+put it on a string
+
+305
+00:16:36.500 --> 00:16:40.370
+and basically launched that process
+and then tile your windows.
+
+306
+00:16:40.370 --> 00:16:42.320
+So he's on the left
+and he's on the right
+
+307
+00:16:43.130 --> 00:16:45.710
+bad boy. We'll put the
+browser inside. And this is
+
+308
+00:16:45.710 --> 00:16:48.920
+a real easy way to
+do your automation. Basically. He's
+
+309
+00:16:48.920 --> 00:16:53.960
+sticking the user control inside
+now. Yeah, bad boys, kind
+
+310
+00:16:53.960 --> 00:16:59.780
+of a it's free, but
+it's kind of walks the
+
+311
+00:16:59.780 --> 00:17:04.430
+line between an HTTP recorder
+and an object model recorder.
+
+312
+00:17:04.790 --> 00:17:08.270
+He's watching the traffic as
+you move around and keeping
+
+313
+00:17:08.270 --> 00:17:12.050
+track of requests and sub
+requests, and then parameterizing them.
+
+314
+00:17:12.050 --> 00:17:13.970
+So then you can go
+back in and say, well,
+
+315
+00:17:13.970 --> 00:17:16.730
+I like that request, except
+this sub request here, where
+
+316
+00:17:16.730 --> 00:17:19.100
+I called out to this
+I-frame I don't want to
+
+317
+00:17:19.100 --> 00:17:22.160
+do that anymore. Or I
+want to change this. And
+
+318
+00:17:22.160 --> 00:17:25.310
+then he'll keep track of
+all the assertions, the warnings,
+
+319
+00:17:25.310 --> 00:17:27.980
+the timings. He does lots
+of charting and graphing, you
+
+320
+00:17:27.980 --> 00:17:31.130
+know, for free tool. It's
+pretty, it's pretty amazing. Yeah.
+
+321
+00:17:31.160 --> 00:17:35.780
+Okay. Now, a very similar
+tool that has a little
+
+322
+00:17:35.780 --> 00:17:39.860
+more functionality in my opinion,
+is from the guys at
+
+323
+00:17:39.890 --> 00:17:44.240
+<inaudible> dot com. They've got
+a tool called web recorder,
+
+324
+00:17:44.510 --> 00:17:48.740
+shrink, stir.com/c Y K. And
+this is a showcase recorder.
+
+325
+00:17:48.740 --> 00:17:52.500
+That's actually separated from their
+playback. So basically you, the
+
+326
+00:17:52.500 --> 00:17:56.460
+recorder creates scripts in their
+scripting kind of VB language
+
+327
+00:17:56.460 --> 00:17:58.950
+that then is run through
+their macro recorder. So they
+
+328
+00:17:58.950 --> 00:18:00.960
+have a generic macro recorder
+can do the comeback and
+
+329
+00:18:00.960 --> 00:18:04.140
+do other things. It appears
+the MJT net guys are
+
+330
+00:18:04.140 --> 00:18:06.360
+not just going for the
+testing market, but also the
+
+331
+00:18:06.360 --> 00:18:08.850
+automation market. If you're someone
+who wants to do screen
+
+332
+00:18:08.850 --> 00:18:11.880
+scraping, you could use their
+tool to suck data off
+
+333
+00:18:11.880 --> 00:18:14.100
+of the net. Now, one
+of the things that's really
+
+334
+00:18:14.100 --> 00:18:18.510
+cool is that they've taken
+that idea like the watermaker
+
+335
+00:18:18.510 --> 00:18:21.180
+that I did awhile back,
+which was a recorder, a
+
+336
+00:18:21.180 --> 00:18:24.900
+poor man's recorder that would
+basically make water scripts. They
+
+337
+00:18:24.900 --> 00:18:27.960
+took their recorder technology, and
+out of the kindness of
+
+338
+00:18:27.960 --> 00:18:32.610
+their hearts released a water
+web recorder@trickster.com slash C Y
+
+339
+00:18:32.610 --> 00:18:36.570
+D. This uses their web
+recorder technology, but records, Ruby
+
+340
+00:18:37.200 --> 00:18:40.950
+water scripts for you get
+you jump-started on, on water
+
+341
+00:18:40.950 --> 00:18:45.750
+and is really already much
+more, much more functional than
+
+342
+00:18:45.750 --> 00:18:48.560
+my existing tool. I know
+you've talked about Ruby quite
+
+343
+00:18:48.560 --> 00:18:51.640
+a few times now and
+what you know, what's, what's
+
+344
+00:18:51.650 --> 00:18:54.260
+so great about Ruby that
+C-sharp can't do or VB
+
+345
+00:18:54.260 --> 00:18:57.140
+net can't do what is
+so cool about it? It's,
+
+346
+00:18:57.170 --> 00:19:02.000
+it's hard. It's hard to
+express it's. So it's so
+
+347
+00:19:02.030 --> 00:19:06.260
+elegant and elegant and not
+in a C in a
+
+348
+00:19:06.260 --> 00:19:08.750
+CAEP C or C plus
+plus kind of terse way.
+
+349
+00:19:08.750 --> 00:19:11.150
+Like some people will look
+at C and they'll say,
+
+350
+00:19:11.330 --> 00:19:17.420
+wow, that's really elegant. It's.
+So terse Ruby has that
+
+351
+00:19:17.420 --> 00:19:19.670
+kind of feel of VB
+in the sense that it's
+
+352
+00:19:19.670 --> 00:19:23.690
+not hiding meaning and symbols
+like C-sharp does or C
+
+353
+00:19:23.690 --> 00:19:31.850
+plus plus does, but it's,
+it's avoiding unnecessary. It's it's
+
+354
+00:19:31.850 --> 00:19:35.480
+avoiding unnecessary words. I guess
+it's kind of hard to
+
+355
+00:19:35.480 --> 00:19:37.550
+say. It's like, when you
+hear someone like, like if
+
+356
+00:19:37.550 --> 00:19:39.950
+you read, if you read
+Hemingway, you go, wow, that
+
+357
+00:19:39.950 --> 00:19:42.320
+was a really tight sentence.
+He just said it all.
+
+358
+00:19:42.590 --> 00:19:45.230
+And I really can't. I
+see how I'm struggling right
+
+359
+00:19:45.230 --> 00:19:48.350
+now to say this correctly.
+That's kind of what Ruby
+
+360
+00:19:48.410 --> 00:19:52.890
+Is like. It's so it's
+succinct. Maybe it's succinct. It's
+
+361
+00:19:52.940 --> 00:19:58.010
+smooth. It's elegant. It's now
+it feels lightweight. Now, do
+
+362
+00:19:58.010 --> 00:20:00.170
+you like this for just
+scripting? Or do you like,
+
+363
+00:20:00.200 --> 00:20:02.390
+would you like to see
+this as a, as a,
+
+364
+00:20:02.900 --> 00:20:05.540
+you know, the, the next
+language, the next big language?
+
+365
+00:20:05.570 --> 00:20:08.900
+I mean, for everything? Yeah.
+I think, well, no, I
+
+366
+00:20:08.900 --> 00:20:10.850
+think it may be the
+next big language. Like I
+
+367
+00:20:10.850 --> 00:20:13.580
+pointed to John Lamb's blog
+right now. He's building that
+
+368
+00:20:13.580 --> 00:20:19.460
+Ruby CLR bridge. Definitely Ruby
+is Gonna be around for
+
+369
+00:20:19.550 --> 00:20:21.740
+a while. I think it'll,
+it'll fill a place like
+
+370
+00:20:21.740 --> 00:20:24.500
+Python. And is it a
+lot what I'm getting at
+
+371
+00:20:24.500 --> 00:20:25.550
+is do you think it's
+going to be a good
+
+372
+00:20:25.550 --> 00:20:28.490
+general language or is it
+going to be specific to
+
+373
+00:20:28.760 --> 00:20:31.520
+web or windows apps or
+any particular, What kind of
+
+374
+00:20:31.520 --> 00:20:34.790
+apps? I think that, because
+Ruby on rails, they're, they're
+
+375
+00:20:34.790 --> 00:20:38.420
+web based, basically the asp.net
+of Ruby is called rails.
+
+376
+00:20:38.990 --> 00:20:41.090
+So Ruby is Ruby. It's
+a scripting language and you
+
+377
+00:20:41.090 --> 00:20:42.950
+can do whatever you want
+to with it. You can
+
+378
+00:20:42.950 --> 00:20:46.910
+write command line applications, a
+Ruby on rails, lets you
+
+379
+00:20:47.140 --> 00:20:51.310
+do things like object, relational
+mapping and object persistence, and
+
+380
+00:20:51.310 --> 00:20:54.580
+really very elegant ways. You
+can write a blog and
+
+381
+00:20:54.670 --> 00:20:57.970
+you know, 20,000 lines of
+code, that kind of thing.
+
+382
+00:20:58.000 --> 00:21:00.870
+So your answer is you
+still have it, Is it
+
+383
+00:21:00.870 --> 00:21:03.660
+general? I guess that's what
+I'm asking. I mean, I
+
+384
+00:21:03.660 --> 00:21:05.580
+don't have to tell you
+it's general until it's not
+
+385
+00:21:05.580 --> 00:21:09.930
+general C sharp general. Okay.
+Yeah. It is sharp as
+
+386
+00:21:09.930 --> 00:21:13.380
+general to me. Yeah. Yeah.
+It's general in that. Yes.
+
+387
+00:21:13.380 --> 00:21:15.050
+You can do anything you
+want to with it. Yeah,
+
+388
+00:21:15.420 --> 00:21:17.610
+no one's no one said,
+Oh wow. I totally couldn't
+
+389
+00:21:17.610 --> 00:21:20.250
+do that in Ruby. Okay.
+And, and do you think
+
+390
+00:21:20.280 --> 00:21:25.140
+more VB programmers or C
+sharp programmers would like Ruby?
+
+391
+00:21:25.260 --> 00:21:27.390
+I mean, who does it?
+Who's the field. That's a
+
+392
+00:21:27.390 --> 00:21:30.090
+very good point. Just like
+I was saying before that
+
+393
+00:21:30.090 --> 00:21:33.000
+it, it has a, a
+VB style about it in
+
+394
+00:21:33.000 --> 00:21:35.100
+that it doesn't use a
+whole lot of funky symbols,
+
+395
+00:21:36.030 --> 00:21:39.030
+but it has all that
+kind of powerful. Oh, Oh.
+
+396
+00:21:39.060 --> 00:21:41.460
+As well as some things
+that, that C sharp doesn't
+
+397
+00:21:41.460 --> 00:21:44.340
+quite do yet. Okay. So
+I think that it's a
+
+398
+00:21:44.340 --> 00:21:46.920
+really good compromise. I mean,
+if C-sharp programmers and db.net
+
+399
+00:21:46.920 --> 00:21:49.170
+programs could really bury the
+hatchet, they would do it
+
+400
+00:21:49.170 --> 00:21:52.390
+over a language like Ruby.
+Okay. Not for that. Let's
+
+401
+00:21:52.650 --> 00:21:55.950
+move on. Moves us on
+to a nice place, which
+
+402
+00:21:55.950 --> 00:22:00.000
+is to the watch of
+water. So water Reb, web
+
+403
+00:22:00.000 --> 00:22:04.560
+application testing in Ruby is
+basically an I E wrapper.
+
+404
+00:22:04.560 --> 00:22:08.370
+It's a wrapper around internet.
+Explorer's common interface that lets
+
+405
+00:22:08.370 --> 00:22:12.080
+Ruby talk to I E
+in a very clean and
+
+406
+00:22:12.090 --> 00:22:16.650
+elegant way. And it's, I
+like it because you can
+
+407
+00:22:16.650 --> 00:22:20.640
+literally just sit down and
+start working and you're productive
+
+408
+00:22:20.640 --> 00:22:24.120
+immediately. I like it because
+you can show someone something
+
+409
+00:22:24.120 --> 00:22:26.910
+in Ruby and water and
+say, Oh, it's like this
+
+410
+00:22:26.910 --> 00:22:28.590
+and they'll go, Oh wow.
+And you don't even need
+
+411
+00:22:28.590 --> 00:22:30.420
+to teach them the language.
+Anyone who knows how to
+
+412
+00:22:30.480 --> 00:22:34.050
+code at all goes, Oh,
+okay. Here's how you're doing.
+
+413
+00:22:34.050 --> 00:22:36.690
+If you know, so literally
+you sit down and you
+
+414
+00:22:36.690 --> 00:22:40.230
+go, I e.new I E
+dot go to eat, you
+
+415
+00:22:40.230 --> 00:22:41.940
+know? And that that's like
+how you do it. Okay.
+
+416
+00:22:42.180 --> 00:22:45.300
+I E dot text field,
+and you grab a text
+
+417
+00:22:45.300 --> 00:22:47.370
+field and you go dot
+set value, and then you're
+
+418
+00:22:47.370 --> 00:22:51.630
+moving yourself along. It's that?
+It's that easy. Okay. So
+
+419
+00:22:52.530 --> 00:22:57.120
+for really simple, functional testing
+that you want to just
+
+420
+00:22:57.120 --> 00:22:59.970
+work, you want it to
+be free and you're willing
+
+421
+00:22:59.970 --> 00:23:03.180
+to learn another language. It's
+cool. Sure. Could you use
+
+422
+00:23:03.270 --> 00:23:06.240
+a C-sharp for this? Absolutely.
+You could use vb.net. You
+
+423
+00:23:06.240 --> 00:23:08.820
+could go into visual studio.
+You could say add web
+
+424
+00:23:08.820 --> 00:23:12.570
+reference and start poking around
+at I E. Okay. Except
+
+425
+00:23:12.570 --> 00:23:15.690
+the Dom, right? The document
+object model for E is
+
+426
+00:23:15.810 --> 00:23:19.560
+complicated. Yes. And you find
+yourself poking around documents, dot
+
+427
+00:23:19.560 --> 00:23:22.320
+all dot forms, dot blah,
+blah, blah, blah, blah. Right.
+
+428
+00:23:22.890 --> 00:23:28.950
+With, with water. They basically
+flattened when appropriate the Dom.
+
+429
+00:23:28.980 --> 00:23:31.380
+So you can go, I
+eat a text field, and
+
+430
+00:23:31.380 --> 00:23:33.060
+then this was the cool
+part. You can say, I
+
+431
+00:23:33.060 --> 00:23:35.400
+want this text field by
+name, or I want it
+
+432
+00:23:35.400 --> 00:23:39.090
+by, by index it's one
+or buy or whatever. You
+
+433
+00:23:39.090 --> 00:23:41.700
+know, You don't always, you
+know, you can't always remember
+
+434
+00:23:41.700 --> 00:23:44.070
+where the high, what the
+hierarchy is and seldom doesn't
+
+435
+00:23:44.070 --> 00:23:46.490
+matter. Yeah. And the other
+nice thing is that Because
+
+436
+00:23:46.490 --> 00:23:50.960
+Ruby has regular expressions, just
+as a construct there all
+
+437
+00:23:50.960 --> 00:23:53.600
+the time, you can just
+pass in a regular expression
+
+438
+00:23:53.600 --> 00:23:55.910
+into water and say, give
+me the one that ends
+
+439
+00:23:55.910 --> 00:23:59.020
+with food. Right. And it'll
+just figure it out. And
+
+440
+00:23:59.060 --> 00:24:02.810
+ordinarily, you'd be writing code
+in C sharp or vb.net
+
+441
+00:24:02.810 --> 00:24:05.930
+to run around looking for
+that thing. They've, they've heightened
+
+442
+00:24:05.930 --> 00:24:08.510
+all that for you. Now.
+Here's the cool part because
+
+443
+00:24:08.510 --> 00:24:10.970
+people always say, Oh well,
+that's I only write. Yeah.
+
+444
+00:24:11.000 --> 00:24:14.480
+Well, there's some, there's some
+rumblings going on. And with
+
+445
+00:24:14.480 --> 00:24:18.530
+all cool named products like
+water, w a T I
+
+446
+00:24:18.530 --> 00:24:21.740
+R, there are cool named
+sub projects. There's a thing
+
+447
+00:24:21.740 --> 00:24:25.100
+called Firewater coming soon. You
+can see that one coming
+
+448
+00:24:25.100 --> 00:24:29.690
+down, Broadway shrinks or.com/c Y
+F. And then here's a
+
+449
+00:24:29.690 --> 00:24:31.940
+little known secret in that
+you won't find that on
+
+450
+00:24:31.940 --> 00:24:38.600
+Google yet shrinks.com/c Y G.
+This is the actual subversion
+
+451
+00:24:38.600 --> 00:24:42.620
+repository. And I've sent you
+the link to the specific
+
+452
+00:24:42.620 --> 00:24:49.030
+Firefox 0.01 ranch within the
+water. So, so let's back
+
+453
+00:24:49.030 --> 00:24:53.200
+up. Water Firewater is Firefox
+water. Right? So what they've
+
+454
+00:24:53.200 --> 00:24:56.950
+done And it's so clever,
+he's built a Firefox extension
+
+455
+00:24:57.910 --> 00:25:01.390
+that then Ruby will call.
+Wow. But you, but, but
+
+456
+00:25:01.420 --> 00:25:04.660
+you would just keep using
+a water the way you're
+
+457
+00:25:04.660 --> 00:25:07.750
+comfortable with using water. I
+see. It's it's, I'm sure
+
+458
+00:25:07.750 --> 00:25:09.460
+it's going to be very
+cool. And once you have
+
+459
+00:25:09.460 --> 00:25:11.890
+a nice tight recorder, which
+I think that we are
+
+460
+00:25:12.190 --> 00:25:16.720
+getting there with the shrinker.com/cyfd,
+the water web recorder, which
+
+461
+00:25:16.720 --> 00:25:18.790
+jump-starts things, and I want
+to make, make it clear
+
+462
+00:25:18.790 --> 00:25:21.670
+that the water team is
+not a fan of recorders.
+
+463
+00:25:22.360 --> 00:25:26.560
+I've said that publicly, I
+like recorders because they jumpstart
+
+464
+00:25:26.560 --> 00:25:28.900
+the work. But understand that
+they'll get you 80%. You
+
+465
+00:25:28.900 --> 00:25:31.270
+have to stop, hit, save,
+and then edit from there
+
+466
+00:25:31.930 --> 00:25:35.800
+afterwards. But, and then if
+you got cross-browser support, at
+
+467
+00:25:35.800 --> 00:25:38.680
+least on ion and Firefox,
+you've got a really nice
+
+468
+00:25:38.680 --> 00:25:43.240
+tool. Okay. And then of
+course, Travis Illig and Dustin
+
+469
+00:25:43.240 --> 00:25:46.480
+Woodhouse, both of my buddies
+here at Kirlian have written
+
+470
+00:25:46.840 --> 00:25:51.100
+wrappers around water to allow
+an unit to talk to
+
+471
+00:25:51.100 --> 00:25:54.460
+those things. If you can
+check my blog for those
+
+472
+00:25:54.460 --> 00:25:58.390
+things. So those, those are
+the that's, that's free, water's
+
+473
+00:25:58.390 --> 00:26:01.660
+free. And again, it is
+free like a puppy, right?
+
+474
+00:26:01.720 --> 00:26:04.780
+Sure. So there are guys
+here, they struggle with it.
+
+475
+00:26:04.780 --> 00:26:07.330
+Sometimes they start getting into,
+well, I seem to be
+
+476
+00:26:07.330 --> 00:26:09.700
+copy pasting code a lot.
+How can I use <inaudible>
+
+477
+00:26:09.700 --> 00:26:12.580
+to solve that problem? You
+know, these are the kinds
+
+478
+00:26:12.580 --> 00:26:14.890
+of things that you just
+have to stumble with and
+
+479
+00:26:14.890 --> 00:26:19.300
+that's the hidden cost. Now,
+what does pester cat? So
+
+480
+00:26:19.390 --> 00:26:24.070
+pastor cat is a Java
+based proxy based tool for,
+
+481
+00:26:24.340 --> 00:26:29.710
+for $27 at prankster.com/c Y
+B, that will do web
+
+482
+00:26:29.710 --> 00:26:34.720
+testing. And it will work
+on OSX, Mac, windows, or
+
+483
+00:26:34.720 --> 00:26:38.440
+Linux, and also has a
+toolkit that will let you
+
+484
+00:26:38.440 --> 00:26:41.830
+plug it into ant, which
+is the like new we're
+
+485
+00:26:41.830 --> 00:26:44.370
+using. You're familiar with annex.
+This is ant on the
+
+486
+00:26:45.510 --> 00:26:49.620
+automated builds, automated builds. Exactly.
+And this is another really
+
+487
+00:26:49.620 --> 00:26:53.610
+nice tool that we'll also
+do not just gets in
+
+488
+00:26:53.610 --> 00:26:57.930
+post and things like that,
+but also rejects validation of
+
+489
+00:26:57.930 --> 00:26:59.820
+gets and posts. So you
+can put your asserts in
+
+490
+00:26:59.820 --> 00:27:02.880
+like that as well as
+some, some SQL type stuff.
+
+491
+00:27:02.880 --> 00:27:06.660
+So if you're a lamp
+type individual, right. If you're
+
+492
+00:27:06.660 --> 00:27:12.990
+a Linux Apache, my sequel,
+Pearl vamp lamp, right. The
+
+493
+00:27:12.990 --> 00:27:16.050
+lamp stack, right. Then something
+like pester cat would be
+
+494
+00:27:16.050 --> 00:27:19.080
+a really straightforward thing that
+you'd be familiar with right
+
+495
+00:27:19.080 --> 00:27:21.750
+away. But then I would
+ask you to look at,
+
+496
+00:27:21.830 --> 00:27:28.020
+at Ruby because that's something
+that works cross-platform, although water
+
+497
+00:27:28.020 --> 00:27:32.160
+is still specifically windows. Okay.
+So water is still windows
+
+498
+00:27:32.160 --> 00:27:34.620
+because it's talking to the
+IE stuff, but you know,
+
+499
+00:27:34.680 --> 00:27:37.320
+the, the potential for Ruby
+to really become a great
+
+500
+00:27:37.590 --> 00:27:40.530
+general scripting language is going
+to be pretty powerful. Okay.
+
+501
+00:27:40.650 --> 00:27:43.710
+So I E specific seems
+to be kind of the
+
+502
+00:27:44.160 --> 00:27:46.740
+way things go because the
+object model on top of
+
+503
+00:27:46.740 --> 00:27:50.130
+it is so nice. Right?
+And the flexibility is there
+
+504
+00:27:50.490 --> 00:27:56.460
+a there's another tool called
+E unit shrink.com/cya, which is
+
+505
+00:27:56.760 --> 00:27:59.460
+not just about the JavaScript
+object model, but also takes
+
+506
+00:27:59.460 --> 00:28:03.450
+advantage of see script dot
+exe, right? The script runner
+
+507
+00:28:03.450 --> 00:28:09.960
+that comes with with windows
+and it's, it's implemented entirely
+
+508
+00:28:09.960 --> 00:28:13.290
+in JavaScript, but it is
+tailored specifically to windows. So
+
+509
+00:28:13.290 --> 00:28:18.570
+it's using the IED HTML
+model. So it's, it's poking
+
+510
+00:28:18.570 --> 00:28:22.020
+at the browser using the
+browsers, you know, using J
+
+511
+00:28:22.020 --> 00:28:26.520
+script dot DLL, the JavaScript
+engine. So the installation is
+
+512
+00:28:26.520 --> 00:28:29.520
+trivial. It's just, you know,
+X copy deploy. And it
+
+513
+00:28:29.520 --> 00:28:31.860
+allows you also to use
+all the new JavaScript object
+
+514
+00:28:31.860 --> 00:28:36.120
+oriented stuff to extend it.
+Yeah. I, this is a
+
+515
+00:28:36.120 --> 00:28:38.760
+pretty cool tool. And I
+looked at this before we
+
+516
+00:28:38.760 --> 00:28:41.130
+started getting into water, but
+I haven't seen anything moving
+
+517
+00:28:41.130 --> 00:28:44.310
+on this since October of
+last year. And I really
+
+518
+00:28:44.310 --> 00:28:46.950
+liked the idea of whatever
+testing tool I'm going to
+
+519
+00:28:46.950 --> 00:28:49.440
+buy. I want to know
+that it's being actively thought
+
+520
+00:28:49.440 --> 00:28:51.600
+about it's being worked on
+and that people care about
+
+521
+00:28:51.600 --> 00:28:53.790
+it. Right. So I'm not
+really clear if a unit
+
+522
+00:28:53.790 --> 00:28:57.960
+is paused or what's going
+on there, it's still something
+
+523
+00:28:57.960 --> 00:28:59.790
+interesting to watch. And if
+you're going to be, if
+
+524
+00:28:59.790 --> 00:29:01.980
+you like JavaScript and you're
+not interested in learning something
+
+525
+00:29:01.980 --> 00:29:04.290
+like Ruby, then definitely something
+that you might want to
+
+526
+00:29:04.290 --> 00:29:07.890
+take a look at. Okay.
+Now on the JavaScript side,
+
+527
+00:29:08.100 --> 00:29:11.880
+selenium is the one that
+people always compare to Ruby.
+
+528
+00:29:12.300 --> 00:29:14.460
+Not because it has anything
+to do with Ruby or
+
+529
+00:29:14.460 --> 00:29:17.670
+looks anything like Ruby, but
+when people say I want
+
+530
+00:29:17.670 --> 00:29:21.270
+a free functional web based
+tool for testing, and I
+
+531
+00:29:21.270 --> 00:29:24.570
+want it to be easy,
+selenium is just about as
+
+532
+00:29:24.570 --> 00:29:28.440
+easy as it could get,
+but it's really for the
+
+533
+00:29:28.440 --> 00:29:31.320
+average windows guy, presumably you
+and I are the average
+
+534
+00:29:31.320 --> 00:29:36.870
+windows guys. It's really weird.
+The input into them, the
+
+535
+00:29:36.870 --> 00:29:38.250
+input that you would say,
+how, like, what are you,
+
+536
+00:29:38.250 --> 00:29:43.690
+right? Your testing is HTML
+tables. Huh? You write your
+
+537
+00:29:43.690 --> 00:29:46.960
+tests as HTML tables. So
+you would make like a
+
+538
+00:29:46.960 --> 00:29:49.540
+table, like in any HTML
+editor, you could write it
+
+539
+00:29:49.540 --> 00:29:53.260
+in, you know, Mozilla composer,
+front page, and you have
+
+540
+00:29:53.260 --> 00:29:56.140
+three columns. And then the
+first column, you'd say open
+
+541
+00:29:56.590 --> 00:29:58.690
+second column, you'd say the
+page you want to open.
+
+542
+00:29:59.500 --> 00:30:02.170
+And then the third column
+would be for other parameters
+
+543
+00:30:02.170 --> 00:30:04.330
+you'd pass in. Open only
+has the one. So then
+
+544
+00:30:04.330 --> 00:30:07.300
+on the next line, the
+next row in the table,
+
+545
+00:30:07.300 --> 00:30:11.950
+you might say something like
+verify text present. So that
+
+546
+00:30:11.950 --> 00:30:14.470
+left column, that first column
+are the functions. You're going
+
+547
+00:30:14.470 --> 00:30:17.050
+to be calling in the,
+in the toolkit. So you're
+
+548
+00:30:17.050 --> 00:30:21.250
+saying open this to, you
+know, open franklins.net, next line,
+
+549
+00:30:21.280 --> 00:30:26.490
+verify element, present Carl Franklin or
+whatever verified texts present. And
+
+550
+00:30:26.520 --> 00:30:29.830
+you can say click and
+wait, verify location. All these
+
+551
+00:30:29.830 --> 00:30:32.710
+kinds of verbs appear in
+that left side. And then
+
+552
+00:30:32.710 --> 00:30:35.500
+the other two columns become
+input. Now what's cool about
+
+553
+00:30:35.500 --> 00:30:39.520
+this is that nontechnical people
+can do this. Okay? You
+
+554
+00:30:39.520 --> 00:30:42.100
+buy own HTML tables, right?
+They could open it up.
+
+555
+00:30:42.130 --> 00:30:43.780
+You could give us your
+business guy. He could open
+
+556
+00:30:43.780 --> 00:30:45.790
+it up into front page.
+And you could just say,
+
+557
+00:30:45.790 --> 00:30:47.770
+well, here's a list of
+things that you could do.
+
+558
+00:30:47.890 --> 00:30:49.390
+And you just basically give
+them a text file that
+
+559
+00:30:49.390 --> 00:30:51.070
+says, here's what you can
+do, make a table, make
+
+560
+00:30:51.070 --> 00:30:53.260
+a table and write the
+things in the order that
+
+561
+00:30:53.260 --> 00:30:57.010
+you want. Then when they
+run them, the, the running
+
+562
+00:30:57.010 --> 00:31:00.010
+actually occurs in the browser.
+So the browser's doing the
+
+563
+00:31:00.010 --> 00:31:02.860
+work. So open up a
+browser and go to that
+
+564
+00:31:02.920 --> 00:31:05.770
+Earl that I just sent
+you. This is a really
+
+565
+00:31:05.770 --> 00:31:09.490
+interesting tool that test runner
+you can see at shrinks.com/c
+
+566
+00:31:09.490 --> 00:31:12.370
+Y N, and then on
+the right side there, it
+
+567
+00:31:12.370 --> 00:31:14.860
+says, execute test. This is
+all running in the browser.
+
+568
+00:31:15.550 --> 00:31:18.250
+Just say, you know, run
+all. You can also walk
+
+569
+00:31:18.250 --> 00:31:21.730
+through them and you'll watch
+that. It's actually using JavaScript
+
+570
+00:31:21.730 --> 00:31:24.730
+to look at those tables
+and then do the work.
+
+571
+00:31:24.730 --> 00:31:27.640
+And it's running your site
+in a frame below. Now
+
+572
+00:31:27.640 --> 00:31:30.730
+there's a, there's a test
+demo here that we could
+
+573
+00:31:30.730 --> 00:31:33.370
+shrink their eyes and tell
+people about. So again, you
+
+574
+00:31:33.370 --> 00:31:40.510
+can take a look@thedemoofthatatshrinks.com slash
+C Y N. And look@thehomepageforseleniumatshrinker.com
+
+575
+00:31:40.510 --> 00:31:43.660
+slash C Y nine. Okay,
+cool. Now I gotta tell
+
+576
+00:31:43.660 --> 00:31:45.670
+you, I go back and
+forth because there's some really
+
+577
+00:31:45.670 --> 00:31:48.370
+neat stuff you can do
+in Ruby, some very specific
+
+578
+00:31:48.370 --> 00:31:52.030
+kinds of testing, but for
+really simple kind of acceptance
+
+579
+00:31:52.030 --> 00:31:55.630
+testing, if you didn't have
+enough testers, but you had
+
+580
+00:31:55.630 --> 00:31:58.540
+a lot of, you know,
+business people who know what
+
+581
+00:31:58.540 --> 00:32:01.000
+they want and, and could
+be given some kind of
+
+582
+00:32:01.000 --> 00:32:03.490
+test philosophy. Yeah. There's really
+something to be said for
+
+583
+00:32:03.490 --> 00:32:07.600
+selenium now, because it's written
+entirely in JavaScript. It really
+
+584
+00:32:07.600 --> 00:32:11.110
+works anywhere, but you can't
+do, I couldn't write a
+
+585
+00:32:11.110 --> 00:32:15.370
+test for google.com because I
+don't own their domain. So
+
+586
+00:32:15.370 --> 00:32:18.070
+you do have to install
+this on your service side
+
+587
+00:32:18.940 --> 00:32:21.220
+and then cause you don't
+want it. Cause the JavaScript
+
+588
+00:32:21.220 --> 00:32:23.230
+has to come from the
+same location as what the
+
+589
+00:32:23.230 --> 00:32:25.450
+thing you're going to test.
+Right? Otherwise you've got some
+
+590
+00:32:25.450 --> 00:32:29.890
+cross browser things, but there's
+also selenium drivers being written.
+
+591
+00:32:29.890 --> 00:32:31.300
+So there's two ways you
+can do this. It can
+
+592
+00:32:31.300 --> 00:32:34.690
+run in the browser or
+it could be driven by
+
+593
+00:32:35.050 --> 00:32:38.230
+Ruby or C sharp or
+whatever kind of driver application
+
+594
+00:32:38.230 --> 00:32:40.910
+is currently being, being used.
+Okay. But like I'm running
+
+595
+00:32:40.910 --> 00:32:44.120
+this right now inside of
+Firefox and it's, it's pretty,
+
+596
+00:32:44.150 --> 00:32:49.100
+pretty amazing if you're not
+doing functional testing, sit down
+
+597
+00:32:49.100 --> 00:32:51.920
+and write one of these,
+one of these tests and
+
+598
+00:32:51.920 --> 00:32:54.020
+get it working on maybe
+your blog or something simple.
+
+599
+00:32:54.020 --> 00:32:56.240
+And I really think that
+you'll, you'll be amazed at
+
+600
+00:32:56.240 --> 00:32:59.270
+how, how simple functional testing
+has really become. And then
+
+601
+00:32:59.370 --> 00:33:01.280
+I'm sorry. Another thing I
+wanted to point out was
+
+602
+00:33:01.280 --> 00:33:04.250
+that a really great guide
+to why Ruby is cool.
+
+603
+00:33:04.700 --> 00:33:09.110
+Is it shrinks.com/c Y M
+it's called poignant guide to
+
+604
+00:33:09.110 --> 00:33:13.550
+Ruby. It's a weird little
+cartoony. He's got like cartoon
+
+605
+00:33:13.550 --> 00:33:16.790
+foxes and stuff. So it's
+kind of obscure, but download
+
+606
+00:33:16.790 --> 00:33:19.160
+the PDF and read it
+and it'll tell you why
+
+607
+00:33:19.160 --> 00:33:20.720
+he thinks it's kind, kinda
+like Rory wrote it. If
+
+608
+00:33:20.720 --> 00:33:24.020
+Rory wrote a guideline on
+Ruby, it would be this
+
+609
+00:33:24.020 --> 00:33:29.920
+guy's poignant guide to Ruby's
+Good. And, and now visual
+
+610
+00:33:29.920 --> 00:33:32.680
+studio team system has some
+testing stuff built into it
+
+611
+00:33:32.680 --> 00:33:35.470
+as well. It does. I
+haven't looked at the, any
+
+612
+00:33:35.470 --> 00:33:38.830
+of the testing stuff short
+of how it does unit
+
+613
+00:33:38.830 --> 00:33:41.080
+testing, right? Like, you know,
+it's a as a, you
+
+614
+00:33:41.080 --> 00:33:43.360
+know, a visual studio team
+system as a replacement for
+
+615
+00:33:43.360 --> 00:33:45.940
+end unit. Okay. Have you
+looked at it? Does it
+
+616
+00:33:45.940 --> 00:33:48.280
+do web based? No, I,
+I haven't. I mean at
+
+617
+00:33:48.310 --> 00:33:52.990
+last I interviewed somebody when,
+when I talked to the
+
+618
+00:33:52.990 --> 00:33:54.970
+team, they said it did
+have a web testing tool,
+
+619
+00:33:54.970 --> 00:33:57.910
+but there wasn't a windows
+testing tool. Is it a
+
+620
+00:33:57.910 --> 00:34:01.270
+visual studio team system load
+testing tool? Does it? I
+
+621
+00:34:01.270 --> 00:34:04.300
+haven't used it myself, but,
+but from what I understand,
+
+622
+00:34:04.300 --> 00:34:06.460
+it's a, it's a web
+testing tool and that's about
+
+623
+00:34:06.460 --> 00:34:08.560
+all I know Here. We'll
+put it out into the
+
+624
+00:34:08.560 --> 00:34:12.010
+world. They'll tell us. No,
+I suspect it's probably the
+
+625
+00:34:12.190 --> 00:34:16.240
+application center test on steroids
+probably, but I don't know
+
+626
+00:34:16.240 --> 00:34:18.340
+if it's functional web testing.
+I have not seen that
+
+627
+00:34:18.340 --> 00:34:20.590
+if I had, I probably
+would be using it. We'll
+
+628
+00:34:20.590 --> 00:34:22.540
+leave it up to an
+alert listener to send us
+
+629
+00:34:22.540 --> 00:34:24.250
+a, the skinny on that.
+And we can talk about
+
+630
+00:34:24.250 --> 00:34:27.490
+it next week. Absolutely. So
+there's another product out there
+
+631
+00:34:27.490 --> 00:34:31.630
+Scott, by red gate called
+ants, does that fall into
+
+632
+00:34:31.630 --> 00:34:35.950
+the category of a web
+testing? So There's ants load.
+
+633
+00:34:36.700 --> 00:34:39.010
+The red gate software got
+an S series of products
+
+634
+00:34:39.010 --> 00:34:41.980
+called the ants, profiler, aunts
+load. Aunts load is a
+
+635
+00:34:41.980 --> 00:34:46.120
+load testing application. So like
+using segway, there's like segway,
+
+636
+00:34:46.120 --> 00:34:49.660
+silk performer and segway silk
+test. Those are calling out
+
+637
+00:34:49.690 --> 00:34:54.430
+a functional test tool versus
+a, a load testing tool.
+
+638
+00:34:55.240 --> 00:34:57.370
+Aunts load is more of
+a, I want to beat
+
+639
+00:34:57.370 --> 00:34:59.380
+on that web server as
+hard as I can and
+
+640
+00:34:59.380 --> 00:35:03.340
+see if the application falls
+over. I see. Okay, good.
+
+641
+00:35:03.340 --> 00:35:06.380
+So they really don't belong
+in the functional testing. If,
+
+642
+00:35:06.390 --> 00:35:09.430
+if today, what we're talking
+about is, is a functional
+
+643
+00:35:09.430 --> 00:35:12.850
+testing than no. Okay. That's
+a, that's a pretty good
+
+644
+00:35:12.850 --> 00:35:15.490
+wrap up there. Scott. There's
+a lot of really cool
+
+645
+00:35:15.490 --> 00:35:18.520
+stuff out there and, you
+know, varying in prices from
+
+646
+00:35:18.850 --> 00:35:21.190
+a, you know, get a
+second mortgage to free. And
+
+647
+00:35:21.190 --> 00:35:24.520
+the waste a lot of
+time we've found at Karelian
+
+648
+00:35:24.520 --> 00:35:28.240
+a nice balance for our
+large load testing. We use
+
+649
+00:35:28.240 --> 00:35:31.810
+segway and we paid a
+lot for it. And for
+
+650
+00:35:31.810 --> 00:35:35.050
+our functional testing, we use
+water and we continue to
+
+651
+00:35:35.050 --> 00:35:38.040
+watch selenium and you know,
+I'm to figure out what
+
+652
+00:35:38.040 --> 00:35:39.720
+I want to use to
+test DAS blog. I know
+
+653
+00:35:39.720 --> 00:35:41.640
+that we need a unit
+testing framework and it's going
+
+654
+00:35:41.640 --> 00:35:43.920
+to be probably because we're
+an open source project and
+
+655
+00:35:43.920 --> 00:35:47.570
+we're free either selenium or,
+or why. And it sounds
+
+656
+00:35:47.570 --> 00:35:50.030
+like if you want to
+test windows applications, you really
+
+657
+00:35:50.030 --> 00:35:53.030
+ought to look at test
+complete. Yeah. Automated QA test
+
+658
+00:35:53.030 --> 00:35:55.610
+complete for, for wind forms,
+application for windows apps, any
+
+659
+00:35:55.610 --> 00:35:59.480
+kind of existing comm application.
+Pretty hardcore. You could also
+
+660
+00:35:59.480 --> 00:36:04.190
+look at the stuff from,
+from mercury or from segway,
+
+661
+00:36:04.190 --> 00:36:05.600
+but I think you're gonna
+spend a lot more money.
+
+662
+00:36:05.630 --> 00:36:08.960
+Right. Okay, good. So what
+else Besides testing has been
+
+663
+00:36:08.960 --> 00:36:12.920
+on your mind this week?
+Scott? Well, people keep sending
+
+664
+00:36:12.920 --> 00:36:18.230
+me links to oerb.com. It's
+this home entertainment application, not
+
+665
+00:36:18.230 --> 00:36:22.040
+quite media center wants to
+be media center thing. It
+
+666
+00:36:22.040 --> 00:36:23.810
+seems to be that kind
+of the, the meme that's
+
+667
+00:36:23.810 --> 00:36:26.600
+moving around the net right
+now. Like, Hey morphs, cool
+
+668
+00:36:26.840 --> 00:36:29.510
+People trying to do remote
+TV. You know, we need
+
+669
+00:36:29.510 --> 00:36:32.120
+to do a talk on
+we'll do it. We'll do
+
+670
+00:36:32.120 --> 00:36:34.130
+a talk. Let's do this.
+Let's do a show on
+
+671
+00:36:34.130 --> 00:36:36.620
+poor man's media centers. Cause
+there are at least a
+
+672
+00:36:36.620 --> 00:36:39.890
+dozen and it's like any
+excuse to not use windows
+
+673
+00:36:39.890 --> 00:36:42.080
+media center. People will come
+up with a way there's
+
+674
+00:36:42.080 --> 00:36:45.830
+Java based tools and there's
+is beyond TV from SnapStream.
+
+675
+00:36:45.830 --> 00:36:47.300
+And there are, I feel
+like I know more about
+
+676
+00:36:47.300 --> 00:36:49.340
+those things just from listening
+to you talk on the
+
+677
+00:36:49.340 --> 00:36:52.580
+previous shows then than a,
+than I've ever wanted to
+
+678
+00:36:52.580 --> 00:36:57.350
+know. Yeah. You know, frankly,
+I spent years trying to
+
+679
+00:36:57.350 --> 00:36:59.540
+figure out what I was
+going to use to record
+
+680
+00:36:59.540 --> 00:37:01.640
+TV. A large part of
+my life will never be
+
+681
+00:37:01.640 --> 00:37:03.740
+gotten back because I spent
+time screwing around with the
+
+682
+00:37:03.740 --> 00:37:06.410
+ATI, all in blunder, trying
+to get it to work
+
+683
+00:37:06.410 --> 00:37:11.330
+on my, on my system.
+I've got, I'll see, I
+
+684
+00:37:11.330 --> 00:37:12.830
+was going, you know, I
+was going to say hodgepodge,
+
+685
+00:37:12.860 --> 00:37:15.080
+but I remembered last time
+that someone told me it
+
+686
+00:37:15.080 --> 00:37:19.040
+was pronounced hop hog, whatever,
+the hop hog card that
+
+687
+00:37:19.040 --> 00:37:21.560
+I've gotten, my $50 cheapo
+card, it was 50 bucks.
+
+688
+00:37:21.560 --> 00:37:24.200
+I can pronounce it, how
+I want to the hotdog
+
+689
+00:37:24.230 --> 00:37:26.810
+car that I've got just
+plugged right into, beyond TV,
+
+690
+00:37:27.320 --> 00:37:29.960
+which is really inexpensive. Now
+people are saying to look
+
+691
+00:37:29.960 --> 00:37:33.200
+at orb because it does
+trans coding. So basically I
+
+692
+00:37:33.200 --> 00:37:35.930
+could be at a hotel
+log into my machine at
+
+693
+00:37:35.930 --> 00:37:37.730
+home by punching a hole
+in the firewall. And it
+
+694
+00:37:37.730 --> 00:37:40.490
+would transcode my, my shows
+and send them to me.
+
+695
+00:37:40.520 --> 00:37:43.760
+Yeah. Interestingly And stream them.
+Right. I mean, not just
+
+696
+00:37:43.760 --> 00:37:47.270
+that. Yeah. So it'll basically
+say, well, yeah, I've got
+
+697
+00:37:47.270 --> 00:37:49.460
+a giant file. That's two
+gigs, but I've got low
+
+698
+00:37:49.460 --> 00:37:52.310
+bandwidth here. Stream it to
+me at two 56 K
+
+699
+00:37:52.850 --> 00:37:55.790
+yeah. An orb does that.
+And people are excited about
+
+700
+00:37:55.790 --> 00:37:58.970
+it because apparently it's easy
+to set up, but beyond
+
+701
+00:37:58.970 --> 00:38:00.830
+TV has done that for
+a couple of years. I've
+
+702
+00:38:00.830 --> 00:38:03.290
+been, I've been going to
+hotels on, on trips, going
+
+703
+00:38:03.290 --> 00:38:06.500
+to tech ed and watching
+TV, VMI be on TV
+
+704
+00:38:06.740 --> 00:38:09.980
+or be on TV link
+stuff from SnapStream. So maybe
+
+705
+00:38:09.980 --> 00:38:11.930
+a listener can tell me
+why orb is cooler than
+
+706
+00:38:11.930 --> 00:38:14.720
+that. Or maybe they didn't
+realize that beyond TV already
+
+707
+00:38:14.720 --> 00:38:16.940
+does that. Okay. So that
+was, that was, that was
+
+708
+00:38:16.940 --> 00:38:19.100
+an interesting thing though. But
+people keep saying, take a
+
+709
+00:38:19.100 --> 00:38:20.870
+look at OERB, take a
+look at orb. It also
+
+710
+00:38:20.870 --> 00:38:22.820
+seems like if you put
+orb on a media center,
+
+711
+00:38:22.820 --> 00:38:25.700
+PC orb does the recording
+and the media center P
+
+712
+00:38:25.700 --> 00:38:28.310
+doesn't. Huh. And that seemed
+a little disturbing to me.
+
+713
+00:38:28.370 --> 00:38:31.340
+It was cool that orb
+would create files in the
+
+714
+00:38:31.340 --> 00:38:33.770
+media center, PC format. But
+I don't know what I
+
+715
+00:38:33.770 --> 00:38:36.700
+think about having another, that's
+not the media center doing
+
+716
+00:38:36.700 --> 00:38:41.130
+the Recording for me. How's
+that different from Slingbox. Okay.
+
+717
+00:38:41.130 --> 00:38:45.030
+So, so Slingbox, if I
+understand correctly, just looks at
+
+718
+00:38:45.030 --> 00:38:48.090
+your media and quote unquote,
+slings it around. It is
+
+719
+00:38:48.090 --> 00:38:52.080
+basically a, a hardware transcoder
+I see it's a piece
+
+720
+00:38:52.080 --> 00:38:54.870
+of hardware that will, that
+will throw your stuff around
+
+721
+00:38:54.870 --> 00:38:57.300
+to wherever you want. And
+from what I understand with
+
+722
+00:38:57.300 --> 00:39:00.210
+Slingbox, it's not like it
+plugs in and you can
+
+723
+00:39:00.210 --> 00:39:03.480
+have multiple peoples, you know,
+stealing cable off of your
+
+724
+00:39:03.480 --> 00:39:07.860
+box. Basically you have to
+know, nobody can watch another
+
+725
+00:39:07.860 --> 00:39:10.590
+channel while you're watching it
+remotely. In other words, it's
+
+726
+00:39:10.590 --> 00:39:14.880
+a re definitely a single
+user remote a viewer for
+
+727
+00:39:14.880 --> 00:39:18.210
+your whatever's coming off your
+cable box. Yeah. Well Slingbox
+
+728
+00:39:18.210 --> 00:39:21.840
+apparently supports DVR satellite boxes,
+DVDs. I mean, it is
+
+729
+00:39:21.840 --> 00:39:24.420
+a it's it's less about
+being a PC and Slingbox
+
+730
+00:39:24.420 --> 00:39:29.280
+is more about capturing your
+existing media, not your media
+
+731
+00:39:29.280 --> 00:39:32.610
+center, but your existing entertainment
+centers, whatever that is content
+
+732
+00:39:32.940 --> 00:39:35.070
+and storing it off somewhere.
+So then you can look
+
+733
+00:39:35.070 --> 00:39:37.770
+at it elsewhere. Okay. So
+I think Slingbox should be
+
+734
+00:39:37.770 --> 00:39:39.150
+the kind of thing that
+I would recommend to my
+
+735
+00:39:39.150 --> 00:39:41.730
+dad. Yeah. Because it would
+plug in, it would work.
+
+736
+00:39:41.760 --> 00:39:43.140
+He would have to think
+about it. It is an
+
+737
+00:39:43.140 --> 00:39:46.470
+appliance. Okay. While all of
+these different tools that we'll
+
+738
+00:39:46.470 --> 00:39:50.340
+talk about in a future
+show about media centerpieces all
+
+739
+00:39:50.340 --> 00:39:53.250
+require a PC. I don't
+get the impression that, that
+
+740
+00:39:53.340 --> 00:39:55.650
+other than the sling player,
+which is the thing that
+
+741
+00:39:55.650 --> 00:39:58.800
+you would use to watch
+your shows, you don't require
+
+742
+00:39:58.800 --> 00:40:01.500
+a whole system to use
+a Slingbox On that future
+
+743
+00:40:01.500 --> 00:40:04.020
+show. Perhaps we should wait
+until something really cool comes
+
+744
+00:40:04.020 --> 00:40:06.990
+out. Yeah. I need to
+get myself one of these
+
+745
+00:40:06.990 --> 00:40:09.630
+high Def TV shows that
+you're talking about the six
+
+746
+00:40:09.630 --> 00:40:13.290
+tuners or something. Right. And
+apparently Sony's also got a
+
+747
+00:40:13.950 --> 00:40:17.880
+very expensive and complicated thing
+called location, free TV. I
+
+748
+00:40:17.880 --> 00:40:21.240
+noticed that when I recently
+upgraded my PSP, my PlayStation
+
+749
+00:40:21.240 --> 00:40:24.750
+portable, I now have built
+in location free TV. So
+
+750
+00:40:24.750 --> 00:40:28.410
+this is kind of Sony
+Slingbox okay. Except it's. And
+
+751
+00:40:28.410 --> 00:40:30.390
+they've got it up at
+Fry's and people walk past
+
+752
+00:40:30.390 --> 00:40:32.730
+it and don't care got
+a URL for that. Yeah.
+
+753
+00:40:32.730 --> 00:40:36.000
+That is up at <inaudible>
+dot com slash C Y
+
+754
+00:40:36.030 --> 00:40:40.710
+H. This is a Sony
+kind of a sling box.
+
+755
+00:40:40.770 --> 00:40:42.750
+And then they they've got
+pictures on their little flash
+
+756
+00:40:42.750 --> 00:40:47.910
+demo of people holding, not
+quite origami looking devices, sitting
+
+757
+00:40:47.910 --> 00:40:51.120
+in their lounge chairs, watching
+television, I C and a,
+
+758
+00:40:51.120 --> 00:40:52.620
+and of course with your
+PSP, you'd be able to
+
+759
+00:40:52.620 --> 00:40:56.580
+watch it as well. Personally,
+I'd much rather avoid streaming
+
+760
+00:40:56.580 --> 00:40:58.650
+this stuff around and I
+would just copy it to
+
+761
+00:40:58.650 --> 00:41:00.510
+my PSP and watch it
+anywhere I want to. I
+
+762
+00:41:00.510 --> 00:41:03.450
+really would have never, The
+media is so cheap. You
+
+763
+00:41:03.450 --> 00:41:06.600
+know, now that become lower
+class or, you know, w
+
+764
+00:41:07.110 --> 00:41:09.240
+T you know, too low
+brow for us, This is
+
+765
+00:41:09.240 --> 00:41:11.640
+the thing I was explaining.
+I was explaining to my,
+
+766
+00:41:11.670 --> 00:41:14.160
+my, my 80 year old
+uncle, the concept of sneaker
+
+767
+00:41:14.160 --> 00:41:16.500
+net, because he's got a
+dial up connection. I wanted
+
+768
+00:41:16.500 --> 00:41:18.180
+to back up his computer.
+So I went over there
+
+769
+00:41:18.180 --> 00:41:20.740
+this weekend with a, I
+was going to take over
+
+770
+00:41:20.740 --> 00:41:23.250
+a, like a USB key,
+but it didn't have one.
+
+771
+00:41:23.250 --> 00:41:25.410
+So I took my camera,
+I took my camera with
+
+772
+00:41:25.410 --> 00:41:27.780
+two gigs. I plugged in
+my digital camera and I
+
+773
+00:41:27.780 --> 00:41:31.050
+backed up his whole computer.
+And I said, I said,
+
+774
+00:41:31.140 --> 00:41:32.550
+what am I doing? What
+are you doing here? You
+
+775
+00:41:32.550 --> 00:41:34.070
+know, why couldn't just email
+it to you? And I
+
+776
+00:41:34.070 --> 00:41:37.580
+said, well, you know, it's
+FedEx is faster than your
+
+777
+00:41:37.580 --> 00:41:39.440
+dial up. You know, I
+could overnight this thing and
+
+778
+00:41:39.500 --> 00:41:41.330
+it would come to me
+faster than you could upload
+
+779
+00:41:41.330 --> 00:41:44.270
+it. Yeah. So I was
+saying, well, it's great that
+
+780
+00:41:44.270 --> 00:41:46.790
+we have location free TV
+and we're streaming media around
+
+781
+00:41:46.790 --> 00:41:49.670
+and whatnot. But it's just
+as easy if I really
+
+782
+00:41:49.670 --> 00:41:51.650
+want to watch the show
+to burn it to a
+
+783
+00:41:51.650 --> 00:41:53.660
+DVD and put it in
+my bag. Right. How many
+
+784
+00:41:53.660 --> 00:41:55.220
+times have you gotten to
+a hotel? And they have
+
+785
+00:41:55.430 --> 00:41:58.910
+a crap connection. All right.
+I know you can't count
+
+786
+00:41:58.910 --> 00:42:03.610
+on the wireless at Starbucks
+to get you the, the
+
+787
+00:42:03.610 --> 00:42:05.240
+winter Olympics. I'm just going
+to burn them to a
+
+788
+00:42:05.240 --> 00:42:07.250
+disc and I'll take them
+with me. Yep, exactly. So
+
+789
+00:42:07.250 --> 00:42:09.050
+there's something to be said
+for sneaker net. I agree.
+
+790
+00:42:09.560 --> 00:42:11.810
+So a what what's you
+got one more thing on
+
+791
+00:42:11.810 --> 00:42:13.580
+the list here that you
+want to talk about halo
+
+792
+00:42:13.590 --> 00:42:16.130
+zero. Oh, this is the
+coolest man. I love this.
+
+793
+00:42:16.430 --> 00:42:22.040
+This is a two D
+side scroller quote, unquote, port
+
+794
+00:42:22.190 --> 00:42:26.330
+of halo. So it's a
+side scroller halo. It's like,
+
+795
+00:42:26.330 --> 00:42:29.390
+remember like airplay Contra or,
+you know, our type, those
+
+796
+00:42:29.390 --> 00:42:33.290
+kind of like classic three
+20 by two big pixel.
+
+797
+00:42:33.680 --> 00:42:39.500
+This is absolutely fantastic. It's
+a trickster.com/c Y I, and
+
+798
+00:42:39.500 --> 00:42:41.810
+it is brilliant. You might
+have to struggle with the
+
+799
+00:42:41.810 --> 00:42:44.690
+download it. So it's very
+popular. All right. So let
+
+800
+00:42:44.690 --> 00:42:47.270
+me, let me ask, did
+they start with the actual
+
+801
+00:42:47.270 --> 00:42:51.740
+halo environment? No. Is it
+completely redone? This is a,
+
+802
+00:42:51.750 --> 00:42:54.710
+this is just a as
+if halo is a comic
+
+803
+00:42:54.710 --> 00:42:56.960
+book. Alright, so it's brand
+new. They didn't use any
+
+804
+00:42:56.960 --> 00:42:59.180
+of the bits from halo.
+No, no, no. This is,
+
+805
+00:42:59.210 --> 00:43:02.000
+this is an, Oh, this
+is an homage. I got
+
+806
+00:43:02.000 --> 00:43:04.820
+you to be, to be
+French of what they're doing.
+
+807
+00:43:05.200 --> 00:43:07.850
+It's cool. It's fantastic. Here's
+the link. Take a look
+
+808
+00:43:07.850 --> 00:43:10.250
+at that. Curl it. It
+reminds me a lot of
+
+809
+00:43:10.250 --> 00:43:12.980
+like Contra or super Mario.
+It's got that kind of
+
+810
+00:43:12.980 --> 00:43:18.560
+classic crisp, 2d, shaded, 2d,
+Sprite style. It's a blast
+
+811
+00:43:18.560 --> 00:43:21.080
+to play. They use the
+same heads up display as
+
+812
+00:43:21.080 --> 00:43:25.660
+halo. And the, the graphics
+are really very nice. It's,
+
+813
+00:43:25.660 --> 00:43:27.860
+it's a really fun game.
+And I don't know why,
+
+814
+00:43:27.860 --> 00:43:31.040
+it's why it's free. I
+love those horizontal play. Oh
+
+815
+00:43:31.040 --> 00:43:32.900
+yeah. They've even got a
+level editor now, so you
+
+816
+00:43:32.900 --> 00:43:36.350
+can, you can make your
+own levels. That's great. Fantastic
+
+817
+00:43:36.350 --> 00:43:39.590
+stuff. So Scott, that, I
+guess that's a show. What
+
+818
+00:43:39.590 --> 00:43:41.750
+are we gonna talk about
+next week? I think next
+
+819
+00:43:41.750 --> 00:43:43.970
+week, we're going to talk
+about the new Microsoft command
+
+820
+00:43:43.970 --> 00:43:48.080
+shell codename. Monad. This is
+like the new dos prompt
+
+821
+00:43:48.110 --> 00:43:51.080
+for, for windows. And I
+am absolutely loving it. I'm
+
+822
+00:43:51.080 --> 00:43:53.600
+in love with this thing.
+Kevin Hill turned me on to
+
+823
+00:43:53.600 --> 00:43:56.270
+this thing. I looked at
+it before I'd said, ah,
+
+824
+00:43:56.300 --> 00:43:58.970
+this is too complicated. And
+then one day I needed
+
+825
+00:43:58.970 --> 00:44:01.820
+it and I started poking
+around and it is absolutely
+
+826
+00:44:01.820 --> 00:44:04.730
+fantastic. All right. It's, it's
+the way that we're going.
+
+827
+00:44:04.730 --> 00:44:05.960
+And you got to check
+it out. And then I
+
+828
+00:44:05.960 --> 00:44:07.850
+think maybe the week after
+that, we'll talk about a
+
+829
+00:44:07.850 --> 00:44:12.350
+little bit more about micro
+formats. Micro formats are, well,
+
+830
+00:44:12.440 --> 00:44:15.620
+that'll be a show then
+when you start, he just
+
+831
+00:44:15.620 --> 00:44:18.290
+won't even start. All right,
+Scott. Thanks a lot. And
+
+832
+00:44:18.320 --> 00:44:20.540
+thank you for listening and
+we'll see you next week
+
+833
+00:44:20.630 --> 00:44:21.530
+on the handsome notes.
+

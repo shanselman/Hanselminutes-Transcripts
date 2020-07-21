@@ -1,0 +1,3597 @@
+WEBVTT FILE
+
+1
+00:00:12.060 --> 00:00:16.740
+From Hanselman it's dot com
+it's Hansel minutes or weekly
+
+2
+00:00:16.740 --> 00:00:21.060
+discussion with web developer and
+technologists. Scott Hanselman hosted by
+
+3
+00:00:21.060 --> 00:00:25.950
+Carl Franklin. This is Lauren's Ryan
+announcing show number one 17
+
+4
+00:00:26.190 --> 00:00:32.130
+recorded live Wednesday, June 4th, 2008. Support
+for Hanselman it's is provided
+
+5
+00:00:32.130 --> 00:00:36.390
+by tellering rad controls, the
+most comprehensive suite of components
+
+6
+00:00:36.390 --> 00:00:45.960
+for windows forms and asp.net
+web applications. online@wwwdottelerik.com and by
+
+7
+00:00:45.960 --> 00:00:49.530
+the code better blog network,
+delivering tried and true solutions
+
+8
+00:00:49.530 --> 00:00:56.880
+to real world problems for
+building better software online@covidbetter.com. Support
+
+9
+00:00:56.880 --> 00:01:00.420
+is also provided by DACA
+developers journal the world's leading.net
+
+10
+00:01:00.420 --> 00:01:07.440
+developer magazine online at www
+dot <inaudible> dot com. In
+
+11
+00:01:07.440 --> 00:01:14.280
+this episode, Scott talks internationalization
+with developer Michael Kaplan. Hi,
+
+12
+00:01:14.280 --> 00:01:16.020
+this is Scott Hanselman and
+this is another episode of
+
+13
+00:01:16.020 --> 00:01:17.940
+Hansel minutes. And I'm sitting
+here at tech ed with
+
+14
+00:01:17.940 --> 00:01:21.330
+my friend Michael Kaplan, a
+developer in windows international. How's
+
+15
+00:01:21.330 --> 00:01:22.980
+it going, Michael? Thanks for
+sitting down with me. Oh,
+
+16
+00:01:23.010 --> 00:01:25.020
+pretty good. Glad to do
+it now. You don't have
+
+17
+00:01:25.020 --> 00:01:26.460
+known each other for a
+long time. And I think
+
+18
+00:01:26.460 --> 00:01:29.040
+we ended up meeting because
+I commented on your blog
+
+19
+00:01:29.040 --> 00:01:33.300
+with regards to my interest
+in Ethiopian languages, specifically Amharic.
+
+20
+00:01:33.560 --> 00:01:35.060
+I actually, I think the
+first time came up was
+
+21
+00:01:35.060 --> 00:01:38.450
+that Turkish bug, but the,
+the Abigail Actually, what was
+
+22
+00:01:38.450 --> 00:01:40.130
+interesting about the Turkish book,
+cause you know, I'm in
+
+23
+00:01:40.130 --> 00:01:42.680
+an, I'm interested in internationalization
+and you're a full time
+
+24
+00:01:42.680 --> 00:01:46.370
+developer and internationalization. Why is
+the Turkish language so interesting
+
+25
+00:01:46.370 --> 00:01:51.710
+for Microsoft developers? Unfortunately, it's
+most interesting because of the
+
+26
+00:01:51.710 --> 00:01:55.520
+bug that commonly happens and
+that's to do with the
+
+27
+00:01:55.520 --> 00:01:59.000
+Turkish eye where they have
+a dotted uppercase version and
+
+28
+00:01:59.000 --> 00:02:02.120
+a dateless lowercase version and
+they case it the way
+
+29
+00:02:02.120 --> 00:02:04.970
+you'd expect where the doubtless
+and dotted go together. We
+
+30
+00:02:04.970 --> 00:02:07.370
+don't do that, but it
+means that they expect something
+
+31
+00:02:07.370 --> 00:02:10.970
+totally different, done it framework
+supports it well, but it
+
+32
+00:02:10.970 --> 00:02:13.790
+means all kinds of apps
+get broken all the time
+
+33
+00:02:13.790 --> 00:02:16.520
+because they case something, they
+can't find a character later.
+
+34
+00:02:16.850 --> 00:02:22.310
+I think that your blogging
+right, actually broken at one
+
+35
+00:02:22.310 --> 00:02:23.990
+at one point because of
+that or not the whole
+
+36
+00:02:23.990 --> 00:02:27.410
+thing, but part of it.
+And then you, you track
+
+37
+00:02:27.410 --> 00:02:29.270
+down the bug, you find
+the one line of code
+
+38
+00:02:29.270 --> 00:02:32.540
+that is responsible for bringing
+everything down. Right? Exactly. And
+
+39
+00:02:32.540 --> 00:02:34.940
+a very good example of
+that would be say that
+
+40
+00:02:34.940 --> 00:02:36.890
+you had an application that
+was going to check for
+
+41
+00:02:36.890 --> 00:02:39.620
+the word fail in a
+text box and the user
+
+42
+00:02:39.620 --> 00:02:42.740
+typed in fail F a
+I L all lower case
+
+43
+00:02:42.740 --> 00:02:45.410
+with a, an I with
+a dot on it. And
+
+44
+00:02:45.410 --> 00:02:48.620
+in your code you said
+text box dot two upper.
+
+45
+00:02:49.490 --> 00:02:53.720
+You would get in Turkish
+F a capital I with
+
+46
+00:02:53.720 --> 00:02:56.300
+a dot on it. L
+and then you would check
+
+47
+00:02:56.300 --> 00:02:59.030
+to see if that equals
+fail and it wouldn't right.
+
+48
+00:02:59.110 --> 00:03:02.740
+Your application would fail. Right.
+Makes total sense when you
+
+49
+00:03:02.740 --> 00:03:05.800
+explained that the Turks have
+four eyes. Yes, but it
+
+50
+00:03:05.800 --> 00:03:08.670
+was very, not intuitive, But
+all a wonderful things in
+
+51
+00:03:08.670 --> 00:03:11.520
+the language about vowel harmony
+and the way that, the
+
+52
+00:03:11.520 --> 00:03:15.330
+way that the words flow
+together is lost on everybody.
+
+53
+00:03:15.330 --> 00:03:19.470
+What people remember is that
+darn Turkish. Yeah, exactly. But
+
+54
+00:03:19.480 --> 00:03:22.260
+that's an example of, you
+know, you can't test your
+
+55
+00:03:22.260 --> 00:03:26.010
+application on every single language.
+Exactly. What are the languages
+
+56
+00:03:26.010 --> 00:03:27.750
+someone should pick when they're
+trying to get a good
+
+57
+00:03:27.750 --> 00:03:30.660
+coverage. That's definitely a good
+core language to look at
+
+58
+00:03:30.660 --> 00:03:34.200
+because that's, that's one of
+those main bugs Romanian came
+
+59
+00:03:34.200 --> 00:03:37.530
+up recently as another one
+because of letters that they
+
+60
+00:03:37.530 --> 00:03:39.990
+wanted added that don't exist
+in the code page, but
+
+61
+00:03:39.990 --> 00:03:42.420
+exist in Unicode. So it's
+a good way to test
+
+62
+00:03:42.420 --> 00:03:45.630
+whether or not they're doing
+the right thing using, using
+
+63
+00:03:45.630 --> 00:03:49.920
+Unicode properly. And actually we
+were talking about Ethiopic, which
+
+64
+00:03:49.920 --> 00:03:53.070
+was another interesting case because
+there were, there were three
+
+65
+00:03:53.100 --> 00:03:56.280
+core languages that were scheduled
+to be added to Vista
+
+66
+00:03:56.340 --> 00:03:58.560
+that I felt really strongly
+needed to be because they'd
+
+67
+00:03:58.560 --> 00:04:01.590
+been Unicode for like five
+years and I was sick
+
+68
+00:04:01.590 --> 00:04:04.500
+of waiting. And it was,
+There's an example where there
+
+69
+00:04:04.500 --> 00:04:07.200
+was a language in the
+Unicode spec that you felt
+
+70
+00:04:07.230 --> 00:04:09.690
+visiting to do the support.
+Well, the Microsoft hadn't supported
+
+71
+00:04:09.690 --> 00:04:13.560
+yet, but they could have,
+and it was sin Holly's
+
+72
+00:04:13.620 --> 00:04:16.620
+Mongolian and Ethiopic and sent
+Holly is we sort of
+
+73
+00:04:16.620 --> 00:04:19.110
+got in. We snuck in
+because the government wanted to
+
+74
+00:04:19.110 --> 00:04:21.540
+help us after tsunami. We,
+they needed help actually collecting
+
+75
+00:04:21.540 --> 00:04:25.020
+names and things so that
+we did an XP patch
+
+76
+00:04:25.020 --> 00:04:28.080
+so they could use Sinhalese.
+So we knew that was
+
+77
+00:04:28.080 --> 00:04:29.700
+going in. Cause we had
+a font and everything, and
+
+78
+00:04:29.880 --> 00:04:32.310
+Mongolian they'd done a bunch
+of work on an Ethiopic.
+
+79
+00:04:32.730 --> 00:04:34.200
+They also did a bunch
+of work on. Right. And
+
+80
+00:04:34.200 --> 00:04:36.210
+when you say Ethiopic, you're
+referring to what's called the
+
+81
+00:04:36.210 --> 00:04:41.010
+<inaudible>, which is the Herrick.
+Yes. Deliberate Ethiopic I usually
+
+82
+00:04:41.010 --> 00:04:42.810
+call it, we don't, I
+don't know. We, I don't
+
+83
+00:04:42.810 --> 00:04:45.300
+usually call it either. My
+understanding is Ethiopic is a
+
+84
+00:04:45.330 --> 00:04:47.970
+compromise thing that was done
+in the standard for the
+
+85
+00:04:47.970 --> 00:04:51.960
+standard itself to come up
+with a neutral name for
+
+86
+00:04:51.960 --> 00:04:55.020
+the script that isn't actually
+how even native speakers think
+
+87
+00:04:55.020 --> 00:04:56.970
+of the script, The native
+speakers call it the feed.
+
+88
+00:04:56.970 --> 00:05:00.810
+L a but there's just
+as there's the Latin script,
+
+89
+00:05:00.810 --> 00:05:03.000
+we call it like when
+we write English it's or
+
+90
+00:05:03.000 --> 00:05:04.890
+French or whatever, there's this
+Latin script. Cause that's the
+
+91
+00:05:04.890 --> 00:05:09.750
+root language Ethiopian Amharic, and
+the languages of similar languages
+
+92
+00:05:09.960 --> 00:05:15.930
+have their Latin, which is
+called <inaudible> is the, you
+
+93
+00:05:15.930 --> 00:05:18.450
+also uses that script. Okay.
+So rather than calling it
+
+94
+00:05:18.690 --> 00:05:21.180
+is or calling it M
+hierarchy, you call it Ethiopic
+
+95
+00:05:21.180 --> 00:05:24.120
+and that's the compromise. Okay.
+So the one advantage you
+
+96
+00:05:24.120 --> 00:05:26.220
+would think of Arabic with
+scripted language or the same
+
+97
+00:05:26.220 --> 00:05:28.230
+people get confused all the
+time. So there's an advantage
+
+98
+00:05:28.230 --> 00:05:30.240
+to having a separate name,
+although kind of a made
+
+99
+00:05:30.240 --> 00:05:32.220
+up name does seem odd.
+Well, yeah, but like you're
+
+100
+00:05:32.220 --> 00:05:35.010
+using, you know, the Indian
+language, right. You know, using
+
+101
+00:05:35.010 --> 00:05:39.900
+the <inaudible> scripts. Exactly. If
+someone who knows about Hindi
+
+102
+00:05:39.900 --> 00:05:42.180
+and <inaudible> and Punjabi and
+all these other languages wouldn't
+
+103
+00:05:42.180 --> 00:05:45.570
+necessary, think of Devanagari as
+being it doesn't exactly roll
+
+104
+00:05:45.570 --> 00:05:49.620
+off the tongue. Very true.
+Describes the script. So back
+
+105
+00:05:49.620 --> 00:05:52.080
+to my original question, what
+are some languages that I
+
+106
+00:05:52.080 --> 00:05:54.240
+would pick do I pick,
+I mean, people usually say,
+
+107
+00:05:54.240 --> 00:05:57.920
+well, you know, English, Spanish,
+and maybe, but I, you
+
+108
+00:05:57.920 --> 00:06:00.530
+know, when I was doing
+internationalization, I would go Arabic,
+
+109
+00:06:01.130 --> 00:06:05.540
+Chinese, and then I would
+make a pseudo internationalized language
+
+110
+00:06:05.540 --> 00:06:09.590
+that had, you know, funky
+accents and stuff like that.
+
+111
+00:06:10.040 --> 00:06:13.450
+Yeah. I, I probably wouldn't.
+I mean, German is a
+
+112
+00:06:13.450 --> 00:06:15.670
+common one people use because
+it's a good example of
+
+113
+00:06:15.670 --> 00:06:19.210
+a language that takes up
+between 30 and 50% more
+
+114
+00:06:19.210 --> 00:06:22.060
+space in the dialogues. So
+it's a good way to
+
+115
+00:06:22.090 --> 00:06:25.270
+check for really, for dialogues
+that are too tightly spaced
+
+116
+00:06:25.660 --> 00:06:28.510
+because you want English to
+look good, but you don't
+
+117
+00:06:28.510 --> 00:06:30.610
+want to make the localizer
+work too hard. You don't
+
+118
+00:06:30.610 --> 00:06:32.650
+want to clip stuff either.
+Ah, right. That's a very
+
+119
+00:06:32.650 --> 00:06:35.830
+interesting thing. You're pointing out
+that the length of the
+
+120
+00:06:35.830 --> 00:06:38.290
+string, the leanest thing will
+change will change the way
+
+121
+00:06:38.290 --> 00:06:40.660
+that your pages will. And,
+and the English is fairly
+
+122
+00:06:40.660 --> 00:06:44.050
+wordy too, but German is,
+is just more wordy and
+
+123
+00:06:44.180 --> 00:06:45.700
+German is also a good
+one. Cause it's, it's a
+
+124
+00:06:45.700 --> 00:06:48.610
+tier one language for many
+types of marketing, many types
+
+125
+00:06:48.610 --> 00:06:51.100
+of markets where people are
+producing software. So it's a,
+
+126
+00:06:51.100 --> 00:06:54.640
+it's a good, typical language
+to use, right? Then beyond
+
+127
+00:06:54.640 --> 00:06:58.300
+that, getting into languages with
+other internationalization issues, Turkish is
+
+128
+00:06:58.300 --> 00:07:01.180
+a great one to use
+because of the, the various
+
+129
+00:07:01.180 --> 00:07:05.530
+Turkish issues that happen with
+the Turkish. I, I usually
+
+130
+00:07:05.530 --> 00:07:07.390
+pick Arabic rather than Hebrew.
+I like to do one
+
+131
+00:07:07.390 --> 00:07:10.480
+right to left. Right. An
+Arabic has more issues related
+
+132
+00:07:10.480 --> 00:07:13.210
+to it because Hebrew is
+very simple, other than being
+
+133
+00:07:13.660 --> 00:07:16.660
+a right to, Because it
+doesn't have any ligatures. Exactly.
+
+134
+00:07:16.660 --> 00:07:20.590
+There's no shaping, what's a
+ligature. You're combining two letters
+
+135
+00:07:20.590 --> 00:07:24.460
+together and producing something. It
+doesn't look exactly like they
+
+136
+00:07:24.460 --> 00:07:27.880
+would separate, Right? Like cursive
+script in English. Exactly. In
+
+137
+00:07:27.880 --> 00:07:30.100
+fact, if you look at
+all the unit scrap examples
+
+138
+00:07:30.220 --> 00:07:32.320
+that are on, that are
+in MSDN and the platform
+
+139
+00:07:32.320 --> 00:07:36.100
+instigate don't even mention Arabic,
+they give cursive Latin examples
+
+140
+00:07:36.100 --> 00:07:38.830
+so that people developers actually
+can say, Oh, I know
+
+141
+00:07:38.830 --> 00:07:40.870
+what that is. Instead of
+saying Arabic, I don't know
+
+142
+00:07:40.870 --> 00:07:45.340
+it. So it's actually a
+wonderful, it's exactly what we're
+
+143
+00:07:45.340 --> 00:07:48.100
+talking about. Right? So Arabic
+is a cursive by, by
+
+144
+00:07:48.100 --> 00:07:51.370
+default Because essentially, I mean,
+they're there, their block script
+
+145
+00:07:51.370 --> 00:07:53.950
+is actually a very cursive
+script. It's very flowing. It's,
+
+146
+00:07:53.950 --> 00:07:56.020
+it's actually a beautiful, not,
+not the kind of font
+
+147
+00:07:56.020 --> 00:07:57.540
+you use every day, but
+some of the very, the
+
+148
+00:07:57.580 --> 00:08:00.340
+fancier fonts look like the
+way typographers put in and
+
+149
+00:08:00.340 --> 00:08:04.600
+it's beautiful, but it, it
+certainly you find more problems
+
+150
+00:08:04.990 --> 00:08:08.290
+with Arabic than you would
+with Hebrew because they should
+
+151
+00:08:08.290 --> 00:08:11.080
+right to left. You have
+all those shaping things. I
+
+152
+00:08:11.080 --> 00:08:15.100
+usually like to pick something
+like Thai as well, because
+
+153
+00:08:15.100 --> 00:08:19.180
+Thai has other issues related
+to word breaking. And you
+
+154
+00:08:19.180 --> 00:08:22.210
+want those things to work
+well by defaults. And sometimes
+
+155
+00:08:22.210 --> 00:08:25.120
+they do, but not all
+components do so well. In
+
+156
+00:08:25.120 --> 00:08:26.950
+fact, one of the main
+problems with it and it
+
+157
+00:08:26.950 --> 00:08:29.410
+framework is there are so
+many things that are, I
+
+158
+00:08:29.410 --> 00:08:33.010
+mean, some controls are fully
+spaced out in summer, just
+
+159
+00:08:33.400 --> 00:08:35.470
+thin wrappers around something else.
+So you end up with
+
+160
+00:08:35.470 --> 00:08:38.500
+support that varies and you
+can find that one piglet
+
+161
+00:08:38.500 --> 00:08:41.140
+girl doesn't work with a
+script where another one will,
+
+162
+00:08:41.570 --> 00:08:43.990
+especially when using third party
+ones. And so it's, it's
+
+163
+00:08:44.320 --> 00:08:46.720
+a good tie, becomes a
+good test of whether or
+
+164
+00:08:46.720 --> 00:08:52.180
+not you can handle, you
+described things like, Oh, a
+
+165
+00:08:52.180 --> 00:08:55.290
+unit scribe is the component
+in windows that does of
+
+166
+00:08:55.290 --> 00:08:58.650
+the work to shape any
+script that requires extra work
+
+167
+00:09:00.270 --> 00:09:02.370
+and extra work, any kind
+of extra work, whether it's
+
+168
+00:09:02.370 --> 00:09:06.600
+right to left or checking
+for legal sequences, a ligature
+
+169
+00:09:06.600 --> 00:09:10.550
+formation. So anything that's not
+just putting up straight English,
+
+170
+00:09:10.580 --> 00:09:14.630
+Latin characters pretty much. Huh.
+You know, when I was
+
+171
+00:09:14.630 --> 00:09:19.190
+doing a internationalization, we were
+working in banking. We thought
+
+172
+00:09:19.190 --> 00:09:22.550
+about the German example. And
+we thought about, you know,
+
+173
+00:09:22.850 --> 00:09:25.760
+more complicated examples. One of
+the things, one of the
+
+174
+00:09:25.760 --> 00:09:28.910
+bugs that we wanted to
+catch was pushing UTF eight
+
+175
+00:09:29.150 --> 00:09:31.820
+code all the way through
+the system and back and
+
+176
+00:09:31.820 --> 00:09:34.490
+making sure that as it
+moved from web server to
+
+177
+00:09:34.730 --> 00:09:37.550
+middle tier, from military to
+database and back that we
+
+178
+00:09:37.550 --> 00:09:39.890
+didn't screw something up, we
+didn't go turn into black
+
+179
+00:09:39.890 --> 00:09:44.450
+squares. So testing the system
+all the way through to
+
+180
+00:09:44.450 --> 00:09:47.240
+make sure that something wasn't
+lost, Right. And sometimes people
+
+181
+00:09:47.240 --> 00:09:50.120
+skip my, the Thai case
+because Thai has a code
+
+182
+00:09:50.120 --> 00:09:51.800
+page and they skipped, they
+move right into one of
+
+183
+00:09:51.800 --> 00:09:56.270
+the Indic languages like Hindi,
+because then you can test
+
+184
+00:09:56.510 --> 00:09:59.350
+if anything ever gets into
+a code page and you
+
+185
+00:09:59.360 --> 00:10:02.000
+are using Hindi, you better
+hope they speak fluent question
+
+186
+00:10:02.000 --> 00:10:03.740
+Mark. Cause that's all you
+have left by the time
+
+187
+00:10:03.740 --> 00:10:05.600
+you're done there, We worked
+with the bank of Bangkok.
+
+188
+00:10:05.600 --> 00:10:08.870
+So we learned that really
+quickly. And, and, and so
+
+189
+00:10:08.870 --> 00:10:11.660
+actually for Thai actually, I've,
+I've had clients who we've
+
+190
+00:10:11.660 --> 00:10:15.620
+actually used Laotian. Basically we
+usually ocean because it doesn't
+
+191
+00:10:15.620 --> 00:10:18.380
+have a code page, whereas
+Tai does. And it's another
+
+192
+00:10:18.380 --> 00:10:20.330
+easy way to test for
+which is the question marks,
+
+193
+00:10:20.340 --> 00:10:22.190
+you know? So let's back
+up a little bit to
+
+194
+00:10:22.190 --> 00:10:24.560
+the, to some of the,
+some of the basics because
+
+195
+00:10:24.890 --> 00:10:27.110
+you know, we're both language
+geeks and we're both, you
+
+196
+00:10:27.110 --> 00:10:31.040
+know, Unicode type geeks. But
+I think we understand ASCII.
+
+197
+00:10:31.160 --> 00:10:32.480
+I think that one of
+the, one of the demos
+
+198
+00:10:32.480 --> 00:10:34.190
+I like to do when
+I talk to high school
+
+199
+00:10:34.190 --> 00:10:36.620
+students is I go out
+to the command line, I
+
+200
+00:10:36.620 --> 00:10:42.410
+type copy con food dot
+text type, ABC control Z.
+
+201
+00:10:42.440 --> 00:10:44.420
+And then I go debug
+food dot text and I
+
+202
+00:10:44.420 --> 00:10:45.650
+go and look at it
+and we say, all right,
+
+203
+00:10:45.680 --> 00:10:48.800
+67, 68, 69. Now here's
+the characters. So I think
+
+204
+00:10:48.800 --> 00:10:52.620
+people understand some of the
+fundamentals of why is a
+
+205
+00:10:53.660 --> 00:10:57.890
+67. I'm not sure. 69.
+I can never remember 41
+
+206
+00:10:57.890 --> 00:11:00.680
+and 68. I think, I
+think in hexadecimal now. Oh,
+
+207
+00:11:00.690 --> 00:11:02.570
+you think in hexadecimal, right?
+Because you're a full time
+
+208
+00:11:02.570 --> 00:11:05.300
+developer on this stuff. Okay.
+I think in, in, in
+
+209
+00:11:05.300 --> 00:11:07.700
+base 10, this is going
+to be a huge problem
+
+210
+00:11:08.420 --> 00:11:10.610
+as 65. Yes. I do
+those in my head now,
+
+211
+00:11:10.640 --> 00:11:14.240
+but that's okay. So go
+to fewer parties because of
+
+212
+00:11:14.240 --> 00:11:16.190
+that. So yeah, That is
+a problem. So then I
+
+213
+00:11:16.190 --> 00:11:19.070
+go to like a Yahoo
+China and I'll select a
+
+214
+00:11:19.070 --> 00:11:21.380
+Chinese character and I'll paste
+it in notepad, in the
+
+215
+00:11:21.380 --> 00:11:24.160
+middle of my ABC. And
+I'll save it as, as
+
+216
+00:11:24.170 --> 00:11:26.750
+Unicode with a byte order,
+Mark. And then I'll go
+
+217
+00:11:26.750 --> 00:11:28.040
+out and I'll show people
+the buyer Mark. And this
+
+218
+00:11:28.040 --> 00:11:31.580
+is like that buyer or
+Mark is just so, I
+
+219
+00:11:31.580 --> 00:11:33.260
+mean, I cannot tell you
+how many times I've received
+
+220
+00:11:33.260 --> 00:11:35.270
+an email where someone said,
+and I looked and there
+
+221
+00:11:35.270 --> 00:11:37.100
+were these funny two characters
+at the beginning of my
+
+222
+00:11:37.100 --> 00:11:40.190
+string and suddenly everything looked
+bad. What is a bite
+
+223
+00:11:40.190 --> 00:11:41.780
+order, Mark? When do I
+need it? When do I
+
+224
+00:11:41.780 --> 00:11:44.060
+not? Why is it sometimes
+there? Why is it not
+
+225
+00:11:44.060 --> 00:11:47.090
+sometimes there? Okay. So the
+biter Mark is actually was
+
+226
+00:11:47.360 --> 00:11:51.080
+put in by Unicode as
+a good way to indicate
+
+227
+00:11:51.080 --> 00:11:53.780
+what the text is. And
+if when it's UTF is,
+
+228
+00:11:53.780 --> 00:11:56.500
+is where the most common
+use of it was and
+
+229
+00:11:56.500 --> 00:11:59.050
+UTF 32, I guess, might
+be the second, most common.
+
+230
+00:11:59.350 --> 00:12:02.530
+The idea of being to
+Mark what the text is.
+
+231
+00:12:02.530 --> 00:12:08.740
+And it's interesting because you,
+the character is FFF that's
+
+232
+00:12:08.740 --> 00:12:13.720
+here, it's there. It's also
+doubles as a zero with
+
+233
+00:12:13.720 --> 00:12:16.450
+no break space. And they
+decided it was a good
+
+234
+00:12:16.450 --> 00:12:19.030
+thing to start with because
+there's no purpose to having
+
+235
+00:12:19.030 --> 00:12:20.980
+a zero with no break
+space at the beginning of
+
+236
+00:12:20.980 --> 00:12:22.720
+a text. So if you
+see it the very beginning,
+
+237
+00:12:22.720 --> 00:12:24.130
+then it must be a
+bite order Mark. And you
+
+238
+00:12:24.130 --> 00:12:26.290
+wouldn't see it because you
+wouldn't see it anyways because
+
+239
+00:12:26.290 --> 00:12:28.930
+it's invisible. In fact, it's
+amazing many people complain about
+
+240
+00:12:28.930 --> 00:12:31.030
+the vital order Mark. And
+I say, I've never heard
+
+241
+00:12:31.030 --> 00:12:33.640
+so much complaint about something
+that you can't see has
+
+242
+00:12:33.640 --> 00:12:37.840
+no width yet. You know,
+megabytes are written about it.
+
+243
+00:12:38.160 --> 00:12:40.200
+Certainly you've proven that you
+don't, that your system is
+
+244
+00:12:40.200 --> 00:12:42.510
+not understanding Unicode because if
+you ever see the thing
+
+245
+00:12:43.030 --> 00:12:45.090
+that shows up with a
+question Mark and some silly
+
+246
+00:12:45.090 --> 00:12:48.540
+character, then you're obviously not
+displaying your zero with Noah,
+
+247
+00:12:48.540 --> 00:12:52.200
+you know, zero. I mean,
+to this day, most Microsoft
+
+248
+00:12:52.830 --> 00:12:56.250
+internal developers actually use windows
+to do their, their diffing
+
+249
+00:12:56.550 --> 00:12:59.400
+and it doesn't understand utfh.
+So you always see that
+
+250
+00:12:59.400 --> 00:13:03.420
+byte owner, Mark, anytime they've
+saved something as UTF. So
+
+251
+00:13:03.420 --> 00:13:06.450
+it's a marker, but also
+it, it describes It, it
+
+252
+00:13:06.510 --> 00:13:09.720
+basically, and, and the place
+where it's a problem for
+
+253
+00:13:09.720 --> 00:13:12.810
+people outside of Microsoft, we
+sort of led to kind
+
+254
+00:13:12.810 --> 00:13:17.250
+of our own people criticizing
+us. We include the Bider
+
+255
+00:13:17.250 --> 00:13:22.380
+Mark in UTF as well,
+where it's not considered necessary,
+
+256
+00:13:22.950 --> 00:13:25.290
+but consider it an optional
+thing because you don't need
+
+257
+00:13:25.290 --> 00:13:26.790
+to know the order of
+the tests. You don't need
+
+258
+00:13:26.790 --> 00:13:30.060
+to know whether the binder
+Display. It's not just a
+
+259
+00:13:30.060 --> 00:13:34.470
+marker. It was actually describing
+order. Exactly. But in UTMA
+
+260
+00:13:34.480 --> 00:13:36.570
+theater is always the same
+it's byte based, but it's
+
+261
+00:13:36.570 --> 00:13:40.050
+useful in UCF because if
+you go into notepad and
+
+262
+00:13:40.050 --> 00:13:42.690
+you have just ASCII text
+and you save it as
+
+263
+00:13:42.690 --> 00:13:45.930
+utfh in the dialogue, we
+can't, we don't have any
+
+264
+00:13:45.930 --> 00:13:48.540
+metadata to remember that, but
+we do have this bite
+
+265
+00:13:48.540 --> 00:13:50.250
+order Mark to put in,
+but if you load it
+
+266
+00:13:50.250 --> 00:13:52.560
+up again and you didn't
+get what you saved, people
+
+267
+00:13:52.560 --> 00:13:54.540
+would complain. So we said,
+well, let's just add the
+
+268
+00:13:54.540 --> 00:13:58.590
+byte order, Mark. Unfortunately it
+seems, and in our biggest
+
+269
+00:13:58.590 --> 00:14:01.380
+complaints still comes from people
+who write unit shell scripts
+
+270
+00:14:01.890 --> 00:14:04.620
+in notepad, which is a
+market that I don't think
+
+271
+00:14:04.620 --> 00:14:08.070
+anybody ever imagined Windows. We
+know that writing a unit
+
+272
+00:14:08.070 --> 00:14:10.890
+shell script. Exactly. Okay. And
+this sounds like the most
+
+273
+00:14:10.890 --> 00:14:13.170
+farfetched thing in the world,
+but I have hundreds of
+
+274
+00:14:13.200 --> 00:14:16.140
+emails from people explaining how
+common this is. So really
+
+275
+00:14:16.260 --> 00:14:18.390
+I can't even, Cause I
+was thinking to myself when
+
+276
+00:14:18.390 --> 00:14:21.060
+you were describing that or
+marks belong in UTF 16
+
+277
+00:14:21.060 --> 00:14:23.130
+and UTF 32, I was
+like, huh, but I see
+
+278
+00:14:23.130 --> 00:14:25.380
+them in all my utfh.
+Yup. And then you said,
+
+279
+00:14:25.380 --> 00:14:27.150
+well, Microsoft put it there
+and I'm thinking, Oh no.
+
+280
+00:14:27.570 --> 00:14:29.970
+What did Microsoft do now?
+Well, I mean, it, it,
+
+281
+00:14:30.060 --> 00:14:32.070
+but it sounds like it
+makes sense. It does make
+
+282
+00:14:32.070 --> 00:14:33.660
+sense. It's just that it
+doesn't make sense from a
+
+283
+00:14:33.670 --> 00:14:37.860
+standpoint of people who support.
+Utfh not for the characters,
+
+284
+00:14:37.860 --> 00:14:41.070
+but just because it happens
+to work. Yeah. And when
+
+285
+00:14:41.070 --> 00:14:43.260
+you look at something like
+a unit shell script, there
+
+286
+00:14:43.260 --> 00:14:45.450
+are, there's a specific protocol
+that you have to start
+
+287
+00:14:45.450 --> 00:14:47.820
+with and it doesn't include
+starting with these other characters.
+
+288
+00:14:48.330 --> 00:14:52.550
+So it causes them problems.
+So people spend Their time
+
+289
+00:14:52.550 --> 00:14:55.610
+in whatever their native language
+is and it just works.
+
+290
+00:14:55.670 --> 00:14:58.100
+And when things get, when
+things go wrong, it's when
+
+291
+00:14:58.100 --> 00:15:01.120
+they switch over and they
+start to localized things. I
+
+292
+00:15:01.130 --> 00:15:04.130
+actually, I worked with a,
+a bank in Israel and
+
+293
+00:15:04.400 --> 00:15:06.590
+they were not familiar with
+internationalization and it seemed to
+
+294
+00:15:06.590 --> 00:15:09.530
+me, and this was such
+an ethnocentric way of me
+
+295
+00:15:09.530 --> 00:15:11.630
+to think. And I was
+like, how can they not
+
+296
+00:15:11.630 --> 00:15:14.510
+be familiar with international they're
+international? Well, of course they're
+
+297
+00:15:14.510 --> 00:15:19.190
+not, they're domestic, you know,
+relative to Israel, but they,
+
+298
+00:15:19.700 --> 00:15:21.890
+it just worked for them.
+But when you start inserting
+
+299
+00:15:21.890 --> 00:15:25.370
+other languages, you make it
+a truly globalized multi-lingual system.
+
+300
+00:15:26.000 --> 00:15:28.670
+And you mix things, particularly
+when you're mixing right to
+
+301
+00:15:28.670 --> 00:15:33.380
+left and left to right
+in the same exact text
+
+302
+00:15:33.380 --> 00:15:36.190
+file. Things started to get
+really interesting. That's something we
+
+303
+00:15:36.190 --> 00:15:39.730
+still do poorly. I think,
+I mean, it's interesting Hebrew
+
+304
+00:15:39.730 --> 00:15:42.310
+itself has some elements that
+are left to right. Basically
+
+305
+00:15:42.310 --> 00:15:45.580
+numbers. And they certainly have
+some English texts. And as
+
+306
+00:15:45.580 --> 00:15:48.900
+a rule, those things work
+well, what doesn't work well
+
+307
+00:15:48.910 --> 00:15:51.040
+is when you actually have
+Hebrew texts, you're kind of
+
+308
+00:15:51.040 --> 00:15:53.470
+inserting in English, like as
+an example or vice versa.
+
+309
+00:15:53.920 --> 00:15:57.220
+We're very poor with that.
+Like true. Bi-directional poor. In
+
+310
+00:15:57.220 --> 00:16:00.730
+what sense, Portland dense, you
+can't really ever hope to
+
+311
+00:16:00.730 --> 00:16:03.340
+copy paste a sample and
+have the same, have it
+
+312
+00:16:03.550 --> 00:16:06.430
+look the same wherever you
+paste it, you have to
+
+313
+00:16:06.430 --> 00:16:09.940
+worry about the machine you're
+on effecting the underlying thing.
+
+314
+00:16:10.090 --> 00:16:11.920
+I mean, there are markers
+you can put in that
+
+315
+00:16:11.920 --> 00:16:15.040
+have, that will strongly decide
+stuff that we never add.
+
+316
+00:16:15.280 --> 00:16:17.650
+Yeah. I've had that happen
+before when doing samples where
+
+317
+00:16:17.650 --> 00:16:21.370
+I'll, I'll grab like an
+Arabic headline and I'll successfully
+
+318
+00:16:21.370 --> 00:16:23.950
+copy it and I'll paste
+it into some application. That's
+
+319
+00:16:24.070 --> 00:16:26.710
+just not the most clever
+application. And I'll look at
+
+320
+00:16:26.710 --> 00:16:28.480
+it. And I don't, I
+have, I took Arabic in
+
+321
+00:16:28.480 --> 00:16:30.880
+college, but I've forgotten at
+all, but I know enough
+
+322
+00:16:30.880 --> 00:16:34.120
+to say that doesn't look
+like a word. Yep. And
+
+323
+00:16:34.120 --> 00:16:36.160
+it's often ends up being
+wrong and things have been
+
+324
+00:16:36.160 --> 00:16:39.850
+flipped around. Yeah. And, and
+there's we, I mean, our
+
+325
+00:16:39.850 --> 00:16:43.540
+story could definitely be better
+here. It's a very difficult
+
+326
+00:16:43.540 --> 00:16:46.660
+problem to solve. Well, I
+mean, in practice, it's actually
+
+327
+00:16:46.660 --> 00:16:49.330
+easy because I, I go
+under simple principle. I believe
+
+328
+00:16:49.330 --> 00:16:51.040
+that a computer program should
+be able to work as
+
+329
+00:16:51.040 --> 00:16:53.230
+well as an eight year
+old would be able to
+
+330
+00:16:53.230 --> 00:16:55.900
+work in eight year olds.
+And as I think our
+
+331
+00:16:55.900 --> 00:16:58.480
+computers are toddling yet, well,
+they're, they're not smart enough
+
+332
+00:16:58.480 --> 00:17:00.040
+to do this yet, but
+an eight year old who's
+
+333
+00:17:00.040 --> 00:17:03.400
+looking at the tax can
+tell you what, what order
+
+334
+00:17:03.400 --> 00:17:06.760
+things should be in. So
+when I look at, if
+
+335
+00:17:06.760 --> 00:17:10.690
+I look at an MQI
+system for windows, a multilingual
+
+336
+00:17:10.720 --> 00:17:12.940
+user interface, and I look
+at the list of languages
+
+337
+00:17:12.970 --> 00:17:14.710
+that are in the native
+scripts. And I look at
+
+338
+00:17:14.710 --> 00:17:16.900
+the fact that in Arabic,
+all of the scripts that
+
+339
+00:17:16.900 --> 00:17:19.330
+have parentheses in them, on
+their lists, like you have
+
+340
+00:17:19.330 --> 00:17:24.760
+a Well Arabic Morocco, Arabic,
+We have one, one that's
+
+341
+00:17:24.760 --> 00:17:27.520
+actually on the list like
+a Chinese simplified, Chinese traditional,
+
+342
+00:17:28.540 --> 00:17:31.480
+the Arabic where basically all
+the prints, these get flipped.
+
+343
+00:17:31.480 --> 00:17:34.030
+So they're look wrong. And
+I think even an eight
+
+344
+00:17:34.030 --> 00:17:36.040
+year old looks at that
+and knows that it's wrong
+
+345
+00:17:36.040 --> 00:17:38.050
+and can describe the problem.
+And I think anytime the
+
+346
+00:17:38.050 --> 00:17:40.390
+eight year old can describe
+it, the computer should figure
+
+347
+00:17:40.390 --> 00:17:41.710
+it out. Well, that's the
+thing though. I mean, an
+
+348
+00:17:41.710 --> 00:17:43.960
+eight year old can describe
+that, that it feels wrong
+
+349
+00:17:43.960 --> 00:17:46.000
+or that they're there because
+the human brain has such
+
+350
+00:17:46.000 --> 00:17:48.820
+a great pattern matcher that
+you can notice that this
+
+351
+00:17:49.290 --> 00:17:51.780
+is wrong. Are those kerning,
+that bit of kerning is
+
+352
+00:17:51.780 --> 00:17:53.880
+wrong, right? But in this
+case, how do you write
+
+353
+00:17:53.880 --> 00:17:55.700
+an algorithm to figure that
+out In this case? I
+
+354
+00:17:55.700 --> 00:17:57.680
+mean, the simple rule is
+we basically put in, see
+
+355
+00:17:57.680 --> 00:18:00.050
+the print, the problem is
+the parentheses are considered neutral.
+
+356
+00:18:00.110 --> 00:18:03.590
+So they take whatever surrounding
+them. But if in the
+
+357
+00:18:03.590 --> 00:18:06.620
+case where you have it's
+right to left overall, Okay.
+
+358
+00:18:06.740 --> 00:18:08.690
+So I have a sentence
+that's right to left. No,
+
+359
+00:18:08.690 --> 00:18:10.660
+no, no. That the system
+is right to left systems,
+
+360
+00:18:10.710 --> 00:18:12.290
+but in this case you
+happen to have a bit
+
+361
+00:18:12.290 --> 00:18:14.510
+of Chinese which has left
+or right in the middle
+
+362
+00:18:14.510 --> 00:18:17.150
+of it. Okay. You want
+the left or right to
+
+363
+00:18:17.150 --> 00:18:20.330
+control. You don't want the
+Arabic to inter to intervene
+
+364
+00:18:20.390 --> 00:18:22.610
+on any of the, the
+texts in the middle. Okay.
+
+365
+00:18:22.640 --> 00:18:24.590
+So you want to put
+a marker in front of
+
+366
+00:18:24.590 --> 00:18:28.070
+that neutral character to say,
+this is left to right.
+
+367
+00:18:28.940 --> 00:18:31.010
+And we have those characters.
+In fact, if you call
+
+368
+00:18:31.010 --> 00:18:33.380
+the get date format function,
+there's a flag you can
+
+369
+00:18:33.380 --> 00:18:35.780
+put in that says, insert
+those characters. So, okay. We
+
+370
+00:18:35.780 --> 00:18:37.610
+do that stuff, but we
+do not have it automatically.
+
+371
+00:18:38.120 --> 00:18:39.950
+And it seems like at
+the display level, it should
+
+372
+00:18:39.950 --> 00:18:42.980
+be something to just notice
+the context. And, and we're
+
+373
+00:18:42.980 --> 00:18:45.380
+smart enough to know, to
+write the algorithm for this.
+
+374
+00:18:45.410 --> 00:18:47.870
+Right. It's just that nobody
+really wants to jump in
+
+375
+00:18:47.870 --> 00:18:49.760
+and do it. That's a
+difficult thing. I mean, the
+
+376
+00:18:49.760 --> 00:18:53.330
+idea that, you know, we
+work for the 99% case,
+
+377
+00:18:53.870 --> 00:18:56.030
+but you know, you never
+know when someone might be
+
+378
+00:18:56.030 --> 00:18:59.210
+writing Arabic and wants to
+include a Chinese character and
+
+379
+00:18:59.230 --> 00:19:01.910
+think about all the Cartesian
+products of different combinations of
+
+380
+00:19:01.910 --> 00:19:04.160
+things that someone could potentially
+want to do. You know,
+
+381
+00:19:04.490 --> 00:19:08.360
+someone's doing Tamel and Ethiopian
+side by side and it
+
+382
+00:19:08.360 --> 00:19:11.300
+doesn't work. You know, how
+many kinds of obscure bugs
+
+383
+00:19:11.300 --> 00:19:13.190
+do you get when it's
+only two languages that are
+
+384
+00:19:13.190 --> 00:19:15.680
+combined in some strange way?
+Have you seen anything like
+
+385
+00:19:15.680 --> 00:19:18.080
+that? Well, it's actually what
+I like to focus on
+
+386
+00:19:18.080 --> 00:19:20.960
+specific languages that are kind
+of edge cases when you
+
+387
+00:19:20.960 --> 00:19:22.880
+mix them in. So like
+when you do, when you
+
+388
+00:19:22.910 --> 00:19:25.970
+include Arabic in the mix,
+you find a whole class
+
+389
+00:19:25.970 --> 00:19:30.110
+of bugs because you're putting
+Arabic in the world. Whether
+
+390
+00:19:30.110 --> 00:19:33.920
+you, sometimes I run the
+other UI languages. Yeah. This
+
+391
+00:19:33.920 --> 00:19:36.470
+is interesting actually, before we
+get into that in XP,
+
+392
+00:19:36.470 --> 00:19:38.030
+I remember if I wanted
+to go and visit a
+
+393
+00:19:38.030 --> 00:19:40.370
+Chinese website, I had to
+go into the regional settings
+
+394
+00:19:40.700 --> 00:19:45.110
+under language tools and say,
+install East Asian fonts. But
+
+395
+00:19:45.110 --> 00:19:48.370
+under Vista, to be clear,
+everything's just there. Right. Are
+
+396
+00:19:48.370 --> 00:19:52.130
+there so on any machine,
+even moms Vista home, they're
+
+397
+00:19:52.130 --> 00:19:54.650
+all there. She can go
+and start typing Chinese immediately.
+
+398
+00:19:54.680 --> 00:19:58.100
+Yes. But, but she can't
+get the UI in Chinese.
+
+399
+00:19:58.130 --> 00:20:01.040
+Yeah. The UI requires, that's
+an extra thing you include.
+
+400
+00:20:01.250 --> 00:20:03.920
+If you have ultimate, you
+can actually install them directly.
+
+401
+00:20:03.920 --> 00:20:06.110
+If you don't, then you
+can upgrade Was definitely a
+
+402
+00:20:06.110 --> 00:20:09.350
+decision that I didn't agree
+with, which not being able
+
+403
+00:20:09.350 --> 00:20:13.550
+to have a regular Vista
+home have, you know, Albanian
+
+404
+00:20:13.820 --> 00:20:15.530
+that I agree with. But
+I agree with that. So
+
+405
+00:20:15.530 --> 00:20:17.900
+we both agree that all
+versions of Vista should be
+
+406
+00:20:17.900 --> 00:20:20.600
+able to have whatever language
+anyone wants to speak. Yes.
+
+407
+00:20:20.630 --> 00:20:23.240
+Yeah. Well maybe that'll change,
+Know things that were interesting
+
+408
+00:20:23.240 --> 00:20:25.610
+about it because most people
+I've talked to, they have
+
+409
+00:20:25.610 --> 00:20:27.650
+no problem with, I mean,
+they're adding a language, they're
+
+410
+00:20:27.650 --> 00:20:29.540
+totally, they're doing something extra.
+They have no problem with
+
+411
+00:20:29.570 --> 00:20:32.390
+paying a little extra for
+that. But that ultimate, it
+
+412
+00:20:32.390 --> 00:20:35.030
+seems weird to them. Yeah.
+Because I want a home
+
+413
+00:20:35.030 --> 00:20:37.220
+system. I just happen to
+have two people in the
+
+414
+00:20:37.220 --> 00:20:39.430
+family who speak two different
+languages. My mom's a different
+
+415
+00:20:39.430 --> 00:20:40.820
+language. So why do I
+have to buy ultimate in
+
+416
+00:20:40.820 --> 00:20:43.310
+order to exactly. So it's
+it's and people don't mind
+
+417
+00:20:43.310 --> 00:20:46.010
+paying extra, but they do
+mind Two different things here.
+
+418
+00:20:46.010 --> 00:20:48.850
+There's having any version of,
+of Vista. I could buy
+
+419
+00:20:48.850 --> 00:20:51.910
+French Vista or English Vista,
+and I'm going to get
+
+420
+00:20:51.940 --> 00:20:54.730
+either the English user interface
+or the French user interface
+
+421
+00:20:55.000 --> 00:20:58.060
+on both of those though.
+I can immediately start typing
+
+422
+00:20:58.060 --> 00:21:02.470
+Chinese or even Ethiopian. So
+any Vista has got Ethiopian
+
+423
+00:21:02.470 --> 00:21:03.910
+out of the box. You
+just go in and you
+
+424
+00:21:03.910 --> 00:21:06.430
+enable it as a language.
+I can start typing Ethiopian
+
+425
+00:21:06.430 --> 00:21:09.880
+and notepad. Yes. But if
+I want to have a
+
+426
+00:21:10.520 --> 00:21:14.410
+Chinese start menu or an
+Albanian start menu, then I
+
+427
+00:21:14.410 --> 00:21:16.840
+have to go and get
+this. Is it a movie
+
+428
+00:21:17.190 --> 00:21:19.230
+Or enterprise or ultimate. And
+then you, then you have,
+
+429
+00:21:19.260 --> 00:21:21.390
+okay. The term is multi-lingual
+user interface in the movie.
+
+430
+00:21:21.400 --> 00:21:23.910
+So you use this term
+movie. Yeah. Well, I use
+
+431
+00:21:23.970 --> 00:21:27.240
+MyUI, there's a, there's a
+weird, I don't know. Maybe
+
+432
+00:21:27.240 --> 00:21:29.100
+I'm the only movie guy.
+No, no, no, no. Movie
+
+433
+00:21:29.100 --> 00:21:31.140
+is actually what the team
+who owns it, calls it
+
+434
+00:21:31.140 --> 00:21:34.920
+now, but they're second generation.
+And that is so there's
+
+435
+00:21:34.920 --> 00:21:37.350
+a difference between having an
+input language in the sense
+
+436
+00:21:37.350 --> 00:21:39.900
+of being able to input
+this and maybe someone's using
+
+437
+00:21:39.900 --> 00:21:42.540
+an English or a French
+Vista and typing Chinese emails
+
+438
+00:21:42.540 --> 00:21:46.620
+to grandma versus running the
+entire user interface in that
+
+439
+00:21:46.620 --> 00:21:49.260
+particular way. Yes. In fact,
+the list of languages that
+
+440
+00:21:49.260 --> 00:21:53.190
+are fully translated into translate
+into is smaller than the
+
+441
+00:21:53.190 --> 00:21:55.140
+list of ones you can
+actually type stuff into. What
+
+442
+00:21:55.140 --> 00:21:59.910
+are the numbers? 208 locales
+in Vista. And I think
+
+443
+00:21:59.910 --> 00:22:02.100
+it's four, there's over a
+hundred. If you include the
+
+444
+00:22:02.100 --> 00:22:05.760
+partially localized, the, the language
+interface packs that are, those
+
+445
+00:22:05.760 --> 00:22:07.950
+are Okay. So what's the
+difference between a language interface
+
+446
+00:22:07.980 --> 00:22:11.940
+pack and an a M
+UI? Well localization, one thing
+
+447
+00:22:11.940 --> 00:22:15.360
+they know about it, it's
+very expensive. It's very, it's
+
+448
+00:22:15.480 --> 00:22:17.580
+equally expensive to do it
+badly as to do it
+
+449
+00:22:18.150 --> 00:22:21.630
+well. And I've been doing
+localization work for years. My
+
+450
+00:22:21.630 --> 00:22:24.930
+very first job out of
+college was to do English,
+
+451
+00:22:24.930 --> 00:22:28.650
+Japanese, French on windows three,
+one. And one of the
+
+452
+00:22:28.650 --> 00:22:30.450
+things that I found in
+my, in working with international
+
+453
+00:22:30.840 --> 00:22:34.230
+localization rather is no one
+will ever agree with the
+
+454
+00:22:34.230 --> 00:22:37.920
+translation that the guy picked
+Well, it's you, you, I
+
+455
+00:22:37.920 --> 00:22:39.600
+mean, some people will agree,
+but you won't, you'll never
+
+456
+00:22:39.600 --> 00:22:41.970
+get complete a sense for
+any of those things. I'll
+
+457
+00:22:41.980 --> 00:22:43.560
+tell you how many times
+people will. We'll we'll spend
+
+458
+00:22:43.560 --> 00:22:46.080
+all this money, we'll translate
+it into Spanish and I'll
+
+459
+00:22:46.080 --> 00:22:47.490
+show it to somebody and
+go, Oh, we don't say
+
+460
+00:22:47.490 --> 00:22:52.290
+that here. And actually Spanish
+is a fun, politically charged
+
+461
+00:22:52.290 --> 00:22:55.290
+case because most of the
+localization work happens in the
+
+462
+00:22:55.290 --> 00:23:00.140
+United States is done from Mexican
+companies, which, you know, the
+
+463
+00:23:00.150 --> 00:23:03.480
+CA the pure Casiano people
+in the Spaniards don't like
+
+464
+00:23:03.480 --> 00:23:06.750
+at all. And they can
+tell the difference. I find
+
+465
+00:23:06.780 --> 00:23:10.740
+traditionally, if you, if you
+work with, you know, Quebecois,
+
+466
+00:23:10.770 --> 00:23:13.350
+French, the people in France
+don't like it, but they
+
+467
+00:23:13.350 --> 00:23:16.410
+can't always distinguish. And so
+I think they don't always
+
+468
+00:23:16.410 --> 00:23:18.240
+know the same way. The
+Spanish can definitely help because
+
+469
+00:23:18.240 --> 00:23:20.730
+there's so many dialect type
+differences that you could spot.
+
+470
+00:23:21.330 --> 00:23:22.980
+All right. Let's just, this
+is a great discussion. Let's
+
+471
+00:23:22.980 --> 00:23:24.990
+take a, just a brief
+moment and thank our sponsors
+
+472
+00:23:24.990 --> 00:23:27.900
+and we'll be right back.
+Do you know how to
+
+473
+00:23:27.900 --> 00:23:30.930
+make the possible out of
+the impossible? Well, the dotnet
+
+474
+00:23:30.930 --> 00:23:33.780
+ninjas at Telerik do they
+just released a huge pack
+
+475
+00:23:33.780 --> 00:23:36.000
+of web controls, all built
+on top of ESPN at
+
+476
+00:23:36.000 --> 00:23:40.230
+Ajax, that'll help you build
+impossibly fast and interactive applications
+
+477
+00:23:40.230 --> 00:23:43.590
+in no time at all.
+They've made the impossible possible
+
+478
+00:23:43.590 --> 00:23:46.670
+in desktop development. If you
+think you can't have a
+
+479
+00:23:46.670 --> 00:23:50.000
+carousel component and wind forms,
+well, you can. They're windows
+
+480
+00:23:50.000 --> 00:23:52.940
+form suite features a super
+powerful grid, view control, and
+
+481
+00:23:52.940 --> 00:23:56.000
+32 other crazy desktop components.
+That'll give you a dazzling
+
+482
+00:23:56.390 --> 00:24:00.140
+WPF like features, but in
+wind farms, they do the
+
+483
+00:24:00.140 --> 00:24:02.540
+same thing in reporting solutions
+with a new design surface,
+
+484
+00:24:02.540 --> 00:24:05.240
+like nothing else looks just
+like graph paper gives you
+
+485
+00:24:05.240 --> 00:24:08.930
+advanced page layout capabilities makes
+it feel more like a
+
+486
+00:24:08.930 --> 00:24:11.930
+graphic design software than a
+reporting solution. Go check them
+
+487
+00:24:11.930 --> 00:24:15.380
+out@telerik.com and be at dotnet
+Ninja. And thanks for listening.
+
+488
+00:24:16.430 --> 00:24:18.920
+This week's Hansel minutes is
+brought to you by code
+
+489
+00:24:18.920 --> 00:24:23.210
+better.com the code better.com blog
+network it's made up of
+
+490
+00:24:23.210 --> 00:24:26.510
+over 20 industry leaders and
+speakers who are passionate about
+
+491
+00:24:26.510 --> 00:24:29.300
+delivering tried and true solutions
+to real world problems for
+
+492
+00:24:29.300 --> 00:24:32.600
+building better software. These guys
+are not only our sponsor
+
+493
+00:24:32.600 --> 00:24:35.510
+this week, but they're also
+my friends. The COVID better
+
+494
+00:24:35.510 --> 00:24:38.120
+blog network. It's where industry
+leaders blog. You can find
+
+495
+00:24:38.120 --> 00:24:42.650
+them@codebetter.com as well as devilish
+S T E V L
+
+496
+00:24:42.650 --> 00:24:46.850
+I C I O dot
+U S. So I'm sitting
+
+497
+00:24:46.850 --> 00:24:50.030
+here talking about internationalization and
+localization issues with Michael Kaplan
+
+498
+00:24:50.030 --> 00:24:53.330
+from windows international. And yeah,
+I've definitely found when doing
+
+499
+00:24:53.330 --> 00:24:56.960
+translation work, that people are
+very passionate about the words
+
+500
+00:24:56.960 --> 00:24:59.420
+that you use. And they're
+very frustrated when things don't
+
+501
+00:24:59.420 --> 00:25:02.660
+either look or feel exactly
+right. You pick the wrong
+
+502
+00:25:02.660 --> 00:25:05.660
+word and you can alienate
+an entire group. I understand
+
+503
+00:25:05.660 --> 00:25:08.730
+that they had to change
+the time zone map inside
+
+504
+00:25:08.730 --> 00:25:11.350
+of what was the deal
+with that I haven't been
+
+505
+00:25:11.350 --> 00:25:14.980
+in. Well, there was a
+huge windows, 95 scandal. And
+
+506
+00:25:14.980 --> 00:25:17.380
+this was when the, the
+lines were removed from the
+
+507
+00:25:17.380 --> 00:25:20.620
+map. And it just became
+this amorphous shapes of, of
+
+508
+00:25:20.980 --> 00:25:25.360
+landmasses that was safer than
+trying to draw lines because
+
+509
+00:25:25.390 --> 00:25:27.940
+not everybody agrees with the
+lines, right? People were disagreeing
+
+510
+00:25:27.940 --> 00:25:29.770
+with the way, the time
+zone, because it was outlining
+
+511
+00:25:29.770 --> 00:25:32.710
+the edge of their country.
+Exactly. Which they may have
+
+512
+00:25:32.710 --> 00:25:35.230
+been. And when it's in
+dispute, I mean, you can't,
+
+513
+00:25:35.230 --> 00:25:37.150
+you can't talk about places
+like cashmere and things like
+
+514
+00:25:37.150 --> 00:25:39.700
+that, and not have somebody
+unhappy with the choice you've
+
+515
+00:25:39.700 --> 00:25:41.980
+made. In fact, one of
+the things that's hard about
+
+516
+00:25:41.980 --> 00:25:46.270
+being Microsoft is they're languages
+that we can't support because
+
+517
+00:25:46.270 --> 00:25:48.640
+of those things directly, really
+like what? Well, we can't
+
+518
+00:25:48.640 --> 00:25:52.930
+do cashmere for example, because,
+well, because you can't call
+
+519
+00:25:52.930 --> 00:25:54.970
+it cashmere, cashmere, cause some
+people really feel like they
+
+520
+00:25:54.970 --> 00:25:57.130
+own it. And you can't
+pick one of those places
+
+521
+00:25:57.130 --> 00:25:59.560
+because the people who feel
+they own it disagree with
+
+522
+00:25:59.590 --> 00:26:01.630
+each other about which parts
+they own. So what do
+
+523
+00:26:01.630 --> 00:26:04.630
+you call it a, well,
+we can't call it anything
+
+524
+00:26:05.110 --> 00:26:08.230
+because anything we'd call it
+would lead to somebody else
+
+525
+00:26:08.230 --> 00:26:10.930
+being offended and people go
+to war over, stuff like
+
+526
+00:26:10.930 --> 00:26:13.510
+that. And they'd use as
+proof that they are the
+
+527
+00:26:13.510 --> 00:26:15.700
+winner of an argument. So
+does this mean that basically
+
+528
+00:26:15.700 --> 00:26:17.770
+everyone who speaks cashmere and
+wants to run windows just
+
+529
+00:26:17.770 --> 00:26:19.960
+lose, loses out? Well, they
+don't lose that. They lose
+
+530
+00:26:19.960 --> 00:26:21.700
+out on the, they lose
+on our being in the
+
+531
+00:26:21.700 --> 00:26:24.220
+box. I mean, we, we
+don't have a font built
+
+532
+00:26:24.220 --> 00:26:27.220
+in. I see. And get
+it. They can get a
+
+533
+00:26:27.220 --> 00:26:29.020
+font. Oh, wow. I see.
+So like, this is interesting
+
+534
+00:26:29.020 --> 00:26:32.830
+because when I was doing
+Ethiopian work, writing menus for
+
+535
+00:26:32.830 --> 00:26:36.640
+local Ethiopian restaurants, windows didn't
+support it. So I would
+
+536
+00:26:36.640 --> 00:26:40.180
+go find the font because
+some Intrepid Ethiopians would go
+
+537
+00:26:40.180 --> 00:26:43.350
+and build a font from
+scratch. Right. And we'd out
+
+538
+00:26:43.350 --> 00:26:45.360
+a way to like type
+it in and people would
+
+539
+00:26:45.360 --> 00:26:49.740
+write custom IMS input, method
+editors. So I assume we
+
+540
+00:26:49.740 --> 00:26:51.660
+could probably look around on
+the web and find if
+
+541
+00:26:51.660 --> 00:26:53.310
+there's a language that windows
+doesn't support, there may be
+
+542
+00:26:53.310 --> 00:26:56.330
+a font. Yes. And, and
+that's the other thing that
+
+543
+00:26:56.420 --> 00:26:58.910
+comes interesting. When people talk
+about us supporting a language
+
+544
+00:26:58.910 --> 00:27:01.820
+they're often talking about, they
+want everything there. They want
+
+545
+00:27:01.820 --> 00:27:03.980
+the locale, they want the
+sorting, they want the font,
+
+546
+00:27:04.010 --> 00:27:07.250
+you know, the, the whole
+package, we kind of think
+
+547
+00:27:07.250 --> 00:27:10.640
+the same way where, and,
+and this actually gets back
+
+548
+00:27:11.000 --> 00:27:15.080
+a long way back. But
+I was very concerned about
+
+549
+00:27:15.080 --> 00:27:19.460
+Ethiopic about MRX specifically, because
+I really felt strongly we
+
+550
+00:27:19.460 --> 00:27:23.090
+needed it in, but there
+was some concern because we
+
+551
+00:27:23.090 --> 00:27:25.520
+kept getting promised the input
+method by the vendor we
+
+552
+00:27:25.520 --> 00:27:27.620
+were working with, that we
+were going to have. This
+
+553
+00:27:27.620 --> 00:27:30.020
+is a really important note
+that you've got your font
+
+554
+00:27:30.140 --> 00:27:32.240
+and you just called out
+your locale. And you're sorting
+
+555
+00:27:32.510 --> 00:27:34.520
+with the input method editor.
+We've got all of these
+
+556
+00:27:34.520 --> 00:27:37.610
+keyboards that have, you know,
+mostly English characters on them.
+
+557
+00:27:37.610 --> 00:27:39.740
+And you can certainly buy
+Japanese keyboards and you can
+
+558
+00:27:39.740 --> 00:27:43.310
+buy Arabic keyboards, but Ethiopic
+Herrick. The fetus has got
+
+559
+00:27:43.310 --> 00:27:47.300
+something like 236 characters. It's
+not an alphabet. It's a
+
+560
+00:27:47.300 --> 00:27:50.630
+syllabary. And they, they need
+a input method that actually
+
+561
+00:27:50.630 --> 00:27:54.350
+will work. That's intuitive for
+them. And we were promised
+
+562
+00:27:54.350 --> 00:27:56.000
+this, that it would work.
+We could do it with
+
+563
+00:27:56.000 --> 00:27:57.890
+them as they claimed we
+could do with ms. Kelsey,
+
+564
+00:27:57.890 --> 00:28:00.260
+they're going to have it
+any day. Obviously the keyboard
+
+565
+00:28:00.260 --> 00:28:03.950
+layout creator, which just built
+center keyboards. And I, at
+
+566
+00:28:03.950 --> 00:28:07.340
+the time didn't really know
+to differ with them, but
+
+567
+00:28:07.340 --> 00:28:10.010
+it turns out then the
+vendor kind of disappeared. That
+
+568
+00:28:10.010 --> 00:28:12.380
+was kind of a minor
+snafu. We were worried that
+
+569
+00:28:12.380 --> 00:28:14.960
+we would have to pull
+out all of it because
+
+570
+00:28:15.080 --> 00:28:17.120
+we can't say we support
+a locale and not let
+
+571
+00:28:17.120 --> 00:28:20.520
+you type in it. Right.
+And I was morally and,
+
+572
+00:28:20.520 --> 00:28:23.600
+and technologically in every sense,
+opposed to taking it out.
+
+573
+00:28:24.020 --> 00:28:25.160
+Cause I said, you know,
+this is one of those
+
+574
+00:28:25.160 --> 00:28:26.780
+scripts. That's been there for
+a long time. We have
+
+575
+00:28:26.780 --> 00:28:31.160
+no business waiting. So I
+pushed really hard on a
+
+576
+00:28:31.190 --> 00:28:33.980
+different technology, which was being
+used because people found that
+
+577
+00:28:33.980 --> 00:28:36.710
+creating IMS was very complicated.
+Okay. So if I wanted
+
+578
+00:28:36.710 --> 00:28:38.840
+to make Scott language or
+cling on, if I want
+
+579
+00:28:38.840 --> 00:28:40.760
+clean on support and I
+want an IME for cling
+
+580
+00:28:40.760 --> 00:28:42.950
+on, I would have to
+go and write a bunch
+
+581
+00:28:42.950 --> 00:28:44.870
+of code. Right. And, and
+that they, I mean, there's
+
+582
+00:28:44.870 --> 00:28:47.390
+hundreds of interfaces. There are
+no good samples. It's very
+
+583
+00:28:47.390 --> 00:28:48.920
+hard to do. I mean,
+people have done it, but
+
+584
+00:28:48.920 --> 00:28:52.580
+it's incredibly hard. Okay. And
+because of that in Vista,
+
+585
+00:28:52.580 --> 00:28:55.640
+they created a text based
+system that would wrap the
+
+586
+00:28:55.640 --> 00:28:58.060
+hard stuff and you create
+a text file with the
+
+587
+00:28:58.130 --> 00:29:00.800
+core information that's needed. Everything
+else would happen automatically. Sounds
+
+588
+00:29:00.800 --> 00:29:02.930
+cool. So I said, you
+know, maybe we could use
+
+589
+00:29:02.930 --> 00:29:06.020
+this and just build one.
+They built something for Amharic.
+
+590
+00:29:06.440 --> 00:29:08.390
+So we went through and
+I, so I worked out
+
+591
+00:29:08.390 --> 00:29:11.480
+the technological issues, which was
+easy because I had another
+
+592
+00:29:11.480 --> 00:29:14.180
+language. So I didn't have
+anything that would be useful
+
+593
+00:29:14.180 --> 00:29:16.910
+for a native speaker yet,
+but I said, okay, so
+
+594
+00:29:16.910 --> 00:29:18.440
+we can actually do this.
+And we're playing with the
+
+595
+00:29:18.440 --> 00:29:21.110
+settings, what we need. So
+we started kind of trolling
+
+596
+00:29:21.110 --> 00:29:23.960
+around, looking for experts in
+the language who would be
+
+597
+00:29:23.960 --> 00:29:26.480
+able to give us a
+big list that amounts to,
+
+598
+00:29:27.590 --> 00:29:30.590
+if I type this letter
+or these letters, this is
+
+599
+00:29:30.590 --> 00:29:32.420
+what I want. Right. And
+this wouldn't just be any
+
+600
+00:29:32.420 --> 00:29:34.190
+old, random Ethiopian guy on
+the street. This would be
+
+601
+00:29:34.190 --> 00:29:36.320
+someone who knows the language.
+Yeah. We want something. We
+
+602
+00:29:36.320 --> 00:29:38.660
+want a native speaker. We
+want, I mean, I've, I've
+
+603
+00:29:38.660 --> 00:29:42.190
+written keyboards, even for governments
+where they're, where they're transcribing
+
+604
+00:29:42.190 --> 00:29:44.710
+information, the keyboard they would
+use is very different than
+
+605
+00:29:44.710 --> 00:29:46.390
+what a native speaker would
+need. So we want people
+
+606
+00:29:46.390 --> 00:29:51.460
+who, just whatever they'd intuitively
+inspect we've in the end,
+
+607
+00:29:51.460 --> 00:29:55.750
+it turned out that what
+we did was fairly intuitive
+
+608
+00:29:55.780 --> 00:29:58.480
+because we've had external people
+actually say that it was
+
+609
+00:29:58.480 --> 00:30:00.370
+very quick for them to
+do. Most of the guesses
+
+610
+00:30:00.370 --> 00:30:02.370
+were what they were expecting.
+Right. And one of the
+
+611
+00:30:02.370 --> 00:30:04.680
+things that's interesting about a
+bet Ethiopian is of course
+
+612
+00:30:04.680 --> 00:30:07.800
+in English, you've got five
+vowels, Ethiopia, and you've got
+
+613
+00:30:07.980 --> 00:30:10.830
+seven and there's this non
+vowel. So, and it's a
+
+614
+00:30:10.830 --> 00:30:15.000
+syllabary. And when Ethiopians learned
+to say their alphabet, they
+
+615
+00:30:15.000 --> 00:30:17.280
+don't, they don't sing ABC.
+Like we do. They sing
+
+616
+00:30:18.360 --> 00:30:24.480
+who he ho <inaudible>. And
+if it's they go on
+
+617
+00:30:24.480 --> 00:30:26.970
+this grid and it's the
+syllables and they go, you
+
+618
+00:30:26.970 --> 00:30:29.100
+know, the first column is
+law and it is the
+
+619
+00:30:29.100 --> 00:30:32.610
+Oz example. And then the
+second column is the Lu
+
+620
+00:30:33.030 --> 00:30:35.820
+Ashley and people who speak
+Japanese would be familiar with
+
+621
+00:30:35.820 --> 00:30:38.640
+that kind of stuff. If
+you know, Katakana, or then
+
+622
+00:30:38.640 --> 00:30:40.920
+you would feel comfortable or,
+or Hebrew, you would feel
+
+623
+00:30:40.920 --> 00:30:43.020
+comfortable in it in Ethiopian.
+Cause Ethiopian is actually an
+
+624
+00:30:43.020 --> 00:30:46.410
+Afro Semitic language. And when
+they type it, if you
+
+625
+00:30:46.410 --> 00:30:48.720
+were going to type haha,
+you would type H a
+
+626
+00:30:49.320 --> 00:30:52.170
+but there's actually two Haas.
+So you have to know
+
+627
+00:30:52.170 --> 00:30:54.300
+which one is which Todd
+did you mean? Because they
+
+628
+00:30:54.300 --> 00:30:57.420
+both sound like ha but
+the, a, the vowel is
+
+629
+00:30:57.420 --> 00:31:00.030
+a different vowel, right. And
+it's subtle. So then you
+
+630
+00:31:00.030 --> 00:31:01.890
+have to pick, and we
+only have five hours to
+
+631
+00:31:01.890 --> 00:31:03.330
+pick from on the keyboards.
+You have to pick another
+
+632
+00:31:03.330 --> 00:31:06.000
+one. So there was a
+keyboard that there was a
+
+633
+00:31:06.000 --> 00:31:09.840
+program that was called GEZ
+pro on windows 3.1. And
+
+634
+00:31:09.840 --> 00:31:13.050
+that was the first custom
+input metadata method editor. And
+
+635
+00:31:13.050 --> 00:31:18.090
+it was basically a custom
+Ethiopian notepad, only it only
+
+636
+00:31:18.090 --> 00:31:20.340
+typed Ethiopian. And it only
+worked with this one font.
+
+637
+00:31:20.400 --> 00:31:23.010
+And then you would basically
+type your Ethiopian script in
+
+638
+00:31:23.010 --> 00:31:25.770
+this editor, which was an
+edit all in one editor
+
+639
+00:31:25.770 --> 00:31:28.920
+IME. And then you would
+copy paste your, your, your,
+
+640
+00:31:29.010 --> 00:31:34.200
+your work into, into word
+and visual basic three at
+
+641
+00:31:34.200 --> 00:31:39.360
+the time did not support
+any, anything internationalized. So people
+
+642
+00:31:39.360 --> 00:31:42.540
+would create, but it, interestingly
+it did at runtime, but
+
+643
+00:31:42.540 --> 00:31:45.660
+the designer didn't. So what
+would happen is you would
+
+644
+00:31:45.930 --> 00:31:47.370
+re you would go and
+you'd say, I want a
+
+645
+00:31:47.370 --> 00:31:49.950
+label that says first name,
+and you would write it
+
+646
+00:31:49.950 --> 00:31:52.410
+in, in American goes pro
+you put it in the
+
+647
+00:31:52.410 --> 00:31:55.080
+clipboard, you'd paste it into
+designer. It would show up
+
+648
+00:31:55.080 --> 00:31:58.530
+as black squares, you'd hit
+F five and you'd run
+
+649
+00:31:58.530 --> 00:32:00.870
+visual basic. And then it
+would show up and look
+
+650
+00:32:00.870 --> 00:32:03.990
+correct. And that's, that's still
+a way that many Ethiopian
+
+651
+00:32:03.990 --> 00:32:07.680
+developers work today, which is
+very scary, which is really
+
+652
+00:32:07.920 --> 00:32:10.590
+pretty bad. And, and, but
+still some of that's today.
+
+653
+00:32:10.590 --> 00:32:13.050
+In fact, I was actually
+talking to, I'm doing a
+
+654
+00:32:13.050 --> 00:32:15.210
+panel later on SQL server.
+And I was talking to
+
+655
+00:32:15.270 --> 00:32:18.390
+my person I'm doing with,
+they were asking me why
+
+656
+00:32:18.390 --> 00:32:23.430
+it was that in the
+results pane of, you know,
+
+657
+00:32:23.430 --> 00:32:25.890
+when they're, when they're running
+queries, they were able to
+
+658
+00:32:25.890 --> 00:32:29.220
+see any language. But in,
+in the actual, when they're
+
+659
+00:32:29.220 --> 00:32:32.080
+typing it, they just see
+square boxes. Right. And we,
+
+660
+00:32:32.080 --> 00:32:33.300
+we kind of went through
+and I showed them what
+
+661
+00:32:33.300 --> 00:32:34.710
+was going on. And it's
+just, you know, some metal
+
+662
+00:32:34.710 --> 00:32:37.860
+controls don't support particular languages
+or things. And, but they
+
+663
+00:32:37.860 --> 00:32:41.120
+were just floored. The, some
+things work perfectly and other
+
+664
+00:32:41.120 --> 00:32:43.570
+things just don't work at
+all. Exactly. Exactly. So an
+
+665
+00:32:43.570 --> 00:32:46.450
+input method editor, they would
+type H and then they
+
+666
+00:32:46.450 --> 00:32:48.520
+would get a combo box,
+like an autocomplete. It would
+
+667
+00:32:48.520 --> 00:32:50.200
+pop down and it would
+show them, here are the
+
+668
+00:32:50.200 --> 00:32:54.100
+things that you might want.
+Exactly. And as you're continuing
+
+669
+00:32:54.100 --> 00:32:56.650
+to type, that list gets
+smaller. Okay. So this is
+
+670
+00:32:56.650 --> 00:32:59.500
+a list of candidates, Basically
+the end. And that's literally
+
+671
+00:32:59.500 --> 00:33:01.540
+what it's called. It's called
+the candidate list for IMTS
+
+672
+00:33:01.840 --> 00:33:05.320
+and basically ha and in
+our case, we had basically
+
+673
+00:33:05.320 --> 00:33:08.350
+an H lowercase, a and
+H uppercase, a for the
+
+674
+00:33:08.350 --> 00:33:10.660
+two different letters that were
+there and that that's, you
+
+675
+00:33:10.660 --> 00:33:14.650
+know, what, we ended up
+choosing the technology itself, doesn't
+
+676
+00:33:14.650 --> 00:33:17.260
+distinguish them. Right. So basically
+it just shows the two
+
+677
+00:33:17.260 --> 00:33:19.720
+in the same candidate list,
+but maybe there were some
+
+678
+00:33:19.720 --> 00:33:22.210
+other letter that would be
+hae or something like that.
+
+679
+00:33:22.210 --> 00:33:24.940
+So you actually maybe have
+more candidates as well. Eventually
+
+680
+00:33:24.940 --> 00:33:26.470
+you just get down to
+one or two and then
+
+681
+00:33:26.470 --> 00:33:29.530
+you basically choose one and
+you're there. The typing is
+
+682
+00:33:29.530 --> 00:33:33.090
+very fast, although it'd be
+faster if we told the
+
+683
+00:33:33.090 --> 00:33:36.280
+difference between those two. And
+it's interesting to see more
+
+684
+00:33:36.880 --> 00:33:39.970
+languages with more mature support
+like Japanese, you know, in
+
+685
+00:33:39.970 --> 00:33:42.610
+the, you would use an
+IME and you could type
+
+686
+00:33:42.610 --> 00:33:44.770
+like Domar I got don't,
+you it's like D O
+
+687
+00:33:44.770 --> 00:33:47.320
+and then pick a character.
+Oh. And it would pick
+
+688
+00:33:47.320 --> 00:33:50.350
+a character. But for some
+people, when the tablet PC
+
+689
+00:33:50.350 --> 00:33:52.750
+came out, it was faster
+to just draw it because
+
+690
+00:33:52.750 --> 00:33:54.910
+they would just draw the
+stroke and that would provide
+
+691
+00:33:54.910 --> 00:33:57.130
+a candidate. So then there
+was that tablet, PC based,
+
+692
+00:33:57.130 --> 00:34:04.060
+Japanese IME, Well, people enjoyed
+a lot more. And really
+
+693
+00:34:04.420 --> 00:34:07.120
+all it requires is some
+work on the actual hindering
+
+694
+00:34:07.120 --> 00:34:10.300
+recognition side, which is easier
+for some languages than others,
+
+695
+00:34:10.330 --> 00:34:13.600
+but also requires the effort
+and Great about that. And
+
+696
+00:34:13.600 --> 00:34:15.730
+what's so interesting about it
+from a Japanese perspective is
+
+697
+00:34:15.730 --> 00:34:19.870
+that stroke order is important,
+right? In, in, in the
+
+698
+00:34:19.870 --> 00:34:22.120
+U S you can draw
+a, an a, and it
+
+699
+00:34:22.120 --> 00:34:24.790
+doesn't matter which, which side
+of the AAU pick, or
+
+700
+00:34:24.790 --> 00:34:27.430
+if you draw the middle
+part first, there's no concept
+
+701
+00:34:27.430 --> 00:34:30.190
+of that. But that stroke
+order can provide a way
+
+702
+00:34:30.190 --> 00:34:32.860
+to narrow down your candidates.
+Well, and although in English,
+
+703
+00:34:32.920 --> 00:34:34.690
+I mean, I I've, I
+was told, and I certainly
+
+704
+00:34:34.690 --> 00:34:38.110
+did very poorly in pinion
+penmanship going to school because
+
+705
+00:34:38.410 --> 00:34:40.180
+for example, Oh, you're supposed
+to start at the top
+
+706
+00:34:40.180 --> 00:34:43.840
+of the, of the circle,
+says, who, okay. Says the
+
+707
+00:34:43.840 --> 00:34:46.600
+teacher now I have always,
+and to this day, still
+
+708
+00:34:46.600 --> 00:34:50.440
+start from the right. That's
+just what I do. And
+
+709
+00:34:50.890 --> 00:34:52.300
+on the right of the
+circle, I have no idea
+
+710
+00:34:52.300 --> 00:34:54.910
+why it's just what I
+do, but I used to
+
+711
+00:34:54.910 --> 00:34:56.710
+get in trouble because you
+always end up with, you
+
+712
+00:34:56.710 --> 00:34:59.020
+see the residual, you see
+some little tiny thing. And
+
+713
+00:34:59.020 --> 00:35:01.810
+so I'd always get marked
+off because of my own
+
+714
+00:35:01.840 --> 00:35:04.480
+that were, And apparently 30
+years later, you're still deeply
+
+715
+00:35:04.480 --> 00:35:06.640
+bitter about this. I'm a
+little bitter about it. And
+
+716
+00:35:06.640 --> 00:35:09.250
+I think that even though
+you failed handwriting that you're
+
+717
+00:35:09.250 --> 00:35:13.780
+doing so well and internationalization,
+I think is the best
+
+718
+00:35:13.780 --> 00:35:16.750
+revenge is living well. Exactly.
+Well, thanks so much for
+
+719
+00:35:16.750 --> 00:35:18.490
+sitting down with me today,
+Michael. I really appreciate it.
+

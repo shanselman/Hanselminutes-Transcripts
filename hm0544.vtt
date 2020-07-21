@@ -1,0 +1,2211 @@
+WEBVTT FILE
+
+1
+00:00:00.540 --> 00:00:03.690
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.690 --> 00:00:06.660
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.660 --> 00:00:10.830
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.830 --> 00:00:15.360
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.750 --> 00:00:19.830
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.860 --> 00:00:23.940
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:24.060 --> 00:00:48.920
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com
+Hansel minutes.com it's Hanselman. It's
+
+8
+00:00:49.130 --> 00:00:53.240
+a weekly discussion with web
+developer and technologist Scott Hanselman.
+
+9
+00:00:53.720 --> 00:00:58.730
+This is Lawrence Ryan announcing show
+number 548. In this episode,
+
+10
+00:00:58.730 --> 00:01:02.720
+Scott talks with Patrick Spencer about
+the cross platform build automation
+
+11
+00:01:02.720 --> 00:01:11.510
+system known as Hi, this
+is Scott Hanselman. This is
+
+12
+00:01:11.510 --> 00:01:14.840
+another episode of Hansel minutes
+today. I'm talking with Patrick
+
+13
+00:01:14.840 --> 00:01:19.160
+Spenson. He's the founder of
+the cake project C-sharp make,
+
+14
+00:01:19.190 --> 00:01:21.560
+and now a team member
+because it's turning into quite
+
+15
+00:01:21.560 --> 00:01:24.410
+a popular and big project.
+Thanks for talking with me
+
+16
+00:01:24.410 --> 00:01:28.310
+today. Hello. When did you
+conceive of the idea of
+
+17
+00:01:28.310 --> 00:01:32.060
+doing a build automation system
+in the same language that
+
+18
+00:01:32.060 --> 00:01:37.130
+you write your absence? Well,
+it was back in 2014
+
+19
+00:01:37.190 --> 00:01:40.580
+and I was a consultant
+at the, at the time
+
+20
+00:01:41.660 --> 00:01:45.770
+and I was at a
+client and they, I was
+
+21
+00:01:45.770 --> 00:01:53.390
+helping them with test automation
+and they didn't have any
+
+22
+00:01:53.390 --> 00:01:58.550
+build automation in place. So
+I proposed fake to them,
+
+23
+00:01:58.790 --> 00:02:04.760
+the F sharp make, but
+they didn't want to do
+
+24
+00:02:04.760 --> 00:02:10.490
+that. So after that I
+suggested reek and they didn't
+
+25
+00:02:10.580 --> 00:02:15.530
+feel very comfortable with Ruby
+as well. So I was
+
+26
+00:02:15.530 --> 00:02:20.000
+thinking, why not? I mean,
+Rosslyn is this here now
+
+27
+00:02:20.000 --> 00:02:24.440
+and throw something together to
+write those scripts in C
+
+28
+00:02:24.440 --> 00:02:27.350
+sharp, They were already, what
+is that one, two, three,
+
+29
+00:02:27.350 --> 00:02:30.800
+four, five, at least five
+different build systems that work
+
+30
+00:02:30.800 --> 00:02:34.310
+great on.net. But it's interesting
+that there's one in F
+
+31
+00:02:34.310 --> 00:02:36.530
+sharp and there's one in
+Ruby and there's one in
+
+32
+00:02:36.680 --> 00:02:40.580
+PowerShell and no one had
+thought about using C-sharp to
+
+33
+00:02:40.580 --> 00:02:46.400
+build C-sharp before. Well, there
+actually was some, some alternatives
+
+34
+00:02:46.430 --> 00:02:50.600
+somewhere else. Yeah. Like your
+bowel bill. And there was
+
+35
+00:02:50.600 --> 00:02:53.930
+another one which w and
+anyway, that those were built
+
+36
+00:02:53.930 --> 00:02:59.500
+on the script CS platform.
+And while I, I'm going
+
+37
+00:02:59.500 --> 00:03:01.480
+to say to that, I'm
+a big fan of script
+
+38
+00:03:01.480 --> 00:03:05.770
+CS. I think it's a
+fantastic tool, but I really,
+
+39
+00:03:05.880 --> 00:03:11.710
+really liked this. What can
+I call it? Distribution model
+
+40
+00:03:11.710 --> 00:03:15.880
+that fake, just download it
+like a regular new get
+
+41
+00:03:15.880 --> 00:03:21.850
+package and you're up and
+running and script CS requires
+
+42
+00:03:21.970 --> 00:03:26.520
+something like chocolaty or install
+something on the build the
+
+43
+00:03:26.530 --> 00:03:31.030
+machine itself. So it was
+more of a question of
+
+44
+00:03:32.350 --> 00:03:35.560
+distribution for me. How do
+I say, would I probably
+
+45
+00:03:35.890 --> 00:03:39.210
+build something upon, upon scripts
+CS? Really? Okay. So the
+
+46
+00:03:39.210 --> 00:03:41.790
+idea was use what you
+already have on the machine
+
+47
+00:03:42.210 --> 00:03:45.570
+to do the job. Yeah.
+More or less. Yeah. Because
+
+48
+00:03:45.570 --> 00:03:49.170
+if you have to go
+and install Ruby or whatever,
+
+49
+00:03:49.170 --> 00:03:51.930
+to get your DSL to
+work, then it's going to
+
+50
+00:03:51.930 --> 00:03:54.420
+give your, your boss and
+your team one more reason
+
+51
+00:03:54.420 --> 00:03:57.270
+to say no. Yeah, exactly.
+So I really like to
+
+52
+00:03:57.270 --> 00:04:02.100
+say I was using fake
+a lot. And before that,
+
+53
+00:04:02.190 --> 00:04:05.340
+and I really liked this
+really lightweight that you have
+
+54
+00:04:05.340 --> 00:04:12.750
+a bootstrap prescript that downloads
+a fake and yeah. And
+
+55
+00:04:12.750 --> 00:04:17.520
+so that's more or less
+the reason why I should
+
+56
+00:04:17.520 --> 00:04:21.660
+send it this way Back
+in 2000, and I want
+
+57
+00:04:21.660 --> 00:04:28.020
+to say five or six,
+I was using Nant, which
+
+58
+00:04:28.020 --> 00:04:31.920
+was XML. And as you
+know, it was before ms.
+
+59
+00:04:31.920 --> 00:04:36.060
+Build and it worked pretty
+great. We were pretty, pretty
+
+60
+00:04:36.060 --> 00:04:38.880
+happy with it. Do we,
+you, were you using anything
+
+61
+00:04:38.880 --> 00:04:40.920
+in that timeframe or were
+you around in that timeframe?
+
+62
+00:04:42.240 --> 00:04:45.730
+I just started working in
+that timeframe. So I was
+
+63
+00:04:46.350 --> 00:04:52.020
+a junior programmer at eCommerce
+company here in Sweden. I
+
+64
+00:04:52.020 --> 00:04:54.870
+don't think we use them.
+They build automation at that
+
+65
+00:04:55.050 --> 00:05:01.500
+timeframe, but I I've used
+the after that. So, So
+
+66
+00:05:01.500 --> 00:05:05.070
+the, the, the thing that
+I remember about cake too,
+
+67
+00:05:05.070 --> 00:05:06.960
+and the thing that I
+remember at Nant that reminds
+
+68
+00:05:06.960 --> 00:05:11.730
+me of cake is this
+dependency programming model, where there's
+
+69
+00:05:11.730 --> 00:05:15.480
+a task that does something,
+but that task can't complete
+
+70
+00:05:15.480 --> 00:05:17.850
+until another task happens. So
+you end up building this
+
+71
+00:05:17.850 --> 00:05:23.130
+graph of tasks that are
+written like little functions independently,
+
+72
+00:05:23.430 --> 00:05:27.480
+but then the Nant or
+in this case cake figures
+
+73
+00:05:27.480 --> 00:05:33.980
+out the order by this,
+this directed graph. Yeah. I
+
+74
+00:05:33.990 --> 00:05:39.000
+mean, most mission systems work
+like, like that. Yeah. I
+
+75
+00:05:39.000 --> 00:05:43.740
+mean back to, to make
+so, So you, you thought
+
+76
+00:05:43.740 --> 00:05:45.300
+that was the way to
+do it. There was no,
+
+77
+00:05:45.300 --> 00:05:47.520
+no, you didn't do it
+procedurally and you didn't do
+
+78
+00:05:47.520 --> 00:05:49.530
+it declaratively. So you did
+it in a, in a
+
+79
+00:05:49.800 --> 00:05:55.260
+procedural directed graph. Yeah, exactly.
+So, yeah. And it's it
+
+80
+00:05:55.260 --> 00:06:00.080
+release it too to compose,
+I mean, write your bill
+
+81
+00:06:00.100 --> 00:06:04.000
+step as like a unit
+of four. Cause it's easy
+
+82
+00:06:04.000 --> 00:06:06.760
+to write when you write
+these, these individual tasks. Yeah.
+
+83
+00:06:06.790 --> 00:06:09.820
+And then you say what
+order they should run and
+
+84
+00:06:09.910 --> 00:06:14.230
+what they are dependent on.
+And it becomes really intuitive
+
+85
+00:06:14.680 --> 00:06:17.740
+once you start doing it
+like that. But let me
+
+86
+00:06:17.740 --> 00:06:20.350
+ask a, like maybe a
+naive question that maybe people
+
+87
+00:06:20.350 --> 00:06:23.530
+that are listening right. Might
+think what's the difference between
+
+88
+00:06:23.530 --> 00:06:27.160
+me just going and writing
+a console app that it
+
+89
+00:06:27.160 --> 00:06:31.540
+does my build and something
+like cake, which is more,
+
+90
+00:06:31.540 --> 00:06:34.690
+almost like a DSL, because
+you're not just saying here's
+
+91
+00:06:34.690 --> 00:06:39.100
+a collection of functions. You're
+saying you're being very prescriptive
+
+92
+00:06:39.100 --> 00:06:41.470
+and it almost doesn't look
+like C-sharp in some ways.
+
+93
+00:06:41.980 --> 00:06:46.600
+Yeah. I mean, of course
+you could do that. I
+
+94
+00:06:46.600 --> 00:06:50.380
+mean, in some way I
+think that writing a console
+
+95
+00:06:50.380 --> 00:06:54.670
+app that does something is
+better than have no form
+
+96
+00:06:54.670 --> 00:07:00.130
+of orchestration at all, but
+you, you, you would have
+
+97
+00:07:00.130 --> 00:07:06.400
+to push binary clue in
+your source code repository, and
+
+98
+00:07:06.400 --> 00:07:11.410
+you probably don't want to
+do that. And it's not
+
+99
+00:07:11.410 --> 00:07:15.490
+as transparent as a script.
+So these run as scripts
+
+100
+00:07:15.490 --> 00:07:17.980
+then there's are not you
+you're putting, is it like
+
+101
+00:07:17.980 --> 00:07:20.610
+a dot cake file or
+something? Yeah, exactly. You have
+
+102
+00:07:20.690 --> 00:07:24.280
+a doc cake file. That's
+just called with the cake
+
+103
+00:07:24.280 --> 00:07:27.820
+that the ECC, and it
+will run the script for,
+
+104
+00:07:27.820 --> 00:07:32.290
+it will actually compile using
+Rosslyn or on windows or
+
+105
+00:07:32.680 --> 00:07:37.570
+mano compiler on Linux and
+our execs. Okay. And we
+
+106
+00:07:37.570 --> 00:07:42.190
+recently ported cake to the
+core state law. So in
+
+107
+00:07:42.190 --> 00:07:44.500
+a couple of weeks you
+will be able to run
+
+108
+00:07:44.500 --> 00:07:49.720
+it on the core. Wow.
+That's pretty exciting. Yeah. Do
+
+109
+00:07:49.720 --> 00:07:53.470
+you, do, do you feel
+like there's competition though? Build
+
+110
+00:07:53.680 --> 00:08:01.960
+automation? Is it friendly competition?
+No, I don't think there's.
+
+111
+00:08:02.020 --> 00:08:04.780
+I mean, I mean, I
+don't know of any other
+
+112
+00:08:05.800 --> 00:08:12.760
+bill orchestration and bill automation
+systems like cake, but if
+
+113
+00:08:12.760 --> 00:08:15.730
+there are any I'm sure
+that, Do you think that
+
+114
+00:08:15.730 --> 00:08:18.670
+fake and peace peace out?
+Was it called peace, Saki
+
+115
+00:08:18.850 --> 00:08:21.370
+peace Saki then do you
+think that they have come
+
+116
+00:08:21.370 --> 00:08:24.760
+up enough that they are
+similar? Or do you feel
+
+117
+00:08:24.760 --> 00:08:29.170
+like cake has, has eclipsed
+them and is now bigger
+
+118
+00:08:29.170 --> 00:08:35.860
+and more, more reliable platform?
+No. I think that each
+
+119
+00:08:35.860 --> 00:08:40.240
+of those systems have, have
+a place. And I mean,
+
+120
+00:08:40.240 --> 00:08:42.730
+if you prefer to write
+your build scripts and if
+
+121
+00:08:42.730 --> 00:08:45.550
+you and your team prefer
+to write your build scripts
+
+122
+00:08:45.550 --> 00:08:50.710
+in PowerShell or F sharp
+or Ruby, then I, I
+
+123
+00:08:50.770 --> 00:08:54.340
+wouldn't use cake. But if
+you want to write your
+
+124
+00:08:54.340 --> 00:08:57.840
+build scripts in C sharp,
+then cake is perfect for
+
+125
+00:08:57.840 --> 00:09:03.000
+you, but we don't want
+people to use cake if
+
+126
+00:09:03.000 --> 00:09:10.680
+they're not perfectly comfortable with
+it. So there's competition in
+
+127
+00:09:10.680 --> 00:09:14.360
+that sense, we don't want
+that. Yeah. And it sounds
+
+128
+00:09:14.360 --> 00:09:16.820
+like it cake, isn't saying,
+you're not saying with cake,
+
+129
+00:09:17.630 --> 00:09:20.090
+you know, don't do ms.
+Build, you're saying cake, is
+
+130
+00:09:20.090 --> 00:09:23.780
+it build orchestration? Not a
+build system. So you've got
+
+131
+00:09:23.780 --> 00:09:26.630
+tests, you've got builds. You've
+got, you gotta clean up
+
+132
+00:09:26.630 --> 00:09:29.660
+your directory. You need to
+run your unit, test, do
+
+133
+00:09:29.660 --> 00:09:32.960
+your packaging. It is an
+orchestration of everything in the
+
+134
+00:09:32.960 --> 00:09:36.580
+language you're already happened to
+be using. Exactly. And I
+
+135
+00:09:36.590 --> 00:09:39.980
+mean, personally, I really like
+Amis builder as well. So
+
+136
+00:09:40.610 --> 00:09:45.470
+yeah. I mean, I'm, I'm,
+I'm no, I, I like
+
+137
+00:09:45.470 --> 00:09:49.550
+it a lot and, but
+it's not for everyone and
+
+138
+00:09:49.880 --> 00:09:54.080
+be getting a lot of,
+I wouldn't call it hate,
+
+139
+00:09:54.110 --> 00:09:59.300
+but a lot of people
+complaining about. Yeah. So, I
+
+140
+00:09:59.300 --> 00:10:01.850
+mean, if you really don't
+want to write to build
+
+141
+00:10:01.850 --> 00:10:07.670
+scripts as, or, or build
+orchestration scripts as XML, then
+
+142
+00:10:07.760 --> 00:10:12.350
+cake might be something for
+you, but we're not trying
+
+143
+00:10:12.350 --> 00:10:15.500
+to say that don't use
+some spills for this, or
+
+144
+00:10:15.530 --> 00:10:19.460
+don't use rake for this.
+We're saying that maybe cake
+
+145
+00:10:20.150 --> 00:10:22.610
+is something for you. If
+you want to record build
+
+146
+00:10:22.610 --> 00:10:26.270
+scripts in C sharp. No,
+that's very, that's very modest.
+
+147
+00:10:27.290 --> 00:10:31.850
+Yeah. But I mean, there's
+so many great tools, so
+
+148
+00:10:32.360 --> 00:10:35.210
+that's Cool. They really are.
+And, and there are a
+
+149
+00:10:35.210 --> 00:10:37.740
+lot of tools that one
+needs to pull together. And
+
+150
+00:10:37.790 --> 00:10:40.130
+it's one of the nice
+things about cake that I
+
+151
+00:10:40.130 --> 00:10:43.850
+noticed immediately is that it
+supports the tools that you're
+
+152
+00:10:43.850 --> 00:10:47.450
+probably already using. So like
+another way of looking at
+
+153
+00:10:47.450 --> 00:10:51.220
+it is it's not necessarily,
+Oh, I like C-sharp, I'll
+
+154
+00:10:51.230 --> 00:10:53.840
+use cake, but it's like,
+I use ms. Build. I
+
+155
+00:10:53.840 --> 00:10:57.710
+use X unit. I use
+nougat. Sometimes I use I'll
+
+156
+00:10:57.710 --> 00:11:02.090
+merge. I do my installers
+with Wix. You know, there's
+
+157
+00:11:02.090 --> 00:11:05.180
+a list of things that
+I use and then you've
+
+158
+00:11:05.180 --> 00:11:09.860
+built in support for those
+things already. So I'm probably
+
+159
+00:11:09.860 --> 00:11:14.840
+doing a poor person's build
+automation already with batch files
+
+160
+00:11:14.840 --> 00:11:19.340
+and my own little PowerShell
+scripts. I should probably step
+
+161
+00:11:19.340 --> 00:11:21.290
+up and use cake because
+you support the things I
+
+162
+00:11:21.290 --> 00:11:24.380
+support. Yeah. That's a, that's
+a good reason as well.
+
+163
+00:11:25.850 --> 00:11:31.370
+It becomes, how can I
+say it? It becomes more
+
+164
+00:11:31.370 --> 00:11:36.500
+maintainable to have 'em to
+use something like cake than
+
+165
+00:11:36.500 --> 00:11:42.290
+to use batch files or
+yeah. Yeah. And you've put
+
+166
+00:11:42.290 --> 00:11:45.860
+together, there's a, there's an
+example repository up on get
+
+167
+00:11:45.860 --> 00:11:48.980
+hub. And I will include
+links to all of the
+
+168
+00:11:48.980 --> 00:11:52.730
+different things that we talk
+about. And you've got both
+
+169
+00:11:53.410 --> 00:11:55.780
+build kind of a build
+dot PowerShell and then a
+
+170
+00:11:55.780 --> 00:12:00.400
+build.shell script, which is kind
+of like the bootstrapper. So
+
+171
+00:12:00.400 --> 00:12:04.060
+you can make this work
+cross-platform like you mentioned, but
+
+172
+00:12:04.060 --> 00:12:06.370
+it, it takes care of,
+you know, all of the
+
+173
+00:12:06.370 --> 00:12:08.470
+things that one needs. Like,
+you need a new, get,
+
+174
+00:12:08.860 --> 00:12:11.140
+you need a package config,
+you know, you have to
+
+175
+00:12:11.500 --> 00:12:14.380
+bootstrap your system. But if
+you just basically start with
+
+176
+00:12:14.380 --> 00:12:18.940
+that example, repository getting started
+with cake, I suppose that
+
+177
+00:12:18.940 --> 00:12:21.750
+someone could make their build
+automated and Maybe an hour.
+
+178
+00:12:22.110 --> 00:12:25.710
+Yeah, absolutely. If you use
+something like vs code, we
+
+179
+00:12:25.710 --> 00:12:29.580
+even have extension for it
+in the, in the marketplace,
+
+180
+00:12:30.570 --> 00:12:36.390
+you can install that extension
+and you just press, what
+
+181
+00:12:36.390 --> 00:12:39.690
+is it? Control shift P
+I think, and you can
+
+182
+00:12:39.690 --> 00:12:44.250
+say install bootstrapper and after
+you've done that, you only
+
+183
+00:12:44.250 --> 00:12:48.810
+need to create the buildup
+cake file. And you're set,
+
+184
+00:12:49.440 --> 00:12:53.610
+You have a visual studio
+code plugin. What's the difference
+
+185
+00:12:53.610 --> 00:12:56.520
+though, between cake and C-sharp
+itself, like, why do you
+
+186
+00:12:56.520 --> 00:12:59.400
+need a plugin? Is it
+to make the syntax highlighting?
+
+187
+00:12:59.400 --> 00:13:02.130
+But if it's already C-sharp,
+what's what's that needed for,
+
+188
+00:13:02.580 --> 00:13:07.500
+Well, one thing that we
+don't have at the moment
+
+189
+00:13:07.560 --> 00:13:12.660
+I'm going to say is
+Omni sharp integration. Since cake
+
+190
+00:13:12.780 --> 00:13:16.800
+scripts are a little bit
+special, you cannot build it
+
+191
+00:13:16.830 --> 00:13:22.380
+with the normal. You won't
+get them, the syntax highlighting
+
+192
+00:13:22.380 --> 00:13:26.010
+and stuff like that. Okay.
+But the extension provides that.
+
+193
+00:13:26.070 --> 00:13:32.100
+And we have started talking
+with Omni sharp guys about
+
+194
+00:13:34.860 --> 00:13:38.130
+having cake support. So maybe
+in the future, we will
+
+195
+00:13:38.130 --> 00:13:41.730
+have that. But other than
+that, we have some snippets
+
+196
+00:13:41.820 --> 00:13:47.460
+for cake like creating tasks
+and similar and installing bootstrappers.
+
+197
+00:13:48.780 --> 00:13:52.890
+Yeah. Episode of Hansel minutes
+is brought to you by
+
+198
+00:13:52.890 --> 00:13:56.760
+brain tree payments. Why make
+payment integration more difficult than
+
+199
+00:13:56.760 --> 00:14:00.660
+it has to be? Braintree's
+powerful. Full stack payment platform
+
+200
+00:14:00.660 --> 00:14:03.360
+allows you to accept nearly
+any type of payment from
+
+201
+00:14:03.390 --> 00:14:07.320
+any device. With one integration,
+it's flexible to your system's
+
+202
+00:14:07.320 --> 00:14:10.980
+needs, supports most programming languages.
+So whether you're using Java,
+
+203
+00:14:11.010 --> 00:14:14.150
+Ruby, or Python, you'll always
+have a range of service
+
+204
+00:14:14.150 --> 00:14:18.810
+side and client side SDKs
+available. Braintree makes payments and
+
+205
+00:14:18.810 --> 00:14:24.570
+your job a whole lot
+easier. You can learn more@braintreepayments.com
+
+206
+00:14:24.600 --> 00:14:35.760
+slash Hanselman that's Braintree payments.com/hanselman.
+So is cake proper C-sharp
+
+207
+00:14:35.790 --> 00:14:38.760
+like, could I go and
+run CSC on a cake?
+
+208
+00:14:39.880 --> 00:14:43.290
+No, it's you can look
+at it like a superset
+
+209
+00:14:43.350 --> 00:14:48.600
+of C sharp, like it.
+So it supports everything that's
+
+210
+00:14:48.600 --> 00:14:52.550
+in C sharp, but we
+also added some additional things
+
+211
+00:14:52.550 --> 00:14:58.340
+to it, like a special
+pre pre processor directives for
+
+212
+00:14:58.340 --> 00:15:03.110
+installing tools and downloading stuff
+from new gets and similar.
+
+213
+00:15:04.630 --> 00:15:07.510
+So does that mean, is
+there a learning curve though?
+
+214
+00:15:07.540 --> 00:15:10.750
+Cause like the art, if
+the, if the, the census,
+
+215
+00:15:10.780 --> 00:15:13.180
+Oh yes. It's C sharp,
+then you just know it
+
+216
+00:15:13.180 --> 00:15:15.040
+already, but you do have
+to learn a little bit.
+
+217
+00:15:15.040 --> 00:15:20.110
+Yes. Yeah. And I would
+like to think that we
+
+218
+00:15:20.110 --> 00:15:24.670
+have pretty good documentation on
+our sites Documentation, to be
+
+219
+00:15:24.670 --> 00:15:28.000
+clear. I see a lot
+of open source projects. It's
+
+220
+00:15:28.000 --> 00:15:34.270
+extremely clear and really complete.
+Oh, thank you. So if
+
+221
+00:15:34.270 --> 00:15:39.220
+you go to KC bill.net,
+there are some tutorials how
+
+222
+00:15:39.220 --> 00:15:44.560
+you get started. And also
+a section that describes the
+
+223
+00:15:44.590 --> 00:15:50.260
+fundamentals of kink. So I
+would recommend anyone who wants
+
+224
+00:15:50.260 --> 00:15:53.860
+to start using cake to
+read that maybe take like
+
+225
+00:15:54.250 --> 00:15:58.570
+10 minutes, but it shouldn't
+be that much of a
+
+226
+00:15:58.570 --> 00:16:03.340
+learning curve. So it takes
+a few minutes to learn
+
+227
+00:16:03.370 --> 00:16:06.130
+and then you can start
+extending it. I noticed that
+
+228
+00:16:06.160 --> 00:16:10.720
+you now have a cake
+contrib. So other people are
+
+229
+00:16:10.720 --> 00:16:14.200
+adding modules to cake with
+support for other bits of
+
+230
+00:16:14.200 --> 00:16:18.790
+orchestration. Like, you know, your
+build could tweet afterwards, or
+
+231
+00:16:18.820 --> 00:16:21.160
+if you're doing iOS apps,
+you could do a P
+
+232
+00:16:21.160 --> 00:16:25.300
+list, serialization, a hockey app
+for D you know, for
+
+233
+00:16:25.300 --> 00:16:29.740
+releasing mobile apps. How much
+of this is you versus,
+
+234
+00:16:30.250 --> 00:16:32.560
+you know, the community is
+starting to step up and
+
+235
+00:16:32.560 --> 00:16:37.390
+hear about your project. I
+don't know. We have about
+
+236
+00:16:37.420 --> 00:16:42.370
+50 admins at this point
+think, wow. And I've written
+
+237
+00:16:42.880 --> 00:16:47.410
+one of those. And I
+don't think that Gary and
+
+238
+00:16:47.920 --> 00:16:51.670
+Woah, who is who they
+are, the other maintainers of
+
+239
+00:16:51.670 --> 00:16:54.370
+the project. I don't think
+that they have written that
+
+240
+00:16:54.370 --> 00:16:58.720
+many extensions. So most of
+them are written by community
+
+241
+00:16:58.720 --> 00:17:03.370
+members. And yeah, it's really
+fun to see that people
+
+242
+00:17:03.370 --> 00:17:08.230
+are using cake and publishing
+extensions for things that they
+
+243
+00:17:09.490 --> 00:17:13.270
+think needs to be supported.
+I think that there's a
+
+244
+00:17:13.270 --> 00:17:16.540
+lot of open source projects
+out there that maybe don't,
+
+245
+00:17:17.210 --> 00:17:19.990
+as we say, catch fire
+and people get excited about
+
+246
+00:17:19.990 --> 00:17:24.790
+them. A lot of times
+you'll spend years just by
+
+247
+00:17:24.790 --> 00:17:27.940
+yourself, trying to get your
+open source project to, to
+
+248
+00:17:27.940 --> 00:17:33.190
+pop. You started this in
+2014. How long before you
+
+249
+00:17:33.190 --> 00:17:38.770
+had a community around it?
+About a year. I think
+
+250
+00:17:39.310 --> 00:17:44.770
+people started to show the,
+to get their shots and
+
+251
+00:17:45.130 --> 00:17:50.670
+started posting, pull requests and
+issues. But to be honest,
+
+252
+00:17:50.910 --> 00:17:56.940
+I never imagined that this
+would be a, I mean,
+
+253
+00:17:56.940 --> 00:17:59.160
+it's not super big, but
+as big as it is
+
+254
+00:17:59.400 --> 00:18:03.830
+at the moment, but it's
+really fun. And w did
+
+255
+00:18:03.830 --> 00:18:05.720
+you do anything in particular?
+Like why do you think
+
+256
+00:18:05.720 --> 00:18:08.270
+this, this ha why does
+one more open source project
+
+257
+00:18:08.360 --> 00:18:11.570
+like pop and another one?
+Doesn't is it promotion? Did
+
+258
+00:18:11.570 --> 00:18:14.450
+you have to go out
+and sell it and market
+
+259
+00:18:14.450 --> 00:18:16.580
+it or did it just
+seem like a good idea?
+
+260
+00:18:16.580 --> 00:18:19.160
+And other people said, wow,
+that is a good idea.
+
+261
+00:18:19.160 --> 00:18:22.700
+I want to get involved.
+To be honest. I don't
+
+262
+00:18:22.700 --> 00:18:25.910
+know. I never promoted it.
+I mean, more than, you
+
+263
+00:18:25.910 --> 00:18:29.480
+know, you post a tweet
+that you released a new
+
+264
+00:18:29.480 --> 00:18:33.590
+version, or I got this
+feature now. And, but other
+
+265
+00:18:33.590 --> 00:18:37.100
+than that, I never really
+promoted it, but people found
+
+266
+00:18:37.100 --> 00:18:40.640
+out about it and started
+and people seem to like
+
+267
+00:18:40.640 --> 00:18:44.360
+it and started sending pull
+requests and issues and started
+
+268
+00:18:44.360 --> 00:18:48.470
+writing about it. And, yeah.
+So you said you, you
+
+269
+00:18:48.470 --> 00:18:51.080
+were kind of alone for
+a year. People started noticing
+
+270
+00:18:51.080 --> 00:18:54.050
+and getting involved, but now
+it's not all about you.
+
+271
+00:18:54.050 --> 00:18:56.210
+It's not like the idea
+that you had now. It's
+
+272
+00:18:56.210 --> 00:18:59.180
+an idea that everyone shares,
+you said you have about
+
+273
+00:18:59.180 --> 00:19:02.540
+50 different add ins. How
+many people are doing kind
+
+274
+00:19:02.540 --> 00:19:08.930
+of a regular commits to
+it? Oh, I don't know.
+
+275
+00:19:08.930 --> 00:19:11.630
+To be honest. There's I
+mean, there's a lot of,
+
+276
+00:19:11.630 --> 00:19:16.430
+It looks like 75 total
+committers. Yeah. And then there's
+
+277
+00:19:16.430 --> 00:19:21.710
+a lot of regular faces
+showing up submitting PRS, but
+
+278
+00:19:22.490 --> 00:19:28.170
+in intervals. Yeah. So maybe
+people use cake has a
+
+279
+00:19:28.610 --> 00:19:31.040
+need for something and they
+submit a pull request and
+
+280
+00:19:31.040 --> 00:19:35.720
+they get it merged and
+then they don't have the
+
+281
+00:19:35.720 --> 00:19:42.770
+need to submit something more
+for awhile. They have one
+
+282
+00:19:42.770 --> 00:19:45.020
+idea, they need that thing
+fixed and then you don't
+
+283
+00:19:45.020 --> 00:19:47.030
+see them again. They don't,
+they don't join the team.
+
+284
+00:19:47.390 --> 00:19:52.010
+Yeah, exactly. Yeah. It's good
+though. 75 committers in the
+
+285
+00:19:52.190 --> 00:19:54.860
+few short years, there's a
+lot of people. Oh yeah.
+
+286
+00:19:54.920 --> 00:19:58.520
+Yeah. I'm, I'm really happy
+to see that. Yeah. I
+
+287
+00:19:58.520 --> 00:20:01.700
+think that for people who
+are, you know, have an
+
+288
+00:20:01.700 --> 00:20:03.980
+open source project, if I,
+if I can give you
+
+289
+00:20:03.980 --> 00:20:08.020
+a compliment, looking at the
+cake and for example, your,
+
+290
+00:20:08.020 --> 00:20:12.230
+your read me a dot.md
+has some features that I
+
+291
+00:20:12.230 --> 00:20:16.220
+think people don't always put
+in their projects. For example,
+
+292
+00:20:16.550 --> 00:20:19.850
+you have a getter, you
+have badges that show your
+
+293
+00:20:19.850 --> 00:20:22.970
+new, get versions. You have
+a new get that is
+
+294
+00:20:22.970 --> 00:20:25.550
+public. And a, my get
+that people can opt into
+
+295
+00:20:25.550 --> 00:20:30.950
+for alpha builds. You use
+chocolatey, the windows apt get
+
+296
+00:20:30.950 --> 00:20:35.810
+system, you publish your, your
+home brew version. You have
+
+297
+00:20:35.960 --> 00:20:39.680
+a clear source browser with
+source project at IO, and
+
+298
+00:20:39.680 --> 00:20:43.250
+then you've even got 10
+different build servers with your
+
+299
+00:20:43.250 --> 00:20:47.980
+passing and failing rates. And
+they're really impressive. 73% coverage
+
+300
+00:20:48.700 --> 00:20:51.490
+as well. So you're using
+a lot of different, cool
+
+301
+00:20:51.490 --> 00:20:56.920
+things in the open source
+ecosystem, like coveralls.io and source
+
+302
+00:20:56.920 --> 00:21:01.510
+browser new, get my, get
+home brew. People who want
+
+303
+00:21:01.510 --> 00:21:05.650
+to see what a well
+organized project is that frankly
+
+304
+00:21:05.650 --> 00:21:09.700
+should look at at cake
+and how you use GitHub
+
+305
+00:21:09.730 --> 00:21:12.370
+to, to kick off all
+of these different processes. It's
+
+306
+00:21:12.370 --> 00:21:15.240
+pretty, yeah. Impressive. Oh, thank
+you. It makes me happy
+
+307
+00:21:15.240 --> 00:21:20.670
+to hear. Yeah, really? Yeah.
+It's. Since, since we run
+
+308
+00:21:20.670 --> 00:21:24.540
+cake on so many different
+systems, like, I mean, there
+
+309
+00:21:24.540 --> 00:21:29.670
+are a lot of different
+CA servers and we really
+
+310
+00:21:29.670 --> 00:21:34.290
+want the good code coverage,
+which you mentioned. And we
+
+311
+00:21:34.290 --> 00:21:38.010
+also want to actually build
+cake on those systems to
+
+312
+00:21:38.190 --> 00:21:43.320
+find any regressions. And we
+also run integration tests on
+
+313
+00:21:43.320 --> 00:21:48.810
+all servers to make sure
+that it works like it
+
+314
+00:21:48.810 --> 00:21:52.020
+should. And it's really saved
+a lot of time for
+
+315
+00:21:52.020 --> 00:21:59.430
+us finding errors and tracking
+down bugs. The recently though,
+
+316
+00:21:59.430 --> 00:22:01.860
+it seems like you got
+big enough where you needed
+
+317
+00:22:01.860 --> 00:22:08.220
+some additional support. So you
+joined the.net foundation. Yeah. What
+
+318
+00:22:08.220 --> 00:22:11.760
+does that mean? What is
+a foundation? Like, why would
+
+319
+00:22:11.760 --> 00:22:13.410
+you get so big that
+you need that? And what
+
+320
+00:22:13.410 --> 00:22:17.160
+does a foundation give you
+that, you know, you can't
+
+321
+00:22:17.160 --> 00:22:25.230
+just do yourself? Well, I
+mean, currently we are three
+
+322
+00:22:25.410 --> 00:22:31.050
+people maintaining this it's me
+and my peers and Gary,
+
+323
+00:22:32.310 --> 00:22:34.890
+and we all have, I
+mean, we are where we
+
+324
+00:22:34.890 --> 00:22:38.160
+have lives. We have work
+and families and stuff like
+
+325
+00:22:38.160 --> 00:22:43.680
+that. And at some point
+people are relying on the
+
+326
+00:22:43.680 --> 00:22:47.880
+system and maybe we won't
+be around for, I mean,
+
+327
+00:22:48.090 --> 00:22:52.950
+next year, you never know,
+maybe yeah. Things happen. You
+
+328
+00:22:52.950 --> 00:22:55.530
+might, well, it may not
+be around as one thing,
+
+329
+00:22:55.860 --> 00:23:00.660
+but you might also simply
+not feel like doing it
+
+330
+00:23:00.660 --> 00:23:02.940
+anymore. Or you might, you
+might move on. Maybe you
+
+331
+00:23:02.940 --> 00:23:06.240
+become a node programmer who
+knows you built something that
+
+332
+00:23:06.240 --> 00:23:10.320
+you want to live longer
+than you. Exactly. So, so
+
+333
+00:23:10.320 --> 00:23:12.690
+we thought it was a
+great idea. So we submitted
+
+334
+00:23:12.720 --> 00:23:17.490
+a request to the dotnet
+foundation and now we're part
+
+335
+00:23:17.490 --> 00:23:21.990
+of it. So, and it's
+a, it's, it's really good
+
+336
+00:23:21.990 --> 00:23:24.240
+to know that if we
+don't want to do this,
+
+337
+00:23:24.510 --> 00:23:29.130
+hopefully we will. And that
+feels good to know that
+
+338
+00:23:29.520 --> 00:23:34.890
+people who rely on cake
+can feel safe. So when
+
+339
+00:23:34.890 --> 00:23:38.100
+you put it in the
+foundation, does that make things
+
+340
+00:23:38.100 --> 00:23:42.330
+simpler? Like for example, who
+has the SSL certificate for
+
+341
+00:23:42.330 --> 00:23:45.560
+the website? Or, you know,
+if you're going to name
+
+342
+00:23:45.560 --> 00:23:49.310
+something or code, sign something,
+do you then turn that
+
+343
+00:23:49.310 --> 00:23:51.860
+over to the foundation? And
+then the foundation manages that,
+
+344
+00:23:51.920 --> 00:23:55.960
+that asset. Yeah, exactly. And
+they also provide legal support
+
+345
+00:23:55.990 --> 00:24:06.730
+and CLA it What's a
+CLA I mean, I'm a
+
+346
+00:24:07.780 --> 00:24:10.000
+coder license agreements. Is he
+going to make me, I
+
+347
+00:24:10.000 --> 00:24:11.770
+should know. I just, one
+of those, one of those
+
+348
+00:24:11.770 --> 00:24:15.520
+acronyms I always have on
+my, on my tip of
+
+349
+00:24:15.520 --> 00:24:21.580
+my tongue. Great it's contributor
+license. Yeah, exactly. There we
+
+350
+00:24:21.580 --> 00:24:23.650
+go. So they will do
+an automatic. So like, if
+
+351
+00:24:23.650 --> 00:24:26.470
+someone does a pull request,
+you can leak, I'm going
+
+352
+00:24:26.470 --> 00:24:29.020
+to keep track of all
+the legal paperwork. Yeah, exactly.
+
+353
+00:24:29.080 --> 00:24:32.320
+And there've been a great,
+great help with getting this
+
+354
+00:24:32.320 --> 00:24:38.230
+to work and also general
+support around the project. So
+
+355
+00:24:39.040 --> 00:24:46.240
+like I said, legal help
+everything from stickers to Asher
+
+356
+00:24:47.030 --> 00:24:52.810
+accounts for our CA servers.
+I think people don't realize
+
+357
+00:24:52.810 --> 00:24:58.840
+though, a good well-organized open
+source project looks like magic,
+
+358
+00:24:59.350 --> 00:25:02.230
+right? I mean, really, if
+you go to KC bill.net,
+
+359
+00:25:02.770 --> 00:25:06.070
+you have a beautiful website,
+you have clean screenshots, great
+
+360
+00:25:06.070 --> 00:25:09.760
+documentation. You've got a logo,
+like even just having a
+
+361
+00:25:09.760 --> 00:25:13.240
+logo is like, shows that
+you're in the top, you
+
+362
+00:25:13.240 --> 00:25:16.210
+know, the top, top of
+open source projects. Now you're
+
+363
+00:25:16.210 --> 00:25:19.840
+in a foundation, all of
+this being done as a
+
+364
+00:25:19.840 --> 00:25:23.560
+volunteer in your spare time
+when the, when the, the,
+
+365
+00:25:23.560 --> 00:25:27.870
+the kids and the partners
+are asleep. Exactly. Yeah. And
+
+366
+00:25:28.700 --> 00:25:30.550
+I mean, I mean, we,
+we paid for all those
+
+367
+00:25:30.640 --> 00:25:34.960
+services ourselves, but it, but
+it's not the longterm solution
+
+368
+00:25:36.100 --> 00:25:38.740
+because I mean, you have
+to pay for the web
+
+369
+00:25:38.740 --> 00:25:42.580
+site and the CS servers.
+And I mean, that quickly,
+
+370
+00:25:43.360 --> 00:25:49.060
+that doesn't scale for, for
+an individual to pay. So
+
+371
+00:25:49.060 --> 00:25:51.730
+it's really good to have
+the foundation behind us on
+
+372
+00:25:51.730 --> 00:25:55.600
+that. And was that, was
+that complicated? Like, is there
+
+373
+00:25:55.630 --> 00:25:57.490
+a lot of legal paperwork
+to do that kind of
+
+374
+00:25:57.490 --> 00:25:59.590
+stuff? I mean, like how
+big should a project be?
+
+375
+00:25:59.590 --> 00:26:01.840
+Like if someone's listening and
+they're like, yeah, I'm an
+
+376
+00:26:01.840 --> 00:26:04.810
+open source project. I should
+join a foundation, To be
+
+377
+00:26:04.810 --> 00:26:07.570
+honest, I'm not sure. But
+I think that, I mean,
+
+378
+00:26:08.350 --> 00:26:13.060
+the foundation is to foster
+open source development. So I'm
+
+379
+00:26:13.060 --> 00:26:15.730
+not sure that you have
+to be that big, but
+
+380
+00:26:15.730 --> 00:26:19.090
+I think maybe you, if
+you have a big enough
+
+381
+00:26:19.090 --> 00:26:26.770
+user base and enough, how
+can I say, well, enough
+
+382
+00:26:26.770 --> 00:26:32.320
+interest yeah. Interest. I see
+no reason for. So you're
+
+383
+00:26:32.320 --> 00:26:35.770
+just three people not accompany
+and you were able to
+
+384
+00:26:35.770 --> 00:26:39.760
+join. So projects big and
+small might need this. I
+
+385
+00:26:39.760 --> 00:26:43.770
+think really it's more that
+you are organized more than
+
+386
+00:26:43.770 --> 00:26:50.030
+anything, You know? Yeah. Maybe
+that's the reason. Yeah. I
+
+387
+00:26:50.030 --> 00:26:53.390
+mean, you had a, you
+had a great documentation, you
+
+388
+00:26:53.390 --> 00:26:57.800
+had a kind of a
+governance process. Right. You had
+
+389
+00:26:57.800 --> 00:27:00.860
+a, you know, codes of
+conduct, you were organized, but
+
+390
+00:27:00.860 --> 00:27:03.980
+you needed a little more,
+I'm going to make a
+
+391
+00:27:03.980 --> 00:27:08.060
+joke, build orchestration, you know,
+kind of around the project
+
+392
+00:27:08.360 --> 00:27:14.130
+and all the better for
+everyone. Yeah, absolutely. It's yeah.
+
+393
+00:27:14.220 --> 00:27:18.950
+Yeah. Where do you think
+things are going with.net core?
+
+394
+00:27:18.980 --> 00:27:21.920
+And it seems like there's
+an opportunity for, for KC
+
+395
+00:27:21.920 --> 00:27:27.560
+to have even more users
+across plants. Yeah. And I
+
+396
+00:27:27.560 --> 00:27:34.420
+think that core has a
+very bright future as for
+
+397
+00:27:34.430 --> 00:27:38.060
+K it's. We already started
+another project in the cake
+
+398
+00:27:38.630 --> 00:27:45.770
+organization called cake frosting, pun
+intended, which is a layer
+
+399
+00:27:45.770 --> 00:27:51.770
+upon cake that uses a
+layer cake. That's beautiful. That
+
+400
+00:27:52.340 --> 00:27:55.610
+allows you to write your
+cake script as a regular
+
+401
+00:27:55.610 --> 00:28:01.820
+C-sharp applications and use the,
+everything that we already have
+
+402
+00:28:01.820 --> 00:28:06.560
+in place. So you get
+telephones and debugging and stuff
+
+403
+00:28:06.560 --> 00:28:09.500
+like that out of our,
+out of the box. Cross-platform
+
+404
+00:28:10.610 --> 00:28:14.030
+so it's an alternative to
+run the, to use the
+
+405
+00:28:14.030 --> 00:28:19.820
+scripting approach. So, yeah. So
+do you, are you like
+
+406
+00:28:19.820 --> 00:28:22.340
+the main person now, or
+are you starting to let
+
+407
+00:28:22.510 --> 00:28:27.410
+other people do more? No.
+I would say that it's
+
+408
+00:28:27.410 --> 00:28:32.450
+a democracy at the moment.
+We're three maintainers and we
+
+409
+00:28:32.450 --> 00:28:36.290
+try to, we talk about
+stuff of me and we
+
+410
+00:28:36.890 --> 00:28:41.360
+vote about things and we
+also try to listen to
+
+411
+00:28:41.360 --> 00:28:45.920
+the community as much as
+we can and ask them
+
+412
+00:28:46.130 --> 00:28:51.620
+if they have any special
+opinions about changes and things
+
+413
+00:28:51.620 --> 00:28:54.770
+like that. You find that
+this is taking up a
+
+414
+00:28:54.770 --> 00:28:56.450
+lot of your time though.
+Like, you know, you have
+
+415
+00:28:56.450 --> 00:28:59.060
+a job, you have a
+life, you know, there's kids
+
+416
+00:28:59.060 --> 00:29:02.180
+in the house. Do you
+do this, do this when
+
+417
+00:29:02.180 --> 00:29:08.580
+everyone's asleep. Yeah. Yeah. Whenever
+when it's asleep mostly. And
+
+418
+00:29:08.580 --> 00:29:12.770
+then sometimes during lunch, or
+right now I'm on paternity
+
+419
+00:29:12.770 --> 00:29:16.670
+leave. So there's not much
+time at all for a
+
+420
+00:29:16.670 --> 00:29:20.990
+cake, but Mathias and Gary,
+they do a lot of
+
+421
+00:29:21.770 --> 00:29:26.060
+the regular work, like pull
+requests and issues and responding
+
+422
+00:29:26.060 --> 00:29:30.650
+to questions. So, yeah, that's
+gotta be Nice to be
+
+423
+00:29:30.650 --> 00:29:32.520
+able to step aside though
+and know that the project
+
+424
+00:29:32.570 --> 00:29:35.570
+still gonna move forward and
+not have that pressure of,
+
+425
+00:29:36.020 --> 00:29:38.840
+you know, there's a, a
+pull request out there waiting,
+
+426
+00:29:38.840 --> 00:29:41.710
+but there's also a baby
+in my lap. Yeah. But
+
+427
+00:29:41.710 --> 00:29:46.270
+what we Say, we state
+that in our documentation as
+
+428
+00:29:46.270 --> 00:29:51.040
+well in our contributed contribution
+guidelines that we don't have
+
+429
+00:29:51.040 --> 00:29:57.670
+our SLA for pull requests.
+So because we have lives
+
+430
+00:29:58.060 --> 00:30:03.910
+outside of cake and jobs
+and families, so it can
+
+431
+00:30:03.910 --> 00:30:06.100
+take up to a month
+for a pull request in,
+
+432
+00:30:06.240 --> 00:30:09.370
+in worst case scenario, but
+we will always try to
+
+433
+00:30:09.370 --> 00:30:13.120
+get to it, but this
+is a side project, so,
+
+434
+00:30:13.650 --> 00:30:16.290
+Well, it's a pretty impressive
+side project and it's pretty,
+
+435
+00:30:16.290 --> 00:30:19.950
+it's pretty cool. Folks can
+check it out at cake,
+
+436
+00:30:19.970 --> 00:30:24.390
+build.net. They can also learn
+about the dotnet foundation and
+
+437
+00:30:24.390 --> 00:30:27.510
+then do check out the,
+get hub. The read me
+
+438
+00:30:27.510 --> 00:30:30.330
+all of the organization, all
+the different projects that, that
+
+439
+00:30:30.360 --> 00:30:34.080
+orbit and surround cake builder
+really, really cool. Thanks so
+
+440
+00:30:34.080 --> 00:30:37.380
+much for chatting with me
+today. Thank you. This has
+
+441
+00:30:37.380 --> 00:30:40.260
+been another episode of Hanselminutes
+and we'll see you again
+
+442
+00:30:40.260 --> 00:30:40.860
+next week.
+

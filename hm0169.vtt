@@ -1,0 +1,3477 @@
+WEBVTT FILE
+
+1
+00:00:12.060 --> 00:00:16.650
+From Hanselman it's dot com.
+It's Hansel minutes, but weekly
+
+2
+00:00:16.650 --> 00:00:20.850
+discussion with web developer and
+technologists, Scott Hanselman hosted by
+
+3
+00:00:20.850 --> 00:00:25.890
+Carl Franklin. This is Lawrence Ryan announcing
+show number one 69 and
+
+4
+00:00:25.890 --> 00:00:31.140
+recorded live Friday, June 19th, 2009. Support
+for Hanselman it's just provided
+
+5
+00:00:31.140 --> 00:00:34.650
+by teller at Reb controls.
+The most comprehensive suite of
+
+6
+00:00:34.650 --> 00:00:45.390
+components for windows forms and
+asp.net web applications. online@wwwdottelerikdotcomandby.net developers
+
+7
+00:00:45.390 --> 00:00:50.610
+journal the world's leading.net developer
+magazine online at www dot
+
+8
+00:00:50.610 --> 00:00:54.360
+<inaudible> dot com. In this
+episode, Scott talks about the
+
+9
+00:00:54.390 --> 00:00:59.300
+arc of unit testing with
+Roy <inaudible>. Hi, this is
+
+10
+00:00:59.300 --> 00:01:01.520
+Scott Hanselman, and this is
+another episode of Hansel minutes,
+
+11
+00:01:01.520 --> 00:01:03.710
+and I'm sitting down today
+with Roy Chareau, the chief
+
+12
+00:01:03.710 --> 00:01:06.260
+architect at type Mark, and
+also the author of the
+
+13
+00:01:06.260 --> 00:01:08.900
+art of unit testing. Thanks
+Roy, for chatting with me
+
+14
+00:01:08.900 --> 00:01:11.750
+today. Hi, nice and nice
+to be here. So you
+
+15
+00:01:11.750 --> 00:01:13.910
+do a lot of unit
+testing. You are definitely a
+
+16
+00:01:13.940 --> 00:01:17.210
+practitioner of correct unit testing.
+You've you've been doing this
+
+17
+00:01:17.210 --> 00:01:18.800
+for years and years and
+years, and you work for
+
+18
+00:01:18.800 --> 00:01:22.100
+a company now that enables
+unit testing. Indeed. You've written
+
+19
+00:01:22.100 --> 00:01:23.840
+on the subject. And you
+also have been speaking here
+
+20
+00:01:23.840 --> 00:01:26.960
+at the Norwegian developers conference
+on unit testing. Yeah, it
+
+21
+00:01:26.960 --> 00:01:28.940
+was a full day yesterday
+for me. Yeah, you've been
+
+22
+00:01:28.940 --> 00:01:32.330
+doing a lot of sessions.
+Now you had, you have
+
+23
+00:01:32.330 --> 00:01:33.920
+been doing a thing lately
+on your blog. That's pretty
+
+24
+00:01:33.920 --> 00:01:37.490
+cool where you're doing test
+reviews. You're doing code reviews
+
+25
+00:01:37.490 --> 00:01:39.650
+of various different chunks of
+code. You actually did a
+
+26
+00:01:39.650 --> 00:01:43.520
+review on nerd dinner as
+a screencast, which I thought
+
+27
+00:01:43.520 --> 00:01:44.960
+was cool. So you have
+a little picture of you
+
+28
+00:01:44.960 --> 00:01:47.150
+in the corner and you're
+walking through the code and
+
+29
+00:01:47.150 --> 00:01:49.340
+you're saying what's good and
+what's bad. What are the
+
+30
+00:01:49.340 --> 00:01:52.040
+things that you've reviewed so
+far on your blog so
+
+31
+00:01:52.040 --> 00:01:54.500
+far, I've only done the
+three of these. I'm trying
+
+32
+00:01:54.500 --> 00:01:56.450
+to find the time to
+do more. I think now
+
+33
+00:01:56.450 --> 00:01:59.600
+I'll have some more free
+time. I did the review
+
+34
+00:01:59.600 --> 00:02:02.450
+for nerd dinner. I did
+a review for the unity,
+
+35
+00:02:03.200 --> 00:02:08.030
+Microsoft unity tests and for
+the asp.net MVC unit test.
+
+36
+00:02:08.210 --> 00:02:10.040
+So you actually look into
+the source code for MVC
+
+37
+00:02:10.040 --> 00:02:11.660
+and the test that we
+shipped with it and reviewed
+
+38
+00:02:11.660 --> 00:02:14.660
+those. Exactly. Okay. So let's
+talk about some of the
+
+39
+00:02:14.660 --> 00:02:16.730
+things that were good or
+bad about any of those
+
+40
+00:02:16.730 --> 00:02:18.380
+things. I know that there
+were some things in Nerdina
+
+41
+00:02:18.380 --> 00:02:20.570
+that were kind of sloppy,
+but there were also some
+
+42
+00:02:20.570 --> 00:02:23.660
+things in MVC itself that
+you thought were pretty cool.
+
+43
+00:02:23.780 --> 00:02:25.850
+So maybe we can talk
+a little about, about where
+
+44
+00:02:25.850 --> 00:02:27.170
+to start. Cause I'm thinking
+a lot of people who
+
+45
+00:02:27.170 --> 00:02:28.940
+are listening to this show
+either are writing in a
+
+46
+00:02:28.940 --> 00:02:32.090
+test or want to, but
+they may not be following
+
+47
+00:02:32.540 --> 00:02:35.720
+best practices or really any
+practices at all. Where do
+
+48
+00:02:35.720 --> 00:02:38.810
+I, you know, where do
+we start? Well, it'd be
+
+49
+00:02:38.810 --> 00:02:41.450
+hard for me to remember
+exactly all the little quirks
+
+50
+00:02:41.450 --> 00:02:44.390
+that I saw in all
+the reviews, but there were
+
+51
+00:02:44.390 --> 00:02:49.850
+things that just kept repeating
+themselves. The first, first of
+
+52
+00:02:49.850 --> 00:02:55.070
+all, in terms of quality,
+the, the asp.net MVC unit
+
+53
+00:02:55.070 --> 00:03:00.610
+tests and the unity source
+code tests were Really good
+
+54
+00:03:00.610 --> 00:03:02.740
+to watch. It was a,
+it was a pleasure to
+
+55
+00:03:02.740 --> 00:03:09.340
+see that there were people
+inside Microsoft who really, how
+
+56
+00:03:09.340 --> 00:03:11.890
+would I say embrace the
+whole idea of not just
+
+57
+00:03:11.890 --> 00:03:15.520
+writing a test, but took
+into account the idea of
+
+58
+00:03:15.910 --> 00:03:21.250
+quality unit tests. I think
+that the things that people
+
+59
+00:03:21.400 --> 00:03:24.070
+usually repeat the most in
+terms of problems in test
+
+60
+00:03:24.080 --> 00:03:27.880
+is the readability of tests.
+That is the naming conventions.
+
+61
+00:03:28.150 --> 00:03:31.060
+The way the tests are
+organized, the code inside the
+
+62
+00:03:31.060 --> 00:03:35.440
+tests. And usually if you
+think about a unit test
+
+63
+00:03:35.440 --> 00:03:37.810
+and what makes them good,
+there are three main pillars.
+
+64
+00:03:38.440 --> 00:03:43.240
+The first one is trustworthiness.
+Are you able to run
+
+65
+00:03:43.240 --> 00:03:46.420
+your test and trust the
+results? So if your test
+
+66
+00:03:46.420 --> 00:03:48.520
+fails, are you okay with
+that? That it fails? Or
+
+67
+00:03:48.610 --> 00:03:51.400
+do you hear sentences in
+your job that say, for
+
+68
+00:03:51.400 --> 00:03:54.370
+example, Oh no, that's okay.
+It's supposed to fail. Or
+
+69
+00:03:54.610 --> 00:03:57.630
+that only fails every second
+time. It failing for the
+
+70
+00:03:57.630 --> 00:04:00.300
+right reason. Is that what
+you're saying? No, it, it
+
+71
+00:04:00.300 --> 00:04:02.190
+might fail for the right
+reason or the wrong reason.
+
+72
+00:04:02.220 --> 00:04:04.770
+The question is, do you
+trust the result? So if
+
+73
+00:04:04.770 --> 00:04:06.900
+you have tests where you
+see a result, but you
+
+74
+00:04:06.900 --> 00:04:09.060
+still go in debug your
+code, just to make sure
+
+75
+00:04:09.390 --> 00:04:11.100
+or you draw, you see
+a result and you say,
+
+76
+00:04:11.100 --> 00:04:13.620
+no, no, it's the wrong
+result. I know what really
+
+77
+00:04:13.620 --> 00:04:17.070
+happening. That means you don't
+trust your tests. Okay? And
+
+78
+00:04:17.070 --> 00:04:19.200
+that clearly creates a big
+problem because at some point
+
+79
+00:04:19.200 --> 00:04:21.720
+they're going to fail or
+pass for the wrong reason,
+
+80
+00:04:22.020 --> 00:04:24.390
+and you're not going to
+trust that result. Okay? So
+
+81
+00:04:24.390 --> 00:04:27.780
+you lose all the confidence
+or the time saving the
+
+82
+00:04:27.780 --> 00:04:31.020
+tests are supposed to give
+you. The second one is
+
+83
+00:04:31.020 --> 00:04:35.010
+maintainability. A lot of people
+write tests, but the main
+
+84
+00:04:35.040 --> 00:04:37.530
+maintenance cost of raw changing
+the test. Every time you
+
+85
+00:04:37.530 --> 00:04:40.920
+take you change, the code
+is too high. So a
+
+86
+00:04:40.920 --> 00:04:44.250
+few months later they start,
+they stop maintaining the tests.
+
+87
+00:04:45.030 --> 00:04:49.050
+And that leads to a
+big problem. Cause now they've
+
+88
+00:04:49.560 --> 00:04:52.020
+also lost all the time
+of writing the test and
+
+89
+00:04:52.020 --> 00:04:54.200
+they don't get all the
+benefit of having them there.
+
+90
+00:04:54.300 --> 00:04:57.480
+They don't run them, they
+don't maintain them. And that's
+
+91
+00:04:57.480 --> 00:05:00.000
+a very big issue. And
+there are simple workarounds for
+
+92
+00:05:00.000 --> 00:05:03.300
+that kind of thing. Like
+reusing code inside tests, refactoring.
+
+93
+00:05:04.200 --> 00:05:07.050
+Now readability is an issue
+because it usually leads to
+
+94
+00:05:07.050 --> 00:05:12.480
+the other two people, right?
+Unreadable tests, someone, a test
+
+95
+00:05:12.480 --> 00:05:15.090
+fails. Someone tries to understand
+why it fails. They don't
+
+96
+00:05:15.090 --> 00:05:19.110
+understand why to start debugging.
+They may not understand the
+
+97
+00:05:19.110 --> 00:05:21.930
+results or they don't trust
+the result, or they don't
+
+98
+00:05:21.930 --> 00:05:24.450
+maintain it because they don't
+understand what they should change.
+
+99
+00:05:24.960 --> 00:05:27.570
+And it just deteriorates from
+there. But all those three
+
+100
+00:05:27.570 --> 00:05:30.990
+pillars are just connected. You
+just, you remove one and
+
+101
+00:05:30.990 --> 00:05:33.390
+the other to fail or
+some point. And the one
+
+102
+00:05:33.390 --> 00:05:35.250
+that really resonated with me
+was the first one they're
+
+103
+00:05:35.250 --> 00:05:37.080
+on, on being able to
+trust it. I like that
+
+104
+00:05:37.080 --> 00:05:39.600
+a lot. The idea that,
+so let me say, if
+
+105
+00:05:39.600 --> 00:05:41.130
+I have a test and
+it fails and you just
+
+106
+00:05:41.130 --> 00:05:44.040
+said like, well, it didn't
+really fail. It failed for
+
+107
+00:05:44.040 --> 00:05:46.950
+this other reason. Or this
+is an expression reality. I
+
+108
+00:05:46.950 --> 00:05:49.800
+can't trust this. Does that
+mean that the test is
+
+109
+00:05:49.800 --> 00:05:52.320
+testing too much or too
+little or the wrong thing?
+
+110
+00:05:52.320 --> 00:05:54.360
+I mean, if I see
+a test that I can
+
+111
+00:05:54.360 --> 00:05:56.640
+no longer trust, what is
+the next action that I
+
+112
+00:05:56.640 --> 00:05:58.820
+should take so that I
+might trust that test in
+
+113
+00:05:58.820 --> 00:06:01.510
+the future? Well, there's, They're
+all things that you can
+
+114
+00:06:01.990 --> 00:06:07.150
+take action to, to prevent
+this problem. If you already
+
+115
+00:06:07.150 --> 00:06:11.290
+have this problem there, you
+really have to understand why
+
+116
+00:06:11.290 --> 00:06:14.290
+it's there and then solve
+the, the, the core problem.
+
+117
+00:06:14.290 --> 00:06:17.080
+Not the, not the symptom.
+This is just a symptom
+
+118
+00:06:17.080 --> 00:06:22.060
+of some different problems. Things
+that lead to untrust to,
+
+119
+00:06:22.150 --> 00:06:25.870
+to test you can trust.
+One of the core things
+
+120
+00:06:25.870 --> 00:06:29.140
+is when you actually mix
+integration and unit test together
+
+121
+00:06:29.140 --> 00:06:32.470
+in the same project. So
+what happens is because integration
+
+122
+00:06:32.470 --> 00:06:36.700
+tests require configuration or that
+kind of stuff. They may
+
+123
+00:06:36.700 --> 00:06:39.460
+not necessarily pass by default.
+You have to configure me.
+
+124
+00:06:39.520 --> 00:06:42.430
+Maybe you have to have
+a database somewhere. So what
+
+125
+00:06:42.430 --> 00:06:45.010
+happens is in real team,
+developers may get the day's
+
+126
+00:06:45.030 --> 00:06:48.040
+version of all the source
+code and try to run
+
+127
+00:06:48.040 --> 00:06:51.970
+all the tests. And some
+will pass. Some will fail.
+
+128
+00:06:52.330 --> 00:06:54.700
+Usually the integration tests may
+not pass on the first
+
+129
+00:06:54.700 --> 00:06:57.670
+time. So they get a
+mix of red and green
+
+130
+00:06:57.670 --> 00:07:00.640
+results from the tests. And
+of course, the first sentence
+
+131
+00:07:00.640 --> 00:07:03.220
+they hear is that's okay,
+these tests or integration tests,
+
+132
+00:07:03.220 --> 00:07:05.200
+they're supposed to fail because
+it didn't configure this and
+
+133
+00:07:05.200 --> 00:07:08.380
+that and so on. So
+they, what happens is that
+
+134
+00:07:08.380 --> 00:07:11.140
+they don't even bother to
+start configuring the test to
+
+135
+00:07:11.140 --> 00:07:13.510
+make them pass. They just
+say, Oh, he's integration desk.
+
+136
+00:07:13.720 --> 00:07:15.760
+I have better things to
+do than make it past.
+
+137
+00:07:16.030 --> 00:07:19.150
+I'll just continue on. And
+what happens is they don't
+
+138
+00:07:19.150 --> 00:07:22.120
+bother checking all the tests,
+whether they're integration related and
+
+139
+00:07:22.120 --> 00:07:24.490
+all that stuff, they have
+better things to do. There
+
+140
+00:07:24.490 --> 00:07:27.670
+is no what I call
+a safe green zone, a
+
+141
+00:07:27.670 --> 00:07:30.730
+piece of a project where
+all the tests there should
+
+142
+00:07:30.730 --> 00:07:35.170
+be green by default, no
+excuses. And so the simplest
+
+143
+00:07:35.170 --> 00:07:39.250
+thing is to, to manage
+integration, separate from unit testing,
+
+144
+00:07:39.290 --> 00:07:42.160
+different project, different things, spaces.
+So as a developer, I
+
+145
+00:07:42.160 --> 00:07:46.030
+can get the latest version
+right-click on all the pieces
+
+146
+00:07:46.030 --> 00:07:50.260
+of, of the project that
+only have unit tests and
+
+147
+00:07:50.260 --> 00:07:52.480
+they should all pass. And
+that way I know that
+
+148
+00:07:52.480 --> 00:07:56.950
+something has to be OK
+if something there fails, I
+
+149
+00:07:56.950 --> 00:07:59.020
+know that there has to
+be a problem. I trust
+
+150
+00:07:59.020 --> 00:08:01.360
+these tests. So at least
+I have a piece of
+
+151
+00:08:01.360 --> 00:08:03.190
+the tests I can trust.
+See, this is good. You
+
+152
+00:08:03.190 --> 00:08:05.410
+actually answered my next question,
+which was going to be
+
+153
+00:08:06.520 --> 00:08:09.310
+so often I see unit
+tests and integration tests mixed.
+
+154
+00:08:09.340 --> 00:08:12.040
+What is the correct way
+to keep those things separate?
+
+155
+00:08:12.040 --> 00:08:14.200
+I can actually think of
+some projects internally at Microsoft
+
+156
+00:08:14.200 --> 00:08:18.130
+right now where the argument
+about unit testing versus integration
+
+157
+00:08:18.130 --> 00:08:21.700
+testing is happening. We're all
+unit using unit testing tools
+
+158
+00:08:22.150 --> 00:08:25.510
+for both unit testing and
+integration testing, that blurs things
+
+159
+00:08:25.510 --> 00:08:28.360
+for new, for new people.
+And you saying you recommend
+
+160
+00:08:28.360 --> 00:08:31.720
+different namespaces and even different
+assemblies. Yeah. Usually I use
+
+161
+00:08:31.720 --> 00:08:34.840
+different projects for real, for
+different assemblies so that I
+
+162
+00:08:34.840 --> 00:08:37.900
+can easily in a command
+line run only integration or
+
+163
+00:08:37.900 --> 00:08:41.740
+both, or just one of
+them. But, but seriously, just
+
+164
+00:08:41.740 --> 00:08:44.320
+on the, on the human
+factor, it's easier to run
+
+165
+00:08:44.320 --> 00:08:45.940
+all the tests in their
+project and all the tests
+
+166
+00:08:45.940 --> 00:08:49.540
+in a namespace or a
+folder just easier. So you
+
+167
+00:08:49.540 --> 00:08:52.060
+want to make things easier
+for people and they will
+
+168
+00:08:52.060 --> 00:08:54.910
+do them, but you need
+to define what is the
+
+169
+00:08:54.930 --> 00:08:59.460
+difference between integration and unit
+test. Some people will define
+
+170
+00:08:59.460 --> 00:09:02.070
+a unit test as testing
+only the smallest piece of
+
+171
+00:09:02.070 --> 00:09:07.740
+code. For example, just a
+method. I define it as
+
+172
+00:09:09.630 --> 00:09:12.840
+something that runs only memory
+runs fast, does not touch
+
+173
+00:09:12.840 --> 00:09:18.780
+any external state and is
+repeatable. Whether it touches multiple
+
+174
+00:09:18.780 --> 00:09:22.830
+classes or multiple methods, as
+far as I'm concerned, it's
+
+175
+00:09:22.830 --> 00:09:26.400
+still a unit test. Some
+people will say, no, that's
+
+176
+00:09:26.400 --> 00:09:29.280
+an integration test. Once you
+cross over the line to
+
+177
+00:09:29.310 --> 00:09:31.830
+even test the code of
+another class. But as far
+
+178
+00:09:31.830 --> 00:09:33.930
+as I'm concerned, as long
+as all the code under
+
+179
+00:09:33.930 --> 00:09:37.680
+test is under your control,
+it's your code it's and
+
+180
+00:09:37.680 --> 00:09:40.440
+it runs in memory and
+is repeatable and doesn't touch
+
+181
+00:09:40.440 --> 00:09:43.860
+external States, such as databases
+file systems or even statics.
+
+182
+00:09:44.610 --> 00:09:46.550
+It could be considered a
+unit test. Okay. I think
+
+183
+00:09:46.550 --> 00:09:48.410
+you definitely said something that
+resonated with me there. You
+
+184
+00:09:48.410 --> 00:09:50.660
+should have said that as
+long as you're testing code,
+
+185
+00:09:51.080 --> 00:09:53.720
+that is under your control
+because when I think of
+
+186
+00:09:53.720 --> 00:09:56.030
+a unit and I've actually
+had these big arguments at
+
+187
+00:09:56.030 --> 00:09:58.220
+previous jobs where we sit
+around and we argue about
+
+188
+00:09:58.220 --> 00:10:01.100
+the definition of the word
+unit, is it a method?
+
+189
+00:10:01.100 --> 00:10:02.630
+Is it a few lines?
+Is it a, is it
+
+190
+00:10:02.650 --> 00:10:07.070
+a one, one pass through
+a method? But I like
+
+191
+00:10:07.070 --> 00:10:09.380
+the idea of kind of
+mentally drawing a circle, like
+
+192
+00:10:09.380 --> 00:10:12.980
+a dotted line around some
+chunk of code, an arbitrary
+
+193
+00:10:12.980 --> 00:10:14.900
+chunk of code. It could
+be one method could be
+
+194
+00:10:14.900 --> 00:10:18.500
+10, but it isn't a
+logical unit of code. And
+
+195
+00:10:18.500 --> 00:10:21.320
+what you just said, that
+kind of crystallized for me
+
+196
+00:10:21.320 --> 00:10:23.840
+was that, and all of
+that is under your control.
+
+197
+00:10:24.020 --> 00:10:27.710
+Yes. Third party libraries are
+mocked away. Things that are,
+
+198
+00:10:27.890 --> 00:10:31.370
+I can't affect are not
+part of that unit. Yeah.
+
+199
+00:10:31.370 --> 00:10:33.410
+I'm testing. And, and, and
+as far as we were
+
+200
+00:10:33.410 --> 00:10:36.650
+talking about, you know, faking
+things out, I don't like
+
+201
+00:10:36.650 --> 00:10:40.430
+the word mocked away. So
+there has to be a
+
+202
+00:10:40.430 --> 00:10:43.670
+difference between mocks and stubs
+and people use the word
+
+203
+00:10:43.670 --> 00:10:46.040
+mocking when they actually mean,
+no, I'm just creating a
+
+204
+00:10:46.040 --> 00:10:49.820
+stub or I'm faking this
+out. And I think that
+
+205
+00:10:50.120 --> 00:10:52.700
+we should stop using the
+<inaudible>. Well, let's take a
+
+206
+00:10:52.700 --> 00:10:54.560
+moment to actually, and let's
+step, let's take a moment
+
+207
+00:10:54.560 --> 00:10:56.900
+from the conversation. Let's step
+aside. And why don't you
+
+208
+00:10:56.900 --> 00:11:00.500
+explain to me mocks, fakes
+and stuffs. Okay. So fakes
+
+209
+00:11:00.500 --> 00:11:04.280
+are basically everything that looks
+like something, but it's fake
+
+210
+00:11:04.400 --> 00:11:07.580
+because of your test. Okay.
+Okay. Now, depending on its
+
+211
+00:11:07.580 --> 00:11:10.310
+usage, it's either a stub
+or a mock object. Okay.
+
+212
+00:11:10.340 --> 00:11:14.090
+Okay. So categorically they're all
+fakes, but a mock object
+
+213
+00:11:14.090 --> 00:11:17.120
+is that thing that you
+might assert against to check
+
+214
+00:11:17.120 --> 00:11:19.850
+if your test is passed.
+Okay. So it's a fake
+
+215
+00:11:19.850 --> 00:11:23.030
+object that decides if your
+test has passed or not,
+
+216
+00:11:23.510 --> 00:11:25.610
+a stub is just something
+that helps your test run.
+
+217
+00:11:26.150 --> 00:11:28.100
+Okay. So a stub is
+something that I would write
+
+218
+00:11:28.130 --> 00:11:30.500
+just to get through, just
+to get, get it, to
+
+219
+00:11:30.500 --> 00:11:32.780
+work, get it, to compile,
+to get it, to actually
+
+220
+00:11:32.780 --> 00:11:36.170
+run, actually run. Yes. But
+a mock actually has some
+
+221
+00:11:36.170 --> 00:11:39.920
+behavior that I might, Mark
+is something that I will
+
+222
+00:11:40.010 --> 00:11:44.480
+assert against might have behavior,
+and I'm not asserting against
+
+223
+00:11:44.480 --> 00:11:47.030
+it. Then it's a stub.
+Okay. I might have multiple
+
+224
+00:11:47.030 --> 00:11:49.520
+stubs in a site, a
+test. Okay. But I will
+
+225
+00:11:49.520 --> 00:11:52.730
+only have one mockup only
+testing. One thing a step
+
+226
+00:11:52.730 --> 00:11:54.790
+might have, but it may
+not Be behavior that I
+
+227
+00:11:54.790 --> 00:11:57.910
+am going to assert against.
+It's just behavior that I
+
+228
+00:11:57.910 --> 00:12:00.000
+needed to do. Yeah. It
+just mimics the system. As
+
+229
+00:12:00.000 --> 00:12:02.760
+far as I'm concerned now,
+in the book X unit
+
+230
+00:12:02.790 --> 00:12:06.390
+test pattern patterns, there are
+more definitions of these kinds
+
+231
+00:12:06.390 --> 00:12:09.630
+of fake objects. There's tests,
+PI, there's a test double
+
+232
+00:12:09.630 --> 00:12:11.640
+and all that kind of
+stuff. And they all are
+
+233
+00:12:11.640 --> 00:12:14.730
+just sub categories of that
+fake object that I just
+
+234
+00:12:14.730 --> 00:12:17.670
+talked about. But for if
+you're just getting started, there
+
+235
+00:12:17.670 --> 00:12:19.800
+is no need to learn
+about all these different things.
+
+236
+00:12:19.800 --> 00:12:21.870
+You just need to know
+that I have these fake
+
+237
+00:12:21.870 --> 00:12:23.700
+objects. And if I look
+at the end of the
+
+238
+00:12:23.700 --> 00:12:25.890
+test and the assert is
+not, is against one of
+
+239
+00:12:25.890 --> 00:12:28.110
+those fake objects, then that
+fake object is a mock
+
+240
+00:12:28.110 --> 00:12:30.960
+option. Everything else is a
+step. Okay, good. So then
+
+241
+00:12:30.960 --> 00:12:32.880
+for the, for the new
+people who aren't necessarily into
+
+242
+00:12:32.880 --> 00:12:35.190
+unit testing that are learning
+about this, let's take what
+
+243
+00:12:35.190 --> 00:12:37.050
+we just talked about and
+let's bring it back. And
+
+244
+00:12:37.050 --> 00:12:39.390
+let's imagine two tests that
+do that are one is
+
+245
+00:12:39.390 --> 00:12:42.390
+a unit test of something.
+And one is an integration
+
+246
+00:12:42.390 --> 00:12:45.570
+test of the same thing.
+Let's say that we're talking
+
+247
+00:12:45.570 --> 00:12:47.370
+to the database. So I'm
+going to go and test,
+
+248
+00:12:47.520 --> 00:12:51.090
+get customer. I've got to
+get customer unit test. I've
+
+249
+00:12:51.090 --> 00:12:54.060
+got to get customer integration
+test. Is that a reasonable
+
+250
+00:12:54.060 --> 00:12:58.080
+scenario? Well, actually database related
+tests are a special case
+
+251
+00:12:58.080 --> 00:13:00.150
+as far as I'm concerned
+because I a few test
+
+252
+00:13:00.180 --> 00:13:03.270
+testing a data access layer.
+I would not recommend writing
+
+253
+00:13:03.270 --> 00:13:05.400
+a unit test for that.
+I would actually recommend to
+
+254
+00:13:05.400 --> 00:13:08.580
+test it with a real
+database because data access layer
+
+255
+00:13:08.580 --> 00:13:12.540
+has very thin if any
+logic whatsoever. And it usually
+
+256
+00:13:12.540 --> 00:13:15.060
+just creates either queries and
+sends them to the database.
+
+257
+00:13:15.390 --> 00:13:17.970
+And then the database contains
+another piece of that same
+
+258
+00:13:17.970 --> 00:13:20.760
+logic. You want to test
+a logic inside the database,
+
+259
+00:13:20.910 --> 00:13:26.940
+whether it's triggers, stored procedures,
+table relations, that's, that's something
+
+260
+00:13:26.940 --> 00:13:29.370
+that's usually you don't test
+unless you invoke it through
+
+261
+00:13:29.370 --> 00:13:31.860
+the data layer. I see
+that's all the same unit
+
+262
+00:13:31.860 --> 00:13:33.450
+as far as I'm concerned.
+So it has to be
+
+263
+00:13:33.450 --> 00:13:35.820
+in here. So maybe then
+a more appropriate thing would
+
+264
+00:13:35.820 --> 00:13:37.740
+be to raise the layer
+of abstraction a bit to
+
+265
+00:13:37.740 --> 00:13:40.380
+a, a service layer. That
+An example that I usually
+
+266
+00:13:40.380 --> 00:13:42.450
+use is a very simple
+one where let's say that
+
+267
+00:13:42.450 --> 00:13:45.660
+you have this class called
+storage and this class takes
+
+268
+00:13:45.660 --> 00:13:50.280
+an object would properties and
+given some property debts ruin
+
+269
+00:13:50.280 --> 00:13:53.340
+the object. The requirement is
+that the class calls some
+
+270
+00:13:53.340 --> 00:13:57.090
+sort of lager. Okay. Okay.
+Logs to the system, or
+
+271
+00:13:57.090 --> 00:14:01.980
+maybe it's a web service.
+Okay. Okay. So our decision
+
+272
+00:14:01.980 --> 00:14:04.500
+is what do we do
+with that lager? The lager
+
+273
+00:14:04.500 --> 00:14:07.080
+is considered a dependency because
+it talks to the external
+
+274
+00:14:07.080 --> 00:14:09.570
+system. That's try, I'm trying
+to test storage, not the
+
+275
+00:14:09.570 --> 00:14:11.940
+logger. Is that correct? You're
+trying to assess it. The
+
+276
+00:14:11.940 --> 00:14:14.790
+requirement that it calls the
+logger. Okay. Given that a
+
+277
+00:14:14.790 --> 00:14:17.940
+property on the object being
+sent is true. So if
+
+278
+00:14:17.940 --> 00:14:20.160
+the Sarge is being sent
+with an object too large,
+
+279
+00:14:20.520 --> 00:14:22.770
+it says to the log,
+I got an object too
+
+280
+00:14:22.770 --> 00:14:26.160
+large. Okay. Okay. So you
+will see in the log
+
+281
+00:14:26.160 --> 00:14:29.100
+file later object with this
+size, we'll send it. Okay.
+
+282
+00:14:29.160 --> 00:14:30.540
+So to make sure that
+I understand, cause I don't
+
+283
+00:14:30.540 --> 00:14:33.060
+wanna, I don't want to
+be incorrect. We're trying to
+
+284
+00:14:33.300 --> 00:14:35.250
+the unit of work we
+are testing is that our
+
+285
+00:14:35.250 --> 00:14:38.610
+object called the logger, not
+that logging occurred or that
+
+286
+00:14:38.610 --> 00:14:41.520
+things got written to disk,
+but that our objects behavior
+
+287
+00:14:41.820 --> 00:14:45.240
+it's expected behavior call the
+lager. If it's too large,
+
+288
+00:14:45.300 --> 00:14:48.210
+et cetera, et cetera. When
+a unit test and integration
+
+289
+00:14:48.750 --> 00:14:51.620
+test, in this case, if
+I was writing an test,
+
+290
+00:14:51.620 --> 00:14:54.770
+I would actually test that
+after calling the save method
+
+291
+00:14:54.770 --> 00:14:57.890
+on the storage, I would
+test that there is actually
+
+292
+00:14:57.890 --> 00:15:00.500
+a file on the system
+with specific texts inside it.
+
+293
+00:15:00.560 --> 00:15:03.590
+Excellent example. And if I
+was testing it as a
+
+294
+00:15:03.590 --> 00:15:06.560
+unit test, I would test
+the interaction between the storage
+
+295
+00:15:06.590 --> 00:15:10.520
+and the logger without ever
+having a real blogger in
+
+296
+00:15:10.520 --> 00:15:12.610
+the system at all. So
+would that mean that between
+
+297
+00:15:12.610 --> 00:15:15.280
+these two theoretical tests, the
+unit tests and the integration
+
+298
+00:15:15.280 --> 00:15:17.290
+test that a large chunk
+of the code would be
+
+299
+00:15:17.290 --> 00:15:19.600
+the same? It's the assertions
+that are going to be
+
+300
+00:15:19.600 --> 00:15:23.980
+different? The assertion will be
+probably be on a different
+
+301
+00:15:23.980 --> 00:15:26.020
+object. Yes. One of them
+will be on a file
+
+302
+00:15:26.020 --> 00:15:28.360
+system and you will also
+have to clean up after
+
+303
+00:15:28.360 --> 00:15:30.340
+yourself in the test to
+clean up the file that
+
+304
+00:15:30.340 --> 00:15:33.430
+was generated. And the, on
+the unit test, you would
+
+305
+00:15:33.430 --> 00:15:35.860
+have to create some sort
+of fake lager initialize the
+
+306
+00:15:35.860 --> 00:15:39.190
+storage with that fake logger,
+and then assert on that
+
+307
+00:15:39.220 --> 00:15:42.130
+fake logger that it was
+indeed called with the right
+
+308
+00:15:42.130 --> 00:15:45.580
+parameters. And so you would
+have to somehow save that
+
+309
+00:15:45.580 --> 00:15:50.350
+information on that method call
+and th that's where isolation,
+
+310
+00:15:50.350 --> 00:15:53.950
+frameworks, or what usually people
+call mocking frameworks come in,
+
+311
+00:15:54.550 --> 00:15:58.690
+where they allow you to
+create those fake objects dynamically.
+
+312
+00:15:59.770 --> 00:16:01.960
+So in that case, that
+fake object would indeed be
+
+313
+00:16:01.960 --> 00:16:05.860
+a mock object. Okay. Do
+you know how to make
+
+314
+00:16:05.860 --> 00:16:09.040
+the possible out of the
+impossible? Well, the dotnet ninjas
+
+315
+00:16:09.040 --> 00:16:11.620
+at Telerik do they just
+released a huge pack of
+
+316
+00:16:11.620 --> 00:16:14.350
+web controls, all built on
+top of ESPN at Ajax,
+
+317
+00:16:14.860 --> 00:16:18.100
+that'll help you build impossibly
+fast and interactive applications in
+
+318
+00:16:18.100 --> 00:16:21.460
+no time at all. They've
+made the impossible possible in
+
+319
+00:16:21.460 --> 00:16:25.000
+desktop development. If you think
+you can have a carousel
+
+320
+00:16:25.000 --> 00:16:28.090
+component and wind farms while
+you can, their windows form
+
+321
+00:16:28.100 --> 00:16:31.120
+suite features a super powerful
+grid, view control, and 32
+
+322
+00:16:31.120 --> 00:16:33.760
+other crazy desktop components that
+will give you a dazzling
+
+323
+00:16:34.180 --> 00:16:37.930
+WPF like features, but in
+wind farms, they do the
+
+324
+00:16:37.930 --> 00:16:40.300
+same thing in reporting solutions
+with a new design surface,
+
+325
+00:16:40.300 --> 00:16:43.000
+like nothing else looks just
+like graph paper gives you
+
+326
+00:16:43.000 --> 00:16:46.690
+advanced page layout capabilities makes
+it feel more like a
+
+327
+00:16:46.690 --> 00:16:49.690
+graphic design software than a
+reporting solution. Go check them
+
+328
+00:16:49.690 --> 00:16:55.360
+out@telerikdotcomandbeat.net Ninja. Thanks for listening.
+It's good that you have
+
+329
+00:16:55.360 --> 00:16:57.880
+these strong opinions about how
+we call things because really
+
+330
+00:16:57.880 --> 00:17:00.820
+an object oriented systems and
+in programming in general, what
+
+331
+00:17:00.820 --> 00:17:04.630
+you name something, colors, your
+the way you perceive it
+
+332
+00:17:04.630 --> 00:17:06.610
+and the way you start
+thinking about it. So, you
+
+333
+00:17:06.610 --> 00:17:08.710
+know, I've got this work
+word, mock stuck in my
+
+334
+00:17:08.710 --> 00:17:11.410
+head and I'm using it
+and it's coloring my perceptions.
+
+335
+00:17:11.440 --> 00:17:15.100
+Yeah. You're saying rather than
+mock framework, like the product
+
+336
+00:17:15.100 --> 00:17:17.680
+that your company makes as
+an isolation frameworks, you're making,
+
+337
+00:17:17.680 --> 00:17:20.140
+you're picking a much more
+descriptive. Well, I think all
+
+338
+00:17:20.140 --> 00:17:22.690
+the other frameworks are a
+citation framework as well. They're
+
+339
+00:17:22.690 --> 00:17:25.750
+not mocking framework because otherwise,
+if they were mocking frameworks,
+
+340
+00:17:26.050 --> 00:17:29.020
+all they will generate for
+you is mock objects, but
+
+341
+00:17:29.020 --> 00:17:32.290
+they also generate for you
+steps. I see. So that,
+
+342
+00:17:32.440 --> 00:17:36.010
+that confuses if you know
+the difference that confuses you,
+
+343
+00:17:36.010 --> 00:17:37.720
+if you don't know the
+difference, you don't know enough
+
+344
+00:17:37.720 --> 00:17:39.970
+anyway. Okay. Okay. So I
+don't want people to be
+
+345
+00:17:39.970 --> 00:17:42.880
+confused. The whole idea of
+these frameworks is to help
+
+346
+00:17:42.880 --> 00:17:46.210
+you easily isolate a unit
+from the unit. It depends
+
+347
+00:17:46.210 --> 00:17:50.160
+upon, so it's a nice
+relation framework. Okay. Excellent. And
+
+348
+00:17:50.160 --> 00:17:53.340
+Then what kind of, you
+know, how other than knowing,
+
+349
+00:17:53.430 --> 00:17:56.850
+like you're saying, knowing intuitively
+to smell whether the code
+
+350
+00:17:56.850 --> 00:17:59.670
+is good or not, whether
+the test is correct, what
+
+351
+00:17:59.670 --> 00:18:01.230
+are some of the things
+to watch for? You had
+
+352
+00:18:01.230 --> 00:18:05.370
+mentioned naming conventions, whether or
+not something was truly isolated
+
+353
+00:18:05.370 --> 00:18:09.980
+or not? Well, there are
+smells that are symptoms. When
+
+354
+00:18:09.980 --> 00:18:13.070
+you run tests, for example,
+tests have to be isolated
+
+355
+00:18:13.070 --> 00:18:15.110
+from each other as well.
+They, they have should have
+
+356
+00:18:15.110 --> 00:18:17.840
+no repercussions on other tests.
+So if you have a
+
+357
+00:18:17.840 --> 00:18:21.200
+test that a Fritz run
+before another one, so if
+
+358
+00:18:21.200 --> 00:18:23.600
+tests are running specific order,
+they fail. But if they're
+
+359
+00:18:23.600 --> 00:18:26.240
+running another order, they pass,
+that's a very common smell.
+
+360
+00:18:26.270 --> 00:18:28.310
+That's a very common smell.
+That's usually means that you
+
+361
+00:18:28.310 --> 00:18:31.250
+probably have an integration test
+on your hands anyway, and
+
+362
+00:18:31.250 --> 00:18:33.260
+that you're not cleaning up
+after your test. So they're
+
+363
+00:18:33.260 --> 00:18:36.050
+using the same shared state
+and they're not rolling back
+
+364
+00:18:36.050 --> 00:18:39.710
+after changing it. And that
+means they're not isolated, but
+
+365
+00:18:39.710 --> 00:18:42.080
+a very common mistake, which
+people don't notice is that
+
+366
+00:18:42.080 --> 00:18:45.950
+they actually write tests that
+invoke other tests. And the
+
+367
+00:18:45.950 --> 00:18:48.500
+reason they usually do that
+is to actually reuse code.
+
+368
+00:18:48.820 --> 00:18:51.830
+They do that to reuse
+code for good reason, because
+
+369
+00:18:51.830 --> 00:18:53.900
+they don't want to repeat
+the same coding test. Okay.
+
+370
+00:18:53.930 --> 00:18:56.900
+But they buy, they do
+it badly because that other
+
+371
+00:18:56.900 --> 00:18:59.240
+test runs. And, but the
+setup method for that other
+
+372
+00:18:59.240 --> 00:19:01.880
+test, doesn't run the tear
+down method for the other
+
+373
+00:19:01.880 --> 00:19:04.370
+test, doesn't run any, and
+there's another Cirque running there.
+
+374
+00:19:04.430 --> 00:19:07.280
+So they're testing two things
+at the same time, but
+
+375
+00:19:07.280 --> 00:19:10.790
+the conditions are unknown. So
+there are two, two ways
+
+376
+00:19:10.790 --> 00:19:12.770
+to screw that up, either
+not to clean up after
+
+377
+00:19:12.770 --> 00:19:15.940
+yourself or invoke other tests,
+but there are simpler things
+
+378
+00:19:16.210 --> 00:19:20.090
+there. There's the notion of
+testing multiple things. If you
+
+379
+00:19:20.090 --> 00:19:23.150
+have multiple asserts in your
+tests, 90% of the time,
+
+380
+00:19:23.150 --> 00:19:26.870
+it means you're testing more
+than one thing. And if
+
+381
+00:19:26.870 --> 00:19:29.060
+you're testing more than one
+thing in a test, it
+
+382
+00:19:29.060 --> 00:19:30.560
+will be hard to give
+it a good name. It
+
+383
+00:19:30.560 --> 00:19:33.320
+will be if it fails,
+it means that either multiple
+
+384
+00:19:33.320 --> 00:19:35.420
+things fail. So it will
+be harder to find what
+
+385
+00:19:35.420 --> 00:19:39.230
+it is that failed and
+assert when it fails throws
+
+386
+00:19:39.230 --> 00:19:43.040
+an exception. So every assert
+assert after it will never
+
+387
+00:19:43.040 --> 00:19:46.130
+run. So you don't know
+the full picture. Okay. That's
+
+388
+00:19:46.130 --> 00:19:48.350
+why you want usually just
+want to start per test,
+
+389
+00:19:48.800 --> 00:19:50.570
+Which is interesting. Cause that
+was the next question I
+
+390
+00:19:50.570 --> 00:19:52.520
+was going to ask you
+is that I find when
+
+391
+00:19:52.520 --> 00:19:54.110
+I'm writing tests that I
+end up doing a lot
+
+392
+00:19:54.110 --> 00:19:57.140
+of copy pasting and I
+get, I get a lot
+
+393
+00:19:57.140 --> 00:19:58.940
+of tests that have like
+four or five lines that
+
+394
+00:19:58.940 --> 00:20:01.130
+are repeated over and over
+again. Then I kind of,
+
+395
+00:20:01.370 --> 00:20:03.620
+I'm not sure if I
+should extract method and pull
+
+396
+00:20:03.620 --> 00:20:07.010
+those out. And then I
+ask myself, well, do I
+
+397
+00:20:07.010 --> 00:20:09.500
+need one assert per test
+or five or six? I
+
+398
+00:20:09.500 --> 00:20:12.050
+say, well, you know, while
+I'm here, I've got these
+
+399
+00:20:12.050 --> 00:20:13.880
+objects. Why don't I go
+and assert these seven or
+
+400
+00:20:13.880 --> 00:20:16.280
+eight different things? And you
+just kind of answered my
+
+401
+00:20:16.280 --> 00:20:19.100
+question. You think one assert
+cert protest. Well, it depends
+
+402
+00:20:19.100 --> 00:20:21.200
+what it is. You're testing.
+If you remember the idea
+
+403
+00:20:21.200 --> 00:20:24.890
+is that you're testing one
+logical thing. Okay. So a
+
+404
+00:20:24.890 --> 00:20:27.500
+one to start protest usually
+is enough. The only time
+
+405
+00:20:27.500 --> 00:20:30.050
+where it's not enough is
+when you're testing different properties
+
+406
+00:20:30.050 --> 00:20:33.260
+on the same object as
+the same logical result. Okay.
+
+407
+00:20:33.290 --> 00:20:35.540
+Sorry. I missed, I'm asserting
+that I'm getting back an
+
+408
+00:20:35.540 --> 00:20:38.510
+object that looks like this
+and this and this. So
+
+409
+00:20:38.510 --> 00:20:40.760
+that's where you would have
+maybe multiple certs, but they're
+
+410
+00:20:40.760 --> 00:20:43.940
+all part of the same
+logical check, Okay. To say,
+
+411
+00:20:44.120 --> 00:20:46.640
+make sure that a customer
+count is greater than zero
+
+412
+00:20:46.640 --> 00:20:48.690
+and than a hundred. I
+don't have to go in
+
+413
+00:20:48.690 --> 00:20:50.440
+and make another whole test
+just because I want to
+
+414
+00:20:50.440 --> 00:20:53.310
+check two batteries at the
+same thing That it's, well,
+
+415
+00:20:53.700 --> 00:20:56.250
+if you're getting back an
+object, if you can create
+
+416
+00:20:56.250 --> 00:21:00.570
+an expected object and then
+equal between them, that's, that's
+
+417
+00:21:00.570 --> 00:21:02.940
+one assert that's testing multiple
+things at the same time.
+
+418
+00:21:02.940 --> 00:21:04.920
+If you can do that
+kind of thing, it means
+
+419
+00:21:04.920 --> 00:21:09.270
+you're testing one thing. Okay.
+Okay. But usually people are
+
+420
+00:21:09.270 --> 00:21:12.480
+testing more than one thing
+without realizing it. Now, one
+
+421
+00:21:12.480 --> 00:21:14.430
+of the things that in,
+in, when you do the
+
+422
+00:21:14.430 --> 00:21:16.590
+nerd dinner test review, that
+we didn't do a good
+
+423
+00:21:16.590 --> 00:21:18.330
+job on was the naming.
+And I know that you
+
+424
+00:21:18.330 --> 00:21:20.880
+feel strongly about naming tests
+correctly. Why is that something
+
+425
+00:21:21.690 --> 00:21:25.830
+Well, naming tests, there are
+two audiences for the test
+
+426
+00:21:25.830 --> 00:21:29.580
+names. First of all, if
+we talk about the beginner
+
+427
+00:21:29.580 --> 00:21:34.950
+crowd that just gets started
+writing unit tests, the pattern
+
+428
+00:21:34.950 --> 00:21:38.850
+that I use for, for
+tests has three parts that,
+
+429
+00:21:39.430 --> 00:21:42.210
+that are very, how would
+I say they're very strict.
+
+430
+00:21:42.450 --> 00:21:44.550
+You're, you're forced to write
+the name of the method
+
+431
+00:21:44.550 --> 00:21:47.760
+on your test, the, the
+scenario in which you're testing
+
+432
+00:21:47.760 --> 00:21:53.940
+it. So a given database,
+it contains two rows calling
+
+433
+00:21:53.940 --> 00:21:57.300
+a method X, and then
+you have third part, which
+
+434
+00:21:57.300 --> 00:22:01.080
+is the expected behavior, then
+extra Troy and exception. Okay.
+
+435
+00:22:01.080 --> 00:22:02.580
+So you're you were saying
+that your method name is
+
+436
+00:22:02.580 --> 00:22:06.200
+saying, given this. Yeah, but
+not in that order, you
+
+437
+00:22:06.210 --> 00:22:09.090
+mean usually mean just the
+name of the method, behavior
+
+438
+00:22:09.240 --> 00:22:13.410
+and a name of the
+method, sorry. Scenario expected behavior.
+
+439
+00:22:13.740 --> 00:22:16.260
+And then there are underscores
+between those and then the
+
+440
+00:22:16.260 --> 00:22:18.540
+scores are there to tell
+you that there are three
+
+441
+00:22:18.540 --> 00:22:21.420
+parts. So if you forget
+one, you know about it,
+
+442
+00:22:21.630 --> 00:22:23.160
+You're not putting it on
+you. Don't like putting underscores
+
+443
+00:22:23.160 --> 00:22:25.860
+between every word you put
+in between the parts. So
+
+444
+00:22:25.860 --> 00:22:27.530
+can you give me an
+example of a couple of
+
+445
+00:22:27.540 --> 00:22:29.580
+'em Let's talk about the
+test. I just talked to,
+
+446
+00:22:29.580 --> 00:22:33.090
+I just explained earlier. So
+if I was testing class
+
+447
+00:22:33.090 --> 00:22:35.820
+storage and had a mess
+method save, then the test
+
+448
+00:22:35.820 --> 00:22:42.960
+will be called save underscore
+object tool to large underscore
+
+449
+00:22:43.680 --> 00:22:46.920
+calls, logger writes to log
+or something like that. Okay.
+
+450
+00:22:46.920 --> 00:22:50.310
+So it's almost like, like
+a sentence, but it's structured
+
+451
+00:22:50.310 --> 00:22:52.650
+enough. So that beginners will
+always remember to write all
+
+452
+00:22:52.650 --> 00:22:56.040
+these parts. Now, as they
+get comfortable, they can create
+
+453
+00:22:56.040 --> 00:22:59.190
+their own naming convention. But
+these three parts are important
+
+454
+00:22:59.190 --> 00:23:01.800
+because now we're talking about
+the other audience and that's
+
+455
+00:23:01.800 --> 00:23:04.650
+the person who reads the
+test that you wrote. And
+
+456
+00:23:04.650 --> 00:23:07.020
+that's the person that didn't
+write that test and they
+
+457
+00:23:07.020 --> 00:23:09.360
+need to understand why it's
+failing and why White's passing.
+
+458
+00:23:10.080 --> 00:23:13.590
+Now, if the test name
+does not contain all these
+
+459
+00:23:13.590 --> 00:23:16.050
+three parts, then they have
+to go into the test
+
+460
+00:23:16.050 --> 00:23:18.360
+and understand and go through
+the code. And that takes
+
+461
+00:23:18.360 --> 00:23:21.030
+time. Now, usually when you
+have, let's say a thousand
+
+462
+00:23:21.030 --> 00:23:24.540
+tests running and five of
+them fail, the only thing
+
+463
+00:23:24.540 --> 00:23:26.700
+you've seen test runner is
+to test names. You don't
+
+464
+00:23:26.700 --> 00:23:29.670
+see comments, you don't see
+anything else. So if I
+
+465
+00:23:29.670 --> 00:23:32.070
+can, just, by looking at
+the test names at the
+
+466
+00:23:32.070 --> 00:23:34.530
+test runner, figure out what
+is a problem and go
+
+467
+00:23:34.530 --> 00:23:36.900
+directly to production code. I've
+just saved a lot of
+
+468
+00:23:36.900 --> 00:23:39.450
+time. And I know exactly
+what is the problem in
+
+469
+00:23:39.450 --> 00:23:44.190
+terms of the requirement and
+the problematic behavior. Now, a
+
+470
+00:23:44.220 --> 00:23:46.940
+BDD style naming and all
+that stuff. They all contain
+
+471
+00:23:46.940 --> 00:23:49.160
+those same three parts, right?
+They just contain them in
+
+472
+00:23:49.160 --> 00:23:53.290
+different structures. That's interesting that
+you say that because I've
+
+473
+00:23:53.290 --> 00:23:54.940
+seen people say, well, you
+should name your tests a
+
+474
+00:23:54.940 --> 00:23:56.770
+certain way. You shouldn't give
+them a structure because when
+
+475
+00:23:56.770 --> 00:23:59.200
+they're out, when they are
+alphabetized and a long list,
+
+476
+00:23:59.200 --> 00:24:02.350
+it makes things, makes things
+implicitly grouped, which is good.
+
+477
+00:24:02.830 --> 00:24:05.170
+You're saying put all three
+bits of information in the
+
+478
+00:24:05.170 --> 00:24:08.170
+method because that's what most
+test runner shows. But like
+
+479
+00:24:08.170 --> 00:24:10.810
+you just said, BDD, or,
+you know, behavior driven design
+
+480
+00:24:11.200 --> 00:24:14.140
+people often say, well, I
+don't want those three pieces
+
+481
+00:24:14.140 --> 00:24:15.910
+in my method. I'm going
+to put part in my
+
+482
+00:24:15.910 --> 00:24:19.210
+namespace part of my class
+and part of my method.
+
+483
+00:24:19.720 --> 00:24:21.580
+But then you have to
+go and change the output
+
+484
+00:24:21.580 --> 00:24:23.620
+columns. If your test runner,
+to show you those bits
+
+485
+00:24:23.620 --> 00:24:27.100
+of information, it's not really
+in one place. Well, sometimes
+
+486
+00:24:27.280 --> 00:24:29.500
+people will actually go to
+a different structure where there
+
+487
+00:24:29.500 --> 00:24:34.480
+is a class per a
+specific method under test our
+
+488
+00:24:34.480 --> 00:24:37.450
+class for a specific behavior
+under test. And the class
+
+489
+00:24:37.480 --> 00:24:40.000
+is actually the context of
+the class name could be
+
+490
+00:24:40.000 --> 00:24:43.300
+the context. And the setup
+of the class is to
+
+491
+00:24:43.300 --> 00:24:46.180
+set up all of all
+the possible test cases. And
+
+492
+00:24:46.180 --> 00:24:48.220
+then each test case inside
+the class has just under
+
+493
+00:24:48.220 --> 00:24:51.550
+different assert. And that makes
+sense when you're testing multiple
+
+494
+00:24:51.550 --> 00:24:55.630
+results of the same action,
+it makes less sense when
+
+495
+00:24:55.690 --> 00:24:58.600
+you're, you have very simple
+tests where you're just given
+
+496
+00:24:58.600 --> 00:25:01.570
+this, I'm getting back that
+right. You can do both
+
+497
+00:25:01.570 --> 00:25:04.930
+sides of tests. I'm not
+a big proponent of the
+
+498
+00:25:04.960 --> 00:25:08.020
+BDD way because I think
+beginners find it much harder
+
+499
+00:25:08.020 --> 00:25:10.510
+to get started with. Yeah.
+They find it easier to
+
+500
+00:25:10.510 --> 00:25:13.810
+read, but to get started
+writing that kind of stuff
+
+501
+00:25:14.890 --> 00:25:17.170
+is a, is a, is,
+is kind of hard for
+
+502
+00:25:17.170 --> 00:25:21.670
+them. And for, for writing
+tests, the simple way is
+
+503
+00:25:21.670 --> 00:25:24.100
+just a way to, to
+ramp up and for after
+
+504
+00:25:24.100 --> 00:25:26.140
+that, you know, if that
+makes sense, going to a
+
+505
+00:25:26.140 --> 00:25:29.140
+different style of writing tests,
+definitely go ahead and do
+
+506
+00:25:29.140 --> 00:25:31.720
+that. Now, is that what
+they call the context specification
+
+507
+00:25:31.730 --> 00:25:34.450
+style of testing? Well, there
+is a context specification and
+
+508
+00:25:34.450 --> 00:25:37.600
+there is a, there are
+a whole bunch of different
+
+509
+00:25:37.600 --> 00:25:40.570
+categories. I'm not, I don't
+think that I quite understand
+
+510
+00:25:40.570 --> 00:25:43.030
+all the differences between them.
+I never really got into
+
+511
+00:25:43.030 --> 00:25:45.640
+that whole world. I'm still
+trying to get in there.
+
+512
+00:25:45.940 --> 00:25:49.450
+I'm still trying to find
+more value in that style
+
+513
+00:25:49.450 --> 00:25:52.930
+of writing right then in
+my current style. And I've
+
+514
+00:25:52.930 --> 00:25:55.240
+been looking at that for
+maybe six months now, and
+
+515
+00:25:55.240 --> 00:25:58.360
+I still haven't found enough
+for me to switch Not
+
+516
+00:25:58.360 --> 00:26:01.660
+enough, compelling enough to make
+a change. Nice. There are
+
+517
+00:26:01.660 --> 00:26:05.620
+some very elegant to solutions
+there, but personally, I really
+
+518
+00:26:05.620 --> 00:26:09.130
+like the really, really simple
+simplicity of the way that
+
+519
+00:26:09.130 --> 00:26:11.650
+I write test today. Everyone
+gets that I can teach
+
+520
+00:26:11.650 --> 00:26:14.710
+that everyone does that very
+easily. He's just a great
+
+521
+00:26:14.710 --> 00:26:17.680
+way to have greater adoption.
+And adoption, I think is,
+
+522
+00:26:18.060 --> 00:26:20.890
+is something that we should
+all be striving for. And
+
+523
+00:26:20.890 --> 00:26:23.920
+the more we complex things,
+the less people will adopt
+
+524
+00:26:23.920 --> 00:26:27.520
+these great practices. Now, how
+does this scale you had
+
+525
+00:26:27.520 --> 00:26:29.650
+made the comment that when
+you have thousands of tests,
+
+526
+00:26:29.650 --> 00:26:31.810
+what does the structure look
+like? If my solution, let's
+
+527
+00:26:31.810 --> 00:26:34.270
+say I've got some fairly
+good sized system and I've
+
+528
+00:26:34.270 --> 00:26:38.200
+got a thousand tests, do
+I have a few hundred
+
+529
+00:26:38.260 --> 00:26:41.140
+per project? Do I have
+many assemblies? You'd said we
+
+530
+00:26:41.140 --> 00:26:44.910
+might have assemblies for unit
+tests and assemblies integration tests.
+
+531
+00:26:45.270 --> 00:26:48.300
+Where are my partitions? How
+do I chop this thing
+
+532
+00:26:48.330 --> 00:26:51.770
+up? I usually just naming
+conventions of the project. So
+
+533
+00:26:51.770 --> 00:26:54.890
+you'd have project X or
+project, and then you would
+
+534
+00:26:54.890 --> 00:26:58.520
+have project X dot tests,
+and then you have project
+
+535
+00:26:58.520 --> 00:27:01.520
+X dot integration tests. So
+you'd have max of three
+
+536
+00:27:02.120 --> 00:27:05.900
+of threes. So, and that
+way, if you look at
+
+537
+00:27:05.900 --> 00:27:09.650
+the, the solution tree, you
+would see them next to
+
+538
+00:27:09.650 --> 00:27:12.110
+each other. Some people like
+to group them by folders
+
+539
+00:27:12.110 --> 00:27:15.590
+and or group them by
+namespace. It starts with tests
+
+540
+00:27:15.680 --> 00:27:18.140
+and then the same name
+of the project. Okay. So
+
+541
+00:27:18.140 --> 00:27:20.300
+it's all a matter of
+just being consistent as long
+
+542
+00:27:20.300 --> 00:27:22.700
+as they are. It's easier
+to find some, given a
+
+543
+00:27:22.710 --> 00:27:24.530
+name of a project. It's
+easier to find all the
+
+544
+00:27:24.530 --> 00:27:27.500
+tests for it. I'm okay
+with that. Okay. So then
+
+545
+00:27:27.500 --> 00:27:30.800
+within a testing assembly itself,
+let's say that I've got
+
+546
+00:27:30.800 --> 00:27:34.370
+some assembly. That's got many,
+many classes. When, when do
+
+547
+00:27:34.370 --> 00:27:38.390
+I make a new class
+within my test assembly? Well,
+
+548
+00:27:38.390 --> 00:27:41.090
+I usually start, especially at
+the beginner level with a
+
+549
+00:27:41.090 --> 00:27:45.590
+class, a under test, I
+will have a class for
+
+550
+00:27:45.590 --> 00:27:47.420
+each class under a test.
+I will have a test
+
+551
+00:27:47.420 --> 00:27:50.000
+class. Okay. So you're still
+one-to-one so one assembly, one
+
+552
+00:27:50.000 --> 00:27:53.090
+test assembly, one test class,
+Start a one to one.
+
+553
+00:27:53.090 --> 00:27:55.760
+And I start with the
+mapping of, well, if I
+
+554
+00:27:55.760 --> 00:27:58.010
+test a method, I start
+with a test method. Okay.
+
+555
+00:27:58.790 --> 00:28:02.990
+But at some point you
+might realize that you, you
+
+556
+00:28:02.990 --> 00:28:05.450
+already a lot of tests
+just for one method and
+
+557
+00:28:05.450 --> 00:28:08.300
+you would separate the class
+for just one methods test
+
+558
+00:28:08.660 --> 00:28:11.300
+or, or you would go
+further. And you'd say, I
+
+559
+00:28:11.300 --> 00:28:14.030
+have a class for a
+specific scenario for a product,
+
+560
+00:28:14.330 --> 00:28:16.010
+and then it can no
+longer maps to a specific
+
+561
+00:28:16.010 --> 00:28:19.250
+class. It just maps to
+specific scenarios on the whole
+
+562
+00:28:19.250 --> 00:28:22.010
+product and then checks multiple
+classes at the same time.
+
+563
+00:28:23.360 --> 00:28:26.570
+It's all a matter of
+what you're comfortable with, but
+
+564
+00:28:26.570 --> 00:28:28.760
+the easiest one is just
+mapping one-to-one at the beginning.
+
+565
+00:28:29.660 --> 00:28:34.370
+Now I may be inappropriately
+obsessed with a cyclometic complexity,
+
+566
+00:28:34.370 --> 00:28:37.460
+but typically when I have
+a class, a method rather
+
+567
+00:28:37.460 --> 00:28:39.470
+than has a couple of
+inputs, I always try to
+
+568
+00:28:39.470 --> 00:28:43.160
+have, you know, a reasonable
+amount of code coverage. I
+
+569
+00:28:43.160 --> 00:28:45.860
+don't necessarily go for 90,
+you know, 90% plus, or
+
+570
+00:28:46.190 --> 00:28:49.070
+try to overly focus on
+that metric. But I usually
+
+571
+00:28:49.070 --> 00:28:53.240
+just can't stop myself from
+writing lots of negative tests.
+
+572
+00:28:53.390 --> 00:28:55.610
+I'm always doing this. I
+want to, I tend, I
+
+573
+00:28:55.610 --> 00:28:57.380
+don't know why it is
+if it's, if it's correct
+
+574
+00:28:57.380 --> 00:28:59.900
+or if it's just me
+and I'm wrong, I'm always
+
+575
+00:28:59.900 --> 00:29:04.970
+trying to throw inappropriate inputs
+into my methods. Cause you're
+
+576
+00:29:04.970 --> 00:29:07.670
+a really negative guy. I'm
+truly a negative person. Very,
+
+577
+00:29:07.730 --> 00:29:11.900
+very negative. A lot of
+black t-shirts do I, is
+
+578
+00:29:11.900 --> 00:29:14.330
+that right? I mean, what's
+the ratio of negative test
+
+579
+00:29:14.330 --> 00:29:16.790
+to positive tests. I'm always
+trying to break stuff. And
+
+580
+00:29:16.790 --> 00:29:19.460
+I find by throwing inputs
+at my methods, that it
+
+581
+00:29:19.880 --> 00:29:23.180
+lets me understand more kind
+of like figuring out the
+
+582
+00:29:23.180 --> 00:29:26.390
+negative space. Lets you understand
+the positive When they read
+
+583
+00:29:26.390 --> 00:29:29.390
+the test already ready before
+or after the method. That's
+
+584
+00:29:29.390 --> 00:29:31.580
+an interesting point. So as
+funny you've actually caught me
+
+585
+00:29:31.580 --> 00:29:34.700
+in something, I think I
+write the positive tests first
+
+586
+00:29:34.940 --> 00:29:37.280
+and that helps me design
+it. And then once I've
+
+587
+00:29:37.280 --> 00:29:39.620
+got it, mostly working, I
+write a bunch of negative
+
+588
+00:29:39.620 --> 00:29:41.770
+tests. I'm not sure if
+that's, but that's what I
+
+589
+00:29:41.770 --> 00:29:44.650
+do. Well, yeah, that's, that's
+close to what I do.
+
+590
+00:29:45.130 --> 00:29:47.380
+If I write tests in
+a test first manner and
+
+591
+00:29:47.380 --> 00:29:49.440
+then that's what I usually
+do. I will, I will
+
+592
+00:29:49.450 --> 00:29:52.960
+drive real functionality. I will
+never start with an invalid
+
+593
+00:29:52.960 --> 00:29:56.320
+value because you don't provide
+real value and you can
+
+594
+00:29:56.320 --> 00:29:58.060
+go to your boss and
+say, Hey, you know what?
+
+595
+00:29:58.060 --> 00:30:02.290
+This doesn't handle now. This
+totally does not. It handles
+
+596
+00:30:02.290 --> 00:30:04.720
+in Valley values. Amazing. No,
+he doesn't do anything, but
+
+597
+00:30:04.720 --> 00:30:07.780
+you can send minus one.
+It'd be amazing. Exactly. So
+
+598
+00:30:07.780 --> 00:30:09.550
+you have to start with
+real value and as you
+
+599
+00:30:09.550 --> 00:30:12.160
+get real value that you
+can actually demo, it can
+
+600
+00:30:12.160 --> 00:30:17.020
+start throwing in unvalued, invalid,
+especially with some types of
+
+601
+00:30:17.020 --> 00:30:20.140
+work. You can, you can
+dive really deep into a
+
+602
+00:30:20.140 --> 00:30:22.660
+bunch of invalid values. At
+some point you might want
+
+603
+00:30:22.660 --> 00:30:25.180
+to start doing range testing,
+which is just getting all
+
+604
+00:30:25.180 --> 00:30:28.090
+the valleys from some Excel
+file, just throwing it at,
+
+605
+00:30:28.510 --> 00:30:32.200
+at the, at the methods,
+seeing what happens. But I
+
+606
+00:30:32.200 --> 00:30:34.090
+would only do that kind
+of thing or maybe throwing
+
+607
+00:30:34.090 --> 00:30:38.530
+in random values after I've
+I felt comfortable with the
+
+608
+00:30:38.530 --> 00:30:42.460
+method. So I will tell
+people you should stop writing
+
+609
+00:30:42.460 --> 00:30:44.950
+tests for a method when
+you feel comfortable about it.
+
+610
+00:30:45.130 --> 00:30:47.290
+So they say, what does
+that mean? I say, okay,
+
+611
+00:30:47.680 --> 00:30:50.440
+remember where you didn't write
+tests. When would you have
+
+612
+00:30:50.440 --> 00:30:54.280
+stopped writing or debugging the
+method when you, when you
+
+613
+00:30:54.280 --> 00:30:57.040
+felt okay about it. Right,
+right, right. You're going to
+
+614
+00:30:57.040 --> 00:31:00.280
+get to that feeling after
+you have enough tests, when
+
+615
+00:31:00.280 --> 00:31:02.140
+will you have enough tests
+when you feel comfortable about
+
+616
+00:31:02.140 --> 00:31:05.250
+it? So it really is
+about that. Whether you have
+
+617
+00:31:05.250 --> 00:31:08.400
+that sense of, of safety,
+because the test is supposed
+
+618
+00:31:08.400 --> 00:31:11.340
+to provide a sense of
+comfort. It is it's about
+
+619
+00:31:11.340 --> 00:31:14.490
+people. And if people don't
+trust the tests, either they
+
+620
+00:31:14.490 --> 00:31:16.440
+need to write more tests
+or something and the test
+
+621
+00:31:16.440 --> 00:31:19.370
+is wrong. That brings us
+full circle to your, your
+
+622
+00:31:19.440 --> 00:31:21.960
+first pillar, which the one
+that really resonated with me
+
+623
+00:31:21.960 --> 00:31:24.870
+was that I need to
+trust these tests. Yes. Are
+
+624
+00:31:24.870 --> 00:31:26.460
+they testing? So now what
+were the other two pillars
+
+625
+00:31:26.460 --> 00:31:30.930
+again, There is maintainability and
+readability. Okay. So readability makes
+
+626
+00:31:30.930 --> 00:31:33.450
+sense to me. I can
+understand how unreadable tests would
+
+627
+00:31:33.450 --> 00:31:36.450
+be a problem. I know
+that there are people like
+
+628
+00:31:36.510 --> 00:31:39.000
+Jim Newkirk and Brad Wilson
+that don't feel that set
+
+629
+00:31:39.000 --> 00:31:41.790
+up and tear down is
+an important part of tests.
+
+630
+00:31:42.630 --> 00:31:46.500
+Having a class, start up,
+prepare some things, get some
+
+631
+00:31:46.500 --> 00:31:48.870
+context, ready, have a bunch
+of tests run and then
+
+632
+00:31:48.870 --> 00:31:50.940
+have a tear down. Do
+you feel strongly one way
+
+633
+00:31:50.940 --> 00:31:54.060
+or the other? I think
+it's a bit of a
+
+634
+00:31:54.060 --> 00:31:57.810
+nitpicking. I think that beginners
+shouldn't care about this kind
+
+635
+00:31:57.810 --> 00:32:00.810
+of nitpicking. They should start
+with this because it's very
+
+636
+00:32:00.810 --> 00:32:04.290
+simple. And at some point,
+if they see any pain
+
+637
+00:32:04.290 --> 00:32:07.050
+points, they can start not
+using set up and tear
+
+638
+00:32:07.050 --> 00:32:11.130
+down. It does. It can
+hurt readability if you, if
+
+639
+00:32:11.130 --> 00:32:13.290
+you, if you abuse set
+up and tear down methods,
+
+640
+00:32:13.650 --> 00:32:15.660
+but here's a little tip.
+If you use tear down
+
+641
+00:32:15.660 --> 00:32:19.350
+methods, usually assign you're doing
+integration testing. Just so you
+
+642
+00:32:19.350 --> 00:32:22.500
+know, I almost never use
+Teradyne methods because if you
+
+643
+00:32:22.500 --> 00:32:24.450
+have to clean up after
+yourself, it means that you're
+
+644
+00:32:24.450 --> 00:32:28.140
+probably doing integration. Testing set
+up is very, very common,
+
+645
+00:32:28.140 --> 00:32:30.360
+but people abuse it because
+set up should only be
+
+646
+00:32:30.360 --> 00:32:33.990
+used for creating things that
+all the tests in that
+
+647
+00:32:33.990 --> 00:32:36.840
+specific class use. So if
+I look at a setup
+
+648
+00:32:36.840 --> 00:32:39.470
+and I see what's created
+there, Oh, calculator, okay. Then
+
+649
+00:32:39.470 --> 00:32:42.760
+I know it's used all
+over. If I instantiate there
+
+650
+00:32:42.770 --> 00:32:44.780
+things that are only using
+some of the tests in
+
+651
+00:32:44.780 --> 00:32:47.270
+the class, then that creates
+confusion because now I have
+
+652
+00:32:47.270 --> 00:32:49.640
+to go to some tests
+and understand which tests use
+
+653
+00:32:49.650 --> 00:32:53.360
+it, which test don't and
+understand what context it's used
+
+654
+00:32:53.360 --> 00:32:56.060
+when it's relevant and so
+on. And that does create
+
+655
+00:32:56.060 --> 00:32:58.580
+confusion. So set up can
+be abused and I can
+
+656
+00:32:58.580 --> 00:33:02.870
+see their point to the
+point where I don't have
+
+657
+00:33:02.870 --> 00:33:04.910
+a problem with people will
+never use setup and only
+
+658
+00:33:04.910 --> 00:33:09.050
+use factory methods from within
+the tests. But as a
+
+659
+00:33:09.050 --> 00:33:13.160
+learning tool, as a, as
+a step to, to getting
+
+660
+00:33:13.160 --> 00:33:16.370
+to reuse code tests, set
+up method is great. I
+
+661
+00:33:16.370 --> 00:33:18.260
+think you made an interesting
+point though, that if you
+
+662
+00:33:18.260 --> 00:33:20.480
+find yourself using a setup
+method and it's really just
+
+663
+00:33:20.480 --> 00:33:22.670
+project creation, then maybe you
+need to be thinking about
+
+664
+00:33:23.000 --> 00:33:25.670
+how you create your objects
+in a factory method inside
+
+665
+00:33:25.670 --> 00:33:27.680
+of the test would be
+easier. Cause I find a
+
+666
+00:33:27.680 --> 00:33:30.590
+lot of people abusing setup
+in the sense that they're
+
+667
+00:33:30.590 --> 00:33:33.050
+saving too much state in
+their test class. And then
+
+668
+00:33:33.050 --> 00:33:35.840
+suddenly you get yourself into
+side effects where your tests
+
+669
+00:33:35.840 --> 00:33:38.780
+have to run in a
+certain order. Well, not not,
+
+670
+00:33:38.780 --> 00:33:41.270
+if you not, if they
+all run the same setup,
+
+671
+00:33:42.140 --> 00:33:44.810
+so there are tests, class
+level setups, right? There's the
+
+672
+00:33:44.810 --> 00:33:46.580
+setup that runs per method.
+And then the ones that
+
+673
+00:33:46.580 --> 00:33:49.070
+run per class in some
+frameworks like and unit, right.
+
+674
+00:33:49.100 --> 00:33:51.320
+All the frameworks, have they
+all have that? Yeah. So
+
+675
+00:33:51.320 --> 00:33:53.330
+is that something that, something
+that someone should think about
+
+676
+00:33:53.360 --> 00:33:55.880
+the idea almost never had
+to use a class level
+
+677
+00:33:55.880 --> 00:33:58.760
+setup if I do. It's
+usually into integration test. Okay.
+
+678
+00:33:58.820 --> 00:34:01.850
+Okay. So the only time
+you, you don't have a
+
+679
+00:34:01.850 --> 00:34:05.810
+smell in your tests, it's
+you only use setup. I
+
+680
+00:34:05.810 --> 00:34:08.570
+can't tell you if you're
+using integration unit. If you're
+
+681
+00:34:08.570 --> 00:34:13.640
+doing a test, a test
+class level set up probably
+
+682
+00:34:13.640 --> 00:34:16.070
+means that either you're using
+statics in your application or
+
+683
+00:34:16.070 --> 00:34:18.290
+using integration, cause you have
+to clean up or set
+
+684
+00:34:18.290 --> 00:34:21.110
+up some sort of state
+outside or generate some code
+
+685
+00:34:21.110 --> 00:34:25.010
+or whatever you are creating
+some horrible, hard to create
+
+686
+00:34:25.010 --> 00:34:27.410
+state. Otherwise you would have
+done it at each test.
+
+687
+00:34:27.470 --> 00:34:28.790
+So that's a really good
+rule of thumb that I
+
+688
+00:34:28.790 --> 00:34:30.770
+like that if you're using
+a tear down, you're probably
+
+689
+00:34:30.770 --> 00:34:33.170
+doing an integration test. If
+you're using a class level
+
+690
+00:34:33.170 --> 00:34:35.930
+setup, then you probably got
+some statics application got bigger
+
+691
+00:34:35.930 --> 00:34:39.470
+problems or thanks a lot.
+Roy, the product is tight
+
+692
+00:34:39.470 --> 00:34:42.380
+mock isolator and the book
+is the art of unit
+
+693
+00:34:42.380 --> 00:34:44.870
+testing. Yes. All right. Well
+thanks so much, Roy Astro
+
+694
+00:34:44.870 --> 00:34:47.270
+for talking to me today,
+this has been another episode
+
+695
+00:34:47.270 --> 00:34:49.760
+of Hanselminutes and we'll see
+you again next week.
+

@@ -1,0 +1,3232 @@
+WEBVTT FILE
+
+1
+00:00:00.390 --> 00:00:03.510
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.510 --> 00:00:06.480
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.480 --> 00:00:10.680
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.680 --> 00:00:15.210
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.600 --> 00:00:19.650
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.680 --> 00:00:23.760
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:23.880 --> 00:00:48.110
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com.
+<inaudible> From hanselminutes.com. It's Hanselman.
+
+8
+00:00:48.110 --> 00:00:52.340
+It's a weekly discussion with
+web developer and technologist Scott
+
+9
+00:00:52.340 --> 00:00:57.860
+Hanselman. This is Lawrence Ryan announcing
+show number 541. In this
+
+10
+00:00:57.860 --> 00:01:01.370
+episode, Scott talks with Dan
+Driscoll about building with the
+
+11
+00:01:01.370 --> 00:01:08.990
+Microsoft bot framework. Hi, this
+is Scott Hanselman. This is
+
+12
+00:01:08.990 --> 00:01:11.930
+another episode of Hansel minutes
+today. I'm talking with Dan
+
+13
+00:01:11.930 --> 00:01:15.260
+Driscoll. He is a developer
+on the bot framework team
+
+14
+00:01:15.260 --> 00:01:19.880
+at Microsoft research. So do
+you remember a smarter child
+
+15
+00:01:20.240 --> 00:01:24.350
+that 25 years ago? Yeah,
+I do. And a number
+
+16
+00:01:24.350 --> 00:01:26.870
+of other bots that were
+available on AOL instant messenger.
+
+17
+00:01:27.890 --> 00:01:30.320
+In fact, I wrote one
+back in 2000. I think
+
+18
+00:01:30.320 --> 00:01:34.210
+everybody well, many developers as,
+as their first bot port
+
+19
+00:01:34.220 --> 00:01:37.550
+disorg to whatever platform they're
+using at the time. And
+
+20
+00:01:37.550 --> 00:01:38.930
+that, that was one that
+I had set up back
+
+21
+00:01:38.930 --> 00:01:42.860
+then, but it moved on
+not, not making Zuora Zuora
+
+22
+00:01:43.010 --> 00:01:46.670
+ports anymore. And I'm on
+the team. That's building the
+
+23
+00:01:46.670 --> 00:01:49.430
+bot framework, which is a
+set of tools for everybody
+
+24
+00:01:49.430 --> 00:01:53.000
+to add conversational interfaces into
+their own software bots or
+
+25
+00:01:53.000 --> 00:01:58.130
+otherwise. Why were we building
+bot frameworks in, you know,
+
+26
+00:01:58.130 --> 00:02:01.550
+late nineties, but now in
+the last year, it's become
+
+27
+00:02:01.550 --> 00:02:04.850
+a hot thing. What piece
+of computer science or technology,
+
+28
+00:02:05.150 --> 00:02:09.110
+or what layer of abstraction,
+you know, hit in this
+
+29
+00:02:09.110 --> 00:02:12.460
+year that made it the
+time for bots? Again, it
+
+30
+00:02:12.460 --> 00:02:17.600
+definitely the artificial intelligence, natural
+language processing components have gotten
+
+31
+00:02:17.600 --> 00:02:20.270
+a lot better in the
+last five years. If you
+
+32
+00:02:20.270 --> 00:02:24.110
+look at the error rate
+for natural language processing systems,
+
+33
+00:02:24.110 --> 00:02:26.900
+they've dropped dramatically in the
+last five years, but it's
+
+34
+00:02:26.900 --> 00:02:29.270
+interesting too, that we have
+always been trying to build
+
+35
+00:02:29.270 --> 00:02:33.110
+these conversational systems even 20,
+30 years ago. It speaks
+
+36
+00:02:33.110 --> 00:02:36.050
+to this desire for us
+to interact conversationally with our
+
+37
+00:02:36.050 --> 00:02:38.900
+software and the tools have
+caught up now, which is
+
+38
+00:02:38.900 --> 00:02:41.330
+great. And so we can
+build much better experiences than
+
+39
+00:02:41.330 --> 00:02:43.610
+we used to, but the
+desire has always been there
+
+40
+00:02:43.760 --> 00:02:46.460
+to interact with software in
+a way that's not defined
+
+41
+00:02:46.460 --> 00:02:49.850
+by a screen. It's not,
+you know, bound by the
+
+42
+00:02:50.210 --> 00:02:54.200
+user interface design that we're,
+you know, we're, we're forced
+
+43
+00:02:54.200 --> 00:02:57.980
+to deal with these bots
+that interact with you via
+
+44
+00:02:57.980 --> 00:03:01.810
+text or SMS or Slack,
+You know, text-based bots. Are
+
+45
+00:03:01.810 --> 00:03:03.790
+they in the same family
+or are they in somehow
+
+46
+00:03:03.790 --> 00:03:06.250
+related to the ones that
+I interact with when I
+
+47
+00:03:06.250 --> 00:03:09.250
+speak to them? You know,
+there's, there's the simple phone
+
+48
+00:03:09.250 --> 00:03:12.130
+tree, press one for, you
+know, the doctor press two
+
+49
+00:03:12.130 --> 00:03:15.130
+for the nurse assistant. But
+I'm thinking about when I
+
+50
+00:03:15.130 --> 00:03:17.890
+call United and they go,
+hi Scott, you know, cause
+
+51
+00:03:17.890 --> 00:03:20.080
+they know me and they
+said, why are you calling
+
+52
+00:03:20.080 --> 00:03:22.480
+about a flight? And then
+I'm having a conversation or
+
+53
+00:03:22.480 --> 00:03:26.750
+a limited conversation it feels
+bought like, Yeah, absolutely. And,
+
+54
+00:03:26.750 --> 00:03:29.820
+and they are definitely related.
+Although the bots that have
+
+55
+00:03:29.820 --> 00:03:33.360
+existed in customer support systems
+are maybe more rudimentary versions
+
+56
+00:03:33.360 --> 00:03:36.870
+of what we're able to
+build now. But speaking to
+
+57
+00:03:36.870 --> 00:03:39.270
+a piece of software has
+all of the same conversation
+
+58
+00:03:39.270 --> 00:03:42.900
+with components as interacting over
+text. Or I am, it's
+
+59
+00:03:42.900 --> 00:03:44.700
+just that in one case,
+you're doing it in audio.
+
+60
+00:03:44.700 --> 00:03:46.380
+And in the other case,
+you're doing it with characters.
+
+61
+00:03:46.710 --> 00:03:48.450
+And that I think is,
+is one of the great,
+
+62
+00:03:49.320 --> 00:03:52.290
+great opportunities that we have
+with conversational software. If you
+
+63
+00:03:52.290 --> 00:03:56.070
+write a bot that can
+communicate in text, then it's
+
+64
+00:03:56.070 --> 00:03:58.020
+actually much easier to take
+that bot and make it
+
+65
+00:03:58.020 --> 00:04:00.900
+available over voice than it
+would be. If you weren't,
+
+66
+00:04:00.930 --> 00:04:02.700
+you know, it didn't have
+that text technology or you
+
+67
+00:04:02.700 --> 00:04:04.530
+had a visual UI like
+you have in an app
+
+68
+00:04:04.560 --> 00:04:08.220
+or on a webpage. Okay.
+So you work on the
+
+69
+00:04:08.220 --> 00:04:11.550
+team that is doing the
+Microsoft bot framework and people
+
+70
+00:04:11.550 --> 00:04:15.900
+can go to bot framework.com
+or dev.bot framework.com. If they're
+
+71
+00:04:15.900 --> 00:04:19.650
+a developer and learn about
+this and I can go
+
+72
+00:04:19.650 --> 00:04:21.990
+and make one of these
+quickly and easily myself, right?
+
+73
+00:04:22.020 --> 00:04:24.750
+Like I could make one
+in an afternoon. Yeah, absolutely.
+
+74
+00:04:25.410 --> 00:04:27.750
+So we, we put together
+a set of tools based
+
+75
+00:04:27.750 --> 00:04:30.420
+on our own experience, trying
+to build bots, we build
+
+76
+00:04:30.420 --> 00:04:32.370
+maybe a half dozen bots
+and we realized that we
+
+77
+00:04:32.520 --> 00:04:34.830
+kept bumping into the same
+problems. And we knew that
+
+78
+00:04:35.040 --> 00:04:37.740
+if anyone was trying to
+add conversational UI into their
+
+79
+00:04:37.740 --> 00:04:40.500
+own software, that they'd bumped
+into the same problem. So
+
+80
+00:04:40.500 --> 00:04:42.720
+we started, we started with
+the problems that we hit
+
+81
+00:04:42.720 --> 00:04:45.420
+and we started solving those.
+So the, the big three
+
+82
+00:04:45.420 --> 00:04:47.700
+that we've tackled so far
+is that if you're building
+
+83
+00:04:47.700 --> 00:04:49.650
+a piece of conversational software,
+you want it to be
+
+84
+00:04:49.650 --> 00:04:52.740
+available where your users are.
+And those users are often
+
+85
+00:04:52.740 --> 00:04:55.470
+on many different platforms that
+could be on Skype. That
+
+86
+00:04:55.470 --> 00:04:58.080
+could be on SMS. That
+could be on Facebook messenger,
+
+87
+00:04:58.380 --> 00:05:00.990
+maybe they're on a webpage.
+And so just connecting a
+
+88
+00:05:00.990 --> 00:05:03.210
+piece of software up to
+these different channels is a
+
+89
+00:05:03.690 --> 00:05:06.690
+whole load of work. So
+we built a single API,
+
+90
+00:05:06.990 --> 00:05:09.480
+a single protocol that translates
+into all of those formats
+
+91
+00:05:09.750 --> 00:05:12.780
+and does all the heavy
+lifting of, you know, managing
+
+92
+00:05:12.780 --> 00:05:14.220
+all the schema is, and
+making sure that you're talking
+
+93
+00:05:14.220 --> 00:05:15.720
+to the right protocol to
+all of these, you just
+
+94
+00:05:15.720 --> 00:05:17.790
+talk to one API and
+then, and then you're done.
+
+95
+00:05:18.750 --> 00:05:21.720
+That's the first problem. That's
+the, to be clear, that's
+
+96
+00:05:21.720 --> 00:05:25.290
+the, like the administrivia of
+the, how do I make
+
+97
+00:05:25.290 --> 00:05:27.390
+a thing that is, that
+lives in Skype? Or how
+
+98
+00:05:27.390 --> 00:05:28.980
+do I make a thing
+that lives in Slack? And
+
+99
+00:05:28.980 --> 00:05:31.290
+then I really just want
+to hear like transmit and
+
+100
+00:05:31.290 --> 00:05:33.780
+receive events. I don't want
+to, I don't want to
+
+101
+00:05:33.780 --> 00:05:36.870
+care about all the little
+admin stuff that is Skype
+
+102
+00:05:36.870 --> 00:05:40.830
+specific That's right. And you
+know, every protocol has its
+
+103
+00:05:40.830 --> 00:05:43.200
+little admin stuff, but we
+normalize it and we make
+
+104
+00:05:43.200 --> 00:05:45.600
+it uniform across all of
+those channels. So that, you
+
+105
+00:05:45.600 --> 00:05:48.420
+know, when, when a user
+sends your bottom message, it
+
+106
+00:05:48.420 --> 00:05:51.180
+doesn't matter whether it's Facebook
+or whether it's Skype. It
+
+107
+00:05:51.180 --> 00:05:53.490
+comes in the same format
+and you know exactly where
+
+108
+00:05:53.490 --> 00:05:55.980
+to look, to get the
+contents out and that extra
+
+109
+00:05:55.980 --> 00:05:58.340
+detail, those things like what
+the timestamp on the message
+
+110
+00:05:58.340 --> 00:06:00.890
+was and who the Senator
+was. And even what the
+
+111
+00:06:00.890 --> 00:06:03.590
+channel itself is like, those
+things were communicated in a
+
+112
+00:06:03.590 --> 00:06:05.810
+way that's really easy to
+use and much simpler than
+
+113
+00:06:05.810 --> 00:06:08.180
+if you had to implement
+these protocols separately on your
+
+114
+00:06:08.180 --> 00:06:11.440
+own. Okay. So that normalizes
+all of that. And I
+
+115
+00:06:11.440 --> 00:06:16.450
+assume that if there's things
+that one text-based messaging format
+
+116
+00:06:16.510 --> 00:06:20.350
+has like maybe red receipts
+and another one doesn't then,
+
+117
+00:06:20.350 --> 00:06:23.560
+you know, it's not implemented
+or it's not an unvisible
+
+118
+00:06:23.560 --> 00:06:26.020
+or do I care about
+details like that? Well, you
+
+119
+00:06:26.020 --> 00:06:28.900
+may care. And in fact,
+we think that most developers
+
+120
+00:06:28.900 --> 00:06:32.380
+will care about making their
+bot their conversational software work
+
+121
+00:06:32.380 --> 00:06:34.840
+great on every channel. And
+so we've actually poked holes
+
+122
+00:06:34.840 --> 00:06:37.480
+through our API to funnel
+through all of the special
+
+123
+00:06:37.480 --> 00:06:40.870
+features of those channels, even
+though they may not be
+
+124
+00:06:40.870 --> 00:06:44.110
+modeled in, in our base
+API protocol. Now that base
+
+125
+00:06:44.110 --> 00:06:48.610
+API is designed to be,
+you know, reasonably comprehensive of,
+
+126
+00:06:48.610 --> 00:06:52.090
+of the features that are
+conventional across all of the
+
+127
+00:06:52.090 --> 00:06:55.960
+platforms. You know, if like
+right now, most of the
+
+128
+00:06:55.960 --> 00:06:58.150
+chat platforms out there support
+cards. And so we have
+
+129
+00:06:58.150 --> 00:07:00.880
+a uniform way that if
+you express a card into
+
+130
+00:07:00.880 --> 00:07:03.040
+our format, then we translate
+it onto all of those
+
+131
+00:07:03.040 --> 00:07:05.500
+channels. In fact, we translate
+it down for channels that
+
+132
+00:07:05.500 --> 00:07:08.650
+don't support cards. So SMS,
+for instance. So a card,
+
+133
+00:07:08.890 --> 00:07:12.760
+a great question. The Facebook
+and Skype are both examples
+
+134
+00:07:12.760 --> 00:07:16.840
+of systems where a piece
+of software can send it.
+
+135
+00:07:16.840 --> 00:07:18.580
+It really does look like
+a, like a playing card
+
+136
+00:07:18.580 --> 00:07:20.470
+almost where it has a,
+maybe an icon on the
+
+137
+00:07:20.470 --> 00:07:22.300
+top or an image, and
+then has some buttons down
+
+138
+00:07:22.300 --> 00:07:24.820
+below. And you can't generate
+one of these as a
+
+139
+00:07:24.820 --> 00:07:27.100
+user, but as a bot,
+you can, you can generate
+
+140
+00:07:27.100 --> 00:07:29.920
+these these cards and send
+them to users and give
+
+141
+00:07:29.920 --> 00:07:32.050
+them more information than you
+would be able to with
+
+142
+00:07:32.050 --> 00:07:36.190
+just a piece of text.
+So like a poll yeah.
+
+143
+00:07:36.220 --> 00:07:38.620
+Poll is a good example
+of, of a card you
+
+144
+00:07:38.620 --> 00:07:41.680
+can, let's see, you could
+send a, a card that
+
+145
+00:07:41.680 --> 00:07:45.250
+contains, Well, if I'm getting
+like an appointment, if I,
+
+146
+00:07:45.250 --> 00:07:47.920
+if I want an appointment
+and I, and you're giving
+
+147
+00:07:47.920 --> 00:07:50.230
+me a list of when
+times are available for that
+
+148
+00:07:50.230 --> 00:07:53.470
+appointment, would that be okay?
+Yeah, absolutely. Yep. Or just
+
+149
+00:07:53.470 --> 00:07:55.630
+a yes, no card, a
+card that says, Hey, are
+
+150
+00:07:55.630 --> 00:07:59.380
+you interested in, you know,
+receiving a text message when
+
+151
+00:07:59.380 --> 00:08:01.480
+your package arrives, you know,
+you have a yes button
+
+152
+00:08:01.480 --> 00:08:04.450
+and a no button, and
+you, you could ask that
+
+153
+00:08:04.480 --> 00:08:07.360
+question conversationally to your user.
+You could say, Hey reply.
+
+154
+00:08:07.360 --> 00:08:09.640
+Yes or no. Or you
+can just present the buttons.
+
+155
+00:08:09.670 --> 00:08:12.610
+And because of the way
+that all of these systems
+
+156
+00:08:12.610 --> 00:08:16.120
+represent these buttons, we can
+actually down render that into
+
+157
+00:08:16.120 --> 00:08:18.880
+text so that if you
+send this, this card that
+
+158
+00:08:18.880 --> 00:08:22.170
+says yes or no, when
+you send it to our
+
+159
+00:08:22.210 --> 00:08:25.030
+SMS implementation, we turn that
+into a piece of text
+
+160
+00:08:25.090 --> 00:08:28.480
+that simply says, Hey, you
+know, here's an option for
+
+161
+00:08:28.480 --> 00:08:30.790
+yes. And an option for
+no. And because you can't
+
+162
+00:08:30.790 --> 00:08:33.310
+push a button and SMS,
+you can just reply yes
+
+163
+00:08:33.310 --> 00:08:35.260
+or no. And, and it
+comes back in the right
+
+164
+00:08:35.260 --> 00:08:39.670
+way. Okay. That's cool. So
+I think so card is
+
+165
+00:08:39.670 --> 00:08:42.250
+a kind of a modus
+dialogue box. It's a moment
+
+166
+00:08:42.250 --> 00:08:44.690
+it's a, it's a fork
+in the road and it
+
+167
+00:08:44.710 --> 00:08:47.110
+constrains things, but it also
+is very friendly, right. It's
+
+168
+00:08:47.110 --> 00:08:49.630
+not just, you know, I
+don't have to type, yes.
+
+169
+00:08:49.780 --> 00:08:52.570
+I can just click the
+button and you're abstracting all
+
+170
+00:08:52.570 --> 00:08:54.550
+of that away. And then
+I assume that there'll be
+
+171
+00:08:54.550 --> 00:08:56.900
+other rich media type things.
+It almost reminds me like
+
+172
+00:08:56.910 --> 00:09:00.300
+of a Twitter card, right.
+Where it's a piece of
+
+173
+00:09:00.300 --> 00:09:03.480
+interactivity that's in the middle
+of this, the stream of
+
+174
+00:09:03.480 --> 00:09:07.550
+text. Yeah, absolutely. Yes. It's
+very similar. And, and so
+
+175
+00:09:07.550 --> 00:09:10.700
+cards, I think we were
+talking about like patterns that
+
+176
+00:09:10.700 --> 00:09:12.650
+are conventional across all the
+channels and cards is an
+
+177
+00:09:12.650 --> 00:09:15.410
+example of something which is
+at this point getting to
+
+178
+00:09:15.410 --> 00:09:18.560
+be fairly uniform, but there
+were some features specific to
+
+179
+00:09:18.560 --> 00:09:22.010
+some of our channels. And
+those are things like Facebook
+
+180
+00:09:22.010 --> 00:09:25.880
+and Skype and others, which
+are specific to that, that
+
+181
+00:09:25.880 --> 00:09:28.670
+channel. And so for those
+features, we actually plumb those
+
+182
+00:09:28.670 --> 00:09:31.070
+through our API. So you're
+not constrained when using the
+
+183
+00:09:31.070 --> 00:09:33.650
+bot framework and you can
+still use those advanced features,
+
+184
+00:09:33.650 --> 00:09:35.930
+but you don't have to
+do all, all of the
+
+185
+00:09:35.930 --> 00:09:39.230
+heavy lifting, all of the
+schema management for talking the
+
+186
+00:09:39.230 --> 00:09:42.620
+base set of core features
+across all the channels. Okay.
+
+187
+00:09:43.010 --> 00:09:46.880
+So there's the administration and
+the hooking up of the
+
+188
+00:09:46.880 --> 00:09:50.840
+bot to whatever channel it
+has the chat channel, whether
+
+189
+00:09:50.840 --> 00:09:54.410
+it be Facebook or SMS
+or whatever. And then there's
+
+190
+00:09:54.410 --> 00:09:58.250
+the parsing of the, of,
+of the text, the understanding
+
+191
+00:09:58.250 --> 00:10:02.060
+of the text. Why would
+I not just write some,
+
+192
+00:10:02.870 --> 00:10:07.100
+you know, string string contains
+code and make it really
+
+193
+00:10:07.520 --> 00:10:10.460
+a bot that just looks
+for certain keywords and, you
+
+194
+00:10:10.460 --> 00:10:12.830
+know, could I make a
+rudimentary bot on my own
+
+195
+00:10:13.040 --> 00:10:15.860
+without you? You certainly can.
+And I think that's where
+
+196
+00:10:15.860 --> 00:10:19.340
+everyone starts. And for some
+bots that works, that that's
+
+197
+00:10:19.340 --> 00:10:23.030
+a sufficient, you know, a
+sufficient solution. If you're building
+
+198
+00:10:23.030 --> 00:10:25.130
+a bot with any complexity,
+there tend to be two
+
+199
+00:10:25.130 --> 00:10:27.530
+problems that you bump into
+and we have different solutions
+
+200
+00:10:27.530 --> 00:10:29.600
+for both of them. So
+the first problem that you
+
+201
+00:10:29.600 --> 00:10:32.780
+went into is that users
+express information in lots of
+
+202
+00:10:32.780 --> 00:10:36.440
+different ways, the, you know,
+you may be expecting the
+
+203
+00:10:36.440 --> 00:10:39.020
+user to say yes, but
+they may say yep. Instead,
+
+204
+00:10:39.020 --> 00:10:42.170
+or yeah, or just the
+character. Y and if you
+
+205
+00:10:42.170 --> 00:10:45.950
+are, if you're building this
+on your own, the other,
+
+206
+00:10:45.950 --> 00:10:48.050
+the switch statement or the
+list of regexes that you
+
+207
+00:10:48.050 --> 00:10:50.120
+have to maintain to capture
+all this data, it gets
+
+208
+00:10:50.120 --> 00:10:52.940
+to be very, very large.
+And so we have a
+
+209
+00:10:52.940 --> 00:10:56.600
+number of tools from Microsoft
+cognitive services that integrate into
+
+210
+00:10:56.600 --> 00:10:58.670
+the bot framework that make
+it really easy for you
+
+211
+00:10:58.670 --> 00:11:02.450
+to do natural language processing.
+And the, the one that
+
+212
+00:11:02.450 --> 00:11:04.180
+I use almost every single
+day is a tool called
+
+213
+00:11:04.190 --> 00:11:08.060
+Lewis. The language, understanding intelligence
+service, and Louis is sort
+
+214
+00:11:08.060 --> 00:11:11.000
+of like a rejects on
+steroids instead of manually coding
+
+215
+00:11:11.000 --> 00:11:13.400
+the rejects in you just
+enter a couple of sample
+
+216
+00:11:13.400 --> 00:11:16.640
+sentences and it learns essentially
+what the matching pattern should
+
+217
+00:11:16.640 --> 00:11:19.850
+be. And it has a
+really simple, a URL based
+
+218
+00:11:19.850 --> 00:11:22.040
+interface where you just throw
+it a piece of text.
+
+219
+00:11:22.040 --> 00:11:23.780
+And it says, I think
+the user's trying to say
+
+220
+00:11:23.780 --> 00:11:27.290
+yes here, and, you know,
+95% certain of that. So
+
+221
+00:11:27.290 --> 00:11:29.990
+it, it takes probably five
+minutes to get set up
+
+222
+00:11:29.990 --> 00:11:32.210
+on Lewis. Most of the
+demos I have, I I'm
+
+223
+00:11:32.210 --> 00:11:35.360
+able to produce a working
+and fully trained model and
+
+224
+00:11:35.660 --> 00:11:39.290
+in two or three minutes.
+So, so Lewis is, is
+
+225
+00:11:39.290 --> 00:11:41.720
+a tool that we integrate
+with in the bot framework
+
+226
+00:11:41.720 --> 00:11:43.730
+to make it really easy
+to understand what a user
+
+227
+00:11:43.730 --> 00:11:47.180
+is saying. So I'm looking
+at the, at the website
+
+228
+00:11:47.180 --> 00:11:52.580
+for this, this isn't microsoft.com/cognitive
+services with a hyphen and
+
+229
+00:11:52.580 --> 00:11:56.830
+cognitive. It's a language understanding
+intelligence service. You said Lewis
+
+230
+00:11:56.830 --> 00:12:01.000
+could also be Louise, and
+it looks like it is
+
+231
+00:12:01.000 --> 00:12:04.780
+10,000 transactions a month free.
+And then it's like, you
+
+232
+00:12:04.780 --> 00:12:07.630
+know, 75 cents for a thousand
+transactions. So for the people
+
+233
+00:12:07.630 --> 00:12:10.000
+who are listening for maybe
+thinking about playing with this
+
+234
+00:12:10.480 --> 00:12:14.530
+prototyping, this, this is certainly
+within the realm of something
+
+235
+00:12:14.530 --> 00:12:16.360
+that they could, they could
+do for free and play
+
+236
+00:12:16.360 --> 00:12:19.690
+around with this. They don't
+have to, there's no outlay
+
+237
+00:12:19.720 --> 00:12:23.010
+to, to start building your
+own service. That's right. And
+
+238
+00:12:23.010 --> 00:12:24.960
+in many of the demos
+that I do, I give
+
+239
+00:12:24.960 --> 00:12:27.840
+the, the 100% free version
+of the demo where I
+
+240
+00:12:27.840 --> 00:12:31.290
+create a trial version of
+Azure to host my bot.
+
+241
+00:12:31.810 --> 00:12:34.290
+So bots in the world
+of the bot framework are
+
+242
+00:12:34.290 --> 00:12:36.870
+all websites. So you just
+deploy this website or this
+
+243
+00:12:36.870 --> 00:12:40.470
+web service that has this
+rest API web book. I
+
+244
+00:12:41.040 --> 00:12:43.740
+create an app insights container.
+So we I'm inside of
+
+245
+00:12:43.740 --> 00:12:46.380
+the bot framework, we log
+all of the bots, telemetry
+
+246
+00:12:46.380 --> 00:12:48.720
+information to application insights, which
+makes it really easy to
+
+247
+00:12:48.720 --> 00:12:51.360
+see the calls coming into
+your system and keep track
+
+248
+00:12:51.360 --> 00:12:54.690
+of telemetry and analytics. And
+then I create a Lewis
+
+249
+00:12:54.690 --> 00:12:57.540
+instance, and then I glue
+it all together with the
+
+250
+00:12:57.540 --> 00:13:00.660
+bot builder SDK, which is
+kind of the third piece,
+
+251
+00:13:00.660 --> 00:13:02.190
+the third problem that we
+solve and in the bot
+
+252
+00:13:02.190 --> 00:13:05.520
+framework, and all of those
+items are all free. And
+
+253
+00:13:05.730 --> 00:13:08.250
+most of them are, in
+fact, the builder for instance,
+
+254
+00:13:08.250 --> 00:13:10.860
+is totally open source and
+get hub. So that that's
+
+255
+00:13:10.860 --> 00:13:13.230
+a thing that you can
+just clone and use directly.
+
+256
+00:13:14.280 --> 00:13:16.860
+So, okay. So you said
+there's three, there's three things.
+
+257
+00:13:16.860 --> 00:13:20.580
+There's the plugging in of,
+into the chat framework, there's
+
+258
+00:13:20.580 --> 00:13:23.100
+the understanding of the language,
+and then what's the next
+
+259
+00:13:23.100 --> 00:13:27.750
+one? So the last one
+is building a conversational model
+
+260
+00:13:27.750 --> 00:13:31.170
+and that's accomplished with our
+bot builder SDK. So once
+
+261
+00:13:31.170 --> 00:13:33.390
+you solve those first two
+problems, you're now left in
+
+262
+00:13:33.390 --> 00:13:36.630
+this position where you have
+to keep track of where
+
+263
+00:13:36.630 --> 00:13:38.900
+you are in the conversation.
+If you ask the user
+
+264
+00:13:38.910 --> 00:13:41.100
+question, Hey, would you like
+a text message? And the
+
+265
+00:13:41.100 --> 00:13:44.070
+user says, yes, that call
+that says, yes, is a
+
+266
+00:13:44.070 --> 00:13:46.770
+stateless call into your, into
+your web service. And you
+
+267
+00:13:46.770 --> 00:13:48.540
+then have to correlate that
+with the question that you
+
+268
+00:13:48.540 --> 00:13:53.160
+asked. And if you're maybe
+a couple of a couple
+
+269
+00:13:53.160 --> 00:13:56.340
+of layers deep inside the
+conversation, then understanding that that
+
+270
+00:13:56.340 --> 00:14:00.240
+yes, related to the order
+tracking for a particular order,
+
+271
+00:14:00.800 --> 00:14:02.640
+and then correlating that back
+to like who the user
+
+272
+00:14:02.640 --> 00:14:05.130
+is, is actually a whole
+lot of work. And once
+
+273
+00:14:05.130 --> 00:14:08.190
+you build one of these
+systems, you find yourself, if
+
+274
+00:14:08.190 --> 00:14:10.500
+you don't have any tooling
+to help support you, you
+
+275
+00:14:10.500 --> 00:14:12.270
+end up with a bunch
+of spaghetti code. At least
+
+276
+00:14:12.270 --> 00:14:13.710
+this is what I found
+the first couple of bots
+
+277
+00:14:13.710 --> 00:14:15.540
+that I wrote. You have
+all, all of these kinds
+
+278
+00:14:15.540 --> 00:14:17.430
+of small methods everywhere that
+have to keep track of
+
+279
+00:14:17.430 --> 00:14:20.130
+their own state. So we
+built the bot builder STK
+
+280
+00:14:20.130 --> 00:14:23.280
+to solve a lot of
+that state management problem for
+
+281
+00:14:23.280 --> 00:14:25.770
+you. The boat builder SDK
+makes it easy to build
+
+282
+00:14:25.770 --> 00:14:28.560
+a conversational model where you
+can ask a question to
+
+283
+00:14:28.560 --> 00:14:31.140
+a user. You can give
+them a form to fill
+
+284
+00:14:31.140 --> 00:14:33.240
+in. We have a technology
+called a form flow where
+
+285
+00:14:33.240 --> 00:14:39.300
+you define a structure and
+C-sharp, and our code walks
+
+286
+00:14:39.300 --> 00:14:41.760
+that structure. And it creates
+an interactive forum that the
+
+287
+00:14:41.760 --> 00:14:44.910
+user can speak to directly
+or, or text to in
+
+288
+00:14:44.910 --> 00:14:47.610
+this case, and just fill
+in the, the values of
+
+289
+00:14:47.610 --> 00:14:49.920
+that form. And then when
+the user's done, your code
+
+290
+00:14:49.920 --> 00:14:51.950
+now has a completely filled
+object that you can then
+
+291
+00:14:51.950 --> 00:14:56.920
+just submit to your existing,
+a web application logic. Interesting.
+
+292
+00:14:57.490 --> 00:15:00.760
+The idea that the bot
+framework would create something that
+
+293
+00:15:00.760 --> 00:15:04.270
+is fully formed enough that
+I could even consider it
+
+294
+00:15:04.270 --> 00:15:07.390
+input into a web API,
+is it takes a moment
+
+295
+00:15:07.390 --> 00:15:10.440
+for me to absorb that
+seems almost disturbing like that,
+
+296
+00:15:10.440 --> 00:15:14.890
+that means that the person
+you de serialize their intent
+
+297
+00:15:15.190 --> 00:15:17.530
+into an object and then
+posted it to a web
+
+298
+00:15:17.890 --> 00:15:22.540
+API. Absolutely. And that deserialization
+is a multi, can be
+
+299
+00:15:22.540 --> 00:15:25.060
+a multistep procedure. You know,
+in some cases you may
+
+300
+00:15:25.060 --> 00:15:27.790
+describe the user may describe
+everything that you need to
+
+301
+00:15:27.790 --> 00:15:29.860
+know in one sentence. And
+so picking up the pieces
+
+302
+00:15:29.860 --> 00:15:32.740
+from that one sentence is
+a, you know, a complicated
+
+303
+00:15:32.740 --> 00:15:35.230
+and involved thing. And our
+SDK helps you with that.
+
+304
+00:15:35.500 --> 00:15:38.110
+In other cases, though, they
+may omit some key piece
+
+305
+00:15:38.110 --> 00:15:40.450
+of data. They may say
+that they would like a
+
+306
+00:15:40.450 --> 00:15:43.870
+delivery, but they didn't give
+their address, or maybe they
+
+307
+00:15:43.870 --> 00:15:45.430
+left most of the format
+and you have to go
+
+308
+00:15:45.430 --> 00:15:47.410
+through and prompt them bit
+by bit. And when you're
+
+309
+00:15:47.410 --> 00:15:49.390
+done with that, filling out
+that form, you may want
+
+310
+00:15:49.390 --> 00:15:51.040
+to confirm it with the
+user and make sure that
+
+311
+00:15:51.040 --> 00:15:54.310
+that's what they actually intended.
+So we have that all
+
+312
+00:15:54.310 --> 00:15:56.710
+built into the bot builder
+STK. So it's, it's easy
+
+313
+00:15:56.710 --> 00:15:58.420
+for you to just say
+what the result is that
+
+314
+00:15:58.420 --> 00:15:59.920
+you want, you know, you're,
+you're going to drive the
+
+315
+00:15:59.920 --> 00:16:02.950
+user to a particular, you
+know, having a completed form,
+
+316
+00:16:03.580 --> 00:16:05.290
+and then we help you
+out with some of the
+
+317
+00:16:05.480 --> 00:16:09.640
+work in the middle. That
+is really interesting. The idea,
+
+318
+00:16:10.330 --> 00:16:12.880
+yeah. This, this idea of
+their, of the user's intent,
+
+319
+00:16:12.880 --> 00:16:16.270
+figuring out their intent. And
+then, you know, the, the
+
+320
+00:16:16.300 --> 00:16:20.020
+pipeline that you move that
+intent through until it, it
+
+321
+00:16:20.020 --> 00:16:22.720
+transforms itself from something that
+is natural to something that
+
+322
+00:16:22.720 --> 00:16:26.410
+is programmatic is a, is
+really interesting. Yeah. And, and,
+
+323
+00:16:26.410 --> 00:16:29.530
+you know, we think too
+that getting users to interact
+
+324
+00:16:29.530 --> 00:16:35.440
+with software, you know, produce
+usable middle tier objects, produce
+
+325
+00:16:35.440 --> 00:16:37.420
+objects that you can actually
+submit to other web services
+
+326
+00:16:37.420 --> 00:16:40.390
+is a really important part
+of conversational UI. There are
+
+327
+00:16:40.390 --> 00:16:44.170
+certainly chatter, bots and bots
+that just do, you know,
+
+328
+00:16:44.170 --> 00:16:47.500
+dialogue back and forth. But
+most conversational UI is going
+
+329
+00:16:47.500 --> 00:16:49.750
+to be attached to either
+a business or a person.
+
+330
+00:16:50.050 --> 00:16:52.690
+And those businesses, those existing
+websites that are out there
+
+331
+00:16:52.690 --> 00:16:54.760
+where you may want to
+add an SMS interface or
+
+332
+00:16:54.760 --> 00:16:58.300
+a Skype interface, they all
+have existing logic that you
+
+333
+00:16:58.300 --> 00:17:01.300
+need to glue into. And
+so we're, we're looking at
+
+334
+00:17:01.300 --> 00:17:04.780
+our tools as, as a
+way to extend existing logic
+
+335
+00:17:04.810 --> 00:17:07.060
+into the conversation around so
+that you can put that
+
+336
+00:17:07.060 --> 00:17:09.280
+chat box and SMS and
+Skype, and, but even, even
+
+337
+00:17:09.280 --> 00:17:11.740
+on your own webpage. So
+for instance, we have a
+
+338
+00:17:11.740 --> 00:17:15.400
+client toolkit built in the,
+in the form of it's
+
+339
+00:17:15.400 --> 00:17:18.010
+an STK that we have
+called direct line that allows
+
+340
+00:17:18.010 --> 00:17:19.780
+you to take a bot
+that you've written and embedded
+
+341
+00:17:19.780 --> 00:17:22.090
+in any application. You can
+put it on a webpage,
+
+342
+00:17:22.270 --> 00:17:23.980
+you can put it in
+a mobile app, and it
+
+343
+00:17:23.980 --> 00:17:26.500
+talks all through the same
+protocols back to the same
+
+344
+00:17:26.500 --> 00:17:29.230
+core about logic that you
+wrote to expose your bot
+
+345
+00:17:29.230 --> 00:17:33.700
+over Skype, for instance, Interesting.
+I, I, I feel like
+
+346
+00:17:33.760 --> 00:17:36.040
+just as a, as a
+user speaking as user, not
+
+347
+00:17:36.040 --> 00:17:40.420
+as a developer, that having
+a smart bot inside of
+
+348
+00:17:40.420 --> 00:17:42.790
+the web on top of
+a webpage seems much more
+
+349
+00:17:42.790 --> 00:17:44.680
+natural to me, and much
+more like a thing that
+
+350
+00:17:44.680 --> 00:17:47.980
+I would use. I have
+enough people in chat already
+
+351
+00:17:48.310 --> 00:17:50.490
+that I'm having trouble keeping
+track of that. I think
+
+352
+00:17:50.490 --> 00:17:52.560
+I would have trouble figuring
+out which of them was
+
+353
+00:17:52.560 --> 00:17:55.140
+a bot and which of
+them wasn't and how, you
+
+354
+00:17:55.140 --> 00:17:58.920
+know, just even picking them
+up and, and chatting with
+
+355
+00:17:58.920 --> 00:18:00.630
+the right person. Like this
+was a problem with smarter
+
+356
+00:18:00.630 --> 00:18:02.940
+child years and years ago.
+And once you've got a
+
+357
+00:18:02.940 --> 00:18:05.880
+hundred people in your chat,
+I really need a separate
+
+358
+00:18:05.880 --> 00:18:08.340
+group, this called bots, I
+guess that will come soon.
+
+359
+00:18:08.730 --> 00:18:10.950
+Skype for business or Skype
+could make me a bot
+
+360
+00:18:10.950 --> 00:18:15.110
+section self-identified bots And, and
+the bots that are available
+
+361
+00:18:15.110 --> 00:18:16.790
+on Skype right now, they
+have a different, they have
+
+362
+00:18:16.790 --> 00:18:20.270
+a hexagonal icon. So they,
+they look like bots. There
+
+363
+00:18:20.270 --> 00:18:22.970
+are some, some that you
+can tell and tell the
+
+364
+00:18:22.970 --> 00:18:26.030
+difference between a bot and
+a user. But I think
+
+365
+00:18:26.030 --> 00:18:28.940
+it's interesting. You brought up
+the group conversation because bots
+
+366
+00:18:28.970 --> 00:18:31.400
+in groups, even though they
+have their limits, right, if
+
+367
+00:18:31.400 --> 00:18:33.230
+you have a really large
+group, that can be kind
+
+368
+00:18:33.230 --> 00:18:34.640
+of a challenge to deal
+with a lot of bots,
+
+369
+00:18:35.270 --> 00:18:37.490
+but bots and small groups
+can actually make a lot
+
+370
+00:18:37.490 --> 00:18:41.450
+of sense. So if you
+and maybe a family member,
+
+371
+00:18:41.450 --> 00:18:43.640
+or a couple of friends
+are having a discussion in
+
+372
+00:18:43.640 --> 00:18:46.580
+a group chat, it's really
+hard to interact with software
+
+373
+00:18:46.580 --> 00:18:49.280
+in that group chat, you
+essentially have to delegate responsibility
+
+374
+00:18:49.280 --> 00:18:51.660
+to one person in the
+group to go deal with
+
+375
+00:18:51.680 --> 00:18:53.630
+the webpage, because you can't
+all be looking at the
+
+376
+00:18:53.630 --> 00:18:56.330
+webpage at the same time,
+unless you're doing sharing. And
+
+377
+00:18:56.330 --> 00:18:58.310
+that doesn't work very well
+on mobile. So there are
+
+378
+00:18:58.310 --> 00:19:00.920
+a bunch of limitations right
+now around software use in
+
+379
+00:19:00.920 --> 00:19:03.650
+group chat and bots are
+a great way to get,
+
+380
+00:19:05.200 --> 00:19:08.720
+you know, a more advanced
+functionality, really any functionality in
+
+381
+00:19:08.720 --> 00:19:12.140
+the group in conversational form
+so that you can accomplish
+
+382
+00:19:12.140 --> 00:19:14.600
+tasks while talking with others,
+let's say, you're planning a
+
+383
+00:19:14.600 --> 00:19:17.960
+vacation. You can actually ask,
+you know, members of the
+
+384
+00:19:17.960 --> 00:19:19.700
+group, Hey, you know, what
+are you interested in doing?
+
+385
+00:19:19.700 --> 00:19:21.530
+What does your schedule look
+like? And the bot can
+
+386
+00:19:21.530 --> 00:19:23.660
+interact with them either as
+a group or one on
+
+387
+00:19:23.660 --> 00:19:26.540
+one in that group conversation
+and do much more than
+
+388
+00:19:26.540 --> 00:19:29.240
+you'd be able to, if
+one person took responsibility to
+
+389
+00:19:29.240 --> 00:19:33.140
+go deal with it on
+their own. As a, as
+
+390
+00:19:33.140 --> 00:19:35.780
+a speaking of that, as
+a developer, one of the
+
+391
+00:19:35.780 --> 00:19:41.210
+most famous group bots would
+be Hubert, H U B
+
+392
+00:19:41.210 --> 00:19:44.990
+O T the get hub
+bot that is listening and
+
+393
+00:19:44.990 --> 00:19:47.750
+watching in the, you know,
+the, in the get hub
+
+394
+00:19:48.230 --> 00:19:51.170
+chats and in, you know,
+in chat systems like, like
+
+395
+00:19:51.170 --> 00:19:54.410
+Slack and it's not necessarily
+super, super smart. You know,
+
+396
+00:19:54.410 --> 00:19:57.290
+it's not thinking about context
+and booking you a haircut
+
+397
+00:19:57.290 --> 00:19:59.840
+appointment, but, you know, if
+you mentioned an address, it
+
+398
+00:19:59.840 --> 00:20:02.030
+shows you a map. If
+you paste, if you put
+
+399
+00:20:02.030 --> 00:20:04.190
+a want a certain image,
+it'll go and find the
+
+400
+00:20:04.190 --> 00:20:06.950
+image and, and put it,
+put it out there for
+
+401
+00:20:06.950 --> 00:20:09.080
+you. And one of the
+things that I think is
+
+402
+00:20:09.080 --> 00:20:11.810
+interesting is that on the
+website for Cuba, they say
+
+403
+00:20:12.080 --> 00:20:15.380
+Cuba is a way of
+life, right. You know, once
+
+404
+00:20:15.380 --> 00:20:18.920
+you have this helpful, you
+know, kind of ask Jeeves
+
+405
+00:20:19.250 --> 00:20:22.190
+in your chat room when
+they're not there, you, you
+
+406
+00:20:22.190 --> 00:20:27.020
+miss them. Yeah, absolutely. And
+you, you know, it's interesting
+
+407
+00:20:27.020 --> 00:20:29.330
+that Cuba has a lot
+of great functionality built into
+
+408
+00:20:29.330 --> 00:20:33.380
+it. There are, we think
+that bots are going to
+
+409
+00:20:33.380 --> 00:20:37.100
+have a lot of capabilities
+and those capabilities are going
+
+410
+00:20:37.100 --> 00:20:39.740
+to be very intelligent in
+many cases. In other cases,
+
+411
+00:20:39.740 --> 00:20:41.510
+they're going to be a
+little bit simpler. And that's
+
+412
+00:20:41.510 --> 00:20:42.830
+what, you know, some of
+the stuff you see in
+
+413
+00:20:42.830 --> 00:20:44.870
+Cuba, where if it just
+is an address, it'll just
+
+414
+00:20:44.870 --> 00:20:48.700
+show you a location. But
+even if the functionality is
+
+415
+00:20:48.700 --> 00:20:51.160
+simple and straightforward, that doesn't
+mean that it can't be
+
+416
+00:20:51.160 --> 00:20:55.720
+intelligent functionality that, that location,
+you know, field doesn't come
+
+417
+00:20:55.720 --> 00:20:57.970
+up in cases where the
+user may have mentioned an
+
+418
+00:20:57.970 --> 00:21:00.190
+address, but it was in
+a context where it doesn't
+
+419
+00:21:00.190 --> 00:21:02.890
+make sense for the bot
+to respond. Or maybe if
+
+420
+00:21:02.890 --> 00:21:05.020
+the bot just does, you
+know, does really simple things
+
+421
+00:21:05.020 --> 00:21:09.040
+like math or, you know,
+other really simple tasks that
+
+422
+00:21:09.040 --> 00:21:12.700
+can't be more aware of
+what's going on conversationally. And
+
+423
+00:21:12.700 --> 00:21:15.670
+that if let's say something
+goes wrong, it can't invoke
+
+424
+00:21:15.820 --> 00:21:18.460
+some, maybe a human to
+help out in the background.
+
+425
+00:21:18.460 --> 00:21:21.190
+And so this idea of
+bot intelligence, the fact that
+
+426
+00:21:21.190 --> 00:21:23.560
+even simple bots can be
+really intelligent is, is something
+
+427
+00:21:23.560 --> 00:21:26.410
+else that we think is
+important, even though you don't
+
+428
+00:21:26.410 --> 00:21:30.610
+necessarily have all of the
+greatest, you know, whizzbang, AI
+
+429
+00:21:30.640 --> 00:21:33.670
+or intent detection, even if
+your bot is really simple,
+
+430
+00:21:33.670 --> 00:21:37.950
+it can still be intelligent.
+So speaking of intelligence, the
+
+431
+00:21:37.950 --> 00:21:42.240
+thing that I feel causes
+bots to, to break down
+
+432
+00:21:42.240 --> 00:21:46.800
+or where I feel like
+the illusion fails is, is
+
+433
+00:21:46.830 --> 00:21:49.830
+contexts as simple as the
+thing that I just said,
+
+434
+00:21:50.640 --> 00:21:52.980
+for example, I was talking
+about what exactly I was
+
+435
+00:21:52.980 --> 00:21:56.850
+saying, what I was talking
+to Cortana shrine to show
+
+436
+00:21:56.850 --> 00:22:01.920
+it to my, my nontechnical
+parent yesterday. And I asked
+
+437
+00:22:01.920 --> 00:22:05.100
+it something and it didn't
+understand. And it tried to
+
+438
+00:22:05.100 --> 00:22:08.100
+launch a search. And I
+found that that idea of
+
+439
+00:22:08.100 --> 00:22:10.890
+the default action, like I
+would have really rather, it
+
+440
+00:22:10.890 --> 00:22:12.750
+just said, I don't know,
+but then it just took
+
+441
+00:22:12.750 --> 00:22:15.180
+my words and put them
+in search. But then I
+
+442
+00:22:15.180 --> 00:22:19.440
+said, no, no something, something
+this, and I referred contextually
+
+443
+00:22:19.440 --> 00:22:22.920
+back to the previous thing.
+And at that point it's
+
+444
+00:22:23.250 --> 00:22:27.900
+lost all context. How do
+bots keep track of like
+
+445
+00:22:28.710 --> 00:22:31.890
+this and that? And, and,
+you know, reflexive type stuff.
+
+446
+00:22:32.250 --> 00:22:34.260
+Yeah. That's a great question.
+And one that we bump
+
+447
+00:22:34.260 --> 00:22:36.960
+up against on a regular
+basis. So we've added some
+
+448
+00:22:36.960 --> 00:22:38.970
+of that into our body
+builder SDK, because it does
+
+449
+00:22:38.970 --> 00:22:41.880
+come up. So often we
+build bots where you certainly
+
+450
+00:22:41.880 --> 00:22:44.400
+do have to respond back
+via like a pronoun, you
+
+451
+00:22:44.400 --> 00:22:46.530
+know? So let's say, you're
+looking at someone's office. You
+
+452
+00:22:46.540 --> 00:22:50.790
+say, Hey, I'm where Scott's
+office. And, and then you
+
+453
+00:22:50.790 --> 00:22:52.320
+can say, well, how long
+will it take me to
+
+454
+00:22:52.320 --> 00:22:55.200
+get there? Or what has
+got Sam? You know, what
+
+455
+00:22:55.200 --> 00:22:58.830
+is his email address? And
+so those are problems that
+
+456
+00:22:58.830 --> 00:23:00.810
+we bumped into and we
+try and push all of
+
+457
+00:23:00.810 --> 00:23:03.450
+those features into our SDKs
+so that everyone can use
+
+458
+00:23:03.450 --> 00:23:06.690
+them Something as simple as
+how do I get there
+
+459
+00:23:06.690 --> 00:23:09.270
+or take me there. And
+then it's like, where it's
+
+460
+00:23:09.270 --> 00:23:12.300
+like, well, I just had
+this conversation. We're in this
+
+461
+00:23:12.300 --> 00:23:17.460
+conversation right now. It's interesting
+bots and conversational UI in
+
+462
+00:23:17.460 --> 00:23:21.030
+many ways is these are
+a set of solutions to
+
+463
+00:23:21.030 --> 00:23:24.720
+problems that we've, we've had
+forever where we look at
+
+464
+00:23:24.720 --> 00:23:26.340
+software and we say, why
+doesn't it just do the
+
+465
+00:23:26.340 --> 00:23:30.360
+thing I wanted to do
+and conversations because we can
+
+466
+00:23:30.360 --> 00:23:32.640
+be. So, you know, we
+can be specific in conversations
+
+467
+00:23:32.640 --> 00:23:34.830
+and, and because we don't
+have to go hunt for
+
+468
+00:23:34.830 --> 00:23:37.170
+the piece of interface, you
+know, we don't have to
+
+469
+00:23:37.170 --> 00:23:38.730
+hunt for the button or
+the menu where this thing
+
+470
+00:23:38.730 --> 00:23:41.070
+is hidden and we can
+just express it directly. It's
+
+471
+00:23:41.070 --> 00:23:44.070
+actually a way that we,
+as software developers can finally
+
+472
+00:23:44.070 --> 00:23:46.220
+give tools to people to
+solve questions. Why doesn't the
+
+473
+00:23:46.220 --> 00:23:48.350
+thing? Just do you know
+why doesn't know what this
+
+474
+00:23:48.350 --> 00:23:50.360
+is and why doesn't it
+know what we were just
+
+475
+00:23:50.360 --> 00:23:52.970
+talking about. We now have
+a canvas in front of
+
+476
+00:23:52.970 --> 00:23:54.380
+us where we, where we
+can actually start to solve
+
+477
+00:23:54.380 --> 00:23:57.200
+those problems. So you're right.
+That it is hard sometimes
+
+478
+00:23:57.200 --> 00:24:00.350
+to, or developers will, will
+find it to be a
+
+479
+00:24:00.350 --> 00:24:02.900
+challenge to process the, this
+field, but we're going to
+
+480
+00:24:02.900 --> 00:24:04.730
+have better and better tools
+over time to help them
+
+481
+00:24:04.730 --> 00:24:08.380
+do that. Okay, now I
+can do this in.net or
+
+482
+00:24:08.380 --> 00:24:11.980
+in node, and I get
+the same functionality we using
+
+483
+00:24:11.980 --> 00:24:15.190
+either one of those environments.
+Yeah. So our, our SDK
+
+484
+00:24:15.220 --> 00:24:19.330
+has first-class support for those
+two languages. And we've got,
+
+485
+00:24:19.930 --> 00:24:21.640
+we have really great tooling
+on both sides. It looks
+
+486
+00:24:21.640 --> 00:24:24.130
+a little bit different because
+the coding paradigms in those
+
+487
+00:24:24.130 --> 00:24:28.060
+two languages are different. But
+if you aren't interested in
+
+488
+00:24:28.060 --> 00:24:31.030
+using C-sharp or node, let's
+say, you know, you're a
+
+489
+00:24:31.030 --> 00:24:32.700
+Python or a Ruby shop,
+or you want to run
+
+490
+00:24:32.850 --> 00:24:35.440
+a button cobalt for some
+reason, as long as you
+
+491
+00:24:35.440 --> 00:24:38.380
+talk our simple rest API
+format, you can still use
+
+492
+00:24:38.380 --> 00:24:41.680
+the bot framework. It's just
+that you, you know, the,
+
+493
+00:24:41.680 --> 00:24:44.110
+the Bob builder SDK isn't
+yet available in those languages.
+
+494
+00:24:45.850 --> 00:24:49.780
+I was having a conversation
+with some folks about, you
+
+495
+00:24:49.780 --> 00:24:52.630
+know, the new dotnet core
+and how the command line
+
+496
+00:24:52.630 --> 00:24:56.740
+works. And we were having
+an interesting conversation where it
+
+497
+00:24:56.740 --> 00:25:00.190
+was like, well, do you
+type.net new hyphen T, or
+
+498
+00:25:00.190 --> 00:25:02.380
+just done a new this?
+And I realized we were
+
+499
+00:25:02.380 --> 00:25:05.380
+building a, kind of a
+conversational UI. We were just
+
+500
+00:25:05.380 --> 00:25:07.630
+trying to stick it on
+the command line. It was
+
+501
+00:25:07.630 --> 00:25:10.300
+a way of figuring out
+how to translate that. And
+
+502
+00:25:10.300 --> 00:25:12.400
+then I noticed that the
+bot framework has a thing
+
+503
+00:25:12.400 --> 00:25:16.330
+called form flow, which looks
+to me a lot, like
+
+504
+00:25:16.330 --> 00:25:20.830
+the way that yeoman does,
+it's interactive creation, you type
+
+505
+00:25:20.860 --> 00:25:24.520
+EO. And then it gives
+you a little, not quite
+
+506
+00:25:24.520 --> 00:25:27.040
+a full screen program, but
+you're suddenly in a menu.
+
+507
+00:25:27.040 --> 00:25:29.650
+And you can say, you
+know, please select a sandwich,
+
+508
+00:25:29.770 --> 00:25:34.930
+press one, press two. It's
+it's, it's an interesting compromise
+
+509
+00:25:34.930 --> 00:25:37.840
+where you're not quite an,
+a full on app, but
+
+510
+00:25:37.840 --> 00:25:39.730
+you give them a little
+bit of something. Is that
+
+511
+00:25:39.760 --> 00:25:42.370
+like a card is form
+flow related to the cards
+
+512
+00:25:42.370 --> 00:25:45.700
+you mentioned before. Yeah. And
+so, so form flow is
+
+513
+00:25:45.700 --> 00:25:47.410
+actually the same thing that
+we were talking about earlier,
+
+514
+00:25:47.410 --> 00:25:50.890
+where you can essentially wrap
+a conversation around your existing
+
+515
+00:25:51.340 --> 00:25:54.700
+C sharp objects and have
+it just work naturally inside
+
+516
+00:25:54.700 --> 00:25:58.720
+of the conversation, The serialization
+deserialization and the presentation of
+
+517
+00:25:58.720 --> 00:26:00.940
+that, that, that choice or
+that data. That is the
+
+518
+00:26:00.940 --> 00:26:07.180
+same thing. Yeah. Okay. And
+that, that D is that
+
+519
+00:26:07.180 --> 00:26:10.090
+a dialogue in the, in
+the parlance of bot the
+
+520
+00:26:10.090 --> 00:26:12.310
+bot framework? It is actually
+that, that is the term
+
+521
+00:26:12.310 --> 00:26:13.750
+that we use. Do you
+know, there's a lot of,
+
+522
+00:26:14.230 --> 00:26:16.810
+there are a lot of
+parallels between, you know, writing
+
+523
+00:26:16.810 --> 00:26:19.660
+basic window managing systems and
+running confrontational systems, even though
+
+524
+00:26:19.660 --> 00:26:22.270
+the presentation is very different.
+There are some things that
+
+525
+00:26:22.270 --> 00:26:24.130
+are similar. And so, yeah,
+a dialogue is what we
+
+526
+00:26:24.130 --> 00:26:26.890
+call it. So you can
+nest dialogues together. You can
+
+527
+00:26:26.890 --> 00:26:30.040
+have a dialogue to answer
+a specific set of questions
+
+528
+00:26:30.040 --> 00:26:33.160
+or fill in a form.
+And those things all cough
+
+529
+00:26:33.190 --> 00:26:35.500
+out a conversational engine that
+you can then attach to
+
+530
+00:26:35.500 --> 00:26:37.270
+whatever. And so actually, if
+you would want, if you
+
+531
+00:26:37.270 --> 00:26:40.240
+wanted to embed that conversational
+engine inside of a rich
+
+532
+00:26:40.240 --> 00:26:43.620
+application, so it works just
+like, you know, very similar
+
+533
+00:26:43.620 --> 00:26:46.140
+to like a rebel or,
+you know, some sort of
+
+534
+00:26:46.140 --> 00:26:51.360
+an interactive language language tool,
+the, the Butler lets you
+
+535
+00:26:51.360 --> 00:26:54.120
+do that. It lets you
+glue that straight into whatever
+
+536
+00:26:54.120 --> 00:26:58.250
+canvas you want Is, is
+that, is the term dialogue
+
+537
+00:26:58.250 --> 00:27:01.790
+in this context deliberately kind
+of a double entendre, is
+
+538
+00:27:01.790 --> 00:27:05.270
+it doing double work because
+it is a dialogue, like
+
+539
+00:27:05.270 --> 00:27:07.910
+a conversation and a dialogue
+that pops up on your
+
+540
+00:27:07.910 --> 00:27:10.970
+screen. Yeah. One, I think
+the history of, of dialogues
+
+541
+00:27:10.970 --> 00:27:13.430
+on our screen were there
+because it became kind of
+
+542
+00:27:13.430 --> 00:27:15.110
+like a, you know, a
+dialogue that we have with
+
+543
+00:27:15.110 --> 00:27:16.730
+people where it's a kind
+of a temporary thing that
+
+544
+00:27:16.730 --> 00:27:18.800
+we do, we interact with
+it and then we close
+
+545
+00:27:18.800 --> 00:27:21.140
+it and then we're able
+to move on and do
+
+546
+00:27:21.140 --> 00:27:23.270
+other work. So yeah, it's
+sort of like the, the
+
+547
+00:27:23.360 --> 00:27:25.130
+two sides of the fork
+are coming back together again.
+
+548
+00:27:26.270 --> 00:27:30.320
+Interesting. Okay. So the broad
+framework made a lot of
+
+549
+00:27:30.320 --> 00:27:32.960
+splash. It made a lot
+of, a lot of press.
+
+550
+00:27:33.470 --> 00:27:36.260
+There were a couple of
+bots made some of the
+
+551
+00:27:36.260 --> 00:27:40.280
+bots more successful than the
+others in that when you
+
+552
+00:27:40.280 --> 00:27:44.150
+can unleash a bot onto
+an unsuspecting public, the, the
+
+553
+00:27:44.510 --> 00:27:47.180
+intelligence behind the bot can
+get confused and caused the
+
+554
+00:27:47.180 --> 00:27:50.990
+bot to do weird stuff.
+Is that bots that went
+
+555
+00:27:50.990 --> 00:27:54.050
+wrong or is that AI,
+that guy that gets confused.
+
+556
+00:27:54.050 --> 00:27:56.540
+And how do I make
+sure that my bot stays
+
+557
+00:27:56.540 --> 00:27:58.370
+constrained and does what I
+want it to do in
+
+558
+00:27:58.370 --> 00:28:01.130
+order pizza and not, you
+know, argue politics with be
+
+559
+00:28:01.400 --> 00:28:03.440
+That's a, it's a great
+question. And a very, very
+
+560
+00:28:03.440 --> 00:28:06.950
+common, I think valid concern.
+The, the term bots is
+
+561
+00:28:06.950 --> 00:28:09.440
+a really broad term editing.
+It covers a lot of
+
+562
+00:28:09.440 --> 00:28:13.880
+different pieces of functionality and
+behavior. And so what we
+
+563
+00:28:13.880 --> 00:28:16.310
+were working on here in
+the bot framework is conversations.
+
+564
+00:28:16.580 --> 00:28:19.400
+So it's building conversational software.
+The term bot can also
+
+565
+00:28:19.400 --> 00:28:24.620
+refer to autonomous software, right?
+Like botnets. And there was
+
+566
+00:28:24.620 --> 00:28:26.870
+actually a, there, there was
+a bot recently that fought
+
+567
+00:28:26.870 --> 00:28:30.110
+a bunch of court cases.
+And those bots are, if
+
+568
+00:28:30.110 --> 00:28:32.150
+you reduce them all the
+way down, they really are
+
+569
+00:28:32.150 --> 00:28:34.040
+sort of four loops, right.
+They're just doing one thing
+
+570
+00:28:34.040 --> 00:28:36.500
+and they're doing it in
+a way that is, you
+
+571
+00:28:36.500 --> 00:28:39.020
+know, very effective to solve
+a particular problem. Or if
+
+572
+00:28:39.020 --> 00:28:41.060
+you're building a botnet it's
+effective at taking down a
+
+573
+00:28:41.060 --> 00:28:42.890
+system, but it's more or
+less just a, just a,
+
+574
+00:28:42.920 --> 00:28:47.690
+a for loop. And there's
+also artificial intelligence. So some
+
+575
+00:28:47.690 --> 00:28:51.020
+of the chatter bots have
+some, some AI capabilities where
+
+576
+00:28:51.020 --> 00:28:55.100
+they can respond intelligently to,
+to things that you say
+
+577
+00:28:55.100 --> 00:28:57.200
+to the bot. And these
+are kind of all separate
+
+578
+00:28:57.200 --> 00:28:59.450
+things, even though there are,
+they all use the term
+
+579
+00:28:59.450 --> 00:29:02.300
+bot and actually robots too.
+Right? So, so physical robots
+
+580
+00:29:02.510 --> 00:29:04.790
+are also covered by this
+term, but are not really
+
+581
+00:29:04.790 --> 00:29:07.820
+the same as, as, as
+a three, if you're building
+
+582
+00:29:07.820 --> 00:29:11.210
+conversational software, you do have
+artificial intelligence tools at your
+
+583
+00:29:11.210 --> 00:29:13.520
+disposal, and you're going to
+want to include them to
+
+584
+00:29:13.520 --> 00:29:16.010
+make your tool, to make
+your bot, be able to
+
+585
+00:29:16.010 --> 00:29:18.890
+understand what users say, you
+know, the, the flexible language
+
+586
+00:29:18.920 --> 00:29:22.280
+that they're expressing to you,
+but those tools are very
+
+587
+00:29:22.280 --> 00:29:24.680
+scoped and they're very predictable.
+So that Lewis tool, it's
+
+588
+00:29:24.680 --> 00:29:28.140
+a red text on steroids.
+It just turns text into
+
+589
+00:29:28.250 --> 00:29:30.770
+essentially an ENM, right? It
+does intend detection. It doesn't
+
+590
+00:29:30.770 --> 00:29:33.140
+do any automatic responses for
+you. And all of the
+
+591
+00:29:33.140 --> 00:29:36.920
+cognitive services tools that we
+offer all have mission specific
+
+592
+00:29:36.920 --> 00:29:39.080
+functions. They'll have a very
+clear thing that they do.
+
+593
+00:29:39.080 --> 00:29:41.470
+They take a specific set
+of inputs, specifically set outputs,
+
+594
+00:29:41.830 --> 00:29:43.540
+and it's up to you
+as the developer to glue
+
+595
+00:29:43.540 --> 00:29:45.430
+those things together. So if
+you want to take one
+
+596
+00:29:45.430 --> 00:29:47.230
+of these AI tools and
+strap it to a four
+
+597
+00:29:47.230 --> 00:29:49.270
+loop, you can do that.
+If you want to just
+
+598
+00:29:49.270 --> 00:29:52.060
+have it returned, you know,
+some texts that you've typed
+
+599
+00:29:52.060 --> 00:29:54.310
+up, you know, some authored
+texts that you've maybe collaborated
+
+600
+00:29:54.310 --> 00:29:56.830
+with a writer to produce.
+You can do that too.
+
+601
+00:29:57.220 --> 00:29:59.830
+That's a little bit different
+than having autonomous software or
+
+602
+00:29:59.830 --> 00:30:02.920
+having, you know, physical. So
+physical, soft, or sorry, physical
+
+603
+00:30:03.550 --> 00:30:05.950
+robots. They're all different ways
+of looking at the same
+
+604
+00:30:05.950 --> 00:30:10.320
+term, but Okay. So, you
+know, it's, we're, we're, we're
+
+605
+00:30:10.320 --> 00:30:12.750
+ascribing a lot of meaning
+and a lot of intent
+
+606
+00:30:12.750 --> 00:30:16.620
+and, and Skynet to a
+three letter word here. You
+
+607
+00:30:16.620 --> 00:30:19.830
+know, it's, it's bot is
+a very, very small word
+
+608
+00:30:19.830 --> 00:30:23.220
+that describes a very large
+area. And during this conversation,
+
+609
+00:30:23.220 --> 00:30:25.260
+we've understood that it's not
+just a large area, it's
+
+610
+00:30:25.260 --> 00:30:27.960
+a whole pipeline and you
+can't really point to one
+
+611
+00:30:27.960 --> 00:30:30.270
+piece of the pipeline that
+goes wrong and say, bots
+
+612
+00:30:30.270 --> 00:30:32.730
+are bad. That's right. That's
+exactly it. And in some
+
+613
+00:30:32.730 --> 00:30:35.190
+ways we're at we're, we're
+in the same space as
+
+614
+00:30:35.190 --> 00:30:38.190
+we were with websites back
+in 1995, where it looked
+
+615
+00:30:38.190 --> 00:30:39.720
+like this thing that was
+sort of live on its
+
+616
+00:30:39.720 --> 00:30:42.210
+own, right. A website was
+sort of distinct from the
+
+617
+00:30:42.210 --> 00:30:44.280
+company that ran it and
+it was different than their,
+
+618
+00:30:44.280 --> 00:30:46.830
+their retail presence. But over
+time, the website and the
+
+619
+00:30:46.830 --> 00:30:50.070
+company and everything kind of
+blurs together and conversational software
+
+620
+00:30:50.190 --> 00:30:53.520
+already has a little bit
+to an extent. So my
+
+621
+00:30:53.520 --> 00:30:57.630
+voicemail message is a bit
+of conversational software already. The
+
+622
+00:30:57.630 --> 00:30:59.910
+out of office responder on
+my email is sort of
+
+623
+00:30:59.910 --> 00:31:02.010
+like a bot version of
+me that responds to you
+
+624
+00:31:02.010 --> 00:31:03.420
+when you send me an
+email and I'm out of
+
+625
+00:31:03.420 --> 00:31:06.690
+the office. So we already
+have kind of simple rudimentary
+
+626
+00:31:06.690 --> 00:31:09.690
+forms of conversational user interface
+all over the place. And
+
+627
+00:31:09.930 --> 00:31:12.360
+as they get to be
+more advanced, we're going to
+
+628
+00:31:12.360 --> 00:31:16.950
+find ways of integrating them
+into existing businesses, software ways
+
+629
+00:31:16.950 --> 00:31:20.570
+of, of running our lives
+that are really natural, that
+
+630
+00:31:20.580 --> 00:31:23.100
+they, they aren't, they, they
+don't have a lot of
+
+631
+00:31:23.100 --> 00:31:24.870
+ragged edges on them. You
+know, you'll be able to
+
+632
+00:31:24.870 --> 00:31:28.380
+do things like texture, plumber,
+even though your plumber doesn't
+
+633
+00:31:28.380 --> 00:31:30.760
+necessarily have, you know, a
+single text line that, that
+
+634
+00:31:31.140 --> 00:31:33.060
+they expose to, they may
+have a piece of software
+
+635
+00:31:33.060 --> 00:31:35.700
+that fronts their phone number
+so that you can ask
+
+636
+00:31:35.700 --> 00:31:39.270
+them questions. You can get
+their location and their software
+
+637
+00:31:39.270 --> 00:31:42.240
+will respond. Their bot will
+respond, even though the plumber
+
+638
+00:31:42.240 --> 00:31:45.480
+may be busy doing another
+job. Very cool. Well, I
+
+639
+00:31:45.480 --> 00:31:49.020
+really appreciate you chatting with
+me today. Likewise, absolute pleasure.
+
+640
+00:31:49.740 --> 00:31:55.260
+So folks can check this
+out@botframework.com, developers dev.bot framework.com. You
+
+641
+00:31:55.260 --> 00:31:59.100
+can get started. Definitely get
+started as a weekend project.
+
+642
+00:31:59.100 --> 00:32:01.260
+You can get your hello
+world bot running very, very
+
+643
+00:32:01.260 --> 00:32:03.810
+quickly, and this is some
+pretty cool stuff and it's
+
+644
+00:32:03.810 --> 00:32:05.940
+happening right now. And I
+assume it's being actively developed.
+
+645
+00:32:05.970 --> 00:32:10.530
+Yes, very cool. This has
+been another episode of Hanselminutes
+
+646
+00:32:10.560 --> 00:32:12.120
+and we'll see you again
+next week.
+

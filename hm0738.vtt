@@ -1,0 +1,2527 @@
+WEBVTT FILE
+
+1
+00:00:00.240 --> 00:00:04.620
+This episode is sponsored by
+Datadog a cloud monitoring platform
+
+2
+00:00:04.620 --> 00:00:08.940
+built by engineers for engineers,
+enabling full stack observability for
+
+3
+00:00:08.940 --> 00:00:13.410
+modern applications. Datadog integrates seamlessly
+to gather metrics and events
+
+4
+00:00:13.410 --> 00:00:17.520
+for more than 400 technologies,
+including cloud providers, databases, and
+
+5
+00:00:17.520 --> 00:00:22.140
+web servers, easily identify slow
+running queries, error rates, bottlenecks,
+
+6
+00:00:22.140 --> 00:00:26.580
+and more fast with built
+in dashboards, algorithmic alerts and,
+
+7
+00:00:26.590 --> 00:00:31.590
+and, and request tracing and
+log management. Datadog helps engineering
+
+8
+00:00:31.590 --> 00:00:35.550
+teams troubleshoot and collaborate together
+in one place to enhance
+
+9
+00:00:35.550 --> 00:00:39.990
+performance and prevent downtime. Start
+a free trial today and
+
+10
+00:00:39.990 --> 00:00:43.380
+Datadog will send you a
+free t-shirt visit data dog
+
+11
+00:00:43.590 --> 00:01:06.170
+hq.com/hansel minutes. That's Datadog hq.com/hansel
+minutes to get started. Hi,
+
+12
+00:01:06.170 --> 00:01:08.360
+this is Scott Hanselman. This
+is another episode of Hansel
+
+13
+00:01:08.360 --> 00:01:10.980
+minutes today. I'm talking with
+Jeremy, some clarity windows and
+
+14
+00:01:10.980 --> 00:01:15.350
+insiders MVP and internet person.
+How are you Jeremy? I'm
+
+15
+00:01:15.350 --> 00:01:18.620
+doing great. How are you
+doing? I'm getting there as
+
+16
+00:01:18.620 --> 00:01:21.770
+much as anyone can be
+right now. I have been
+
+17
+00:01:21.800 --> 00:01:23.600
+watching you on Twitter for
+a very long time. We've
+
+18
+00:01:23.600 --> 00:01:27.350
+hung out a number of
+times as well. And you
+
+19
+00:01:27.350 --> 00:01:31.520
+really like your surface pro
+X. Now I'm surfaced, you
+
+20
+00:01:31.520 --> 00:01:33.290
+know, I'm surfaced all up
+left and right. I've got
+
+21
+00:01:33.290 --> 00:01:35.720
+all kinds of services, but
+what is so special about
+
+22
+00:01:35.720 --> 00:01:40.880
+these surface pro X? Well,
+this surface pro X, it
+
+23
+00:01:40.880 --> 00:01:45.590
+is the first surface device
+that Microsoft offered that runs
+
+24
+00:01:45.590 --> 00:01:49.670
+completely on arm 64. So
+we have a windows 10
+
+25
+00:01:49.790 --> 00:01:55.550
+arm, 64 device that is
+surface branded. So I remember
+
+26
+00:01:55.550 --> 00:02:01.280
+when everything was X 86,
+which is Intel X, zero
+
+27
+00:02:01.280 --> 00:02:04.820
+X 86. There was three
+86 and 46. And then
+
+28
+00:02:04.820 --> 00:02:07.280
+there was a time when
+we were going from 32
+
+29
+00:02:07.280 --> 00:02:11.390
+bit to 64 bit. And
+I don't think that a
+
+30
+00:02:11.390 --> 00:02:14.210
+lot of users notice that
+time. A lot of devs
+
+31
+00:02:14.210 --> 00:02:17.360
+had like recompiled things, but
+when I'm on my Intel
+
+32
+00:02:17.360 --> 00:02:20.510
+machine and I'm running a
+32 bit process or a
+
+33
+00:02:20.510 --> 00:02:24.110
+64 week process, I don't
+really think about stuff too
+
+34
+00:02:24.110 --> 00:02:26.690
+much. Like I don't, I
+don't think that anyone anymore
+
+35
+00:02:26.690 --> 00:02:29.480
+thinks about it. And now
+64 bit on Intel is
+
+36
+00:02:29.480 --> 00:02:32.660
+pretty much a standard deal,
+but arm that's a whole
+
+37
+00:02:32.660 --> 00:02:35.810
+other universe, right? This is
+an Intel chip. This is
+
+38
+00:02:35.810 --> 00:02:39.560
+a totally different architecture. Is
+that correct? Yes, absolutely. This
+
+39
+00:02:40.310 --> 00:02:47.420
+the arm system on chip
+SOC, it's a risk processor.
+
+40
+00:02:47.870 --> 00:02:51.380
+So you have that reduced
+instruction, just kind of like
+
+41
+00:02:51.380 --> 00:02:55.850
+the power PC. If you
+think about that, the Intel's
+
+42
+00:02:55.850 --> 00:02:59.710
+the exit he sakes. Those
+are all complex, complex instructions.
+
+43
+00:03:00.490 --> 00:03:05.320
+The biggest difference I can
+see between the arm and
+
+44
+00:03:05.500 --> 00:03:11.260
+the Intel processors is that
+you have the low power
+
+45
+00:03:11.290 --> 00:03:18.550
+efficiency that the arm provides.
+So I understand that Intel
+
+46
+00:03:18.550 --> 00:03:21.010
+has their expertise, and this
+is a bit of a
+
+47
+00:03:21.010 --> 00:03:22.600
+generalization. And the kind of
+things we're going to talk
+
+48
+00:03:22.600 --> 00:03:25.120
+about here are kind of
+generalizations, but Intel's expertise is
+
+49
+00:03:25.120 --> 00:03:30.430
+just design. You know, the
+basically high, high performance processors,
+
+50
+00:03:30.430 --> 00:03:34.030
+their goal is perf perf
+perf, right? Desktop and server,
+
+51
+00:03:34.690 --> 00:03:38.350
+but arm has only ever
+focused on power efficient. Like
+
+52
+00:03:38.350 --> 00:03:41.830
+that's, their whole thing is
+let's be efficient with power.
+
+53
+00:03:41.830 --> 00:03:47.440
+It's almost like arm fundamentally
+sees computing differently from Intel.
+
+54
+00:03:48.160 --> 00:03:54.850
+Correct. And what I believe
+by that is by focusing
+
+55
+00:03:54.850 --> 00:03:58.810
+on that low power standpoint,
+there's going to be a
+
+56
+00:03:58.810 --> 00:04:01.690
+lot more optimization. You're going
+to get a lot more
+
+57
+00:04:01.690 --> 00:04:07.030
+done without pulling a lot
+of energy from the processors.
+
+58
+00:04:07.750 --> 00:04:13.330
+And a lot of the
+arm system chips don't even
+
+59
+00:04:13.330 --> 00:04:17.020
+have fans in them because
+they're meant to be that
+
+60
+00:04:17.020 --> 00:04:20.800
+low power, but get a
+lot of that performance out
+
+61
+00:04:20.800 --> 00:04:24.250
+of it. Interesting. Okay. So
+you're saying that like, well,
+
+62
+00:04:24.250 --> 00:04:26.950
+we are trying to figure
+out ways to make fans
+
+63
+00:04:26.950 --> 00:04:30.730
+quieter and like surface. Like
+I have a surface pro
+
+64
+00:04:30.730 --> 00:04:32.920
+three, which is quite a
+bit older. It's several years
+
+65
+00:04:32.920 --> 00:04:34.930
+old, but it's got a
+tiny little fan and there's
+
+66
+00:04:34.930 --> 00:04:37.360
+all kinds of discussion about
+the vents and how the
+
+67
+00:04:37.360 --> 00:04:40.090
+fans work. This surface pro
+X didn't even have a
+
+68
+00:04:40.090 --> 00:04:42.760
+fan. Did you mean that
+there's just no concept, cause
+
+69
+00:04:42.760 --> 00:04:44.200
+it's just not how it
+works. I need a fan.
+
+70
+00:04:45.400 --> 00:04:50.020
+Correct. And then another wonderful
+thing about this. If you
+
+71
+00:04:50.020 --> 00:04:55.570
+think about arm, arm 64,
+the phones that you have,
+
+72
+00:04:56.320 --> 00:05:00.430
+they're running arm 64. Think
+about the battery life you're
+
+73
+00:05:00.430 --> 00:05:03.700
+getting out of that. Get
+out of your phones, your
+
+74
+00:05:03.700 --> 00:05:07.120
+iPhone, your Android phones. You're
+going to have that same
+
+75
+00:05:07.120 --> 00:05:12.910
+similar performance on here. Mm
+okay. So someone once called
+
+76
+00:05:12.910 --> 00:05:16.630
+the, the arm arm basically
+is the architect of the
+
+77
+00:05:16.630 --> 00:05:19.600
+smartphone, the smartphone era. I
+think that was a quote
+
+78
+00:05:19.600 --> 00:05:22.960
+in the verge. Basically. They
+kind of thought about and
+
+79
+00:05:22.960 --> 00:05:25.780
+invented the idea of mobile
+system on a chip, like
+
+80
+00:05:25.810 --> 00:05:28.150
+put everything on a chip,
+shove it into a tiny
+
+81
+00:05:28.150 --> 00:05:31.780
+device that requires all day
+battery life and no fan.
+
+82
+00:05:32.800 --> 00:05:36.250
+So these are phone chips,
+but phones then are becoming
+
+83
+00:05:36.250 --> 00:05:41.590
+computers in our pockets. Yeah.
+And if you think about
+
+84
+00:05:42.070 --> 00:05:44.830
+something that I've seen happened
+in quite a few times,
+
+85
+00:05:46.120 --> 00:05:53.590
+phones being used for full
+movie and audio production, I
+
+86
+00:05:53.590 --> 00:05:56.440
+think a lot, a lot
+of the DJs and music
+
+87
+00:05:56.440 --> 00:06:03.640
+producers, most of the time
+they're carrying around mobile sized
+
+88
+00:06:03.640 --> 00:06:08.690
+devices. They're not carrying around
+full laptops and food desktops
+
+89
+00:06:08.690 --> 00:06:14.480
+anywhere. They have their mobile
+devices with them because a
+
+90
+00:06:14.480 --> 00:06:19.220
+lot of that, a lot
+of the audio code and
+
+91
+00:06:20.420 --> 00:06:24.650
+people have seen how efficient
+everything is. So that's like,
+
+92
+00:06:24.650 --> 00:06:28.640
+why carry around this beefing
+machine when we have all
+
+93
+00:06:28.640 --> 00:06:33.640
+of our code optimized just
+for this. Yeah. We've seen
+
+94
+00:06:33.640 --> 00:06:36.640
+people do like entire albums
+on, you know, garage band
+
+95
+00:06:36.670 --> 00:06:39.550
+or make us small, or
+even, I think they've done
+
+96
+00:06:39.550 --> 00:06:41.200
+a number of movies in
+the theaters that have been
+
+97
+00:06:41.200 --> 00:06:44.830
+done entirely on unlike I
+movie. So certainly the, the
+
+98
+00:06:44.830 --> 00:06:47.740
+idea that a phone can't
+do something major, like those
+
+99
+00:06:47.740 --> 00:06:51.010
+things are those days are
+over. But I remember that
+
+100
+00:06:51.010 --> 00:06:53.200
+there was a couple of
+devices where Microsoft tried to
+
+101
+00:06:53.200 --> 00:06:55.570
+make it. So you could
+plug in a phone to
+
+102
+00:06:55.570 --> 00:06:57.970
+a giant monitor and like
+run the whole run the
+
+103
+00:06:57.970 --> 00:07:00.520
+whole thing. What was that?
+I don't remember what that
+
+104
+00:07:00.520 --> 00:07:03.280
+was called, but during the
+windows phone, 10 era, there
+
+105
+00:07:03.280 --> 00:07:05.560
+was an idea that you
+would carry the, the phone
+
+106
+00:07:05.560 --> 00:07:09.490
+would become your computer basically.
+Yeah, Yeah. That, Oh, this
+
+107
+00:07:09.490 --> 00:07:13.210
+is bringing me back the,
+yeah. Windows 10 mobile, a
+
+108
+00:07:13.240 --> 00:07:17.800
+continuum. That was the device.
+I mean, that was that
+
+109
+00:07:18.060 --> 00:07:22.390
+the function. And I actually
+feel like that was maybe
+
+110
+00:07:22.390 --> 00:07:27.580
+a preview of what we
+could expect with the windows
+
+111
+00:07:27.580 --> 00:07:33.070
+on arm. So windows on
+arm means not windows phone
+
+112
+00:07:33.070 --> 00:07:35.770
+10. It means literally the
+windows 10 that I'm already
+
+113
+00:07:35.770 --> 00:07:40.030
+using home or pro or
+whatever on an arm device,
+
+114
+00:07:40.360 --> 00:07:44.020
+but not necessarily a phone
+sized device. The surface pro
+
+115
+00:07:44.020 --> 00:07:46.720
+X is, is tiny though.
+It's like the it's like
+
+116
+00:07:46.790 --> 00:07:49.570
+basic, it's the size. It's
+almost basically an iPad. It's
+
+117
+00:07:49.570 --> 00:07:51.880
+a size and this and
+weight of an iPad, but
+
+118
+00:07:51.880 --> 00:07:55.270
+it's a full piece. Yep,
+absolutely. It's the, it's the
+
+119
+00:07:55.270 --> 00:08:01.540
+full OOS. So many of
+the functionalities that you'd be
+
+120
+00:08:01.540 --> 00:08:08.110
+able to have on your,
+whatever your surface pro or
+
+121
+00:08:08.110 --> 00:08:13.480
+surface six, seven, all of
+those you'll be able to
+
+122
+00:08:13.480 --> 00:08:16.810
+do this on the windows
+on arm. So I can
+
+123
+00:08:16.810 --> 00:08:22.570
+actually run WSL on here,
+for instance, The windows subsystem
+
+124
+00:08:22.570 --> 00:08:25.990
+for Linux. So you could,
+which is which, which uses
+
+125
+00:08:25.990 --> 00:08:28.300
+a virtual immuno. It uses
+hyper V and a number
+
+126
+00:08:28.300 --> 00:08:31.180
+of virtualization technology. So you
+can kind of go nuts.
+
+127
+00:08:31.180 --> 00:08:33.520
+So you, do you use
+yours as a development machine
+
+128
+00:08:33.980 --> 00:08:38.080
+Actually do that? I think
+from talking to many people,
+
+129
+00:08:38.530 --> 00:08:43.000
+that's been one of the
+first things they do. If
+
+130
+00:08:43.000 --> 00:08:46.720
+they get an arm device,
+first thing they do is,
+
+131
+00:08:46.780 --> 00:08:49.420
+well, let's see a visual
+studio runs on here. So
+
+132
+00:08:49.420 --> 00:08:51.550
+you can guess that was
+the first thing that I
+
+133
+00:08:51.550 --> 00:08:57.230
+did was download and run
+visual studio there And agreed
+
+134
+00:08:57.230 --> 00:09:01.520
+at work though, because visual
+studio isn't arm compiled, It
+
+135
+00:09:01.520 --> 00:09:06.620
+actually did work because of
+some, some awesome things that
+
+136
+00:09:06.680 --> 00:09:12.440
+the Microsoft teams have done
+to make that possible. There
+
+137
+00:09:12.440 --> 00:09:19.130
+is a <inaudible> emulation layer
+that runs on the arm
+
+138
+00:09:19.130 --> 00:09:25.040
+64. So you'll be able
+to run x86 binaries only
+
+139
+00:09:25.040 --> 00:09:31.250
+exited six though, not X
+64. Okay. Interesting here. So
+
+140
+00:09:31.250 --> 00:09:36.320
+hang on. So there's, this
+is an arm 64 chip,
+
+141
+00:09:36.620 --> 00:09:42.050
+not an arm 32. And
+you can run, I assume,
+
+142
+00:09:42.050 --> 00:09:44.300
+arm 32 things as a
+kind of an emulation as
+
+143
+00:09:44.300 --> 00:09:47.930
+well. So just like I
+was mentioning before my 64,
+
+144
+00:09:47.930 --> 00:09:50.210
+but Intel machine, my desktop
+that I'm talking to you
+
+145
+00:09:50.210 --> 00:09:53.450
+on right now, so it
+can certainly run 32 bit
+
+146
+00:09:53.570 --> 00:09:55.790
+apps and that works fine.
+And I don't really think
+
+147
+00:09:55.790 --> 00:10:00.680
+about it. And this arm,
+64 version of windows 10
+
+148
+00:10:00.920 --> 00:10:05.000
+uses a, a layer. It's
+not a virtual machine though.
+
+149
+00:10:05.000 --> 00:10:08.360
+It's a, it's an emulation
+layer. So it's, it's literally
+
+150
+00:10:09.110 --> 00:10:14.360
+absorbing those, those instructions for
+X 86, converting them in
+
+151
+00:10:14.360 --> 00:10:18.380
+real time onto arm. It's
+lying to the app and
+
+152
+00:10:18.380 --> 00:10:20.990
+telling it that this is
+an x86 and, and it
+
+153
+00:10:20.990 --> 00:10:28.580
+works. Yep, absolutely. That's that's,
+that's why you would typically
+
+154
+00:10:28.580 --> 00:10:32.780
+see as an alternative to
+the lack of arm 64
+
+155
+00:10:32.780 --> 00:10:35.960
+binaries, if there's an X
+96 binary, they say, Hey,
+
+156
+00:10:35.960 --> 00:10:41.810
+just use this where it's
+the performance of that exit
+
+157
+00:10:41.880 --> 00:10:48.680
+six simulation layer is it's
+okay. You didn't sound enthusiastic
+
+158
+00:10:48.680 --> 00:10:53.750
+when you said, okay. Yeah,
+it's, I'll say it's better.
+
+159
+00:10:54.020 --> 00:10:56.960
+And I'm going to give
+a comparison to my first
+
+160
+00:10:57.560 --> 00:11:01.310
+arm, 64 device. It was
+my, a Seuss Nova go.
+
+161
+00:11:01.430 --> 00:11:06.830
+And I got a bill
+in 2018, the exit he
+
+162
+00:11:06.830 --> 00:11:11.810
+six emulation on that was
+pretty abysmal because it had
+
+163
+00:11:11.840 --> 00:11:18.140
+a Snapdragon eight 35, which
+was the same processor, the
+
+164
+00:11:18.260 --> 00:11:25.040
+processor that's in my razor
+phone, which interestingly enough, it's
+
+165
+00:11:26.480 --> 00:11:31.730
+running visual studio on that.
+Just be prepared to suffer
+
+166
+00:11:32.030 --> 00:11:34.070
+because there's a lot of
+processes going on as a
+
+167
+00:11:34.070 --> 00:11:39.770
+lot of sub processes. Ah,
+that's interesting. The more exit
+
+168
+00:11:39.830 --> 00:11:42.920
+six processes you're running at
+the same time. And if
+
+169
+00:11:42.920 --> 00:11:48.200
+there's anything that's dependent on
+that, just goodbye, the body
+
+170
+00:11:48.200 --> 00:11:51.860
+or performance. Okay. So let
+me think about this for
+
+171
+00:11:51.860 --> 00:11:54.310
+a second. So this is
+a device, it's a great
+
+172
+00:11:54.310 --> 00:11:58.120
+idea. The idea of an
+arm 64 device means a
+
+173
+00:11:58.120 --> 00:12:03.280
+fabulous low power arc, you
+know, architected for low power
+
+174
+00:12:03.280 --> 00:12:05.860
+at the very beginning device,
+a device that gives you
+
+175
+00:12:06.610 --> 00:12:10.030
+all day or darn near
+all day battery life. But
+
+176
+00:12:10.090 --> 00:12:13.870
+if I start using that
+device to exclusively run 32
+
+177
+00:12:13.870 --> 00:12:18.250
+bit applications on an emulator,
+especially complicated ones that fan
+
+178
+00:12:18.250 --> 00:12:20.350
+out, like you said, the
+visual studios and example is
+
+179
+00:12:20.350 --> 00:12:23.860
+kind of like the torture
+device, you know, the torture
+
+180
+00:12:23.860 --> 00:12:27.940
+example because it's like dozens
+of, of processes that fork
+
+181
+00:12:27.940 --> 00:12:30.250
+out and fork out. Cause
+it's not one app it's
+
+182
+00:12:30.760 --> 00:12:33.490
+dozens of little apps that
+all talk together. Then at
+
+183
+00:12:33.490 --> 00:12:36.370
+that point, I'm really not
+getting, I'm not using the
+
+184
+00:12:36.370 --> 00:12:37.870
+device kind of in the
+way it was intended. It's
+
+185
+00:12:37.870 --> 00:12:40.330
+great that it works that
+way, but I'm going to
+
+186
+00:12:40.420 --> 00:12:42.400
+probably not get awesome battery
+life and I'm not going
+
+187
+00:12:42.400 --> 00:12:44.650
+to get awesome perf and
+it's not going to make
+
+188
+00:12:44.650 --> 00:12:48.420
+the device really shine. Correct.
+Yeah. And that's, and it's
+
+189
+00:12:48.420 --> 00:12:52.590
+really, like I said, it's
+the complexity of the x86
+
+190
+00:12:52.590 --> 00:12:57.540
+app that determines your level
+of performance, like say for,
+
+191
+00:12:57.570 --> 00:13:02.490
+for existence, Microsoft teams actually
+runs pretty well. There's been
+
+192
+00:13:02.490 --> 00:13:06.150
+a lot of optimization and
+I can really kind of
+
+193
+00:13:07.080 --> 00:13:13.950
+attribute it to the improvements
+that were done on the,
+
+194
+00:13:14.700 --> 00:13:19.590
+I guess they've video performance.
+And a lot of that
+
+195
+00:13:19.620 --> 00:13:26.160
+plus we've had firmware updates
+for the pro X made
+
+196
+00:13:26.340 --> 00:13:30.750
+the experience amazing. So they're
+really actively trying to make
+
+197
+00:13:30.750 --> 00:13:34.650
+this thing awesome. Like it's
+getting updated regularly. Oh yeah.
+
+198
+00:13:34.950 --> 00:13:38.880
+Which is, which is really
+nice. I mean, there's obviously
+
+199
+00:13:39.240 --> 00:13:47.220
+there are bugs, which they're
+random, but the biggest thing
+
+200
+00:13:47.220 --> 00:13:50.010
+I try to remind everyone
+to do is if you
+
+201
+00:13:50.010 --> 00:13:54.300
+encounter any random bug, add
+it to the feed hub,
+
+202
+00:13:54.870 --> 00:13:58.680
+the feedback hub, the feedback
+hub app. Yeah. Yep. That's
+
+203
+00:13:59.010 --> 00:14:02.040
+I can say that every
+single time I run into
+
+204
+00:14:02.040 --> 00:14:06.300
+something that's out of the
+ordinary, I throw it in
+
+205
+00:14:06.300 --> 00:14:10.590
+there and I make sure
+that I do the biggest
+
+206
+00:14:10.590 --> 00:14:14.970
+amount of detail in there.
+Just so the engineers can
+
+207
+00:14:16.260 --> 00:14:20.130
+understand what I was doing
+at that time, because I
+
+208
+00:14:20.130 --> 00:14:22.920
+want this stuff to ext
+to, I want this to
+
+209
+00:14:22.950 --> 00:14:27.450
+run completely flawless. Yeah. Definitely.
+People are paying a lot
+
+210
+00:14:27.450 --> 00:14:28.920
+of attention to that kind
+of stuff. And this has
+
+211
+00:14:28.920 --> 00:14:31.320
+only been six months since
+the device came out. So
+
+212
+00:14:31.590 --> 00:14:34.850
+certainly now, but at the
+same time though, like I
+
+213
+00:14:34.860 --> 00:14:37.440
+always thought that they should
+have called it like not
+
+214
+00:14:37.440 --> 00:14:39.840
+windows 10 arm or windows
+10 on arm, I would
+
+215
+00:14:39.840 --> 00:14:41.910
+have called it. And this
+is just me making this
+
+216
+00:14:41.910 --> 00:14:43.860
+up. But I would have
+called it windows 10 all
+
+217
+00:14:43.860 --> 00:14:47.950
+day office. Because the thing
+that I like about the,
+
+218
+00:14:47.950 --> 00:14:49.980
+the surface pro X is
+that it will be basically
+
+219
+00:14:49.980 --> 00:14:53.330
+ruined forever. If you don't
+throw a bunch of ambulation
+
+220
+00:14:53.330 --> 00:14:56.120
+stuff at it, right. Like
+if you think it's the
+
+221
+00:14:56.120 --> 00:14:59.090
+perfect all day machine for
+dev and all you're going
+
+222
+00:14:59.090 --> 00:15:01.550
+to do is emulate an
+x86. It's probably not for
+
+223
+00:15:01.550 --> 00:15:03.260
+you. It sounds like if
+you were in a native
+
+224
+00:15:03.260 --> 00:15:06.020
+arm though, stuff it'll just
+run forever, which is pretty
+
+225
+00:15:06.020 --> 00:15:13.090
+cool. Oh yes. And for
+instance, the first thing I
+
+226
+00:15:13.090 --> 00:15:19.510
+did was download the new
+Microsoft edge. That's chromium based
+
+227
+00:15:21.220 --> 00:15:23.710
+and put it right on
+this laptop. Well, I call
+
+228
+00:15:23.710 --> 00:15:27.760
+it a laptop, but my
+arm 64 pro X device,
+
+229
+00:15:28.240 --> 00:15:35.110
+because, and everyone there's been
+jokes for years about anything
+
+230
+00:15:35.110 --> 00:15:38.470
+Chrome related, how it just
+loves to eat your memory.
+
+231
+00:15:39.880 --> 00:15:45.580
+So imagine running that a
+full base CR full chromium
+
+232
+00:15:45.580 --> 00:15:52.720
+based browser on x86 it's,
+you'll see the complete difference
+
+233
+00:15:52.720 --> 00:15:55.300
+between the exit six version
+and an arm, 64 version.
+
+234
+00:15:55.780 --> 00:16:00.250
+There's many times where I
+could actually, and this might
+
+235
+00:16:00.250 --> 00:16:06.310
+be just my own opinion,
+but I've seen ex ex
+
+236
+00:16:07.600 --> 00:16:12.520
+86 run a horrible why?
+Well, the arm 64 version
+
+237
+00:16:12.520 --> 00:16:17.440
+of these browsers run better
+than my ex 64 based
+
+238
+00:16:17.440 --> 00:16:22.480
+Dell. Really? Yeah. I've I
+usually have a good 20,
+
+239
+00:16:22.510 --> 00:16:28.330
+30 tabs open at any
+given time. And I have
+
+240
+00:16:28.540 --> 00:16:32.050
+really no issue Better mean
+to you. Like I think
+
+241
+00:16:32.050 --> 00:16:33.550
+that one of the things
+that's hard when trying to
+
+242
+00:16:33.550 --> 00:16:36.250
+explain to people the difference
+between this arm machine and
+
+243
+00:16:36.250 --> 00:16:41.230
+a, a comparative Intel machine
+is the sense of it's
+
+244
+00:16:41.320 --> 00:16:44.680
+it runs better. I mean,
+there's no fan, it is
+
+245
+00:16:44.680 --> 00:16:48.100
+efficient and it is crisp
+and you click and things
+
+246
+00:16:48.100 --> 00:16:51.070
+happen instantly. So you're saying
+better. How can you be
+
+247
+00:16:51.070 --> 00:16:54.280
+more kind of quantitative about
+it? And yeah, it's, it's
+
+248
+00:16:54.280 --> 00:17:00.070
+really kind of better depending
+on what you're doing. I
+
+249
+00:17:00.070 --> 00:17:03.730
+put browsing in there as
+an example, because I've seen
+
+250
+00:17:04.150 --> 00:17:08.140
+most people when they're on
+their devices, whether it be
+
+251
+00:17:08.140 --> 00:17:12.220
+a laptop, desktop tablet, you're
+going to have your browser.
+
+252
+00:17:12.550 --> 00:17:18.880
+That experience is significantly better
+than what I'm seeing on
+
+253
+00:17:19.090 --> 00:17:22.780
+my work machine that has
+32 gigs of Ram and
+
+254
+00:17:23.560 --> 00:17:29.440
+eight core Intel processor. It's
+it feels like it's those
+
+255
+00:17:30.220 --> 00:17:38.290
+tiny wins, but at the
+same time, you still have
+
+256
+00:17:38.290 --> 00:17:44.440
+to it still going to
+have to think about the
+
+257
+00:17:44.440 --> 00:17:49.410
+level of complexity because on
+these devices, you're going to
+
+258
+00:17:49.440 --> 00:17:59.040
+be running a full blown,
+super video game. Like, Oh
+
+259
+00:17:59.040 --> 00:18:01.470
+no, I'll bring up an
+old example, like a crisis.
+
+260
+00:18:02.000 --> 00:18:04.160
+Well, our gears of war,
+right? I mean, unless gears
+
+261
+00:18:04.160 --> 00:18:06.620
+of war was a native
+arm app though, this isn't
+
+262
+00:18:06.620 --> 00:18:09.230
+what this is for. Right.
+I think when I first
+
+263
+00:18:09.230 --> 00:18:12.620
+got a pro X, I
+thought this was supposed to
+
+264
+00:18:12.620 --> 00:18:16.400
+be the perfect computer. Like
+with this solves everything in
+
+265
+00:18:16.400 --> 00:18:18.470
+the sense of this is
+going to be as high
+
+266
+00:18:18.470 --> 00:18:20.870
+powered as my desktop. And
+it was going to be
+
+267
+00:18:21.290 --> 00:18:23.600
+everything that my Intel was
+and more, and I think
+
+268
+00:18:23.600 --> 00:18:25.940
+I got my head wrong
+about that, because like we
+
+269
+00:18:25.940 --> 00:18:30.200
+said, at the beginning, Intel
+makes high performance server desktop
+
+270
+00:18:30.200 --> 00:18:35.120
+machines, but our makes power
+efficient processes from the beginning.
+
+271
+00:18:35.120 --> 00:18:38.840
+And this is a really
+grown up phone processor. That's
+
+272
+00:18:38.880 --> 00:18:42.560
+a system on a chip
+and my expectation wasn't reasonable
+
+273
+00:18:42.560 --> 00:18:44.420
+and it wasn't correct. Cause
+that's not what this is
+
+274
+00:18:44.420 --> 00:18:48.800
+for. Correct. And that's, and
+that's why there's been that
+
+275
+00:18:48.800 --> 00:18:52.220
+example from the beginning to
+say, Hey, this can do
+
+276
+00:18:52.220 --> 00:18:55.820
+a lot of stuff. It's
+really great for productivity, but
+
+277
+00:18:55.820 --> 00:19:00.320
+don't expect to use it
+as a gaming machine, which
+
+278
+00:19:00.330 --> 00:19:04.850
+makes sense. Right. And I
+think that, you know, as
+
+279
+00:19:04.880 --> 00:19:12.500
+these, as the processors, you
+know, gain more complexity because
+
+280
+00:19:12.770 --> 00:19:18.560
+have just the chains between
+a Snapdragon eight 35 to
+
+281
+00:19:18.590 --> 00:19:24.740
+this Microsoft P one based
+off of the Qualcomm Snapdragon,
+
+282
+00:19:24.830 --> 00:19:32.030
+ACX the difference, the difference
+between the performances insane. Like,
+
+283
+00:19:32.090 --> 00:19:37.730
+and I think the more
+complex, the more that we
+
+284
+00:19:37.730 --> 00:19:43.940
+see the evolution of the
+arm based processors, I feel
+
+285
+00:19:43.940 --> 00:19:45.980
+like it's going to get
+to that point of being
+
+286
+00:19:45.980 --> 00:19:50.930
+a true contender. Cause I've,
+I've done the, the geek
+
+287
+00:19:50.930 --> 00:19:57.050
+bench was a kink bench,
+four or five on this
+
+288
+00:19:57.050 --> 00:20:01.430
+pro X in, it was
+comparative to an I five.
+
+289
+00:20:02.870 --> 00:20:05.120
+Yeah. That's interesting. That's like
+the, the benchmarks that they
+
+290
+00:20:05.120 --> 00:20:07.160
+do on iPads and stuff,
+when they're trying to show
+
+291
+00:20:07.160 --> 00:20:08.870
+like an iPad, I don't
+think it is comparable to
+
+292
+00:20:08.870 --> 00:20:11.630
+a PC, but if you
+take a, a benchmark that
+
+293
+00:20:11.630 --> 00:20:14.690
+is a, a browser based
+benchmark, and you say, if
+
+294
+00:20:14.690 --> 00:20:17.090
+you spend, you know, most
+of your time, 60, 70,
+
+295
+00:20:17.090 --> 00:20:20.090
+80% of your time in
+a browser, it is comparable
+
+296
+00:20:20.090 --> 00:20:22.160
+and you can get a
+lot of really significant work
+
+297
+00:20:22.160 --> 00:20:28.610
+done. Yes. And I, and
+I think that's, that's where
+
+298
+00:20:28.610 --> 00:20:32.180
+you get a lot of
+those wins. But I do
+
+299
+00:20:32.180 --> 00:20:38.030
+believe that I think O
+S wise, as, as windows
+
+300
+00:20:38.030 --> 00:20:44.390
+gets more armed, 64 binaries
+out there, and as the
+
+301
+00:20:44.390 --> 00:20:50.770
+OSTP itself continues, get optimized.
+This may not be a
+
+302
+00:20:50.770 --> 00:20:55.750
+problem. That's a good think
+about it. You've seen like
+
+303
+00:20:55.750 --> 00:21:04.900
+arm 64 has been out
+since about 2010, not implemented,
+
+304
+00:21:05.680 --> 00:21:09.130
+but you know, the RVA
+does that spec has been
+
+305
+00:21:09.130 --> 00:21:13.570
+there and Linux has been
+on it since then. So
+
+306
+00:21:13.570 --> 00:21:18.370
+like 2013, I think you
+started to see your first
+
+307
+00:21:19.060 --> 00:21:25.720
+Linux-based build of an arm,
+64 target in there. There's
+
+308
+00:21:25.930 --> 00:21:30.460
+a lot of stuff running
+on Linux arm, 64 out
+
+309
+00:21:30.460 --> 00:21:35.370
+there. Yeah. We're seeing a
+movement of arm, not just
+
+310
+00:21:35.370 --> 00:21:37.920
+from the phone, but up
+into the cloud as well.
+
+311
+00:21:37.920 --> 00:21:42.120
+The idea of this power
+efficient processor means that if
+
+312
+00:21:42.120 --> 00:21:44.940
+I could do a, you
+know, a.net web app and
+
+313
+00:21:44.940 --> 00:21:47.160
+run it on arm in
+the cloud and not even
+
+314
+00:21:47.160 --> 00:21:48.690
+think about the fact that
+it's written on our arm,
+
+315
+00:21:48.690 --> 00:21:51.720
+if it just works, then
+you know, the entire data
+
+316
+00:21:51.720 --> 00:21:54.180
+center could be more power
+efficient. And that could cause
+
+317
+00:21:54.420 --> 00:21:57.720
+potentially say, I don't know,
+millions of dollars because we're
+
+318
+00:21:57.720 --> 00:22:00.720
+not using as much power
+to, to keep to, or
+
+319
+00:22:00.720 --> 00:22:03.360
+cooling to, to run the
+cloud. So I think there's
+
+320
+00:22:03.360 --> 00:22:05.220
+a really interesting thing to
+be said there as well.
+
+321
+00:22:05.220 --> 00:22:08.910
+There's a, now we're going
+to have products Again. Yeah.
+
+322
+00:22:09.000 --> 00:22:13.860
+And I think that's, that's,
+that's really great because especially
+
+323
+00:22:13.860 --> 00:22:22.260
+as a.net developer, I know
+the latest.net five previews, there's
+
+324
+00:22:22.740 --> 00:22:27.600
+an S STK targets arm
+64 on windows. So I've
+
+325
+00:22:27.600 --> 00:22:33.840
+been actually able to compile
+full on.net core apps and
+
+326
+00:22:33.840 --> 00:22:41.310
+they work. So console ASP,
+net core. And for right
+
+327
+00:22:41.310 --> 00:22:47.850
+now WinForms, there is WinForms
+support in the latest dotnet
+
+328
+00:22:47.850 --> 00:22:55.410
+five previews, at least from
+the, the latest bleeding edge
+
+329
+00:22:55.440 --> 00:23:00.390
+version, which I think would
+be towards like a preview
+
+330
+00:23:00.600 --> 00:23:03.150
+five ish or even pre
+before I have to look
+
+331
+00:23:03.150 --> 00:23:09.060
+again. But yeah, there's, I
+have been creating WinForms apps
+
+332
+00:23:10.770 --> 00:23:14.760
+and they've worked flawlessly that
+that's, what's blowing on mine.
+
+333
+00:23:15.840 --> 00:23:17.790
+When you need to focus
+on building, do you want
+
+334
+00:23:17.790 --> 00:23:20.520
+to get bogged down by
+your database? Mongo DB is
+
+335
+00:23:20.520 --> 00:23:23.340
+an intuitive, flexible document database
+that lets you get to
+
+336
+00:23:23.340 --> 00:23:27.000
+building Mongo. DBS document model
+is a natural way to
+
+337
+00:23:27.000 --> 00:23:30.210
+represent data so you can
+focus on what matters Mongo
+
+338
+00:23:30.210 --> 00:23:32.970
+DB Atlas is the best
+way to use Mongo DB.
+
+339
+00:23:33.270 --> 00:23:35.910
+It's a global cloud database
+service that gives you all
+
+340
+00:23:35.910 --> 00:23:39.120
+of the developer productivity of
+Mongo DB. Plus the added
+
+341
+00:23:39.120 --> 00:23:42.600
+simplicity of a fully managed
+database service. You can get
+
+342
+00:23:42.600 --> 00:23:50.150
+started free with Mongo DB
+atlas@mongodb.com Slash Atlas. I was
+
+343
+00:23:50.150 --> 00:23:53.840
+looking at your blog here
+and you've got a blog
+
+344
+00:23:53.840 --> 00:23:57.380
+post from February where you
+compiled the asp.net core runtime
+
+345
+00:23:57.380 --> 00:24:01.370
+for arm windows, arm 64.
+And there's already a Linux
+
+346
+00:24:01.370 --> 00:24:05.240
+arm and Lennox arm 64.
+So folks have been able
+
+347
+00:24:05.240 --> 00:24:09.890
+to use asp.net and.net on
+raspberry pies with success for
+
+348
+00:24:09.890 --> 00:24:12.440
+a long time, I've got
+a number of raspberry PI,
+
+349
+00:24:12.440 --> 00:24:15.350
+and I've been talking about
+that for years, but it
+
+350
+00:24:15.350 --> 00:24:17.690
+doesn't look like you had
+to do a whole lot
+
+351
+00:24:17.750 --> 00:24:22.010
+to recompile that you basically
+made your own runtime identifier
+
+352
+00:24:22.040 --> 00:24:26.150
+and just compiled it all
+with, with open it with
+
+353
+00:24:26.160 --> 00:24:28.760
+existing tools. Did that take
+a lot of effort to
+
+354
+00:24:28.760 --> 00:24:32.640
+get Donna core running on
+arm 64 on windows? Yeah,
+
+355
+00:24:32.690 --> 00:24:35.930
+it took, it took a
+while because at that time,
+
+356
+00:24:36.020 --> 00:24:38.780
+which I guess this is
+my fault for not updating
+
+357
+00:24:38.780 --> 00:24:43.340
+the blog. That that process
+is actually the amount of
+
+358
+00:24:43.580 --> 00:24:48.980
+complexity of that process is
+essentially gone the better for
+
+359
+00:24:48.980 --> 00:24:53.960
+you now. Yeah. the.net team
+has done so much, but
+
+360
+00:24:55.370 --> 00:24:57.590
+it was a lot of
+trial and error on my
+
+361
+00:24:57.590 --> 00:25:00.530
+part because it's the first
+time I even brought down
+
+362
+00:25:00.530 --> 00:25:05.150
+the entire Danette core source.
+Cause so for me, trying
+
+363
+00:25:05.150 --> 00:25:12.290
+to make this run and
+build natively, I gained some
+
+364
+00:25:12.290 --> 00:25:17.120
+experience with looking through the.net
+source and getting an understanding
+
+365
+00:25:17.210 --> 00:25:23.120
+for how that process works.
+Were you impressed? Was that
+
+366
+00:25:23.120 --> 00:25:25.130
+it was that like, were
+you surprised at all? Cause
+
+367
+00:25:25.130 --> 00:25:27.800
+I know that Microsoft always
+talks about being able to
+
+368
+00:25:27.800 --> 00:25:29.750
+compile all of dotnet yourself
+and you're just like, yeah,
+
+369
+00:25:29.750 --> 00:25:31.790
+I'm just gonna compile that
+net for Toyota for processor.
+
+370
+00:25:32.180 --> 00:25:34.100
+And I actually could do
+it. Like it was a
+
+371
+00:25:34.100 --> 00:25:39.260
+real thing. I was extremely
+impressed because as soon as
+
+372
+00:25:39.260 --> 00:25:43.490
+I did it, I, I
+had to run.net and I
+
+373
+00:25:43.490 --> 00:25:48.770
+made a simple ASP net
+core app that just shows
+
+374
+00:25:49.070 --> 00:25:55.790
+the runtime of the binary
+of whatever their host process.
+
+375
+00:25:56.240 --> 00:25:59.600
+And just to see that
+arm 64, they're like, it
+
+376
+00:25:59.600 --> 00:26:02.780
+just blew my mind and
+made me so happy because
+
+377
+00:26:04.940 --> 00:26:10.400
+currently when you're downloading anything
+done at core related in
+
+378
+00:26:10.670 --> 00:26:15.620
+using it beef, it wants
+everything wants to use x86
+
+379
+00:26:16.550 --> 00:26:22.100
+because you know, there's no
+publicly available, I guess, general
+
+380
+00:26:22.100 --> 00:26:26.960
+release of the SDK for
+arm 64. So trying to
+
+381
+00:26:26.960 --> 00:26:32.270
+compile something in the exit
+86 version of.net versus the
+
+382
+00:26:32.270 --> 00:26:37.640
+arm 64, it is day
+and night. Let me, let
+
+383
+00:26:37.640 --> 00:26:38.840
+me ask you this. Here's
+a bit of a loaded
+
+384
+00:26:38.840 --> 00:26:42.290
+question. So I'm thinking about
+two different people. There's you
+
+385
+00:26:42.320 --> 00:26:46.470
+who have the technical Ability
+and patience to compile all
+
+386
+00:26:46.470 --> 00:26:49.530
+of.net for the processor that
+you love. And then there's
+
+387
+00:26:49.530 --> 00:26:53.550
+maybe my nontechnical spouse. So
+my nontechnical spouse gets a
+
+388
+00:26:53.550 --> 00:26:58.740
+surface pro ex they're going
+to be able to install
+
+389
+00:26:58.740 --> 00:27:01.200
+office, install every app that
+they want to run. I
+
+390
+00:27:01.200 --> 00:27:05.970
+mean, other than like obscure
+low-level drivers and weird VPN
+
+391
+00:27:05.970 --> 00:27:08.580
+apps that might do something
+custom, they're not going to
+
+392
+00:27:08.580 --> 00:27:12.150
+have any trouble running, whatever,
+like nontechnical spouse can run,
+
+393
+00:27:12.150 --> 00:27:15.180
+whatever makes them happy on
+one of these devices. Right.
+
+394
+00:27:15.750 --> 00:27:19.380
+But if you're a dev,
+how much hunting around do
+
+395
+00:27:19.380 --> 00:27:23.340
+you usually do for an
+arm native build of something
+
+396
+00:27:23.400 --> 00:27:24.750
+when you go, when you're
+like, yeah, I'm going to
+
+397
+00:27:24.750 --> 00:27:27.300
+run edge. You said you've
+got the arm build, you
+
+398
+00:27:27.300 --> 00:27:28.770
+know, how important is that?
+And how much time do
+
+399
+00:27:28.770 --> 00:27:34.280
+you spend doing that? I
+always go out searching on
+
+400
+00:27:34.310 --> 00:27:37.880
+the individual application. I go
+searching to see if they
+
+401
+00:27:37.940 --> 00:27:41.840
+do have an arm 64
+build. If it's open source,
+
+402
+00:27:42.950 --> 00:27:44.780
+first thing I try to
+do is see, okay, how
+
+403
+00:27:44.780 --> 00:27:51.440
+can I make this cross
+compile? I, you know, I
+
+404
+00:27:51.440 --> 00:27:54.020
+get down to that level
+because it's more of a,
+
+405
+00:27:54.170 --> 00:27:57.740
+you know, a learning, learning
+thing for me, but also
+
+406
+00:27:57.740 --> 00:28:02.780
+a way that I can
+contribute back. But there's only
+
+407
+00:28:02.780 --> 00:28:10.790
+been really a few things
+I've wanted to see. Well,
+
+408
+00:28:11.210 --> 00:28:14.510
+and I've wanted to natively
+compiled arm 64, that weren't
+
+409
+00:28:14.510 --> 00:28:19.490
+there and well vs code
+being one of them. And
+
+410
+00:28:19.490 --> 00:28:28.250
+there was a pull request
+by rich Townsend that enabled
+
+411
+00:28:29.240 --> 00:28:33.290
+all of the prerequisites in
+order to make a build
+
+412
+00:28:33.290 --> 00:28:38.600
+for I'm 64. And that's
+what essentially, you know, became
+
+413
+00:28:39.260 --> 00:28:43.850
+the insiders with the few
+tweaks to it without that
+
+414
+00:28:43.850 --> 00:28:47.090
+was the one thing I
+did. I haven't compiled it.
+
+415
+00:28:47.900 --> 00:28:49.910
+Actually, the first thing I
+did with the BS code
+
+416
+00:28:50.300 --> 00:28:55.520
+was I opened up windows,
+subsystem for Linux. Got it.
+
+417
+00:28:55.520 --> 00:29:04.820
+Compiled there used VC X
+surf, the do like X,
+
+418
+00:29:04.820 --> 00:29:09.590
+11 client or whatever to
+see the actual gooey. So
+
+419
+00:29:09.590 --> 00:29:15.920
+I saw that Linux app
+running on windows as system
+
+420
+00:29:15.950 --> 00:29:19.310
+for Lennox, the gooey on
+my screen. And I was
+
+421
+00:29:19.700 --> 00:29:23.510
+dabbing in that. So it's
+like that that's, that's where
+
+422
+00:29:23.510 --> 00:29:26.960
+a lot of the fun
+things with having windows subsystem
+
+423
+00:29:26.960 --> 00:29:30.440
+for Linux works out. Cause
+if there, if there's something
+
+424
+00:29:30.890 --> 00:29:34.850
+that I feel like, okay,
+this, I don't need anything
+
+425
+00:29:34.850 --> 00:29:42.100
+windows specific from this, I
+can just load up and
+
+426
+00:29:42.820 --> 00:29:47.320
+run within that little environment
+and be done with it.
+
+427
+00:29:48.520 --> 00:29:52.030
+Like I said, there was
+like, there was a little
+
+428
+00:29:52.030 --> 00:29:56.050
+trade off. There is like
+the alternatives. Cause there is
+
+429
+00:29:56.050 --> 00:30:00.760
+like a for instance, I
+think the windows on arm
+
+430
+00:30:00.760 --> 00:30:08.560
+only supports open GL one.one.
+And that's, there's many things
+
+431
+00:30:08.560 --> 00:30:12.550
+that if it does support
+open GL, what's not going
+
+432
+00:30:12.550 --> 00:30:16.470
+to be targeting one dot
+wall. So there's that an
+
+433
+00:30:16.470 --> 00:30:19.920
+older thing? Yeah, that's a,
+it's an older thing. But
+
+434
+00:30:19.920 --> 00:30:23.760
+the cool thing about this
+is that I ran, I
+
+435
+00:30:23.760 --> 00:30:26.760
+ran like quake three, there
+was like an opensource quake
+
+436
+00:30:26.760 --> 00:30:31.570
+three and I could not
+get compiled properly yet. There
+
+437
+00:30:31.680 --> 00:30:34.770
+a lot of, you know,
+weird things that I ran
+
+438
+00:30:34.770 --> 00:30:40.560
+into. I opened up windows.
+So subsystem for Linux downloaded
+
+439
+00:30:40.560 --> 00:30:45.630
+the package and ran it
+and I'm playing quake three
+
+440
+00:30:45.630 --> 00:30:47.850
+on my pro X And
+it worked just fine out
+
+441
+00:30:47.850 --> 00:30:51.540
+of the box. Yep, absolutely.
+So it sounds like, even
+
+442
+00:30:51.540 --> 00:30:53.040
+though, like I said, we're
+just six months from the
+
+443
+00:30:53.040 --> 00:30:55.380
+release of this and it's
+the beginning of windows are
+
+444
+00:30:55.380 --> 00:30:59.280
+on arm for the average
+nontechnical Joe or Jane. It'll
+
+445
+00:30:59.280 --> 00:31:04.770
+just work for when edge,
+edge has arm builds. The
+
+446
+00:31:04.770 --> 00:31:07.200
+new chromium based edge has
+arm built available that you
+
+447
+00:31:07.200 --> 00:31:09.630
+can find. But at some
+point that'll just work as
+
+448
+00:31:09.630 --> 00:31:12.240
+well. Like everyone will just
+get the latest version. So
+
+449
+00:31:12.540 --> 00:31:15.570
+nontechnical spouse will have a
+faster browser and they don't
+
+450
+00:31:15.570 --> 00:31:18.120
+have to do anything. I
+know that visual studio code
+
+451
+00:31:18.150 --> 00:31:22.230
+insiders has arm builds. So
+visual studio code itself will
+
+452
+00:31:22.230 --> 00:31:25.650
+compile directly on arm. It
+seems like if more people
+
+453
+00:31:25.650 --> 00:31:30.720
+start using, you know, getting
+arms stuff, it'll just happen.
+
+454
+00:31:30.750 --> 00:31:34.020
+Basically the machine will just
+get faster and low battery
+
+455
+00:31:34.020 --> 00:31:38.100
+life will get longer because
+X 86 compiled emulated apps
+
+456
+00:31:38.100 --> 00:31:41.790
+will slowly over the next
+several months to a year,
+
+457
+00:31:42.330 --> 00:31:46.170
+be replaced with arm native
+builds and everybody wins. Yeah.
+
+458
+00:31:46.230 --> 00:31:50.250
+I believe that then that's
+one of my goals to
+
+459
+00:31:50.250 --> 00:31:55.170
+bring more awareness. Cause in
+visual studio, it was like
+
+460
+00:31:55.170 --> 00:32:01.080
+back in 2018, we gain
+the ability to easily target
+
+461
+00:32:01.080 --> 00:32:06.510
+arm 64. So for right
+now, if you have a
+
+462
+00:32:06.510 --> 00:32:11.160
+C plus plus project, you
+can easily add a target
+
+463
+00:32:11.190 --> 00:32:18.120
+from 64 and I'd say
+99% of your builds will
+
+464
+00:32:18.120 --> 00:32:24.660
+just work. Cause there's been
+that IX. You think about
+
+465
+00:32:24.660 --> 00:32:31.260
+C make and even rust.
+There's all of those different
+
+466
+00:32:31.260 --> 00:32:38.190
+components have arm 64 native
+compatibility. So a lot of
+
+467
+00:32:38.190 --> 00:32:42.650
+Dave's these big apps can
+just be easily ported without
+
+468
+00:32:42.650 --> 00:32:46.940
+trouble. That's cool. It's amazing
+to me, even that on
+
+469
+00:32:47.040 --> 00:32:49.760
+arm 64, that there's a
+VHD ex chicken run hyper
+
+470
+00:32:49.760 --> 00:32:51.950
+V on these devices. Like
+the idea that you have
+
+471
+00:32:51.950 --> 00:32:55.820
+on hyper V and windows
+10 enterprise on a surface
+
+472
+00:32:55.820 --> 00:32:59.900
+pro ax running, you know,
+this, this arm Snapdragon style
+
+473
+00:32:59.900 --> 00:33:03.170
+process, they idea that what's
+effectively a giant phone with
+
+474
+00:33:03.170 --> 00:33:06.020
+all day battery life. It
+has the ability to do
+
+475
+00:33:06.020 --> 00:33:08.600
+these kinds of things. It
+sounds like you are a
+
+476
+00:33:08.630 --> 00:33:11.570
+big fan of this device.
+I'm a, I'm a huge
+
+477
+00:33:11.570 --> 00:33:16.730
+fan and I, more than
+anything, it's the first device
+
+478
+00:33:16.730 --> 00:33:19.700
+I pick up and I'm
+on it the entire day.
+
+479
+00:33:21.590 --> 00:33:27.620
+So just about everything I'm
+doing, even this recording is
+
+480
+00:33:27.630 --> 00:33:30.650
+done from my pro ex.
+Oh, you're on it now.
+
+481
+00:33:31.040 --> 00:33:34.310
+Oh yeah. Oh wow. Okay.
+And then you have like
+
+482
+00:33:34.310 --> 00:33:36.740
+what a USB mic plugged
+in. Like you're just using
+
+483
+00:33:36.740 --> 00:33:38.270
+it. It's a PC it's
+plugged into the, give it
+
+484
+00:33:38.270 --> 00:33:41.990
+on the dock and it's
+on running two monitors. Yup.
+
+485
+00:33:42.050 --> 00:33:45.950
+I've I've done that. It's
+it's amazing. I thought that
+
+486
+00:33:46.160 --> 00:33:48.830
+I was going to have
+so much issues, but I
+
+487
+00:33:48.830 --> 00:33:53.810
+have, I've had none with
+just replacing the device. That's
+
+488
+00:33:53.810 --> 00:33:57.680
+hooked up to my monitors.
+I have, I do have
+
+489
+00:33:58.160 --> 00:34:02.690
+the first generation surface dock,
+which still works flawlessly. I
+
+490
+00:34:02.690 --> 00:34:08.600
+even have a USBC to
+USB converter and that's what
+
+491
+00:34:08.600 --> 00:34:13.070
+I'm using right now for
+the mic. But even then
+
+492
+00:34:13.310 --> 00:34:23.000
+I have a, an Arturia
+mini keyboard. I plugged it
+
+493
+00:34:23.000 --> 00:34:28.940
+into this and used FL
+studio mobile. And I'm playing
+
+494
+00:34:30.200 --> 00:34:35.750
+this keyboard without any delay
+can actually make music on
+
+495
+00:34:35.750 --> 00:34:39.590
+this borough. X sounds like
+you're living the dream man.
+
+496
+00:34:39.650 --> 00:34:43.460
+Oh yeah. And that's that's
+I try to find everything
+
+497
+00:34:43.460 --> 00:34:47.870
+that I can, that I
+can do just to get
+
+498
+00:34:48.020 --> 00:34:52.790
+the best out of the
+device. All right. Well, thanks
+
+499
+00:34:52.790 --> 00:34:54.710
+so much for chatting with
+me today. I hope that
+
+500
+00:34:54.710 --> 00:34:57.620
+folks check out what's happening
+in the arms space and
+
+501
+00:34:57.620 --> 00:35:00.200
+that this maybe has them
+give a second look at
+
+502
+00:35:00.200 --> 00:35:02.150
+the surface pro X and
+what's happening with arm on
+
+503
+00:35:02.150 --> 00:35:05.240
+windows. Thank you so much,
+Jeremy Sinclair. Yeah. Thank you
+
+504
+00:35:05.240 --> 00:35:09.020
+so much, Scott. This has
+been another episode of Hansel
+
+505
+00:35:09.020 --> 00:35:22.640
+minutes and we'll see you
+again next week. <inaudible>.
+

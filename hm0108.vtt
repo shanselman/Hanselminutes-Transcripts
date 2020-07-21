@@ -1,0 +1,4207 @@
+WEBVTT FILE
+
+1
+00:00:12.020 --> 00:00:17.510
+From Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+2
+00:00:17.510 --> 00:00:22.970
+web developer and technologist Scott
+Hanselman hosted by Carl Franklin. This
+
+3
+00:00:22.970 --> 00:00:26.750
+is Lawrence Ryan announcing show number
+one Oh eight. Recorded live
+
+4
+00:00:26.750 --> 00:00:32.410
+Wednesday, April 9th, 2008. Support for Hanselman
+it's just provided by teller.
+
+5
+00:00:32.690 --> 00:00:36.380
+Already controls the most comprehensive
+suite of components for windows
+
+6
+00:00:36.380 --> 00:00:45.980
+forms and asp.net web applications.
+online@wwwdottlerik.com. Support is also provided
+
+7
+00:00:45.980 --> 00:00:51.050
+by.net developers journal the world's
+leading.net developer magazine online at
+
+8
+00:00:51.170 --> 00:00:56.480
+www dot <inaudible> dot com.
+In this episode, Scott sits
+
+9
+00:00:56.480 --> 00:01:00.260
+down with Robbie, Gary and
+Andy from planet argon, a
+
+10
+00:01:00.260 --> 00:01:03.830
+local rail shop in Portland,
+Oregon, and talks about Distributed
+
+11
+00:01:03.830 --> 00:01:09.050
+source control with get hi,
+this is Scott Hanselman, and
+
+12
+00:01:09.050 --> 00:01:10.850
+this is another episode of
+Hansel minutes. And I'm sitting
+
+13
+00:01:10.850 --> 00:01:14.390
+here in Portland, Oregon, my
+hometown at planet argon, a
+
+14
+00:01:14.420 --> 00:01:17.540
+Ruby on rails shop downtown
+Portland. I've gotten here with
+
+15
+00:01:17.540 --> 00:01:20.510
+Robbie, Gary and Andy from
+planet argon and they're all
+
+16
+00:01:20.510 --> 00:01:24.140
+rails developers. And they've recently
+started using get Git, get
+
+17
+00:01:24.140 --> 00:01:27.440
+as a new distributor newish
+to share it source control
+
+18
+00:01:27.440 --> 00:01:31.490
+system from Linus Torvalds himself,
+and as myself being an
+
+19
+00:01:31.490 --> 00:01:34.340
+old subversion guy from way
+back. And these guys have
+
+20
+00:01:34.340 --> 00:01:36.830
+recently moved from subversion or
+moving from subversion to get,
+
+21
+00:01:37.160 --> 00:01:38.450
+I wanted to sit down
+and find out what all
+
+22
+00:01:38.450 --> 00:01:41.480
+the, what all the hype
+is about. Get. So you've
+
+23
+00:01:41.480 --> 00:01:44.120
+been using subversion for your
+rails work for, for years?
+
+24
+00:01:44.390 --> 00:01:46.850
+Yes, We've been using subversion
+for as long as the
+
+25
+00:01:46.850 --> 00:01:48.500
+company has been around. Definitely
+it's for as long as
+
+26
+00:01:48.530 --> 00:01:53.120
+I've been here. And we
+just recently started switching to
+
+27
+00:01:53.150 --> 00:01:56.120
+get, and we don't have
+a centralized get server yet,
+
+28
+00:01:56.120 --> 00:01:59.210
+but we're using get against
+the subversion server using get
+
+29
+00:01:59.210 --> 00:02:02.480
+SVN. No, I started out
+in source control using zip
+
+30
+00:02:02.480 --> 00:02:04.910
+files and I just changed
+the file name and I
+
+31
+00:02:04.910 --> 00:02:07.130
+stick it over there. Right.
+And Linus did that. He'd
+
+32
+00:02:07.130 --> 00:02:08.930
+made tarballs and he put
+them off in the corner
+
+33
+00:02:08.930 --> 00:02:11.510
+and that's that's enough storage
+control for me. And then
+
+34
+00:02:11.510 --> 00:02:14.240
+as a Microsoft developer, I
+started using source safe, which
+
+35
+00:02:14.240 --> 00:02:17.780
+was just a big cloud
+of source in the sky.
+
+36
+00:02:17.810 --> 00:02:19.910
+And there was this notion
+of checkout and check in,
+
+37
+00:02:19.910 --> 00:02:23.030
+and it was in a
+pessimistic checkout model, such that
+
+38
+00:02:23.030 --> 00:02:25.640
+I would check something out
+and it was mine. There
+
+39
+00:02:25.640 --> 00:02:28.250
+was no notion of a,
+you know, optimistic concurrency in
+
+40
+00:02:28.250 --> 00:02:30.320
+the sense of just get
+it out and edit it.
+
+41
+00:02:30.320 --> 00:02:32.450
+And we'll worry about merging
+later. So that was a
+
+42
+00:02:32.450 --> 00:02:35.840
+big change for me to
+go from a sort of
+
+43
+00:02:35.840 --> 00:02:40.460
+safe model to subversion model
+right now, subversion seemed great.
+
+44
+00:02:40.460 --> 00:02:42.140
+I mean, I have no
+problem with diversion. The only
+
+45
+00:02:42.140 --> 00:02:44.300
+time things go wrong with
+subversion is when I branch
+
+46
+00:02:44.310 --> 00:02:47.090
+the code and try to
+merge it back. Right. And
+
+47
+00:02:47.090 --> 00:02:51.680
+that's one place that gets
+really shines that subversion always
+
+48
+00:02:51.680 --> 00:02:55.550
+talks about how branching is
+really easy and really fast.
+
+49
+00:02:55.550 --> 00:02:59.530
+And it's a, it's a
+shallow copy, but in get,
+
+50
+00:02:59.560 --> 00:03:02.290
+they try and make merging
+really easy. And so the
+
+51
+00:03:02.290 --> 00:03:04.690
+branch is really easy to,
+but really if you can't
+
+52
+00:03:04.690 --> 00:03:07.570
+merge, what's the point of
+branching. So get really tries
+
+53
+00:03:07.570 --> 00:03:11.220
+to make that easy. Okay.
+So with subversion, the fi
+
+54
+00:03:11.250 --> 00:03:13.920
+it's all in the file
+system, there's no database like
+
+55
+00:03:13.920 --> 00:03:15.600
+there was in that, there
+is in the, in the
+
+56
+00:03:15.600 --> 00:03:18.420
+source safe world, there was
+just this big binary blob
+
+57
+00:03:18.420 --> 00:03:19.920
+and the source was out,
+there was a version. There's
+
+58
+00:03:19.920 --> 00:03:21.510
+a, it's a file system.
+You can look at. So
+
+59
+00:03:21.510 --> 00:03:24.270
+when I make a branch,
+I'm really doing this on
+
+60
+00:03:24.270 --> 00:03:26.310
+the file system. Correct. But
+I'm doing it on a
+
+61
+00:03:26.310 --> 00:03:29.460
+main centralized server. That's out
+in the cloud somewhere right
+
+62
+00:03:30.030 --> 00:03:32.220
+now, while I can get
+on an airplane with subversion
+
+63
+00:03:32.220 --> 00:03:36.480
+and start editing my code,
+I can't really make local
+
+64
+00:03:36.480 --> 00:03:40.740
+labels. I can't say, well,
+I need unlimited undo because
+
+65
+00:03:40.740 --> 00:03:43.410
+I'm on an airplane. Right?
+So versions out there. So
+
+66
+00:03:43.410 --> 00:03:46.560
+people keep saying that good
+is a distributed system. Where's
+
+67
+00:03:46.560 --> 00:03:50.370
+that where's that, that main
+cloud Machine. So the way
+
+68
+00:03:50.370 --> 00:03:53.850
+it works is is that
+every, every single get checkout
+
+69
+00:03:53.880 --> 00:03:56.460
+is a full repository. So
+you have all version history
+
+70
+00:03:56.820 --> 00:03:59.250
+sitting there in your directory
+and you, you have the,
+
+71
+00:03:59.490 --> 00:04:02.880
+you can make commits to
+it. And when the concept
+
+72
+00:04:02.880 --> 00:04:05.610
+of certain central server is
+different, it's not, it's not
+
+73
+00:04:05.610 --> 00:04:07.920
+something you're making commits to.
+It's, you're, you're pushing the
+
+74
+00:04:07.920 --> 00:04:10.650
+comments that you've already made
+locally. So you make commits
+
+75
+00:04:10.650 --> 00:04:12.480
+locally and then you can
+push that set of commits
+
+76
+00:04:12.480 --> 00:04:15.870
+to a central server. Okay.
+So it's a, it's a
+
+77
+00:04:15.870 --> 00:04:20.010
+kind of a multi-phased commit.
+Exactly. Exactly. Okay. So it's
+
+78
+00:04:20.010 --> 00:04:22.350
+sitting on my local machine.
+I've got, do I have
+
+79
+00:04:22.350 --> 00:04:24.600
+a server on my machine
+or is it really not?
+
+80
+00:04:25.130 --> 00:04:28.440
+It's just interacting with the
+database directly. There, there's a
+
+81
+00:04:28.440 --> 00:04:32.280
+set of files that they
+maintain the revision history. Okay.
+
+82
+00:04:32.280 --> 00:04:34.800
+So as a windows developer,
+I installed get, and I
+
+83
+00:04:34.800 --> 00:04:38.430
+had to get Cygwin, which
+is a Unix subsystem. And
+
+84
+00:04:38.430 --> 00:04:40.740
+I noticed it get, is
+put together with bash and
+
+85
+00:04:40.740 --> 00:04:44.130
+scripts. And it's kind of
+a, this MacGyver, like thing,
+
+86
+00:04:44.620 --> 00:04:47.010
+I assume it's less so
+on, on iOS 10, which
+
+87
+00:04:47.010 --> 00:04:50.420
+you guys are using. Yeah.
+Because It is developed for
+
+88
+00:04:50.430 --> 00:04:54.270
+Unix type environments. It, it's
+pretty, it's pretty, it's really
+
+89
+00:04:54.270 --> 00:04:57.720
+simple trivial to install it
+with Mac ports. So we're
+
+90
+00:04:57.720 --> 00:05:01.260
+able to just do a
+port install, get dash core,
+
+91
+00:05:01.590 --> 00:05:03.870
+and then we're able to
+pass plus SVN. So we
+
+92
+00:05:03.870 --> 00:05:07.260
+get the SPN support built
+in to get, and that's
+
+93
+00:05:07.350 --> 00:05:08.580
+pretty much all we have
+to do to get, get
+
+94
+00:05:08.790 --> 00:05:10.320
+up and running on our
+machines. And then we have
+
+95
+00:05:10.320 --> 00:05:12.900
+the get command available from
+our terminal. So in my
+
+96
+00:05:12.900 --> 00:05:16.290
+system, I got a get
+shell. So basically a custom
+
+97
+00:05:16.320 --> 00:05:19.230
+dos prompt and the windows
+world that looks like it's
+
+98
+00:05:19.230 --> 00:05:21.090
+got all the paths and
+everything. So I can type
+
+99
+00:05:21.090 --> 00:05:23.400
+things like get status and
+get add, and things like
+
+100
+00:05:23.400 --> 00:05:27.000
+that. And I said, create
+repository and a little dot
+
+101
+00:05:27.030 --> 00:05:30.780
+get folder appeared in my,
+in my folder. And it
+
+102
+00:05:30.780 --> 00:05:32.940
+was cool that that's all,
+it was, there was no
+
+103
+00:05:32.940 --> 00:05:35.850
+service that was installed. Nothing
+was running in the background.
+
+104
+00:05:35.880 --> 00:05:37.950
+It just simply worked. I
+assume it's all the same.
+
+105
+00:05:37.950 --> 00:05:40.680
+Whether I'm on Linux OS
+10 or windows, As far
+
+106
+00:05:40.680 --> 00:05:42.510
+as I'm aware, I've, I've
+actually never used it on
+
+107
+00:05:42.510 --> 00:05:45.150
+windows. So I'm not really
+familiar with how windows users
+
+108
+00:05:45.150 --> 00:05:47.580
+are interacting with it. But
+as far as it's concerned,
+
+109
+00:05:47.640 --> 00:05:49.850
+as Annie was saying, it's
+all just that there's a,
+
+110
+00:05:49.850 --> 00:05:53.670
+basically a database that gets
+added to your local directory
+
+111
+00:05:53.670 --> 00:05:56.730
+and then everything is self
+contained in that directory. So,
+
+112
+00:05:57.320 --> 00:05:59.510
+so as, as A, as
+a single developer doing this
+
+113
+00:05:59.510 --> 00:06:02.930
+work, I'm, I've made changes
+to files. I've added files,
+
+114
+00:06:02.930 --> 00:06:07.520
+I've committed. And I've got
+some, some rudimentary visual tools
+
+115
+00:06:07.520 --> 00:06:10.520
+for seeing branching and whatnot,
+but I don't have a
+
+116
+00:06:10.520 --> 00:06:14.540
+centralized location to, to push
+changes up to. So from
+
+117
+00:06:14.540 --> 00:06:16.400
+the point of view of
+a single developer on my
+
+118
+00:06:16.400 --> 00:06:20.000
+local machine, it feels like
+subversion in the sense that
+
+119
+00:06:20.000 --> 00:06:22.910
+I'm making commits and I
+can tag things and I
+
+120
+00:06:22.910 --> 00:06:25.910
+can branch, I've done a
+couple of merges. So, so
+
+121
+00:06:25.910 --> 00:06:29.750
+far it feels like a
+local subversion repository. And I've
+
+122
+00:06:29.750 --> 00:06:31.490
+made those before. A lot
+of people think of subversion
+
+123
+00:06:31.490 --> 00:06:33.780
+as being centralized, but you
+can say file colon whack,
+
+124
+00:06:33.790 --> 00:06:37.010
+whack, and suddenly you're doing
+some version locally. What part
+
+125
+00:06:37.010 --> 00:06:39.800
+of get am I not
+seeing this? This is that
+
+126
+00:06:39.830 --> 00:06:42.880
+notion of a central server
+to push to With getting,
+
+127
+00:06:42.880 --> 00:06:45.430
+you can do that. You
+can, you can still have
+
+128
+00:06:45.430 --> 00:06:47.950
+a central server, like if
+you're worried about backing up
+
+129
+00:06:47.980 --> 00:06:49.930
+things. So it's not, Well,
+I guess I'm saying that
+
+130
+00:06:49.930 --> 00:06:52.690
+when Linux Linus, isn't really
+building the Linux kernel on
+
+131
+00:06:52.690 --> 00:06:54.790
+his laptop and then releasing
+it to the world, surely
+
+132
+00:06:54.790 --> 00:06:57.190
+there's a build server somewhere.
+There must be an authoritative
+
+133
+00:06:57.190 --> 00:07:01.600
+source to say, that's the
+branch. That's the main. Exactly.
+
+134
+00:07:01.600 --> 00:07:05.140
+So, I mean, you can
+have a get repository stored
+
+135
+00:07:05.140 --> 00:07:07.030
+on a server that has
+a central server, but it's,
+
+136
+00:07:07.030 --> 00:07:10.120
+it's just like the repository
+that's on your local laptop.
+
+137
+00:07:10.120 --> 00:07:12.190
+It's special in any way.
+It's not special in any
+
+138
+00:07:12.190 --> 00:07:13.780
+way. And usually there's not
+a working directory with all
+
+139
+00:07:13.780 --> 00:07:16.480
+the funnels in it. It's
+just, it's just the database.
+
+140
+00:07:18.010 --> 00:07:19.390
+I mean, you can do
+that. Yeah. So it's just
+
+141
+00:07:19.390 --> 00:07:22.500
+another peer. So this is
+really Exactly. And so you,
+
+142
+00:07:22.500 --> 00:07:25.030
+you generally have one of
+these central servers, which is
+
+143
+00:07:25.150 --> 00:07:27.190
+authoritative in some way because
+of who's hosting it. So
+
+144
+00:07:27.190 --> 00:07:29.680
+Linux has a central server
+somewhere that you can pull
+
+145
+00:07:29.680 --> 00:07:33.370
+from and, and pull down
+the Colonel tree that, but
+
+146
+00:07:33.370 --> 00:07:35.200
+it's his Colonel tree and
+somebody else can have a
+
+147
+00:07:35.200 --> 00:07:37.870
+good server that has their
+version of the kernel tree
+
+148
+00:07:37.870 --> 00:07:39.610
+and they can make their
+own changes to it. And
+
+149
+00:07:39.610 --> 00:07:42.100
+then the really cool part
+is, is that because these
+
+150
+00:07:42.100 --> 00:07:46.840
+are just two piers, the
+second that somebody else's kernel
+
+151
+00:07:46.840 --> 00:07:51.370
+tree, they can just send
+a Lenise, a pull request,
+
+152
+00:07:51.370 --> 00:07:53.320
+or just say, pull from
+my tree and then let
+
+153
+00:07:53.320 --> 00:07:55.670
+us can say, okay, pulling
+those changes from that source
+
+154
+00:07:55.750 --> 00:07:58.270
+over there, push them up
+to his server. And then
+
+155
+00:07:58.990 --> 00:08:01.450
+all of the changes have
+been, have, have been made
+
+156
+00:08:01.450 --> 00:08:04.060
+it to the, into the
+authoritative server. Okay. So let's,
+
+157
+00:08:04.210 --> 00:08:06.220
+let's try to put this
+more at the hello world
+
+158
+00:08:06.220 --> 00:08:08.710
+stage. Okay. So, so Andy
+has got get in his
+
+159
+00:08:08.710 --> 00:08:11.080
+machine, right? He sets up
+a folder, he says, create
+
+160
+00:08:11.080 --> 00:08:13.840
+repository and we make the
+new hello world application. Correct.
+
+161
+00:08:14.200 --> 00:08:17.170
+You add a bunch of
+files to it. You commit,
+
+162
+00:08:17.290 --> 00:08:20.170
+you say initial check-in right.
+And this exists only on
+
+163
+00:08:20.170 --> 00:08:22.970
+your machine. Correct. And you
+make changes to it and
+
+164
+00:08:22.970 --> 00:08:25.450
+you say, get hyphen, you'll
+get space status. And it
+
+165
+00:08:25.450 --> 00:08:28.030
+says that you've got three
+files that have changed. You
+
+166
+00:08:28.030 --> 00:08:31.390
+commit them and you say,
+second change now, how do
+
+167
+00:08:31.390 --> 00:08:36.040
+I get your stuff? If,
+if I'm working on a
+
+168
+00:08:36.040 --> 00:08:38.140
+server, if I'm, if I'm
+working on like my desktop
+
+169
+00:08:38.140 --> 00:08:40.720
+or something like that. Okay.
+It's perfectly reasonable to have,
+
+170
+00:08:41.290 --> 00:08:43.900
+have you have the ability
+to push to that repository
+
+171
+00:08:44.440 --> 00:08:46.780
+file sharing or via, I
+mean, you can run it
+
+172
+00:08:46.780 --> 00:08:49.630
+on over SSH. So, I
+mean, max have an SSH
+
+173
+00:08:49.630 --> 00:08:52.030
+to rebuilt in. You can
+do that in Linux, of
+
+174
+00:08:52.030 --> 00:08:54.700
+course too. But what would
+make more sense is that
+
+175
+00:08:54.730 --> 00:08:56.610
+if I like some Linux
+server and, but some back
+
+176
+00:08:56.610 --> 00:09:00.060
+closet somewhere, I can make
+a get repository there, push
+
+177
+00:09:00.060 --> 00:09:05.030
+my changes to it. The
+HTTP vs. SSH, Whatever protocol,
+
+178
+00:09:05.320 --> 00:09:07.550
+there's a good protocol. That's
+sort of the common one.
+
+179
+00:09:07.580 --> 00:09:10.520
+It's really, really efficient for
+just pushing the changes that
+
+180
+00:09:10.520 --> 00:09:14.090
+are necessary. Okay. And then
+you can talk to that
+
+181
+00:09:14.090 --> 00:09:17.180
+same repository and pull down
+my changes. You've got it
+
+182
+00:09:17.180 --> 00:09:20.150
+from you directly from this
+one. Exactly. There's no difference
+
+183
+00:09:20.150 --> 00:09:21.830
+between the server. So we
+could say there's a build
+
+184
+00:09:21.830 --> 00:09:23.690
+server. I could get it
+from there. I could get
+
+185
+00:09:23.690 --> 00:09:26.210
+it from you. And, but
+administratively, it makes more sense
+
+186
+00:09:26.210 --> 00:09:28.190
+to have essential server because
+I don't necessarily want to
+
+187
+00:09:28.190 --> 00:09:30.680
+have you have SSH access
+or get access to my
+
+188
+00:09:30.680 --> 00:09:34.290
+machine. Whereas if you have
+the central server, I understand
+
+189
+00:09:34.310 --> 00:09:35.720
+one of the things that's
+fundamental to get is this
+
+190
+00:09:35.720 --> 00:09:38.450
+notion of these unique IDs
+is a unique ID for
+
+191
+00:09:38.450 --> 00:09:40.960
+every check and a globally
+unique. Right. And it, and
+
+192
+00:09:40.960 --> 00:09:43.760
+it's simply the shell one,
+some of the contents of
+
+193
+00:09:43.760 --> 00:09:46.220
+that Checkin, it's a SHA
+one hash of the contents
+
+194
+00:09:46.220 --> 00:09:49.490
+of the check-in. Okay. So
+contents, the same, you get
+
+195
+00:09:49.490 --> 00:09:52.430
+the same. Check-in okay. And
+these are all just nodes
+
+196
+00:09:52.430 --> 00:09:55.640
+in a graph. So you
+have a directed graph and
+
+197
+00:09:56.870 --> 00:09:58.160
+every time you check in,
+you get a new node
+
+198
+00:09:58.160 --> 00:10:00.560
+in the graph, there's a
+new point, a new pointer
+
+199
+00:10:00.560 --> 00:10:04.700
+to the graph. And then
+you have some label that
+
+200
+00:10:04.700 --> 00:10:06.740
+says, this is the head.
+Okay. So we've got a
+
+201
+00:10:07.130 --> 00:10:10.040
+number of distributed systems that
+all have get on them.
+
+202
+00:10:10.040 --> 00:10:12.980
+They'll have local repositories of
+our hello world application. Correct?
+
+203
+00:10:13.370 --> 00:10:15.290
+Every time someone makes a
+change and checks it in,
+
+204
+00:10:15.290 --> 00:10:18.140
+there's a hash of that
+batched up check in that's
+
+205
+00:10:18.140 --> 00:10:20.090
+created and stored in that
+database so that I can
+
+206
+00:10:20.510 --> 00:10:24.020
+point to something anyone's commit
+and say that not only
+
+207
+00:10:24.020 --> 00:10:28.840
+is this a unique and
+identifiable, but I'm also a,
+
+208
+00:10:28.840 --> 00:10:32.360
+I can't go back and
+change history because you said
+
+209
+00:10:32.360 --> 00:10:35.210
+it's cryptographically significant. I assume
+that means that I can't
+
+210
+00:10:35.210 --> 00:10:38.030
+go back three versions and
+lie and make it look
+
+211
+00:10:38.030 --> 00:10:39.890
+like that's what you checked
+in because I've got a
+
+212
+00:10:39.890 --> 00:10:43.700
+little bit of a It's
+interesting in there, you can,
+
+213
+00:10:44.180 --> 00:10:46.130
+in a way you can
+go back and edit, commit
+
+214
+00:10:46.130 --> 00:10:48.290
+messages. You can, you can
+go back in the commit
+
+215
+00:10:48.290 --> 00:10:54.020
+history, but it's so the,
+the sort of main competing
+
+216
+00:10:54.440 --> 00:10:57.470
+revision control system is mercurial
+Is the one that everyone
+
+217
+00:10:57.470 --> 00:10:59.150
+brings up on the windows
+side, because it has a
+
+218
+00:10:59.150 --> 00:11:02.300
+few more things that are
+windows support. Exactly. So mercurial
+
+219
+00:11:02.300 --> 00:11:04.190
+is very similar to get,
+it uses the same sort
+
+220
+00:11:04.190 --> 00:11:10.400
+of directed graph. The database
+is the same. And, but
+
+221
+00:11:10.640 --> 00:11:16.340
+in mercurial, the immutable revision
+history is very, very true.
+
+222
+00:11:16.370 --> 00:11:19.520
+You can be immutable, very
+immutable. Yes. I guess that
+
+223
+00:11:19.520 --> 00:11:21.770
+would be more immutable than
+right. So, so in get,
+
+224
+00:11:21.770 --> 00:11:23.420
+and get, there are ways
+that you can change things.
+
+225
+00:11:23.420 --> 00:11:26.210
+So that, But the intent
+is that one can't modify,
+
+226
+00:11:26.480 --> 00:11:29.030
+right? Yes. Okay. Correct. So,
+so then you've got one
+
+227
+00:11:29.030 --> 00:11:30.710
+and I've got one and
+the build server got one
+
+228
+00:11:30.720 --> 00:11:35.690
+and we don't actually declare
+one branch, the, the head
+
+229
+00:11:35.990 --> 00:11:38.240
+like you would in subversion,
+this notion of the head,
+
+230
+00:11:38.600 --> 00:11:41.660
+it's more of a convention
+of people. Good. Clear Linus
+
+231
+00:11:41.660 --> 00:11:45.080
+is branch as the head
+simply via we trust him.
+
+232
+00:11:45.530 --> 00:11:47.970
+Right. Well, I mean, well,
+there's two different concepts that
+
+233
+00:11:48.010 --> 00:11:51.470
+there's there's branches, which are
+different copies within the same
+
+234
+00:11:52.220 --> 00:11:54.460
+and within the same repository.
+And then you have separate
+
+235
+00:11:54.460 --> 00:11:57.850
+repository. So, okay. There, you're
+talking about like Lenise's repository
+
+236
+00:11:57.850 --> 00:12:00.220
+is the authoritative one and
+that's true. So you have
+
+237
+00:12:00.250 --> 00:12:04.090
+kernel.org, which is the authoritative,
+you know, get repository for
+
+238
+00:12:04.120 --> 00:12:07.570
+the Colonel. Okay. And as
+far as branches go, there's
+
+239
+00:12:07.570 --> 00:12:11.110
+a convention of the master
+branch in get, which allows
+
+240
+00:12:11.110 --> 00:12:14.680
+you to, ah, is that
+just the first one? It
+
+241
+00:12:14.680 --> 00:12:15.850
+is. I mean, it's the,
+it's the one that gets
+
+242
+00:12:15.850 --> 00:12:17.380
+created. It's the one you
+commit to when you just
+
+243
+00:12:17.380 --> 00:12:19.210
+create a branch and it's
+the one you switch back
+
+244
+00:12:19.210 --> 00:12:21.210
+to. So on my windows
+machine, I noticed that I
+
+245
+00:12:21.210 --> 00:12:23.430
+have one called master and
+it was just the initial
+
+246
+00:12:23.430 --> 00:12:25.410
+one. I made a couple
+of other ones. Exactly. So
+
+247
+00:12:25.680 --> 00:12:28.470
+now on my system, I've
+just been saying checkout and
+
+248
+00:12:28.470 --> 00:12:30.750
+then picking a different branch.
+And then the folder, my
+
+249
+00:12:30.750 --> 00:12:32.460
+main folder, I've been doing
+all of my development and
+
+250
+00:12:32.460 --> 00:12:37.320
+simply changes. Exactly exactly. Now
+would I want to make
+
+251
+00:12:37.320 --> 00:12:39.360
+different sandboxes? It's just as
+simply a matter of making
+
+252
+00:12:39.360 --> 00:12:41.340
+a folder and saying checkout,
+and then I've got another
+
+253
+00:12:41.340 --> 00:12:43.950
+repository or is there a
+convention? Do most people keep
+
+254
+00:12:43.950 --> 00:12:48.360
+multiple versions or do they
+just change one folder? Can
+
+255
+00:12:48.360 --> 00:12:50.820
+I move you around? Most
+people just keep one folder
+
+256
+00:12:50.820 --> 00:12:53.430
+and then just sort of
+move, move the working directory
+
+257
+00:12:53.430 --> 00:12:55.860
+around. So you have the
+index and the, and the
+
+258
+00:12:56.150 --> 00:13:00.600
+database behind that. And then
+the, you can just change
+
+259
+00:13:00.600 --> 00:13:04.590
+the working directory to point
+at whichever And the treatments
+
+260
+00:13:04.620 --> 00:13:07.380
+version, we call that an
+SVN switch. Right? And if
+
+261
+00:13:07.380 --> 00:13:09.450
+I remember correctly in my
+days of subversion, which is
+
+262
+00:13:09.450 --> 00:13:11.670
+about, it's been about a
+year now, I got nailed
+
+263
+00:13:11.670 --> 00:13:15.180
+several times since a version
+where I would have committed
+
+264
+00:13:15.210 --> 00:13:17.910
+things that weren't quite committed.
+And so version got confused
+
+265
+00:13:17.910 --> 00:13:21.300
+because I, I had something
+in a non-committed state can,
+
+266
+00:13:21.300 --> 00:13:24.630
+the same things happen and
+get Basically if something bad
+
+267
+00:13:24.630 --> 00:13:27.390
+is gonna happen and won't
+let you do it. So
+
+268
+00:13:27.390 --> 00:13:30.780
+if you have uncommitted changes
+that that will overwrite things,
+
+269
+00:13:30.900 --> 00:13:32.970
+it'll say, no, you can't.
+Cause that was my fear.
+
+270
+00:13:33.000 --> 00:13:35.310
+I'm going to lose this
+uncommitted change. Right? If you
+
+271
+00:13:35.310 --> 00:13:37.890
+have an uncommitted change that
+that will not, will that
+
+272
+00:13:37.890 --> 00:13:41.070
+conflicts with something in the
+other branch or switching to
+
+273
+00:13:41.670 --> 00:13:45.090
+then it'll, it'll complain. It
+won't let you do it.
+
+274
+00:13:45.090 --> 00:13:47.160
+It won't let me check
+out. Right. Okay. So there's
+
+275
+00:13:47.160 --> 00:13:49.650
+a, there's a command that's
+called get stash. That'll basically
+
+276
+00:13:49.650 --> 00:13:51.900
+just store away. All of
+your intermittent changes. It just
+
+277
+00:13:51.990 --> 00:13:53.760
+puts them somewhere. And then
+you can switch to your
+
+278
+00:13:53.760 --> 00:13:56.490
+master branch. Do your changes
+come back to commit, right?
+
+279
+00:13:56.490 --> 00:13:58.380
+It's not a commit. There's
+no, there's no commit message.
+
+280
+00:13:58.380 --> 00:14:00.780
+It's just hiding them away
+for a minute. And then
+
+281
+00:14:00.960 --> 00:14:02.370
+when you come back to
+that branch and you want
+
+282
+00:14:02.370 --> 00:14:04.080
+to pick up where you
+left off, you do get
+
+283
+00:14:04.080 --> 00:14:06.240
+stash apply. And that puts
+all your changes back. This
+
+284
+00:14:06.250 --> 00:14:08.640
+makes me feel, is this
+a distributed source control system
+
+285
+00:14:08.640 --> 00:14:12.290
+or just a very clever,
+clever journaled file system. It
+
+286
+00:14:12.330 --> 00:14:15.790
+actually has a lot of
+similarities to file systems. Linux
+
+287
+00:14:15.790 --> 00:14:18.450
+us of course, is a
+kernel developer. So he, he
+
+288
+00:14:18.450 --> 00:14:21.090
+used a lot of the
+semantics of file systems to
+
+289
+00:14:21.470 --> 00:14:26.040
+develop, develop the database. Maybe
+it's just me. But one
+
+290
+00:14:26.040 --> 00:14:28.410
+of the things that I'm
+finding myself doing is forgetting
+
+291
+00:14:28.410 --> 00:14:31.140
+to add files in, I'll
+make a new file and
+
+292
+00:14:31.140 --> 00:14:32.700
+I'll go editing and editing
+and editing, and then I'll
+
+293
+00:14:32.700 --> 00:14:34.590
+realize as it comes time
+to commit, then I never
+
+294
+00:14:34.590 --> 00:14:36.870
+added it. Is this just
+something that I have to
+
+295
+00:14:36.870 --> 00:14:39.930
+learn? Yeah. I mean, it
+tells you if you do
+
+296
+00:14:39.930 --> 00:14:42.120
+get status, it says these
+files around tracked by get.
+
+297
+00:14:42.130 --> 00:14:44.910
+So I don't know. I
+run into the same thing
+
+298
+00:14:44.910 --> 00:14:46.710
+on subversion. I forgot to
+add my files the same
+
+299
+00:14:46.710 --> 00:14:48.240
+thing. So The reason I
+ask is I'm trying to
+
+300
+00:14:48.240 --> 00:14:50.040
+understand. I think that one
+of the things that cool,
+
+301
+00:14:50.050 --> 00:14:52.190
+a Microsoft guy said, who
+is the chief architect of
+
+302
+00:14:52.190 --> 00:14:54.230
+visual studio, said that he
+wants to design a product
+
+303
+00:14:54.230 --> 00:14:56.900
+that lets you fall into
+the pit of success. So
+
+304
+00:14:56.900 --> 00:14:59.150
+even if you screw up
+and you fall, you're landing
+
+305
+00:14:59.150 --> 00:15:01.820
+in a good place. And
+I like products that are
+
+306
+00:15:01.820 --> 00:15:03.620
+not gonna let me screw
+up. Basically, I don't want
+
+307
+00:15:03.620 --> 00:15:05.990
+too much rope. I don't
+want a loaded gun, you
+
+308
+00:15:05.990 --> 00:15:08.200
+know? Yeah. It does give
+you a fair amount of
+
+309
+00:15:08.200 --> 00:15:11.020
+rope, but it's getting better
+all the time. It's a
+
+310
+00:15:11.020 --> 00:15:12.670
+lot easier to use. Now.
+It's a lot easier to
+
+311
+00:15:12.850 --> 00:15:14.680
+stab yourself in the toe
+now than it was a
+
+312
+00:15:14.680 --> 00:15:17.170
+year ago or two years
+ago. So what's the relationship
+
+313
+00:15:17.170 --> 00:15:21.910
+between your existing subversion repositories
+and this new getrepository repository?
+
+314
+00:15:21.910 --> 00:15:25.450
+Because I understand you didn't
+just switch over. No, we
+
+315
+00:15:25.450 --> 00:15:29.440
+still have our subversion repositories.
+And basically we use them.
+
+316
+00:15:30.070 --> 00:15:31.600
+We're using it as though
+it's like a rapid at
+
+317
+00:15:31.600 --> 00:15:36.880
+the moment around our subversion
+repositories, but we get part
+
+318
+00:15:36.880 --> 00:15:39.940
+of a power of get,
+you know, all the benefits
+
+319
+00:15:39.940 --> 00:15:42.790
+of being able to work
+offline and create local branches
+
+320
+00:15:42.790 --> 00:15:46.060
+and so on what we're
+still connected to our subversion
+
+321
+00:15:46.060 --> 00:15:49.150
+repositories. Interesting. So how many
+times are you checking in
+
+322
+00:15:49.150 --> 00:15:50.860
+on your get repository, which
+I would think we would
+
+323
+00:15:50.860 --> 00:15:53.530
+call a local commit where
+you're basically using the get
+
+324
+00:15:53.530 --> 00:15:58.300
+repository repository as an unlimited
+local personal undue system with
+
+325
+00:15:58.300 --> 00:16:01.390
+commits and notes, and then
+subversion, which are you checking
+
+326
+00:16:01.390 --> 00:16:05.320
+in once a day, once
+a week, We believe that
+
+327
+00:16:05.320 --> 00:16:07.090
+we do it is, I
+mean, you can build up
+
+328
+00:16:07.090 --> 00:16:11.400
+commits for open day and
+obviously we're doing constant backups
+
+329
+00:16:11.650 --> 00:16:16.150
+throughout the day, but we
+also try to encourage people
+
+330
+00:16:16.150 --> 00:16:20.590
+when possible to check back
+into the main repository, Getting
+
+331
+00:16:20.590 --> 00:16:22.690
+a sense of the, the,
+the, the tempo. Cause I
+
+332
+00:16:22.690 --> 00:16:24.280
+think that one of the
+things that a lot of
+
+333
+00:16:24.280 --> 00:16:26.800
+the agile and test driven
+development, people that I talked
+
+334
+00:16:26.800 --> 00:16:29.140
+to like about get is
+the idea that I might
+
+335
+00:16:29.140 --> 00:16:31.450
+check in after every successful
+test. I mean, someone might
+
+336
+00:16:31.450 --> 00:16:35.140
+literally check in every, you
+know, 10, 15 minutes while
+
+337
+00:16:35.140 --> 00:16:38.500
+in subversion, that might be
+an expensive operation. And I'm
+
+338
+00:16:38.500 --> 00:16:40.810
+wondering if this is interesting
+that someone might want to
+
+339
+00:16:40.810 --> 00:16:43.540
+not go all, get all
+the time and might want
+
+340
+00:16:43.540 --> 00:16:46.060
+to just use it locally
+and then stick with whatever
+
+341
+00:16:46.060 --> 00:16:49.210
+their corporate mandated, whether it
+be TFS on the Microsoft
+
+342
+00:16:49.210 --> 00:16:52.660
+side or subversion or whatever
+as their centralized location and
+
+343
+00:16:52.660 --> 00:16:57.910
+build server. We'll just go
+back to a little bit
+
+344
+00:16:57.910 --> 00:17:01.690
+about the tempo. We all
+kind of work in different
+
+345
+00:17:01.690 --> 00:17:03.710
+ways. And I think at
+the moment, if you look
+
+346
+00:17:04.210 --> 00:17:06.370
+what we've been doing, Andy
+tends to keep hold of
+
+347
+00:17:06.370 --> 00:17:10.930
+things a little longer. Well,
+some of us we check
+
+348
+00:17:10.930 --> 00:17:13.780
+in more often. It really
+depends a lot on how
+
+349
+00:17:13.780 --> 00:17:16.480
+many people are working on
+something and how closely related
+
+350
+00:17:16.480 --> 00:17:20.560
+it is. Obviously if you've
+got a few people who
+
+351
+00:17:20.560 --> 00:17:23.050
+are all waiting for something
+to wear, you know, be
+
+352
+00:17:23.050 --> 00:17:25.030
+checked in, then we'll encourage
+people to do that more
+
+353
+00:17:25.030 --> 00:17:28.570
+often. So you're using get
+locally and personally, or do
+
+354
+00:17:28.570 --> 00:17:31.360
+you get information to Andy
+by pushing it up to
+
+355
+00:17:31.360 --> 00:17:33.220
+subversion and then he gets
+it down or do you
+
+356
+00:17:33.220 --> 00:17:36.670
+go sideways? Yeah. So interesting.
+So even though get as
+
+357
+00:17:36.670 --> 00:17:39.460
+a distributed versioning system, you're
+not quite at the point
+
+358
+00:17:39.460 --> 00:17:41.710
+where you're going peer to
+peer, you're still using, it's
+
+359
+00:17:41.710 --> 00:17:44.110
+a version as that hub.
+This is analyst. One of
+
+360
+00:17:44.110 --> 00:17:47.320
+the great things about we
+found actually is that it
+
+361
+00:17:47.320 --> 00:17:50.700
+allows us to, you know,
+play Around with it, get
+
+362
+00:17:50.700 --> 00:17:55.500
+used to all the different
+features of our office, but
+
+363
+00:17:55.500 --> 00:17:57.960
+we don't have to jump
+right in. Yeah. So it's
+
+364
+00:17:57.960 --> 00:17:59.760
+a good little stepping stone
+on the way to get
+
+365
+00:17:59.760 --> 00:18:02.130
+in there. We do have
+plans to move to it
+
+366
+00:18:02.130 --> 00:18:06.960
+eventually because everybody enjoys using
+it. But yeah, this was
+
+367
+00:18:06.960 --> 00:18:10.740
+a great little stepping stone.
+What do you think Robbie
+
+368
+00:18:10.890 --> 00:18:13.290
+asked one off on that
+a little bit more. One
+
+369
+00:18:13.290 --> 00:18:15.780
+of the other constraints that
+we have is that we,
+
+370
+00:18:15.840 --> 00:18:17.700
+some of the clients that
+we work with have their
+
+371
+00:18:17.700 --> 00:18:22.200
+own subversion repositories. So we'd
+actually, can't dictate what the,
+
+372
+00:18:22.680 --> 00:18:24.510
+you know, what we're actually
+going to use for the
+
+373
+00:18:24.510 --> 00:18:26.580
+whole project and they'll have
+their own developers working on
+
+374
+00:18:26.580 --> 00:18:28.800
+the project as well. So
+we're able to start connecting
+
+375
+00:18:28.800 --> 00:18:35.340
+to their existing, their existing
+subversion repositories and with their
+
+376
+00:18:35.340 --> 00:18:37.200
+get. And we're actually able
+to keep balling in the
+
+377
+00:18:37.200 --> 00:18:41.640
+same, get processed and then
+keep pushing to their subversion
+
+378
+00:18:41.640 --> 00:18:44.520
+repository. And that's been working
+really well for us as
+
+379
+00:18:44.520 --> 00:18:47.420
+well. So Be really useful
+for a consultant. A roaming
+
+380
+00:18:47.420 --> 00:18:49.370
+consultant could keep get stuff
+locally, but he might be
+
+381
+00:18:49.370 --> 00:18:52.280
+doing CVS one place and
+a zip files and another
+
+382
+00:18:52.280 --> 00:18:54.620
+and something else somewhere else.
+So in a second here,
+
+383
+00:18:54.620 --> 00:18:56.390
+I want to ask you
+about get as it relates
+
+384
+00:18:56.390 --> 00:18:58.640
+to SVN. Cause I understand
+that there's some SVN tools
+
+385
+00:18:58.640 --> 00:18:59.990
+that are built in to
+get, but real quickly, we
+
+386
+00:18:59.990 --> 00:19:02.210
+just need to pay the
+bills and thank our sponsors.
+
+387
+00:19:03.890 --> 00:19:06.050
+Hi, it's Scott here from
+another place in time. I
+
+388
+00:19:06.050 --> 00:19:08.600
+hope you're enjoying the show
+so far. I apologize for
+
+389
+00:19:08.600 --> 00:19:10.070
+interrupting it, but I wanted
+to let you know that
+
+390
+00:19:10.160 --> 00:19:13.280
+assembling a podcast like this
+every week, isn't free. Certainly
+
+391
+00:19:13.280 --> 00:19:15.380
+the bandwidth bill crushes us
+every month. So I want
+
+392
+00:19:15.380 --> 00:19:17.060
+to let you know that
+this show is sponsored by
+
+393
+00:19:17.060 --> 00:19:19.580
+Tellerik. They make the show
+possible and it makes pretty
+
+394
+00:19:19.580 --> 00:19:22.280
+cool products as well. For
+example, if you're trying to
+
+395
+00:19:22.280 --> 00:19:25.220
+build a web 2.0 Ajax
+application, trying to use the
+
+396
+00:19:25.220 --> 00:19:28.250
+web 1.0 components, it's kind
+of difficult. You've got to
+
+397
+00:19:28.250 --> 00:19:29.600
+get the next gen stuff.
+If you want to build
+
+398
+00:19:29.600 --> 00:19:31.970
+the next gen websites. And
+that's exactly what the folks
+
+399
+00:19:31.970 --> 00:19:34.490
+at Telerx have got and
+their new upcoming product, which
+
+400
+00:19:34.490 --> 00:19:37.940
+is code named rad controls.
+Prometheus's big pack, a web
+
+401
+00:19:37.940 --> 00:19:40.970
+controls built entirely on top
+of the Microsoft ASP net
+
+402
+00:19:41.000 --> 00:19:43.400
+Ajax stuff that you already
+understand. It's going to give
+
+403
+00:19:43.400 --> 00:19:45.710
+you a lot of performance
+interactivity on your next project.
+
+404
+00:19:46.100 --> 00:19:48.890
+They mirror the ASP net
+Ajax API. So the development's
+
+405
+00:19:48.890 --> 00:19:52.820
+really straightforward client scripture's shared
+loading time is pretty fast.
+
+406
+00:19:53.330 --> 00:19:55.060
+You set a couple of
+properties. You can even bind
+
+407
+00:19:55.070 --> 00:19:58.310
+a web services for really
+efficient operation. The new rad
+
+408
+00:19:58.310 --> 00:20:00.560
+editor for ASB at Ajax
+loads up to four times
+
+409
+00:20:00.560 --> 00:20:03.560
+faster than before. And the
+rad grid will do thousands
+
+410
+00:20:03.560 --> 00:20:06.290
+of records and milliseconds. But
+of course it's, it's better
+
+411
+00:20:06.290 --> 00:20:08.210
+to try these things for
+yourself. So you can visit
+
+412
+00:20:08.240 --> 00:20:11.060
+<inaudible> dot com slash ASP,
+net Ajax, and download a
+
+413
+00:20:11.060 --> 00:20:13.790
+trial. Thanks a lot for
+listening and we'll get right
+
+414
+00:20:13.790 --> 00:20:17.720
+back to the show. All
+right. So a moment ago,
+
+415
+00:20:17.720 --> 00:20:20.240
+I wanted to ask you
+Robbie, about subversion as it
+
+416
+00:20:20.240 --> 00:20:21.770
+relates to get. Cause you
+were saying that there were
+
+417
+00:20:21.780 --> 00:20:24.950
+some tools that get comes
+with where it get itself
+
+418
+00:20:24.980 --> 00:20:28.790
+knows about subversion. Yeah. When
+you installed get, depending on
+
+419
+00:20:28.790 --> 00:20:32.090
+how you install it on,
+on, on our max, we're
+
+420
+00:20:32.090 --> 00:20:35.060
+able to install the SBN
+extensions for get, which is
+
+421
+00:20:35.060 --> 00:20:38.450
+something that comes with get
+if you install it. So
+
+422
+00:20:38.450 --> 00:20:41.060
+that allows you to automatically
+connect to us version repository.
+
+423
+00:20:41.060 --> 00:20:42.770
+So it's trying to encourage
+people to move away from
+
+424
+00:20:42.770 --> 00:20:45.350
+subversion. That's something that the
+get project actually decided to
+
+425
+00:20:45.350 --> 00:20:48.490
+do. So that's not something
+we have to install from
+
+426
+00:20:48.490 --> 00:20:51.210
+some other third party that's
+actually coming from. What does
+
+427
+00:20:51.210 --> 00:20:53.070
+that give you connect to
+a subversion repository in what
+
+428
+00:20:53.070 --> 00:20:56.370
+respect in the sense that
+Andy saying use get locally
+
+429
+00:20:56.370 --> 00:20:59.370
+and certainly kind of a
+migration path. Yeah. So basically
+
+430
+00:20:59.370 --> 00:21:01.410
+it ends up providing you
+a, another command called get
+
+431
+00:21:01.410 --> 00:21:04.830
+SVN, get dashes fan or
+get space SPN, depending on
+
+432
+00:21:05.220 --> 00:21:09.720
+your platform, but that that's
+allowing you to basically check
+
+433
+00:21:09.720 --> 00:21:12.450
+out from a subversion repository,
+commit back to as a
+
+434
+00:21:12.450 --> 00:21:16.530
+version repository and do many
+of the subversion tasks that
+
+435
+00:21:16.530 --> 00:21:18.450
+you would normally do if
+you're using the SVN command.
+
+436
+00:21:19.230 --> 00:21:21.960
+So we're able to do
+that through get. Hmm. And
+
+437
+00:21:21.960 --> 00:21:23.460
+do you think that that's
+something that, that, that you'll
+
+438
+00:21:23.460 --> 00:21:25.230
+stick with or a year
+is your goal to get
+
+439
+00:21:25.230 --> 00:21:28.860
+completely away from SVN? It
+would be nice to move
+
+440
+00:21:28.860 --> 00:21:32.100
+completely away from subversion, but
+I mean, the realities are
+
+441
+00:21:32.100 --> 00:21:34.710
+that some of our projects,
+we are working with other
+
+442
+00:21:34.710 --> 00:21:37.290
+clients that have some version
+already in place. So we're,
+
+443
+00:21:37.560 --> 00:21:39.600
+we're going to have to
+work with those, those customers,
+
+444
+00:21:39.600 --> 00:21:42.270
+but for our own projects
+we're using get, I have
+
+445
+00:21:42.270 --> 00:21:43.980
+a couple of open source
+projects. And so does any
+
+446
+00:21:43.980 --> 00:21:46.470
+that are using get when
+we were using them, get
+
+447
+00:21:46.470 --> 00:21:49.770
+hub for that, which is
+a new gets a hosting
+
+448
+00:21:50.310 --> 00:21:53.550
+service, which is also where
+Ruby on rails is moving
+
+449
+00:21:53.550 --> 00:21:55.530
+towards as well. Right? Ruby
+on rails is going to
+
+450
+00:21:55.530 --> 00:21:57.690
+be moving right now, completely
+from subversion over to get
+
+451
+00:21:57.690 --> 00:22:01.380
+and they're hosting it github.com.
+Now, one of the things
+
+452
+00:22:01.560 --> 00:22:04.920
+that I thought was interesting
+about it was that subversion
+
+453
+00:22:05.490 --> 00:22:08.550
+touts itself as only storing
+deltas, like that's a good
+
+454
+00:22:08.550 --> 00:22:10.890
+thing. We don't store the
+full file. You know, we,
+
+455
+00:22:10.890 --> 00:22:13.800
+we store these deltas of
+files. Well, on, in get,
+
+456
+00:22:14.130 --> 00:22:16.650
+they're saying, well, this space
+is cheap. Plus I don't
+
+457
+00:22:16.650 --> 00:22:20.280
+trust anyone. Therefore not only
+do I not want to
+
+458
+00:22:20.280 --> 00:22:22.350
+have a centralized server that
+could be corrupted, but I
+
+459
+00:22:22.350 --> 00:22:24.660
+don't even want to let
+there be diffs of files.
+
+460
+00:22:24.870 --> 00:22:26.280
+I want to have the
+full file on all the
+
+461
+00:22:26.280 --> 00:22:30.390
+time. What's really interesting is
+that the get repository is
+
+462
+00:22:30.390 --> 00:22:32.700
+almost always smaller than this
+version, the equivalent of version
+
+463
+00:22:32.700 --> 00:22:35.520
+checkout. So there's a certain
+irony in there that I,
+
+464
+00:22:35.520 --> 00:22:38.100
+you know, I have some
+version checkouts that without the
+
+465
+00:22:38.100 --> 00:22:40.080
+full riches and history are
+still one and a half
+
+466
+00:22:40.080 --> 00:22:42.270
+times as big as the
+get checked out with the
+
+467
+00:22:42.270 --> 00:22:44.850
+full version history, I don't
+really know the details of
+
+468
+00:22:44.850 --> 00:22:48.330
+how, of how the database
+is stored, but Linux is
+
+469
+00:22:48.330 --> 00:22:51.180
+obviously a really smart guy.
+He, he, he built it.
+
+470
+00:22:51.270 --> 00:22:54.060
+I started to realize that
+he built it based on
+
+471
+00:22:54.090 --> 00:22:57.720
+file system techniques, like, like
+I said earlier. So he
+
+472
+00:22:57.720 --> 00:23:00.180
+does some cool things that
+you can repack the repository
+
+473
+00:23:00.180 --> 00:23:02.670
+and make it smaller. You
+reduce the file, the number
+
+474
+00:23:02.670 --> 00:23:04.980
+of files. So you just
+have one big file that
+
+475
+00:23:04.980 --> 00:23:07.350
+has all the, all the
+little packs in it. And
+
+476
+00:23:08.010 --> 00:23:10.170
+so you don't have the
+huge number of files. You
+
+477
+00:23:10.170 --> 00:23:13.530
+also just have the one
+dot get fi directory rather
+
+478
+00:23:13.530 --> 00:23:17.130
+than dots. SVN directory is
+all over your source control.
+
+479
+00:23:17.520 --> 00:23:19.530
+Oh, interesting. So I said,
+I haven't got a couple
+
+480
+00:23:19.530 --> 00:23:21.090
+of deep, so you're saying
+that they're at the root
+
+481
+00:23:21.090 --> 00:23:23.940
+of your repository. There's a
+dot yet folder. That would
+
+482
+00:23:23.940 --> 00:23:26.700
+be invisible. It's kind of
+the kid is here. Thing
+
+483
+00:23:26.700 --> 00:23:28.620
+hidden directory. Well, it's a
+version. You get these dot
+
+484
+00:23:28.620 --> 00:23:32.700
+SVN files kind of littered.
+Exactly. So you just have
+
+485
+00:23:32.700 --> 00:23:35.970
+that one get, get directory.
+What's interesting is that to
+
+486
+00:23:35.970 --> 00:23:38.580
+turn a, get repository into
+just a checkout line or
+
+487
+00:23:38.580 --> 00:23:41.160
+an export and subversion speak,
+all you have to do
+
+488
+00:23:41.160 --> 00:23:43.320
+is remove that dot get
+directory. And then it's just,
+
+489
+00:23:43.630 --> 00:23:46.100
+it's just your checkout. So
+there's no, there's, there's no
+
+490
+00:23:46.100 --> 00:23:49.190
+concept of, of get export
+because you just get checked
+
+491
+00:23:49.190 --> 00:23:52.060
+out or get clone in
+the roof. That folder. Now,
+
+492
+00:23:52.090 --> 00:23:53.950
+one of the things that
+was really interesting about subversion
+
+493
+00:23:53.950 --> 00:23:56.020
+that took me a while
+was that, and it was
+
+494
+00:23:56.020 --> 00:23:58.510
+an improvement over, over CVS,
+which is where I was
+
+495
+00:23:58.510 --> 00:24:02.590
+originally was that I could
+rename a file and not
+
+496
+00:24:02.590 --> 00:24:07.300
+lose my history. And how
+does that work? Get tracks
+
+497
+00:24:07.300 --> 00:24:09.460
+the content. So it doesn't
+actually track the files directly,
+
+498
+00:24:09.490 --> 00:24:12.640
+but it, if you, if
+you copy a file, then
+
+499
+00:24:12.700 --> 00:24:14.560
+the shawl on some of
+that files the same or
+
+500
+00:24:14.950 --> 00:24:19.210
+mostly the same. So even
+The shot one hash it's
+
+501
+00:24:19.210 --> 00:24:20.890
+either the same or it's
+not, there's no, mostly at
+
+502
+00:24:20.890 --> 00:24:23.350
+the site, I don't know
+the details of how it,
+
+503
+00:24:23.380 --> 00:24:25.150
+how it keeps track of
+what's the same or not,
+
+504
+00:24:25.150 --> 00:24:26.650
+but it does keep track
+of partial chain, But in
+
+505
+00:24:26.650 --> 00:24:28.360
+your daily life, as you're
+using it and you were
+
+506
+00:24:28.360 --> 00:24:30.640
+going to rename something, right.
+So I'm still follow the
+
+507
+00:24:30.640 --> 00:24:34.120
+history back. I get, you
+know, I'm I move the
+
+508
+00:24:34.120 --> 00:24:35.800
+file, I get delete the
+old file and get out
+
+509
+00:24:35.800 --> 00:24:37.060
+of the new file. And
+then when I check in,
+
+510
+00:24:37.060 --> 00:24:41.410
+it says, copy or move.
+It's just that it's a
+
+511
+00:24:41.410 --> 00:24:44.320
+delete in an ad. Right.
+But because the hash is
+
+512
+00:24:44.320 --> 00:24:47.020
+the same, But it detects
+the change. So you don't
+
+513
+00:24:47.020 --> 00:24:49.060
+have, there is no, well,
+I think they're probably doesn't
+
+514
+00:24:49.060 --> 00:24:50.440
+get moved, but you don't
+have to use it. It's
+
+515
+00:24:50.680 --> 00:24:51.940
+it's still all the time,
+which I'm sure you can
+
+516
+00:24:51.940 --> 00:24:54.400
+do it in one. Exactly.
+And it happens all the
+
+517
+00:24:54.400 --> 00:24:58.480
+time where I I'll I'll
+check in something I'll duplicate
+
+518
+00:24:58.480 --> 00:25:00.190
+some file. And then I
+won't even like, copy it
+
+519
+00:25:00.190 --> 00:25:04.120
+directly. Like, but just in
+my text editor I'll copy.
+
+520
+00:25:04.150 --> 00:25:06.310
+Most of the contents, this
+happens a lot in HTML
+
+521
+00:25:06.310 --> 00:25:08.590
+files change a few things.
+And then when I do
+
+522
+00:25:08.650 --> 00:25:12.580
+get check-in, it's still, it
+says copy rather than, than
+
+523
+00:25:12.580 --> 00:25:16.330
+a new file. So everyone
+picks on subversion when it
+
+524
+00:25:16.330 --> 00:25:18.490
+comes to mergers and branches.
+They're saying that, you know,
+
+525
+00:25:18.670 --> 00:25:22.360
+branches are pretty straightforward once
+you understand how a subversions
+
+526
+00:25:23.230 --> 00:25:26.170
+URL addressing scheme works. But
+in, in get, I just
+
+527
+00:25:26.170 --> 00:25:28.180
+gave it a name. I
+think I called it, I'm
+
+528
+00:25:28.180 --> 00:25:30.580
+trying something. And then I
+went off and I fooled
+
+529
+00:25:30.580 --> 00:25:32.560
+around with it. I committed.
+And then I said, I
+
+530
+00:25:32.560 --> 00:25:35.920
+want to merge. I'm trying
+something into master. Right. I
+
+531
+00:25:35.920 --> 00:25:37.990
+did. There were a couple
+of things work. There was
+
+532
+00:25:37.990 --> 00:25:40.240
+one conflict where I changed
+the same line in two
+
+533
+00:25:40.240 --> 00:25:43.060
+places. Right. You have to
+resolve that conflict and then
+
+534
+00:25:43.060 --> 00:25:46.230
+I'm back in business. It
+was pretty straight. Yeah. It
+
+535
+00:25:46.230 --> 00:25:48.820
+works really well. I find
+that there usually a very
+
+536
+00:25:48.820 --> 00:25:52.570
+small number of conflicts, unless
+there's actually been conflicts. I
+
+537
+00:25:52.570 --> 00:25:55.600
+mean, tends to be the,
+you see conflicts and get
+
+538
+00:25:55.600 --> 00:25:57.760
+when some people have been
+changing the same part of
+
+539
+00:25:57.760 --> 00:26:00.850
+the same file, which obviously
+it can't figure out. Sure.
+
+540
+00:26:01.310 --> 00:26:03.820
+It's interesting. It's starting to
+make it difficult. I'm trying
+
+541
+00:26:03.820 --> 00:26:05.800
+to get my brain around
+this. And one of the
+
+542
+00:26:05.800 --> 00:26:07.810
+things that really made me
+realize that it was different
+
+543
+00:26:07.810 --> 00:26:09.730
+was that I went over
+to get hub. One of
+
+544
+00:26:09.730 --> 00:26:12.670
+the options was most forked,
+right? What did you see
+
+545
+00:26:12.670 --> 00:26:15.790
+most popular? Right. But most
+fork meant that, you know,
+
+546
+00:26:15.790 --> 00:26:17.740
+more and more people are
+forking. And I work on
+
+547
+00:26:17.740 --> 00:26:19.450
+a number of open source
+projects and one of them
+
+548
+00:26:19.450 --> 00:26:23.080
+is called DAS blog. It's
+a blogging system for.net and
+
+549
+00:26:23.080 --> 00:26:26.230
+it's been forked once and
+it freaked us out. And
+
+550
+00:26:26.230 --> 00:26:28.990
+I went up on GitHub
+and one project is forklift
+
+551
+00:26:28.990 --> 00:26:31.180
+73 times. Right. And if
+I understand what does that
+
+552
+00:26:31.180 --> 00:26:34.450
+mean? So forking is really
+just other people who've made
+
+553
+00:26:34.450 --> 00:26:37.990
+their own repositories, Right? So
+that's just like, it's the
+
+554
+00:26:37.990 --> 00:26:41.020
+same as if I cloned
+it to my laptop or
+
+555
+00:26:41.020 --> 00:26:43.230
+whatever, but it's just both
+on get hub. So I
+
+556
+00:26:43.230 --> 00:26:45.540
+just have my own repository,
+which has the same contents.
+
+557
+00:26:45.780 --> 00:26:47.340
+But the thing is, is
+that I might have, might
+
+558
+00:26:47.340 --> 00:26:50.700
+not have commit rights to
+your repository, but I have
+
+559
+00:26:50.700 --> 00:26:53.700
+commitments rights to my repository.
+So rather than checking out
+
+560
+00:26:53.700 --> 00:26:56.520
+your code, formatting patches, emailing
+you patches, and then you
+
+561
+00:26:56.520 --> 00:26:58.650
+apply them. Them, all I
+do is I fork your
+
+562
+00:26:58.650 --> 00:27:01.500
+code. I make my changes.
+I add a new feature.
+
+563
+00:27:01.830 --> 00:27:03.930
+I push my changes back
+up to get hub. And
+
+564
+00:27:03.930 --> 00:27:05.820
+then I sent you a
+pull request. And then you,
+
+565
+00:27:05.820 --> 00:27:08.160
+if you like my changes,
+just pull from my GitHub
+
+566
+00:27:08.160 --> 00:27:12.210
+repository. I don't, there's no
+involvement from me. And it
+
+567
+00:27:12.210 --> 00:27:14.000
+makes it a lot easier
+to Let's back up and
+
+568
+00:27:14.000 --> 00:27:16.400
+do that slower. Cause right
+now, if someone wants to
+
+569
+00:27:16.400 --> 00:27:19.490
+make a patch to my
+subversion stuff in dusk blog,
+
+570
+00:27:19.730 --> 00:27:22.010
+right, they do it, they
+do a checkout, they can't
+
+571
+00:27:22.010 --> 00:27:24.710
+commit back. Right. They make
+a patch and they mail
+
+572
+00:27:24.710 --> 00:27:27.230
+me the patch. I look
+at it and I apply
+
+573
+00:27:27.230 --> 00:27:29.990
+it. And then I check
+in exactly in your instance,
+
+574
+00:27:29.990 --> 00:27:32.660
+they've made a clone and
+they've got the complete repository
+
+575
+00:27:32.660 --> 00:27:34.700
+and their own machine. They
+never have to talk to
+
+576
+00:27:34.700 --> 00:27:37.340
+you again, Not just on
+their own machine. They have
+
+577
+00:27:37.490 --> 00:27:41.120
+their complete repository on GitHub
+as well. Oh. So when
+
+578
+00:27:41.120 --> 00:27:43.550
+you sent the servers doing
+the same thing, right. Fork,
+
+579
+00:27:43.550 --> 00:27:47.210
+you, you have, I would
+then have my own full
+
+580
+00:27:47.240 --> 00:27:50.480
+repository of, of DAS blog
+in this case. Okay. On
+
+581
+00:27:50.480 --> 00:27:53.420
+GitHub, Effective get hub in
+the way they've decided to
+
+582
+00:27:53.420 --> 00:27:57.950
+do things. Exactly. Exactly. Okay.
+I mean, it's, as far
+
+583
+00:27:57.950 --> 00:27:59.570
+as anyone's concerned, I couldn't
+do this on my own
+
+584
+00:27:59.570 --> 00:28:01.370
+server. Right. And then I
+could send you a pull
+
+585
+00:28:01.370 --> 00:28:04.370
+request from that server Pull
+request. Is this something formal
+
+586
+00:28:04.370 --> 00:28:06.260
+that has a protocol or
+is this just a convention?
+
+587
+00:28:06.380 --> 00:28:08.810
+It doesn't in get hub,
+get hub has a, has
+
+588
+00:28:08.810 --> 00:28:10.280
+a system. So I can
+click a button that says
+
+589
+00:28:10.280 --> 00:28:12.470
+pull request. Then it'll send
+you an email saying poll,
+
+590
+00:28:12.920 --> 00:28:15.230
+but it's not actually a
+get some hands. So when
+
+591
+00:28:15.230 --> 00:28:17.180
+I do a fork on
+this, on this get hub
+
+592
+00:28:17.270 --> 00:28:21.080
+shared hosting system, I'm getting
+my own private master for
+
+593
+00:28:21.080 --> 00:28:22.790
+lack of a better word,
+because I can then commit
+
+594
+00:28:22.790 --> 00:28:25.820
+to I won't Sully yours.
+And then I go and
+
+595
+00:28:25.820 --> 00:28:29.570
+say, Hey dude, look over
+here. This is cool. Exactly.
+
+596
+00:28:29.750 --> 00:28:32.090
+This is interesting because this
+makes sense. This would be
+
+597
+00:28:32.090 --> 00:28:35.180
+exactly how Linux would work.
+Exactly. I'm going to say
+
+598
+00:28:35.180 --> 00:28:39.170
+his name a different way.
+Each time. I say he
+
+599
+00:28:39.170 --> 00:28:41.660
+wants, he has a trusted
+network of people that he,
+
+600
+00:28:41.740 --> 00:28:45.590
+he believes are good. And
+then though his lieutenants have
+
+601
+00:28:45.590 --> 00:28:48.200
+trusted networks of people. And
+so does that, how it's
+
+602
+00:28:48.200 --> 00:28:51.290
+working amongst the nine of
+you at your company. We're
+
+603
+00:28:51.290 --> 00:28:53.240
+not quite there yet. There's
+still some of us that
+
+604
+00:28:53.240 --> 00:28:55.670
+are using subversion. We have
+a couple of designers who
+
+605
+00:28:55.730 --> 00:28:57.970
+aren't as tech savvy, and
+don't want it on the
+
+606
+00:28:57.980 --> 00:28:59.650
+command line. We're not quite
+on the bleeding, you know,
+
+607
+00:28:59.690 --> 00:29:01.640
+they're not on the bleeding
+edge. They they're, they're more
+
+608
+00:29:01.640 --> 00:29:04.370
+comfortable with the command line
+than many, but we're getting
+
+609
+00:29:04.370 --> 00:29:06.290
+there. So, I mean, but
+that's, that's sort of the
+
+610
+00:29:06.580 --> 00:29:09.410
+goal. I mean, that would
+be awesome. But in our
+
+611
+00:29:09.410 --> 00:29:11.750
+small company here, we're all
+gonna have commit rights to
+
+612
+00:29:11.750 --> 00:29:14.330
+the, to the central server.
+So having, having each our
+
+613
+00:29:14.330 --> 00:29:19.580
+own remote repository isn't necessarily
+going to be the key.
+
+614
+00:29:20.780 --> 00:29:22.400
+Now are you guys are
+doing everything at the command
+
+615
+00:29:22.400 --> 00:29:24.590
+line. I know when I
+sat down and started messing
+
+616
+00:29:24.590 --> 00:29:28.070
+around with get as a
+windows developer, it was really
+
+617
+00:29:28.100 --> 00:29:31.490
+rather a bit shocking when
+I said S get commit
+
+618
+00:29:31.970 --> 00:29:35.690
+and suddenly VI popped up.
+And I had to remember
+
+619
+00:29:35.690 --> 00:29:38.210
+how to get out. I
+was trapped in the, in
+
+620
+00:29:38.210 --> 00:29:39.980
+the comment section for a
+second. Are you guys doing
+
+621
+00:29:39.980 --> 00:29:43.780
+everything at the command line?
+Yeah, We're pretty much doing
+
+622
+00:29:43.780 --> 00:29:48.190
+everything by way. And it's
+interesting because my history was
+
+623
+00:29:48.670 --> 00:29:50.890
+used to be a.net developer.
+And so I was used
+
+624
+00:29:50.890 --> 00:29:56.410
+to using a GUI tools
+and just over a year
+
+625
+00:29:56.410 --> 00:30:00.550
+ago, I moved over. Hadn't
+used Unix for a long,
+
+626
+00:30:00.550 --> 00:30:04.800
+long time. Super. What were
+you using for your, as
+
+627
+00:30:04.800 --> 00:30:07.410
+a.net developer for your, for
+your source control? Initially, I
+
+628
+00:30:07.410 --> 00:30:10.380
+was using a safe and
+then got, as soon as
+
+629
+00:30:10.380 --> 00:30:14.070
+Tim system came out, we
+switched to a different system.
+
+630
+00:30:14.160 --> 00:30:16.500
+Okay, good. Yeah. So I've
+only been using supervision for
+
+631
+00:30:16.500 --> 00:30:19.710
+a year and now we're
+going through to get so
+
+632
+00:30:19.710 --> 00:30:24.960
+it's yet another change for
+me, but transitioning from using,
+
+633
+00:30:25.410 --> 00:30:30.300
+you know, frontends a nice
+squeeze on everything. It was
+
+634
+00:30:30.300 --> 00:30:32.760
+a little bit of a
+sort of jolt at first,
+
+635
+00:30:32.760 --> 00:30:35.820
+but I got used to
+it very quickly. And now
+
+636
+00:30:35.820 --> 00:30:37.620
+I feel like in some
+ways I have a little
+
+637
+00:30:37.620 --> 00:30:41.460
+more control over what I
+do. It seems like there
+
+638
+00:30:41.460 --> 00:30:44.640
+is a slightly steeper learning
+curve, but once you get
+
+639
+00:30:44.640 --> 00:30:47.820
+past that, it's, it's hard
+to describe, but I feel
+
+640
+00:30:47.820 --> 00:30:49.350
+like I've got a little
+more control over what I'm
+
+641
+00:30:49.350 --> 00:30:52.590
+doing Now. Have you found
+yourself making shell scripts or
+
+642
+00:30:52.590 --> 00:30:54.210
+batch files to make things
+a little easier or are
+
+643
+00:30:54.210 --> 00:30:57.600
+you just doing get space
+command? As far as Oregon
+
+644
+00:30:57.660 --> 00:31:02.100
+really is just aliasing stuff
+there. Just some of the
+
+645
+00:31:02.100 --> 00:31:05.760
+get commands are not really
+how I picked you up
+
+646
+00:31:05.760 --> 00:31:08.400
+from being, so I've just
+set up aliases form my
+
+647
+00:31:08.440 --> 00:31:11.100
+suits, me and boy. Yeah.
+I made a few customization.
+
+648
+00:31:11.100 --> 00:31:13.860
+So we're using the verbs
+that you're comfortable with. Yeah.
+
+649
+00:31:15.710 --> 00:31:18.420
+This is interesting that it
+really works the way that
+
+650
+00:31:18.420 --> 00:31:22.140
+you want it to work.
+Yeah. For the most part
+
+651
+00:31:22.830 --> 00:31:27.180
+it's been to the level
+of we're using it right
+
+652
+00:31:27.180 --> 00:31:30.150
+now, it's been pretty natural.
+And obviously there is a
+
+653
+00:31:30.150 --> 00:31:33.600
+lot more, if you look
+at some of the things
+
+654
+00:31:33.600 --> 00:31:37.740
+that Andy talks about in
+his blog posts, it gets
+
+655
+00:31:37.740 --> 00:31:40.200
+pretty complex. And I've yet
+to touch on some of
+
+656
+00:31:40.200 --> 00:31:41.910
+that. That's interesting. Cause Andy,
+I was looking at your
+
+657
+00:31:41.910 --> 00:31:43.410
+blog and I found a
+number of things that seemed
+
+658
+00:31:43.410 --> 00:31:47.190
+fairly complex. You know, where
+this isn't something that just
+
+659
+00:31:47.190 --> 00:31:49.350
+junior developer sits down and
+starts using. I think, I
+
+660
+00:31:49.350 --> 00:31:52.200
+mean, gets it, is it
+because it was designed with
+
+661
+00:31:52.200 --> 00:31:54.300
+the Linux way of thinking,
+which is a little bit
+
+662
+00:31:54.300 --> 00:31:58.680
+more, they assume that you
+are having to have skills
+
+663
+00:31:59.250 --> 00:32:00.450
+at some point, you know
+what I mean? Like you
+
+664
+00:32:00.450 --> 00:32:03.690
+have basic abilities. I think
+so. I think that there's
+
+665
+00:32:03.690 --> 00:32:09.000
+some amount of assumed knowledge
+where you, when Lennox, Lennox
+
+666
+00:32:09.000 --> 00:32:12.150
+was first writing, get, he
+was writing it for kernel
+
+667
+00:32:12.150 --> 00:32:14.180
+developers. And for people like
+him who are very comfortable
+
+668
+00:32:14.180 --> 00:32:16.830
+with command line, have a
+pretty good working grasp of,
+
+669
+00:32:16.860 --> 00:32:20.520
+of different check-ins checkouts, you
+know, knew what a directed
+
+670
+00:32:20.520 --> 00:32:23.820
+graph might be. And, But
+also patch files the way
+
+671
+00:32:23.820 --> 00:32:27.600
+it did the universal format
+works, VI you know, arc
+
+672
+00:32:27.600 --> 00:32:31.080
+and different regular expressions. There's
+a certain expectation that you
+
+673
+00:32:31.080 --> 00:32:34.250
+get the Unix command line.
+I think that's definitely true.
+
+674
+00:32:34.260 --> 00:32:37.050
+And it was a lot
+more true when get first
+
+675
+00:32:37.050 --> 00:32:40.070
+came out, Lenise purposely wrote
+it to be a bunch
+
+676
+00:32:40.070 --> 00:32:46.070
+of low level C programs
+to modify the database directly.
+
+677
+00:32:46.070 --> 00:32:48.290
+And then a few shell
+scripts on top of it
+
+678
+00:32:48.530 --> 00:32:50.630
+to do sort of the,
+they call it the porcelain
+
+679
+00:32:51.290 --> 00:32:54.790
+and Interesting th th the
+pretty stuff is called the
+
+680
+00:32:54.910 --> 00:33:00.190
+Porcelain. I think so. Yeah.
+Cool. So there, the, all
+
+681
+00:33:00.190 --> 00:33:02.620
+the porcelain has gotten much
+better in the past couple
+
+682
+00:33:02.620 --> 00:33:06.940
+of years. So in the
+beginning I didn't use it
+
+683
+00:33:06.940 --> 00:33:09.520
+right when it came out,
+but there were horror stories
+
+684
+00:33:09.520 --> 00:33:12.520
+of how hard it was
+to use. So it's gotten
+
+685
+00:33:12.520 --> 00:33:15.310
+a lot better. Most of
+the semantics are the same.
+
+686
+00:33:15.310 --> 00:33:18.640
+You still, as subversion, you
+still check out, check in
+
+687
+00:33:18.640 --> 00:33:21.670
+status. These are all sort
+of the same things, Right?
+
+688
+00:33:21.670 --> 00:33:24.010
+There's a number of tutorials
+I've seen that say here's
+
+689
+00:33:24.010 --> 00:33:27.360
+get from the subversion user's
+point. Exactly, exactly. It definitely
+
+690
+00:33:27.370 --> 00:33:31.960
+though, compared to something like,
+like source safe, which not
+
+691
+00:33:31.960 --> 00:33:34.480
+only has basic simple things,
+like get, get version and
+
+692
+00:33:34.510 --> 00:33:36.490
+check, check in that's basic,
+you know, get latest and
+
+693
+00:33:36.490 --> 00:33:39.730
+check in, but that notion
+that I can just change
+
+694
+00:33:39.730 --> 00:33:42.910
+any file Willy nilly, whatever
+I want to do. And
+
+695
+00:33:44.140 --> 00:33:45.700
+that was one of the
+most difficult things for my
+
+696
+00:33:45.700 --> 00:33:47.380
+company that I used to
+work at when we moved
+
+697
+00:33:47.380 --> 00:33:50.110
+from source safe to subversion,
+was this notion that you
+
+698
+00:33:50.110 --> 00:33:52.960
+can't just check stuff out
+and lock it down. Right.
+
+699
+00:33:53.590 --> 00:33:55.600
+But now the idea that
+I can have local commits
+
+700
+00:33:56.020 --> 00:33:59.200
+Lenise brings this up in
+his, in his YouTube video
+
+701
+00:33:59.200 --> 00:34:00.550
+about get where he says
+he wanted to be able
+
+702
+00:34:00.550 --> 00:34:03.640
+to be on a plane
+and make edits, and then
+
+703
+00:34:03.640 --> 00:34:06.340
+we'll do local commits. Cause
+I've used the version for,
+
+704
+00:34:06.340 --> 00:34:10.480
+for years and always got
+nailed where I didn't check
+
+705
+00:34:10.480 --> 00:34:12.010
+in for a day or
+two and I needed to
+
+706
+00:34:12.010 --> 00:34:14.620
+back up just a few
+hours. Right. And I've done
+
+707
+00:34:14.620 --> 00:34:17.140
+that. I mean, I've made
+chickens on planes when we
+
+708
+00:34:17.410 --> 00:34:19.960
+took a business trip a
+couple of months ago and
+
+709
+00:34:20.200 --> 00:34:21.970
+I was doing some work
+on the plane across the
+
+710
+00:34:21.970 --> 00:34:24.340
+Atlantic. And now if you
+make, say five check-ins on
+
+711
+00:34:24.340 --> 00:34:28.120
+a plane, and then you
+is the term push that.
+
+712
+00:34:28.240 --> 00:34:30.850
+Yeah. Push the, do all
+five commits, go up there
+
+713
+00:34:31.420 --> 00:34:34.450
+by default. You can, there,
+there are ways that this
+
+714
+00:34:34.450 --> 00:34:36.550
+is where you get into
+editing the revision history. So
+
+715
+00:34:36.550 --> 00:34:39.910
+you can squash commits down
+to a single commit. Okay.
+
+716
+00:34:40.210 --> 00:34:41.470
+It doesn't sound like that
+would be a good thing.
+
+717
+00:34:41.890 --> 00:34:45.550
+I'm not necessarily, I've done
+it a few times because
+
+718
+00:34:45.550 --> 00:34:47.890
+I'm pushing to the subversion
+server. So if I have
+
+719
+00:34:47.890 --> 00:34:50.620
+20 commits and it has
+to do The commits were,
+
+720
+00:34:50.680 --> 00:34:52.570
+Oh, I see that you're
+pushing into the subversion server.
+
+721
+00:34:52.630 --> 00:34:54.910
+Right. So, I mean, I
+know it was commits. So
+
+722
+00:34:54.910 --> 00:34:58.000
+by default, if I, if
+I make five commits locally,
+
+723
+00:34:58.000 --> 00:35:00.250
+and then I say, get
+SPN D commit to push
+
+724
+00:35:00.250 --> 00:35:03.160
+those to the subversion server.
+Okay. Then it will make
+
+725
+00:35:03.160 --> 00:35:05.470
+five. So version commits, just
+the same commits. And you
+
+726
+00:35:05.470 --> 00:35:08.350
+just said the term decommit,
+decommitted, that's just the command.
+
+727
+00:35:08.380 --> 00:35:10.780
+I don't actually know what
+it is. D E commit
+
+728
+00:35:11.230 --> 00:35:15.100
+just the letter D Okay.
+Let's get to version D
+
+729
+00:35:15.100 --> 00:35:18.580
+commitment, but it's because it's
+coming from your local commits
+
+730
+00:35:18.640 --> 00:35:21.010
+of interest. Exactly. Just pushing
+my commits that I've made
+
+731
+00:35:21.010 --> 00:35:23.440
+locally to get up to
+this version. So really It
+
+732
+00:35:23.440 --> 00:35:25.390
+depends on whether or not
+those commits are significant to
+
+733
+00:35:25.390 --> 00:35:27.700
+the rest. Exactly. So I'm
+at a five, if I'm
+
+734
+00:35:27.700 --> 00:35:29.440
+just saying like, Oh, a
+little bit more work, you
+
+735
+00:35:29.440 --> 00:35:32.050
+know, I made some more
+changes and then there's one
+
+736
+00:35:32.050 --> 00:35:36.130
+complete feature that I'm adding.
+I can, I can rename
+
+737
+00:35:36.130 --> 00:35:38.430
+those five commits, squash them
+out in one, commit, Put
+
+738
+00:35:38.790 --> 00:35:41.820
+a new commit message saying
+I've added this feature and
+
+739
+00:35:41.880 --> 00:35:44.730
+push that to subversion. That's
+not as common in if
+
+740
+00:35:44.730 --> 00:35:48.420
+you have to get central
+repository, because I mean, then
+
+741
+00:35:48.480 --> 00:35:50.010
+annoying thing is, is that
+when it's doing each of
+
+742
+00:35:50.010 --> 00:35:53.070
+those subversion commits, it's slow
+because it's got to basically
+
+743
+00:35:53.460 --> 00:35:56.700
+push them to diversion, pull
+down any changes from subversion.
+
+744
+00:35:56.730 --> 00:35:58.020
+Do it again, do it
+again and do it again.
+
+745
+00:35:58.130 --> 00:36:00.080
+But most things didn't get
+her fast because they're all
+
+746
+00:36:00.080 --> 00:36:02.630
+local things. Exactly. Pushing fires
+around a local very, very
+
+747
+00:36:02.630 --> 00:36:07.790
+fast. Yeah. Now you were
+using TFS before and TFS.
+
+748
+00:36:07.820 --> 00:36:09.500
+I'm going to talk to
+those guys next week about,
+
+749
+00:36:09.590 --> 00:36:11.720
+cause they're a much more
+centralized thing, but they have
+
+750
+00:36:11.990 --> 00:36:14.030
+issue tracking and bug tracking,
+all that kind of stuff.
+
+751
+00:36:14.150 --> 00:36:16.280
+Were you using those features
+when you were using TFS?
+
+752
+00:36:17.630 --> 00:36:21.080
+When I began using, we
+didn't go into a lot
+
+753
+00:36:21.080 --> 00:36:23.930
+of depth on it. Let's
+see. We are pretty much
+
+754
+00:36:23.960 --> 00:36:26.390
+working on the bleeding edge
+of whatever Microsoft will bring
+
+755
+00:36:26.390 --> 00:36:29.930
+it out. And so we
+adopt that as you know,
+
+756
+00:36:29.930 --> 00:36:34.430
+from a day it was
+available and primarily the way
+
+757
+00:36:34.430 --> 00:36:37.250
+I was using it was
+still as a sole developer,
+
+758
+00:36:37.490 --> 00:36:40.070
+you know, working on an
+actual, Just for the source
+
+759
+00:36:40.070 --> 00:36:42.590
+control. Yeah. And so I
+didn't get into that, you
+
+760
+00:36:42.590 --> 00:36:45.830
+know, too much, but it
+was obvious that it was
+
+761
+00:36:45.830 --> 00:36:49.430
+better than sort of safe.
+I mean with no more
+
+762
+00:36:49.430 --> 00:36:52.910
+corrupt databases and things like
+that. People compare like subversion
+
+763
+00:36:52.910 --> 00:36:55.820
+to, to TFS or version
+to some of these other
+
+764
+00:36:55.820 --> 00:36:58.010
+tools that have issue tracking
+and stuff built in. It
+
+765
+00:36:58.010 --> 00:37:00.080
+makes me wonder when you're
+using, get you're using subversion,
+
+766
+00:37:00.080 --> 00:37:01.970
+you must have an issue
+tracking bug tracking system as
+
+767
+00:37:01.970 --> 00:37:04.640
+well using Zillow, or what
+are you guys using? We're
+
+768
+00:37:04.640 --> 00:37:08.060
+using a lighthouse which is
+Developed by a local company
+
+769
+00:37:08.330 --> 00:37:12.620
+written in rails. Okay. And
+so that's working out pretty
+
+770
+00:37:12.620 --> 00:37:15.260
+well for us. I don't
+know, Just does one want
+
+771
+00:37:15.260 --> 00:37:18.170
+to plug those things in
+such that a, a check
+
+772
+00:37:18.170 --> 00:37:21.860
+in is attached to an
+issue. We, we kinda have
+
+773
+00:37:21.860 --> 00:37:24.920
+our own convention for that.
+So when we're, you know,
+
+774
+00:37:24.920 --> 00:37:28.160
+we're fixing a bug that's
+in lighthouse, we'll usually, we'll
+
+775
+00:37:28.170 --> 00:37:31.850
+occasionally I mentioned the, the
+lighthouse bug ticket number and
+
+776
+00:37:31.850 --> 00:37:34.970
+that commit. So people can
+kind of see the history
+
+777
+00:37:34.970 --> 00:37:38.750
+because there's nothing directly connected.
+I've heard some rumors that
+
+778
+00:37:38.750 --> 00:37:41.390
+there's some posts, be some
+integration between get hub and
+
+779
+00:37:41.480 --> 00:37:44.780
+lighthouse in the, in the
+near future when light or
+
+780
+00:37:44.780 --> 00:37:47.690
+when get hub becomes publicly
+available. Because right now it's
+
+781
+00:37:47.750 --> 00:37:50.450
+invite only I believe. Yeah,
+because also the Ruby on
+
+782
+00:37:50.450 --> 00:37:53.180
+rails project is also moving
+to lighthouse as their primary
+
+783
+00:37:53.180 --> 00:37:57.470
+ticket system. So there's open
+source to know lighthouse and
+
+784
+00:37:57.470 --> 00:38:01.760
+get hub are actually both
+commercial products, but they're free
+
+785
+00:38:01.760 --> 00:38:03.470
+for open source developers to
+use. And they're going to
+
+786
+00:38:03.470 --> 00:38:09.800
+have commercial, you know, commercial
+account levels. So for private
+
+787
+00:38:09.800 --> 00:38:12.290
+repositories and stuff like that.
+So we've actually looked at
+
+788
+00:38:12.290 --> 00:38:14.780
+that as being a potential
+option for us too. So
+
+789
+00:38:14.780 --> 00:38:16.910
+we'll have something like a
+central repository, but that it
+
+790
+00:38:16.910 --> 00:38:20.030
+would be up for private
+repositories for our client. Is
+
+791
+00:38:20.030 --> 00:38:22.910
+there, is there a gift
+repository browser, like there was
+
+792
+00:38:22.910 --> 00:38:25.700
+for like fisheye for a
+version that you run around
+
+793
+00:38:25.700 --> 00:38:28.280
+inside of subversion on the
+web and look at charts
+
+794
+00:38:28.280 --> 00:38:30.770
+and graphs and commit history
+and all those kinds of
+
+795
+00:38:30.770 --> 00:38:32.840
+things in a very graphical
+sense, but you know, some
+
+796
+00:38:32.840 --> 00:38:35.500
+kind of an Explorer are
+you talking about, like on
+
+797
+00:38:35.500 --> 00:38:36.970
+the client side, I don't,
+I don't know anything about
+
+798
+00:38:36.970 --> 00:38:38.920
+fish fish. I was just
+a tool that you would
+
+799
+00:38:38.920 --> 00:38:40.570
+basically install on a cert
+on a, on a web
+
+800
+00:38:40.570 --> 00:38:42.670
+server you'd pointed at some
+version, it would go through
+
+801
+00:38:42.670 --> 00:38:45.370
+it and would make these
+really, this really friendly, you
+
+802
+00:38:45.370 --> 00:38:48.880
+know, repository browser with graphical
+branches. And it was, it
+
+803
+00:38:48.880 --> 00:38:51.880
+was basically like blame plus
+plus plus on steroids on
+
+804
+00:38:51.880 --> 00:38:54.960
+the web. Right. So get
+actually comes with a, with
+
+805
+00:38:54.960 --> 00:38:58.780
+a component called get web
+so that it does basically
+
+806
+00:38:58.780 --> 00:39:00.580
+what you're, what you're talking
+about. It's probably not nearly
+
+807
+00:39:00.580 --> 00:39:02.680
+as pretty, it's pretty sort
+of bare bones, but you
+
+808
+00:39:02.680 --> 00:39:05.080
+can go through, look at
+the revision history, look through
+
+809
+00:39:05.080 --> 00:39:07.150
+all the comments, look at,
+look at the file tree
+
+810
+00:39:07.150 --> 00:39:10.750
+and looking at each individual
+file. It uses all get
+
+811
+00:39:10.750 --> 00:39:14.530
+naming conventions. So you're clicking
+on things that are called,
+
+812
+00:39:14.560 --> 00:39:17.440
+you know, blobs and, and
+trees and things like that.
+
+813
+00:39:17.440 --> 00:39:19.240
+I find things a little
+confusing. I know that all
+
+814
+00:39:19.240 --> 00:39:22.270
+of my checkins so far
+and get, say unknown. So
+
+815
+00:39:22.300 --> 00:39:24.790
+somewhere I haven't put in
+my name yet. Right? Yeah.
+
+816
+00:39:24.790 --> 00:39:27.100
+That's the first thing. And
+every, every that's the first
+
+817
+00:39:27.100 --> 00:39:30.310
+thing, every 15th commit and
+then they all unknown. So
+
+818
+00:39:30.310 --> 00:39:31.540
+now I have to figure
+out how to go back
+
+819
+00:39:31.540 --> 00:39:33.760
+and change them. There's a,
+there's a file in your
+
+820
+00:39:33.760 --> 00:39:36.700
+home directory, wherever that happens
+to be, and it's called
+
+821
+00:39:36.700 --> 00:39:38.680
+get config dot and get
+confirmed. So it's a hidden
+
+822
+00:39:38.680 --> 00:39:41.440
+file. And you put your
+name and your email address
+
+823
+00:39:41.440 --> 00:39:43.540
+in there, and that's, that's
+what gets recorded as your
+
+824
+00:39:43.540 --> 00:39:46.930
+commit. It's not like some
+version where I haven't user
+
+825
+00:39:46.930 --> 00:39:49.680
+on the subversion server. So
+it's just what I, what
+
+826
+00:39:49.680 --> 00:39:51.220
+I claim to be. Right.
+The first thing we did
+
+827
+00:39:51.220 --> 00:39:52.880
+when we had some version
+was you hooked up our
+
+828
+00:39:53.170 --> 00:39:55.840
+domain user in the windows
+universe and it existed in
+
+829
+00:39:55.840 --> 00:39:58.420
+some version. So it just
+happened automatically. Exactly. It's interesting
+
+830
+00:39:58.420 --> 00:40:00.820
+when, when the units were
+on the windows world collide,
+
+831
+00:40:00.820 --> 00:40:02.200
+and then you have to
+go and explain to someone
+
+832
+00:40:02.200 --> 00:40:05.770
+who's never seen the Unix
+machine, what a.directory is that
+
+833
+00:40:05.770 --> 00:40:08.860
+kind of implies interesting. Well,
+thanks so much you guys,
+
+834
+00:40:08.860 --> 00:40:10.690
+for sitting down with me
+today, it's good to see
+
+835
+00:40:11.350 --> 00:40:13.610
+people using these tools in
+ways I hadn't thought about,
+
+836
+00:40:13.630 --> 00:40:15.160
+I didn't know that you
+could plug in the manual
+
+837
+00:40:15.160 --> 00:40:18.490
+to get into subversion, and
+I wish you luck using
+
+838
+00:40:18.490 --> 00:40:22.120
+this new tool on Ruby,
+on rails projects. Thanks again,
+
+839
+00:40:22.120 --> 00:40:24.880
+Andy, Gary and Robby here
+at planet argon and downtown
+
+840
+00:40:24.880 --> 00:40:27.820
+Portland. This has been another
+episode of Hansel minutes and
+
+841
+00:40:27.820 --> 00:40:28.750
+I'll see you again next
+week.
+

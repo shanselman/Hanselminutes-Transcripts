@@ -1,0 +1,2452 @@
+WEBVTT FILE
+
+1
+00:00:04.920 --> 00:00:17.030
+<inaudible> From Hansel minutes.com. It's
+Hanselman it's Oh, weekly discussion
+
+2
+00:00:17.030 --> 00:00:20.810
+with web developer and technologist
+Scott Hanselman hosted by Carl Franklin.
+
+3
+00:00:21.140 --> 00:00:26.960
+This is Lawrence Ryan announcing show
+number 24 recorded Monday, July 10th, 2006.
+
+4
+00:00:27.620 --> 00:00:31.250
+Support for Hanselman is provided
+by COVID Smith tools, makers
+
+5
+00:00:31.250 --> 00:00:35.180
+of code Smith and extensible
+template based code generator for.net.
+
+6
+00:00:35.780 --> 00:00:38.930
+And now Hanselman its listeners.
+Get $100 off COVID Smith
+
+7
+00:00:38.930 --> 00:00:46.070
+professional with coupon code H
+M 100. online@covidsmithtools.com. Support is
+
+8
+00:00:46.070 --> 00:00:49.880
+also provided by exceeds zip
+for.net, which lets you handle
+
+9
+00:00:49.910 --> 00:00:55.070
+zip tar and jesus' files
+on FTP servers in streams
+
+10
+00:00:55.160 --> 00:00:58.730
+in memory and more. Now
+get 20% off any exceed
+
+11
+00:00:58.730 --> 00:01:01.940
+component or suite just for
+listening to Hansel minutes, just
+
+12
+00:01:01.940 --> 00:01:05.240
+go to <inaudible> dot com
+slash FPT and use the
+
+13
+00:01:05.240 --> 00:01:09.380
+code H M dash 20
+dash 20. And don't forget
+
+14
+00:01:09.380 --> 00:01:13.250
+to visit Peter bloom.com. Start
+with better controls finish with
+
+15
+00:01:13.250 --> 00:01:23.210
+better sites online@peterblum.com and.net developers
+journal the world's leading.net developer
+
+16
+00:01:23.210 --> 00:01:28.880
+magazine online at www dot
+<inaudible> dot com. In this
+
+17
+00:01:28.880 --> 00:01:38.990
+episode, Scott discusses advanced capabilities
+of Microsoft PowerShell. Hi, this
+
+18
+00:01:38.990 --> 00:01:42.290
+is Carl Franklin. Welcome back to
+Hansel minutes. Of course we're
+
+19
+00:01:42.290 --> 00:01:45.590
+talking with Scott Hanselman as
+we always do Scott what's
+
+20
+00:01:45.650 --> 00:01:49.370
+on the roster for today.
+Well, it's been awhile since
+
+21
+00:01:49.370 --> 00:01:53.000
+we talked about power shell,
+which was originally called monad
+
+22
+00:01:53.000 --> 00:01:55.070
+or the Microsoft command shell.
+Right. And I got a
+
+23
+00:01:55.070 --> 00:01:57.470
+number of letters from listeners
+saying they want to hear
+
+24
+00:01:57.470 --> 00:01:59.660
+about some more PowerShell stuff.
+And if you read my
+
+25
+00:01:59.660 --> 00:02:02.390
+blog, you know that I've
+been messing around with a
+
+26
+00:02:02.390 --> 00:02:06.140
+lot of PowerShell. So let's
+call this advanced PowerShell such
+
+27
+00:02:06.140 --> 00:02:08.120
+as it is. Okay, great.
+Now, have you got a
+
+28
+00:02:08.120 --> 00:02:10.880
+chance to dig into this
+at all? No, I've read
+
+29
+00:02:10.880 --> 00:02:12.740
+the blogs. I've seen what
+it can do, but I
+
+30
+00:02:12.740 --> 00:02:16.220
+haven't done it myself. I
+haven't used it yet. PowerShell
+
+31
+00:02:16.220 --> 00:02:17.780
+for me, I've been thinking
+more and more about how
+
+32
+00:02:17.780 --> 00:02:19.940
+to describe this. You know,
+what's the elevator speech. When
+
+33
+00:02:19.940 --> 00:02:22.490
+you try to explain to
+someone what's PowerShell and it's,
+
+34
+00:02:22.490 --> 00:02:25.130
+you know, it's a.net command
+line that lets you put
+
+35
+00:02:25.130 --> 00:02:29.150
+windows on a string, sweet,
+anything that you can do,
+
+36
+00:02:29.990 --> 00:02:32.510
+you know, by right clicking
+and MMC and saying file
+
+37
+00:02:32.510 --> 00:02:34.940
+new whatever, you know, you
+can do with, with PowerShell.
+
+38
+00:02:35.000 --> 00:02:37.220
+And when you script it,
+You can pass object references,
+
+39
+00:02:37.220 --> 00:02:40.340
+right? Exactly. You pass objects
+from place to place. So,
+
+40
+00:02:40.340 --> 00:02:41.780
+you know, you can do
+all the same stuff you're
+
+41
+00:02:41.780 --> 00:02:45.890
+used to like DIR pipe
+more. But when you say
+
+42
+00:02:45.890 --> 00:02:49.940
+DIR, you're not really getting
+a listing of directory, you're
+
+43
+00:02:49.940 --> 00:02:52.520
+not really listing out the
+directory as text. You're getting
+
+44
+00:02:52.520 --> 00:02:56.150
+back some director info objects,
+file info. You're really looking
+
+45
+00:02:56.150 --> 00:02:58.370
+at a range of objects,
+which then lets you use
+
+46
+00:02:58.430 --> 00:03:02.440
+reflection, manipulate these things. So
+it's a fantastic command shell
+
+47
+00:03:02.470 --> 00:03:05.470
+and there's a very vibrant
+community. That's being built up
+
+48
+00:03:05.500 --> 00:03:10.330
+around this for systems administrators,
+but also enthusiasts and developers
+
+49
+00:03:10.330 --> 00:03:13.630
+like like myself, I'm not
+an admin or an it
+
+50
+00:03:13.630 --> 00:03:16.450
+guy, but you know, I
+used to write a lot
+
+51
+00:03:16.450 --> 00:03:19.870
+of small programs to test
+stuff out. You know, maybe
+
+52
+00:03:19.870 --> 00:03:22.060
+you want to check to
+see what daytime dot two
+
+53
+00:03:22.060 --> 00:03:24.400
+string does or whatever. And
+more and more I've been
+
+54
+00:03:24.400 --> 00:03:26.590
+doing that at the command
+line. It's such an amazing
+
+55
+00:03:26.590 --> 00:03:29.350
+experience to be able to
+load an assembly from your
+
+56
+00:03:29.350 --> 00:03:32.230
+command line and start calling
+methods on it directly. That's
+
+57
+00:03:32.230 --> 00:03:36.340
+very cool. Now there's a
+whole series of lists and
+
+58
+00:03:36.790 --> 00:03:39.580
+resources that I could potentially
+give you and I'll give
+
+59
+00:03:39.580 --> 00:03:42.430
+you a lot, but there
+is a fantastic list of
+
+60
+00:03:42.430 --> 00:03:46.270
+resources at delicious slash PowerShell,
+which is at <inaudible> dot
+
+61
+00:03:46.270 --> 00:03:50.020
+com slash G I L
+delicious of course, as these
+
+62
+00:03:50.020 --> 00:03:55.050
+social bookmarking system online Automatic
+cream rising to the top
+
+63
+00:03:55.050 --> 00:03:59.400
+machine. Okay, Exactly. And the
+user whose username is PowerShell
+
+64
+00:03:59.400 --> 00:04:03.060
+has set up a series
+of links. And then there
+
+65
+00:04:03.060 --> 00:04:06.480
+are also the, all of
+the delicious links that are
+
+66
+00:04:06.480 --> 00:04:10.080
+tagged as PowerShell, which is
+at shrinker slash G I
+
+67
+00:04:10.080 --> 00:04:14.010
+N. So that's delicious slash
+PowerShell or delicious last tags.
+
+68
+00:04:14.010 --> 00:04:16.080
+That's PowerShell. Once you start
+poking around in there and
+
+69
+00:04:16.080 --> 00:04:20.460
+you see the popular tags,
+you see basically everything, the
+
+70
+00:04:20.460 --> 00:04:22.770
+depths of all of the
+things that are being talked
+
+71
+00:04:22.770 --> 00:04:26.190
+about around PowerShell now, because
+power show used to be
+
+72
+00:04:26.190 --> 00:04:29.580
+called monad or the Microsoft
+command shell. A number of
+
+73
+00:04:29.580 --> 00:04:33.210
+things are tagged as M
+S H cause mush was
+
+74
+00:04:33.210 --> 00:04:35.820
+what we used to call
+PowerShell. So you might also
+
+75
+00:04:35.820 --> 00:04:38.250
+take a look at the
+delicious things that are tagged
+
+76
+00:04:38.400 --> 00:04:41.670
+mush. So that's at shrink
+stir slash G I R,
+
+77
+00:04:42.120 --> 00:04:44.340
+between the three of those
+things. You've pretty much got
+
+78
+00:04:44.340 --> 00:04:47.280
+the full spectrum of what's
+being talked about within the
+
+79
+00:04:47.280 --> 00:04:51.720
+PowerShell universe. Now there's another
+number of other places where
+
+80
+00:04:51.720 --> 00:04:54.330
+you can get introductions and
+things about PowerShell. And we
+
+81
+00:04:54.330 --> 00:04:56.760
+talked About including your show.
+I mean, we did an
+
+82
+00:04:56.760 --> 00:05:00.030
+introductory show in PowerShell. Yeah.
+And, and we won't redo
+
+83
+00:05:00.030 --> 00:05:01.680
+that show here. Well, so
+we're going to think this
+
+84
+00:05:01.680 --> 00:05:06.180
+is advanced PowerShell. Yeah. Part
+two. So might take a
+
+85
+00:05:06.180 --> 00:05:08.100
+look at that last show.
+It was a nice, quick
+
+86
+00:05:08.460 --> 00:05:10.830
+update on what was going
+on in PowerShell and kind
+
+87
+00:05:10.830 --> 00:05:13.140
+of the gestalt behind it.
+But we're going to talk
+
+88
+00:05:13.140 --> 00:05:15.180
+about a little bit more
+advanced stuff. So if you
+
+89
+00:05:15.180 --> 00:05:17.310
+want the basics, take a
+look at our other show.
+
+90
+00:05:17.860 --> 00:05:20.130
+There's also a good site
+at Rez kit, which is
+
+91
+00:05:20.130 --> 00:05:24.180
+at shrinks.com/g I V. I
+can give you some details
+
+92
+00:05:24.180 --> 00:05:27.330
+on what's available, but things
+that I'm interested in in
+
+93
+00:05:27.330 --> 00:05:31.740
+PowerShell are extending it right.
+Making it Dance, right? So
+
+94
+00:05:31.740 --> 00:05:35.670
+there's, There's a thing called
+a commandlet a CMD let
+
+95
+00:05:35.700 --> 00:05:40.710
+commandlet and commandlets can be
+written in any dotnet language.
+
+96
+00:05:40.920 --> 00:05:42.840
+So you would sit down
+and C sharp and you'd
+
+97
+00:05:42.840 --> 00:05:47.340
+make a new class library
+and then take either existing
+
+98
+00:05:47.340 --> 00:05:50.610
+code that you have or
+write stuff from scratch, using
+
+99
+00:05:50.610 --> 00:05:53.820
+the full power of the.net
+framework and write out a
+
+100
+00:05:53.820 --> 00:05:58.520
+new command within power show.
+These commands might take input
+
+101
+00:05:59.000 --> 00:06:02.270
+that's been piped in or
+input from the command line.
+
+102
+00:06:02.390 --> 00:06:06.200
+It's totally up to you.
+There's a really great screencast
+
+103
+00:06:06.200 --> 00:06:10.640
+at shrink stir slash G
+I X. And this is
+
+104
+00:06:10.640 --> 00:06:14.750
+a video of how to
+make a commandlet. There's lots
+
+105
+00:06:14.750 --> 00:06:18.350
+of great sample code that
+comes with the documentation pack
+
+106
+00:06:18.350 --> 00:06:24.020
+for a PowerShell. And I
+don't, I personally haven't had
+
+107
+00:06:24.020 --> 00:06:26.300
+to write a commandlet. I
+kept saying to myself, well,
+
+108
+00:06:26.300 --> 00:06:28.370
+I'm going to really get
+right into.net and do it,
+
+109
+00:06:28.640 --> 00:06:32.510
+but more and more, I'm
+finding myself writing scripts because
+
+110
+00:06:32.510 --> 00:06:34.340
+you really have the full
+power of the.net framework. You
+
+111
+00:06:34.340 --> 00:06:38.000
+don't have IntelliSense right out
+of the bat on the,
+
+112
+00:06:38.000 --> 00:06:42.050
+on the command line, but.net
+is sitting right there. You
+
+113
+00:06:42.050 --> 00:06:44.030
+can do anything that you
+want to, but a lot
+
+114
+00:06:44.030 --> 00:06:46.370
+of people have existing libraries
+that they want to call,
+
+115
+00:06:46.370 --> 00:06:50.450
+or they liked that the
+sense of packaging up all
+
+116
+00:06:50.450 --> 00:06:53.510
+of their stuff into one
+single commandlet. And so take
+
+117
+00:06:53.510 --> 00:06:56.240
+a look at that screencast.
+Okay. Now, when you create
+
+118
+00:06:56.240 --> 00:06:58.910
+a command that you package
+up your existing functionality or
+
+119
+00:06:58.910 --> 00:07:01.310
+new functionality into a DLL,
+you can run a thing
+
+120
+00:07:01.310 --> 00:07:04.640
+called make shell, make hyphen
+shell, and you can make
+
+121
+00:07:04.640 --> 00:07:08.410
+your own custom PowerShell With
+reference. Are you stalking about
+
+122
+00:07:08.410 --> 00:07:12.490
+references with references loaded up
+or right References, loaded up
+
+123
+00:07:12.520 --> 00:07:15.940
+environment, loaded up colors and
+everything to customize. So you
+
+124
+00:07:15.940 --> 00:07:18.940
+might have, if you're an,
+a system administrator for a
+
+125
+00:07:18.940 --> 00:07:22.990
+very large company, you might
+want to have one for
+
+126
+00:07:22.990 --> 00:07:26.530
+managing exchange mailboxes and one
+for managing FTP and have
+
+127
+00:07:26.530 --> 00:07:29.320
+all of your different shells
+set up. I say, you
+
+128
+00:07:29.320 --> 00:07:31.150
+might want to set up
+a custom one just for
+
+129
+00:07:31.150 --> 00:07:33.190
+the work that you do
+with plop on, you know,
+
+130
+00:07:33.190 --> 00:07:35.320
+you might have BitTorrent things
+from the command line. You
+
+131
+00:07:35.320 --> 00:07:39.430
+might have FTP stuff, set
+up environment, variables, paths, existing
+
+132
+00:07:39.430 --> 00:07:43.510
+scripts prepared. So then you'd
+have multiple shells, right? You
+
+133
+00:07:43.510 --> 00:07:45.880
+have, you have two shells
+now You right. You've got
+
+134
+00:07:45.880 --> 00:07:49.330
+your ride command at the
+ECC. We've got VAs VARs,
+
+135
+00:07:49.330 --> 00:07:52.330
+right? When you go into
+visual Studio, cause it has
+
+136
+00:07:52.330 --> 00:07:55.930
+different path statements in the
+environment. Sure, exactly. Yeah. So
+
+137
+00:07:55.930 --> 00:07:59.560
+extending that. How many different
+kinds of context windows would
+
+138
+00:07:59.560 --> 00:08:02.290
+would one need? So we
+have a big application at
+
+139
+00:08:02.290 --> 00:08:05.620
+my company called Voyager that
+does online finance. Why wouldn't
+
+140
+00:08:05.620 --> 00:08:07.990
+we have a Karelian specific
+PowerShell? And then we can
+
+141
+00:08:07.990 --> 00:08:10.270
+just ship that shell to
+folks. They put PowerShell on
+
+142
+00:08:10.270 --> 00:08:15.610
+their system, they get kirlian.voyager.shell
+and everything that they need.
+
+143
+00:08:15.610 --> 00:08:20.290
+Is there Hail to them,
+Definitely some power there within
+
+144
+00:08:20.290 --> 00:08:23.410
+creating your own commandlet and
+then creating your own. That's
+
+145
+00:08:23.410 --> 00:08:26.320
+pretty cool. I gotta tell
+ya. Yeah, It's it gets
+
+146
+00:08:26.320 --> 00:08:28.990
+even cooler. So you can
+get lots and lots of
+
+147
+00:08:28.990 --> 00:08:32.230
+good information at the Microsoft
+PowerShell. Newsgroup this is just
+
+148
+00:08:32.230 --> 00:08:36.070
+at Microsoft slash communities up
+at shrink stir slash GI
+
+149
+00:08:36.280 --> 00:08:40.870
+Y but the thing here's
+the mind blowing thing. It's
+
+150
+00:08:40.870 --> 00:08:43.480
+not just about the shell.
+It's about the engine. The
+
+151
+00:08:43.480 --> 00:08:46.570
+fact that it decided to
+display itself as a text
+
+152
+00:08:46.570 --> 00:08:50.140
+on a black background, really
+just facia on top of
+
+153
+00:08:50.140 --> 00:08:53.320
+this underlying engine. What if
+I have an application that
+
+154
+00:08:53.320 --> 00:08:58.350
+I want to enable for
+scripting? I've got an application,
+
+155
+00:08:58.350 --> 00:09:01.830
+it's got an object model.
+It's got things that people
+
+156
+00:09:01.830 --> 00:09:04.320
+might want to extend. I
+would like them to write
+
+157
+00:09:04.350 --> 00:09:07.740
+just a little bit of
+script to manipulate the objects
+
+158
+00:09:07.740 --> 00:09:11.310
+that are living inside of
+my application. Sure. So Lee
+
+159
+00:09:11.310 --> 00:09:14.280
+Holmes has got a really
+great blog post that shrinks
+
+160
+00:09:14.280 --> 00:09:17.310
+your slash GIZ. And do
+you remember logo? Did you
+
+161
+00:09:17.310 --> 00:09:20.300
+do this in school? Yeah.
+The little turtle turtle, basic
+
+162
+00:09:20.540 --> 00:09:23.360
+kind of stuff. Yeah. Right.
+Turn left. And then you
+
+163
+00:09:23.360 --> 00:09:25.250
+start learning about looping and
+the next thing you know,
+
+164
+00:09:25.250 --> 00:09:28.850
+you've written a, in drawn
+a flower, right? Some kind
+
+165
+00:09:28.850 --> 00:09:32.210
+of a recursive algorithm. Right.
+So he wrote logo in,
+
+166
+00:09:32.250 --> 00:09:35.300
+in, in C sharp and
+it's pretty straightforward. It's just
+
+167
+00:09:35.300 --> 00:09:38.030
+a little wind forms application.
+He's got a little object
+
+168
+00:09:38.300 --> 00:09:42.110
+called turtle. Okay. And turtles
+got a number of public
+
+169
+00:09:42.110 --> 00:09:44.390
+methods on it, like reset,
+turn, left, turn. Right. And
+
+170
+00:09:44.390 --> 00:09:47.300
+things like that. It seems
+pretty straight forward, but how
+
+171
+00:09:47.300 --> 00:09:50.510
+would he make it available
+to the user to script?
+
+172
+00:09:51.050 --> 00:09:53.150
+So he makes a text
+box where people can write
+
+173
+00:09:53.150 --> 00:09:56.720
+in PowerShell script and then
+he hosts what's called a
+
+174
+00:09:56.720 --> 00:10:01.160
+run space. That run space
+is the PowerShell engine. Okay.
+
+175
+00:10:01.160 --> 00:10:04.010
+So at this point, PowerShell
+hasn't yet come together. It
+
+176
+00:10:04.010 --> 00:10:07.430
+hasn't come into the application.
+He's got a nice graphical
+
+177
+00:10:07.430 --> 00:10:09.710
+area to draw the turtle.
+He's got a text box.
+
+178
+00:10:09.890 --> 00:10:12.680
+They write into the text
+box. Maybe they say turtle
+
+179
+00:10:12.680 --> 00:10:17.240
+dot left 10. Okay. Then
+in the run button on
+
+180
+00:10:17.240 --> 00:10:19.610
+his click, he say, click
+do it. He makes a
+
+181
+00:10:19.610 --> 00:10:22.400
+new run space. And then
+he says to the run
+
+182
+00:10:22.400 --> 00:10:25.820
+space, there's this object called
+turtle. And he hands it
+
+183
+00:10:25.820 --> 00:10:28.970
+into it. So you're creating
+an instance of PowerShell that
+
+184
+00:10:28.970 --> 00:10:32.570
+run space, handing the turtle
+object into it. And then
+
+185
+00:10:32.570 --> 00:10:35.960
+you say, create pipeline. Cause
+a pipeline is really a
+
+186
+00:10:35.960 --> 00:10:39.200
+series of commands. So whatever
+they wrote in their textbooks,
+
+187
+00:10:39.530 --> 00:10:42.830
+that script is a pipeline
+of command after command, after
+
+188
+00:10:42.830 --> 00:10:46.790
+command. Cool. And then he
+says pipeline dot, invoke, and
+
+189
+00:10:47.390 --> 00:10:50.750
+draws what the turtle did.
+Very cool. Think of how
+
+190
+00:10:50.750 --> 00:10:53.090
+you could use this in
+existing applications. Sure. You know,
+
+191
+00:10:53.090 --> 00:10:56.630
+maybe someone could script plop
+catcher to do different things.
+
+192
+00:10:56.930 --> 00:11:01.310
+You've basically built in automation.
+You like using swamp catchers,
+
+193
+00:11:01.850 --> 00:11:04.490
+you like using pop catchers
+and example I've noticed, Well,
+
+194
+00:11:04.820 --> 00:11:07.610
+in this case, my audience
+of one is you. Right.
+
+195
+00:11:07.760 --> 00:11:09.470
+So I'm putting it in
+terms of my audience can
+
+196
+00:11:09.470 --> 00:11:14.900
+understand just like my examples
+always Voyager and our application
+
+197
+00:11:14.900 --> 00:11:18.110
+at Kirlian. Yeah. But pop
+catcher is a great example
+
+198
+00:11:18.110 --> 00:11:20.210
+because it's one of these
+little applications that started to
+
+199
+00:11:20.210 --> 00:11:23.270
+become more and more fully
+featured. Sure. And at some
+
+200
+00:11:23.270 --> 00:11:25.070
+point scripting might be something
+you might want to do
+
+201
+00:11:25.070 --> 00:11:28.100
+to it. Absolutely. Or other
+applications. Yeah. Scripting is one
+
+202
+00:11:28.100 --> 00:11:30.590
+of those things that one
+has always wants to add
+
+203
+00:11:30.590 --> 00:11:33.440
+to their application, but it,
+the, the, the, the distance
+
+204
+00:11:33.770 --> 00:11:36.680
+between your idea and the
+actual getting it done is
+
+205
+00:11:36.680 --> 00:11:39.860
+always so great. In this
+example, Lee Holmes has added
+
+206
+00:11:39.860 --> 00:11:43.220
+scripting to an application in
+six lines of code and
+
+207
+00:11:43.400 --> 00:11:45.770
+you don't see the PowerShell,
+right. It doesn't fire up
+
+208
+00:11:45.770 --> 00:11:48.350
+and show off into something.
+I mean, this is running
+
+209
+00:11:48.350 --> 00:11:52.910
+in process. He's just adding
+a reference to system.management dot.
+
+210
+00:11:53.830 --> 00:11:56.560
+So think about this. If
+you can start hosting the
+
+211
+00:11:56.560 --> 00:12:00.970
+power show, just in this
+example of doing script, what
+
+212
+00:12:00.970 --> 00:12:02.440
+else could you do with
+it? You could have an
+
+213
+00:12:02.440 --> 00:12:06.610
+administrative console written entirely in
+PowerShell, get it working and
+
+214
+00:12:06.610 --> 00:12:11.110
+then write a WinForms app
+around it, a management application.
+
+215
+00:12:11.400 --> 00:12:13.290
+You know, I hear the
+voice of skepticism in the
+
+216
+00:12:13.290 --> 00:12:15.990
+back of my head. Maybe
+the few listeners out there
+
+217
+00:12:16.020 --> 00:12:18.690
+are feeling this too. You
+know, why are you, why
+
+218
+00:12:18.690 --> 00:12:20.820
+are you reinventing the wheel?
+Why not just do things
+
+219
+00:12:20.820 --> 00:12:24.330
+with visual studio? Why not
+just create an application? You
+
+220
+00:12:24.330 --> 00:12:27.750
+know, why, why have a
+limited set of functionality when
+
+221
+00:12:27.750 --> 00:12:30.360
+you can have the real
+thing? Okay. So that's a
+
+222
+00:12:30.360 --> 00:12:33.210
+very good question. So one,
+if I wanted to go
+
+223
+00:12:33.210 --> 00:12:36.360
+and write some functionality that
+would be available to me
+
+224
+00:12:36.360 --> 00:12:38.640
+at both the command line
+and at the wind forms
+
+225
+00:12:39.560 --> 00:12:42.540
+in wind forms, I'd have
+to write some DLL out
+
+226
+00:12:42.540 --> 00:12:44.100
+there that would do the
+thing, right? So I'd write
+
+227
+00:12:44.100 --> 00:12:46.860
+that and see sharper VB.
+And then I'd write the
+
+228
+00:12:48.300 --> 00:12:51.720
+command line version, right? And
+then I'd write the windows
+
+229
+00:12:52.050 --> 00:12:55.080
+version. But because the command
+line version is forced to
+
+230
+00:12:55.080 --> 00:12:57.480
+take strings as input and
+strings it out as output,
+
+231
+00:12:57.480 --> 00:13:01.320
+it wouldn't be able to
+very easily communicate with other
+
+232
+00:13:01.320 --> 00:13:03.840
+pieces of the command line
+version. I couldn't string multiple
+
+233
+00:13:03.840 --> 00:13:06.450
+commands. Now you have to
+write parsers and things like
+
+234
+00:13:06.450 --> 00:13:10.380
+that. Then, then think it
+grows. Okay. Interoperability is really
+
+235
+00:13:10.380 --> 00:13:14.340
+the Key here, right? Interrupt
+between commands between. But it
+
+236
+00:13:14.340 --> 00:13:17.970
+really gets interesting when we
+talk about calm and WMI.
+
+237
+00:13:18.600 --> 00:13:21.720
+If we're talking just.net, you
+partially have a point. Yeah.
+
+238
+00:13:21.720 --> 00:13:23.250
+You could just read it
+and.net and it would work
+
+239
+00:13:23.250 --> 00:13:25.530
+fine. And many people have
+done just that. And that's
+
+240
+00:13:25.530 --> 00:13:30.270
+great, but what's cool in
+PowerShell is that WMI objects
+
+241
+00:13:30.270 --> 00:13:34.080
+and comm objects and dotnet
+objects are all peers. And
+
+242
+00:13:34.080 --> 00:13:37.350
+now in.net and a regular
+WinForms application, calm objects have
+
+243
+00:13:37.350 --> 00:13:39.930
+that whole interrupt thing, getting
+fed behind you. And every
+
+244
+00:13:39.930 --> 00:13:41.700
+once in a while, a
+little calm leaks out and
+
+245
+00:13:41.700 --> 00:13:46.020
+you go, eh, that's nasty
+and WMI. Isn't exactly easy
+
+246
+00:13:46.020 --> 00:13:48.450
+either, But you have the
+same. You must have the
+
+247
+00:13:48.450 --> 00:13:51.420
+same interrupt issues with calm
+objects in PowerShell that you
+
+248
+00:13:51.420 --> 00:13:54.660
+do in a.net app, don't
+you? Well. So, because PowerShell
+
+249
+00:13:54.660 --> 00:13:57.670
+is doing all of its
+evaluation at runtime and laser
+
+250
+00:13:57.670 --> 00:14:00.390
+only, they get to generate
+all this stuff. And the
+
+251
+00:14:00.390 --> 00:14:04.920
+whole facia on top of
+your objects at runtime and
+
+252
+00:14:04.920 --> 00:14:06.630
+the object back that they
+hand back to you, they
+
+253
+00:14:06.630 --> 00:14:08.730
+can make it look like
+anything that they want. So
+
+254
+00:14:08.730 --> 00:14:10.740
+in PowerShell, if you want
+to make a new.net object,
+
+255
+00:14:10.740 --> 00:14:14.550
+you can say new hyphen
+object system dot string. If
+
+256
+00:14:14.550 --> 00:14:16.590
+you wanna make a new
+comm object, you say new
+
+257
+00:14:16.890 --> 00:14:21.750
+hyphen object, dashcam shell dot
+application, and then you can
+
+258
+00:14:21.750 --> 00:14:24.930
+loop over it and look
+at collections and run around
+
+259
+00:14:24.930 --> 00:14:28.290
+inside the object. Exactly. As
+if it's any old power.
+
+260
+00:14:28.900 --> 00:14:31.740
+Sure. But one of the
+problems, especially with, you know,
+
+261
+00:14:31.740 --> 00:14:33.720
+the disposed pattern and all
+that kind of stuff with
+
+262
+00:14:33.720 --> 00:14:36.090
+calm objects is that if
+you really want to get
+
+263
+00:14:36.090 --> 00:14:37.980
+rid of them, you, you
+can't just set them to
+
+264
+00:14:37.980 --> 00:14:42.420
+nothing. You have to, you
+know, use the Marshall object
+
+265
+00:14:42.420 --> 00:14:46.020
+and release comm object. I
+personally, I, I'm not sure
+
+266
+00:14:46.020 --> 00:14:48.810
+how specifically PowerShell deals with
+that, but I've gone and
+
+267
+00:14:48.810 --> 00:14:51.680
+just set the common objects
+to nil, to NOLA rather
+
+268
+00:14:51.700 --> 00:14:55.520
+to dollar sign. No, and
+haven't had any trouble, we've
+
+269
+00:14:55.550 --> 00:14:58.740
+treated WMI objects the same
+way. I really mean that
+
+270
+00:14:58.950 --> 00:15:01.450
+it's working right though. But
+yeah, No, it doesn't mean
+
+271
+00:15:01.450 --> 00:15:04.180
+it's working. Right. But it
+does mean that PowerShell does
+
+272
+00:15:04.180 --> 00:15:07.240
+everything that it possibly can.
+And your point is valid
+
+273
+00:15:07.240 --> 00:15:10.450
+to the extent that it's
+possible to make it look
+
+274
+00:15:10.450 --> 00:15:14.200
+like all these objects are
+peers are the same thing.
+
+275
+00:15:14.410 --> 00:15:16.660
+And I guess it's also
+what you're using it for.
+
+276
+00:15:16.660 --> 00:15:22.000
+Right. You're using PowerShell to
+script applications together. Whereas, you
+
+277
+00:15:22.000 --> 00:15:25.150
+know, the problems with comm
+inter-op really happen, you know,
+
+278
+00:15:25.150 --> 00:15:28.390
+really rear their ugly head
+under a big scalable backend
+
+279
+00:15:28.390 --> 00:15:30.730
+system. Sure. That's a very
+valid point and I'm not
+
+280
+00:15:30.730 --> 00:15:34.570
+going to necessarily have PowerShell
+doing 10,000 some things against
+
+281
+00:15:34.630 --> 00:15:37.900
+a com interface. Although I
+did, I did recently write
+
+282
+00:15:37.900 --> 00:15:40.600
+a script that would talk
+to outlook and remove duplicates
+
+283
+00:15:40.600 --> 00:15:43.540
+from my calendar. So it
+spun through all my calendar
+
+284
+00:15:43.540 --> 00:15:48.070
+objects within the outlook object
+model, using calm, then look
+
+285
+00:15:48.070 --> 00:15:51.100
+for duplicates and remove them.
+And I did that. It
+
+286
+00:15:51.100 --> 00:15:54.130
+took like 200 megs of
+Ram and pounded on outlook
+
+287
+00:15:54.130 --> 00:15:56.950
+for half an hour. But
+it didn't, it didn't blow
+
+288
+00:15:56.950 --> 00:16:00.130
+up. It didn't leak that
+I could see. Right. So
+
+289
+00:16:00.130 --> 00:16:01.780
+in it and a leak
+is no problem. Cause it
+
+290
+00:16:01.780 --> 00:16:03.790
+doesn't have to stay in
+memory for long periods of
+
+291
+00:16:03.790 --> 00:16:06.970
+time. It's just going to
+run into that shell process
+
+292
+00:16:06.970 --> 00:16:11.110
+blows away. It's gone anyway.
+Exactly. Yeah, exactly. Okay. Good
+
+293
+00:16:11.110 --> 00:16:13.330
+points. Yeah. So I'm one
+of the things that we've
+
+294
+00:16:13.330 --> 00:16:16.930
+been doing at Carilion is
+a scripting, our version control
+
+295
+00:16:16.930 --> 00:16:19.570
+using subversion. We've talked about
+before, how I'm a subversion
+
+296
+00:16:19.570 --> 00:16:24.730
+guy and we've got some
+applications that need to programmatically
+
+297
+00:16:24.730 --> 00:16:26.800
+check things in and out
+of the system, we're doing
+
+298
+00:16:26.800 --> 00:16:30.640
+some configuration management. We have
+an application that if our
+
+299
+00:16:30.640 --> 00:16:33.910
+end user goes into our
+system and makes a change
+
+300
+00:16:33.910 --> 00:16:36.850
+using a configuration tool, we
+want to know that they
+
+301
+00:16:36.850 --> 00:16:40.180
+made that change and we
+want to have auditability. So
+
+302
+00:16:40.180 --> 00:16:43.840
+we actually check the files
+that that person changes with
+
+303
+00:16:43.840 --> 00:16:48.280
+our content management system back
+into source control. So then
+
+304
+00:16:48.280 --> 00:16:50.320
+we can go back and
+say, well gosh, on Tuesday,
+
+305
+00:16:50.320 --> 00:16:52.540
+the client logged in and
+made three changes and I
+
+306
+00:16:52.540 --> 00:16:55.780
+can see exactly what he
+did by doing DIFs. It's
+
+307
+00:16:55.780 --> 00:16:57.730
+a pretty, pretty simple pattern,
+has nothing to do with
+
+308
+00:16:57.730 --> 00:17:00.910
+source control has to do
+with managing content, right? Why
+
+309
+00:17:00.910 --> 00:17:02.800
+create a database to do
+all that management when you've
+
+310
+00:17:02.800 --> 00:17:06.160
+got a perfectly good journaled
+file system right here. And
+
+311
+00:17:06.160 --> 00:17:09.340
+the same thing would apply
+to team foundation server. But
+
+312
+00:17:09.730 --> 00:17:14.950
+the, the subversion system is
+this big opaque sea monster
+
+313
+00:17:15.100 --> 00:17:17.770
+that, that I don't well
+understand, but a really cool
+
+314
+00:17:17.770 --> 00:17:22.570
+guy named Arnold fines at
+shrink stir slash GIK. This
+
+315
+00:17:22.570 --> 00:17:25.180
+is the guy who wrote
+ONC. ONC is the subversion
+
+316
+00:17:25.180 --> 00:17:28.750
+plugin for visual studio is
+also a PowerShell fan and
+
+317
+00:17:28.750 --> 00:17:32.830
+is helping us write subversion
+scripts to check stuff in
+
+318
+00:17:32.830 --> 00:17:35.440
+and out. So right now
+there are scripts that living
+
+319
+00:17:35.440 --> 00:17:37.120
+at the command line, but
+we're going to plug those
+
+320
+00:17:37.120 --> 00:17:41.440
+in using that same extension
+ability to host PowerShell within
+
+321
+00:17:42.240 --> 00:17:45.580
+a web application or WinForms
+application. So all that functionality
+
+322
+00:17:45.580 --> 00:17:48.400
+to make these changes to
+our configuration system are gonna
+
+323
+00:17:48.400 --> 00:17:50.730
+be available in a wind
+farms app. We might put
+
+324
+00:17:50.730 --> 00:17:53.940
+an into an like an
+office application like InfoPath or
+
+325
+00:17:53.970 --> 00:17:58.980
+the command line or in
+on the web, all being
+
+326
+00:17:58.980 --> 00:18:02.310
+hosted within PowerShell. So PowerShell
+helps you level the playing
+
+327
+00:18:02.310 --> 00:18:05.100
+field with these admin administrative
+consoles that you might have
+
+328
+00:18:05.310 --> 00:18:08.790
+very cool. So that administration
+stuff is really where it's
+
+329
+00:18:08.790 --> 00:18:10.920
+at. If you take a
+look at Jeffrey <inaudible>, the
+
+330
+00:18:10.920 --> 00:18:14.730
+architect of PowerShell had a
+series of tech ed talks
+
+331
+00:18:14.730 --> 00:18:16.600
+that are now online. You
+can see him at shrink
+
+332
+00:18:16.600 --> 00:18:22.110
+cutter slash G I M.
+Jeffrey is the really enthusiastic
+
+333
+00:18:22.110 --> 00:18:25.050
+guy who, who helped create
+PowerShell. He's kind of the
+
+334
+00:18:25.050 --> 00:18:27.570
+architect of PowerShell, the father
+of PowerShell. I got a
+
+335
+00:18:27.570 --> 00:18:29.370
+chance to meet him at
+tech ed. We were just
+
+336
+00:18:29.370 --> 00:18:33.330
+literally there on Sunday, walking
+around the preconference had started.
+
+337
+00:18:33.330 --> 00:18:36.840
+And he was hanging out
+talking to another blogger named
+
+338
+00:18:36.840 --> 00:18:40.170
+Mark from the Netherlands. And
+they were just hanging out
+
+339
+00:18:40.200 --> 00:18:41.310
+and I was like, Hey,
+what are you guys up
+
+340
+00:18:41.310 --> 00:18:43.740
+to? And then we just
+start hacking on PowerShell. I
+
+341
+00:18:43.740 --> 00:18:46.200
+think I talked to him
+for like three hours, such
+
+342
+00:18:46.230 --> 00:18:48.300
+a cool guy. That's one
+of the great things about
+
+343
+00:18:48.300 --> 00:18:51.000
+tech and you just bump
+into people. I ended up
+
+344
+00:18:51.000 --> 00:18:56.310
+doing two, two demonstrations of
+PowerShell for Jeffrey, and so
+
+345
+00:18:56.310 --> 00:18:57.990
+he could free him up
+to do a little bit
+
+346
+00:18:57.990 --> 00:19:00.840
+of other things. So we
+were writing more and more
+
+347
+00:19:00.840 --> 00:19:03.810
+PowerShell content at Kirlian. We
+need to, we need a
+
+348
+00:19:03.810 --> 00:19:08.220
+unit test that content. So
+one of our guys, Jason Sherman
+
+349
+00:19:08.250 --> 00:19:12.790
+at Karelian has written an
+end unit example up a
+
+350
+00:19:12.810 --> 00:19:16.260
+trickster slash Gio, where you
+can use an unit to
+
+351
+00:19:16.260 --> 00:19:18.660
+test your PowerShell scripts, to
+see if they work well.
+
+352
+00:19:19.080 --> 00:19:22.560
+Cool. Very, very simple, same
+exact model as the logo
+
+353
+00:19:22.560 --> 00:19:25.470
+stuff you're hosting PowerShell within
+end unit, and then end
+
+354
+00:19:25.470 --> 00:19:28.320
+unit itself gets hosted within
+a test runner. And those
+
+355
+00:19:28.320 --> 00:19:31.710
+concepts very much apply to
+whatever test runner you're using.
+
+356
+00:19:31.710 --> 00:19:34.860
+If you're using a team
+foundation server, it would apply
+
+357
+00:19:34.860 --> 00:19:38.190
+as well. It's just that
+flexible having an in-process engine
+
+358
+00:19:38.190 --> 00:19:40.680
+to fire up PowerShell. It
+makes it really, really powerful.
+
+359
+00:19:40.710 --> 00:19:43.440
+Nice. Now, one of the
+other things that PowerShell is
+
+360
+00:19:43.440 --> 00:19:47.550
+really awesome at doing is
+manipulating XML. It lets you
+
+361
+00:19:47.550 --> 00:19:50.340
+look at XML in what
+feels like a very strongly
+
+362
+00:19:50.340 --> 00:19:52.380
+typed way. Like if I
+were going to load up,
+
+363
+00:19:54.180 --> 00:19:55.800
+if I were gonna open
+up an RSS feed and
+
+364
+00:19:55.800 --> 00:19:59.730
+look for attachments, right? Look
+for enclosures. Typically I would
+
+365
+00:19:59.790 --> 00:20:03.270
+like do what XML document
+that load, give it the
+
+366
+00:20:03.270 --> 00:20:05.760
+Earl. Then I'd say like
+select nodes or select single
+
+367
+00:20:05.760 --> 00:20:09.210
+nodes near codex use X
+path to write use X
+
+368
+00:20:09.210 --> 00:20:12.690
+path type in whack, whack
+slash enclosures or something like
+
+369
+00:20:12.690 --> 00:20:17.580
+that. I could use get
+elements by tag name and
+
+370
+00:20:17.580 --> 00:20:19.760
+get all of the elements
+of certain tag name, Several
+
+371
+00:20:19.760 --> 00:20:22.700
+nested loops. Yeah. I could
+spend through it looking at
+
+372
+00:20:22.700 --> 00:20:26.270
+the different child nodes underneath
+that, that Dom with PowerShell
+
+373
+00:20:26.270 --> 00:20:29.030
+though, you can do all
+those things of course, but
+
+374
+00:20:29.240 --> 00:20:33.230
+it also looks at the
+tags and generates basically I
+
+375
+00:20:33.230 --> 00:20:37.550
+would say synthetic properties. So
+I could say taking a
+
+376
+00:20:37.550 --> 00:20:39.950
+variable, a let's say, Hey,
+and I go and I
+
+377
+00:20:39.980 --> 00:20:42.590
+go off and I get
+my RSS feed. And now
+
+378
+00:20:42.620 --> 00:20:45.800
+inside of the variable a
+is my RSS feed. I
+
+379
+00:20:45.800 --> 00:20:53.110
+could say a.rss.channel dot items
+and spin through that list.
+
+380
+00:20:53.260 --> 00:20:55.300
+So they don't really exist,
+but it looks at the
+
+381
+00:20:55.300 --> 00:20:58.900
+document and it gleans them
+right there. There's synthetic, that's
+
+382
+00:20:58.900 --> 00:21:02.500
+a beautiful model. Oh, it's
+so clean. It's not serialization.
+
+383
+00:21:02.500 --> 00:21:05.680
+Right. It's almost like link
+or X link. Yeah. But
+
+384
+00:21:05.680 --> 00:21:09.520
+it's today. Very cool. Yeah.
+And then I can hear
+
+385
+00:21:09.520 --> 00:21:11.350
+with what's cool. Check this
+out. So I can say
+
+386
+00:21:11.830 --> 00:21:16.780
+a.rss.channel that items pipe, and
+I can pipe that collection
+
+387
+00:21:16.780 --> 00:21:19.810
+of items. And then I
+can go and say where
+
+388
+00:21:20.590 --> 00:21:23.590
+item dot title equals this.
+So I can almost kind
+
+389
+00:21:23.590 --> 00:21:26.290
+of, it's very linked, like,
+and it all happens today
+
+390
+00:21:26.290 --> 00:21:29.410
+and it's all because PowerShell
+is doing this lazy reflection.
+
+391
+00:21:30.340 --> 00:21:34.120
+You loose type redness interpreting,
+and it's very fast, you
+
+392
+00:21:34.120 --> 00:21:35.980
+know, performance isn't, doesn't have
+to be an issue. Right.
+
+393
+00:21:35.980 --> 00:21:38.520
+Cause it's supposed to be
+friendly and flexible. Yeah. And
+
+394
+00:21:38.520 --> 00:21:41.070
+performance isn't less and less
+of an issue every year
+
+395
+00:21:41.100 --> 00:21:45.090
+with these new processors. It's
+ridiculous. Yeah. Yeah. Especially for
+
+396
+00:21:45.090 --> 00:21:48.330
+apps. Exactly. Exactly. And for
+administration, it's not that big
+
+397
+00:21:48.330 --> 00:21:50.880
+of a deal, but it
+still is pretty fast. So
+
+398
+00:21:50.880 --> 00:21:54.240
+I went and I noticed
+that a guy had written
+
+399
+00:21:54.270 --> 00:21:59.430
+a windows, desktop search thing,
+plugin commandlet for PowerShell because
+
+400
+00:21:59.430 --> 00:22:01.230
+he want to be able
+to search his desktop search
+
+401
+00:22:01.650 --> 00:22:05.100
+from, from PowerShell. Now I
+stopped using windows, desktop search
+
+402
+00:22:05.100 --> 00:22:08.460
+a while back. I use
+Google desktop search. So I
+
+403
+00:22:08.460 --> 00:22:10.980
+know that Google desktop has
+a calm API. So I
+
+404
+00:22:10.980 --> 00:22:13.590
+figured I'd go off and
+try to do some magic
+
+405
+00:22:13.590 --> 00:22:16.620
+to talk to that calm
+API. But yeah, the calm
+
+406
+00:22:16.620 --> 00:22:19.140
+part of my brain has
+long been overwritten by more
+
+407
+00:22:19.140 --> 00:22:22.440
+interesting things. Right. That that
+brain cell now holds, I
+
+408
+00:22:22.440 --> 00:22:27.900
+don't know information about lost
+Grey's anatomy. So I was
+
+409
+00:22:27.900 --> 00:22:31.230
+fizzy man. Oh yeah. I
+gave up on all that
+
+410
+00:22:31.230 --> 00:22:33.450
+stuff. And then I said
+to myself, well crap, how
+
+411
+00:22:33.450 --> 00:22:35.100
+am I going to talk
+to Google desktop? All they
+
+412
+00:22:35.100 --> 00:22:37.560
+have is this calm API.
+Well, turns out that, you
+
+413
+00:22:37.560 --> 00:22:39.690
+know, if you search Google
+desktop, you're doing a local
+
+414
+00:22:39.690 --> 00:22:41.820
+host. They have a little
+mini web server, right. You're
+
+415
+00:22:41.820 --> 00:22:45.570
+on like port 80, 80,
+if you type in format
+
+416
+00:22:45.600 --> 00:22:49.140
+equals XML on the Earl,
+when you talk to your
+
+417
+00:22:49.140 --> 00:22:52.530
+Google desktop, they'll hand back
+XML rather than, Oh, and
+
+418
+00:22:52.530 --> 00:22:56.000
+you could pipe that right
+into S into PowerShell PowerShell.
+
+419
+00:22:56.520 --> 00:22:58.860
+Wow. So what I ended
+up doing was I did
+
+420
+00:22:58.860 --> 00:23:02.970
+a local web server call
+basically. I said to PowerShell
+
+421
+00:23:03.630 --> 00:23:08.670
+search for Carl Franklin does a
+web service call to the
+
+422
+00:23:08.670 --> 00:23:13.350
+local host instance of Google
+desktop format equals XML and
+
+423
+00:23:13.350 --> 00:23:15.270
+then spun through it. And
+then here's the cool part.
+
+424
+00:23:15.570 --> 00:23:19.470
+It returns back the file
+names, right? Yeah. Well, those
+
+425
+00:23:19.470 --> 00:23:21.420
+file names are local. They're
+on my real system. So
+
+426
+00:23:21.420 --> 00:23:24.180
+I can go and say,
+get info and suddenly talk
+
+427
+00:23:24.180 --> 00:23:26.520
+to those file names. And
+I ended up returning not
+
+428
+00:23:26.520 --> 00:23:28.530
+just a list of the
+file names, but the actual
+
+429
+00:23:28.530 --> 00:23:31.710
+file and Philip see your
+headings. Exactly. And then from
+
+430
+00:23:31.710 --> 00:23:34.320
+there, I could say search
+for all of these files
+
+431
+00:23:34.320 --> 00:23:37.200
+and get their content and
+copy them here or delete
+
+432
+00:23:37.200 --> 00:23:39.510
+them or whatever. So, you
+know what I ended up
+
+433
+00:23:39.510 --> 00:23:42.450
+doing, I ended up searching
+for my social security number,
+
+434
+00:23:43.800 --> 00:23:46.940
+found it in a tax
+that I had forgotten about
+
+435
+00:23:47.900 --> 00:23:50.480
+and then pipe the resulting
+file info optics and deleted
+
+436
+00:23:50.480 --> 00:23:53.480
+them. Wow. Yeah. Very cool
+stuff. And that's just one
+
+437
+00:23:53.480 --> 00:23:55.400
+example that applies to whatever
+you want to do, any
+
+438
+00:23:55.400 --> 00:23:57.650
+place where you've got some
+information and you want to
+
+439
+00:23:57.650 --> 00:24:01.070
+tie it into other information.
+So PowerShell is that spackle,
+
+440
+00:24:01.070 --> 00:24:03.560
+right? It's that putty that
+can tie these disparate bits
+
+441
+00:24:03.560 --> 00:24:07.700
+of information together. So for
+automating like the, the workflow
+
+442
+00:24:07.700 --> 00:24:09.980
+process, I know that you
+have a very complicated workflow
+
+443
+00:24:09.980 --> 00:24:13.160
+process to make plop work
+because you have the source
+
+444
+00:24:13.160 --> 00:24:15.710
+audio and then it fires
+off all of these different
+
+445
+00:24:15.710 --> 00:24:18.230
+codecs and compressors and things
+to make all the different
+
+446
+00:24:18.230 --> 00:24:21.260
+audio. And then FTP them
+put things in databases and
+
+447
+00:24:21.260 --> 00:24:24.800
+stuff, power it's probably batch
+files and magic and vb.net.
+
+448
+00:24:24.880 --> 00:24:26.230
+I don't know how you
+do it. It is no,
+
+449
+00:24:26.230 --> 00:24:29.590
+it's no batch files. It's
+shelling out to different things
+
+450
+00:24:29.590 --> 00:24:34.150
+and shelling out to convert
+the files, you know, to
+
+451
+00:24:34.150 --> 00:24:37.750
+lame and to the windows,
+media encoder. And, you know,
+
+452
+00:24:37.750 --> 00:24:40.600
+the workflow is all just
+logic. It's all AB network
+
+453
+00:24:40.780 --> 00:24:43.540
+Stuff like stuff like that
+is totally something you could
+
+454
+00:24:43.540 --> 00:24:46.690
+write in vb.net. And you
+already have the benefits of
+
+455
+00:24:46.690 --> 00:24:49.060
+writing it in scripting are
+the, you know, the flexibility
+
+456
+00:24:49.060 --> 00:24:53.140
+that you can change those
+things very quickly. There's also
+
+457
+00:24:53.140 --> 00:24:57.520
+the notion of a progress
+bar within PowerShell. You can
+
+458
+00:24:57.520 --> 00:25:01.690
+say, right progress. And depending
+on, depending on what it's
+
+459
+00:25:01.690 --> 00:25:04.030
+hosted in, it might be
+hosted in the command line
+
+460
+00:25:04.030 --> 00:25:07.120
+and then bring up kind
+of an ANSI art progress
+
+461
+00:25:07.120 --> 00:25:09.190
+bar. Or if it's hosted
+in a windows application, you
+
+462
+00:25:09.190 --> 00:25:11.230
+might choose to put up
+an actual progress bar. So
+
+463
+00:25:11.230 --> 00:25:13.480
+no one has to know
+it's a PowerShell script and
+
+464
+00:25:13.480 --> 00:25:15.370
+you still get the flexibility
+of being able to change
+
+465
+00:25:15.370 --> 00:25:21.220
+those scripts. That examples it's
+shrink, stir.com/gi Q very nice.
+
+466
+00:25:21.430 --> 00:25:24.820
+Yeah, pretty cool stuff. There's
+a number of different advanced
+
+467
+00:25:24.820 --> 00:25:26.590
+things that I've got up
+on the blog to take
+
+468
+00:25:26.590 --> 00:25:28.960
+a look at. One of
+them is a talking to
+
+469
+00:25:28.960 --> 00:25:35.770
+virtual server, 2005, using WMI
+with shrink.com/gis, and then extending
+
+470
+00:25:35.770 --> 00:25:40.210
+DIR actually making Durer DIR
+show more information than it
+
+471
+00:25:40.210 --> 00:25:42.970
+does when it ships with
+the PowerShell. That's at <inaudible>
+
+472
+00:25:42.980 --> 00:25:46.960
+dot com slash Git nice
+lots of good information. I
+
+473
+00:25:46.960 --> 00:25:50.020
+really encourage people to take
+the time because it'll suck
+
+474
+00:25:50.020 --> 00:25:52.510
+for the first couple of
+hours. PowerShell is a tos
+
+475
+00:25:52.510 --> 00:25:56.740
+and confusing, but once you
+get it, it stops being
+
+476
+00:25:56.740 --> 00:25:59.320
+a tos and starts being
+elegant. You know, it stops
+
+477
+00:25:59.320 --> 00:26:01.630
+being confusing and starts working
+the way your brain works.
+
+478
+00:26:02.140 --> 00:26:04.650
+It really opens up a
+lot of OSTP things that
+
+479
+00:26:05.020 --> 00:26:07.420
+aren't available to you. I
+gotta tell you, Scott, that
+
+480
+00:26:07.420 --> 00:26:10.720
+example with Google desktop is
+just wild. Cause how, how
+
+481
+00:26:10.720 --> 00:26:12.730
+would you have done that
+before, right? Yeah. No, you
+
+482
+00:26:12.730 --> 00:26:15.550
+couldn't. Yeah. It would have
+been very, very difficult. You
+
+483
+00:26:15.550 --> 00:26:17.800
+could have done it with
+a command line application and.net,
+
+484
+00:26:17.830 --> 00:26:20.530
+but it wouldn't truly have
+been integrated. It's the difference
+
+485
+00:26:20.530 --> 00:26:24.820
+between kind of MacGyver style
+integration, right? Where you're, where
+
+486
+00:26:24.820 --> 00:26:28.210
+you're doing bailing wire and
+inter-op tweezers and really having
+
+487
+00:26:28.210 --> 00:26:32.230
+it. Wow. That sounds fantastic.
+Scott. I think the listeners
+
+488
+00:26:32.230 --> 00:26:35.670
+are really going to appreciate
+all your hard work and
+
+489
+00:26:35.710 --> 00:26:39.040
+for rounding up all these
+great resources, check out PowerShell,
+
+490
+00:26:39.430 --> 00:26:42.760
+get into it, and we'll
+see you next week on.
+

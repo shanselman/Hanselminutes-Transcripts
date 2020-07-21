@@ -1,0 +1,3382 @@
+WEBVTT FILE
+
+1
+00:00:12.120 --> 00:00:17.670
+From hanselminutes.com. It's Ansul minutes,
+our weekly discussion with web
+
+2
+00:00:17.670 --> 00:00:22.260
+developer and technologists, Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+3
+00:00:22.260 --> 00:00:28.800
+number two 23. Recorded live
+Friday, July 16th, 2010. Support for Hanselman
+
+4
+00:00:28.800 --> 00:00:32.280
+it's. This provided by Telerik
+rad controls, the most comprehensive
+
+5
+00:00:32.280 --> 00:00:35.970
+suite of components for windows
+forms and asp.net web applications
+
+6
+00:00:36.420 --> 00:00:44.520
+online@wwwdottelerik.com. In this episode, Scott
+talks to senior dev lead
+
+7
+00:00:44.520 --> 00:00:49.860
+in the database and modeling
+group. Jeff there's that? Hi,
+
+8
+00:00:49.860 --> 00:00:51.780
+this is Scott Hanselman, and
+this is another episode of
+
+9
+00:00:51.780 --> 00:00:54.810
+Hansel minutes today. We're talking
+to Jeff <inaudible>. He is
+
+10
+00:00:54.810 --> 00:00:57.210
+a senior development lead in
+the data and modeling group,
+
+11
+00:00:57.270 --> 00:01:01.230
+and he is working on
+entity framework magic unicorn edition.
+
+12
+00:01:01.590 --> 00:01:04.640
+Thank you, Jeff, for chatting
+with me today. No problem,
+
+13
+00:01:04.640 --> 00:01:07.460
+Scott. Thanks for having me.
+What is the real name
+
+14
+00:01:07.550 --> 00:01:09.950
+I named it magic unicorn,
+just because it makes it
+
+15
+00:01:09.950 --> 00:01:12.350
+easy to search for what,
+what is the name of
+
+16
+00:01:12.350 --> 00:01:15.560
+what we just got released
+last year? So we just
+
+17
+00:01:15.560 --> 00:01:19.940
+released the entity framework feature
+CTP for, and this is
+
+18
+00:01:19.940 --> 00:01:22.730
+not to be confused with
+the entity framework for that
+
+19
+00:01:22.730 --> 00:01:26.570
+shift with.net framework for this
+is a set of pre-release
+
+20
+00:01:26.570 --> 00:01:31.280
+features that we're working on
+for a future full version
+
+21
+00:01:31.280 --> 00:01:36.380
+of the framework or not
+a band release, but basically
+
+22
+00:01:36.380 --> 00:01:38.420
+what it is is, is
+a set of additions that
+
+23
+00:01:38.420 --> 00:01:40.790
+we want to add to
+the product in some format.
+
+24
+00:01:40.790 --> 00:01:44.300
+And we're really looking for
+customer feedback on these features
+
+25
+00:01:44.300 --> 00:01:48.290
+to see if they like
+the experiences we're given, and
+
+26
+00:01:48.290 --> 00:01:50.810
+if they want us to
+change the shape of any
+
+27
+00:01:50.810 --> 00:01:53.810
+of the API APIs or
+any of the components so
+
+28
+00:01:53.810 --> 00:01:56.960
+that we can really get
+them right when we ship
+
+29
+00:01:56.960 --> 00:02:00.620
+them. For real, It seems
+like entity framework has to
+
+30
+00:02:00.620 --> 00:02:03.800
+do a lot of it
+has to solve a lot
+
+31
+00:02:03.800 --> 00:02:05.570
+of problems for a lot
+of people. I mean, I
+
+32
+00:02:05.720 --> 00:02:08.090
+like you, you know, you
+have to be like entity,
+
+33
+00:02:08.090 --> 00:02:10.640
+you have to be enterprise
+level and be super powerful
+
+34
+00:02:10.640 --> 00:02:14.360
+and do giant databases and
+complex situations and complex mappings,
+
+35
+00:02:14.960 --> 00:02:18.140
+but then you also want
+it to be as easy
+
+36
+00:02:18.140 --> 00:02:20.120
+as linked to SQL was
+because so many people use
+
+37
+00:02:20.420 --> 00:02:23.570
+SQL and you want to
+make sure that Scott goo
+
+38
+00:02:23.570 --> 00:02:26.570
+can do a North wind
+demo and put a database
+
+39
+00:02:26.570 --> 00:02:28.700
+together and just a few
+minutes. So how do you
+
+40
+00:02:28.910 --> 00:02:32.390
+deal with those competing ends
+if you want to solve
+
+41
+00:02:32.390 --> 00:02:35.960
+the giant database problem, and
+also just do a real,
+
+42
+00:02:35.960 --> 00:02:41.000
+real simple application? Well, that,
+that, that is the challenge.
+
+43
+00:02:41.600 --> 00:02:45.020
+And, and we do recognize
+that there are two really
+
+44
+00:02:45.020 --> 00:02:47.930
+big focuses that are interested
+in this space. And as
+
+45
+00:02:47.930 --> 00:02:50.930
+you said, one is that
+high end enterprise customer that,
+
+46
+00:02:51.200 --> 00:02:55.340
+you know, wants enterprise scale
+wants really large models. You
+
+47
+00:02:55.340 --> 00:02:57.740
+know, they want all of
+the latest and greatest server
+
+48
+00:02:57.740 --> 00:03:01.660
+features like user defined types
+and table valued parameters and,
+
+49
+00:03:01.810 --> 00:03:04.930
+and that sort of thing.
+But there's also a set
+
+50
+00:03:04.930 --> 00:03:09.100
+of customers who are really
+looking for a simple solution
+
+51
+00:03:10.390 --> 00:03:13.330
+for data access, where they
+can get up and running
+
+52
+00:03:13.330 --> 00:03:16.690
+and be productive right away.
+And so what we've done
+
+53
+00:03:16.690 --> 00:03:19.630
+with our release after the
+release of entity framework for,
+
+54
+00:03:20.200 --> 00:03:24.790
+and visual studio, 2010, we
+really decided that, you know,
+
+55
+00:03:25.210 --> 00:03:28.240
+those were the two, two
+focuses we wanted to have
+
+56
+00:03:28.660 --> 00:03:31.540
+going forward. At least for
+this next release was we
+
+57
+00:03:31.540 --> 00:03:36.220
+are going to be doing
+a significant investment and that
+
+58
+00:03:36.220 --> 00:03:39.250
+higher end customer in terms
+of exposing more, more SQL
+
+59
+00:03:39.250 --> 00:03:43.110
+server functionality through the entity
+framework with concepts like, like
+
+60
+00:03:43.120 --> 00:03:47.590
+user defined types and that
+sort of thing. But we
+
+61
+00:03:47.590 --> 00:03:51.160
+also, you know, want it
+to really make the experience
+
+62
+00:03:51.160 --> 00:03:54.190
+of using the entity framework
+and simplifying the data access
+
+63
+00:03:54.190 --> 00:04:00.640
+layer for, for customers who,
+who didn't really need all
+
+64
+00:04:00.640 --> 00:04:04.330
+those additional complexities in their
+face all the time. And
+
+65
+00:04:04.330 --> 00:04:06.310
+so what we did was
+we defined this kind of
+
+66
+00:04:06.310 --> 00:04:11.440
+productivity theme for the next
+release and, and that one
+
+67
+00:04:12.400 --> 00:04:15.250
+we're really about taking another
+look at the API we
+
+68
+00:04:15.250 --> 00:04:18.820
+had and, and trying to,
+to change the story of
+
+69
+00:04:18.820 --> 00:04:22.180
+yes, a little bit in
+that, you know, in the
+
+70
+00:04:22.180 --> 00:04:26.320
+first release, it really wasn't
+about being an object, relational
+
+71
+00:04:26.320 --> 00:04:30.370
+mapping technology. And by first
+release, I mean like.net three,
+
+72
+00:04:30.370 --> 00:04:33.130
+five SB one when the
+entity framework first came out,
+
+73
+00:04:33.550 --> 00:04:36.340
+you know, we, we really
+weren't positioning ourselves as an
+
+74
+00:04:36.340 --> 00:04:39.970
+ORM that would, you know,
+have, have feature parody with
+
+75
+00:04:40.240 --> 00:04:44.650
+other worms, like, like in
+hibernate, it was really about
+
+76
+00:04:44.650 --> 00:04:48.100
+getting the, the entity data
+model kind of concept out
+
+77
+00:04:48.100 --> 00:04:51.070
+there for the first time.
+But as a result, you
+
+78
+00:04:51.070 --> 00:04:53.170
+know, we saw a lot
+of customers were like, Hey,
+
+79
+00:04:53.170 --> 00:04:56.320
+you know, this thing really
+does fit or seems to
+
+80
+00:04:56.320 --> 00:04:59.890
+fit in that object, relational
+mapping technology, where I want
+
+81
+00:04:59.890 --> 00:05:02.080
+an ORM to help me
+build, you know, my data
+
+82
+00:05:02.080 --> 00:05:05.410
+access layer, but really, you
+know, we felt, we felt
+
+83
+00:05:05.410 --> 00:05:08.830
+pretty far pretty short of,
+of actually fulfilling a lot
+
+84
+00:05:08.830 --> 00:05:11.200
+of those scenarios. And, you
+know, we took, we took
+
+85
+00:05:11.200 --> 00:05:14.470
+a big step forward in
+<inaudible> with the release of
+
+86
+00:05:14.500 --> 00:05:18.190
+<inaudible>, but we realized that
+there's still, there's still a
+
+87
+00:05:18.190 --> 00:05:21.100
+long way to go. You
+know, there's still customers who,
+
+88
+00:05:21.400 --> 00:05:23.560
+you know, want the power
+of, of modeling and the
+
+89
+00:05:23.560 --> 00:05:26.020
+ease of modeling, but they
+don't want to have to
+
+90
+00:05:26.020 --> 00:05:29.170
+go through and, you know,
+build up a bunch of
+
+91
+00:05:29.230 --> 00:05:32.830
+build a model with designers.
+They don't want to have
+
+92
+00:05:32.830 --> 00:05:36.340
+to look at an API
+surface and see, you know,
+
+93
+00:05:36.340 --> 00:05:39.880
+50, 60 API APIs hanging
+off of a single class,
+
+94
+00:05:39.880 --> 00:05:42.910
+just because that class, like
+you said, needs to serve
+
+95
+00:05:42.910 --> 00:05:46.750
+multiple purposes, it needs to
+work well in multi-tiered scenarios.
+
+96
+00:05:46.750 --> 00:05:48.790
+It needs to work well
+in the enterprise. It needs
+
+97
+00:05:48.790 --> 00:05:52.180
+to work well as just
+a core query and change
+
+98
+00:05:52.180 --> 00:05:55.990
+tracking mechanism. But, you know,
+not everyone has all of
+
+99
+00:05:55.990 --> 00:05:58.880
+those concerns. So that really
+why we built those, you
+
+100
+00:05:58.880 --> 00:06:02.540
+know, the DB context and
+DB set classes and that
+
+101
+00:06:02.540 --> 00:06:08.410
+feature CTP for magic magic
+unicorn edition. Which, But are
+
+102
+00:06:08.410 --> 00:06:10.000
+you guys mad when you
+saw that? Cause I didn't
+
+103
+00:06:10.000 --> 00:06:12.670
+tell you I was going
+to do that. No, we,
+
+104
+00:06:12.670 --> 00:06:14.620
+we got, you know, I
+think a couple of guys
+
+105
+00:06:14.620 --> 00:06:17.800
+on the team, you know,
+saw your blog posts and
+
+106
+00:06:17.800 --> 00:06:20.380
+started emailing it around and
+in our hallway now we
+
+107
+00:06:20.380 --> 00:06:22.630
+have a little unicorn horns
+on all of our office.
+
+108
+00:06:25.090 --> 00:06:29.350
+That's awesome because we're all
+citizens. When I, what happened
+
+109
+00:06:29.350 --> 00:06:33.250
+was I was, I played
+with it before a while
+
+110
+00:06:33.250 --> 00:06:34.960
+back. I mean, cause it'd
+been, you guys have been
+
+111
+00:06:34.960 --> 00:06:38.260
+designing this and thinking about
+this for, for a while,
+
+112
+00:06:38.260 --> 00:06:39.850
+you know, you can go
+up to the entity framework,
+
+113
+00:06:39.850 --> 00:06:41.830
+design blog and check it
+out. And there's been discussion
+
+114
+00:06:41.830 --> 00:06:44.740
+about this for, you know,
+publicly, even since March, but
+
+115
+00:06:45.100 --> 00:06:47.080
+I don't think a lot
+of people saw that. I
+
+116
+00:06:47.080 --> 00:06:48.880
+mean, the people who were
+really interested in the framework
+
+117
+00:06:48.970 --> 00:06:52.660
+saw the blog, the blog
+posted March about data annotations
+
+118
+00:06:52.660 --> 00:06:56.020
+and code first had been
+talked about for awhile. But
+
+119
+00:06:56.020 --> 00:06:59.480
+I sat down with actually
+with Scott goo a couple
+
+120
+00:06:59.510 --> 00:07:03.160
+days ago and he was
+showing me this in, in
+
+121
+00:07:03.160 --> 00:07:05.560
+the lobby of one of
+the buildings. It like I
+
+122
+00:07:05.560 --> 00:07:07.570
+kinda was like eight 30
+or nine o'clock at night.
+
+123
+00:07:07.600 --> 00:07:11.530
+It was totally empty. People
+were vacuuming and, and Scott
+
+124
+00:07:11.530 --> 00:07:12.640
+was like, dude, are you
+going to see you see
+
+125
+00:07:12.640 --> 00:07:14.630
+this? Did you check this
+out? Cause that's what's so
+
+126
+00:07:14.630 --> 00:07:17.620
+Scott that's how Scott goo
+rolls. Right? He's got like
+
+127
+00:07:17.620 --> 00:07:20.170
+a laptop. He's like, dude,
+did you see this? So
+
+128
+00:07:20.500 --> 00:07:23.080
+he goes and he's like
+public class, this pelletize stack.
+
+129
+00:07:23.950 --> 00:07:25.420
+And he hits at five
+and it's like, well, what
+
+130
+00:07:25.480 --> 00:07:27.400
+was it? Slow down, slow
+down. Where's your connection string.
+
+131
+00:07:27.700 --> 00:07:31.930
+Where's the database, you know
+what happened there? And it
+
+132
+00:07:31.930 --> 00:07:34.810
+was the first time and
+I'm, and I'm being straight
+
+133
+00:07:34.810 --> 00:07:35.980
+with here, but it was
+the first time when I
+
+134
+00:07:35.980 --> 00:07:38.110
+was like, wow, I'm going
+to actually use any framework
+
+135
+00:07:38.110 --> 00:07:40.450
+for little stuff too, because
+I've been using linked to
+
+136
+00:07:40.460 --> 00:07:43.210
+SQL. Yeah. I know that
+there was some link to
+
+137
+00:07:43.210 --> 00:07:45.580
+SQL stuff. It's a controversy
+and people were like, yeah,
+
+138
+00:07:45.610 --> 00:07:49.060
+entity frameworks, the way going
+forward. But you know, people
+
+139
+00:07:49.060 --> 00:07:51.580
+were still using links SQL
+cause it's simple and easy.
+
+140
+00:07:51.580 --> 00:07:54.490
+And this was the first
+time when I felt that
+
+141
+00:07:54.490 --> 00:07:56.590
+on the, on the ease
+of getting started in any
+
+142
+00:07:56.590 --> 00:08:00.070
+framework, gut got easier. And
+I actually was in I'm
+
+143
+00:08:00.340 --> 00:08:02.830
+at the web camps with
+James senior and we did
+
+144
+00:08:02.860 --> 00:08:04.750
+like a whole bunch of
+cities, I think changed it
+
+145
+00:08:04.750 --> 00:08:08.350
+like 15 cities, worldwide teaching
+people how to make websites
+
+146
+00:08:08.350 --> 00:08:11.170
+and use any framework. And
+that jumped that jumping off
+
+147
+00:08:11.170 --> 00:08:14.140
+point that getting started, make
+a database install, SQL express
+
+148
+00:08:14.480 --> 00:08:16.900
+that was difficult, but being
+able to go and just
+
+149
+00:08:16.900 --> 00:08:22.240
+define your classes and go
+for four basic scenarios is
+
+150
+00:08:22.240 --> 00:08:25.750
+just fantastic. I thought like
+I'm gushing, but I was
+
+151
+00:08:25.750 --> 00:08:28.960
+really impressed. A couple, a
+couple of funny points on
+
+152
+00:08:28.960 --> 00:08:30.700
+that. You know, we've, we've
+been working quite a bit
+
+153
+00:08:30.700 --> 00:08:33.610
+with, with Scott goo on,
+you know, the evolution of
+
+154
+00:08:33.610 --> 00:08:35.530
+this thing and we, we
+give them demos every now
+
+155
+00:08:35.530 --> 00:08:37.510
+and then. And on the
+latest one where we showed
+
+156
+00:08:37.510 --> 00:08:40.110
+him the functionality that we
+were going to ship in
+
+157
+00:08:40.160 --> 00:08:44.890
+this CDP, he was literally
+coming across the room, you
+
+158
+00:08:44.890 --> 00:08:47.470
+know, elbowing the guy who
+was giving him the demo
+
+159
+00:08:47.470 --> 00:08:49.510
+out of the way to
+like take the keyboard, to
+
+160
+00:08:49.510 --> 00:08:51.970
+like play with stuff. It
+was, he was really excited
+
+161
+00:08:51.970 --> 00:08:56.640
+about it. But yeah, that,
+that was definitely one of
+
+162
+00:08:56.640 --> 00:08:59.820
+the big goals was how
+do you, how do you
+
+163
+00:08:59.820 --> 00:09:03.750
+get started quickly and not
+getting started experience when, you
+
+164
+00:09:03.750 --> 00:09:05.550
+know, maybe you don't have
+a database and you're just
+
+165
+00:09:05.550 --> 00:09:10.410
+doing some, some rapid application
+development stuff. And you know,
+
+166
+00:09:10.410 --> 00:09:14.070
+you just write your classes,
+you kind of conceptually can
+
+167
+00:09:14.070 --> 00:09:18.000
+build this model just by
+making a new DB context
+
+168
+00:09:18.000 --> 00:09:21.270
+and saying which classes you're
+interested in. Like, and then
+
+169
+00:09:21.270 --> 00:09:24.030
+you just create the class
+and it makes a database
+
+170
+00:09:24.030 --> 00:09:27.630
+for you. And you know,
+if there's a database that
+
+171
+00:09:27.630 --> 00:09:30.420
+already exists, it will, it
+will find that one and
+
+172
+00:09:30.450 --> 00:09:35.040
+use that. And you know,
+the hope was that, you
+
+173
+00:09:35.040 --> 00:09:38.220
+know, at least, at least
+for some customers that that
+
+174
+00:09:38.220 --> 00:09:41.640
+would, that would really create
+an easy experience for building
+
+175
+00:09:41.910 --> 00:09:44.870
+kind of smaller apps. So
+the first thing that some
+
+176
+00:09:44.870 --> 00:09:46.550
+people that I talked to
+said when they saw this
+
+177
+00:09:46.550 --> 00:09:48.230
+was okay, well, that's cool.
+And I could see me
+
+178
+00:09:48.230 --> 00:09:50.750
+using that for small apps
+and for hobbies and stuff,
+
+179
+00:09:51.110 --> 00:09:53.810
+but I really want, I
+like the model. I want
+
+180
+00:09:53.810 --> 00:09:55.610
+the code first model, but
+I really know what I
+
+181
+00:09:55.610 --> 00:09:58.640
+wanted the database to look
+like. So if I, if
+
+182
+00:09:58.640 --> 00:10:01.280
+I say public class book
+and I public this and
+
+183
+00:10:01.280 --> 00:10:02.900
+public bat and I hit
+at five, I'm going to
+
+184
+00:10:02.900 --> 00:10:05.180
+get a database that you're
+gonna auto name, the database,
+
+185
+00:10:05.180 --> 00:10:07.250
+you'll auto create it. You
+can either put it in
+
+186
+00:10:07.250 --> 00:10:10.040
+SQL server express or stick
+it in app data as
+
+187
+00:10:10.040 --> 00:10:13.910
+a compact edition file. But
+what if I know I
+
+188
+00:10:13.910 --> 00:10:16.160
+want it to look a
+certain way, what are the
+
+189
+00:10:16.160 --> 00:10:18.980
+different ways that I can
+take control and set the
+
+190
+00:10:18.980 --> 00:10:21.320
+database up the way I
+want it to look? Yeah.
+
+191
+00:10:21.550 --> 00:10:24.260
+So there's a couple of
+things. So, and we've tried
+
+192
+00:10:24.260 --> 00:10:27.500
+to layer in complexity so
+that you kind of, you
+
+193
+00:10:27.500 --> 00:10:29.450
+only need to really see
+it when, you know, you
+
+194
+00:10:29.450 --> 00:10:32.090
+need it. And, and when
+you want to customize some
+
+195
+00:10:32.090 --> 00:10:34.840
+of your, your physical artifacts
+on, in your database, then,
+
+196
+00:10:34.840 --> 00:10:37.130
+then you know, you need
+some more complexity. So the
+
+197
+00:10:37.130 --> 00:10:39.440
+first thing you can do
+is in the DB context,
+
+198
+00:10:39.440 --> 00:10:42.110
+there's a constructor. And let's
+say, the first thing you
+
+199
+00:10:42.110 --> 00:10:43.790
+want to do is like,
+I don't like the database
+
+200
+00:10:43.790 --> 00:10:45.500
+name that you're making. Like,
+how do I, how do
+
+201
+00:10:45.500 --> 00:10:48.590
+I choose? And I know
+I want my database to
+
+202
+00:10:48.590 --> 00:10:50.900
+be called this rather than
+what the convention comes up
+
+203
+00:10:50.900 --> 00:10:55.490
+with. So if you and
+your DB context, constructor, you
+
+204
+00:10:55.490 --> 00:10:57.950
+can just pass in the
+string of the database name.
+
+205
+00:10:57.950 --> 00:11:00.920
+And there you can customize
+that, that aspect of things.
+
+206
+00:11:02.480 --> 00:11:04.250
+If you want to get
+a little bit farther down
+
+207
+00:11:04.250 --> 00:11:09.380
+into, okay, I, I want
+to customize table names and
+
+208
+00:11:09.380 --> 00:11:13.280
+column names, or I want
+to specify, you know, length
+
+209
+00:11:13.310 --> 00:11:16.700
+of, of string columns or
+byte array columns, and that
+
+210
+00:11:16.700 --> 00:11:19.910
+sort of thing. You have
+a couple of options there
+
+211
+00:11:19.910 --> 00:11:23.840
+as well. So for, for
+table and column names in
+
+212
+00:11:23.840 --> 00:11:29.450
+the CTP, there's a, a
+special method inside the DB
+
+213
+00:11:29.450 --> 00:11:34.400
+context called on model creating,
+which you can override. And
+
+214
+00:11:34.400 --> 00:11:37.460
+when the DB context, when
+the very first instance of
+
+215
+00:11:37.460 --> 00:11:41.480
+the DB context is created,
+we pass in this, the
+
+216
+00:11:41.480 --> 00:11:43.700
+model builder that it, which
+is a new class that
+
+217
+00:11:43.700 --> 00:11:46.640
+we introduced in the CTP,
+which allows you to customize
+
+218
+00:11:46.640 --> 00:11:50.000
+your model. And you can
+do customization in terms of
+
+219
+00:11:50.000 --> 00:11:53.950
+adding more entities to your
+model, or can customize the
+
+220
+00:11:53.950 --> 00:11:57.220
+experience in that like, Hey,
+I don't like the inheritance
+
+221
+00:11:57.220 --> 00:12:02.320
+hierarchy strategy that you've, you've
+chosen by default the code
+
+222
+00:12:02.320 --> 00:12:07.360
+first component that builds the
+model. We'll use TPH a
+
+223
+00:12:07.390 --> 00:12:09.880
+table, one table in the
+database to store the entire
+
+224
+00:12:09.880 --> 00:12:12.850
+hierarchy. But let's say you
+wanted to use like one
+
+225
+00:12:12.850 --> 00:12:15.550
+table for every type and
+your type hierarchy. You can
+
+226
+00:12:15.550 --> 00:12:18.310
+use the model builder to
+customize that and, and get
+
+227
+00:12:18.310 --> 00:12:22.870
+a different set of, of
+tables generated. You can use
+
+228
+00:12:22.870 --> 00:12:26.230
+the model builder to specify
+that you want different properties
+
+229
+00:12:26.230 --> 00:12:29.320
+to have be, you know,
+different maximum lengths, whether you
+
+230
+00:12:29.320 --> 00:12:33.460
+want them to be fixed
+length Unicode. And that's all
+
+231
+00:12:33.460 --> 00:12:36.100
+done using a fluent style
+API on top of the
+
+232
+00:12:36.100 --> 00:12:42.970
+model builder for, for some,
+some common things like setting
+
+233
+00:12:43.060 --> 00:12:46.840
+maximum length or table name
+or column names. Our real
+
+234
+00:12:46.840 --> 00:12:49.870
+goal ultimately is to allow
+you to do that declaratively.
+
+235
+00:12:49.870 --> 00:12:52.690
+So you don't have to
+override that on model creating
+
+236
+00:12:52.690 --> 00:12:57.310
+event or method. And the
+way that we allow you
+
+237
+00:12:57.310 --> 00:12:59.950
+to do that is through
+supporting a bunch of data
+
+238
+00:12:59.950 --> 00:13:03.880
+annotation attributes. So you, one
+of the things in the
+
+239
+00:13:03.880 --> 00:13:08.080
+feature CTP is that all
+of the data annotation attributes
+
+240
+00:13:08.080 --> 00:13:10.360
+that are in a system
+dot component model, that data
+
+241
+00:13:10.360 --> 00:13:13.840
+annotations things like the key
+attribute or required attribute or
+
+242
+00:13:13.840 --> 00:13:17.920
+concurrency check or timestamp timestamp
+attribute. If you put those
+
+243
+00:13:17.920 --> 00:13:21.310
+on your properties of your
+class will recognize that, you
+
+244
+00:13:21.310 --> 00:13:24.970
+know, your, your intention was
+to make like that property
+
+245
+00:13:24.970 --> 00:13:27.700
+a key for your entity.
+And so we'll interpret that
+
+246
+00:13:27.700 --> 00:13:31.210
+and use that property as
+the key. And so what
+
+247
+00:13:31.210 --> 00:13:33.910
+we did in the CTP
+was we not only supported
+
+248
+00:13:33.910 --> 00:13:36.550
+the annotations that exist today,
+but we added, added a
+
+249
+00:13:36.550 --> 00:13:39.400
+couple new ones. We added
+things like we added a
+
+250
+00:13:39.400 --> 00:13:42.610
+max length attribute so that
+you could set the max
+
+251
+00:13:42.610 --> 00:13:46.120
+length of, of like byte
+arrays, because data annotations has
+
+252
+00:13:46.120 --> 00:13:48.990
+string length, but you can't
+really use that on, on
+
+253
+00:13:49.000 --> 00:13:52.200
+byte arrays. What I thought
+was cool about that is
+
+254
+00:13:52.200 --> 00:13:55.080
+that I complimented you guys
+in the blog posts because
+
+255
+00:13:55.080 --> 00:13:57.690
+I said that I felt
+like the Lego pieces that
+
+256
+00:13:57.690 --> 00:13:59.520
+we are releasing as a
+company are getting to be
+
+257
+00:13:59.520 --> 00:14:03.330
+like the right sizes. Like
+it's, I mean, we can
+
+258
+00:14:03.330 --> 00:14:05.430
+talk about the past in
+a, in a, in a
+
+259
+00:14:05.430 --> 00:14:08.760
+kind of an attractive way
+in the past. Microsoft has
+
+260
+00:14:08.760 --> 00:14:11.550
+a tendency to have groups
+that create stuff without realizing
+
+261
+00:14:11.550 --> 00:14:15.390
+the other groups are creating
+similar stuff. And one group
+
+262
+00:14:15.390 --> 00:14:16.890
+will make a giant Lego
+and hit a group. We'll
+
+263
+00:14:16.890 --> 00:14:18.420
+make a small Lego, and
+then I have to make
+
+264
+00:14:18.420 --> 00:14:20.730
+them fit together. But what
+I thought was cool about
+
+265
+00:14:20.730 --> 00:14:22.740
+this is that you were
+using the data annotations that
+
+266
+00:14:22.740 --> 00:14:25.500
+I was always, I was
+already using. Cause they were,
+
+267
+00:14:25.710 --> 00:14:29.610
+they were used for validation
+and data, an asp.net MVC.
+
+268
+00:14:30.480 --> 00:14:33.120
+And I know that Silverlight
+and Rhea services uses data
+
+269
+00:14:33.120 --> 00:14:37.170
+annotations. So I mean, key
+and string length or were
+
+270
+00:14:37.170 --> 00:14:39.840
+things that required and all
+those things I was putting
+
+271
+00:14:39.840 --> 00:14:44.280
+on my objects already in
+my views. And that allowed
+
+272
+00:14:44.280 --> 00:14:48.690
+me to put in validation
+and my asp.net application. So
+
+273
+00:14:48.690 --> 00:14:51.770
+I could have client side
+validation with JavaScript server side
+
+274
+00:14:51.770 --> 00:14:55.910
+validation in my model, binder
+and database validation, all with
+
+275
+00:14:55.910 --> 00:14:58.550
+the same attributes. So it
+was, it was very dry,
+
+276
+00:14:58.850 --> 00:15:03.190
+you know, don't repeat yourself.
+Yeah, absolutely. And you know,
+
+277
+00:15:03.190 --> 00:15:06.490
+the, the other nice thing
+about data annotations is it
+
+278
+00:15:06.670 --> 00:15:09.190
+they're pretty easy to configure.
+I mean, it's pretty straightforward.
+
+279
+00:15:09.200 --> 00:15:13.510
+What you mean when you
+say something is required. And
+
+280
+00:15:13.510 --> 00:15:15.790
+so, you know, the, the
+ones that we've chosen to
+
+281
+00:15:15.790 --> 00:15:18.550
+add, we tried to keep
+in, in the spirit of,
+
+282
+00:15:18.700 --> 00:15:22.560
+you know, these are simple,
+straightforward, little augmentations to, to
+
+283
+00:15:22.570 --> 00:15:25.360
+your class. And then you
+don't, if you don't want
+
+284
+00:15:25.360 --> 00:15:27.940
+to have to go down
+and, and use the fluent
+
+285
+00:15:27.940 --> 00:15:30.850
+API to configure your model
+further, you don't have to.
+
+286
+00:15:32.170 --> 00:15:34.000
+So some of the annotations
+that didn't make it in
+
+287
+00:15:34.010 --> 00:15:37.540
+the CTP, but we're thinking
+about our annotations to be
+
+288
+00:15:37.540 --> 00:15:40.420
+able to customize table and
+column names. So we're going
+
+289
+00:15:40.420 --> 00:15:43.780
+to add a table name
+and a column name attribute.
+
+290
+00:15:44.860 --> 00:15:46.810
+We're going to add attributes
+to say, if you want
+
+291
+00:15:46.810 --> 00:15:49.060
+to exclude certain things from
+your model. So, so there's
+
+292
+00:15:49.060 --> 00:15:51.910
+a couple of more attributes
+that didn't make the CTP
+
+293
+00:15:51.910 --> 00:15:54.460
+that we know are really
+important, but you know, if
+
+294
+00:15:54.460 --> 00:15:56.620
+anybody's got any great ideas
+for once they want to
+
+295
+00:15:56.620 --> 00:15:59.050
+see, you know, they should
+let us know. I really
+
+296
+00:15:59.050 --> 00:16:02.380
+liked that you had the
+opportunity, you have the option
+
+297
+00:16:02.380 --> 00:16:04.570
+for me to do something
+in an attribute and not
+
+298
+00:16:04.600 --> 00:16:08.320
+an attribute. Like if, if
+I have like book, if
+
+299
+00:16:08.320 --> 00:16:11.410
+I say book ID, you'll
+figure that out. That that's
+
+300
+00:16:11.410 --> 00:16:13.390
+the key automatically. So you
+have some convention. So if
+
+301
+00:16:13.390 --> 00:16:14.800
+I have like a book,
+it has an ID and
+
+302
+00:16:14.800 --> 00:16:17.400
+a title, you'll figure out
+that the ID is, is
+
+303
+00:16:17.410 --> 00:16:20.440
+a key. Or if I
+have like book, which has
+
+304
+00:16:20.440 --> 00:16:23.830
+like ESPN or something, that's
+not something where you as
+
+305
+00:16:23.830 --> 00:16:26.950
+a runtime configure out automatically
+that that's a key. I
+
+306
+00:16:26.950 --> 00:16:29.350
+can Mark it as a
+key with an attribute, but
+
+307
+00:16:29.350 --> 00:16:32.950
+if I don't want to
+decorate all of my classes,
+
+308
+00:16:32.950 --> 00:16:35.890
+I mean, these poco classes,
+these plain old CLR classes,
+
+309
+00:16:35.890 --> 00:16:38.010
+I don't even want to
+put attributes on them. And
+
+310
+00:16:38.010 --> 00:16:39.910
+then I do what you
+said with the on-model creating.
+
+311
+00:16:39.910 --> 00:16:42.730
+And I say, this entity
+has this key and it
+
+312
+00:16:42.730 --> 00:16:47.350
+is ESPN. I, I hope
+that you continue with that,
+
+313
+00:16:47.350 --> 00:16:50.350
+that symmetry. Cause I really
+liked the idea to have
+
+314
+00:16:51.310 --> 00:16:54.880
+the fluent interface, describe stuff
+that I could also describe
+
+315
+00:16:54.910 --> 00:16:58.330
+in, in the classes. Cause
+sometimes you can't control where
+
+316
+00:16:58.330 --> 00:17:02.560
+those classes come from, you
+know? Yeah, absolutely. And you
+
+317
+00:17:02.560 --> 00:17:05.740
+know, our, our real hope
+with, you know, with, with
+
+318
+00:17:05.740 --> 00:17:09.910
+kind of the adding, adding
+the layering in of complexity
+
+319
+00:17:09.910 --> 00:17:12.730
+is that, you know, hopefully
+most people, you know, building
+
+320
+00:17:12.730 --> 00:17:14.950
+small apps can get by
+with just the default and
+
+321
+00:17:14.950 --> 00:17:17.710
+then the DB context constructs.
+They can, they can change
+
+322
+00:17:17.710 --> 00:17:21.950
+the database, the DB context
+constructor, or we hope that
+
+323
+00:17:22.180 --> 00:17:26.080
+through, by using data annotations,
+most of the fairly common
+
+324
+00:17:26.950 --> 00:17:32.230
+mapping and model customization actions,
+you'll be able to accomplish
+
+325
+00:17:32.230 --> 00:17:34.720
+using a data annotation. And
+then, you know, if you
+
+326
+00:17:34.720 --> 00:17:36.670
+need to go a little
+bit farther, you know, you,
+
+327
+00:17:36.690 --> 00:17:39.610
+you have the, the model
+builder with the, where you
+
+328
+00:17:39.610 --> 00:17:42.850
+can kind of get, you
+know, full control over, over
+
+329
+00:17:42.850 --> 00:17:46.660
+what your model looks like.
+But yeah, definitely. We want
+
+330
+00:17:46.660 --> 00:17:49.030
+to want to keep the
+layering going and we want
+
+331
+00:17:49.050 --> 00:17:52.980
+to keep the flexibility in
+terms of either attribute or
+
+332
+00:17:53.970 --> 00:17:58.250
+using the model builder. Hi,
+this is Scott. I just
+
+333
+00:17:58.250 --> 00:18:01.490
+want to remind you guys
+that there's no show without
+
+334
+00:18:01.490 --> 00:18:05.030
+a sponsor going to pay
+for all this bandwidth. And
+
+335
+00:18:05.030 --> 00:18:07.550
+the more popular the show
+becomes. The more important is
+
+336
+00:18:07.940 --> 00:18:12.020
+that we thank our sponsors
+folks like Tellerik I wanna
+
+337
+00:18:12.020 --> 00:18:14.090
+let you guys know that
+Tellerik has got a pretty
+
+338
+00:18:14.090 --> 00:18:21.770
+cool deal going between June 1st, 2010
+and August 31st, 2010. Any interested listener,
+
+339
+00:18:21.800 --> 00:18:30.710
+just send an email to
+podcast@telleriktlerik.com mentioned Hansel minutes and
+
+340
+00:18:30.710 --> 00:18:33.230
+they will reply and they'll
+give you a special $50
+
+341
+00:18:33.240 --> 00:18:38.090
+off coupon code. So just
+remember podcast at <inaudible> dot
+
+342
+00:18:38.090 --> 00:18:44.450
+com mentioned Hansel minutes, $50
+off. It goes until August 31st, 2010
+
+343
+00:18:45.110 --> 00:18:47.840
+and big thanks again for
+the folks at Tellerik for
+
+344
+00:18:47.840 --> 00:18:51.290
+believing in our show and
+for continuing to help pay
+
+345
+00:18:51.290 --> 00:18:57.440
+for our expenses. It seems
+like historically Microsoft developer, not
+
+346
+00:18:57.440 --> 00:19:00.660
+micro, not working for Microsoft,
+but people like me who
+
+347
+00:19:00.660 --> 00:19:05.060
+were writing code for like
+people who aren't working for
+
+348
+00:19:05.060 --> 00:19:07.820
+Microsoft. When I say Microsoft
+developers, aren't used to the
+
+349
+00:19:07.820 --> 00:19:11.960
+kind of magic that, that
+rails and some of the
+
+350
+00:19:11.960 --> 00:19:17.390
+different frameworks give around conventions.
+We, Microsoft employees are used
+
+351
+00:19:17.390 --> 00:19:20.300
+to magic that is usually
+dragon drop magic, or the
+
+352
+00:19:20.300 --> 00:19:24.380
+designer did it for you
+type magic, right. But asp.net
+
+353
+00:19:24.440 --> 00:19:28.220
+MVC, and then entity framework
+and other frameworks that have
+
+354
+00:19:28.220 --> 00:19:32.300
+been coming out like math
+have been introducing convention over
+
+355
+00:19:32.300 --> 00:19:34.940
+configuration. And I don't think
+that we're used, we, the
+
+356
+00:19:34.940 --> 00:19:38.360
+Microsoft developers aren't used to
+that kind of magic, particularly
+
+357
+00:19:39.080 --> 00:19:42.800
+like with, with this new
+code first, there are conventions
+
+358
+00:19:42.800 --> 00:19:45.620
+where you're looking at the
+names of things and automatically
+
+359
+00:19:45.620 --> 00:19:48.980
+inferring things like relationships. Like
+if I have a product
+
+360
+00:19:49.490 --> 00:19:53.840
+product ID product might have
+a property called category and
+
+361
+00:19:53.840 --> 00:19:57.200
+you're figuring out that I
+can move back and forth
+
+362
+00:19:57.230 --> 00:20:01.160
+between the category class and
+the product class, just based
+
+363
+00:20:01.160 --> 00:20:03.680
+on how the properties are
+named. I mean, you're inferring
+
+364
+00:20:03.680 --> 00:20:05.360
+what the right thing to
+do is based on naming.
+
+365
+00:20:06.110 --> 00:20:10.070
+Yeah. Yeah, absolutely. We, we,
+I think, I think you
+
+366
+00:20:10.070 --> 00:20:12.890
+were right on the money
+about how Microsoft developers, typically
+
+367
+00:20:12.890 --> 00:20:16.820
+aren't used to putting so
+much convention into the code
+
+368
+00:20:16.820 --> 00:20:19.430
+that they write, especially in
+the frameworks that we build.
+
+369
+00:20:20.900 --> 00:20:23.360
+But I think we're seeing
+that to get the developer
+
+370
+00:20:23.360 --> 00:20:26.990
+productivity and the developer experiences
+we really want, you know,
+
+371
+00:20:27.170 --> 00:20:29.780
+that's really a direction we
+need to go. And so,
+
+372
+00:20:29.780 --> 00:20:34.670
+yeah, code first definitely embrace
+that. So with relationships we
+
+373
+00:20:34.670 --> 00:20:38.540
+put in a whole bunch
+of conventions around identifying relationship
+
+374
+00:20:38.540 --> 00:20:40.940
+in versus so, you know,
+like you said, if, if
+
+375
+00:20:40.970 --> 00:20:45.320
+a product has a, a
+category property on it, that
+
+376
+00:20:45.320 --> 00:20:48.310
+points do a category and
+a category has a collection
+
+377
+00:20:48.310 --> 00:20:51.790
+of products in it, we'll,
+we'll figure out by convention
+
+378
+00:20:51.790 --> 00:20:55.040
+that, you know, Hey, those
+things are actually, you, you
+
+379
+00:20:55.060 --> 00:20:58.030
+mean the same relationship when
+you, when you're referring to
+
+380
+00:20:58.030 --> 00:21:00.910
+that thing. And so we'll,
+we'll figure out that, you
+
+381
+00:21:00.910 --> 00:21:04.540
+know, Hey, you didn't mean
+to have multiple relationships with
+
+382
+00:21:04.540 --> 00:21:06.760
+multiple foreign keys backing them
+and that sort of thing.
+
+383
+00:21:06.760 --> 00:21:08.950
+And, and there's also a
+bunch of conventions in there
+
+384
+00:21:08.950 --> 00:21:12.340
+to determine, you know, if
+you have a, a relationship
+
+385
+00:21:12.340 --> 00:21:15.520
+and you really want to
+use the, and have a
+
+386
+00:21:15.520 --> 00:21:19.900
+foreign key as part of
+your, your entity, which, which
+
+387
+00:21:19.900 --> 00:21:22.240
+property on your entity, you
+meant to be the foreign
+
+388
+00:21:22.240 --> 00:21:24.550
+key. And we do that
+based on some naming conventions.
+
+389
+00:21:26.010 --> 00:21:28.800
+Yeah. Like if I have
+a book and a book
+
+390
+00:21:28.800 --> 00:21:32.580
+has an ESPN, another object
+might also have a book
+
+391
+00:21:33.240 --> 00:21:35.280
+maybe like I'd have like
+a book review, I'm looking
+
+392
+00:21:35.280 --> 00:21:39.120
+at your blog post here,
+like book review has a,
+
+393
+00:21:39.270 --> 00:21:42.930
+a, an object called subject
+that is the subject of
+
+394
+00:21:42.930 --> 00:21:44.850
+that review, which is a
+type book. So then it
+
+395
+00:21:44.850 --> 00:21:47.160
+has a subject ISP. And
+so you're basically saying like
+
+396
+00:21:47.820 --> 00:21:50.910
+class name and then primary
+key property name. And as
+
+397
+00:21:50.910 --> 00:21:53.670
+long as those that's named
+that way, subject is a
+
+398
+00:21:53.670 --> 00:21:57.090
+book. The primary key is
+ISBM therefore if you name
+
+399
+00:21:57.090 --> 00:22:00.270
+this subject, ESPN, it'll piddle
+in for that. And there's
+
+400
+00:22:00.270 --> 00:22:02.940
+no extra attributes that need
+to be put on. But
+
+401
+00:22:02.940 --> 00:22:06.060
+if I, if, if the
+inference isn't clear or if
+
+402
+00:22:06.060 --> 00:22:08.250
+I don't want it named
+that way, I can just
+
+403
+00:22:08.250 --> 00:22:10.710
+go back. Like you said,
+with the fluent API, just
+
+404
+00:22:10.710 --> 00:22:13.560
+say it. Yeah, you can,
+in that case, you can
+
+405
+00:22:13.560 --> 00:22:16.020
+use, you either use the
+fluent API or we added
+
+406
+00:22:16.020 --> 00:22:20.040
+a new data annotation attribute
+called related to, which is
+
+407
+00:22:20.040 --> 00:22:22.260
+just a hint to us
+to say like, Hey, you
+
+408
+00:22:22.260 --> 00:22:24.600
+put that up on top
+of a navigation property, like,
+
+409
+00:22:24.620 --> 00:22:29.730
+like products.dot category, and you
+can relate that property to
+
+410
+00:22:29.730 --> 00:22:32.940
+other properties on other classes,
+or you can relate that
+
+411
+00:22:32.940 --> 00:22:35.430
+property to, you know, the
+foreign key that that's going
+
+412
+00:22:35.430 --> 00:22:37.320
+to back it. So you
+don't have to go to
+
+413
+00:22:37.320 --> 00:22:40.260
+the fluent API, but we
+provide a way for you
+
+414
+00:22:40.260 --> 00:22:42.480
+to give us a hint
+about, about what you meant
+
+415
+00:22:43.170 --> 00:22:47.910
+when you wrote that, that
+navigation property. But yeah, some
+
+416
+00:22:47.910 --> 00:22:50.760
+of the conventions we put
+in there for, for figuring
+
+417
+00:22:50.760 --> 00:22:53.250
+out what the, you know,
+what the key, what the
+
+418
+00:22:53.250 --> 00:22:55.860
+foreign key is going to
+be, you know, if the
+
+419
+00:22:55.860 --> 00:22:58.710
+foreign key name matches the
+primary key name on the
+
+420
+00:22:58.710 --> 00:23:02.070
+other side, you know, obviously
+we hook that up or
+
+421
+00:23:02.070 --> 00:23:07.770
+like type name plus plus
+the primary key name or
+
+422
+00:23:07.770 --> 00:23:10.980
+like navigation property. Plus the
+type name are a couple
+
+423
+00:23:10.980 --> 00:23:14.520
+of the conventions we have
+for identifying what the, what
+
+424
+00:23:14.520 --> 00:23:17.940
+the foreign key actually is.
+What are, what are some
+
+425
+00:23:17.940 --> 00:23:20.400
+more advanced ones? Cause sometimes
+when people listen to these
+
+426
+00:23:20.400 --> 00:23:23.920
+kinds of features, they might
+say, well, you know what
+
+427
+00:23:23.930 --> 00:23:25.710
+I'm doing as much too
+complex, you know, I have
+
+428
+00:23:25.710 --> 00:23:28.950
+concurrency checks and I have
+the important timestamps that I'm
+
+429
+00:23:28.950 --> 00:23:31.650
+saving. I'm doing stuff that's
+much more complicated than this.
+
+430
+00:23:31.830 --> 00:23:35.340
+How quickly will people hit
+the, hit a wall with
+
+431
+00:23:35.340 --> 00:23:37.350
+this? And when they do
+that, will they have to
+
+432
+00:23:37.350 --> 00:23:41.340
+switch entirely over to doing
+things as an entity framework,
+
+433
+00:23:41.370 --> 00:23:43.980
+modeling file an EDM X
+file, or how far can
+
+434
+00:23:43.980 --> 00:23:47.390
+I take code first before
+I hit some kind of
+
+435
+00:23:47.510 --> 00:23:51.870
+artificial wall? So our ultimate
+goal is that the, the
+
+436
+00:23:51.970 --> 00:23:55.690
+configurations that you do as
+part of code first through
+
+437
+00:23:55.690 --> 00:23:59.390
+the fluent API have parody
+with the entire EDM, that's
+
+438
+00:23:59.500 --> 00:24:02.530
+usable by the entity framework.
+So there shouldn't be anything.
+
+439
+00:24:02.560 --> 00:24:05.320
+There shouldn't be a wall.
+There should be some way
+
+440
+00:24:05.320 --> 00:24:09.280
+to use the fluent API
+to specify, you know, very
+
+441
+00:24:09.280 --> 00:24:14.050
+complicated inheritance type inter inheritance
+mapping strategies. Like if you've
+
+442
+00:24:14.050 --> 00:24:18.520
+got a table for type,
+for a particular, you know,
+
+443
+00:24:18.610 --> 00:24:21.640
+fragment of your type hierarchy,
+but then you want to
+
+444
+00:24:21.640 --> 00:24:23.680
+switch. And the rest of
+the type hierarchy is all
+
+445
+00:24:23.680 --> 00:24:25.480
+in one table. We want
+you to be able to
+
+446
+00:24:25.480 --> 00:24:28.060
+express that using code first,
+because that's something that you
+
+447
+00:24:28.060 --> 00:24:31.780
+can do with the entity
+framework. If you have concurrency
+
+448
+00:24:32.950 --> 00:24:37.330
+properties or computed properties or
+identity properties, you know, those
+
+449
+00:24:37.330 --> 00:24:38.530
+are all things we want
+you to be able to
+
+450
+00:24:38.530 --> 00:24:42.310
+configure using the model builder.
+So the end goal is
+
+451
+00:24:42.310 --> 00:24:46.420
+to have how parody between
+code first configuration and the
+
+452
+00:24:46.420 --> 00:24:49.450
+things that the entity framework
+supports. And I think in
+
+453
+00:24:49.450 --> 00:24:52.570
+the feature CDP, we're pretty
+close to that. There might
+
+454
+00:24:52.570 --> 00:24:56.410
+be a couple cases like
+relationships where you don't have
+
+455
+00:24:56.410 --> 00:24:59.620
+navigation properties on either side.
+That might be one wall
+
+456
+00:24:59.650 --> 00:25:02.230
+that you hit, but these
+are things, you know, we
+
+457
+00:25:02.230 --> 00:25:05.410
+know about, you know, about
+the limitations and we're, we're
+
+458
+00:25:05.470 --> 00:25:09.460
+gonna continue refining that, that
+API on model builder until
+
+459
+00:25:09.790 --> 00:25:13.870
+you can really do everything
+you need to do. You
+
+460
+00:25:13.870 --> 00:25:15.700
+know, you talked about, you
+know, what are some of
+
+461
+00:25:15.700 --> 00:25:19.210
+the more complicated conventions we've
+got in there? Well, I
+
+462
+00:25:19.210 --> 00:25:21.340
+wouldn't really say that the
+conventions we have in there
+
+463
+00:25:21.340 --> 00:25:24.820
+are, are real complicated. I
+mean, they're, they're, they're common
+
+464
+00:25:24.820 --> 00:25:27.580
+things, but one of the,
+you know, one of the
+
+465
+00:25:27.580 --> 00:25:30.220
+ideas that we have to
+kind of make this experience
+
+466
+00:25:30.250 --> 00:25:32.440
+even better, especially for people
+who are like, well, I
+
+467
+00:25:32.440 --> 00:25:35.470
+have a particular naming strategy
+that I have for columns
+
+468
+00:25:35.470 --> 00:25:38.050
+and it, and it really,
+you know, allows me to,
+
+469
+00:25:39.130 --> 00:25:41.740
+you know, every time I
+see a table, I want
+
+470
+00:25:41.740 --> 00:25:45.010
+to prefix it with TBL
+underscore or something like that.
+
+471
+00:25:46.240 --> 00:25:49.870
+You know, that's not a
+convention into the product because
+
+472
+00:25:49.960 --> 00:25:53.710
+you know, most people probably
+don't want that convention. But
+
+473
+00:25:53.710 --> 00:25:55.870
+one of the things we're
+thinking about is we're doing
+
+474
+00:25:55.870 --> 00:25:58.960
+some, a little bit of
+rearchitecting, the internals of code
+
+475
+00:25:58.960 --> 00:26:02.500
+first, so that, you know,
+you can plug in very,
+
+476
+00:26:02.500 --> 00:26:07.030
+very powerful conventions and kind
+of write your own conventions
+
+477
+00:26:07.030 --> 00:26:09.460
+if you want to do
+that. And hopefully, you know,
+
+478
+00:26:09.460 --> 00:26:11.020
+the goal is to be
+able to write those in
+
+479
+00:26:11.020 --> 00:26:13.120
+a very simple way and,
+and plug them in so
+
+480
+00:26:13.120 --> 00:26:15.400
+that, you know, any model
+you create can just use
+
+481
+00:26:15.400 --> 00:26:18.190
+this convention and kind of
+augment the conventions that are
+
+482
+00:26:18.190 --> 00:26:20.980
+already in there or override
+the conventions that are already
+
+483
+00:26:20.980 --> 00:26:24.460
+in there so that you
+can customize naming. Or if
+
+484
+00:26:24.460 --> 00:26:26.980
+you see a certain, certain
+kind of type with your
+
+485
+00:26:26.980 --> 00:26:30.700
+own data, your own declarative
+attribute on it, you can,
+
+486
+00:26:30.700 --> 00:26:32.800
+we can kind of interpret
+that and, and you can
+
+487
+00:26:32.800 --> 00:26:35.470
+run some of your own
+code in there to further
+
+488
+00:26:35.470 --> 00:26:37.930
+customize the model. So, so
+that's not in the feature
+
+489
+00:26:37.930 --> 00:26:40.300
+CTP, but that's kind of
+a direction that we were
+
+490
+00:26:40.540 --> 00:26:46.530
+thinking about taking the model.
+Yeah. I noticed that you
+
+491
+00:26:46.530 --> 00:26:47.970
+can go and to kind
+of set up kind of
+
+492
+00:26:47.970 --> 00:26:50.550
+a strategy pattern. You can
+say, like, there's a, there's
+
+493
+00:26:50.550 --> 00:26:54.270
+a method called set initializer
+on the database. So it'll
+
+494
+00:26:54.450 --> 00:26:57.540
+basically, it's your strategy for,
+what do you do if
+
+495
+00:26:57.540 --> 00:27:00.660
+the database doesn't exist? What
+if the model changes? Do
+
+496
+00:27:00.660 --> 00:27:02.280
+I want to make a
+new database every time I
+
+497
+00:27:02.280 --> 00:27:04.770
+run? You know, it depends
+on whether you're not like
+
+498
+00:27:04.770 --> 00:27:06.840
+if you're doing some testing,
+you might want to automatically
+
+499
+00:27:06.840 --> 00:27:11.880
+create the database and fill
+it with test data. It
+
+500
+00:27:11.880 --> 00:27:14.130
+seemed to me like you,
+you, you include some stuff
+
+501
+00:27:14.360 --> 00:27:18.330
+you include, let me think
+here, create database only if
+
+502
+00:27:18.330 --> 00:27:21.300
+not exists, right? That's the
+kind of the standard strategy
+
+503
+00:27:21.750 --> 00:27:24.810
+it'll make the database. It
+doesn't exist. The database knows
+
+504
+00:27:25.380 --> 00:27:27.480
+kind of, it knows its
+version internally. There's a, a
+
+505
+00:27:27.480 --> 00:27:30.870
+table that has information, like
+a hash about what's going
+
+506
+00:27:30.870 --> 00:27:34.560
+on. So if the model
+changes, you can recreate the
+
+507
+00:27:34.560 --> 00:27:37.080
+database. So it got me
+thinking that I could build
+
+508
+00:27:37.080 --> 00:27:39.770
+some kind of migrations if
+I know, I mean, you
+
+509
+00:27:39.770 --> 00:27:41.490
+know, a lot, like a
+lot like rails. If I
+
+510
+00:27:41.490 --> 00:27:43.020
+know the version of the
+model, I know the virtual
+
+511
+00:27:43.020 --> 00:27:46.320
+database, I could bring that
+forward. I noticed that I,
+
+512
+00:27:46.350 --> 00:27:48.930
+when I was messing around
+with the database internally after
+
+513
+00:27:48.930 --> 00:27:51.060
+doing code first, and then
+I tried to run it,
+
+514
+00:27:51.390 --> 00:27:55.710
+the system knew that I'd
+changed things and was basically
+
+515
+00:27:55.710 --> 00:27:56.970
+saying, I'm not going to
+move forward. Cause I don't
+
+516
+00:27:56.970 --> 00:27:59.160
+want to destroy your data.
+So here's here. And the,
+
+517
+00:27:59.170 --> 00:28:00.660
+it gave me an error
+that said, here are the
+
+518
+00:28:00.660 --> 00:28:02.670
+things that you can do
+to get back kind of
+
+519
+00:28:02.670 --> 00:28:06.540
+on the righteous path. Yeah,
+definitely. Are you showing me
+
+520
+00:28:06.540 --> 00:28:08.940
+hooks that I could maybe
+plug in migrations or what
+
+521
+00:28:08.940 --> 00:28:13.100
+am I seeing? So this,
+this feature, the database initializer
+
+522
+00:28:13.100 --> 00:28:18.110
+feature was, was really intended
+to, to, as you said,
+
+523
+00:28:18.110 --> 00:28:21.800
+provide that, that interception and
+customization hook for when we
+
+524
+00:28:21.800 --> 00:28:25.010
+go to, you know, check
+whether the database is there
+
+525
+00:28:25.010 --> 00:28:28.040
+or not, you know, do
+the scheme as match and
+
+526
+00:28:28.460 --> 00:28:31.490
+possibly another point for you
+to, you know, add more
+
+527
+00:28:32.000 --> 00:28:37.070
+physical data artifacts to the
+database. You could enter in
+
+528
+00:28:37.070 --> 00:28:40.250
+the feature CTP, you could
+take your own migration code
+
+529
+00:28:40.250 --> 00:28:42.560
+and plug it into that
+and build your own database
+
+530
+00:28:42.560 --> 00:28:47.540
+initially <inaudible> strategy and put
+migrations in there. You know,
+
+531
+00:28:47.720 --> 00:28:51.110
+really our intention with this
+feature and this feature CTP
+
+532
+00:28:51.110 --> 00:28:54.920
+was to get feedback on,
+you know, what kind of
+
+533
+00:28:54.920 --> 00:28:58.970
+experience do people want? And
+what's useful for them in
+
+534
+00:28:58.970 --> 00:29:03.650
+terms of like runtime database
+initialization, because, you know, historically
+
+535
+00:29:03.860 --> 00:29:07.100
+you see a lot of
+migration work, that's pretty tightly
+
+536
+00:29:07.100 --> 00:29:11.240
+coupled with tooling. And so
+with migrations and the entity
+
+537
+00:29:11.240 --> 00:29:13.610
+framework and code first, you
+know, like what's the story
+
+538
+00:29:13.610 --> 00:29:17.300
+there? You know, what the
+story is, is, you know,
+
+539
+00:29:17.780 --> 00:29:20.660
+from Microsoft, we want a
+nice cohesive story. So we
+
+540
+00:29:20.660 --> 00:29:24.290
+don't have like, you know,
+six migration engines out there.
+
+541
+00:29:24.740 --> 00:29:27.410
+And so what we want
+to do is we want
+
+542
+00:29:27.410 --> 00:29:29.990
+to provide the right hooks
+in the runtime so that
+
+543
+00:29:31.490 --> 00:29:35.360
+if you want to do
+a runtime migration, you can,
+
+544
+00:29:35.900 --> 00:29:38.210
+but that the mechanism that
+you can use is something
+
+545
+00:29:38.210 --> 00:29:41.290
+that, you know, has parody
+with the migration solutions we
+
+546
+00:29:41.290 --> 00:29:44.350
+have with tooling. So that,
+you know, you know, one
+
+547
+00:29:44.350 --> 00:29:47.350
+example, you know, one kind
+of like Holy grail kind
+
+548
+00:29:47.350 --> 00:29:50.170
+of solution that would be
+really nice would be, you
+
+549
+00:29:50.170 --> 00:29:54.730
+know, to, to do a
+migration, you know, plan using
+
+550
+00:29:54.770 --> 00:29:57.820
+using tooling, but then somehow
+be able to plug that
+
+551
+00:29:57.820 --> 00:29:59.680
+in back into the runtime
+so that, you know, if
+
+552
+00:29:59.680 --> 00:30:05.320
+when you deploy your app
+that some database initialization code
+
+553
+00:30:05.320 --> 00:30:10.180
+can run using the common
+migration engine and, you know,
+
+554
+00:30:10.270 --> 00:30:13.930
+do the migration at runtime.
+So, you know, really what
+
+555
+00:30:13.930 --> 00:30:15.830
+we want from this feature
+is we want people to
+
+556
+00:30:15.880 --> 00:30:19.000
+look at it and evaluate
+it, tell us, you know,
+
+557
+00:30:19.000 --> 00:30:21.550
+what else would they want
+at runtime in terms of
+
+558
+00:30:21.550 --> 00:30:27.490
+like schema evolution, database evolution,
+that sort of thing. And
+
+559
+00:30:27.490 --> 00:30:30.280
+then what we're doing is
+we're still doing an investigation
+
+560
+00:30:30.280 --> 00:30:32.320
+of like, you know, how
+do we really have a
+
+561
+00:30:32.320 --> 00:30:38.440
+good set of experiences around
+tooling based migrations versus runtime
+
+562
+00:30:38.440 --> 00:30:41.190
+based migrations? And, you know,
+we're, you know, as a
+
+563
+00:30:41.260 --> 00:30:44.800
+runtime team, entity framework, entity
+framework, runtime team, you know,
+
+564
+00:30:44.800 --> 00:30:47.590
+our, our, we have a
+responsibility to kind of give
+
+565
+00:30:47.590 --> 00:30:51.640
+feedback back to, you know,
+the, the migration engine team
+
+566
+00:30:51.910 --> 00:30:54.430
+to say, like, you know,
+there are runtime scenarios that
+
+567
+00:30:54.430 --> 00:30:56.560
+are interesting and, you know,
+here, here are some of
+
+568
+00:30:56.560 --> 00:30:59.230
+the key features we're going
+to need from that to
+
+569
+00:30:59.230 --> 00:31:01.570
+be able to successfully do
+some of these scenarios. So,
+
+570
+00:31:01.800 --> 00:31:04.510
+so that's something that we're
+still working on. It's definitely,
+
+571
+00:31:04.510 --> 00:31:07.810
+you know, one of our
+priorities is to, you know,
+
+572
+00:31:07.810 --> 00:31:10.420
+make sure we have, you
+know, a good story between,
+
+573
+00:31:10.450 --> 00:31:12.670
+you know, how tooling does
+migrations, but then how you
+
+574
+00:31:12.670 --> 00:31:15.730
+can kind of take those
+migration packages and plug them
+
+575
+00:31:15.730 --> 00:31:20.260
+into, you know, this database
+initializer hook or something like
+
+576
+00:31:20.260 --> 00:31:26.260
+that, to be able to
+do them at runtime. So,
+
+577
+00:31:27.400 --> 00:31:28.930
+yeah, I mean, so one
+of the things that we
+
+578
+00:31:28.930 --> 00:31:32.590
+put in there and then
+migrate with not really migrations,
+
+579
+00:31:32.590 --> 00:31:36.700
+but you said, you know,
+we have a, a class
+
+580
+00:31:36.700 --> 00:31:39.790
+that will actually detect whether
+the schema change. So, you
+
+581
+00:31:39.790 --> 00:31:42.100
+know, if you're building, if
+you're building an application and
+
+582
+00:31:42.100 --> 00:31:44.950
+you, you added a set
+of entities and you kind
+
+583
+00:31:44.950 --> 00:31:47.950
+of ran your application to
+see how things were working
+
+584
+00:31:47.950 --> 00:31:49.780
+well, we'll go ahead and
+that very first time, we'll
+
+585
+00:31:49.780 --> 00:31:51.970
+see, Oh, there's no database
+let's create a database for
+
+586
+00:31:51.970 --> 00:31:55.300
+you. But then let's say
+I added a few properties
+
+587
+00:31:55.300 --> 00:31:58.420
+to, you know, my product
+entity, you know, I wanted
+
+588
+00:31:58.420 --> 00:32:01.150
+to add, you know, an
+extended description property. So I'll
+
+589
+00:32:01.150 --> 00:32:04.270
+add that property. And, and
+what we do is at
+
+590
+00:32:04.270 --> 00:32:06.610
+least in this version of
+the CTP, we generate a
+
+591
+00:32:06.610 --> 00:32:09.010
+hash on the model that
+we create. And then we
+
+592
+00:32:09.010 --> 00:32:12.160
+check to see if that
+hash matches what's in the
+
+593
+00:32:12.160 --> 00:32:15.400
+database right now. And if
+the hash doesn't match, then
+
+594
+00:32:15.400 --> 00:32:19.420
+we either throw an exception
+saying, you know, Hey, you
+
+595
+00:32:19.420 --> 00:32:22.300
+know, your database doesn't match.
+You know, we're not quite
+
+596
+00:32:22.300 --> 00:32:23.830
+sure what to do by
+default. So we're going to
+
+597
+00:32:23.830 --> 00:32:26.260
+throw an exception, but, but
+certainly you could write your
+
+598
+00:32:26.260 --> 00:32:29.710
+own initializer to say like,
+Hey, you know, it doesn't
+
+599
+00:32:29.710 --> 00:32:32.770
+match, you know, run some
+custom code that you wrote
+
+600
+00:32:32.770 --> 00:32:35.350
+to, to fix things up
+or Hey, you know, things
+
+601
+00:32:35.350 --> 00:32:38.920
+don't match. I don't care,
+erase the database, put a
+
+602
+00:32:38.920 --> 00:32:41.690
+new test database up there,
+initialize it with a bunch
+
+603
+00:32:41.690 --> 00:32:43.970
+of data and, you know,
+in a way you go.
+
+604
+00:32:45.290 --> 00:32:47.750
+So that was, that was
+one of the, like, you
+
+605
+00:32:47.750 --> 00:32:49.850
+know, kind of early looks
+at some of the things
+
+606
+00:32:49.850 --> 00:32:54.370
+that some of the experiences
+we want to enable. What's
+
+607
+00:32:54.370 --> 00:32:56.440
+a good way that someone,
+if someone already has a
+
+608
+00:32:56.440 --> 00:32:59.260
+database, but they still want
+to use code first, like
+
+609
+00:32:59.260 --> 00:33:02.130
+they've got an existing database
+at work and they liked
+
+610
+00:33:02.130 --> 00:33:04.510
+that they like this model,
+but they don't want, you
+
+611
+00:33:04.510 --> 00:33:06.220
+know, they, they, they're tired
+of seeing examples where they're
+
+612
+00:33:06.220 --> 00:33:10.660
+always creating their own Oh,
+database, Where were the systems
+
+613
+00:33:10.660 --> 00:33:13.720
+creating the database? Like the
+assumption that everyone's making fresh
+
+614
+00:33:13.720 --> 00:33:15.940
+databases out there. So how
+do I do code first?
+
+615
+00:33:16.180 --> 00:33:19.700
+But honestly I have a
+database already. Yeah. So, so
+
+616
+00:33:19.720 --> 00:33:24.040
+you have a couple options
+there. One is, you know,
+
+617
+00:33:24.640 --> 00:33:27.640
+the, the DB context and
+DB set classes don't have
+
+618
+00:33:27.640 --> 00:33:29.980
+to be used with, with
+code first. You don't have
+
+619
+00:33:29.980 --> 00:33:32.560
+to write code and then
+write a bunch of fluent
+
+620
+00:33:32.560 --> 00:33:35.320
+API mappings. If you find,
+if you find that experience
+
+621
+00:33:35.320 --> 00:33:39.130
+difficult and you do, you
+know, you do like the
+
+622
+00:33:39.130 --> 00:33:43.660
+DB context, DB set kind
+of reduced API experience, but
+
+623
+00:33:43.660 --> 00:33:47.080
+you're okay with using some
+tooling, you can build an
+
+624
+00:33:47.110 --> 00:33:51.010
+EDM X file model using
+tools and then pass in
+
+625
+00:33:51.010 --> 00:33:54.700
+the connection string. That is
+just a standard entity framework
+
+626
+00:33:54.730 --> 00:33:57.490
+connection string into a DB
+context. And we'll use that
+
+627
+00:33:57.490 --> 00:34:00.880
+connection string. So, you know,
+one option is create an
+
+628
+00:34:00.880 --> 00:34:05.080
+EDM X file and a
+regular entity framework connection string,
+
+629
+00:34:05.380 --> 00:34:08.200
+pass that into the DB
+context and, and a way
+
+630
+00:34:08.200 --> 00:34:12.880
+you can go, another option
+that you have is it's
+
+631
+00:34:12.880 --> 00:34:15.520
+a little bit more manual,
+but what you can do
+
+632
+00:34:15.520 --> 00:34:17.980
+is you can just pass
+in, like, let's say your
+
+633
+00:34:17.980 --> 00:34:20.320
+databases and SQL server. You
+can just pass it in
+
+634
+00:34:20.320 --> 00:34:23.980
+your SQL server connection string,
+but then you, what you
+
+635
+00:34:23.980 --> 00:34:26.380
+can do is in your,
+you know, your on model,
+
+636
+00:34:26.380 --> 00:34:31.030
+creating overload in your DB
+context, you can put a
+
+637
+00:34:31.390 --> 00:34:34.390
+configuration logic in there to
+say how your classes, how
+
+638
+00:34:34.510 --> 00:34:36.730
+you want them to be
+mapped to the database. So
+
+639
+00:34:37.000 --> 00:34:41.200
+for example, if your database
+has, you know, a special
+
+640
+00:34:41.200 --> 00:34:44.950
+name for, you know, your
+customer table or your database,
+
+641
+00:34:44.950 --> 00:34:47.140
+like I said, has, you
+know, a special arrangement of
+
+642
+00:34:47.140 --> 00:34:52.360
+tables for your, your inheritance
+hierarchies, you know, you can
+
+643
+00:34:52.360 --> 00:34:56.230
+use all the configuration API
+to kind of manually map
+
+644
+00:34:56.320 --> 00:35:01.810
+between your entities and what's
+in the database already. And,
+
+645
+00:35:02.020 --> 00:35:05.710
+you know, I definitely recognize
+that that that particular experience
+
+646
+00:35:05.710 --> 00:35:09.790
+is, is something that probably
+isn't quite where we want
+
+647
+00:35:09.790 --> 00:35:12.220
+it yet, because it's a
+lot of manual work. You
+
+648
+00:35:12.220 --> 00:35:14.440
+kind of have to really
+know what your database schema
+
+649
+00:35:14.440 --> 00:35:15.880
+looks like, and you have
+to really know what your
+
+650
+00:35:15.880 --> 00:35:18.790
+classes look like. So, you
+know, I personally think that
+
+651
+00:35:18.790 --> 00:35:23.800
+there's probably a good, you
+know, solution that, you know,
+
+652
+00:35:23.800 --> 00:35:27.850
+some, some more magic unicorn
+work that, you know, does,
+
+653
+00:35:28.150 --> 00:35:32.500
+does by default, you know,
+mapping for you between classes
+
+654
+00:35:32.500 --> 00:35:35.290
+and an existing database. And,
+and then just allows you
+
+655
+00:35:35.290 --> 00:35:38.460
+to kind of tweak that.
+Or we kind of can
+
+656
+00:35:38.520 --> 00:35:41.070
+report warnings or something like
+that. If there's a mapping
+
+657
+00:35:41.070 --> 00:35:44.430
+that, that, that we can't
+figure out. So I think
+
+658
+00:35:44.430 --> 00:35:47.400
+there's, there's more work that
+we need to do on
+
+659
+00:35:47.400 --> 00:35:49.980
+the entity framework team around,
+you know, what happens when
+
+660
+00:35:49.980 --> 00:35:53.280
+you want to do code
+first, but you already have
+
+661
+00:35:53.280 --> 00:35:57.560
+a database. Cool. Well, we're
+going to make sure that
+
+662
+00:35:57.560 --> 00:36:00.470
+people have links to the
+entity framework, design blog, the
+
+663
+00:36:00.470 --> 00:36:04.790
+ado.net blogs, and that any
+feedback that people have will
+
+664
+00:36:04.790 --> 00:36:07.640
+get, get to the right
+people. I definitely know now
+
+665
+00:36:07.670 --> 00:36:09.710
+who the right people are
+so they can, people can
+
+666
+00:36:09.710 --> 00:36:12.770
+leave comments. They can email
+the author of like the
+
+667
+00:36:12.770 --> 00:36:17.000
+envy framework, design blog, and
+understand. And when people are
+
+668
+00:36:17.000 --> 00:36:19.520
+paying attention, I mean, I
+see you guys wandering around
+
+669
+00:36:19.520 --> 00:36:22.760
+on, on Twitter and the
+blogs answering questions, and I've
+
+670
+00:36:22.760 --> 00:36:25.610
+seen you comment on my
+blog and answer people's questions,
+
+671
+00:36:25.610 --> 00:36:29.210
+and we'd definitely appreciate it.
+That we're getting the Lego
+
+672
+00:36:29.210 --> 00:36:31.790
+pieces at the right size.
+Thank you so much for
+
+673
+00:36:31.790 --> 00:36:34.040
+coming on the show. Appreciate
+it. Hey, well, thanks for
+
+674
+00:36:34.040 --> 00:36:38.180
+having me. I'm glad you
+enjoyed the CTP. Alright. That
+
+675
+00:36:38.180 --> 00:36:40.970
+was Jeff <inaudible>. And this
+has been another episode of
+
+676
+00:36:40.970 --> 00:36:43.430
+Hansel minutes. We'll see you
+again next week.
+

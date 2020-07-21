@@ -1,0 +1,3487 @@
+WEBVTT FILE
+
+1
+00:00:00.480 --> 00:00:05.400
+This episode is sponsored by
+Datadog with 350 plus integrations,
+
+2
+00:00:05.400 --> 00:00:09.810
+as well as metrics logs,
+traces and APM Datadog enables
+
+3
+00:00:09.810 --> 00:00:12.390
+your team to quickly find
+and fix issues before they
+
+4
+00:00:12.390 --> 00:00:17.340
+escalate. Visualize your microservices architecture
+with a service map, spot
+
+5
+00:00:17.370 --> 00:00:20.640
+unusual trends with the log
+patterns, view and monitor the
+
+6
+00:00:20.640 --> 00:00:25.050
+availability of your services with
+synthetics. Start a free 14
+
+7
+00:00:25.050 --> 00:00:28.620
+day trial of Datadog today
+and receive a complimentary t-shirt
+
+8
+00:00:28.650 --> 00:00:51.510
+by visiting bitly.com/data dog shirt.
+That's bitly.com/datadog shirt. Hi, this
+
+9
+00:00:51.510 --> 00:00:54.000
+is Scott Hanselman. This is
+another episode of Hansel minutes.
+
+10
+00:00:54.000 --> 00:00:57.690
+And today I'm chatting with
+Andrew Hunt and Dave Thomas authors
+
+11
+00:00:57.690 --> 00:01:01.470
+of the pragmatic programmer from
+tournament to master now in
+
+12
+00:01:01.470 --> 00:01:05.370
+its 20th year. How are
+you gentlemen? We are thanks
+
+13
+00:01:05.370 --> 00:01:08.220
+for having us. I know,
+I know this, Andy, you
+
+14
+00:01:08.220 --> 00:01:10.890
+get an Andrew and I
+just got a Dave. I
+
+15
+00:01:10.890 --> 00:01:14.520
+mean, you know, you know,
+what's funny is that that's
+
+16
+00:01:14.790 --> 00:01:17.430
+one of the other combinations
+because when we first wrote
+
+17
+00:01:17.430 --> 00:01:20.010
+the book, it was Andrew
+and David, because, you know,
+
+18
+00:01:20.280 --> 00:01:22.410
+we were young trying to
+make a name for ourselves
+
+19
+00:01:22.410 --> 00:01:24.450
+and then all the books
+we've written since then have
+
+20
+00:01:24.450 --> 00:01:28.230
+been Dave and Andy or
+Andy and Dave. And so
+
+21
+00:01:28.230 --> 00:01:31.950
+we still get kind of
+random permutations. Is there a
+
+22
+00:01:31.950 --> 00:01:34.800
+preferred one? I dunno. I
+guess my dad is Dave,
+
+23
+00:01:34.860 --> 00:01:38.010
+so I'm afraid. I, I
+got a little sloppy there.
+
+24
+00:01:39.390 --> 00:01:43.770
+That's what I go by.
+Andy and Dave and Andy.
+
+25
+00:01:44.520 --> 00:01:48.840
+This is 20 years old,
+which feels impossible. I mean,
+
+26
+00:01:48.840 --> 00:01:53.430
+I, it, it feels fresh.
+It reads fresh. Did you
+
+27
+00:01:53.430 --> 00:01:55.320
+know when you were writing
+it that it was going
+
+28
+00:01:55.320 --> 00:01:57.210
+to be a Seminole work?
+Do you sit down and
+
+29
+00:01:57.210 --> 00:01:58.920
+say, you know, let's write
+a book, but let's make
+
+30
+00:01:58.920 --> 00:02:02.010
+it a seminal work or
+did you just slap the
+
+31
+00:02:02.010 --> 00:02:04.440
+keyboard? And it turned out
+that way. I think the
+
+32
+00:02:04.440 --> 00:02:07.350
+only person in history who
+said, I'm going to write
+
+33
+00:02:07.350 --> 00:02:12.600
+a bestseller was Jeffrey Archer.
+And he wrote one because
+
+34
+00:02:12.600 --> 00:02:14.520
+he was bankrupt and he
+needed the money. I think
+
+35
+00:02:14.520 --> 00:02:17.880
+otherwise it's just, I mean,
+you write the book you
+
+36
+00:02:17.880 --> 00:02:20.100
+write and you see what
+happens. I mean, I think
+
+37
+00:02:20.100 --> 00:02:26.010
+both of us were stunned
+when it took off, because
+
+38
+00:02:26.100 --> 00:02:29.490
+for us it was an
+exercise in really as much
+
+39
+00:02:29.490 --> 00:02:32.400
+as anything else trying to
+clarify our own thoughts and
+
+40
+00:02:32.640 --> 00:02:35.400
+put down what was to
+us kind of like common
+
+41
+00:02:35.400 --> 00:02:38.370
+sense that our clients at
+the time, weren't really seeing
+
+42
+00:02:38.370 --> 00:02:41.880
+as common sense. So it
+was almost like a crystallization
+
+43
+00:02:41.880 --> 00:02:44.100
+of a set of notes
+when we wrote it. So
+
+44
+00:02:44.100 --> 00:02:46.080
+you're writing it down to
+explain it to yourself, make
+
+45
+00:02:46.080 --> 00:02:47.610
+sure that what you think
+you know is what you
+
+46
+00:02:47.610 --> 00:02:50.070
+know. Yeah. And to our
+clients. I mean, we got,
+
+47
+00:02:50.100 --> 00:02:52.020
+we kind of got, we
+went through a period where
+
+48
+00:02:52.020 --> 00:02:56.130
+we were going into onsite
+and just about everybody we
+
+49
+00:02:56.130 --> 00:02:58.230
+went to, I mean, typically
+as a consultant, you don't
+
+50
+00:02:58.230 --> 00:03:00.760
+get brought in when things
+are wonderful anyway, But the
+
+51
+00:03:00.760 --> 00:03:03.100
+people that we were brought
+into all had the same
+
+52
+00:03:03.100 --> 00:03:07.210
+kind of problems, their builds
+weren't consistent, they were shipping
+
+53
+00:03:07.210 --> 00:03:10.570
+code that hadn't tested, they
+were designing things in such
+
+54
+00:03:10.570 --> 00:03:13.150
+a way. It was impossible
+to change them. And so
+
+55
+00:03:13.150 --> 00:03:14.950
+we thought, well, let's save
+ourselves a bit of time
+
+56
+00:03:14.950 --> 00:03:17.230
+and heartache by just jotting
+down notes we can give
+
+57
+00:03:17.230 --> 00:03:21.010
+to them. And that got
+turned into the pragmatic programmer.
+
+58
+00:03:21.610 --> 00:03:24.010
+Yeah. I mean the original
+thought was we didn't even
+
+59
+00:03:24.040 --> 00:03:26.740
+seek out to do a
+book to begin with. We
+
+60
+00:03:26.740 --> 00:03:28.840
+were just going to write
+a white paper, you know,
+
+61
+00:03:28.870 --> 00:03:31.000
+literally just, just some notes
+just to save us a
+
+62
+00:03:31.000 --> 00:03:34.240
+little time, going into the
+next client and, you know,
+
+63
+00:03:34.300 --> 00:03:36.490
+projects grow in scope, right?
+So, you know, the little
+
+64
+00:03:36.490 --> 00:03:39.130
+white paper became, you know,
+more of a full fledged
+
+65
+00:03:39.130 --> 00:03:42.190
+book, but you know, that
+was, that was our intent.
+
+66
+00:03:42.190 --> 00:03:45.190
+We didn't, we had no
+notion that this would be
+
+67
+00:03:45.220 --> 00:03:48.670
+a popular at all or
+any kind of bestseller. We
+
+68
+00:03:48.670 --> 00:03:50.470
+just kind of, we were
+like, wow, we can actually
+
+69
+00:03:50.470 --> 00:03:53.710
+get this printed and published,
+you know, that's, that's really
+
+70
+00:03:53.710 --> 00:03:55.750
+cool. And we figured, you
+know, our moms would buy
+
+71
+00:03:55.750 --> 00:03:57.760
+a copy and you know,
+maybe a few friends, but
+
+72
+00:03:58.240 --> 00:04:01.770
+yeah, not much more than
+that Sounds like you're, you're
+
+73
+00:04:01.890 --> 00:04:04.140
+trying not to repeat yourself
+in this case. You're being
+
+74
+00:04:04.140 --> 00:04:06.420
+dry because you're like, you
+know, people keep asking us
+
+75
+00:04:06.420 --> 00:04:08.850
+this, we should probably just
+make a FAC and then
+
+76
+00:04:08.850 --> 00:04:10.200
+we can hand it to
+the client when we were
+
+77
+00:04:10.200 --> 00:04:12.510
+like, Oh, welcome. You've just
+hired us. Here's the, here's
+
+78
+00:04:12.510 --> 00:04:15.900
+how we work, Basically, basically.
+And then as Dave said,
+
+79
+00:04:15.900 --> 00:04:18.750
+as we started looking at
+that, that level of project,
+
+80
+00:04:18.750 --> 00:04:21.480
+like, well, okay, we have
+a chance to make this,
+
+81
+00:04:21.480 --> 00:04:24.840
+this fact, this white paper,
+what are the most important
+
+82
+00:04:24.840 --> 00:04:27.480
+things that we could say?
+You know, we don't want
+
+83
+00:04:27.480 --> 00:04:30.090
+to waste time talking about,
+well, you know, you should
+
+84
+00:04:30.090 --> 00:04:32.790
+format your code this way
+or adhere to the one
+
+85
+00:04:32.790 --> 00:04:35.610
+true brace style or, or,
+you know, that, that level
+
+86
+00:04:35.610 --> 00:04:37.800
+of stuff. So it's like,
+well, what do you want
+
+87
+00:04:37.800 --> 00:04:40.320
+to say? And what is
+the most important and how
+
+88
+00:04:40.320 --> 00:04:42.150
+can we, how can we
+say that? How can we
+
+89
+00:04:42.150 --> 00:04:45.630
+convey that in a way
+that people will, will remember
+
+90
+00:04:45.630 --> 00:04:48.480
+it and understand it and
+you know, really grok it.
+
+91
+00:04:48.480 --> 00:04:51.180
+Cause as much as I'd
+love to you, can't go
+
+92
+00:04:51.180 --> 00:04:53.400
+in and tell people, you
+have to brush your teeth
+
+93
+00:04:53.400 --> 00:04:56.580
+and eat your broccoli and
+know that kind of advice.
+
+94
+00:04:56.580 --> 00:05:00.210
+It's like, yes, that's true.
+But people tune out. They
+
+95
+00:05:00.210 --> 00:05:03.420
+won't, they won't necessarily hear.
+And if nothing else, you
+
+96
+00:05:03.420 --> 00:05:05.940
+gotta eat your broccoli and
+then brush your teeth. Otherwise
+
+97
+00:05:05.940 --> 00:05:11.580
+there's no point order important.
+Absolutely. Yeah. And I think
+
+98
+00:05:11.580 --> 00:05:13.620
+the other thing that was
+really beneficial to us was
+
+99
+00:05:13.620 --> 00:05:18.720
+that at that time we
+were working with a really
+
+100
+00:05:18.720 --> 00:05:21.060
+wide variety of clients in
+a whole bunch of different
+
+101
+00:05:21.060 --> 00:05:26.100
+industries, different languages, different operating
+systems. And so there was
+
+102
+00:05:26.100 --> 00:05:29.460
+no one size fits all.
+So we were kind of
+
+103
+00:05:29.460 --> 00:05:31.680
+forced to go back a
+level and look at it
+
+104
+00:05:31.680 --> 00:05:33.750
+from the kind of, you
+know, the metal level, if
+
+105
+00:05:33.750 --> 00:05:37.560
+you like, of what are
+the underlying concepts, as opposed
+
+106
+00:05:37.560 --> 00:05:40.350
+to what of the tools.
+And I think that's possibly
+
+107
+00:05:40.350 --> 00:05:43.020
+one of the reasons that
+we, we were lucky with
+
+108
+00:05:43.020 --> 00:05:46.200
+the book is that we
+didn't make it specific or
+
+109
+00:05:46.200 --> 00:05:49.560
+too specific to one such
+technologies When you're working in
+
+110
+00:05:49.560 --> 00:05:52.650
+software and especially, or auditory
+and in software you're people
+
+111
+00:05:52.650 --> 00:05:54.090
+are always saying, if you
+can name it, you can
+
+112
+00:05:54.090 --> 00:05:56.310
+claim it. People will spend
+days trying to name the
+
+113
+00:05:56.310 --> 00:05:58.220
+right class. If they get
+the thing they say The
+
+114
+00:05:58.220 --> 00:06:00.170
+name, right then they'll understand
+it. And the design will
+
+115
+00:06:00.170 --> 00:06:02.750
+just fall out from it.
+How important was it to
+
+116
+00:06:02.750 --> 00:06:06.470
+call it pragmatic when you
+discovered that word pragmatic, you
+
+117
+00:06:06.470 --> 00:06:08.780
+didn't call it the dogmatic
+program or you needed the
+
+118
+00:06:08.780 --> 00:06:11.870
+pragmatic programmer when you nailed
+that word. Was that the
+
+119
+00:06:11.870 --> 00:06:14.180
+word that you needed or
+was that just a title
+
+120
+00:06:14.620 --> 00:06:17.380
+We wanted because, and I
+had almost forgotten this until
+
+121
+00:06:17.380 --> 00:06:20.710
+I saw some interview from
+back in the day, but
+
+122
+00:06:20.920 --> 00:06:24.520
+at the time, like with
+Twitter today or read it,
+
+123
+00:06:24.520 --> 00:06:27.040
+there was a lot of
+discussion on a use net
+
+124
+00:06:27.160 --> 00:06:30.010
+on comp.com dot object. And
+in some of these other
+
+125
+00:06:30.010 --> 00:06:34.570
+news groups, and there was
+a long running argument slash
+
+126
+00:06:34.570 --> 00:06:40.510
+discussion about whether programming was
+craft or not. And, and
+
+127
+00:06:40.510 --> 00:06:42.550
+you know, all kinds of
+the follow on arguments, you
+
+128
+00:06:42.550 --> 00:06:44.050
+know, well, if it's not,
+is it art? Is it
+
+129
+00:06:44.050 --> 00:06:46.540
+science? Is it engineering? Is
+it this isn't that? And
+
+130
+00:06:46.540 --> 00:06:50.050
+the answer is yes. You
+know, it's, it's all these
+
+131
+00:06:50.050 --> 00:06:54.910
+things in measure, but in
+particular, there was a strain
+
+132
+00:06:54.910 --> 00:06:57.340
+of thought at the time,
+which, you know, kind of
+
+133
+00:06:57.430 --> 00:07:01.540
+virulently persists to this day
+that is very dogmatic that
+
+134
+00:07:01.540 --> 00:07:04.450
+says, you must abide by
+this principle and you must
+
+135
+00:07:04.450 --> 00:07:07.390
+do this and you must
+do this this way. And
+
+136
+00:07:07.390 --> 00:07:09.880
+we looked at these and
+you're like, well, yeah, no,
+
+137
+00:07:09.970 --> 00:07:13.480
+it doesn't work like that
+really. I mean, yes, a
+
+138
+00:07:13.480 --> 00:07:16.570
+lot of the time this
+principle can be helpful. This
+
+139
+00:07:16.570 --> 00:07:20.230
+practice can be helpful. This,
+you know, this paradigm can
+
+140
+00:07:20.230 --> 00:07:23.980
+be useful, but not always.
+And you need to know
+
+141
+00:07:24.070 --> 00:07:28.450
+the difference. So we very
+much pushed deliberately against the,
+
+142
+00:07:28.450 --> 00:07:32.410
+the, what we perceived as
+the dogmatic approach and approach
+
+143
+00:07:32.410 --> 00:07:33.900
+is being pushed at the
+time and said, no, no,
+
+144
+00:07:33.910 --> 00:07:36.160
+you gotta, you've got to
+look at things in context.
+
+145
+00:07:36.160 --> 00:07:38.680
+You've got to be able
+to apply these lessons where,
+
+146
+00:07:38.680 --> 00:07:41.560
+and when they make sense.
+And I think a lot
+
+147
+00:07:41.560 --> 00:07:44.110
+of that, we tried to
+capture in the book of
+
+148
+00:07:44.110 --> 00:07:46.870
+trying to give that sense
+of, you know, this is
+
+149
+00:07:46.870 --> 00:07:49.420
+what you need to look
+at to evaluate is this
+
+150
+00:07:49.420 --> 00:07:52.270
+the right thing to do
+here? In this context, you
+
+151
+00:07:52.270 --> 00:07:55.750
+can't just blindly say, I'm
+going to use a, Oh,
+
+152
+00:07:55.780 --> 00:07:57.850
+or I'm going to use
+functional programming, or I'm going
+
+153
+00:07:57.850 --> 00:08:00.040
+to use scrum, or I'm
+going to use CLO or
+
+154
+00:08:00.040 --> 00:08:04.600
+whatever it is. It has
+to fit the situation. Yeah.
+
+155
+00:08:04.630 --> 00:08:07.420
+Yeah. That's absolutely true. I
+mean, I think one thing
+
+156
+00:08:07.420 --> 00:08:09.100
+I like to put up
+on slides is that there's
+
+157
+00:08:09.100 --> 00:08:11.800
+only one universal rule and
+that is that there are
+
+158
+00:08:11.800 --> 00:08:16.240
+no universal rules. And I
+think that's, that's very, very
+
+159
+00:08:16.240 --> 00:08:17.620
+true. And I think one
+of the things that we
+
+160
+00:08:17.620 --> 00:08:21.280
+try to be is, and
+it's harder on our readers
+
+161
+00:08:21.310 --> 00:08:23.050
+because what we're doing is
+we're pushing back on them.
+
+162
+00:08:23.050 --> 00:08:26.200
+We're trying not to say,
+do this. We're trying to
+
+163
+00:08:26.200 --> 00:08:30.070
+say, here are the options.
+Here are things other people
+
+164
+00:08:30.070 --> 00:08:33.520
+do now go work out
+what works for you, because
+
+165
+00:08:33.670 --> 00:08:36.160
+there are no two developers
+doing the same thing at
+
+166
+00:08:36.160 --> 00:08:38.130
+the same time, in the
+same environment, et cetera, et
+
+167
+00:08:38.130 --> 00:08:42.160
+cetera, et cetera. So it's
+pretty much guaranteed that there
+
+168
+00:08:42.160 --> 00:08:45.400
+is no such thing as
+a best practice. We, when
+
+169
+00:08:45.430 --> 00:08:47.500
+we've been talking at a,
+at my job about how
+
+170
+00:08:47.500 --> 00:08:49.900
+to interview people, especially now
+that there's this new fresh
+
+171
+00:08:49.900 --> 00:08:52.690
+generation of developers coming in,
+and a lot of people
+
+172
+00:08:52.690 --> 00:08:55.650
+have been pushing back on
+white boarding interviews, pushing back
+
+173
+00:08:55.650 --> 00:08:57.720
+on how we interview people,
+because they feel that it
+
+174
+00:08:57.720 --> 00:09:00.540
+is asking a bunch of
+trivia. And one of the,
+
+175
+00:09:00.570 --> 00:09:03.000
+one of the bosses propose
+that we're less interested in
+
+176
+00:09:03.000 --> 00:09:06.180
+people who have the answers
+and more interested in people
+
+177
+00:09:06.180 --> 00:09:08.970
+who know the right questions
+to absolutely. That's a really
+
+178
+00:09:08.970 --> 00:09:11.910
+good way of it. The
+other thing from my personal
+
+179
+00:09:11.910 --> 00:09:14.760
+experience is that some of
+the best developers I've hired
+
+180
+00:09:15.030 --> 00:09:18.930
+couldn't program at the time,
+you know, I mean, and
+
+181
+00:09:18.930 --> 00:09:21.660
+nowadays you can get productive
+in a couple of months
+
+182
+00:09:21.720 --> 00:09:24.090
+up to a level where
+you're, you know, you're paying
+
+183
+00:09:24.090 --> 00:09:26.970
+back your salary. So I
+think you're looking at the
+
+184
+00:09:26.970 --> 00:09:30.850
+personality. Absolutely. I had the,
+I had the, I had
+
+185
+00:09:30.860 --> 00:09:33.530
+the very, the very same
+experience. One of the, one
+
+186
+00:09:33.530 --> 00:09:36.380
+of the best C programmers
+I ever met had an
+
+187
+00:09:36.380 --> 00:09:40.010
+advanced degree in botany. And
+he used to go on
+
+188
+00:09:40.010 --> 00:09:44.600
+literally like expeditions into the
+Amazon to collect some Don't
+
+189
+00:09:44.600 --> 00:09:46.190
+tell me he was looking
+for bugs. Oh, no, it
+
+190
+00:09:46.190 --> 00:09:50.720
+was plants. I'm sure. I'm
+sure that there were bugs
+
+191
+00:09:50.720 --> 00:09:53.840
+involved, but yeah, But no,
+it's yeah, it's absolutely. It's,
+
+192
+00:09:53.840 --> 00:09:58.400
+it's the, it's your part
+of personality, but your outlook,
+
+193
+00:09:58.430 --> 00:10:01.970
+you know, that, that kind
+of insatiable curiosity about the
+
+194
+00:10:01.970 --> 00:10:03.740
+world. I mean, if you're
+willing to go traipse into
+
+195
+00:10:03.740 --> 00:10:07.580
+the farthest jungle with headhunters
+and, you know, actual headhunters
+
+196
+00:10:07.580 --> 00:10:10.430
+who like, like cannibals, not
+the scary kind who, you
+
+197
+00:10:10.430 --> 00:10:12.200
+know, try to get you
+jobs and stuff, but you
+
+198
+00:10:12.200 --> 00:10:14.660
+know, if you're willing to
+traipse out into the jungle
+
+199
+00:10:14.810 --> 00:10:18.320
+to look for plants, just
+because it's cool, you know?
+
+200
+00:10:18.350 --> 00:10:20.930
+Yeah. You're willing to read
+a few man pages, you
+
+201
+00:10:20.930 --> 00:10:22.790
+know, look up a few
+things on the web, figure
+
+202
+00:10:22.790 --> 00:10:26.990
+out how stuff works, but
+it's that, that driving curiosity,
+
+203
+00:10:26.990 --> 00:10:30.230
+Hey, this is neat. How
+does this work? What's behind
+
+204
+00:10:30.230 --> 00:10:32.780
+this, where'd this come from?
+Can I use this? You
+
+205
+00:10:32.780 --> 00:10:35.840
+know, that's really the driving
+force. I think, Well, you
+
+206
+00:10:35.840 --> 00:10:38.690
+bring up an interesting point
+here because we're, we're on
+
+207
+00:10:38.690 --> 00:10:41.270
+a, we're hearing a podcast
+with, with, with all due
+
+208
+00:10:41.270 --> 00:10:43.550
+respect to all three of
+us, a bunch of older
+
+209
+00:10:43.730 --> 00:10:46.670
+programmers, we probably got a
+hundred years of programming experience
+
+210
+00:10:47.510 --> 00:10:49.910
+between us and Dave just
+said, well, you know, you
+
+211
+00:10:49.910 --> 00:10:51.530
+can get up to speed
+in a couple of weeks
+
+212
+00:10:51.530 --> 00:10:54.710
+and, you know, start paying
+back your, your studying. It's
+
+213
+00:10:54.710 --> 00:10:57.710
+interesting. It's one of those
+things where it's like the
+
+214
+00:10:57.710 --> 00:10:59.960
+game of go, right, where
+it's a minute to learn
+
+215
+00:10:59.960 --> 00:11:02.390
+and a lifetime to master.
+I'm not hearing from either
+
+216
+00:11:02.390 --> 00:11:04.190
+of you, any kind of
+what they call these days,
+
+217
+00:11:04.400 --> 00:11:06.230
+gatekeeping, where it's like, well,
+you know, you need a
+
+218
+00:11:06.230 --> 00:11:09.230
+software engineering degree and a
+master's thesis before you can
+
+219
+00:11:09.230 --> 00:11:13.190
+start writing that HTML. I'm
+hearing an enthusiasm for people
+
+220
+00:11:13.190 --> 00:11:16.550
+to start programming right away
+and just start asking the
+
+221
+00:11:16.550 --> 00:11:19.400
+right questions. So I let
+you into a little secret.
+
+222
+00:11:19.400 --> 00:11:25.160
+I I'm teaching currently I'm
+teaching two classes, undergraduate level
+
+223
+00:11:25.220 --> 00:11:31.670
+at SMU, just to, well,
+Paul, for two reasons, one
+
+224
+00:11:31.670 --> 00:11:34.910
+of them is I want
+to corrupt the youth. So,
+
+225
+00:11:34.970 --> 00:11:36.680
+you know, I'm teaching them
+things that, you know, like
+
+226
+00:11:36.680 --> 00:11:39.830
+functional programming that they wouldn't
+get otherwise. But the other
+
+227
+00:11:39.830 --> 00:11:44.990
+reason is I have this
+nagging feeling that particularly computer
+
+228
+00:11:44.990 --> 00:11:50.120
+science education is really poorly
+serving both the industry and
+
+229
+00:11:50.120 --> 00:11:54.160
+the student in that these
+people are coming of university
+
+230
+00:11:54.160 --> 00:11:57.880
+With tens, maybe hundreds of
+thousands of dollars of debt.
+
+231
+00:11:58.630 --> 00:12:03.400
+And yet in terms of
+the value to the industry
+
+232
+00:12:03.400 --> 00:12:06.280
+as a whole, there are
+really not that much different
+
+233
+00:12:06.280 --> 00:12:08.620
+to people that go through
+an eight week or whatever
+
+234
+00:12:08.620 --> 00:12:13.180
+boot camp, eight month, I
+guess it is bootcamp in
+
+235
+00:12:13.180 --> 00:12:20.080
+that they, they aren't being
+shown the real world. And
+
+236
+00:12:20.080 --> 00:12:23.080
+what, what they're being shown
+is like, you know, various
+
+237
+00:12:23.080 --> 00:12:25.180
+ideas on how to do
+certain things in C plus
+
+238
+00:12:25.180 --> 00:12:28.000
+plus or whatever it might
+be. And I mean, for
+
+239
+00:12:28.000 --> 00:12:33.190
+example, I teach people in
+a third, fourth year and
+
+240
+00:12:33.190 --> 00:12:37.960
+the masters students, and pretty
+much universally, not a single
+
+241
+00:12:37.960 --> 00:12:40.660
+one of them has ever
+been shown any form of
+
+242
+00:12:40.660 --> 00:12:49.080
+testing so far in their
+calls. So it's yeah, you're,
+
+243
+00:12:49.080 --> 00:12:51.070
+you're never going to get
+me saying, Oh yeah, you
+
+244
+00:12:51.070 --> 00:12:54.640
+need a degree in this.
+You know, I would much
+
+245
+00:12:54.640 --> 00:12:58.870
+rather hire somebody who had
+the right attitude and who
+
+246
+00:12:58.870 --> 00:13:01.600
+I liked and who was
+smart and who could talk
+
+247
+00:13:01.600 --> 00:13:05.310
+to people and then show
+them how to code. I
+
+248
+00:13:05.320 --> 00:13:08.190
+agree a hundred percent. In
+fact, I think it's, It
+
+249
+00:13:08.190 --> 00:13:10.740
+seems to me and, and
+both, you know, here's a
+
+250
+00:13:10.740 --> 00:13:14.370
+reveal, both Dave and I
+have have kids in and
+
+251
+00:13:14.370 --> 00:13:17.310
+just about to be out
+of college, you know, studying
+
+252
+00:13:17.310 --> 00:13:21.210
+in these areas and looking
+at the various degree programs
+
+253
+00:13:21.240 --> 00:13:24.360
+and, you know, the contents
+and what they teach. I
+
+254
+00:13:24.360 --> 00:13:27.390
+get the strong feeling that
+most computer science programs are
+
+255
+00:13:27.390 --> 00:13:31.200
+there to teach you to
+become a professor, a teacher
+
+256
+00:13:31.200 --> 00:13:34.320
+of computer science, you know,
+and not practically actually get
+
+257
+00:13:34.320 --> 00:13:36.510
+out in the world and
+be a software developer to
+
+258
+00:13:36.510 --> 00:13:40.680
+be a problem solver. And
+that's really kind of disappointing.
+
+259
+00:13:41.010 --> 00:13:44.010
+I know the, when my,
+my son went to college,
+
+260
+00:13:44.730 --> 00:13:49.380
+they, they had the attitude
+in the introductory courses that
+
+261
+00:13:49.380 --> 00:13:51.540
+here you were, you know,
+coming into college for the
+
+262
+00:13:51.540 --> 00:13:53.970
+first time. You want your
+declaring your major to be
+
+263
+00:13:54.270 --> 00:13:57.060
+computer science. And they started
+with the assumption. You'd basically
+
+264
+00:13:57.060 --> 00:14:00.900
+had never seen a computer
+before, and here's the keyboard.
+
+265
+00:14:00.900 --> 00:14:03.240
+And you, you know, this,
+this level of instruction, it's
+
+266
+00:14:03.240 --> 00:14:07.470
+like, they missed the fact
+that this generation has been
+
+267
+00:14:07.500 --> 00:14:11.520
+playing on their iPods, iPads
+since they were, you know,
+
+268
+00:14:11.520 --> 00:14:14.580
+toddlers or whatever, you know,
+they're very comfortable in the
+
+269
+00:14:14.580 --> 00:14:16.590
+digital age. These people have
+had, you know, these kids
+
+270
+00:14:16.590 --> 00:14:20.130
+have had summer jobs programming
+in Python or PHP, or
+
+271
+00:14:20.130 --> 00:14:23.160
+what have you, they're coming
+in with a certain base
+
+272
+00:14:23.160 --> 00:14:26.940
+level of knowledge. And the
+regular programs are like, Nope,
+
+273
+00:14:26.970 --> 00:14:30.240
+you've never seen one of
+these magic devices before, you
+
+274
+00:14:30.240 --> 00:14:32.970
+know, starting from there. And
+you know, again, in four
+
+275
+00:14:32.970 --> 00:14:35.010
+years with everything else they're
+trying to teach. Yeah. They
+
+276
+00:14:35.010 --> 00:14:38.850
+don't cover testing. They don't
+cover working effectively in a
+
+277
+00:14:38.850 --> 00:14:42.060
+team. They don't cover things
+like version control that are
+
+278
+00:14:42.060 --> 00:14:45.060
+just, you know, hygiene really
+I'm, it's back to brushing
+
+279
+00:14:45.060 --> 00:14:47.070
+your teeth. I mean, this
+is just how you do
+
+280
+00:14:47.070 --> 00:14:50.610
+things. And that's, you know,
+often not, not part of
+
+281
+00:14:50.610 --> 00:14:54.110
+their experience. I Mean, fundamentally,
+I don't think they teach
+
+282
+00:14:54.140 --> 00:15:00.260
+programming in the, in the
+broader sense they teach how
+
+283
+00:15:00.260 --> 00:15:05.930
+to code in certain languages.
+And typically that is motivated
+
+284
+00:15:05.960 --> 00:15:08.900
+by I'm going to teach
+you data structures, or I'm
+
+285
+00:15:08.900 --> 00:15:12.050
+going to teach you, you
+know, algorithm speed or something
+
+286
+00:15:12.050 --> 00:15:16.400
+like that. But in terms
+of just general good things
+
+287
+00:15:16.400 --> 00:15:20.270
+to do when programming that
+never gets taught. And that's
+
+288
+00:15:20.270 --> 00:15:22.610
+a, that's a big shame.
+I mean, that reflects the
+
+289
+00:15:22.610 --> 00:15:24.980
+overall problem. Right? And, and
+you, you hit the nail
+
+290
+00:15:24.980 --> 00:15:27.980
+there in the head. It's
+like people still identify themselves
+
+291
+00:15:27.980 --> 00:15:30.920
+as I'm a Java programmer.
+I'm a C plus plus
+
+292
+00:15:30.920 --> 00:15:32.630
+programmer. You know, I want
+to go to school to
+
+293
+00:15:32.630 --> 00:15:35.480
+learn programming. No, as you
+said, you know, you can
+
+294
+00:15:35.480 --> 00:15:37.220
+learn that in a couple
+of weeks, a couple months
+
+295
+00:15:37.420 --> 00:15:40.490
+at a bootcamp, what you
+need to learn is problem
+
+296
+00:15:40.490 --> 00:15:44.960
+solving. How do I attack
+and solve this problem using
+
+297
+00:15:45.140 --> 00:15:50.570
+technology, using computer languages, using
+algorithmic constructs, using, you know,
+
+298
+00:15:50.570 --> 00:15:53.660
+development paradigms, how do I
+solve these classes of problems?
+
+299
+00:15:53.660 --> 00:15:56.840
+What tools do I use?
+That's really the heart of
+
+300
+00:15:56.840 --> 00:16:00.050
+the matter. That's well, that's
+the first pug, but then,
+
+301
+00:16:00.050 --> 00:16:03.200
+then after you get more
+experienced than the second part
+
+302
+00:16:03.230 --> 00:16:06.650
+is being able to recognize
+the problems. Yeah. And that's,
+
+303
+00:16:06.650 --> 00:16:11.660
+that's never tool. I've been
+teaching my now teenager, some
+
+304
+00:16:11.660 --> 00:16:14.420
+of the fundamentals of hygiene,
+the thing that came up
+
+305
+00:16:14.420 --> 00:16:19.070
+yesterday was the importance of
+deodorant. And I was trying
+
+306
+00:16:19.070 --> 00:16:22.100
+to explain to this, this
+young person, how important this
+
+307
+00:16:22.100 --> 00:16:24.820
+was. And I realized that,
+you know, if you don't
+
+308
+00:16:24.820 --> 00:16:28.000
+have a person To do
+that, you're just going to
+
+309
+00:16:28.420 --> 00:16:32.560
+smell. And how would you
+know? Yeah. How, how could
+
+310
+00:16:32.560 --> 00:16:35.250
+you have discovered that? And
+I think that we, we
+
+311
+00:16:35.380 --> 00:16:38.590
+Assume so much that this
+is this or that is
+
+312
+00:16:38.590 --> 00:16:42.190
+discoverable, and That's asking a
+lot of someone to go
+
+313
+00:16:42.190 --> 00:16:43.810
+and discover that when we
+could simply show them, Hey,
+
+314
+00:16:43.810 --> 00:16:46.630
+there's a way to do
+this. That's understood. And maybe
+
+315
+00:16:46.680 --> 00:16:50.800
+You could do it this
+way. Yeah, absolutely. Hey friends,
+
+316
+00:16:50.920 --> 00:16:54.190
+summers longer days and slower
+pace, invite us to pick
+
+317
+00:16:54.190 --> 00:16:57.220
+up a book, follow our
+questions and try our hand
+
+318
+00:16:57.220 --> 00:17:00.490
+at something new. The work
+of modern software developers is
+
+319
+00:17:00.490 --> 00:17:03.910
+evolving in ways that are
+both challenging and rewarding. As
+
+320
+00:17:03.910 --> 00:17:07.270
+a developer, it's essential that
+you cultivate a security mindset
+
+321
+00:17:07.390 --> 00:17:10.390
+and to help we've put
+together a collection of information,
+
+322
+00:17:10.390 --> 00:17:15.520
+security books, podcasts, blogs, and
+hands on exercises recommended by
+
+323
+00:17:15.520 --> 00:17:19.750
+Vira coders, across our development
+security and product teams from
+
+324
+00:17:19.750 --> 00:17:24.160
+adjust published page Turner to
+classic frac articles. There's something
+
+325
+00:17:24.160 --> 00:17:27.400
+here for everyone who's interested
+in becoming more security minded.
+
+326
+00:17:27.820 --> 00:17:29.890
+So dip your toes in,
+or take a deep dive
+
+327
+00:17:29.950 --> 00:17:34.510
+visit www dot Vierra code
+that's V E R a
+
+328
+00:17:34.600 --> 00:17:44.710
+code.com/reading that's vericode.com/reading. I noticed
+that. And the chapter three
+
+329
+00:17:44.710 --> 00:17:46.690
+of the, of the book,
+you have a whole section
+
+330
+00:17:46.690 --> 00:17:48.700
+called the basic tools and
+you go right off the
+
+331
+00:17:48.700 --> 00:17:50.940
+bat and you say, look
+the power Of plain text,
+
+332
+00:17:51.540 --> 00:17:53.490
+but I don't remember learning
+how to edit text in
+
+333
+00:17:53.490 --> 00:17:59.070
+college. I was told how
+to use punch cuts. So
+
+334
+00:17:59.100 --> 00:18:02.790
+that's almost the same, but
+no, I mean, again, again,
+
+335
+00:18:02.850 --> 00:18:08.400
+it's it's so, okay. Here
+here's here's an interesting, Andy
+
+336
+00:18:08.400 --> 00:18:12.840
+talked about his boy who
+went through effectively. It was
+
+337
+00:18:12.840 --> 00:18:15.360
+basically like it was a
+cybernetic. So computer science, one
+
+338
+00:18:15.360 --> 00:18:17.760
+of those kinds of engineering
+year kind of things. My
+
+339
+00:18:17.760 --> 00:18:23.760
+son, my oldest son took
+a liberal arts degree is
+
+340
+00:18:23.760 --> 00:18:29.550
+relatively fluent in ancient Greek.
+Some Latin, some French, he
+
+341
+00:18:29.550 --> 00:18:33.420
+can argue philosophers until, you
+know, your eyes drop out.
+
+342
+00:18:35.010 --> 00:18:39.150
+And because I was in
+to programming, he was vehemently
+
+343
+00:18:39.150 --> 00:18:44.190
+not into programming for a
+long, long, long time. And
+
+344
+00:18:44.220 --> 00:18:48.570
+he got out of college
+and discovered that there aren't
+
+345
+00:18:48.570 --> 00:18:51.420
+that many openings for liberal
+artists out there in the
+
+346
+00:18:51.420 --> 00:18:56.510
+job market and was basically
+hanging around, looking for, for
+
+347
+00:18:56.570 --> 00:19:02.910
+stuff to do and got
+involved programming an Arduino to,
+
+348
+00:19:03.270 --> 00:19:06.930
+he was trying to sense
+muscle tension. So he could
+
+349
+00:19:06.930 --> 00:19:11.010
+produce like an artificial hand
+and he kinda got into
+
+350
+00:19:11.010 --> 00:19:15.540
+programming that way and decided
+he liked it, went and
+
+351
+00:19:15.540 --> 00:19:21.360
+did a really fantastic course
+at a boot camp. He's
+
+352
+00:19:21.360 --> 00:19:26.220
+now pro I mean, he's
+been basically, he's probably paid
+
+353
+00:19:27.030 --> 00:19:31.740
+more than twice. The next
+type of student that graduated
+
+354
+00:19:31.740 --> 00:19:38.490
+in his class, totally enjoying
+himself and getting back to
+
+355
+00:19:38.490 --> 00:19:44.730
+editing text, he was taught
+using visual studio code and
+
+356
+00:19:44.730 --> 00:19:47.700
+he has gone through this
+conversion to the dark side.
+
+357
+00:19:48.120 --> 00:19:51.120
+And he is now, you
+know, beating me up cause
+
+358
+00:19:51.120 --> 00:19:52.980
+I use vs code. And
+he's saying, Oh no, no,
+
+359
+00:19:53.010 --> 00:19:55.800
+you should be using VIM
+and T mucks and blah,
+
+360
+00:19:55.810 --> 00:19:59.340
+blah, blah. You know, and
+this is someone who had
+
+361
+00:19:59.610 --> 00:20:03.180
+really never even seen an
+editor until a year ago.
+
+362
+00:20:03.900 --> 00:20:09.960
+So that side of things
+is, is I think there's
+
+363
+00:20:09.960 --> 00:20:12.180
+lots of different levels, you
+know? And I think that
+
+364
+00:20:12.280 --> 00:20:15.030
+that sort of thing, the
+edge and tech stuff is
+
+365
+00:20:15.060 --> 00:20:19.050
+absolutely fundamental. But what we're
+trying to get to in
+
+366
+00:20:19.530 --> 00:20:22.350
+that chapter is not so
+much the, this is how
+
+367
+00:20:22.350 --> 00:20:26.310
+you edit text, but it's
+how the fact that if
+
+368
+00:20:26.310 --> 00:20:30.480
+you have stuff in text,
+then it's accessible to all
+
+369
+00:20:30.480 --> 00:20:34.230
+of your tools. Whereas if
+instead you have tools specific
+
+370
+00:20:34.380 --> 00:20:37.980
+data, then you're limited to
+what you can do by
+
+371
+00:20:37.980 --> 00:20:40.830
+what the tool can do.
+So that's kind of an
+
+372
+00:20:40.830 --> 00:20:45.330
+underlying principle, if you will,
+that, that runs through the
+
+373
+00:20:45.330 --> 00:20:48.730
+whole book, are these subtle
+little things That you might
+
+374
+00:20:48.730 --> 00:20:51.970
+not think about, but that
+if you do them correctly,
+
+375
+00:20:52.000 --> 00:20:55.060
+they help keep your options
+open in the future. Because
+
+376
+00:20:55.300 --> 00:20:58.930
+as a species, we were
+terrible at fortune telling, you
+
+377
+00:20:58.930 --> 00:21:00.910
+know, we think we're decent
+at it. We think we
+
+378
+00:21:00.910 --> 00:21:03.790
+can, we know, Oh, this
+is how this class will
+
+379
+00:21:03.790 --> 00:21:06.160
+be extended in the future.
+And I'm going to build
+
+380
+00:21:06.160 --> 00:21:10.000
+it to be maintainable and
+extensible and nonsense, right? None
+
+381
+00:21:10.000 --> 00:21:13.210
+of us know what's going
+to happen six months, 12
+
+382
+00:21:13.210 --> 00:21:17.380
+months, 18 months from now.
+So anywhere we can, we
+
+383
+00:21:17.380 --> 00:21:20.650
+try to do whatever we
+can to be as flexible,
+
+384
+00:21:20.920 --> 00:21:23.560
+keep our options open, right?
+Keeping things in plain text
+
+385
+00:21:23.860 --> 00:21:26.170
+while we can use it.
+Any number of ways in
+
+386
+00:21:26.170 --> 00:21:29.050
+the future, we don't need
+to know what those ways
+
+387
+00:21:29.050 --> 00:21:32.850
+are, but we're ready for
+it. It's been funny now
+
+388
+00:21:32.850 --> 00:21:35.130
+that I've got so many
+years doing this to watch
+
+389
+00:21:35.130 --> 00:21:39.330
+people go back and forth
+between name equals value to
+
+390
+00:21:39.390 --> 00:21:44.610
+XML, to Jason and now
+Yammel, and I try not
+
+391
+00:21:44.610 --> 00:21:47.640
+to be the older programmer
+and go, Oh, you know,
+
+392
+00:21:47.700 --> 00:21:51.750
+that's just adorable. As I
+watch people reinvent these things,
+
+393
+00:21:51.750 --> 00:21:53.790
+as we all come back
+eventually to just name value
+
+394
+00:21:53.790 --> 00:21:57.090
+pairs or, you know, INI
+file As they say exactly.
+
+395
+00:21:57.210 --> 00:22:00.780
+Exactly. Yeah. But it doesn't
+just apply to things like
+
+396
+00:22:00.780 --> 00:22:05.070
+in configuration. So for example,
+we wrote the first edition
+
+397
+00:22:05.070 --> 00:22:09.920
+of the book using latte,
+which is basically this text
+
+398
+00:22:09.930 --> 00:22:16.350
+files, right? Yeah. And the
+publisher was, was a guest
+
+399
+00:22:16.350 --> 00:22:20.220
+at this. They wanted us
+to use word and then
+
+400
+00:22:20.220 --> 00:22:21.900
+they want to take the
+word and back then they
+
+401
+00:22:21.900 --> 00:22:24.600
+were going to import it
+into frame maker and make
+
+402
+00:22:24.600 --> 00:22:27.180
+a book out of that.
+Of course they were. And
+
+403
+00:22:27.180 --> 00:22:29.190
+we said, okay, but if
+you do that, then how
+
+404
+00:22:29.190 --> 00:22:32.190
+do we make changes? And
+they were, they were like,
+
+405
+00:22:32.490 --> 00:22:36.990
+Oh, what we make the
+changes? Would you do that?
+
+406
+00:22:38.190 --> 00:22:40.950
+They wanted to make the
+FrameMaker, the authoritative source and
+
+407
+00:22:40.950 --> 00:22:43.770
+then throw away External source.
+Here's the, here's the real
+
+408
+00:22:43.770 --> 00:22:48.300
+cool thing. So skip forward
+20 years and we're going
+
+409
+00:22:48.300 --> 00:22:50.910
+to do it again. We
+had exactly the same conversation
+
+410
+00:22:50.910 --> 00:22:54.360
+with the publisher and in
+the end we were entrenched
+
+411
+00:22:54.660 --> 00:22:58.260
+intransigent enough to win. But
+now we're faced with the
+
+412
+00:22:58.260 --> 00:23:02.130
+fact that we'd produce this
+incredibly complex, low tech system.
+
+413
+00:23:02.820 --> 00:23:06.000
+And we in the meantime
+have develop our own publishing
+
+414
+00:23:06.000 --> 00:23:08.850
+company. And we actually had
+a pretty kick ass system
+
+415
+00:23:08.850 --> 00:23:14.010
+around. And obviously we didn't
+accept latte, but it was
+
+416
+00:23:14.010 --> 00:23:17.730
+in plain text. So a
+couple of Ruby scripts later
+
+417
+00:23:18.180 --> 00:23:23.460
+allow tech actually quite happily
+fed into our plain text
+
+418
+00:23:23.460 --> 00:23:27.780
+based production system for the
+news, the new stuff. And
+
+419
+00:23:27.780 --> 00:23:30.690
+that's the benefit of plain
+text, right? You don't have
+
+420
+00:23:30.690 --> 00:23:33.210
+to think about the future
+because you know, ASCII is
+
+421
+00:23:33.210 --> 00:23:36.030
+asking is always going to
+be asking you, right. It's
+
+422
+00:23:36.030 --> 00:23:37.650
+funny that you mentioned that
+I was working with an
+
+423
+00:23:37.650 --> 00:23:42.180
+Apache spark system recently, and
+it was many, many hundreds
+
+424
+00:23:42.180 --> 00:23:46.250
+of terabytes of data, but
+it was all CSV. And
+
+425
+00:23:46.520 --> 00:23:48.710
+some of the, some of
+the more, what they thought
+
+426
+00:23:48.710 --> 00:23:51.830
+of as being more pragmatic,
+people were having trouble understanding
+
+427
+00:23:52.310 --> 00:23:59.000
+the scope and reconciling the
+size hundreds of terabytes with
+
+428
+00:23:59.270 --> 00:24:02.150
+what their CSV files. Like,
+I can't open them in
+
+429
+00:24:02.150 --> 00:24:05.420
+VIM, but they are giant.
+And, but there's a benefit
+
+430
+00:24:05.420 --> 00:24:08.240
+for that because when it's
+all done and it's a
+
+431
+00:24:08.240 --> 00:24:10.400
+hundred years from now, it's
+the CSV files that are
+
+432
+00:24:10.400 --> 00:24:14.470
+going to save us all.
+Yeah. Oh, absolutely. Yeah. Yeah.
+
+433
+00:24:14.590 --> 00:24:17.230
+Well, I mean CSV it's,
+it's incredible to me that,
+
+434
+00:24:17.650 --> 00:24:19.540
+I mean, when did Excel
+for us come out like
+
+435
+00:24:19.690 --> 00:24:23.680
+early eighties, mid eighties or
+something? Yeah. CSV is still
+
+436
+00:24:23.740 --> 00:24:27.880
+the only lingua franca of
+business in the United States or
+
+437
+00:24:27.880 --> 00:24:30.490
+in the world. And you
+know, all this talk about
+
+438
+00:24:30.520 --> 00:24:34.000
+EDI and everything else, people
+just email spreadsheets, each other.
+
+439
+00:24:34.450 --> 00:24:37.510
+Okay. So is this a
+truth? Okay. Because we are
+
+440
+00:24:37.510 --> 00:24:39.520
+old or is this a
+truth? And we need to
+
+441
+00:24:39.520 --> 00:24:43.150
+teach everyone this truth because
+it's the pragmatic truth. I
+
+442
+00:24:43.150 --> 00:24:45.580
+think, I think it actually
+it's that it is a
+
+443
+00:24:45.580 --> 00:24:48.220
+pragmatic truth. Now, if, if
+we went the other way
+
+444
+00:24:48.220 --> 00:24:50.710
+and said, okay, this is
+a truth because we're old.
+
+445
+00:24:50.920 --> 00:24:53.500
+That's where we it's like,
+well, bash scripts forever baby,
+
+446
+00:24:55.240 --> 00:24:57.460
+because I've got shell scripts
+that are 30 years old,
+
+447
+00:24:57.460 --> 00:25:00.970
+that still work perfectly fine.
+And I've got COVID and
+
+448
+00:25:00.970 --> 00:25:07.030
+<inaudible>, and you've got those
+working. Did you bugs in
+
+449
+00:25:07.030 --> 00:25:10.750
+them? But yeah, well done.
+Actually I wouldn't call them
+
+450
+00:25:10.750 --> 00:25:16.180
+a truth. I would call
+them it's an observation because
+
+451
+00:25:16.390 --> 00:25:19.000
+a truth implies that it's
+my way or the highway.
+
+452
+00:25:19.180 --> 00:25:23.410
+And you know, I don't
+believe that. I think that
+
+453
+00:25:23.410 --> 00:25:25.450
+there are likely to be
+lots of different opportunities to
+
+454
+00:25:25.450 --> 00:25:29.200
+doing different things in different
+ways for us to date
+
+455
+00:25:29.800 --> 00:25:32.650
+plaintiff Has been all savior.
+Well, which is great because
+
+456
+00:25:32.650 --> 00:25:34.570
+it gets back to the
+original root of the conversation,
+
+457
+00:25:34.570 --> 00:25:37.870
+which is about pragmatism, where
+you might feel something is
+
+458
+00:25:38.110 --> 00:25:41.050
+a truth and someone comes
+up with a better truth
+
+459
+00:25:41.050 --> 00:25:42.700
+and go, okay, well, that's
+the truth now. But in
+
+460
+00:25:42.700 --> 00:25:44.800
+this case here, it is
+a proven thing because it
+
+461
+00:25:44.800 --> 00:25:47.470
+is just like scientific method.
+It's a theory that has
+
+462
+00:25:47.470 --> 00:25:49.150
+been proven time and time
+and time again, to be
+
+463
+00:25:49.150 --> 00:25:52.530
+a useful thing. Exactly. This,
+this is what works and
+
+464
+00:25:52.570 --> 00:25:54.460
+that's really, I mean, that
+really probably should have been
+
+465
+00:25:54.460 --> 00:25:57.220
+the tagline to the book.
+This is what works, but
+
+466
+00:25:57.280 --> 00:25:59.800
+I think also, no, no,
+no, it's not. This is
+
+467
+00:25:59.800 --> 00:26:02.530
+what works. It's this is
+what worked in the past
+
+468
+00:26:02.530 --> 00:26:05.590
+tense. You could even say,
+this is what worked in
+
+469
+00:26:05.590 --> 00:26:09.310
+the past tense for us.
+Yeah. On these projects at
+
+470
+00:26:09.310 --> 00:26:12.580
+this time. And then here
+we are over specifying the
+
+471
+00:26:12.580 --> 00:26:15.010
+specification. And now the name
+of the book is the
+
+472
+00:26:15.010 --> 00:26:17.380
+pragmatic programmer. This is what
+worked in the past tense
+
+473
+00:26:17.380 --> 00:26:19.720
+for us at these specific
+times on these projects, we
+
+474
+00:26:19.720 --> 00:26:25.660
+hope that you have Well,
+their success. exactly.com. Yes. You
+
+475
+00:26:25.660 --> 00:26:28.000
+made the funny joke about,
+but yeah, About bash scripts
+
+476
+00:26:28.000 --> 00:26:29.890
+and Dave said, are those
+working? And that brings me
+
+477
+00:26:29.890 --> 00:26:33.460
+to the chapter on software
+entropy, this idea of software
+
+478
+00:26:33.460 --> 00:26:36.280
+rot. I am personally right
+now actively trying to get
+
+479
+00:26:36.280 --> 00:26:39.880
+a 15 year old blogging
+system that uses XML for
+
+480
+00:26:39.880 --> 00:26:44.250
+its backend up and running.
+Cross-platform all new software And
+
+481
+00:26:44.250 --> 00:26:48.050
+I'm just trying to get
+the thing to build. And
+
+482
+00:26:48.060 --> 00:26:52.890
+I like nothing's really changed
+except basically everything has changed.
+
+483
+00:26:53.400 --> 00:26:57.260
+Yeah. It's, it's, it's insidious
+because I actually had an
+
+484
+00:26:57.260 --> 00:27:01.040
+opportunity to pull An old,
+it was either an iPhone
+
+485
+00:27:01.040 --> 00:27:03.670
+or an iPod touch. It's
+not some old bit of
+
+486
+00:27:03.680 --> 00:27:06.920
+gear out of the drawer
+that was maybe seven, eight,
+
+487
+00:27:06.920 --> 00:27:11.090
+nine, 10 years old. And
+I couldn't even connect to
+
+488
+00:27:11.090 --> 00:27:16.130
+any websites on it. Oh.
+Certificates because certificates, because the
+
+489
+00:27:16.130 --> 00:27:19.130
+SSL protocol, The calls have
+changed because you know, enough,
+
+490
+00:27:19.140 --> 00:27:22.010
+little bits of the plumbing
+who changed that, Oh, that's
+
+491
+00:27:22.010 --> 00:27:26.360
+all it's insecure. You can't
+even load, you know, modern
+
+492
+00:27:26.360 --> 00:27:29.960
+websites on an older bit
+of gear and you would
+
+493
+00:27:29.960 --> 00:27:33.320
+think, well, okay, God, it's
+HDP. It's HTML. Nothing has
+
+494
+00:27:33.320 --> 00:27:37.820
+changed. Well think again, you
+know, enough has changed that
+
+495
+00:27:38.000 --> 00:27:40.820
+you can't get there from
+here. Give me coming back
+
+496
+00:27:40.820 --> 00:27:43.370
+to your, your, your XML
+thing. I think the other
+
+497
+00:27:43.370 --> 00:27:45.620
+thing is we tend to
+have this kind of rosy
+
+498
+00:27:45.620 --> 00:27:49.520
+view of life was simpler
+back then. And so you
+
+499
+00:27:49.520 --> 00:27:51.920
+could say, well, it worked
+in the past, you know,
+
+500
+00:27:51.920 --> 00:27:54.230
+as if it was a
+no brainer back then, why
+
+501
+00:27:54.230 --> 00:27:57.770
+isn't it working now? But
+we all tend to forget
+
+502
+00:27:57.830 --> 00:28:01.040
+that getting it to work
+in the past also involves
+
+503
+00:28:01.490 --> 00:28:04.520
+downloading 17 different versions of
+WebEx and melon. So you
+
+504
+00:28:04.520 --> 00:28:07.190
+found the one that was
+compatible with whatever software you
+
+505
+00:28:07.190 --> 00:28:09.770
+were using. And then it
+will always incompatible with this
+
+506
+00:28:09.770 --> 00:28:11.630
+version of read line. And
+therefore I've got to change
+
+507
+00:28:11.630 --> 00:28:14.510
+this. And you know, and
+so I don't know about
+
+508
+00:28:14.510 --> 00:28:17.630
+you, but one of the
+reasons I switched from Linux
+
+509
+00:28:17.630 --> 00:28:20.540
+to a Mac was I
+just got so sick of
+
+510
+00:28:20.540 --> 00:28:23.420
+spending at least half of
+my day dependency managing the
+
+511
+00:28:23.420 --> 00:28:27.500
+whole time. So, you know,
+it's it's, if you imagine
+
+512
+00:28:27.500 --> 00:28:29.990
+you had one of those
+systems back then that you
+
+513
+00:28:29.990 --> 00:28:31.810
+had just managed to get
+work and you go all
+
+514
+00:28:31.840 --> 00:28:35.750
+dependencies. Right. And I said
+to you, Hey, Scott, stop
+
+515
+00:28:35.760 --> 00:28:38.960
+doing that for a month.
+You'd go spare on me
+
+516
+00:28:39.080 --> 00:28:41.000
+because you'd know at the
+end of that month, right.
+
+517
+00:28:41.000 --> 00:28:44.990
+Three things will be out
+of date and 15 years,
+
+518
+00:28:44.990 --> 00:28:47.810
+forget it. I mean, you
+know, just rewrite it mate.
+
+519
+00:28:47.870 --> 00:28:50.420
+Well, so there was a
+Ruby script buried in the
+
+520
+00:28:50.420 --> 00:28:52.790
+thing that apparently tidy it
+up and did some cleaning
+
+521
+00:28:52.790 --> 00:28:54.890
+of my XML files. And
+it was using like Ruby
+
+522
+00:28:54.890 --> 00:28:57.980
+2.1 0.4. And I was
+trying to go an app
+
+523
+00:28:57.990 --> 00:29:00.980
+to get that version of
+Ruby and it's not available.
+
+524
+00:29:01.160 --> 00:29:03.380
+So then it's like, I
+don't know what the semantic
+
+525
+00:29:03.380 --> 00:29:05.480
+versioning rules are for Ruby.
+If I could just go
+
+526
+00:29:05.480 --> 00:29:09.380
+to 2.1 0.3 or six
+or seven, and I ended
+
+527
+00:29:09.380 --> 00:29:12.710
+up shaving the yak for
+about three hours, trying to
+
+528
+00:29:12.710 --> 00:29:14.870
+figure out which, how to
+get a Ruby script to
+
+529
+00:29:14.870 --> 00:29:19.200
+work because of versioning because
+of rock because of, and,
+
+530
+00:29:19.200 --> 00:29:21.200
+and of course we've all
+had the experience where a
+
+531
+00:29:21.530 --> 00:29:25.010
+repository disappears off the internet
+entirely it's software can't even
+
+532
+00:29:25.010 --> 00:29:27.500
+be downloaded, but then the
+children, the kids today will
+
+533
+00:29:27.500 --> 00:29:29.090
+tell you that it's all
+about containers. And I should
+
+534
+00:29:29.090 --> 00:29:31.430
+be doing everything as a
+container. And having my build
+
+535
+00:29:31.430 --> 00:29:36.170
+system live, you know, basically
+in Amber, just freeze, dry
+
+536
+00:29:36.170 --> 00:29:38.690
+it in Amber, like a
+bug in Amber and have
+
+537
+00:29:38.690 --> 00:29:42.010
+my whole build system there,
+which, which is fine until
+
+538
+00:29:42.070 --> 00:29:44.050
+you have to interface with
+the rest of the world,
+
+539
+00:29:44.050 --> 00:29:45.790
+like with the phone in
+the drawer. And then the
+
+540
+00:29:45.790 --> 00:29:47.740
+rest of the world has
+moved on and it doesn't
+
+541
+00:29:47.740 --> 00:29:49.660
+matter what you've got an
+Amber you're still going to
+
+542
+00:29:49.660 --> 00:29:53.020
+run into problems. Okay. So
+then what's the pragmatic thing
+
+543
+00:29:53.020 --> 00:29:55.270
+to do. The pragmatic thing
+to do is to say
+
+544
+00:29:55.270 --> 00:29:58.720
+that software rot is a
+real thing, right? If you
+
+545
+00:29:58.720 --> 00:30:01.450
+don't touch a piece of
+software, it will gradually stop
+
+546
+00:30:01.450 --> 00:30:04.150
+working, which is kind of
+really counter intuitive, but it's
+
+547
+00:30:04.210 --> 00:30:08.530
+absolutely the truth. So if
+there is software that you
+
+548
+00:30:10.000 --> 00:30:12.520
+suspect that you want to
+be using for a long
+
+549
+00:30:12.520 --> 00:30:15.190
+time, you're going to have
+to put some effort into
+
+550
+00:30:15.190 --> 00:30:16.990
+it in the same way
+that, you know, if you
+
+551
+00:30:16.990 --> 00:30:19.330
+live somewhere, you're going to
+do a maintenance every now
+
+552
+00:30:19.330 --> 00:30:21.970
+and then otherwise it's going
+to like fall apart, same
+
+553
+00:30:21.970 --> 00:30:25.570
+thing with your software. And
+part of that maintenance is
+
+554
+00:30:25.660 --> 00:30:28.570
+the code. But to me,
+the most important part of
+
+555
+00:30:28.570 --> 00:30:32.350
+that maintenance is thinking about
+the data. And do I
+
+556
+00:30:32.350 --> 00:30:35.350
+have backups? Do I have
+backups in a format that
+
+557
+00:30:35.350 --> 00:30:39.310
+I can use if I
+lose the original and you
+
+558
+00:30:39.310 --> 00:30:41.530
+know, all these kinds of
+questions or things that you're
+
+559
+00:30:41.530 --> 00:30:45.040
+always asking yourself as part
+of the ongoing maintenance issue.
+
+560
+00:30:45.040 --> 00:30:48.580
+So I think the pragmatic
+approach is simply don't do
+
+561
+00:30:48.580 --> 00:30:50.380
+it. Don't just leave a
+bit of software and then
+
+562
+00:30:50.380 --> 00:30:51.970
+come back to it and
+hope it's going to work
+
+563
+00:30:52.000 --> 00:30:54.040
+because it won't well, see,
+now you feel like I
+
+564
+00:30:54.040 --> 00:30:55.870
+need to go get my
+zip disks and make sure
+
+565
+00:30:55.870 --> 00:31:00.130
+that they still work. Oh,
+goodness. I think my jazz
+
+566
+00:31:00.130 --> 00:31:03.190
+drive is here somewhere. Yeah.
+Those backups on VHS tape.
+
+567
+00:31:03.220 --> 00:31:05.680
+Yeah. That's yeah, no. I
+actually had a whole set
+
+568
+00:31:05.680 --> 00:31:09.670
+of backups on some incredibly
+expensive debt storage that I
+
+569
+00:31:09.700 --> 00:31:13.060
+bought. Right. And I had
+like, I don't know, like
+
+570
+00:31:13.060 --> 00:31:16.660
+a $1,500 that drive and
+I had about, I don't
+
+571
+00:31:16.660 --> 00:31:20.650
+know, 20 or 30 backup
+tapes. And when I moved
+
+572
+00:31:20.650 --> 00:31:24.070
+house, I looked at those
+and threw them away. Cause
+
+573
+00:31:24.070 --> 00:31:27.550
+I just thought, okay, this
+is like never, ever, ever
+
+574
+00:31:27.670 --> 00:31:30.370
+gonna work for star. It
+had a scuzzy interface on
+
+575
+00:31:30.370 --> 00:31:34.000
+it. This is never going
+to work. What's the point,
+
+576
+00:31:34.220 --> 00:31:36.670
+right. I've never actually gone
+to these tapes, throw them
+
+577
+00:31:36.670 --> 00:31:39.880
+away. And I think that's,
+that's kind of like, to
+
+578
+00:31:39.880 --> 00:31:42.640
+some extent, one of the
+things that we do Roman
+
+579
+00:31:42.640 --> 00:31:45.760
+software is we tend to
+Revere it too much. A
+
+580
+00:31:45.760 --> 00:31:47.710
+lot of the stress goes
+out of software. If you
+
+581
+00:31:47.710 --> 00:31:51.460
+consider it to be disposable,
+Zs, some bits of software,
+
+582
+00:31:51.460 --> 00:31:53.920
+like if you were writing
+software for a pacemaker, it
+
+583
+00:31:53.920 --> 00:31:56.380
+probably pays to get it
+right. But a lot of
+
+584
+00:31:56.380 --> 00:32:00.370
+software really. Yeah. You don't
+have to worry that much.
+
+585
+00:32:01.000 --> 00:32:02.710
+And if you have to
+throw it away, you have
+
+586
+00:32:02.710 --> 00:32:04.720
+to throw it away and
+start again. And that's fine.
+
+587
+00:32:05.590 --> 00:32:07.780
+And so I think if
+he could bring the cost
+
+588
+00:32:07.780 --> 00:32:11.020
+of experimentation down and the
+cost of replacing down, then
+
+589
+00:32:11.020 --> 00:32:14.410
+a lot of those stresses
+go away. Yeah. That's one
+
+590
+00:32:14.410 --> 00:32:16.270
+of the points we make
+in the book is that,
+
+591
+00:32:16.270 --> 00:32:19.750
+you know, it might be
+better to think about writing
+
+592
+00:32:19.750 --> 00:32:23.140
+software, knowing that you're going
+to replace it rather than
+
+593
+00:32:23.140 --> 00:32:26.320
+trying to invest in fortune
+tellings that, well, how, how
+
+594
+00:32:26.320 --> 00:32:28.570
+might this be extended in
+the future? How could this
+
+595
+00:32:28.570 --> 00:32:31.690
+be more maintainable? Forget that.
+Cause you have no idea.
+
+596
+00:32:32.020 --> 00:32:34.090
+You don't know what's going
+to happen, but you know,
+
+597
+00:32:34.090 --> 00:32:36.340
+worst case scenario, whatever does
+happen, you're gonna have to
+
+598
+00:32:36.340 --> 00:32:39.260
+rip this thing out. So,
+okay. How can I make
+
+599
+00:32:39.260 --> 00:32:42.080
+it easy To rip this
+piece out when it's no
+
+600
+00:32:42.080 --> 00:32:47.000
+longer functioning now you've got
+better coupling cohesion, Applewood, mother
+
+601
+00:32:47.000 --> 00:32:51.890
+pie, all those things, right?
+Yeah. I just figured it's
+
+602
+00:32:51.890 --> 00:32:54.290
+going to change in such
+a way that you're not
+
+603
+00:32:54.290 --> 00:32:56.300
+going to be able to
+fix it. Great. So let's
+
+604
+00:32:56.300 --> 00:32:59.080
+toss it out, throw it
+out. Right. So Context of
+
+605
+00:32:59.080 --> 00:33:01.780
+my blogging system, what I
+need is the 20 years
+
+606
+00:33:01.780 --> 00:33:05.440
+of XML files and graphics.
+I need the, the blog,
+
+607
+00:33:05.650 --> 00:33:07.930
+whether it's WordPress or ghost
+or whatever, I don't really
+
+608
+00:33:07.930 --> 00:33:10.930
+care. Yeah. If I went
+through the executive, the same
+
+609
+00:33:10.930 --> 00:33:16.120
+thing I had XML, Then
+it turned into a, what
+
+610
+00:33:16.120 --> 00:33:19.810
+was it, Textile? And then
+it turns Back into XML
+
+611
+00:33:19.810 --> 00:33:23.470
+for awhile. And then it
+went right. You know, and
+
+612
+00:33:23.620 --> 00:33:26.380
+the most important thing has
+to be re retain enough
+
+613
+00:33:26.380 --> 00:33:29.710
+semantic information in the data.
+Right. So I can just,
+
+614
+00:33:29.800 --> 00:33:32.170
+I can reconstruct it. And
+ultimately All I care about
+
+615
+00:33:32.170 --> 00:33:34.960
+in this context of my
+new migration is my URLs
+
+616
+00:33:35.200 --> 00:33:37.630
+because prop off the inner.
+So as long as I
+
+617
+00:33:37.630 --> 00:33:40.270
+don't change that and I've
+got the same data, hopefully
+
+618
+00:33:40.270 --> 00:33:43.540
+it'll be a, it'll be
+a good experience. And hopefully
+
+619
+00:33:43.540 --> 00:33:46.840
+I will be able to
+have the pragmatic programmer, 20th
+
+620
+00:33:46.840 --> 00:33:50.530
+anniversary edition updated. How updated
+is this book? How much
+
+621
+00:33:50.530 --> 00:33:52.600
+did you change? Because a
+lot's changed in 20 years,
+
+622
+00:33:52.810 --> 00:33:54.940
+We changed a lot at
+a lot of different levels.
+
+623
+00:33:54.970 --> 00:33:58.060
+So, you know, on the
+one hand we probably made
+
+624
+00:33:58.060 --> 00:34:01.870
+edits at least several edits
+to every single page. I
+
+625
+00:34:01.880 --> 00:34:06.030
+know that escaped. And some
+of that was just the
+
+626
+00:34:06.070 --> 00:34:09.250
+low level obvious stuff. Right.
+So we'd been talking about
+
+627
+00:34:09.490 --> 00:34:13.900
+CORBA and RMI and you
+know, exciting new languages like
+
+628
+00:34:13.960 --> 00:34:18.280
+Tom and interesting languages like
+Eiffel and right then the
+
+629
+00:34:18.280 --> 00:34:22.180
+audience is what I've never
+heard of these things. Yeah.
+
+630
+00:34:22.270 --> 00:34:26.710
+So there's a lot of
+technology, obviously that didn't survive
+
+631
+00:34:26.710 --> 00:34:29.890
+the passage of time. And
+there were a lot of
+
+632
+00:34:29.890 --> 00:34:33.250
+tips where the tip is
+still spot on like, like
+
+633
+00:34:33.250 --> 00:34:36.310
+the dry principle or, or
+no broken windows or whatever,
+
+634
+00:34:36.640 --> 00:34:40.300
+but we have found better
+ways to express it. Better
+
+635
+00:34:40.300 --> 00:34:44.080
+ways to talk about it.
+We've discovered people taking the
+
+636
+00:34:44.080 --> 00:34:48.220
+advice the wrong way. Maybe
+we expanded on the, the,
+
+637
+00:34:48.220 --> 00:34:53.620
+the dry principle a bit,
+because that's come to mean
+
+638
+00:34:53.620 --> 00:34:56.620
+to a lot of people
+don't copy and paste. And
+
+639
+00:34:56.620 --> 00:35:00.460
+it's not about that. It's
+about duplicating knowledge. So you
+
+640
+00:35:00.460 --> 00:35:03.610
+may have a literal copy
+of something in two different
+
+641
+00:35:03.610 --> 00:35:06.790
+places and that's fine because
+it's serving different purposes. It's
+
+642
+00:35:07.000 --> 00:35:10.450
+in a different context. Like
+we were saying before, that's
+
+643
+00:35:10.450 --> 00:35:14.830
+not a drive violation. We
+had some advice in the
+
+644
+00:35:14.830 --> 00:35:18.250
+first book of saying like,
+well, you should use metadata
+
+645
+00:35:18.580 --> 00:35:20.980
+to push decisions out of
+the code. So you don't
+
+646
+00:35:20.980 --> 00:35:24.030
+have to recompile and redeploy,
+if you just need to
+
+647
+00:35:24.100 --> 00:35:29.050
+change some bit of configuration.
+Right. Great advice. We had
+
+648
+00:35:29.380 --> 00:35:33.550
+some people take that to
+the extreme and their application
+
+649
+00:35:33.550 --> 00:35:37.740
+had 40,000 configuration variables in
+it, but told me to
+
+650
+00:35:37.740 --> 00:35:41.070
+do it, Andy, it's your
+fault. Exactly. So, you know,
+
+651
+00:35:41.080 --> 00:35:43.020
+there was, there was, there
+was things like that where
+
+652
+00:35:43.020 --> 00:35:48.060
+we'd gotten feedback years and
+figured, okay, well this is
+
+653
+00:35:48.060 --> 00:35:50.820
+something we should clarify. We
+should tell this story. We
+
+654
+00:35:50.820 --> 00:35:54.270
+should mention, you know, a
+drop will cure you if
+
+655
+00:35:54.270 --> 00:35:59.940
+you drink the whole bottle,
+you're gonna die. Yeah. So
+
+656
+00:35:59.940 --> 00:36:01.950
+we went through and put
+skull and crossbones on quite
+
+657
+00:36:01.950 --> 00:36:07.170
+a few things. So we
+did that kind of housekeeping.
+
+658
+00:36:08.490 --> 00:36:11.370
+And as Andy said, that
+was pretty pervasive. We also
+
+659
+00:36:11.400 --> 00:36:17.070
+took out a fair few
+tips and inserted some nuance,
+
+660
+00:36:18.270 --> 00:36:21.000
+partly because the world has
+changed. So for example, the
+
+661
+00:36:21.000 --> 00:36:26.040
+first edition kind of touched
+on concurrency, but back then
+
+662
+00:36:26.520 --> 00:36:29.190
+the idea of having 16
+calls in a laptop was
+
+663
+00:36:29.190 --> 00:36:34.050
+like, you know, star Trek.
+So the world has changed.
+
+664
+00:36:34.140 --> 00:36:36.060
+And so we beefed up,
+we have a whole new
+
+665
+00:36:36.060 --> 00:36:42.180
+chapter now on concurrency and
+also the world has changed
+
+666
+00:36:42.210 --> 00:36:49.080
+in terms of socially that
+the, the ethics of programming
+
+667
+00:36:49.680 --> 00:36:54.420
+is becoming more important. The
+ethics of personal interactions become
+
+668
+00:36:54.420 --> 00:36:59.550
+more important. And so we've
+added content to try to
+
+669
+00:36:59.550 --> 00:37:05.220
+address both of those things.
+And in general, you know,
+
+670
+00:37:05.250 --> 00:37:06.720
+every now and then that's
+a tip that I just
+
+671
+00:37:06.720 --> 00:37:09.690
+really, really, really wanted to
+write, you know, over the,
+
+672
+00:37:10.270 --> 00:37:13.530
+over the intervening 20 years
+have, Oh, I wish I
+
+673
+00:37:13.620 --> 00:37:15.660
+have put that one in.
+And so now we have
+
+674
+00:37:15.660 --> 00:37:18.930
+the opportunity to put them
+in. So probably about or
+
+675
+00:37:18.930 --> 00:37:22.260
+about a third, Andy is
+brand new, probably about that.
+
+676
+00:37:22.260 --> 00:37:26.130
+And yeah, some, some topics
+weren't even a concern back
+
+677
+00:37:26.130 --> 00:37:28.380
+then. So we have a
+whole new section on security
+
+678
+00:37:29.640 --> 00:37:32.190
+because back in the day,
+we were just struggling to
+
+679
+00:37:32.190 --> 00:37:34.680
+get the stuff to run.
+Right. We didn't have to
+
+680
+00:37:34.680 --> 00:37:39.630
+worry about, you know, deliberate
+attacks from bad actors locally
+
+681
+00:37:39.630 --> 00:37:42.780
+or around the world or
+what it might be. So,
+
+682
+00:37:43.080 --> 00:37:46.590
+you know, that's a whole
+new landscape that I'm sure
+
+683
+00:37:46.590 --> 00:37:49.110
+20 years from now when
+we do the 40th anniversary
+
+684
+00:37:49.110 --> 00:37:52.080
+edition, we'll have a lot
+more to say with a
+
+685
+00:37:52.080 --> 00:37:54.090
+whole section on AI and
+making sure you don't make
+
+686
+00:37:54.090 --> 00:37:58.110
+Skynet. Exactly. Exactly. Please. Don't,
+it'll be a whole section
+
+687
+00:37:58.110 --> 00:38:03.210
+on how not to upset
+Skynet off switch. You need
+
+688
+00:38:03.300 --> 00:38:09.660
+a big, fantastic. Well, thank
+you so much. Andy hunt
+
+689
+00:38:09.660 --> 00:38:12.090
+and Dave Thomas for chatting
+with me today, always a
+
+690
+00:38:12.090 --> 00:38:15.540
+pleasure. Thanks for having us.
+The book is the pragmatic
+
+691
+00:38:15.540 --> 00:38:17.670
+programmer from journeymen to master
+and it is now in
+
+692
+00:38:17.670 --> 00:38:21.360
+its 20th anniversary updated version.
+There'll be links in the
+
+693
+00:38:21.360 --> 00:38:23.100
+show notes, so you can
+pick this up. It is
+
+694
+00:38:23.100 --> 00:38:25.320
+great for everyone, whether you've
+been in software for 20
+
+695
+00:38:25.320 --> 00:38:27.060
+years or 20 minutes, I
+encourage you to check it
+
+696
+00:38:27.060 --> 00:38:30.480
+out. This has been another
+episode of Hansel minutes, and
+
+697
+00:38:30.480 --> 00:38:52.210
+we'll see you again Next
+week. <inaudible>.
+

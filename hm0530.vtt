@@ -1,0 +1,2511 @@
+WEBVTT FILE
+
+1
+00:00:00.330 --> 00:00:03.450
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.450 --> 00:00:06.780
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.780 --> 00:00:11.070
+Tellerik create compelling app experiences
+across any screen with the
+
+4
+00:00:11.070 --> 00:00:15.900
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
+
+5
+00:00:15.900 --> 00:00:19.590
+leading UI tools with cloud
+services to simplify the entire
+
+6
+00:00:19.590 --> 00:00:24.090
+app development cycle Tellerik offers
+everything.net developers need to build
+
+7
+00:00:24.090 --> 00:00:33.510
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform
+
+8
+00:00:46.980 --> 00:00:52.680
+from Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+9
+00:00:52.680 --> 00:00:57.870
+web developer and technologist Scott
+Hanselman. This is Lawrence Ryan announcing
+
+10
+00:00:57.870 --> 00:01:02.940
+show number 534. In this
+episode, Scott talks with Jessica
+
+11
+00:01:02.940 --> 00:01:10.230
+Lord about creating cross platform
+electron apps. Hi, this is
+
+12
+00:01:10.230 --> 00:01:13.200
+Scott Hanselman. This is another
+episode of Hanselminutes today. We're
+
+13
+00:01:13.200 --> 00:01:16.800
+talking with Jessica Lord. She
+works at GitHub on electron.
+
+14
+00:01:16.800 --> 00:01:19.370
+How are you? I'm great.
+Thank you so much for
+
+15
+00:01:19.370 --> 00:01:22.400
+having me. I am shocked.
+I realized now as we
+
+16
+00:01:22.400 --> 00:01:25.700
+do this remote podcast that
+you're in Portland, so I
+
+17
+00:01:25.700 --> 00:01:27.800
+could have brought my microphone
+to you. So for that,
+
+18
+00:01:27.800 --> 00:01:33.920
+I apologize. No worries. So
+you work on electron, formerly
+
+19
+00:01:34.130 --> 00:01:37.190
+Adam shell, Adam dash shell.
+This is different than the
+
+20
+00:01:37.190 --> 00:01:40.460
+Adam editor, right? It's a
+totally different thing. Yeah, it's
+
+21
+00:01:40.460 --> 00:01:45.140
+actually the piece of software
+that Adam is built on.
+
+22
+00:01:45.530 --> 00:01:48.770
+It was, and it was
+built originally for Adam because
+
+23
+00:01:49.280 --> 00:01:52.760
+get hub had the dream
+of building a text editor
+
+24
+00:01:52.760 --> 00:01:56.360
+with web technologies, ones that
+you could totally hack with
+
+25
+00:01:56.420 --> 00:02:01.310
+JavaScript. And in order to
+build Adam, get hub builts,
+
+26
+00:02:02.000 --> 00:02:06.650
+electron formerly called Adam shell,
+which speaks to how originally
+
+27
+00:02:06.650 --> 00:02:10.620
+it really was just this
+dependency for Adam. And I
+
+28
+00:02:10.670 --> 00:02:14.120
+remember when like visual studio
+code, which is another editor
+
+29
+00:02:14.150 --> 00:02:17.240
+similar to Adam, came out,
+people looked at it and
+
+30
+00:02:17.240 --> 00:02:20.420
+they're like, Oh, that's just
+Adam. They just branded Adam
+
+31
+00:02:20.420 --> 00:02:23.900
+again. And at that point
+it like became officially confusing
+
+32
+00:02:24.140 --> 00:02:26.690
+as to what was Adam.
+And what was Adam shell?
+
+33
+00:02:27.110 --> 00:02:28.820
+What made you all? Is
+that, is that kind of
+
+34
+00:02:28.820 --> 00:02:31.430
+what made you all change
+the name? Yes, actually that,
+
+35
+00:02:31.430 --> 00:02:35.390
+that, that project in particular
+was the impetus. It was
+
+36
+00:02:35.630 --> 00:02:38.960
+the moment where we're like,
+okay, people are doing really
+
+37
+00:02:38.960 --> 00:02:42.680
+big things with this. And
+even though Microsoft did build
+
+38
+00:02:42.680 --> 00:02:47.360
+another text editor, you can
+build anything with electron. And
+
+39
+00:02:47.360 --> 00:02:50.960
+so it didn't make sense
+for everyone to be tied
+
+40
+00:02:51.260 --> 00:02:55.910
+in name to a text
+editor. Yeah. And now that
+
+41
+00:02:55.910 --> 00:02:59.530
+electron is its own kind
+of platform. There's sorts of
+
+42
+00:02:59.530 --> 00:03:02.410
+apps that you really can't
+really tell if they're electronic
+
+43
+00:03:02.410 --> 00:03:05.530
+apps or not. I know
+that a Slack, the Slack
+
+44
+00:03:05.530 --> 00:03:08.880
+windows app is electronic, right?
+Yep. I think it's their
+
+45
+00:03:08.880 --> 00:03:13.080
+windows and Linux versions. Yeah.
+So there's lots of apps
+
+46
+00:03:13.110 --> 00:03:17.010
+that are running cross-platform on
+electron, but I still feel
+
+47
+00:03:17.010 --> 00:03:20.580
+like people look at it
+and they go, Oh, that's
+
+48
+00:03:20.580 --> 00:03:24.570
+just Chrome in a box.
+And they minimize it. Like
+
+49
+00:03:24.630 --> 00:03:27.630
+they, you know, that's what
+programmers do. Right. That's just
+
+50
+00:03:28.320 --> 00:03:33.030
+is the way the conversation
+always starts minimizing word. So
+
+51
+00:03:33.090 --> 00:03:36.360
+let me just ask you
+isn't this just like Chrome
+
+52
+00:03:36.360 --> 00:03:42.150
+and a frame. No, it's
+so much more. So it's
+
+53
+00:03:42.150 --> 00:03:45.870
+actually only a small part
+of Chrome, which is something
+
+54
+00:03:45.870 --> 00:03:50.070
+that sets it apart from
+other tools like in WJS,
+
+55
+00:03:50.190 --> 00:03:55.410
+which include a lot more
+of Chrome electron only in
+
+56
+00:03:55.680 --> 00:04:00.960
+includes Chrome's rendering engine. So
+only the part of Chrome
+
+57
+00:04:00.960 --> 00:04:03.690
+that knows how to draw
+a webpage to paint the
+
+58
+00:04:03.690 --> 00:04:07.290
+elements on a screen that
+makes it really easy for
+
+59
+00:04:07.290 --> 00:04:10.170
+electron to stay up to
+date as Chrome is changing
+
+60
+00:04:10.350 --> 00:04:15.210
+and updating itself, because there's
+much less of us, much
+
+61
+00:04:15.210 --> 00:04:18.030
+less for us to worry
+about having to update when
+
+62
+00:04:18.030 --> 00:04:21.330
+Chrome updates, because we use
+just this portion of Chrome,
+
+63
+00:04:22.050 --> 00:04:25.290
+But playing devil's advocate. What
+else is there in Chrome,
+
+64
+00:04:25.290 --> 00:04:29.490
+other than the thing that
+makes webpages, like there's like
+
+65
+00:04:29.490 --> 00:04:33.270
+the tabs and there's the
+history and settings and all
+
+66
+00:04:33.270 --> 00:04:37.830
+that stuff. Yeah. And there's
+the dev tools extensions and
+
+67
+00:04:37.830 --> 00:04:43.140
+things like that. And yeah,
+the world of extensions in
+
+68
+00:04:43.140 --> 00:04:49.140
+general, right. There are more
+and more dev tools, extension
+
+69
+00:04:49.650 --> 00:04:53.010
+or yeah. Dev tools, extension
+API APIs are being built
+
+70
+00:04:53.010 --> 00:04:57.210
+into electron. Now that's something
+that has been happening more
+
+71
+00:04:57.210 --> 00:05:00.720
+actively over the past couple
+of weeks so that people
+
+72
+00:05:00.720 --> 00:05:03.960
+can use the react dev
+tools, extension angular, dev tools,
+
+73
+00:05:03.960 --> 00:05:09.810
+extension accessibility, dev tools, extension
+that that last one is
+
+74
+00:05:09.810 --> 00:05:14.850
+still in the, in progress.
+But basically we are reimplementing
+
+75
+00:05:14.880 --> 00:05:19.770
+these Chrome extension API APIs
+because we don't, we don't,
+
+76
+00:05:20.130 --> 00:05:23.280
+we don't pull in that
+part of Chrome into electron
+
+77
+00:05:23.490 --> 00:05:30.090
+originally, but so beyond Chrome
+it's, so it's got that
+
+78
+00:05:30.120 --> 00:05:34.620
+chromium rendering layer and then
+it's got the full node
+
+79
+00:05:34.620 --> 00:05:39.090
+API. So it's got all
+of node in every context
+
+80
+00:05:39.090 --> 00:05:44.730
+and that's what makes it
+really more than just a
+
+81
+00:05:44.730 --> 00:05:47.760
+web view, essentially. That's a
+good way to put it.
+
+82
+00:05:48.210 --> 00:05:51.600
+And, and you can also
+think of it really as
+
+83
+00:05:52.980 --> 00:05:57.000
+a UI for node, because
+you can just write note
+
+84
+00:05:57.140 --> 00:06:02.000
+the way you normally would
+write a note app. But
+
+85
+00:06:02.000 --> 00:06:06.500
+now you with electron you
+have access to native things
+
+86
+00:06:06.500 --> 00:06:11.750
+like opening dialogue boxes on
+three operating systems. And that's
+
+87
+00:06:11.750 --> 00:06:14.690
+what the Chrome part enables
+you to do on top
+
+88
+00:06:14.690 --> 00:06:18.080
+of just writing node. And
+then what node enables you
+
+89
+00:06:18.080 --> 00:06:21.200
+to do instead of just
+writing webpages in Chrome is
+
+90
+00:06:21.200 --> 00:06:25.310
+to access the file system.
+So you can save things
+
+91
+00:06:25.310 --> 00:06:27.560
+and do anything that you
+can do to the file
+
+92
+00:06:27.560 --> 00:06:30.620
+system with node. You can
+now do in an HTML
+
+93
+00:06:30.620 --> 00:06:35.770
+file in your electronic app.
+So what is running for
+
+94
+00:06:35.770 --> 00:06:37.630
+lack of a better word
+client side, and is there
+
+95
+00:06:37.630 --> 00:06:39.820
+ever a server side, like,
+is there a little node
+
+96
+00:06:39.820 --> 00:06:45.340
+web server locally ever? No,
+it's completely node. No. The
+
+97
+00:06:45.340 --> 00:06:49.060
+full note API is available
+and throughout electron. And so
+
+98
+00:06:49.060 --> 00:06:53.980
+there really isn't a client
+side and server side per
+
+99
+00:06:53.980 --> 00:06:57.880
+se. What changes in the
+electron context is that you
+
+100
+00:06:57.880 --> 00:07:01.690
+have two processes, you have
+the main process and the
+
+101
+00:07:01.690 --> 00:07:05.560
+renderer process, and both of
+those have the full node
+
+102
+00:07:05.560 --> 00:07:11.470
+API, but the main process
+specifically does the heavier lifting.
+
+103
+00:07:11.470 --> 00:07:14.920
+So it's in this process
+that you would make calls
+
+104
+00:07:14.920 --> 00:07:18.970
+to open dialogue boxes, things
+that are more CPU intensive.
+
+105
+00:07:19.420 --> 00:07:22.660
+And then the renderer process
+is the process that's actually
+
+106
+00:07:22.660 --> 00:07:26.940
+drawing your webpage. And so
+you can use node and
+
+107
+00:07:26.940 --> 00:07:29.650
+both of those processes, you
+can talk between the two
+
+108
+00:07:29.650 --> 00:07:34.300
+processes, but you do do
+different things in those processes.
+
+109
+00:07:34.810 --> 00:07:37.690
+Okay? So that is a
+really good explanation that actually
+
+110
+00:07:37.690 --> 00:07:42.070
+changes kind of my perception
+around how electron fits into
+
+111
+00:07:42.070 --> 00:07:44.560
+this world. So let me
+paraphrase. And you tell me
+
+112
+00:07:44.560 --> 00:07:47.290
+if I get this right,
+when we make a web
+
+113
+00:07:47.290 --> 00:07:51.760
+app today and we navigate
+between two links. If the
+
+114
+00:07:51.760 --> 00:07:54.310
+link is like a whole
+new page navigation, there's like
+
+115
+00:07:54.310 --> 00:07:58.000
+a moment where we, our
+app like winks out of
+
+116
+00:07:58.000 --> 00:08:01.510
+existence, you know, but with
+an electronic app, I can
+
+117
+00:08:01.510 --> 00:08:03.970
+have a whole separate process
+that can maintain state that
+
+118
+00:08:03.970 --> 00:08:07.720
+is completely unrelated to my,
+my UI renderer. Is that
+
+119
+00:08:07.720 --> 00:08:12.100
+correct? Yes. So actually each
+process you can sort of
+
+120
+00:08:12.100 --> 00:08:16.690
+think of as a separate
+tab in Chrome, they're all
+
+121
+00:08:16.690 --> 00:08:20.800
+independent. And so one thing,
+but they can all talk
+
+122
+00:08:20.800 --> 00:08:26.140
+to each other. So you
+can have things happening in
+
+123
+00:08:26.170 --> 00:08:30.790
+one process that don't slow
+down the rendering or impact
+
+124
+00:08:30.790 --> 00:08:34.000
+what's happening at all in
+the other process, but it
+
+125
+00:08:34.030 --> 00:08:39.040
+can still be working and
+sending messages. So is it
+
+126
+00:08:39.040 --> 00:08:41.020
+like there are two tabs,
+but you just can't see
+
+127
+00:08:41.020 --> 00:08:42.730
+them cause you can't see
+one of the tabs. It's
+
+128
+00:08:42.730 --> 00:08:45.610
+an invisible tab In a
+way. It, I mean, if
+
+129
+00:08:45.610 --> 00:08:50.440
+you visualize it as Chrome,
+the main process is when
+
+130
+00:08:50.440 --> 00:08:54.070
+you have Chrome open, but
+no windows and no tabs
+
+131
+00:08:54.070 --> 00:08:57.210
+open, but you still, that
+menu bar there it's the
+
+132
+00:08:57.210 --> 00:09:01.500
+lifecycle of the app. You
+can close it and open
+
+133
+00:09:01.500 --> 00:09:05.130
+a new window from there.
+And so that is like
+
+134
+00:09:05.130 --> 00:09:09.210
+the main process in electron,
+but then each renderer process
+
+135
+00:09:09.210 --> 00:09:12.090
+you create, cause you can
+create one or however many
+
+136
+00:09:12.090 --> 00:09:16.200
+you want, each of those
+is like a new tab.
+
+137
+00:09:16.230 --> 00:09:20.460
+So each render process is
+a separate, distinct process, but
+
+138
+00:09:20.460 --> 00:09:23.790
+they can all communicate with
+each other or communicate back
+
+139
+00:09:23.790 --> 00:09:28.130
+to the main process. So
+who is in, who is
+
+140
+00:09:28.130 --> 00:09:32.660
+in charge, which, which is
+the boss process, The main
+
+141
+00:09:32.660 --> 00:09:37.160
+process is the boss' process.
+It spawns each, each renderer
+
+142
+00:09:37.160 --> 00:09:42.860
+process and it controls closing
+the app and all of
+
+143
+00:09:42.860 --> 00:09:46.850
+those things. And it handles
+all the CPU intensive stuff
+
+144
+00:09:46.880 --> 00:09:51.620
+like opening dialogues and things
+like that. Okay. So if
+
+145
+00:09:51.620 --> 00:09:54.260
+I was going to write
+a electron app that had
+
+146
+00:09:54.260 --> 00:09:57.980
+to think really hard, the,
+the non render process would
+
+147
+00:09:57.980 --> 00:10:00.260
+do all the hard thinking
+and they would communicate with
+
+148
+00:10:00.260 --> 00:10:03.140
+each other. Yes, Yes. And
+another thing you can do
+
+149
+00:10:03.140 --> 00:10:07.910
+that people sometimes do is
+to just create an invisible
+
+150
+00:10:07.910 --> 00:10:11.030
+render process because it's up
+to you to decide if
+
+151
+00:10:11.030 --> 00:10:13.970
+you want this new window
+to be visible or not.
+
+152
+00:10:14.420 --> 00:10:18.080
+So you could have one
+visible window that was your
+
+153
+00:10:18.080 --> 00:10:21.950
+main app that people saw,
+but then you could spin
+
+154
+00:10:21.950 --> 00:10:25.430
+up an invisible window and
+sort of farm off tasks
+
+155
+00:10:25.490 --> 00:10:28.190
+to that renderer process. So
+you don't even have to
+
+156
+00:10:28.190 --> 00:10:30.500
+do there's some things that
+have to be done in
+
+157
+00:10:30.500 --> 00:10:33.890
+the main process, like all
+the, all the calls to
+
+158
+00:10:33.890 --> 00:10:38.660
+the native UI elements, like
+an open file dialogue and
+
+159
+00:10:38.660 --> 00:10:40.640
+all of those things have
+to happen in the main
+
+160
+00:10:40.640 --> 00:10:44.300
+process. But if you just
+want to write a bunch
+
+161
+00:10:44.300 --> 00:10:48.500
+of intensive JavaScript and open
+up a new renderer process,
+
+162
+00:10:48.500 --> 00:10:52.760
+you can make an invisible
+one, do heavy calculations and
+
+163
+00:10:52.760 --> 00:10:55.610
+then send the result back
+to your main visible window.
+
+164
+00:10:55.610 --> 00:10:59.240
+That way all the stuff
+you're churning is happening in
+
+165
+00:10:59.240 --> 00:11:02.510
+the background in a totally
+separate process and not impacting
+
+166
+00:11:02.510 --> 00:11:05.930
+your users in their main
+window. So how is the
+
+167
+00:11:05.930 --> 00:11:10.220
+cross process communication happening? It's
+an elect, it's a builtin
+
+168
+00:11:10.220 --> 00:11:14.900
+electron module called IPC for
+interprocess communication. And you send
+
+169
+00:11:14.900 --> 00:11:19.070
+messages on channels between the
+processes. There's the whole message
+
+170
+00:11:19.070 --> 00:11:22.340
+bus. Yeah. Yeah. And that's
+not something that you get
+
+171
+00:11:22.340 --> 00:11:26.300
+in Chrome for free. That's
+an electron thing. Yes. Yeah.
+
+172
+00:11:26.330 --> 00:11:28.340
+So yeah, it starts to
+come together to realize there's
+
+173
+00:11:28.340 --> 00:11:32.840
+a lot more. So I
+went and downloaded electron quick
+
+174
+00:11:32.840 --> 00:11:35.840
+start. It was like hit
+cologne. I did it on
+
+175
+00:11:35.840 --> 00:11:39.440
+windows. I went get clone.
+I went NPM install and
+
+176
+00:11:39.440 --> 00:11:43.520
+I went, NPM start. And
+when I did that, I
+
+177
+00:11:43.520 --> 00:11:45.650
+got a hello world. And
+then on the right hand
+
+178
+00:11:45.650 --> 00:11:48.170
+side, it popped up the
+kind of the node developer
+
+179
+00:11:48.200 --> 00:11:50.810
+tools to kind of the
+node. But the chromium developer
+
+180
+00:11:50.810 --> 00:11:53.090
+tools to remind me that,
+you know, this is where
+
+181
+00:11:53.440 --> 00:11:57.430
+start, it's got the electron
+icon, it's got a menu.
+
+182
+00:11:57.910 --> 00:12:00.730
+And at this point I'm
+kind of off and running.
+
+183
+00:12:00.730 --> 00:12:03.340
+I mean, it was three
+minutes to get an app,
+
+184
+00:12:03.370 --> 00:12:06.490
+a hello world app going.
+And when I go in
+
+185
+00:12:06.490 --> 00:12:09.280
+there, I noticed that there's
+really just like three or
+
+186
+00:12:09.280 --> 00:12:12.370
+four K of stuff. There's
+a main JS and a
+
+187
+00:12:12.370 --> 00:12:15.220
+render or JS. And that's
+basically it, the thing that
+
+188
+00:12:15.220 --> 00:12:17.980
+I was a little kind
+of bummed about was the
+
+189
+00:12:17.980 --> 00:12:24.880
+node modules folder has like
+2000 files. That's just like
+
+190
+00:12:24.940 --> 00:12:28.320
+node, right. There's nothing. That's
+just life. I mean that,
+
+191
+00:12:28.320 --> 00:12:32.130
+yeah, that depends on how
+many other things you're requiring
+
+192
+00:12:32.160 --> 00:12:35.850
+it in the quick start.
+Right. So the Quickstart app
+
+193
+00:12:35.880 --> 00:12:40.020
+is requiring electron itself. So
+that's what it is. The
+
+194
+00:12:40.050 --> 00:12:43.530
+it's main, the QuickStarts main
+dependency is a module called
+
+195
+00:12:43.530 --> 00:12:47.790
+electron prebuilt, which is a
+compiled version of electron. That's
+
+196
+00:12:47.850 --> 00:12:52.050
+actually running that app. So
+the Quickstart app really just
+
+197
+00:12:52.050 --> 00:12:55.680
+includes electrons. So it's like,
+<inaudible>, this is kind of
+
+198
+00:12:55.680 --> 00:12:57.600
+like, I think about things
+in the context of dotnet.
+
+199
+00:12:57.600 --> 00:12:59.700
+Cause that's where I started,
+where it's like, hello, world
+
+200
+00:12:59.700 --> 00:13:02.430
+is two K and then
+there's 150 megs of stuff
+
+201
+00:13:02.430 --> 00:13:04.140
+that comes along. But that's
+just kind of like the
+
+202
+00:13:04.140 --> 00:13:07.830
+runtime, but it's private though,
+which means that I can
+
+203
+00:13:07.830 --> 00:13:10.260
+have lots of different electronic
+apps and they don't affect
+
+204
+00:13:10.260 --> 00:13:14.130
+each other. Right. Like I
+can't break my electron app
+
+205
+00:13:14.160 --> 00:13:18.810
+because I installed yours. Right,
+Right. Yes. Yeah. Each electron
+
+206
+00:13:18.810 --> 00:13:24.000
+app comes with electron bundled
+in it. Okay. So then
+
+207
+00:13:24.000 --> 00:13:27.840
+that means, do I have,
+what versions do I have
+
+208
+00:13:27.840 --> 00:13:31.260
+to think about? Like, there's
+the version of electron there's
+
+209
+00:13:31.260 --> 00:13:36.960
+the version of node. Yes.
+And they share a V
+
+210
+00:13:36.960 --> 00:13:42.600
+eight, which is chromium's rendering
+engine. And so it JavaScript
+
+211
+00:13:42.600 --> 00:13:45.840
+or rendering engine. Well, it's
+the, chromium's the rendering in
+
+212
+00:13:45.840 --> 00:13:50.970
+VAT, the JavaScript. Right, right.
+Yeah. And so node is
+
+213
+00:13:50.970 --> 00:13:55.110
+built using V8 as well.
+And so in electron they're
+
+214
+00:13:55.110 --> 00:13:59.520
+sharing a single V8 instance.
+Okay. So the, okay, so
+
+215
+00:13:59.520 --> 00:14:02.190
+the note is there on
+top of V8, chromium is
+
+216
+00:14:02.190 --> 00:14:05.790
+also using V8 and the
+electron collaborates and kind of
+
+217
+00:14:06.630 --> 00:14:09.210
+manages all of these different
+things working together. But those
+
+218
+00:14:09.210 --> 00:14:11.250
+are the four versions of
+things I need to think
+
+219
+00:14:11.250 --> 00:14:15.480
+about when I take a
+new bill. Yes. Because there
+
+220
+00:14:15.480 --> 00:14:20.370
+are mostly, I think it's
+to know what cool new
+
+221
+00:14:20.370 --> 00:14:24.000
+things you can do because
+we're usually just a week
+
+222
+00:14:24.000 --> 00:14:29.400
+or so behind stable Chrome
+updates. And so when cool
+
+223
+00:14:29.400 --> 00:14:32.670
+things happen in Chrome, you
+can start building those things
+
+224
+00:14:32.670 --> 00:14:36.780
+into your electron app. And
+when you're building an electron
+
+225
+00:14:36.780 --> 00:14:38.910
+app, compared to when you're
+building a web app, you
+
+226
+00:14:38.910 --> 00:14:42.300
+only have to design for
+one browser, which is a
+
+227
+00:14:42.300 --> 00:14:47.550
+really freeing experience. Everybody will
+be viewing your electron app
+
+228
+00:14:47.580 --> 00:14:53.750
+using that version of chromium
+that's into electron. And so
+
+229
+00:14:54.080 --> 00:14:56.540
+any new features that are
+shipped in it, you can
+
+230
+00:14:56.540 --> 00:15:00.380
+use. So like CSS variables
+exist in the latest Chrome.
+
+231
+00:15:00.380 --> 00:15:03.020
+So you can use them
+freely without any kind of
+
+232
+00:15:03.410 --> 00:15:08.700
+other dependency. You just use
+them over 90% of <inaudible>
+
+233
+00:15:08.700 --> 00:15:11.840
+six is inside a VA,
+which means it's inside of
+
+234
+00:15:12.140 --> 00:15:15.170
+Chrome and node at this
+point. And so you don't
+
+235
+00:15:15.170 --> 00:15:18.680
+need any compilers or anything.
+You can just start writing
+
+236
+00:15:18.770 --> 00:15:24.490
+ESX. So does this do,
+this is more philosophical. Like
+
+237
+00:15:24.490 --> 00:15:26.440
+I don't mean to get
+all like, bring it down
+
+238
+00:15:26.440 --> 00:15:28.810
+for a second, but this
+isn't, this kind of get
+
+239
+00:15:28.810 --> 00:15:31.600
+the sense that we could
+have a monoculture, like, like
+
+240
+00:15:31.840 --> 00:15:34.720
+there's, there's, there's opinions about
+the Chrome, the Chromebook, but
+
+241
+00:15:35.050 --> 00:15:38.160
+what do we do when
+there's windows, Linux and, and
+
+242
+00:15:38.200 --> 00:15:41.890
+Mac, and there are only
+electronic apps, I suppose. That's
+
+243
+00:15:41.890 --> 00:15:46.570
+good for you. Was that
+the job? Well, like, are
+
+244
+00:15:46.570 --> 00:15:48.190
+there apps that you don't
+want to write an electronic
+
+245
+00:15:51.250 --> 00:15:54.190
+Mobile apps? You can't really
+think about it. You're like,
+
+246
+00:15:54.190 --> 00:15:56.020
+well, but mobile apps you
+would use like, you know,
+
+247
+00:15:56.020 --> 00:16:03.020
+phone gap, right? Yeah. So
+it, I'm not sure the
+
+248
+00:16:03.320 --> 00:16:09.580
+drawbacks really, because it's, it's
+really up to you. Right?
+
+249
+00:16:09.580 --> 00:16:11.890
+You have to be smart
+when you're writing an app
+
+250
+00:16:11.890 --> 00:16:15.520
+this way, because it's not
+completely native development. You need
+
+251
+00:16:15.520 --> 00:16:19.180
+to know how to write
+a good note app. And
+
+252
+00:16:19.180 --> 00:16:23.470
+so there might be situations
+where you think that your
+
+253
+00:16:23.470 --> 00:16:27.250
+app is loading really slow,
+but really you have a
+
+254
+00:16:27.250 --> 00:16:30.250
+ton of require statements happening
+at the start of your
+
+255
+00:16:30.250 --> 00:16:32.440
+app that you can minimize
+that you can put into
+
+256
+00:16:32.440 --> 00:16:37.090
+one JS file so that
+you're only making one request
+
+257
+00:16:37.150 --> 00:16:40.090
+to the file system to
+start your app. And so
+
+258
+00:16:40.450 --> 00:16:43.150
+there are definitely ways to
+be clever and make your
+
+259
+00:16:43.150 --> 00:16:47.230
+app really smart, but you
+can make a really fast
+
+260
+00:16:47.560 --> 00:16:51.460
+app with electron and anything
+that you can't write in
+
+261
+00:16:51.460 --> 00:16:54.820
+node, you can write a
+native module four and then
+
+262
+00:16:55.360 --> 00:16:57.970
+use it in electron two.
+So if there is something
+
+263
+00:16:57.970 --> 00:17:00.820
+in particular that your app
+needs to do that can
+
+264
+00:17:00.820 --> 00:17:05.050
+really only be done in
+the low level, that you
+
+265
+00:17:05.050 --> 00:17:08.410
+can write that piece, Would
+you have to read it
+
+266
+00:17:08.410 --> 00:17:12.850
+three times just once. So
+I could write a native
+
+267
+00:17:12.850 --> 00:17:15.910
+app, a native module, and
+then how will I get
+
+268
+00:17:15.910 --> 00:17:17.470
+it to work on Linux,
+Mac and windows? If it's
+
+269
+00:17:17.470 --> 00:17:21.760
+native to those things, It
+builds to the version of
+
+270
+00:17:21.760 --> 00:17:26.260
+node that is in your
+electrons. Okay. So let's say
+
+271
+00:17:26.260 --> 00:17:29.410
+that like Mac came up
+with some new feature. Like,
+
+272
+00:17:30.630 --> 00:17:33.070
+I don't know, what's a
+crazy Mac feature. I don't
+
+273
+00:17:33.070 --> 00:17:34.930
+know. Let's just say like,
+they have like Siri, let's
+
+274
+00:17:34.930 --> 00:17:36.370
+say that Siri, like Siri
+is gonna come to the
+
+275
+00:17:36.370 --> 00:17:38.710
+Mac. Right. And I want
+my electron app to talk
+
+276
+00:17:38.710 --> 00:17:42.040
+to Siri or do some
+kind of Siri based thing.
+
+277
+00:17:42.040 --> 00:17:45.250
+There that's a totally native,
+totally Mac, totally OS specific
+
+278
+00:17:45.250 --> 00:17:48.700
+thing. I would write a
+native module that act as
+
+279
+00:17:48.700 --> 00:17:52.110
+a bridge V8 and JavaScript
+and Siri, and I would
+
+280
+00:17:52.110 --> 00:17:53.880
+build it. And then I
+would just detect that I'm
+
+281
+00:17:53.880 --> 00:17:55.710
+on a Mac and light
+it up if I was
+
+282
+00:17:55.710 --> 00:18:02.630
+on Mac. Yes. Well that
+one in particular, Like, is
+
+283
+00:18:02.630 --> 00:18:05.120
+that a weird thing to
+want to do Necessarily? And
+
+284
+00:18:05.120 --> 00:18:10.310
+actually that's something that might
+land in electron core because
+
+285
+00:18:11.690 --> 00:18:17.120
+really anything that is native
+on these operating systems is
+
+286
+00:18:17.120 --> 00:18:21.890
+something that might as might
+belong inside of core. Anything
+
+287
+00:18:21.890 --> 00:18:25.160
+that you could write a
+JavaScript node module for really
+
+288
+00:18:25.190 --> 00:18:30.890
+doesn't belong in core, but
+the bindings to native UI
+
+289
+00:18:30.890 --> 00:18:35.540
+elements is something that core
+is handling for you. So
+
+290
+00:18:35.540 --> 00:18:38.390
+it really is like if
+you're doing something with audio
+
+291
+00:18:38.390 --> 00:18:41.390
+files that you really need
+to write in a native
+
+292
+00:18:41.660 --> 00:18:47.060
+language, you can do that
+and then compile it so
+
+293
+00:18:47.060 --> 00:18:50.180
+that it works with the
+version of node that is
+
+294
+00:18:50.180 --> 00:18:52.580
+in that version of electron
+that you're building your app
+
+295
+00:18:52.580 --> 00:18:56.210
+against. But a lot of
+the stuff that's native to
+
+296
+00:18:56.210 --> 00:18:59.930
+the operating system gets built
+into core. And so something
+
+297
+00:18:59.930 --> 00:19:04.070
+that's cool and happening now
+is, as I mentioned, like
+
+298
+00:19:04.070 --> 00:19:06.920
+electron was built originally for
+Adam. And so a lot
+
+299
+00:19:06.920 --> 00:19:10.250
+of the API APIs are
+really specific to building a
+
+300
+00:19:10.250 --> 00:19:13.370
+text editor, but now people
+are building tons of other
+
+301
+00:19:13.370 --> 00:19:18.290
+things on electron and they're
+contributing these native API APIs
+
+302
+00:19:18.290 --> 00:19:22.520
+back upstream. And so there
+are so many more things
+
+303
+00:19:22.520 --> 00:19:26.480
+that exist in electron now
+that existed a year ago.
+
+304
+00:19:27.170 --> 00:19:31.400
+And some of them are
+platform specific because, you know,
+
+305
+00:19:31.400 --> 00:19:36.020
+while every platform has the
+open file dialog, they all
+
+306
+00:19:36.020 --> 00:19:39.440
+don't do notifications in the
+same way. For instance, Exactly
+
+307
+00:19:39.440 --> 00:19:42.560
+a notification, I'm a windows
+10 user and I'm a
+
+308
+00:19:42.560 --> 00:19:45.650
+fan of windows 10. I
+like it when there's like
+
+309
+00:19:45.650 --> 00:19:48.740
+a little badge on the
+icon in the task bar
+
+310
+00:19:48.740 --> 00:19:50.480
+that tells me like, you
+know, how many mails I
+
+311
+00:19:50.480 --> 00:19:53.930
+got, that would be a
+cool thing for electron to
+
+312
+00:19:54.050 --> 00:19:57.740
+implement. I have a badge.
+It does. Yeah. So notifications
+
+313
+00:19:57.770 --> 00:20:02.540
+exist to varying degrees depending
+on like what windows version
+
+314
+00:20:02.570 --> 00:20:07.700
+the user is on, but
+they do exist for OSX.
+
+315
+00:20:08.180 --> 00:20:10.370
+And then there's things, you
+know, that are really specific,
+
+316
+00:20:10.370 --> 00:20:13.010
+like on Mac, you can
+have a dark or light
+
+317
+00:20:13.100 --> 00:20:16.760
+menu bar. So there's an
+electronic API to detect like
+
+318
+00:20:16.790 --> 00:20:20.900
+what theme your user has.
+And I think a similar
+
+319
+00:20:20.900 --> 00:20:25.340
+one exists for that in
+windows two. So there are
+
+320
+00:20:25.340 --> 00:20:30.620
+actually platform specific API APIs
+because, but in general, electron
+
+321
+00:20:30.620 --> 00:20:36.950
+is covering this native area
+in terms of doing all
+
+322
+00:20:36.950 --> 00:20:42.110
+the communication, communicating for the
+native UIs. What about the
+
+323
+00:20:42.110 --> 00:20:46.280
+situation where I have a
+kickass or sorry, forgive me.
+
+324
+00:20:46.280 --> 00:20:49.060
+I just said ass on
+my own show. You know,
+
+325
+00:20:49.060 --> 00:20:51.010
+it really awesome web app.
+Like I think he like
+
+326
+00:20:51.220 --> 00:20:55.450
+outlook, like I'll look.com. The
+outlook web app is like
+
+327
+00:20:55.480 --> 00:20:58.990
+legendary. Like Gmail hasn't changed
+in years, but I'll look.com
+
+328
+00:20:58.990 --> 00:21:01.480
+is like, amazing. I want
+to make that an electron
+
+329
+00:21:01.490 --> 00:21:04.210
+app, but that's not really
+the same. Like there's, there's
+
+330
+00:21:04.210 --> 00:21:06.850
+taking a website and putting
+it in a pretty frame.
+
+331
+00:21:07.420 --> 00:21:10.030
+And then there's really taking
+advantage of like, you just
+
+332
+00:21:10.030 --> 00:21:12.670
+described all the native kind
+of stuff. If I have
+
+333
+00:21:12.670 --> 00:21:15.610
+a really awesome web app,
+can I port it or
+
+334
+00:21:15.610 --> 00:21:18.490
+bring it in and start
+lighting it up on electronic?
+
+335
+00:21:18.840 --> 00:21:22.920
+You can, the first thing
+you could do. Cause you
+
+336
+00:21:22.920 --> 00:21:26.160
+can actually, if you just
+want, if there's a website,
+
+337
+00:21:26.160 --> 00:21:28.170
+you use a lot that
+you just want to act
+
+338
+00:21:28.170 --> 00:21:31.260
+as a standalone app in
+your doc. Yeah, I totally
+
+339
+00:21:31.260 --> 00:21:33.870
+have. I could think of
+like five. Yeah. So instead
+
+340
+00:21:33.870 --> 00:21:37.020
+of loading a local file
+in that electron Quickstart, you
+
+341
+00:21:37.020 --> 00:21:39.780
+could just put in a
+URL to an existing website.
+
+342
+00:21:39.780 --> 00:21:42.570
+And so, Okay. Hang on.
+Let me do that right
+
+343
+00:21:42.570 --> 00:21:45.150
+now. Where do I, where
+do I do that In
+
+344
+00:21:45.150 --> 00:21:50.760
+the electron Quickstart, the main
+JS file that is representing
+
+345
+00:21:50.760 --> 00:21:53.220
+your main process. So all
+the main process code is
+
+346
+00:21:53.220 --> 00:21:57.360
+in there and it has
+a line where it should
+
+347
+00:21:57.360 --> 00:22:01.170
+say new browser window, and
+that's the main process spinning
+
+348
+00:22:01.170 --> 00:22:05.310
+up a browser window, which
+is the renderer process. And
+
+349
+00:22:05.340 --> 00:22:08.490
+in that you can pass
+load URL, you can pass
+
+350
+00:22:08.490 --> 00:22:11.760
+a ton of different options
+about what size it is,
+
+351
+00:22:11.760 --> 00:22:14.640
+if it's see-through or not,
+and all kinds of stuff,
+
+352
+00:22:14.670 --> 00:22:17.520
+but at minimum you can
+say how big it should
+
+353
+00:22:17.520 --> 00:22:22.980
+be and what what's the
+HTML and that HTML could
+
+354
+00:22:22.980 --> 00:22:26.400
+be local on your system
+in your app. Or it
+
+355
+00:22:26.400 --> 00:22:31.590
+could point to an actual
+live website. Whoa, I just
+
+356
+00:22:31.590 --> 00:22:34.920
+did that. And so I
+just made one for the
+
+357
+00:22:34.920 --> 00:22:39.630
+Azure portal. Nice. So cool.
+So WordPress actually is an
+
+358
+00:22:39.630 --> 00:22:42.840
+electron app. Now they've made
+a desktop version and so
+
+359
+00:22:43.410 --> 00:22:46.860
+something, I think that's similar
+to what you're talking about,
+
+360
+00:22:46.860 --> 00:22:49.380
+where you can take a
+web app and then start
+
+361
+00:22:49.380 --> 00:22:53.580
+changing things over where people
+don't have to drag and
+
+362
+00:22:53.580 --> 00:22:57.540
+drop files onto a website.
+I mean, they still can,
+
+363
+00:22:57.840 --> 00:23:01.350
+but you can actually then
+use the native open file
+
+364
+00:23:01.380 --> 00:23:05.370
+dialogues and things like that.
+Okay. So this, okay, good.
+
+365
+00:23:05.370 --> 00:23:08.580
+So then I, I would
+have my existing web app
+
+366
+00:23:09.090 --> 00:23:11.430
+that, that would, you know,
+could still be visited on
+
+367
+00:23:11.430 --> 00:23:13.620
+the web, but then I
+would bootstrap it or kick
+
+368
+00:23:13.620 --> 00:23:17.430
+it off with electron and
+then I could add my
+
+369
+00:23:17.430 --> 00:23:19.830
+light up things. Can they
+talk to each other, like
+
+370
+00:23:19.830 --> 00:23:21.780
+I'm loading a web app,
+but I've also got local
+
+371
+00:23:21.780 --> 00:23:24.690
+code running. How do those
+processing and how does the
+
+372
+00:23:24.750 --> 00:23:26.730
+surface, I think in the,
+in the clients, I know
+
+373
+00:23:26.730 --> 00:23:29.520
+that like, how does my
+website know it's in electron
+
+374
+00:23:29.520 --> 00:23:32.790
+and certain, I start communicating
+with it. Well, your website
+
+375
+00:23:32.790 --> 00:23:36.570
+wouldn't know it's an electron,
+because at that point it's
+
+376
+00:23:36.570 --> 00:23:40.260
+just a chromium window doing
+what it does, which is
+
+377
+00:23:40.260 --> 00:23:45.710
+drawing a webpage. But if
+you built API APIs into
+
+378
+00:23:46.280 --> 00:23:50.030
+the server of your website,
+certainly your, your electronic app
+
+379
+00:23:50.030 --> 00:23:52.480
+could talk to that server.
+Okay. But I do have
+
+380
+00:23:52.480 --> 00:23:55.330
+those two processes. Right. I've
+got the rendering one, which
+
+381
+00:23:55.360 --> 00:23:59.320
+is now my blog. And
+then I've got the, the
+
+382
+00:23:59.320 --> 00:24:02.980
+one that, you know, the,
+the invisible one couldn't monitor
+
+383
+00:24:02.980 --> 00:24:05.160
+what was going on and,
+and change things and, and
+
+384
+00:24:05.160 --> 00:24:10.480
+inject things into the experience.
+Oh, definitely. Yeah. But that
+
+385
+00:24:10.480 --> 00:24:13.630
+information is only happening on
+the user's computer. If you
+
+386
+00:24:13.630 --> 00:24:16.450
+wanted that to like go
+back to the server, that's
+
+387
+00:24:16.450 --> 00:24:18.850
+running your website, then you
+need to talk to that,
+
+388
+00:24:19.030 --> 00:24:22.840
+but yeah. API call. Right.
+But yeah, you can have
+
+389
+00:24:22.840 --> 00:24:26.440
+that one. You can use
+like any database that you
+
+390
+00:24:26.440 --> 00:24:28.900
+like. I mean, you can
+use local storage, but you
+
+391
+00:24:28.900 --> 00:24:32.590
+can also use whatever database
+you're comfortable using and projects.
+
+392
+00:24:32.590 --> 00:24:35.230
+You can also just read
+and write Jason on files
+
+393
+00:24:35.320 --> 00:24:38.710
+to the user system. Okay.
+So then those are just
+
+394
+00:24:38.740 --> 00:24:40.090
+now, where are those going
+to go? Are they going
+
+395
+00:24:40.090 --> 00:24:43.030
+to, like, if I put
+this in C program files,
+
+396
+00:24:43.030 --> 00:24:45.820
+which is kind of like
+the administrative place, I suppose
+
+397
+00:24:45.820 --> 00:24:49.540
+I can keep my data
+in the user's profile. There's
+
+398
+00:24:49.540 --> 00:24:54.130
+an API in electron actually
+called get app path, I
+
+399
+00:24:54.130 --> 00:24:58.810
+think. But it, that will
+retrieve exactly because when a
+
+400
+00:24:58.810 --> 00:25:02.230
+user installs the app, depending
+on what operating system they're
+
+401
+00:25:02.230 --> 00:25:05.140
+on and how they install
+it really, they could put
+
+402
+00:25:05.140 --> 00:25:07.450
+it anywhere, right? Like on
+Mac, I don't have to
+
+403
+00:25:07.450 --> 00:25:09.580
+have it in the applications
+folder. It could be running
+
+404
+00:25:09.580 --> 00:25:14.770
+it out of downloads. So
+that API in electron returns
+
+405
+00:25:14.770 --> 00:25:17.290
+to you, the path of
+exactly where your app is
+
+406
+00:25:17.290 --> 00:25:19.750
+on the user system. And
+then you can save files
+
+407
+00:25:20.170 --> 00:25:24.790
+there. This is really cool.
+And you wrote a cool
+
+408
+00:25:24.790 --> 00:25:28.690
+app with electron to teach
+people how to use, get
+
+409
+00:25:29.740 --> 00:25:34.450
+called, get it Git. Gosh,
+I T and you and
+
+410
+00:25:34.450 --> 00:25:35.980
+I are gonna actually do
+a training on this in
+
+411
+00:25:35.980 --> 00:25:40.360
+July teaching some folks how
+to use, get, did that
+
+412
+00:25:40.360 --> 00:25:42.250
+exist as a website before?
+Or did you write it
+
+413
+00:25:42.250 --> 00:25:45.310
+as an app? Yeah. Yeah.
+So that one was, that
+
+414
+00:25:45.310 --> 00:25:47.950
+was a cool thing to
+turn into an electronic app.
+
+415
+00:25:48.100 --> 00:25:52.780
+So what it existed as
+before was a node module
+
+416
+00:25:52.780 --> 00:25:55.630
+that ran in terminal that
+actually had like a menu
+
+417
+00:25:55.630 --> 00:26:00.520
+in terminal you could navigate
+through. And then the challenges,
+
+418
+00:26:02.170 --> 00:26:05.260
+I don't know. No, I
+think I just dated myself.
+
+419
+00:26:07.090 --> 00:26:10.180
+Text-based giving, you know, text
+based wintering menu kind of
+
+420
+00:26:10.180 --> 00:26:12.940
+thing. Yeah. Yes. I'm in
+terminal. And then it had
+
+421
+00:26:12.970 --> 00:26:20.230
+a web guide that had
+the step by step instructions
+
+422
+00:26:20.260 --> 00:26:27.310
+and the diagrams explaining, you
+know, exactly what you're doing,
+
+423
+00:26:27.520 --> 00:26:31.930
+what is a clone repository
+and such. So it was
+
+424
+00:26:32.230 --> 00:26:35.620
+a whole bunch of node
+files and then a bunch
+
+425
+00:26:35.620 --> 00:26:38.590
+of HTML files. And it
+ended up being really kind
+
+426
+00:26:38.590 --> 00:26:41.290
+of the perfect thing to
+turn into an electron app
+
+427
+00:26:41.320 --> 00:26:44.970
+because that's all electron is
+also. And so I, I
+
+428
+00:26:44.970 --> 00:26:49.410
+really, I just, I started
+with a Quickstart app and
+
+429
+00:26:49.470 --> 00:26:53.550
+I, I copy and pasted
+all of the HTML files
+
+430
+00:26:53.550 --> 00:26:56.130
+into there. And then I
+copy and pasted all of
+
+431
+00:26:56.130 --> 00:26:58.890
+the JavaScript files into it.
+And then it was just
+
+432
+00:26:58.890 --> 00:27:03.210
+a matter of writing some
+more JavaScript to have them
+
+433
+00:27:04.170 --> 00:27:06.600
+to add more elements, because
+it used to be that
+
+434
+00:27:06.600 --> 00:27:09.930
+you verify each challenge in
+terminal, you would type get
+
+435
+00:27:09.930 --> 00:27:13.560
+it verify. But so I
+had to build the verifying
+
+436
+00:27:13.560 --> 00:27:19.200
+into the electronic app, but
+I got, I was, it
+
+437
+00:27:19.200 --> 00:27:21.540
+was a headstart because all
+of the HTML was already
+
+438
+00:27:21.540 --> 00:27:25.650
+written all of the actual
+verifying scripts themselves that were
+
+439
+00:27:25.650 --> 00:27:30.120
+JavaScript. All of those I
+reused, I just added the
+
+440
+00:27:30.120 --> 00:27:35.690
+verifying, like UI elements into
+get it Very cool. And
+
+441
+00:27:35.690 --> 00:27:37.220
+of course we can see
+all of this at your
+
+442
+00:27:37.220 --> 00:27:40.580
+website. J L O R
+D J Lord dot U
+
+443
+00:27:40.580 --> 00:27:42.770
+S. And you've talked about
+on your blog and it's
+
+444
+00:27:42.770 --> 00:27:45.110
+on your get hub as
+well. Yeah. And then one
+
+445
+00:27:45.110 --> 00:27:47.180
+final thing as we close
+that I think is just
+
+446
+00:27:47.180 --> 00:27:51.140
+a really cool way to
+bridge the web with electron
+
+447
+00:27:51.140 --> 00:27:53.600
+is the idea of a
+protocol handler. I mean, you
+
+448
+00:27:53.600 --> 00:27:58.430
+could say something about that
+Electron you can create protocols
+
+449
+00:27:58.520 --> 00:28:01.460
+and do those things in
+electronic. And so you can
+
+450
+00:28:02.390 --> 00:28:07.100
+create a specific file type.
+Well, I guess you could,
+
+451
+00:28:07.130 --> 00:28:09.590
+if you're, if you want
+your app to be something
+
+452
+00:28:09.620 --> 00:28:14.000
+that is like the default
+app that people open PDFs
+
+453
+00:28:14.000 --> 00:28:17.390
+with, you can set that
+up. You can also create
+
+454
+00:28:17.420 --> 00:28:23.080
+new ones. There is a,
+What do you mean? Like
+
+455
+00:28:23.090 --> 00:28:28.340
+Hanselman colon slash, Right? Yeah,
+exactly. Yeah. And so you
+
+456
+00:28:28.340 --> 00:28:31.340
+could create a website that
+use that URL that would
+
+457
+00:28:31.340 --> 00:28:36.110
+then launch the electron app
+on someone's computer. There is
+
+458
+00:28:37.190 --> 00:28:39.560
+an awesome tool that I
+will give a shout out
+
+459
+00:28:40.100 --> 00:28:43.790
+that we made called electron
+API demos, and that's on
+
+460
+00:28:43.790 --> 00:28:49.040
+the electron website and it's
+actually an electron app demoing
+
+461
+00:28:49.460 --> 00:28:54.590
+the electron API APIs. And
+so it's really cool because
+
+462
+00:28:54.620 --> 00:28:57.950
+it's got tons of sample
+code in there that you
+
+463
+00:28:58.220 --> 00:29:03.120
+can just copy and paste
+into your Quickstart app. And
+
+464
+00:29:03.210 --> 00:29:06.350
+it demos really exactly what
+some of these things are
+
+465
+00:29:06.350 --> 00:29:10.700
+because sometimes, you know, there
+is confusion when you say,
+
+466
+00:29:11.240 --> 00:29:15.290
+Oh, electronic gives you use
+of native UI elements. Well,
+
+467
+00:29:15.290 --> 00:29:17.630
+what does that mean? And
+you can actually demo and
+
+468
+00:29:17.630 --> 00:29:21.510
+click like, Oh, this like
+an open file, file dialogue,
+
+469
+00:29:21.570 --> 00:29:25.700
+say file dialog and that
+kind of thing. And so
+
+470
+00:29:25.700 --> 00:29:28.580
+there is a demo there
+for creating a custom protocol
+
+471
+00:29:29.720 --> 00:29:34.130
+that you can, that will
+launch your app, Right? And
+
+472
+00:29:34.130 --> 00:29:37.460
+you can even do stuff
+like take screenshots or print
+
+473
+00:29:37.460 --> 00:29:40.640
+PDFs. I mean, you know,
+it's a good reminder of
+
+474
+00:29:40.640 --> 00:29:42.820
+like all the kind of
+native stuff. And then also
+
+475
+00:29:42.820 --> 00:29:45.970
+all of that stuff we
+talked about about asynchronous, synchronous
+
+476
+00:29:45.970 --> 00:29:49.690
+messaging and communicating with the
+invisible window. Not only does
+
+477
+00:29:49.690 --> 00:29:51.550
+it have demos, like every
+single one of them is
+
+478
+00:29:51.550 --> 00:29:55.890
+live, plus it includes sample
+code. And a cool fun
+
+479
+00:29:55.890 --> 00:30:00.240
+fact about this app is
+because of the sun electron
+
+480
+00:30:00.240 --> 00:30:05.340
+app, all of the code
+that's actually running each demo.
+
+481
+00:30:05.760 --> 00:30:08.550
+And then there's the sample
+code given to you? That
+
+482
+00:30:08.550 --> 00:30:12.360
+sample code is the actual
+code because we are just
+
+483
+00:30:12.360 --> 00:30:15.300
+doing a read file and
+then add it to the
+
+484
+00:30:15.300 --> 00:30:21.120
+Dom. And so that's cool.
+I know, I know. And
+
+485
+00:30:21.180 --> 00:30:25.590
+it's cool in terms of
+sustainability too, because you only
+
+486
+00:30:25.590 --> 00:30:29.100
+have to update the code
+once and it's updated in
+
+487
+00:30:29.100 --> 00:30:32.460
+the demo. That was cool.
+Yeah. So it really is.
+
+488
+00:30:32.460 --> 00:30:35.040
+It's meant to be, it's
+meant for you to copy
+
+489
+00:30:35.040 --> 00:30:39.990
+and paste out of all
+the sample. The sample snippets
+
+490
+00:30:39.990 --> 00:30:42.360
+are in the demo app,
+like when you run it,
+
+491
+00:30:42.810 --> 00:30:46.800
+but we also totally recommend
+just cloning the app and
+
+492
+00:30:46.800 --> 00:30:49.380
+looking through how we built
+the app as a best
+
+493
+00:30:49.380 --> 00:30:53.580
+practice for building electron apps
+in terms of how are
+
+494
+00:30:53.580 --> 00:30:56.610
+we testing this app? What
+are the scripts that we're
+
+495
+00:30:56.610 --> 00:30:59.400
+using to package it? We
+just got it in the
+
+496
+00:30:59.400 --> 00:31:05.520
+Mac app store. So there's,
+there's lots of that can
+
+497
+00:31:05.520 --> 00:31:08.310
+be learned from just reading
+the code of the app
+
+498
+00:31:08.310 --> 00:31:11.280
+itself. Well, thanks so much
+for chatting with me today.
+
+499
+00:31:12.750 --> 00:31:15.060
+Again, you can check out
+Jessica Lorde on her website,
+
+500
+00:31:15.090 --> 00:31:18.540
+on her Twitter and on
+GitHub, and certainly check out
+
+501
+00:31:18.570 --> 00:31:22.380
+electron. This has been another
+episode of Hanselminutes and we'll
+
+502
+00:31:22.380 --> 00:31:23.610
+see you again next week.
+

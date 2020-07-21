@@ -1,0 +1,3381 @@
+WEBVTT FILE
+
+1
+00:00:12.030 --> 00:00:17.970
+From hanselminutes.com. It's Hanselminutes a
+weekly discussion with web developer
+
+2
+00:00:17.970 --> 00:00:22.680
+and technologist Scott Hanselman. This
+is Lawrence Ryan announcing show number
+
+3
+00:00:22.680 --> 00:00:29.430
+two 76. Recorded live Thursday,
+July 21st, 2011. Support for Hanselman is
+
+4
+00:00:29.430 --> 00:00:33.210
+provided by Tellerik rad controls,
+the most comprehensive suite of
+
+5
+00:00:33.210 --> 00:00:37.800
+components for windows forms and
+asp.net web applications. Online app
+
+6
+00:00:38.000 --> 00:00:45.140
+Www.telerik.com. In this episode, Scott
+visits, Matt clay and Matt
+
+7
+00:00:45.140 --> 00:00:47.810
+Davis at earth class mail.
+To talk about how they
+
+8
+00:00:47.810 --> 00:00:50.630
+use script sharp compiler to
+write Java script from a
+
+9
+00:00:50.630 --> 00:00:55.850
+C sharp source. Hi, this
+is Scott Hanselman. This is
+
+10
+00:00:55.850 --> 00:00:57.860
+another episode of Hansel minutes,
+and I'm over here at
+
+11
+00:00:57.890 --> 00:01:00.920
+earth class mail. I'm talking
+to Matt clay and Matt
+
+12
+00:01:00.920 --> 00:01:03.710
+Davis, Matt Davis. How are
+you, sir? Pretty good. How
+
+13
+00:01:03.710 --> 00:01:06.320
+much? So too bad. Give
+me the elevator speech on
+
+14
+00:01:06.320 --> 00:01:08.360
+what earth class mail does
+and why I should care.
+
+15
+00:01:09.200 --> 00:01:11.960
+Basically we put your postal
+mail online. So we have
+
+16
+00:01:11.960 --> 00:01:14.480
+addresses all over the country.
+People can sign up with
+
+17
+00:01:14.480 --> 00:01:16.970
+us and instead of getting
+mail in their mailbox, they
+
+18
+00:01:16.970 --> 00:01:20.180
+can change some where all
+of their mailers to send
+
+19
+00:01:20.180 --> 00:01:22.190
+mail to us. We'll take
+a picture of the envelope.
+
+20
+00:01:22.190 --> 00:01:24.650
+And once you, once you
+get a picture of the
+
+21
+00:01:24.650 --> 00:01:28.160
+envelope, we'll, we'll deliberate in
+your email box and we'll
+
+22
+00:01:28.220 --> 00:01:30.230
+make available online. You can
+decide what to do that.
+
+23
+00:01:30.230 --> 00:01:31.970
+And so if you want
+to recycle it, which is
+
+24
+00:01:31.970 --> 00:01:34.820
+what most people do with
+just about everything we do
+
+25
+00:01:34.820 --> 00:01:36.350
+that. If you want to
+shred it fine, if you
+
+26
+00:01:36.350 --> 00:01:38.960
+want to open it, big
+PDF, we'll do that. You
+
+27
+00:01:38.970 --> 00:01:42.900
+got checks in there when
+you've deposited electronically. There's lots
+
+28
+00:01:42.900 --> 00:01:44.000
+of stuff you do with
+it. And then we can
+
+29
+00:01:44.180 --> 00:01:47.570
+shift the stuff out as
+well. Bulk it up. What
+
+30
+00:01:47.570 --> 00:01:51.200
+do you do when you
+get Netflix? You probably get
+
+31
+00:01:51.200 --> 00:01:53.660
+a lot of Netflix. People
+usually are smart enough not
+
+32
+00:01:53.660 --> 00:01:55.250
+to do that, but you
+know, it happens once in
+
+33
+00:01:55.250 --> 00:01:56.960
+a while and they just
+have to ship them out
+
+34
+00:01:56.960 --> 00:01:59.630
+and figure it out. Okay.
+Very cool. So I wanted
+
+35
+00:01:59.630 --> 00:02:01.610
+to talk to you guys
+because I understand that you
+
+36
+00:02:01.610 --> 00:02:03.710
+had a project where you
+used a thing called script
+
+37
+00:02:03.740 --> 00:02:06.110
+sharp and script sharp has
+been around for a long
+
+38
+00:02:06.110 --> 00:02:08.300
+time. And the guy that
+made script sharp works for
+
+39
+00:02:08.300 --> 00:02:12.170
+Microsoft and script sharp is
+basically lets you write C
+
+40
+00:02:12.170 --> 00:02:14.840
+sharp and make Java script.
+And since I've been talking
+
+41
+00:02:14.840 --> 00:02:17.840
+lately and proposing these ideas
+around JavaScript on my blog,
+
+42
+00:02:17.840 --> 00:02:21.110
+and I talked to Eric Meyer
+on the podcast a couple
+
+43
+00:02:21.110 --> 00:02:25.040
+of weeks ago, who had
+project Volta that did similar
+
+44
+00:02:25.040 --> 00:02:27.620
+kind of thing. And I'm
+starting to see JavaScript to
+
+45
+00:02:27.620 --> 00:02:31.400
+I L and a high
+level language to JavaScript compilers
+
+46
+00:02:31.400 --> 00:02:33.470
+and things like that. I
+said, well, I could go
+
+47
+00:02:33.470 --> 00:02:35.840
+and find the guy that
+wrote it, or I could
+
+48
+00:02:35.840 --> 00:02:38.030
+find an actual human who
+did a real project with
+
+49
+00:02:38.030 --> 00:02:40.730
+it in the real world.
+So rather than talking to
+
+50
+00:02:40.770 --> 00:02:44.870
+Nikail, who wrote scripture, who
+writes script sharp? I want
+
+51
+00:02:44.870 --> 00:02:47.180
+you to talk to you
+guys. So what did you
+
+52
+00:02:47.180 --> 00:02:50.390
+build with this thing called
+script sharp? So we built
+
+53
+00:02:50.390 --> 00:02:53.530
+a from scratch builds on
+mobile UI for a request
+
+54
+00:02:53.550 --> 00:02:57.200
+mail. So we are only
+mobile experience in mobile story
+
+55
+00:02:57.200 --> 00:02:59.740
+thus far as then we
+actually had a user reverse
+
+56
+00:02:59.740 --> 00:03:03.070
+engineer Or Jason stuff and
+wrote a protozoa iPhone app
+
+57
+00:03:03.070 --> 00:03:06.400
+for it and stuff and
+selling it. And that's, that's
+
+58
+00:03:06.400 --> 00:03:08.440
+been our mobile story for
+the last few years. And
+
+59
+00:03:08.620 --> 00:03:11.530
+we decided, you know, watching
+the watching user agent logs
+
+60
+00:03:11.530 --> 00:03:13.060
+and things that it was
+time to do something about
+
+61
+00:03:13.060 --> 00:03:16.700
+that. So we'd been watching
+script sharps since, you know,
+
+62
+00:03:17.410 --> 00:03:19.240
+like what 2006. I mean,
+this is not a new
+
+63
+00:03:19.240 --> 00:03:21.700
+thing, but it finally got
+to a point where it
+
+64
+00:03:21.700 --> 00:03:24.110
+was really usable when he,
+when he added all the
+
+65
+00:03:24.110 --> 00:03:28.660
+data to support generics, you
+know, some of the just,
+
+66
+00:03:29.650 --> 00:03:31.550
+you know, and that was
+delegated saying like that, that,
+
+67
+00:03:31.550 --> 00:03:34.570
+that got added recently. And
+also the visual studio development
+
+68
+00:03:34.570 --> 00:03:38.380
+experience has changed very recently,
+so that it's really useful
+
+69
+00:03:38.380 --> 00:03:41.680
+and really well integrated that
+it finally hit a point
+
+70
+00:03:41.680 --> 00:03:43.150
+where it's like, Hey, we
+can really do something with
+
+71
+00:03:43.150 --> 00:03:45.960
+this. Okay. So Matt clay,
+what do I do with
+
+72
+00:03:45.960 --> 00:03:49.620
+script sharp? It's a library,
+it's a plugin. What do
+
+73
+00:03:49.620 --> 00:03:51.540
+I, what is it in
+visual studio? And why do
+
+74
+00:03:51.540 --> 00:03:55.980
+I care Visual studio? You
+can create a sort of
+
+75
+00:03:55.980 --> 00:04:02.970
+sharp class project hands that
+will allow you to just
+
+76
+00:04:02.970 --> 00:04:08.730
+write regular C-sharp code instead
+of having your regular most
+
+77
+00:04:08.730 --> 00:04:13.260
+correlate with all your, your
+builtin objects you've got in
+
+78
+00:04:13.260 --> 00:04:18.030
+this car with Husker sharp
+provides similar functionality. And then
+
+79
+00:04:18.420 --> 00:04:22.650
+for access to the whole
+Prosser functionality, things like the
+
+80
+00:04:22.650 --> 00:04:28.830
+window object or other things
+that he objects, you would
+
+81
+00:04:28.920 --> 00:04:33.120
+add a reference to a
+system web, which is just
+
+82
+00:04:33.390 --> 00:04:37.830
+a script scriptural import library
+librarian script sharp is a
+
+83
+00:04:37.830 --> 00:04:42.780
+way of basically declaring a
+class that represents important functionality.
+
+84
+00:04:42.810 --> 00:04:46.770
+That's already provided by either
+the browser and natively or
+
+85
+00:04:46.830 --> 00:04:49.800
+a functionality that's provided by
+a third party library, movie
+
+86
+00:04:50.040 --> 00:04:55.170
+jQuery, or some other script
+and scripture needs a way
+
+87
+00:04:55.170 --> 00:04:58.410
+to know what those methods
+of nutritional objects, all the
+
+88
+00:04:58.410 --> 00:05:03.990
+properties look like. And so
+once, once you've referenced one
+
+89
+00:05:03.990 --> 00:05:09.750
+of those libraries, then you
+can just write your crown
+
+90
+00:05:09.950 --> 00:05:14.040
+in C sharp syntax and
+want us to compile it.
+
+91
+00:05:14.130 --> 00:05:16.500
+It looks very similar to
+what you've just written, but
+
+92
+00:05:16.500 --> 00:05:19.680
+this going to be in
+JavaScript syntax. Okay. So let
+
+93
+00:05:19.680 --> 00:05:21.870
+me see if I understand.
+That's why I say file
+
+94
+00:05:21.870 --> 00:05:25.050
+new script shark project. I
+want to hash table, and
+
+95
+00:05:25.050 --> 00:05:27.630
+I want to do some
+manipulations of some data structures,
+
+96
+00:05:27.660 --> 00:05:30.870
+but I'm referring not to
+the hash table in.net. I'm
+
+97
+00:05:30.870 --> 00:05:34.890
+referring to some script sharp
+stub. Yes, but it doesn't
+
+98
+00:05:34.890 --> 00:05:37.440
+actually have any code in
+it. It depends whether or
+
+99
+00:05:37.440 --> 00:05:42.750
+not it's functionality that is
+more was provided by JavaScript
+
+100
+00:05:42.780 --> 00:05:46.170
+already. If you've got a
+scene, you need a daytime
+
+101
+00:05:46.170 --> 00:05:49.800
+object, okay. There's already a
+date object in JavaScript. So
+
+102
+00:05:50.220 --> 00:05:52.860
+the daytime object that you
+see in script sharp, essentially
+
+103
+00:05:52.860 --> 00:05:56.430
+maps to the functionality that's
+provided by the browser. If
+
+104
+00:05:56.430 --> 00:06:01.010
+you need in a class
+that is functional, that doesn't
+
+105
+00:06:01.010 --> 00:06:04.310
+directly map to something in
+JavaScript. There may be some
+
+106
+00:06:04.310 --> 00:06:10.250
+script chart provided functionality for
+that. There's a SS named
+
+107
+00:06:10.250 --> 00:06:16.490
+space that provides functionality that
+you have to add in
+
+108
+00:06:16.490 --> 00:06:18.620
+just like what it was
+at her party library or
+
+109
+00:06:18.620 --> 00:06:21.830
+something sharp. That's something that
+I came with the browser.
+
+110
+00:06:22.810 --> 00:06:27.100
+Okay. So there's, there's functionality
+that, like you said, JavaScript
+
+111
+00:06:27.100 --> 00:06:30.280
+has what they call native
+objects. And then there's things
+
+112
+00:06:30.280 --> 00:06:31.840
+that I could map. Like
+if I don't have a
+
+113
+00:06:31.840 --> 00:06:34.240
+hash table or some data
+structure, a linked list, he
+
+114
+00:06:34.240 --> 00:06:38.080
+could, he Nickeel the script
+sharp guy could say, you
+
+115
+00:06:38.080 --> 00:06:41.080
+do this manipulation and C-sharp,
+and I will convert it
+
+116
+00:06:41.080 --> 00:06:44.920
+into the appropriate, possibly expanded
+code in Java script to
+
+117
+00:06:44.920 --> 00:06:47.950
+do the same thing. And
+then there's functionality that neither
+
+118
+00:06:47.950 --> 00:06:51.130
+of them supply that are
+totally separate libraries like jQuery
+
+119
+00:06:51.130 --> 00:06:54.340
+or whatever you'd have to
+have includes. Yes. And there
+
+120
+00:06:54.340 --> 00:06:57.010
+are certain important libraries that
+the keel has already provided.
+
+121
+00:06:57.760 --> 00:07:02.500
+There's a jQuery, that's the,
+that's the biggest one that
+
+122
+00:07:02.500 --> 00:07:04.690
+we've been using, but there's
+been that that's another positive
+
+123
+00:07:04.690 --> 00:07:09.130
+and contributed from other developers
+is getting our library of
+
+124
+00:07:09.130 --> 00:07:11.320
+right. You've seen it. Right.
+Hmm. And then when I
+
+125
+00:07:11.320 --> 00:07:15.280
+do build, when I control
+shift B JavaScript pops out,
+
+126
+00:07:15.310 --> 00:07:17.880
+or is this all at
+runtime? Is it a build
+
+127
+00:07:17.890 --> 00:07:20.830
+time? And you actually get
+there, there's two compilers involved.
+
+128
+00:07:20.920 --> 00:07:23.590
+There's the regular Batman compiler.
+So you're still going to
+
+129
+00:07:23.590 --> 00:07:28.090
+yet a DLL that's generated.
+And that can be useful
+
+130
+00:07:28.090 --> 00:07:30.940
+if you need to reflect
+over your code, or if
+
+131
+00:07:30.940 --> 00:07:32.200
+you want to be able
+to reference it in another
+
+132
+00:07:32.200 --> 00:07:34.870
+sharp project is just, just
+not some limit you would
+
+133
+00:07:34.870 --> 00:07:38.230
+have for any other that
+project. But then the script
+
+134
+00:07:38.230 --> 00:07:41.740
+sharp compiler also compiles that
+source code. And it will
+
+135
+00:07:41.740 --> 00:07:46.120
+be what limits the JavaScript.
+So the script, so C-sharp
+
+136
+00:07:46.150 --> 00:07:50.710
+to ill intermediate language. And
+then presumably I L to
+
+137
+00:07:50.710 --> 00:07:53.620
+Java, No, actually the script
+sharp does not process. The
+
+138
+00:07:53.620 --> 00:07:57.130
+aisle actually is a compiler
+and it will be the
+
+139
+00:07:57.220 --> 00:08:00.790
+same pump that the C
+sharp compiler is using. So,
+
+140
+00:08:01.090 --> 00:08:03.250
+So if it fans out
+as opposed to kind of
+
+141
+00:08:03.250 --> 00:08:07.120
+going synchronously here to here,
+and then interesting Of situations
+
+142
+00:08:07.120 --> 00:08:13.180
+where you use functionality, say
+Amanda's in a miles, fine
+
+143
+00:08:13.180 --> 00:08:16.510
+with B C sharp compiler.
+And then you got to
+
+144
+00:08:16.510 --> 00:08:18.970
+build there because the surcharge
+compiler says, Hey, I'm support
+
+145
+00:08:18.980 --> 00:08:22.330
+this. And does it support
+Lambdas? No, You can, you
+
+146
+00:08:22.330 --> 00:08:26.620
+can do delegates, but the
+expression syntax is not supported
+
+147
+00:08:27.490 --> 00:08:30.700
+and none of the dotnet
+for features. So I write
+
+148
+00:08:30.700 --> 00:08:34.240
+C-sharp that I presumably know,
+and I get JavaScript out
+
+149
+00:08:34.240 --> 00:08:36.160
+of it. And that JavaScript
+works just fine in the
+
+150
+00:08:36.160 --> 00:08:39.190
+browser. And presumably works well
+in other browsers, but it's
+
+151
+00:08:39.190 --> 00:08:41.980
+generated in that it was
+made from a compiler. So
+
+152
+00:08:41.980 --> 00:08:45.730
+I am compiling to JavaScript.
+That is correct. I could
+
+153
+00:08:45.730 --> 00:08:48.190
+look at it as a
+cogeneration step. I mean, there's
+
+154
+00:08:48.190 --> 00:08:50.440
+a couple of ways. So
+philosophically we could think about
+
+155
+00:08:50.440 --> 00:08:53.490
+this, depends on what works
+for the audience. And in
+
+156
+00:08:53.500 --> 00:08:55.500
+this case, what works for
+me, because you're it, to
+
+157
+00:08:55.500 --> 00:08:59.610
+me C-sharp could be considered
+a domain specific language or
+
+158
+00:08:59.790 --> 00:09:03.990
+pretty broad one, and then
+we compile to JavaScript or
+
+159
+00:09:03.990 --> 00:09:07.860
+we, but, but they're so
+similar. There's curly braces. I
+
+160
+00:09:07.860 --> 00:09:09.480
+mean, let me, let me
+throw rocks here a little
+
+161
+00:09:09.480 --> 00:09:13.200
+bit. JavaScript is an extremely
+expressive language and there's some
+
+162
+00:09:13.200 --> 00:09:17.250
+impedance mismatch between them, Matt
+Davis, why would I bother
+
+163
+00:09:17.670 --> 00:09:19.890
+doing this when they're so
+similar? It's not like we're
+
+164
+00:09:19.890 --> 00:09:22.440
+going from Fortran to JavaScript.
+We're going from curly brace
+
+165
+00:09:22.440 --> 00:09:25.250
+language to curly brace language.
+Script's got a lot of
+
+166
+00:09:25.250 --> 00:09:27.680
+fans and, you know, I'm,
+I'm one of those. And
+
+167
+00:09:27.720 --> 00:09:29.870
+it has a lot of
+really nice, you know, kind
+
+168
+00:09:29.870 --> 00:09:32.600
+of more functional features and
+dynamic features. It's a pretty
+
+169
+00:09:32.600 --> 00:09:34.940
+cool language, but at the
+end of the day, you
+
+170
+00:09:34.940 --> 00:09:37.430
+know, when all of our
+service layer and everything else
+
+171
+00:09:37.430 --> 00:09:40.010
+we do is written in
+C sharp managed code, strong
+
+172
+00:09:40.040 --> 00:09:43.580
+typing, the compiler does a
+lot of heavy lifting for
+
+173
+00:09:43.580 --> 00:09:45.980
+us as far as making,
+you know, just it's. I
+
+174
+00:09:45.980 --> 00:09:48.110
+think I saw you, you
+say the compiler is the
+
+175
+00:09:48.110 --> 00:09:50.060
+first unit test, but I
+don't know if that's your
+
+176
+00:09:50.060 --> 00:09:53.840
+own quote. I steal most
+of my quotes. Well, anyway,
+
+177
+00:09:53.870 --> 00:09:57.680
+somebody said that, and I
+totally agree. That is that's
+
+178
+00:09:57.680 --> 00:09:59.660
+the very first thing, and
+it's the earliest thing, and
+
+179
+00:09:59.660 --> 00:10:01.850
+it's the cheapest thing. So
+if there's anything we can
+
+180
+00:10:01.850 --> 00:10:06.110
+do to make our, you
+know, to make that compiler
+
+181
+00:10:06.140 --> 00:10:09.860
+do more work for us,
+that's, that's great. And the,
+
+182
+00:10:10.580 --> 00:10:12.050
+the real problem we've run
+into is, and it's a
+
+183
+00:10:12.050 --> 00:10:15.770
+real pain in the butt
+to refactor JavaScript when we've
+
+184
+00:10:15.770 --> 00:10:17.540
+got, especially when we've got,
+you know, we've got a
+
+185
+00:10:17.540 --> 00:10:19.940
+strong type service layer, we've
+got a lot of metadata
+
+186
+00:10:19.940 --> 00:10:23.480
+available to us with, you
+know, so we're, we expose
+
+187
+00:10:23.480 --> 00:10:27.170
+all our stuff as whether
+HDB binding the WCF, Jason.
+
+188
+00:10:27.470 --> 00:10:31.240
+So we have a strong
+service contract that defines everything
+
+189
+00:10:31.250 --> 00:10:33.590
+and all the operations, all
+the data contracts, everything that
+
+190
+00:10:33.590 --> 00:10:37.010
+we're using. And yet, as
+soon as, as soon as
+
+191
+00:10:37.010 --> 00:10:39.470
+we go into JavaScript plans,
+try and consume that stuff.
+
+192
+00:10:39.620 --> 00:10:42.230
+If we're just writing naked
+JavaScript, we have to duplicate
+
+193
+00:10:42.230 --> 00:10:44.330
+all that stuff so that,
+you know, we've got those
+
+194
+00:10:44.330 --> 00:10:47.180
+same types available to us
+in JavaScript. And then if
+
+195
+00:10:47.180 --> 00:10:50.210
+we want to change something
+over on the.net side, then
+
+196
+00:10:50.240 --> 00:10:52.220
+we just have to, you
+know, we're, we're kind of
+
+197
+00:10:52.220 --> 00:10:54.260
+out on our own, as
+far as fixing the JS,
+
+198
+00:10:54.260 --> 00:10:56.150
+we have to just go
+assume we caught it off.
+
+199
+00:10:56.170 --> 00:10:58.640
+Cause you know, find all
+references doesn't work in JavaScript.
+
+200
+00:11:00.110 --> 00:11:01.580
+Okay. So there's a couple
+of things that you brought
+
+201
+00:11:01.580 --> 00:11:04.820
+up there. First, you said
+that it's hard to refactor
+
+202
+00:11:04.820 --> 00:11:07.520
+JavaScript, and I assume by
+refactor, you don't necessarily mean
+
+203
+00:11:07.520 --> 00:11:10.580
+like the act of manually
+refactoring, but it's hard to,
+
+204
+00:11:10.970 --> 00:11:13.520
+there are no JavaScript refactoring
+tools that are like automated,
+
+205
+00:11:13.520 --> 00:11:18.350
+like ReSharper code rush. Correct.
+Okay. And refactoring needs needs
+
+206
+00:11:18.350 --> 00:11:20.210
+a lot of insight into
+the code. I mean, in
+
+207
+00:11:20.210 --> 00:11:23.240
+order to say something like
+extract method or promote variable,
+
+208
+00:11:23.840 --> 00:11:27.110
+there's a lot of context
+that is required. And with
+
+209
+00:11:27.110 --> 00:11:29.420
+dynamic languages, it's a little
+bit harder to do that
+
+210
+00:11:29.420 --> 00:11:32.060
+kind of gleaning. Yes. Yeah.
+And you, you pretty much
+
+211
+00:11:32.060 --> 00:11:33.500
+have to do an exhaustive,
+you know, I mean, you're
+
+212
+00:11:33.500 --> 00:11:36.410
+using a lot of control
+app and that's a, that's
+
+213
+00:11:36.470 --> 00:11:37.940
+not the best way to
+do it. You know, once
+
+214
+00:11:37.940 --> 00:11:39.650
+you've been used to doing
+this in C sharp and
+
+215
+00:11:40.010 --> 00:11:41.510
+you know, you get all
+the little nice things when
+
+216
+00:11:41.510 --> 00:11:43.250
+you rename it, you know,
+where you rename a member
+
+217
+00:11:43.250 --> 00:11:45.500
+on a contract or you,
+you know, delete something or
+
+218
+00:11:45.500 --> 00:11:49.670
+change something or add something,
+you know, it's again, if
+
+219
+00:11:49.670 --> 00:11:53.350
+a compiler, you, you, you
+get the control dot renamed
+
+220
+00:11:53.350 --> 00:11:56.760
+member and it just ripples
+throughout your code. That's, that's
+
+221
+00:11:56.770 --> 00:11:59.770
+pretty powerful to do the
+same thing. And JavaScript requires
+
+222
+00:11:59.770 --> 00:12:01.840
+a whole lot of control
+app. And I don't like,
+
+223
+00:12:02.200 --> 00:12:04.620
+I don't like coding that
+way if I can. Okay.
+
+224
+00:12:04.710 --> 00:12:07.980
+But then you said that,
+that you kind of use
+
+225
+00:12:07.980 --> 00:12:10.110
+my own stolen quote against
+me, but you said it
+
+226
+00:12:10.110 --> 00:12:13.380
+compiler as the first unit
+test wouldn't if you had
+
+227
+00:12:13.380 --> 00:12:17.160
+used a proper JS test
+framework that JavaScript test framework,
+
+228
+00:12:17.160 --> 00:12:20.310
+whether it be selenium or
+something more formal, isn't the
+
+229
+00:12:20.310 --> 00:12:23.730
+idea when you did the
+statement, when you said refactoring
+
+230
+00:12:23.730 --> 00:12:27.510
+is hard and JavaScript, I
+think it might be more
+
+231
+00:12:27.510 --> 00:12:31.470
+correct to say refactoring is
+scary in JavaScript. That's actually
+
+232
+00:12:31.470 --> 00:12:34.110
+bad. He's a much more
+accurate statement began. And that's
+
+233
+00:12:34.110 --> 00:12:37.530
+exactly the reason that, you
+know, our, our UI hasn't
+
+234
+00:12:37.530 --> 00:12:40.350
+changed in the last, Because
+you're afraid of it. Yeah.
+
+235
+00:12:40.380 --> 00:12:43.230
+Yeah. We, you know, it's
+this huge, massive JavaScript. I
+
+236
+00:12:43.230 --> 00:12:45.300
+mean, you know, tens of
+thousands of likes, but off
+
+237
+00:12:45.320 --> 00:12:48.540
+script, I think, Is it
+Minnesota? Here's where I want
+
+238
+00:12:48.540 --> 00:12:50.130
+to kinda bring it full
+circle. Is it tens of
+
+239
+00:12:50.130 --> 00:12:52.440
+thousands of lines of script
+sharp generated, JavaScript that you're
+
+240
+00:12:52.440 --> 00:12:55.920
+afraid of, or is this
+older JavaScript that you wrote
+
+241
+00:12:56.910 --> 00:12:58.260
+that we wrote a couple
+years ago? I want to
+
+242
+00:12:58.260 --> 00:13:00.390
+make sure that you haven't
+painted yourself into a corner
+
+243
+00:13:00.390 --> 00:13:02.820
+and then you're singing about
+how great it is. Yes.
+
+244
+00:13:03.210 --> 00:13:05.160
+So yeah, a couple of
+years ago, we, we rewrote
+
+245
+00:13:05.160 --> 00:13:08.820
+all of our old asp.net
+web forms, UI into basically,
+
+246
+00:13:08.820 --> 00:13:11.250
+you know, complete client side
+JavaScript thing. And there's a
+
+247
+00:13:11.250 --> 00:13:13.890
+whole lot of JavaScript out
+there that just we're all
+
+248
+00:13:13.890 --> 00:13:17.520
+really. So you wrote it
+without tests, but you would
+
+249
+00:13:17.520 --> 00:13:20.870
+have from scratch. Okay. So
+here's the next question. And
+
+250
+00:13:20.990 --> 00:13:24.510
+it's kind of all related
+when you're using a, a
+
+251
+00:13:24.540 --> 00:13:28.500
+high level language to target
+a compilation target that is
+
+252
+00:13:28.500 --> 00:13:32.970
+itself another high level language
+of, you know, arguably strange
+
+253
+00:13:32.970 --> 00:13:35.850
+syntax, but still there's, you
+know, there's a Venn diagram
+
+254
+00:13:35.850 --> 00:13:40.470
+between C-sharp and JavaScript and
+it probably intersects 80 plus
+
+255
+00:13:40.470 --> 00:13:44.670
+percent. How do you make
+sure that you're not you're
+
+256
+00:13:44.680 --> 00:13:48.000
+that you're utilizing JavaScript the
+most effective way there's idiomatic
+
+257
+00:13:48.150 --> 00:13:52.710
+JavaScript. There's there's correct ways
+to do it. Why is
+
+258
+00:13:52.710 --> 00:13:57.300
+it appropriate to take C-sharp
+and generate JavaScript? And people
+
+259
+00:13:57.300 --> 00:13:59.490
+are okay with that. But
+if I said we were
+
+260
+00:13:59.490 --> 00:14:01.140
+going to go and take
+C sharp to Ruby, people
+
+261
+00:14:01.140 --> 00:14:03.150
+were like, no, no, no,
+you can't do that. That's
+
+262
+00:14:03.150 --> 00:14:05.340
+like translating English to French.
+You can't do it. You
+
+263
+00:14:05.340 --> 00:14:09.690
+can only go the other
+way. You know, I don't
+
+264
+00:14:09.690 --> 00:14:12.600
+know. I think the script
+surface I'm pretty darn high
+
+265
+00:14:12.610 --> 00:14:17.250
+Valley compiler. So you can
+write, you can write crappy
+
+266
+00:14:17.280 --> 00:14:21.000
+1995 era JavaScript and C
+sharp, just the same way
+
+267
+00:14:21.000 --> 00:14:24.420
+you can write, you know,
+really nice, elegant, modern JavaScript,
+
+268
+00:14:24.420 --> 00:14:28.740
+pretty much all the features
+translate. So it does pretty
+
+269
+00:14:28.740 --> 00:14:31.800
+well. So, you know, if
+you do need to understand
+
+270
+00:14:31.800 --> 00:14:35.550
+what Java script allows and,
+you know, script sharp is
+
+271
+00:14:35.550 --> 00:14:37.830
+not really an answer to
+that. It's just, it provides
+
+272
+00:14:37.830 --> 00:14:40.080
+you a whole lot more
+functionality as far as, as
+
+273
+00:14:40.080 --> 00:14:42.390
+far as the really being
+able to consume that metadata
+
+274
+00:14:42.390 --> 00:14:46.890
+that you are This episode
+of Hansel minutes is brought
+
+275
+00:14:46.890 --> 00:14:50.730
+to you by careers. 2.0
+careers, 2.0 is a new
+
+276
+00:14:50.730 --> 00:14:53.930
+service by our friends at
+stack overflow. You're probably all
+
+277
+00:14:53.930 --> 00:14:57.860
+familiar with stack overflow. The
+online QA resource dedicated specifically
+
+278
+00:14:57.860 --> 00:15:02.120
+to programmers and programming related
+topics. Well, the team at
+
+279
+00:15:02.120 --> 00:15:05.750
+stack overflow created careers 2.0
+to provide you with access
+
+280
+00:15:05.750 --> 00:15:08.210
+to great jobs and introduce
+you to a bunch of
+
+281
+00:15:08.210 --> 00:15:11.060
+great companies that you might
+consider working for, even if
+
+282
+00:15:11.060 --> 00:15:13.790
+you're not currently looking for
+a job, think of careers.
+
+283
+00:15:13.790 --> 00:15:17.540
+2.0 is a programmer profile
+gives you a platform to
+
+284
+00:15:17.540 --> 00:15:21.050
+show that you're awesome by
+featuring your proudest contributions to
+
+285
+00:15:21.050 --> 00:15:26.000
+stack overflow, GitHub SourceForge Bitbucket,
+anything programming related, you can
+
+286
+00:15:26.000 --> 00:15:30.140
+even add your favorite programming
+books from amazon.com profiles on
+
+287
+00:15:30.140 --> 00:15:33.620
+careers. 2.0 are free. They're
+easy to get started, especially
+
+288
+00:15:33.620 --> 00:15:38.930
+by importing your LinkedIn profile.
+However, there's one catch profiles
+
+289
+00:15:38.930 --> 00:15:42.800
+and career 2.0 or invite
+only they did this to
+
+290
+00:15:42.800 --> 00:15:45.500
+keep out the spam and
+have a high quality environment.
+
+291
+00:15:46.430 --> 00:15:48.950
+Fortunately, for you as a
+Hansel minutes listener, I've got
+
+292
+00:15:48.950 --> 00:15:54.860
+your back head on over
+to careers dot stack overflow.com/h
+
+293
+00:15:54.860 --> 00:15:58.430
+M to accept your invitation
+today, once again, that's careers
+
+294
+00:15:58.940 --> 00:16:07.040
+dot stack, overflow.com/h M. I
+hope you like it. So
+
+295
+00:16:07.070 --> 00:16:09.380
+Matt clay, a number of
+people on the articles that
+
+296
+00:16:09.380 --> 00:16:12.020
+I've written about JavaScript, I've
+said things like it's the
+
+297
+00:16:12.020 --> 00:16:16.250
+assembly language for the web.
+And when I say, I
+
+298
+00:16:16.250 --> 00:16:20.090
+think it's interesting and neat
+that you can target JavaScript,
+
+299
+00:16:20.150 --> 00:16:23.240
+like, you know, Google web
+toolkit lets you take Java
+
+300
+00:16:23.390 --> 00:16:26.120
+and compile it into JavaScript.
+And it seems like that
+
+301
+00:16:26.120 --> 00:16:28.460
+was much more successful than
+script sharp was. I mean,
+
+302
+00:16:28.460 --> 00:16:30.950
+scripture I've had some fans,
+but it's not as big
+
+303
+00:16:30.950 --> 00:16:34.220
+and prolific as a web
+tool kit. But some people
+
+304
+00:16:34.430 --> 00:16:39.950
+found that very concept offensive,
+the idea that I have
+
+305
+00:16:39.950 --> 00:16:43.190
+this layer of abstraction over
+something that itself really doesn't
+
+306
+00:16:43.190 --> 00:16:48.980
+need abstractions. What do you
+think about that? That to,
+
+307
+00:16:49.040 --> 00:16:51.260
+to layer stuff on top
+of stuff that doesn't mean
+
+308
+00:16:51.260 --> 00:16:53.060
+layers remembering of course that
+Nickeel is one of the
+
+309
+00:16:53.060 --> 00:16:57.710
+architects of asp.net, a much
+maligned framework that uses things
+
+310
+00:16:57.710 --> 00:17:01.070
+like you state and layered
+inventing. Do you, do you,
+
+311
+00:17:01.280 --> 00:17:02.270
+I guess what I'm trying
+to say is, do you
+
+312
+00:17:02.270 --> 00:17:08.200
+see shadows of inappropriate abstractions
+in script sharp? No, I
+
+313
+00:17:08.200 --> 00:17:10.750
+don't think so. We've actually,
+that was one of the
+
+314
+00:17:10.750 --> 00:17:14.860
+reasons that we picked that
+chart because looking at some
+
+315
+00:17:14.860 --> 00:17:17.200
+of the other tools out
+there and how they're developed,
+
+316
+00:17:17.200 --> 00:17:21.250
+they have a lot of
+extra weight that they add
+
+317
+00:17:21.250 --> 00:17:26.200
+to your, your resulting there's
+there's extra frameworks that you
+
+318
+00:17:26.200 --> 00:17:30.280
+have to include that provide
+punctuality to try to make
+
+319
+00:17:30.280 --> 00:17:37.030
+the target playing with somebody
+that's not. And scripture pretty
+
+320
+00:17:37.030 --> 00:17:40.330
+cleanly maps down to JavaScript.
+There's not a lot of
+
+321
+00:17:41.260 --> 00:17:42.700
+extra weight that it puts
+in. There's not a lot,
+
+322
+00:17:42.700 --> 00:17:45.040
+not a lot of extra
+functionality that it tries to
+
+323
+00:17:45.520 --> 00:17:51.000
+change and make it behave
+differently than what you would
+
+324
+00:17:51.000 --> 00:17:54.560
+expect. See, that's really interesting
+because some people have said,
+
+325
+00:17:54.950 --> 00:17:56.750
+and you don't, whether you
+believe this or not, doesn't
+
+326
+00:17:56.750 --> 00:17:58.580
+really matter. But I've said
+that, you know, a web
+
+327
+00:17:58.580 --> 00:18:01.160
+forums just trying to make
+HTTP and HTML work in
+
+328
+00:18:01.160 --> 00:18:03.530
+ways that it is not
+supposed to it's it's bringing
+
+329
+00:18:03.530 --> 00:18:07.850
+support libraries. And often you
+see these four GLS, even
+
+330
+00:18:07.850 --> 00:18:10.010
+from small companies where they're
+like, yeah, look you drag
+
+331
+00:18:10.010 --> 00:18:13.550
+and drop this and you
+hit, remember I'm open Laszlo.
+
+332
+00:18:13.910 --> 00:18:17.000
+Do you guys remember that
+open Laszlo was a was
+
+333
+00:18:17.000 --> 00:18:19.550
+I don't know if they're
+still around was a 4g,
+
+334
+00:18:19.550 --> 00:18:21.410
+I'll write a fourth generation
+language where you would go
+
+335
+00:18:21.410 --> 00:18:23.660
+and design your UI and
+you drag your buttons and
+
+336
+00:18:23.660 --> 00:18:26.870
+you'd hit compile. And it
+would make a flash UI
+
+337
+00:18:27.410 --> 00:18:31.250
+and a Java UI and
+an HTML five UI. And
+
+338
+00:18:31.250 --> 00:18:34.490
+it was just like, what,
+you know, how has, you
+
+339
+00:18:34.490 --> 00:18:37.340
+know, what it was targeting
+each of those three things,
+
+340
+00:18:37.640 --> 00:18:41.090
+except in order to do
+it, it brought along all
+
+341
+00:18:41.090 --> 00:18:43.400
+this support libraries and your
+buttons had to look like,
+
+342
+00:18:43.730 --> 00:18:47.090
+you know, Well, we've seen
+a lot of that in
+
+343
+00:18:47.090 --> 00:18:50.000
+the past, right? Is that,
+that particular? I didn't remember
+
+344
+00:18:50.000 --> 00:18:52.430
+that one by hand. Are
+you seeing that thing all
+
+345
+00:18:52.430 --> 00:18:55.280
+along? You Oracle started with
+this kind of stuff in
+
+346
+00:18:55.280 --> 00:18:58.070
+the early nineties with their,
+you know, Brad designer stuff,
+
+347
+00:18:58.190 --> 00:19:01.010
+you spend six months like
+dragging around a bunch of
+
+348
+00:19:01.010 --> 00:19:03.830
+little boxes and push the
+button. I like to say
+
+349
+00:19:03.830 --> 00:19:06.380
+that it's just like how
+a Henry Ford said you can
+
+350
+00:19:06.380 --> 00:19:08.930
+have any color you want.
+As long as it's black,
+
+351
+00:19:09.260 --> 00:19:11.030
+all of these four GLS
+are like, yeah, you can
+
+352
+00:19:11.030 --> 00:19:13.130
+have any button working on
+any platform. As long as
+
+353
+00:19:13.130 --> 00:19:15.200
+it looks like this pink
+and green button that we
+
+354
+00:19:15.440 --> 00:19:17.960
+have standardized on Things are
+great. You know, they're, they're
+
+355
+00:19:17.960 --> 00:19:21.200
+great for throwing together an
+application, but yeah, usually the
+
+356
+00:19:21.200 --> 00:19:22.730
+problem is as soon as
+you hit something that you
+
+357
+00:19:22.730 --> 00:19:26.330
+can't do, you can't do
+it Right, right. Once debug
+
+358
+00:19:26.330 --> 00:19:29.390
+everywhere does. So what I
+was kind of asking Matt
+
+359
+00:19:29.390 --> 00:19:31.850
+clan, I'd like to hear
+what you guys think is,
+
+360
+00:19:32.540 --> 00:19:36.740
+does script sharp, bring along
+other libraries and stuff. Like
+
+361
+00:19:36.800 --> 00:19:39.260
+first thing you do is
+install the script sharp library
+
+362
+00:19:39.260 --> 00:19:42.590
+because it's not really JavaScript.
+It's magical script, sharp script.
+
+363
+00:19:44.180 --> 00:19:46.910
+Well, there's only one pilots
+are hard for is her
+
+364
+00:19:46.910 --> 00:19:51.110
+sharp. There's a 25 K
+five and that's the most
+
+365
+00:19:51.430 --> 00:19:55.280
+JS in the current releases
+for sure. And then provides
+
+366
+00:19:55.460 --> 00:19:59.330
+the necessary functionality for things
+like dictionary and some of
+
+367
+00:19:59.410 --> 00:20:03.290
+the other things that just
+didn't map cleanly enough directly
+
+368
+00:20:03.290 --> 00:20:06.140
+from the C-sharp to Java
+script. There's a little bit
+
+369
+00:20:06.140 --> 00:20:09.680
+of localization support in there.
+I know some of those
+
+370
+00:20:09.680 --> 00:20:12.920
+things now Maciel's working on
+actually splitting out most like
+
+371
+00:20:13.580 --> 00:20:15.860
+what I see, not yet.
+This is some separate files
+
+372
+00:20:15.860 --> 00:20:19.760
+so that you can even
+have more functionality on, on
+
+373
+00:20:19.760 --> 00:20:23.810
+top of that, not to
+pull up script truck too
+
+374
+00:20:23.810 --> 00:20:29.030
+much with functionality that the
+model developer shirts And he's
+
+375
+00:20:29.030 --> 00:20:30.830
+working on this now, like
+this is active. You just
+
+376
+00:20:30.830 --> 00:20:32.990
+said get hub. I figured
+that this was an application
+
+377
+00:20:32.990 --> 00:20:36.020
+on code Plex that the
+world had forgotten that you've
+
+378
+00:20:36.020 --> 00:20:43.790
+used Because the import libraries,
+hands clients has supported code,
+
+379
+00:20:43.790 --> 00:20:48.370
+smaller things. Compiler itself is
+not yet to Hold the
+
+380
+00:20:48.370 --> 00:20:54.130
+starch. So he's still working
+on that privately from, from
+
+381
+00:20:54.130 --> 00:20:56.770
+what I brought us, it
+looks like he's, he's trying
+
+382
+00:20:56.770 --> 00:21:01.450
+to handsome support for more
+basket part functionality heading for
+
+383
+00:21:01.450 --> 00:21:06.420
+our school support for future.
+Wow. Interesting. Of course, because
+
+384
+00:21:06.420 --> 00:21:10.020
+he chose to do this
+from source rather than from
+
+385
+00:21:10.020 --> 00:21:12.360
+ill I'm I'm I'm I
+I'd have to talk to
+
+386
+00:21:12.360 --> 00:21:14.340
+him and find out unless,
+you know, why he chose
+
+387
+00:21:14.340 --> 00:21:17.580
+to compile from C sharp
+source to JS source as
+
+388
+00:21:17.580 --> 00:21:20.250
+opposed to from aisle too.
+I don't know the reason
+
+389
+00:21:20.250 --> 00:21:22.590
+he picked that. I was
+a little surprised myself to
+
+390
+00:21:22.590 --> 00:21:25.650
+see that when you start
+reading about conscript sharp, he's
+
+391
+00:21:25.650 --> 00:21:27.300
+got some good high grass
+on his site and that's
+
+392
+00:21:27.300 --> 00:21:30.270
+one of the things that's
+jumped very quickly is that
+
+393
+00:21:31.090 --> 00:21:35.160
+he's, he's compounding directly. One
+of the things that I
+
+394
+00:21:35.160 --> 00:21:37.200
+hear when I hear script
+sharp talked about is like,
+
+395
+00:21:37.500 --> 00:21:40.320
+wow, this is interesting. And
+this architect at Microsoft did
+
+396
+00:21:40.320 --> 00:21:45.840
+it, but why doesn't Microsoft
+support it? And one of
+
+397
+00:21:45.840 --> 00:21:47.850
+the things that I've heard
+talked internally when I talked
+
+398
+00:21:47.850 --> 00:21:51.510
+to example to some of
+my bosses, the various Scott's
+
+399
+00:21:52.380 --> 00:21:54.600
+plural that are my bosses,
+as we go up the
+
+400
+00:21:54.600 --> 00:21:57.690
+Scott chain to the ultimate,
+the greater Scott did you
+
+401
+00:21:57.690 --> 00:21:59.640
+know that they actually refer
+to us at Microsoft as
+
+402
+00:21:59.640 --> 00:22:03.210
+the lesser Scott's. I was
+at a meeting and this
+
+403
+00:22:03.240 --> 00:22:04.860
+and Keira, my friend was
+like, okay, well, what are
+
+404
+00:22:04.860 --> 00:22:07.380
+the, see, what are the
+lesser Scott's think about that.
+
+405
+00:22:07.980 --> 00:22:10.080
+So I am in that
+collective. So one of the
+
+406
+00:22:10.080 --> 00:22:13.350
+greater Scott's made the comment
+that what we do support
+
+407
+00:22:13.350 --> 00:22:17.070
+it in that we think
+it's great and Nickeel has
+
+408
+00:22:17.070 --> 00:22:18.960
+it. And it's open source.
+Why should this open source
+
+409
+00:22:18.960 --> 00:22:22.830
+people asked any more than
+any other project? So my
+
+410
+00:22:22.830 --> 00:22:27.180
+question to you is, are
+you comfortable or uncomfortable with
+
+411
+00:22:27.180 --> 00:22:30.120
+the idea that you're just
+using just yet another project?
+
+412
+00:22:30.120 --> 00:22:31.860
+Or do you feel that
+this is something that Microsoft
+
+413
+00:22:31.860 --> 00:22:35.290
+should like bring into the
+fold and mess up? I
+
+414
+00:22:35.290 --> 00:22:38.310
+would certainly love to see
+more support for it. If
+
+415
+00:22:38.310 --> 00:22:40.860
+anything, given me kill an
+engineering team and say, Hey,
+
+416
+00:22:40.860 --> 00:22:43.050
+support and give him, give
+me more resources so that
+
+417
+00:22:43.050 --> 00:22:48.390
+this can move along farther
+is that Emma said, they're
+
+418
+00:22:49.140 --> 00:22:53.100
+trying to support most of
+the language features of C
+
+419
+00:22:53.100 --> 00:22:54.390
+sharp. And there are a
+couple of things that we
+
+420
+00:22:54.390 --> 00:22:59.700
+do miss not having the
+support for expressions, not support
+
+421
+00:22:59.700 --> 00:23:02.130
+for object. Initializers, that's a
+big one, Just from a
+
+422
+00:23:02.130 --> 00:23:05.250
+convenience perspective, Not things you
+can't do. It's things you
+
+423
+00:23:05.250 --> 00:23:07.770
+didn't have to write a
+different way. Again, we've, we've
+
+424
+00:23:07.770 --> 00:23:12.120
+been really spoiled with the,
+the extra functionality, the syntax
+
+425
+00:23:12.120 --> 00:23:14.400
+available and on that for
+if you were really nice
+
+426
+00:23:14.400 --> 00:23:17.040
+to see some of those
+signs, Matt Davis, do you
+
+427
+00:23:17.040 --> 00:23:19.140
+agree? Do you think that
+Microsoft should take something like
+
+428
+00:23:19.140 --> 00:23:21.000
+this in, or is it
+just an open source project
+
+429
+00:23:21.000 --> 00:23:23.700
+and you use it like
+you would any other Certainly
+
+430
+00:23:24.030 --> 00:23:26.490
+that, that they shouldn't pick
+it in, but you know,
+
+431
+00:23:26.790 --> 00:23:29.490
+it's, I guess it's always
+the a hundred dollars problem,
+
+432
+00:23:29.490 --> 00:23:31.050
+right? I mean, how, you
+know, if you've got, if
+
+433
+00:23:31.050 --> 00:23:34.230
+you've got a hundred dollars
+to spend on languages, like
+
+434
+00:23:34.290 --> 00:23:35.600
+how much would you put
+in, do you spell out
+
+435
+00:23:35.600 --> 00:23:38.970
+scripture? And honestly, like other
+than, other than adding, you
+
+436
+00:23:38.970 --> 00:23:40.980
+know, those more, the more
+advanced, you know, dot at
+
+437
+00:23:40.980 --> 00:23:43.560
+three and C sharp three
+and C sharp for features.
+
+438
+00:23:43.950 --> 00:23:45.980
+I don't know that there's
+a whole, that really needs
+
+439
+00:23:45.980 --> 00:23:49.430
+to be done. You know,
+the, the, the way that
+
+440
+00:23:49.430 --> 00:23:51.530
+Nikki has got to put
+together and integrated in the
+
+441
+00:23:51.530 --> 00:23:53.480
+visual studio, I mean, it's
+already got its own project
+
+442
+00:23:53.480 --> 00:23:55.520
+support. You know, they made
+that so much easier to
+
+443
+00:23:55.520 --> 00:23:59.000
+do in 2010, but you're
+seeing a lot more, how
+
+444
+00:23:59.000 --> 00:24:03.500
+did it work before? I
+don't even, I've seen some
+
+445
+00:24:03.500 --> 00:24:05.570
+language package stuff. I mean,
+it was, I know it
+
+446
+00:24:05.570 --> 00:24:07.540
+was just, you know, Like
+post build steps and all
+
+447
+00:24:07.540 --> 00:24:09.610
+that kind of stuff. It
+was, Oh, you need to
+
+448
+00:24:09.610 --> 00:24:10.930
+have it to work for
+you. Just like you're saying
+
+449
+00:24:10.930 --> 00:24:13.270
+it's so much better now,
+how was it before? Yeah,
+
+450
+00:24:13.270 --> 00:24:15.130
+it didn't, it didn't have,
+it had its own little
+
+451
+00:24:15.130 --> 00:24:18.040
+editor window that would pop
+up inside visual studio. Like
+
+452
+00:24:18.070 --> 00:24:19.930
+it was, it was like
+a video studio add in
+
+453
+00:24:19.930 --> 00:24:22.960
+and yeah, like a little
+vegetable Postville steps, you know,
+
+454
+00:24:22.960 --> 00:24:26.140
+event hooks and things that
+would really, it was, that
+
+455
+00:24:26.140 --> 00:24:27.590
+was, you know, we looked
+at it in the past
+
+456
+00:24:27.590 --> 00:24:29.200
+and it was just like,
+Ooh, this is really, you
+
+457
+00:24:29.200 --> 00:24:31.090
+know, you, you don't get
+the full editor experience. You
+
+458
+00:24:31.090 --> 00:24:33.250
+don't pull and tell us
+where in 2010, I mean,
+
+459
+00:24:33.430 --> 00:24:36.400
+it's, it's not really, So
+you literally just write C-sharp
+
+460
+00:24:36.970 --> 00:24:39.100
+and JavaScript pops up the
+other side and is the
+
+461
+00:24:39.100 --> 00:24:40.900
+JavaScript any good? And you
+said that you did this
+
+462
+00:24:40.900 --> 00:24:43.600
+for your mobile site and
+I'm just, this is running
+
+463
+00:24:43.600 --> 00:24:46.960
+on an iPhone now. Yeah,
+yeah. It's really, it is
+
+464
+00:24:46.960 --> 00:24:49.080
+it's, it's one, it's pretty
+much one-to-one, you know, I
+
+465
+00:24:49.080 --> 00:24:51.820
+mean, so there, obviously there
+are those few little things,
+
+466
+00:24:51.820 --> 00:24:53.440
+you know, have a dictionary,
+some of those other things
+
+467
+00:24:53.590 --> 00:24:55.420
+that have a little bit
+of a translation layer, but
+
+468
+00:24:55.420 --> 00:24:58.090
+really like the JavaScript is
+pretty much line for line
+
+469
+00:24:58.090 --> 00:25:00.250
+debugging tool with C sharp.
+You know, Of course you
+
+470
+00:25:00.250 --> 00:25:02.280
+can, you can debug it.
+You can step through, You
+
+471
+00:25:02.320 --> 00:25:04.120
+can step through it again,
+you know, if you've got
+
+472
+00:25:04.180 --> 00:25:08.500
+it, you're using the browsers
+de-boning and middle students. Okay.
+
+473
+00:25:08.500 --> 00:25:11.560
+You're not debugging as you're
+not debugging, JavaScript as C
+
+474
+00:25:11.560 --> 00:25:15.490
+sharp. Right. But you it's
+pretty linear as far as
+
+475
+00:25:15.490 --> 00:25:17.740
+the, you know, you can't
+match it up quite line
+
+476
+00:25:17.740 --> 00:25:19.900
+number for line number, but
+yeah, it's pretty darn close.
+
+477
+00:25:19.900 --> 00:25:21.460
+If you can find you
+at where, where was this
+
+478
+00:25:21.460 --> 00:25:23.710
+method in my original stuff,
+when you can find it,
+
+479
+00:25:24.050 --> 00:25:25.600
+you can find it in
+the jail. So it's not
+
+480
+00:25:25.600 --> 00:25:30.640
+dramatically changing things turning on.
+Well, you can find the,
+
+481
+00:25:30.640 --> 00:25:32.110
+you know, if you can
+find the corresponding line and
+
+482
+00:25:32.110 --> 00:25:35.830
+the C-sharp is, you know,
+95% of the same And
+
+483
+00:25:35.830 --> 00:25:37.630
+is this easy to teach?
+Are you guys the only
+
+484
+00:25:37.630 --> 00:25:39.160
+two guys that work on
+this or is there other,
+
+485
+00:25:39.160 --> 00:25:40.740
+other people where you've just
+brought in and you said,
+
+486
+00:25:40.790 --> 00:25:43.030
+this is script sharp. And
+here's how it works. Three
+
+487
+00:25:43.030 --> 00:25:45.940
+people that were working on
+our mobile project that Matt
+
+488
+00:25:45.940 --> 00:25:49.720
+and myself and a cook
+Bowman, another guy. So we,
+
+489
+00:25:50.280 --> 00:25:53.980
+it really, it went really
+quickly. It was very, you
+
+490
+00:25:53.980 --> 00:25:57.280
+know, very natural. We picked
+it up just immediately. And,
+
+491
+00:25:57.280 --> 00:25:58.630
+you know, Matt was the
+one that was really out,
+
+492
+00:25:58.990 --> 00:26:01.390
+out in the, in the
+weeds on this stuff early
+
+493
+00:26:01.390 --> 00:26:03.670
+on. And, you know, I
+jumped in and started working
+
+494
+00:26:03.670 --> 00:26:05.770
+on it with him and,
+you know, looking at some
+
+495
+00:26:05.770 --> 00:26:07.570
+of this internal tooling that
+we had to build the
+
+496
+00:26:07.570 --> 00:26:09.850
+support, that to support it
+and use some of the
+
+497
+00:26:09.850 --> 00:26:14.760
+other things that we wanted
+to do. It really, it
+
+498
+00:26:14.770 --> 00:26:18.430
+was, it was pretty, Was
+it hard to tell your
+
+499
+00:26:18.430 --> 00:26:20.440
+company and your CEO that
+we want to use this
+
+500
+00:26:20.440 --> 00:26:23.350
+open source project? That's not
+a Microsoft thing or does
+
+501
+00:26:23.350 --> 00:26:28.490
+she know? I think she
+does. Cause you know, I'm,
+
+502
+00:26:28.490 --> 00:26:30.940
+I'm really trying to advocate
+for open source. Right. And
+
+503
+00:26:30.940 --> 00:26:32.200
+there's a couple of questions
+I want you to answer
+
+504
+00:26:32.200 --> 00:26:34.510
+first is, you know, how
+did you let the, how
+
+505
+00:26:34.510 --> 00:26:36.760
+did you make it happen
+at the company legally? And
+
+506
+00:26:36.760 --> 00:26:39.670
+then the second one after
+that will be, are you
+
+507
+00:26:40.090 --> 00:26:42.340
+comfortable with these projects where
+they're not dead, but there
+
+508
+00:26:42.340 --> 00:26:47.150
+may be done. I would
+feel Better if the scripture
+
+509
+00:26:47.240 --> 00:26:51.530
+Pilar was sitting on GitHub
+that, you know, that would,
+
+510
+00:26:51.560 --> 00:26:53.720
+that's, that's one thing that,
+that would make me feel
+
+511
+00:26:53.720 --> 00:26:55.370
+a little better about it.
+But in general, you know,
+
+512
+00:26:55.370 --> 00:26:57.710
+it's like, okay, if it
+works well enough, we haven't
+
+513
+00:26:57.710 --> 00:27:00.170
+run into any, we haven't
+run into any like showstopper
+
+514
+00:27:00.170 --> 00:27:01.520
+bugs, we've run into a
+few things we had to
+
+515
+00:27:01.520 --> 00:27:03.200
+work around or things that
+they feel like, you know,
+
+516
+00:27:03.200 --> 00:27:07.550
+work out, fix really quickly
+in general, Pretty smooth. And
+
+517
+00:27:07.550 --> 00:27:09.230
+the reason that you would
+feel comfortable with that being
+
+518
+00:27:09.230 --> 00:27:11.990
+on GitHub is because if
+Nickeel gets hit by a
+
+519
+00:27:11.990 --> 00:27:15.800
+bus, exactly. You have that
+there. Yeah. You know, if
+
+520
+00:27:15.800 --> 00:27:17.120
+we need to, if we
+need to whip out another
+
+521
+00:27:17.120 --> 00:27:19.970
+face or something. Yeah. But
+we haven't seen anything that
+
+522
+00:27:20.150 --> 00:27:23.000
+was like, you know, incorrect
+JS getting generated or anything
+
+523
+00:27:23.000 --> 00:27:25.130
+like that. It was usually
+like a compiler error where
+
+524
+00:27:25.130 --> 00:27:29.540
+there shouldn't have been watering
+stricter Jews about something. But,
+
+525
+00:27:31.790 --> 00:27:33.620
+and then as far as
+making me making that happen
+
+526
+00:27:33.620 --> 00:27:35.360
+within the company, I mean,
+the nice thing was that
+
+527
+00:27:35.690 --> 00:27:37.880
+this was basically just kind
+of an experiment. We kind
+
+528
+00:27:37.880 --> 00:27:39.290
+of sold it as an
+experiment. And I was like,
+
+529
+00:27:39.290 --> 00:27:41.240
+well, we don't have a
+mobile UI. We need a
+
+530
+00:27:41.240 --> 00:27:43.700
+mobile UI. Let's just throw
+something out there as betas.
+
+531
+00:27:44.330 --> 00:27:47.180
+And you know, literally from,
+I think it was seven
+
+532
+00:27:47.180 --> 00:27:50.810
+weeks from the day we
+downloaded scripture to the day
+
+533
+00:27:50.810 --> 00:27:54.320
+we shipped the beta. It
+was really, really fast, including
+
+534
+00:27:54.320 --> 00:27:57.770
+building all that internal. Okay.
+So for folks that are
+
+535
+00:27:57.770 --> 00:28:00.800
+listening, who may be thinking
+about mobile, we want to
+
+536
+00:28:00.800 --> 00:28:02.750
+make sure that they understand
+that script sharp is not
+
+537
+00:28:02.840 --> 00:28:05.270
+specific to mobile. And there's
+nothing about script sharp that
+
+538
+00:28:05.690 --> 00:28:08.480
+says, Hey, make your iPhone
+app or your windows phone
+
+539
+00:28:08.480 --> 00:28:12.800
+app with this thing, it's
+a sharp to JavaScript, you
+
+540
+00:28:12.800 --> 00:28:16.580
+know, translation layer. Why was
+mobile so attractive to you?
+
+541
+00:28:16.580 --> 00:28:18.710
+And why didn't you just
+go and use like jQuery
+
+542
+00:28:18.710 --> 00:28:22.070
+mobile or write a mobile
+UI from scratch with manually
+
+543
+00:28:22.070 --> 00:28:25.250
+written JavaScript In January mobile.
+Cause actually we are using
+
+544
+00:28:25.250 --> 00:28:27.440
+jQuery mobile. So what we
+ended up doing was just
+
+545
+00:28:27.440 --> 00:28:29.690
+writing a, we ended up
+writing a, a, an important
+
+546
+00:28:29.690 --> 00:28:32.570
+library for jQuery mobile to
+take advantage of that functionality.
+
+547
+00:28:32.840 --> 00:28:35.780
+Okay. So explain that more,
+an import library for jQuery
+
+548
+00:28:35.780 --> 00:28:37.730
+mobile. What is that again?
+I know we've got Matt
+
+549
+00:28:37.790 --> 00:28:39.350
+talked to him a little
+bit about that, but what
+
+550
+00:28:39.350 --> 00:28:42.110
+did you write to make
+script sharp? Know what jQuery
+
+551
+00:28:42.110 --> 00:28:44.900
+mobile is. Do you want,
+if you want, the analogy
+
+552
+00:28:44.900 --> 00:28:46.910
+is probably more like it's
+like a sea header file,
+
+553
+00:28:46.910 --> 00:28:48.980
+basically. It's something that lets
+you kind of, you know,
+
+554
+00:28:49.010 --> 00:28:52.070
+use the, it describes the
+J at the metadata of
+
+555
+00:28:52.070 --> 00:28:54.260
+the JavaScript library that you're
+going to use so that
+
+556
+00:28:54.260 --> 00:28:56.630
+they can be consumed by
+C-sharp so that the compiler
+
+557
+00:28:56.630 --> 00:28:59.210
+in C sharp knows to
+fly things as good. Okay.
+
+558
+00:28:59.210 --> 00:29:01.460
+So let me see if
+I understand that scripture doesn't
+
+559
+00:29:01.460 --> 00:29:04.610
+know about jQuery mobile. I
+want to write jQuery mobile,
+
+560
+00:29:04.610 --> 00:29:07.520
+but I like using script
+sharp. I go add reference
+
+561
+00:29:07.520 --> 00:29:10.640
+inside of visual studio. And
+I pointed to my, my
+
+562
+00:29:10.700 --> 00:29:14.150
+C-sharp version of jQuery mobile,
+not the actual code, but
+
+563
+00:29:14.150 --> 00:29:17.300
+the shape of it though,
+the, the header definition of
+
+564
+00:29:17.300 --> 00:29:20.840
+function definitions, then I get
+IntelliSense and then I could
+
+565
+00:29:20.840 --> 00:29:24.770
+start writing to J criminals.
+Oh, Intel sense, like JavaScript
+
+566
+00:29:24.770 --> 00:29:27.620
+libraries. It's just so, But
+we haven't tell us we
+
+567
+00:29:27.620 --> 00:29:31.130
+have that though. Yeah. It's
+nice. But just having it
+
+568
+00:29:31.130 --> 00:29:33.170
+all, having it all right
+there and C is just,
+
+569
+00:29:33.650 --> 00:29:36.800
+So he really, really liked
+this thing. Okay. So then
+
+570
+00:29:36.800 --> 00:29:40.190
+met clay. This idea that
+about, about dead versus done,
+
+571
+00:29:40.580 --> 00:29:43.570
+like for I'm still running
+DAS blog, my old, old,
+
+572
+00:29:43.570 --> 00:29:47.020
+old, old blogging system that
+Clemens masters and a bunch
+
+573
+00:29:47.020 --> 00:29:49.330
+of us worked on and
+people keep saying, yeah, your
+
+574
+00:29:49.330 --> 00:29:52.180
+project's dead. I'm like, well,
+no, it's actually done. And
+
+575
+00:29:52.180 --> 00:29:55.510
+it's working quite lovely, you
+know, is, do you get
+
+576
+00:29:55.510 --> 00:29:58.180
+the sense that that script
+sharp is like this active,
+
+577
+00:29:58.780 --> 00:30:02.200
+actively developed in, you know,
+powerful community of people? Or
+
+578
+00:30:02.200 --> 00:30:04.690
+is this just something that,
+that Nickeel throws a fix
+
+579
+00:30:04.690 --> 00:30:06.700
+out every once in a
+while? And do you care?
+
+580
+00:30:07.470 --> 00:30:08.880
+What's it like to see
+him more active than it
+
+581
+00:30:08.880 --> 00:30:12.000
+is? I think activities maybe
+picked up a little bit
+
+582
+00:30:12.270 --> 00:30:15.840
+recently with things being on.
+I'm not sure exactly how
+
+583
+00:30:15.840 --> 00:30:19.650
+long that's been out there
+sometime after I started following
+
+584
+00:30:19.650 --> 00:30:25.260
+a year or two ago,
+that shut up. And like
+
+585
+00:30:25.260 --> 00:30:27.540
+Matt said, you know, if
+we can have the compiler
+
+586
+00:30:27.540 --> 00:30:29.850
+out there too, that would
+make the community more active,
+
+587
+00:30:29.880 --> 00:30:32.280
+but I can understand NICU.
+One day, he'd done a
+
+588
+00:30:32.280 --> 00:30:35.310
+little closer until he's had
+a chance to work. There's
+
+589
+00:30:35.310 --> 00:30:40.890
+another competitor issues for her
+more advanced language support, But
+
+590
+00:30:40.920 --> 00:30:44.100
+is it, why do people
+want it, want it or
+
+591
+00:30:44.100 --> 00:30:46.520
+want an open source project
+to be more active? It's
+
+592
+00:30:46.540 --> 00:30:48.660
+just the sense of like,
+Hey, I checked for a
+
+593
+00:30:48.660 --> 00:30:51.570
+pulse. You just, you've already
+both said that it pretty
+
+594
+00:30:51.570 --> 00:30:54.150
+much does everything you want
+except object initializers and some
+
+595
+00:30:54.150 --> 00:30:57.960
+expression stuff. Why do people
+want a project like this
+
+596
+00:30:57.960 --> 00:31:01.770
+to look alive? Whether it's
+done or not. I think
+
+597
+00:31:01.770 --> 00:31:06.630
+it's confidence in the product.
+Something that's used by a
+
+598
+00:31:06.630 --> 00:31:08.850
+lot of people you're going
+to have more confidence that
+
+599
+00:31:08.940 --> 00:31:11.700
+it actually works well that
+somebody else has already tripped
+
+600
+00:31:11.700 --> 00:31:14.100
+over and found bugs. And
+they've been fixed that you're
+
+601
+00:31:14.100 --> 00:31:16.920
+not going to be on
+the bleeding edge of doing
+
+602
+00:31:16.920 --> 00:31:19.660
+all the experiment thing. Oh,
+we found this and no
+
+603
+00:31:19.890 --> 00:31:21.690
+finished product. This shouldn't be
+this way. And this should
+
+604
+00:31:21.690 --> 00:31:25.110
+be this way. We ran
+into a lot of small
+
+605
+00:31:25.110 --> 00:31:27.600
+shoots. Thankfully there have all
+been things that we were
+
+606
+00:31:27.600 --> 00:31:29.940
+able to work around very
+easily. They weren't quite message
+
+607
+00:31:29.940 --> 00:31:33.360
+showstoppers, but those are the
+things that I can see
+
+608
+00:31:33.360 --> 00:31:36.750
+a lot of other developers
+encountering and saying, well, this
+
+609
+00:31:36.750 --> 00:31:40.800
+doesn't work. How can I
+trust this product? So having
+
+610
+00:31:40.800 --> 00:31:43.290
+a working community, I think
+would be great, at least
+
+611
+00:31:43.290 --> 00:31:46.740
+deal more testing, more buttons
+handle putting on more cases.
+
+612
+00:31:47.670 --> 00:31:52.470
+Okay. So last question. Do
+you guys feel that in
+
+613
+00:31:52.470 --> 00:31:55.350
+a couple of years, you're
+not going to look back
+
+614
+00:31:55.350 --> 00:31:57.300
+in this code base and
+say, wow, I shouldn't have
+
+615
+00:31:57.300 --> 00:32:01.440
+had a dependency on this
+giant thing. What about maybe
+
+616
+00:32:01.440 --> 00:32:04.020
+we should have written our
+JavaScript from scratch? Or do
+
+617
+00:32:04.020 --> 00:32:06.360
+you feel like you'll look
+back and you'll, you'll have
+
+618
+00:32:06.360 --> 00:32:08.220
+no regrets. I'd have to
+look back and I have
+
+619
+00:32:08.220 --> 00:32:13.440
+no regrets. Absolutely. Yeah. I
+think having the ability to
+
+620
+00:32:14.070 --> 00:32:16.560
+having the ability to use
+all these other tools that
+
+621
+00:32:16.560 --> 00:32:18.540
+we use as part of
+our daily process or FX
+
+622
+00:32:18.540 --> 00:32:23.820
+cop Amex, just being able
+to talk about that. Yes.
+
+623
+00:32:24.360 --> 00:32:27.270
+FX cop, of course, being
+a syntax and a rules
+
+624
+00:32:27.270 --> 00:32:29.580
+checker that lets you set
+up a whole series of
+
+625
+00:32:29.580 --> 00:32:32.250
+rules. I presume you have
+custom rules that say, you
+
+626
+00:32:32.250 --> 00:32:34.500
+know, this is how we
+do things here. You're actually
+
+627
+00:32:34.500 --> 00:32:38.430
+doing that FX cop rule
+against C-sharp that will eventually
+
+628
+00:32:38.430 --> 00:32:43.090
+become JavaScripts. Yes. So you're
+enforcing compliance. Yes. And I
+
+629
+00:32:43.120 --> 00:32:45.070
+know it's easy. It's easy
+when, you know, when you're
+
+630
+00:32:45.070 --> 00:32:47.410
+working in a big code
+base to, to let things
+
+631
+00:32:47.410 --> 00:32:49.090
+slide and you know, there
+are things that, that may
+
+632
+00:32:49.090 --> 00:32:50.980
+function just fine, but then
+you go back and look
+
+633
+00:32:50.980 --> 00:32:52.510
+at it, you know, a
+few years later and go,
+
+634
+00:32:52.540 --> 00:32:54.340
+Oh no, this is not
+the way we did this.
+
+635
+00:32:54.340 --> 00:32:56.650
+Like how did this slip
+in here? It, it just
+
+636
+00:32:56.650 --> 00:32:59.650
+happens. And so it's really
+nice to have even the
+
+637
+00:32:59.650 --> 00:33:02.290
+same developer that might have
+set the rule. You know,
+
+638
+00:33:02.350 --> 00:33:05.290
+you forget, you forget to
+do things the wrong way,
+
+639
+00:33:05.290 --> 00:33:06.760
+you know, when you're working
+in the same code of
+
+640
+00:33:06.760 --> 00:33:08.620
+your later. So it's nice
+to have something to check
+
+641
+00:33:08.620 --> 00:33:14.290
+into on that. But as
+far as, as far as
+
+642
+00:33:14.290 --> 00:33:16.570
+that goes, I'll tell you
+something else we're looking at.
+
+643
+00:33:16.570 --> 00:33:18.460
+And we're working on actually
+trying to convert a bunch
+
+644
+00:33:18.460 --> 00:33:23.140
+of our old legacy JS
+into C-sharp. So you're actually
+
+645
+00:33:23.140 --> 00:33:26.200
+taking JavaScript. You wrote from
+scratch and going backwards or
+
+646
+00:33:26.530 --> 00:33:30.520
+forwards. I dunno. Sideways. Yes.
+Yeah. Just because it's, again,
+
+647
+00:33:30.520 --> 00:33:31.870
+that code base that I
+was talking about, that we're
+
+648
+00:33:31.870 --> 00:33:35.560
+kind of afraid to refactor
+it. We want the ability
+
+649
+00:33:35.560 --> 00:33:37.550
+to refactor. We want the
+ability to go back and
+
+650
+00:33:37.550 --> 00:33:41.380
+then work in that with
+some confidence that it's going
+
+651
+00:33:41.380 --> 00:33:45.160
+to work without like exhaustively
+testing, every little, every little
+
+652
+00:33:45.160 --> 00:33:48.460
+Pope path and every little
+corner that at least we
+
+653
+00:33:48.460 --> 00:33:50.200
+got that, at least we
+got the dumb stuff. Right.
+
+654
+00:33:51.490 --> 00:33:54.880
+So separate, separate from script
+sharp. You guys feel good
+
+655
+00:33:54.880 --> 00:33:58.960
+about the idea of JavaScript
+as a compilation target? Absolutely.
+
+656
+00:33:59.590 --> 00:34:02.200
+And I mean, to the
+point that even our UI
+
+657
+00:34:02.200 --> 00:34:06.040
+itself is actually generated into
+JavaScript. So from some other
+
+658
+00:34:06.040 --> 00:34:08.950
+tools that Matt Rhodes for
+this internal stuff, we were
+
+659
+00:34:08.950 --> 00:34:11.380
+using jQuery tableting early on.
+And there were some kind
+
+660
+00:34:11.380 --> 00:34:13.210
+of, there were some things
+that we didn't like about
+
+661
+00:34:13.210 --> 00:34:16.060
+it with in conjunction with
+script sharp, it worked okay.
+
+662
+00:34:16.060 --> 00:34:18.250
+But there were some things
+that we thought we could
+
+663
+00:34:18.250 --> 00:34:20.560
+do better. And so Madden,
+we're writing some tooling around
+
+664
+00:34:20.560 --> 00:34:23.770
+that, but we basically took
+things that look like jQuery
+
+665
+00:34:23.770 --> 00:34:27.310
+templates, but actually compiled down
+to script sharp cat. How
+
+666
+00:34:27.340 --> 00:34:29.410
+you guys blogging about these
+adventures anywhere where we can
+
+667
+00:34:29.410 --> 00:34:32.290
+point people to Not yet,
+we've been talking about it.
+
+668
+00:34:32.420 --> 00:34:34.510
+I can give you my
+blog address. And maybe by
+
+669
+00:34:34.510 --> 00:34:36.670
+the time the podcast goes
+out, we'll actually have something
+
+670
+00:34:36.670 --> 00:34:38.380
+else. All right. Well give
+me everything that you can,
+
+671
+00:34:38.380 --> 00:34:40.810
+we'll put it in the
+show notes. Okay. Very cool.
+
+672
+00:34:40.810 --> 00:34:42.730
+Thank you so much. Matt
+clay and Matt Davis here
+
+673
+00:34:42.730 --> 00:34:46.150
+at earth class mail, talking
+about script sharp and compiling
+
+674
+00:34:46.150 --> 00:34:49.180
+to JavaScript in the real
+world. This has been another
+
+675
+00:34:49.180 --> 00:34:51.670
+episode of Hansel minutes and
+I'll see you again next
+
+676
+00:34:51.670 --> 00:34:52.030
+week.
+

@@ -1,0 +1,3166 @@
+WEBVTT FILE
+
+1
+00:00:00.240 --> 00:00:03.810
+Today's episode is sponsored by
+Datadog a modern full stack
+
+2
+00:00:03.810 --> 00:00:09.000
+monitoring platform for cloud infrastructure,
+applications, and logs metrics, all
+
+3
+00:00:09.000 --> 00:00:12.240
+in one place from their
+recent report on serverless adoption
+
+4
+00:00:12.240 --> 00:00:15.660
+and trends. Datadog found half
+their customer base using ECC
+
+5
+00:00:15.660 --> 00:00:19.980
+twos have now adopted AWS
+Lambda. They've examined real world
+
+6
+00:00:19.980 --> 00:00:22.980
+serverless usage by thousands of
+companies running on millions of
+
+7
+00:00:22.980 --> 00:00:26.550
+distinct serverless functions. And they
+found that half of the
+
+8
+00:00:26.550 --> 00:00:30.000
+Lambda invocations run for less
+than 800 milliseconds, you can
+
+9
+00:00:30.000 --> 00:00:33.180
+easily monitor all your serverless
+functions in one place and
+
+10
+00:00:33.180 --> 00:00:37.140
+generate serverless metrics straight from
+Datadog. Check it out yourself
+
+11
+00:00:37.170 --> 00:00:40.110
+by signing up for a
+free 14 day trial and
+
+12
+00:00:40.110 --> 00:00:47.040
+get a free t-shirt visit
+datadog.com/hanselman it's show to get
+
+13
+00:00:47.040 --> 00:01:06.020
+started. That's datadog.com/hansel minutes show
+to get started. Hi, this
+
+14
+00:01:06.020 --> 00:01:08.360
+is Scott Hanselman. This is
+another episode of Hansel minutes
+
+15
+00:01:08.390 --> 00:01:11.480
+today. I'm chatting with Jason Phillips.
+Who's a director of engineering
+
+16
+00:01:11.600 --> 00:01:15.200
+online bootcamps to you and
+an instructor full stack dev
+
+17
+00:01:15.200 --> 00:01:17.570
+bootcamp. How are you sir?
+Doing good. Scott. How about
+
+18
+00:01:17.570 --> 00:01:21.530
+stuff very well. I am
+still remote still here in
+
+19
+00:01:21.530 --> 00:01:25.100
+Portland, working remotely now for
+13 years. And you actually
+
+20
+00:01:25.100 --> 00:01:27.110
+have worked remote for a
+number of years, but also
+
+21
+00:01:27.110 --> 00:01:30.350
+managing teams and projects. Yes,
+I've been working remote for
+
+22
+00:01:30.350 --> 00:01:33.800
+about three years. Now, started
+off with a web dev
+
+23
+00:01:33.800 --> 00:01:38.330
+team at trilogy education services,
+which we got rolled into
+
+24
+00:01:38.330 --> 00:01:42.470
+two. You have the acquisition.
+And from there I helped
+
+25
+00:01:42.500 --> 00:01:46.940
+pilot our first online offering
+where we were teaching live
+
+26
+00:01:47.030 --> 00:01:53.300
+via zoom. So have definitely
+had to enjoy the advantages
+
+27
+00:01:53.330 --> 00:01:54.920
+of remote, but also figure
+out how to make it
+
+28
+00:01:54.920 --> 00:01:58.250
+work best for me. And
+I saw a really great
+
+29
+00:01:58.250 --> 00:02:00.410
+thread that you started and
+gave it a little kick.
+
+30
+00:02:00.410 --> 00:02:02.300
+And it's kind of a
+little viral thread where you
+
+31
+00:02:02.300 --> 00:02:04.400
+said I've been working remote
+and it was one of
+
+32
+00:02:04.400 --> 00:02:07.130
+those, one of an where
+you just kinda like dumped
+
+33
+00:02:07.550 --> 00:02:09.800
+onto Twitter until you ran
+out of steam and you
+
+34
+00:02:09.800 --> 00:02:11.330
+had a lot of great
+tips and a lot of
+
+35
+00:02:11.330 --> 00:02:13.520
+great interaction with folks because
+you were giving us all
+
+36
+00:02:13.520 --> 00:02:16.850
+the tips to be effective
+as a remote worker. And
+
+37
+00:02:16.850 --> 00:02:19.580
+I I've always talked about
+this kind of dystopian joy
+
+38
+00:02:19.580 --> 00:02:22.370
+of being a remote worker.
+Cause it's amazing because you're
+
+39
+00:02:22.370 --> 00:02:25.040
+like 10 feet from your
+office, but totally sucks because
+
+40
+00:02:25.040 --> 00:02:27.380
+you're like 10 feet from
+your office. Yeah. The, one
+
+41
+00:02:27.380 --> 00:02:30.110
+of the biggest challenges I
+think, you know, as you
+
+42
+00:02:30.110 --> 00:02:32.330
+just mentioned is knowing when
+to turn it on and
+
+43
+00:02:32.330 --> 00:02:35.510
+when to turn it off,
+right of the convenience of
+
+44
+00:02:35.660 --> 00:02:37.910
+quote unquote, rolling over in
+bed and starting your day
+
+45
+00:02:37.910 --> 00:02:42.650
+is great. But when you,
+you know, go at a
+
+46
+00:02:42.650 --> 00:02:46.430
+remote working for awhile, you
+start to realize that you
+
+47
+00:02:46.430 --> 00:02:48.440
+can end up in a
+place where you just don't
+
+48
+00:02:48.440 --> 00:02:50.870
+know how to set that
+boundary of my day's over
+
+49
+00:02:50.900 --> 00:02:53.510
+or my day has started.
+And for me that was
+
+50
+00:02:53.510 --> 00:02:56.480
+particularly challenging. And so when
+I saw someone else tweet
+
+51
+00:02:56.480 --> 00:03:00.190
+about remote workers, for instance,
+taking sick days that strongly
+
+52
+00:03:00.190 --> 00:03:02.530
+Resonated and kind of was
+the impetus for starting that
+
+53
+00:03:02.800 --> 00:03:06.640
+kind of thread on Twitter
+of, you know, that's one
+
+54
+00:03:06.640 --> 00:03:09.550
+big example, right? We work
+from home, we are convenient.
+
+55
+00:03:09.910 --> 00:03:12.820
+So since we can't get
+anyone sick, why don't we
+
+56
+00:03:12.820 --> 00:03:15.640
+just work while we're sick?
+And that's really not the
+
+57
+00:03:15.640 --> 00:03:19.160
+best way to think about
+that. You said that it
+
+58
+00:03:19.170 --> 00:03:22.470
+was important to have an
+activity that signals the start
+
+59
+00:03:22.470 --> 00:03:25.080
+of your work day. You're
+almost basically training yourself like,
+
+60
+00:03:25.080 --> 00:03:27.450
+you know how they say,
+you know, don't watch iPad
+
+61
+00:03:27.450 --> 00:03:29.490
+in bed or don't read
+in bed because then your
+
+62
+00:03:29.490 --> 00:03:31.350
+brain will say, Oh, this
+is where we watch movies.
+
+63
+00:03:31.350 --> 00:03:33.840
+I will stay awake. You
+are trying to keep your,
+
+64
+00:03:34.020 --> 00:03:37.710
+I am working and I
+am at home Separate. Yeah.
+
+65
+00:03:37.710 --> 00:03:42.660
+So I try to really
+recreate the structure, especially after
+
+66
+00:03:42.660 --> 00:03:45.360
+I moved back into working
+remote, after a brief stint
+
+67
+00:03:45.390 --> 00:03:48.510
+in an office of now
+I know I'm on it,
+
+68
+00:03:48.510 --> 00:03:51.960
+I'm starting my day of
+mimicking the commute. If you
+
+69
+00:03:51.960 --> 00:03:54.990
+will, even if it's 10
+steps. And for me, it
+
+70
+00:03:54.990 --> 00:03:58.110
+was really important to kind
+of establish to my brain
+
+71
+00:03:58.110 --> 00:04:01.560
+and to myself that, okay,
+as of right now, I
+
+72
+00:04:01.560 --> 00:04:04.260
+am available to be booked
+for meetings. I am available
+
+73
+00:04:04.260 --> 00:04:06.690
+to be on and have
+a team across different time
+
+74
+00:04:06.690 --> 00:04:10.350
+zones that I need to
+consistently have a start time
+
+75
+00:04:10.350 --> 00:04:15.570
+to be available for. And
+so over time, that kind
+
+76
+00:04:15.570 --> 00:04:17.700
+of routine really more for
+me into all right, when
+
+77
+00:04:17.700 --> 00:04:20.100
+I wake up, take my
+shower, take my medicine, but
+
+78
+00:04:20.100 --> 00:04:23.070
+also take a five minute
+walk around the block, take
+
+79
+00:04:23.070 --> 00:04:26.190
+a walk in the neighborhood.
+Kind of giving me that,
+
+80
+00:04:26.200 --> 00:04:29.130
+that rush a fresh air
+as if I was commuting.
+
+81
+00:04:29.130 --> 00:04:31.710
+So then when I walked
+back through the door, my
+
+82
+00:04:31.710 --> 00:04:33.840
+brain's all woken and I'm
+like, okay, now it start
+
+83
+00:04:33.990 --> 00:04:35.730
+this time. Just kind of
+start plugging in and get
+
+84
+00:04:35.730 --> 00:04:39.870
+ready Is really clever. It's
+I mean, you're basically commuting.
+
+85
+00:04:39.870 --> 00:04:42.330
+You go out, you do
+a loop, like, you know,
+
+86
+00:04:42.340 --> 00:04:45.270
+grandpa Simpson, you go in
+and go out and you
+
+87
+00:04:45.270 --> 00:04:47.670
+just go outside and then
+come back in and then
+
+88
+00:04:47.880 --> 00:04:50.670
+enter your workspace with a
+fresh perspective as if you
+
+89
+00:04:50.670 --> 00:04:53.460
+have arrived at work. Yeah.
+And it also, for me
+
+90
+00:04:53.460 --> 00:04:56.730
+was a good way at
+first it was, Hey, I'm
+
+91
+00:04:56.730 --> 00:05:00.510
+noticing I don't get nowhere
+near a thousand steps in
+
+92
+00:05:00.510 --> 00:05:04.050
+a day until noon. And
+it was like, okay, I've
+
+93
+00:05:04.050 --> 00:05:07.050
+got to break that up.
+But also it's like, I'm
+
+94
+00:05:07.050 --> 00:05:10.560
+starting work earlier in earlier.
+And I'm at different levels
+
+95
+00:05:10.590 --> 00:05:14.580
+of energized depending on the
+day. So for me, that
+
+96
+00:05:14.580 --> 00:05:18.660
+loop was really important. So
+yeah, by going out, getting
+
+97
+00:05:18.660 --> 00:05:21.000
+into neighborhoods, seeing the same
+dogs on their dog walks
+
+98
+00:05:21.000 --> 00:05:24.660
+every morning, it just gave
+me a routine and just
+
+99
+00:05:25.290 --> 00:05:28.020
+gave me enough of a
+shift to really feel like
+
+100
+00:05:28.020 --> 00:05:30.630
+that was the commute. I
+liked that. I talked, I've
+
+101
+00:05:30.630 --> 00:05:32.730
+talked a lot before on
+the show with other people
+
+102
+00:05:32.730 --> 00:05:36.600
+about this idea of living
+your life by design, rather
+
+103
+00:05:36.600 --> 00:05:39.540
+than living it by default,
+some people might be listening
+
+104
+00:05:39.540 --> 00:05:41.340
+and say, well, you know,
+I like being at home
+
+105
+00:05:41.340 --> 00:05:43.320
+or I'm a, I'm an
+introvert or I'm a whatever.
+
+106
+00:05:43.320 --> 00:05:45.510
+And I want to be
+at home, but it's worth
+
+107
+00:05:45.570 --> 00:05:48.360
+trying things. If you simply
+accept the defaults, you might
+
+108
+00:05:48.360 --> 00:05:50.340
+just roll over and pick
+up your laptop and then
+
+109
+00:05:50.340 --> 00:05:52.410
+your online. And if that
+works for you and feed
+
+110
+00:05:52.410 --> 00:05:55.800
+your spirit, do it. But
+why not try a morning
+
+111
+00:05:55.800 --> 00:05:58.460
+walk or try out whatever
+your go to your local
+
+112
+00:05:58.460 --> 00:06:01.010
+breakfast place or your local
+small business, support them, turn
+
+113
+00:06:01.010 --> 00:06:03.110
+around, come back with your
+fresh coffee and your fresh
+
+114
+00:06:03.110 --> 00:06:06.610
+perspective. Yeah, I think a
+big, I'll see, you said
+
+115
+00:06:06.610 --> 00:06:07.660
+a couple of times too.
+And I think for me,
+
+116
+00:06:07.660 --> 00:06:10.450
+the way I thought about
+that is instead of accepting
+
+117
+00:06:10.450 --> 00:06:12.100
+the default being handed to
+me, it's creating your own
+
+118
+00:06:12.100 --> 00:06:15.160
+default, right? Like you just
+mentioned, it's exactly. It's not
+
+119
+00:06:15.160 --> 00:06:18.760
+bad that you have a
+default it's that you've said,
+
+120
+00:06:18.760 --> 00:06:21.190
+okay, this is work for
+me. Right? Like it's not
+
+121
+00:06:21.190 --> 00:06:24.040
+given to me it's this
+is what works best for
+
+122
+00:06:24.040 --> 00:06:26.350
+me. Cause I think in
+the beginning I did a,
+
+123
+00:06:26.550 --> 00:06:28.510
+that the fault of, Hey,
+I can just roll over,
+
+124
+00:06:28.840 --> 00:06:31.090
+keep my camera off and
+take my first four meetings
+
+125
+00:06:31.090 --> 00:06:33.550
+of the day from bed.
+And then it was all
+
+126
+00:06:33.550 --> 00:06:36.340
+right, well, I'm not eating
+breakfast and don't have any
+
+127
+00:06:36.340 --> 00:06:38.530
+energy and I'm not getting
+out of bed. And now
+
+128
+00:06:38.530 --> 00:06:42.010
+it's noon. And instead of
+me feeling like I had
+
+129
+00:06:42.010 --> 00:06:45.760
+the convenience and the relaxation
+of working from bed, I
+
+130
+00:06:45.760 --> 00:06:48.550
+have this dread of all
+right. I feel like I've
+
+131
+00:06:48.550 --> 00:06:50.440
+got to start the day,
+but I haven't gotten up
+
+132
+00:06:50.440 --> 00:06:54.070
+yet. And now, although I've
+had four meetings, I feel
+
+133
+00:06:54.070 --> 00:06:56.350
+like I've had a ton
+more work, just pile up.
+
+134
+00:06:56.770 --> 00:07:01.990
+Like I've not actually gotten
+into active mode. And then
+
+135
+00:07:02.140 --> 00:07:03.490
+by the end of the
+day, it's like, all right,
+
+136
+00:07:03.490 --> 00:07:07.510
+it's 5:00 PM. Let me start
+my day when I've already
+
+137
+00:07:07.510 --> 00:07:10.960
+had a full day. I
+like that. It, you say
+
+138
+00:07:10.960 --> 00:07:14.110
+that it's not about defaults.
+It's about making them yours.
+
+139
+00:07:14.110 --> 00:07:18.340
+You decided you, you intentionalize,
+you intentionally made those defaults
+
+140
+00:07:18.340 --> 00:07:20.620
+accepted them. It's always a
+good idea to look at
+
+141
+00:07:20.620 --> 00:07:23.710
+things that you do assert
+your assumptions as we are
+
+142
+00:07:23.710 --> 00:07:26.440
+taught as software engineers, like,
+right, is this, is this
+
+143
+00:07:26.440 --> 00:07:28.180
+really what I need to
+be doing? And if it
+
+144
+00:07:28.180 --> 00:07:31.030
+is cool, keep doing it.
+But like, if you catch
+
+145
+00:07:31.030 --> 00:07:33.580
+yourself going, wow, I don't
+know how that happened. But
+
+146
+00:07:33.580 --> 00:07:35.710
+for three days in a
+row, I took meetings in
+
+147
+00:07:35.710 --> 00:07:39.310
+bed and that doesn't work
+for me. Therefore I am
+
+148
+00:07:39.310 --> 00:07:42.310
+going to consciously decide not
+to do. Yeah. Then some
+
+149
+00:07:42.310 --> 00:07:44.410
+of it too was, you
+know, having others point that
+
+150
+00:07:44.410 --> 00:07:47.350
+out to me as well.
+Like, you know, my therapist
+
+151
+00:07:47.350 --> 00:07:49.540
+would say at a certain
+point, Hey, have you tried
+
+152
+00:07:49.600 --> 00:07:52.750
+like at lunchtime, just taking
+a 30 minute walk, you
+
+153
+00:07:52.750 --> 00:07:55.060
+know, you love taking hikes.
+You can't get out for
+
+154
+00:07:55.060 --> 00:07:57.040
+a full hike, but there's
+a park nearby walk to
+
+155
+00:07:57.040 --> 00:07:59.440
+the park and then walk
+back. So, you know, just
+
+156
+00:07:59.440 --> 00:08:02.800
+even a stepping that input
+again, allows you to not
+
+157
+00:08:02.800 --> 00:08:04.930
+accept that the fault, like
+you said, it, it allows
+
+158
+00:08:04.930 --> 00:08:07.600
+you to say, okay, I
+can take the suggestion, but
+
+159
+00:08:07.600 --> 00:08:09.940
+then I can make it
+my own. You know, one
+
+160
+00:08:09.940 --> 00:08:11.620
+of the things that I
+get teased about on Twitter,
+
+161
+00:08:11.620 --> 00:08:14.020
+but it has, has become
+one of my defaults is
+
+162
+00:08:14.020 --> 00:08:18.700
+the idea of wearing dress
+shoes. I wear dress shoes
+
+163
+00:08:19.150 --> 00:08:22.540
+In my house to my
+office because it is those
+
+164
+00:08:22.540 --> 00:08:25.540
+shoes that represent work to
+me. And then if I'm
+
+165
+00:08:25.540 --> 00:08:27.730
+out in the world, I
+might wear trainers or sneakers
+
+166
+00:08:27.730 --> 00:08:30.220
+or whatever, you know, but
+I will not wear kicks
+
+167
+00:08:30.220 --> 00:08:32.320
+in my office. It is
+my office. And that is
+
+168
+00:08:32.380 --> 00:08:35.800
+just my little weird thing,
+but it helps me keep
+
+169
+00:08:35.800 --> 00:08:39.130
+things separate. Yeah. For me,
+it's two things in particular.
+
+170
+00:08:39.130 --> 00:08:43.180
+One is a big bottle
+full of water as like
+
+171
+00:08:43.180 --> 00:08:45.490
+my default at the desk
+of I'm starting my day.
+
+172
+00:08:45.790 --> 00:08:48.370
+And the second is wearing
+a hoodie. I mean, it's
+
+173
+00:08:48.370 --> 00:08:54.100
+very, very barrier, right? So
+like Oakland in San Francisco.
+
+174
+00:08:54.160 --> 00:08:58.350
+But I, that just even
+that notion of walking out
+
+175
+00:08:58.350 --> 00:09:00.930
+the house, then walking back
+in and keeping the hoodie
+
+176
+00:09:00.930 --> 00:09:03.600
+on it again gives me
+that feel of like, I
+
+177
+00:09:03.600 --> 00:09:07.590
+just walked into the office.
+It's it is my, for
+
+178
+00:09:07.590 --> 00:09:10.550
+like a better phrase. My
+mr. Rogers moment, It's your
+
+179
+00:09:10.550 --> 00:09:13.370
+suit though? It's your blazer?
+It's the thing that represents
+
+180
+00:09:13.370 --> 00:09:14.930
+work to you and you
+put it on. Yeah. And
+
+181
+00:09:14.940 --> 00:09:17.480
+Richard Rogers, he would take a
+sweater off and put a
+
+182
+00:09:17.480 --> 00:09:20.810
+different sweater on, but it
+was, it was Separate sweater
+
+183
+00:09:21.890 --> 00:09:23.720
+always made me wonder about
+that as a kid, but
+
+184
+00:09:23.870 --> 00:09:26.600
+it made sense. Red sweater
+is one thing and the
+
+185
+00:09:26.600 --> 00:09:29.650
+blue is another man. I
+mean, it's so obvious. Yeah.
+
+186
+00:09:29.800 --> 00:09:32.330
+And it's that, you know,
+I, you know, that the
+
+187
+00:09:32.340 --> 00:09:35.540
+thread that we're talking about
+of signaling the start of
+
+188
+00:09:35.540 --> 00:09:38.120
+an episode in the end,
+right. It's signaling to him
+
+189
+00:09:38.150 --> 00:09:41.000
+talking to us versus him
+going off and going back
+
+190
+00:09:41.000 --> 00:09:43.850
+into the world. And you
+mentioned in that thread, that
+
+191
+00:09:43.850 --> 00:09:46.880
+working remote doesn't mean you
+don't have boundaries. And I
+
+192
+00:09:46.880 --> 00:09:49.220
+think we, as the remote
+workers are so easy, so
+
+193
+00:09:49.220 --> 00:09:52.730
+eager to please that we
+tend to think that there
+
+194
+00:09:52.730 --> 00:09:55.220
+are no boundaries when we
+take meetings at times when
+
+195
+00:09:55.490 --> 00:09:58.130
+non remotes would just say,
+well, no, I'm not working
+
+196
+00:09:58.130 --> 00:10:01.700
+right there. I'm not in
+the office. Yeah. It's I
+
+197
+00:10:01.700 --> 00:10:06.200
+think one big thing that's
+that can become that, that
+
+198
+00:10:06.200 --> 00:10:09.470
+block or, or bring that
+tension is this idea that
+
+199
+00:10:10.100 --> 00:10:13.760
+you have this privilege and
+convenience just from working from
+
+200
+00:10:13.760 --> 00:10:16.220
+home. And while you do
+in a lot of ways,
+
+201
+00:10:16.220 --> 00:10:19.220
+in terms of your choice
+of environment, it doesn't mean
+
+202
+00:10:19.220 --> 00:10:22.070
+you haven't earned your boundaries,
+right. Or that you don't
+
+203
+00:10:22.070 --> 00:10:26.330
+have the right to have
+the same structure that your,
+
+204
+00:10:26.750 --> 00:10:29.990
+maybe your colleagues in the
+office do have. And so,
+
+205
+00:10:30.260 --> 00:10:32.390
+you know, if you say
+from eight to 10:00 AM, you
+
+206
+00:10:32.390 --> 00:10:34.700
+don't take any meetings because
+that's the best time for
+
+207
+00:10:34.700 --> 00:10:37.760
+you to do your administrative
+work. You don't have to
+
+208
+00:10:37.760 --> 00:10:39.890
+feel bad about that just
+because you work from home.
+
+209
+00:10:40.400 --> 00:10:42.800
+It's, you know, those boundaries
+are not about where you
+
+210
+00:10:42.800 --> 00:10:44.510
+do the work. It's about
+how you do the work.
+
+211
+00:10:44.990 --> 00:10:47.240
+And that's really, I know
+for me, that was really
+
+212
+00:10:47.240 --> 00:10:50.300
+tough to wrap my head
+around the first year that
+
+213
+00:10:50.300 --> 00:10:53.870
+I worked remote. I just,
+I almost felt bad that
+
+214
+00:10:53.870 --> 00:10:56.390
+I didn't make myself available
+for a 9:00 AM meeting because
+
+215
+00:10:56.420 --> 00:10:59.360
+well, I'm at home. I
+didn't have to commute. But
+
+216
+00:10:59.360 --> 00:11:02.660
+again, that that's, I think
+that's the wrong way. At
+
+217
+00:11:02.660 --> 00:11:04.940
+least for me to think
+about it in terms of
+
+218
+00:11:04.940 --> 00:11:07.490
+how I set that boundary.
+And just knowing that, Hey,
+
+219
+00:11:07.490 --> 00:11:11.390
+9:00 AM is my best email
+time. Like I don't need
+
+220
+00:11:11.780 --> 00:11:15.290
+no other interruptions until my
+first team meeting at nine
+
+221
+00:11:15.320 --> 00:11:18.500
+30. Yeah. Yeah. I, I
+think that, that I have
+
+222
+00:11:18.710 --> 00:11:23.420
+low, I have remote worker,
+low self esteem where I
+
+223
+00:11:23.420 --> 00:11:25.940
+feel guilty because I can
+pick my kids up at
+
+224
+00:11:25.940 --> 00:11:29.420
+school at three. And I
+feel guilty that my coworkers
+
+225
+00:11:29.420 --> 00:11:31.670
+that live in Seattle drive
+an hour to get to
+
+226
+00:11:31.670 --> 00:11:35.000
+work or whatever they do.
+So then I overcompensate by
+
+227
+00:11:35.000 --> 00:11:37.280
+working hours that are not
+reasonable hours. And I have
+
+228
+00:11:37.280 --> 00:11:40.640
+found that to be pretty
+consistent of remote workers. That,
+
+229
+00:11:40.680 --> 00:11:42.320
+that also, I don't know
+if the right phrase is
+
+230
+00:11:42.350 --> 00:11:45.410
+remote workers, low self esteem,
+but there's a little paranoia
+
+231
+00:11:45.440 --> 00:11:50.120
+that I think we have.
+Yeah. It's and it's understandable,
+
+232
+00:11:50.120 --> 00:11:53.380
+right? It's again, it's like,
+well, I have this unfound
+
+233
+00:11:53.380 --> 00:11:57.790
+freedom that most people don't,
+but in the same token,
+
+234
+00:11:57.790 --> 00:12:00.550
+it's, you know, when we
+do commute to an office,
+
+235
+00:12:00.550 --> 00:12:04.150
+we have a choice at
+times of, or relatively speaking,
+
+236
+00:12:04.150 --> 00:12:06.400
+we can have a choice
+of going earlier of going
+
+237
+00:12:06.400 --> 00:12:10.430
+later, depending on the environment.
+And so, you know, I
+
+238
+00:12:10.480 --> 00:12:12.970
+think for me, it was
+helpful to also think about,
+
+239
+00:12:13.390 --> 00:12:15.310
+well, if someone has an
+hour commute to get to
+
+240
+00:12:15.310 --> 00:12:17.380
+the office, then I should
+take an hour before I
+
+241
+00:12:17.380 --> 00:12:20.620
+start my day, excuse me,
+to do the same personal
+
+242
+00:12:20.620 --> 00:12:24.730
+things, get my coffee, make
+my breakfast, you know, and
+
+243
+00:12:24.730 --> 00:12:27.580
+also promote habits that I
+know I wouldn't do any
+
+244
+00:12:27.580 --> 00:12:29.680
+office, like, you know, in
+the office, I don't eat
+
+245
+00:12:30.070 --> 00:12:33.130
+during most meetings. Right. That,
+that wouldn't be a thing
+
+246
+00:12:33.130 --> 00:12:35.170
+that I personally would do.
+And so I don't want
+
+247
+00:12:35.170 --> 00:12:37.780
+to carry that at home.
+Like I want my lunchtime
+
+248
+00:12:37.780 --> 00:12:40.600
+and my breakfast time to
+be my time. And so
+
+249
+00:12:41.020 --> 00:12:42.820
+if I know my teammates
+are commuting from eight to
+
+250
+00:12:42.820 --> 00:12:47.800
+9:00 AM, then I will, my
+burden quote unquote, will be
+
+251
+00:12:47.860 --> 00:12:51.540
+to do my personal stuff
+from eight to 9:00 AM. That
+
+252
+00:12:51.540 --> 00:12:54.750
+is smart. That is smart.
+It's about being conscious and
+
+253
+00:12:54.750 --> 00:12:56.670
+being thoughtful and thinking about
+how you feel about a
+
+254
+00:12:56.670 --> 00:12:59.790
+situation, how others might feel
+about that situation, applying empathy
+
+255
+00:12:59.790 --> 00:13:02.130
+to it, and then deciding
+that, okay, this is a
+
+256
+00:13:02.130 --> 00:13:04.110
+decision I made. This is
+a decision that they made,
+
+257
+00:13:04.110 --> 00:13:07.410
+but I am going to
+set boundaries because otherwise, if
+
+258
+00:13:07.410 --> 00:13:09.180
+there are no boundaries that
+the work is going to
+
+259
+00:13:09.180 --> 00:13:12.300
+consume me. Yeah. And then
+you don't, you know, you
+
+260
+00:13:12.300 --> 00:13:15.510
+don't take those steps back
+those steps back to, you
+
+261
+00:13:15.510 --> 00:13:17.310
+know, take the space to
+think through problems. If you're
+
+262
+00:13:17.310 --> 00:13:19.830
+in engineering or in any
+field really right. You don't,
+
+263
+00:13:20.160 --> 00:13:22.440
+you don't really get to
+do the things that you
+
+264
+00:13:22.650 --> 00:13:25.920
+would normally do. Right. Which
+I think brings me to
+
+265
+00:13:25.980 --> 00:13:27.960
+another point that I was
+talking about in that thread
+
+266
+00:13:27.960 --> 00:13:32.820
+that's related is taking frequent
+small breaks. Right. I know
+
+267
+00:13:32.820 --> 00:13:35.190
+in a lot of office
+settings, there's always the challenge
+
+268
+00:13:35.190 --> 00:13:37.710
+of, Oh, you know, there's
+folks who take smoke breaks.
+
+269
+00:13:38.340 --> 00:13:39.840
+And I used to tell
+everyone whether you smoke or
+
+270
+00:13:39.840 --> 00:13:42.000
+not, or no matter what
+your voice is or what
+
+271
+00:13:42.000 --> 00:13:44.580
+you do always take a
+smoke break or take a
+
+272
+00:13:44.580 --> 00:13:48.690
+break, right? Walk, stretch your
+legs, go meet somebody in
+
+273
+00:13:48.690 --> 00:13:52.080
+a different department. You can
+do the same thing remotely.
+
+274
+00:13:52.110 --> 00:13:54.150
+You can, you know, if
+you still want to be
+
+275
+00:13:54.150 --> 00:13:57.090
+connected, you can take stuff
+away from the desk. If
+
+276
+00:13:57.090 --> 00:13:59.670
+you have a work device
+where you have, you know,
+
+277
+00:13:59.670 --> 00:14:02.370
+you're connected to your teammates,
+whether it's Slack or Microsoft
+
+278
+00:14:02.370 --> 00:14:05.580
+teams or another product, you
+can still kind of have
+
+279
+00:14:05.580 --> 00:14:08.760
+water cooler chat with your
+teammates while walking around the
+
+280
+00:14:08.760 --> 00:14:12.720
+block. But getting away from
+the screen that much like
+
+281
+00:14:12.720 --> 00:14:15.060
+you would in an office
+is really important to me,
+
+282
+00:14:15.360 --> 00:14:18.180
+for me, it was to
+mimic. So that again, I
+
+283
+00:14:18.220 --> 00:14:21.270
+don't fall into that trap
+of feeling guilty for taking
+
+284
+00:14:21.270 --> 00:14:23.820
+time away, just because I
+work from home and then
+
+285
+00:14:23.820 --> 00:14:25.980
+just getting stuck at the
+desk for hours on it.
+
+286
+00:14:27.660 --> 00:14:30.420
+And then you continue by
+saying, protect your home spaces
+
+287
+00:14:30.420 --> 00:14:32.670
+for, you know, for rest
+and recovery. One of the
+
+288
+00:14:32.670 --> 00:14:34.350
+things that I've done that
+I think is a best
+
+289
+00:14:34.350 --> 00:14:36.690
+practice is that if you
+have the space and not
+
+290
+00:14:36.690 --> 00:14:39.600
+everybody has an extra room,
+I realize that some people
+
+291
+00:14:39.600 --> 00:14:42.300
+have studios or some people
+have a one bedroom, but
+
+292
+00:14:42.300 --> 00:14:45.150
+I do have an extra
+room, a den I'm I
+
+293
+00:14:45.150 --> 00:14:47.040
+designed it. I made it
+with just a coat of
+
+294
+00:14:47.040 --> 00:14:50.070
+paint and different furniture. It
+looks like a totally different
+
+295
+00:14:50.190 --> 00:14:53.150
+house. You see what I'm
+saying? Like the walls are
+
+296
+00:14:53.150 --> 00:14:56.240
+painted different. The furniture is
+weird. Like the, even the,
+
+297
+00:14:56.690 --> 00:14:58.970
+the, what would he call
+these? The a, the blinds
+
+298
+00:14:59.300 --> 00:15:02.060
+do not match anything. Like,
+it looks like you're in
+
+299
+00:15:02.060 --> 00:15:05.570
+a different place. So if
+you can make your, your
+
+300
+00:15:05.570 --> 00:15:07.700
+corner of the kitchen or
+your area, or wherever you
+
+301
+00:15:07.700 --> 00:15:12.140
+sit, look dramatically different than
+your home, that's a way
+
+302
+00:15:12.140 --> 00:15:14.540
+of protecting your home space
+that I've found works for
+
+303
+00:15:14.540 --> 00:15:17.590
+me at least. Yeah. That's
+a great point. And you
+
+304
+00:15:17.590 --> 00:15:19.540
+know, when I was in
+an apartment where I had
+
+305
+00:15:19.540 --> 00:15:22.150
+a one bedroom, but I
+had a built in desk,
+
+306
+00:15:22.900 --> 00:15:25.390
+I made sure that I
+didn't do anything but work
+
+307
+00:15:25.390 --> 00:15:28.180
+at that desk. So even
+if I was, you know,
+
+308
+00:15:28.600 --> 00:15:31.180
+browsing the web in my
+off time or anything like
+
+309
+00:15:31.180 --> 00:15:34.120
+that, anything that I'm doing
+personal for comfort, I do
+
+310
+00:15:34.120 --> 00:15:37.780
+from places of comfort, the
+sofa. Right. But when I
+
+311
+00:15:37.780 --> 00:15:40.930
+was in work mode and
+it was time to be
+
+312
+00:15:41.050 --> 00:15:42.730
+on at the office, I
+had to do it at
+
+313
+00:15:42.730 --> 00:15:46.720
+that desk. I had to
+not bring work into my
+
+314
+00:15:46.780 --> 00:15:51.580
+other spaces. And that is
+hard to do when everything's
+
+315
+00:15:51.580 --> 00:15:56.680
+at home. Right. But that
+is key because you start
+
+316
+00:15:56.680 --> 00:15:59.590
+to remember that, Hey, when
+I walk out of that
+
+317
+00:15:59.740 --> 00:16:01.570
+area or when I walk
+out of that room, if
+
+318
+00:16:01.570 --> 00:16:04.210
+I have a spare room
+that's signals, the day is
+
+319
+00:16:04.210 --> 00:16:08.710
+over. Unless I'm on call.
+If something's on fire, no,
+
+320
+00:16:08.800 --> 00:16:12.250
+there's no more email. There's
+nothing getting pushed to our
+
+321
+00:16:12.250 --> 00:16:17.710
+repositories. There's nothing getting deployed.
+We're done for today. Exactly,
+
+322
+00:16:17.980 --> 00:16:21.310
+exactly. Do you find that
+this is, this can't be
+
+323
+00:16:21.310 --> 00:16:23.560
+just us. I mean, we're
+here to people talking about
+
+324
+00:16:23.560 --> 00:16:26.200
+what it's like as remote
+engineers. I mean, this is
+
+325
+00:16:26.200 --> 00:16:28.660
+a thing, right? Like there
+are, there are other of
+
+326
+00:16:28.660 --> 00:16:31.180
+us that behave the same
+way and that the blur,
+
+327
+00:16:31.180 --> 00:16:34.450
+these lines between personal and
+work, we are, isn't there
+
+328
+00:16:34.450 --> 00:16:37.240
+a thing about the remote
+worker being a workaholic of
+
+329
+00:16:37.240 --> 00:16:40.690
+sorts. Yeah. It's, you know,
+I have a couple of
+
+330
+00:16:40.690 --> 00:16:44.440
+friends who work remote for
+some companies that are back
+
+331
+00:16:44.440 --> 00:16:46.870
+East that are not in
+engineering. And they've kind of
+
+332
+00:16:46.870 --> 00:16:50.740
+had similar friction points to,
+you know, you fall into
+
+333
+00:16:50.740 --> 00:16:53.470
+that trap of, you know,
+well, I don't have a
+
+334
+00:16:53.470 --> 00:16:55.300
+commute so I can take
+an extra hour of work.
+
+335
+00:16:55.690 --> 00:16:57.970
+And so I can take
+a meeting until 6:00 PM. And
+
+336
+00:16:57.970 --> 00:17:01.420
+that's not fair to you
+if you know that you
+
+337
+00:17:01.420 --> 00:17:03.820
+would have a hard stop
+at 5:00 PM to leave the
+
+338
+00:17:03.820 --> 00:17:08.080
+office to be home by
+6:00 PM. Right. And just the
+
+339
+00:17:08.170 --> 00:17:10.720
+ease of being able to
+turn the laptop on and
+
+340
+00:17:10.720 --> 00:17:14.200
+off without the friction of
+commute or of, you know,
+
+341
+00:17:14.350 --> 00:17:16.660
+an elevator, even in a
+building taking five minutes to
+
+342
+00:17:16.660 --> 00:17:20.320
+come downstairs, it's you have
+to put some other friction
+
+343
+00:17:20.320 --> 00:17:23.320
+in place to protect your
+space and to not fall
+
+344
+00:17:23.320 --> 00:17:26.800
+into that trap of overwork.
+I know I was notoriously
+
+345
+00:17:26.800 --> 00:17:29.470
+bad at this the first
+year and a half, maybe
+
+346
+00:17:29.470 --> 00:17:34.510
+even two years teaching and
+doing that at night, kind
+
+347
+00:17:34.510 --> 00:17:38.200
+of helped me get that
+because I'm teaching a course
+
+348
+00:17:38.200 --> 00:17:43.090
+from 6:00 PM to 10:00 PM after
+having works from nine to
+
+349
+00:17:43.090 --> 00:17:46.480
+five. And so I had
+to maximize that hour from
+
+350
+00:17:46.480 --> 00:17:48.580
+five to six before office
+hours so that I could
+
+351
+00:17:48.580 --> 00:17:51.240
+eat dinner, or I could
+like step away and drink
+
+352
+00:17:51.240 --> 00:17:53.130
+water or take a walk
+or get some fresh air
+
+353
+00:17:53.130 --> 00:17:58.350
+or, you know, interact with
+people. And just while it
+
+354
+00:17:58.350 --> 00:18:01.770
+would seem that doing two
+remote jobs would, could make
+
+355
+00:18:01.770 --> 00:18:05.310
+that worse fatigue and having
+to listen to my own
+
+356
+00:18:05.310 --> 00:18:07.950
+needs. I actually made that
+a forcing function for me
+
+357
+00:18:07.950 --> 00:18:14.930
+to maximize the times in
+between each opportunity. Interesting. How
+
+358
+00:18:14.930 --> 00:18:17.330
+do you deal with, with,
+with sick days and with
+
+359
+00:18:17.360 --> 00:18:19.880
+illness? Because I have found
+as my entire team is
+
+360
+00:18:19.880 --> 00:18:23.240
+remote, I've got a team
+of six all remote, and
+
+361
+00:18:23.270 --> 00:18:25.400
+I hopefully I'm not calling
+them out in public, but
+
+362
+00:18:25.400 --> 00:18:29.090
+they're all pretty lousy about
+when they're sick, they're still
+
+363
+00:18:29.090 --> 00:18:32.930
+in bed answering email. It
+seems like since you're already
+
+364
+00:18:32.930 --> 00:18:35.870
+in bed answering emails or
+remote or wherever you are,
+
+365
+00:18:35.900 --> 00:18:37.670
+you know, you think yourself,
+well, I can't be sick
+
+366
+00:18:37.670 --> 00:18:40.040
+in my house. My hands
+still work. I should be
+
+367
+00:18:40.040 --> 00:18:44.210
+working. Yeah. I, I will
+say that my team has
+
+368
+00:18:44.210 --> 00:18:48.470
+been great at one, forcing
+me to, to practice what
+
+369
+00:18:48.470 --> 00:18:52.850
+I preach whenever someone's sick,
+I just look shut the
+
+370
+00:18:52.850 --> 00:18:58.010
+laptop off, go to bed.
+If there's anything we need,
+
+371
+00:18:58.010 --> 00:19:00.740
+there's another tech lead somewhere.
+There's another engineer somewhere. And
+
+372
+00:19:00.740 --> 00:19:03.620
+there's another designer somewhere. There's
+always someone on your team
+
+373
+00:19:03.620 --> 00:19:06.440
+who can back you up.
+And so our team has
+
+374
+00:19:06.440 --> 00:19:08.720
+really had a, I've been
+fortunate with this team to
+
+375
+00:19:08.720 --> 00:19:12.110
+really have a culture that
+we've built together to say,
+
+376
+00:19:12.320 --> 00:19:14.780
+as soon as someone even
+mentions that they even have
+
+377
+00:19:14.780 --> 00:19:17.810
+so much as a migraine
+it's, Hey, don't tough out
+
+378
+00:19:17.810 --> 00:19:21.080
+the migraine. If you have
+medication for it, take it
+
+379
+00:19:21.500 --> 00:19:23.870
+go. I mean, at the
+end of the day, we're
+
+380
+00:19:23.870 --> 00:19:26.600
+not on the front lines,
+like an EMT. We're not
+
+381
+00:19:27.320 --> 00:19:30.440
+you taking a sick day
+is not going to result
+
+382
+00:19:30.440 --> 00:19:32.240
+in people losing lives. And
+I think that's a really
+
+383
+00:19:32.240 --> 00:19:36.110
+important thing for us to
+kind of, at times, keep
+
+384
+00:19:36.110 --> 00:19:38.570
+in mind is like the,
+what are the ramifications of
+
+385
+00:19:38.570 --> 00:19:42.380
+taking care of myself versus
+the flip side, which is
+
+386
+00:19:42.410 --> 00:19:45.410
+you overworking and extending your
+sickness could actually make your,
+
+387
+00:19:45.710 --> 00:19:48.830
+whatever it is you're going
+through worse, which is more
+
+388
+00:19:48.830 --> 00:19:51.200
+time away for you, but
+also more time away for
+
+389
+00:19:51.200 --> 00:19:55.280
+you in that same sickness.
+So now forget the fact
+
+390
+00:19:55.280 --> 00:19:57.170
+that you're away from the
+office for an extended period,
+
+391
+00:19:57.170 --> 00:20:00.680
+because you've been working while
+you're sick. You yourself are
+
+392
+00:20:00.680 --> 00:20:02.720
+now going to, could potentially
+be in a worst place
+
+393
+00:20:03.680 --> 00:20:06.170
+because you haven't let your
+body rest because you haven't
+
+394
+00:20:06.170 --> 00:20:08.840
+given yourself a time, time
+to recover. And at the
+
+395
+00:20:08.840 --> 00:20:10.580
+end of the day, that
+matters more. That's more important,
+
+396
+00:20:10.760 --> 00:20:13.310
+right? That we come back
+refreshed that we come back
+
+397
+00:20:13.730 --> 00:20:17.210
+healthy. And then we can
+kind of jump in and
+
+398
+00:20:17.270 --> 00:20:19.930
+pick up where we left
+off. I did a, a
+
+399
+00:20:19.940 --> 00:20:23.780
+blog post. It was called
+software and saving babies. And
+
+400
+00:20:23.840 --> 00:20:27.380
+you know, your, your website
+that sells, you know, widgets
+
+401
+00:20:27.860 --> 00:20:30.560
+is very likely not saving
+babies. So unless you work
+
+402
+00:20:30.560 --> 00:20:33.980
+on like fulltime, baby, save
+baby saving software, then you
+
+403
+00:20:33.980 --> 00:20:35.420
+can probably take a break.
+You know what I mean?
+
+404
+00:20:35.420 --> 00:20:37.460
+Like there are, there are
+mission critical things. I get
+
+405
+00:20:37.460 --> 00:20:39.510
+that. But at the same
+time, you know, though, the
+
+406
+00:20:39.530 --> 00:20:42.170
+sicker you get the tireder,
+you get the, we know
+
+407
+00:20:42.170 --> 00:20:43.970
+the quality goes down. So
+you got to take care
+
+408
+00:20:43.970 --> 00:20:46.040
+of yourself, even if you're
+a remote. Okay. Totally agree.
+
+409
+00:20:46.430 --> 00:20:49.360
+Yeah. Think about it this
+way. When someone in, ER,
+
+410
+00:20:49.360 --> 00:20:51.310
+who's the best, who could
+be the best surgeon on
+
+411
+00:20:51.310 --> 00:20:54.970
+their floor is sick. They're
+not going to go operate
+
+412
+00:20:54.970 --> 00:20:57.430
+on someone. They're going to
+go home because they're not
+
+413
+00:20:57.430 --> 00:20:59.380
+going to do their best
+work while they themselves are
+
+414
+00:20:59.380 --> 00:21:04.050
+feeling sick. Exactly. Exactly. I'd
+like to welcome our new
+
+415
+00:21:04.050 --> 00:21:08.910
+sponsor. Couchbase Couchbase is an
+open source, no SQL document
+
+416
+00:21:08.910 --> 00:21:13.110
+and key value store database
+requires no external cash support
+
+417
+00:21:13.120 --> 00:21:17.790
+CQL and analytical queries for
+Jason data. Couchbase supports technologies
+
+418
+00:21:17.790 --> 00:21:23.310
+like Kubernetes, java.net, Java script,
+go and Python. Download it,
+
+419
+00:21:23.370 --> 00:21:31.650
+give it a try at
+couchbase.com/hansel minutes. That's couchbased.com/hansel minutes.
+
+420
+00:21:32.010 --> 00:21:34.170
+And I'll remind you that
+when you support our sponsors,
+
+421
+00:21:34.410 --> 00:21:37.530
+you support this show. Another
+weird thing that at least
+
+422
+00:21:37.530 --> 00:21:39.420
+people tell me, it's weird
+that I do is I
+
+423
+00:21:39.420 --> 00:21:42.150
+will go to the mall
+and sit in the food
+
+424
+00:21:42.150 --> 00:21:45.600
+court, just to have people
+around just to hear the
+
+425
+00:21:45.600 --> 00:21:48.240
+din and the, the electrical
+energy of people in the
+
+426
+00:21:48.240 --> 00:21:54.810
+room. Do you get cabin
+fever? Yes. So everyone's running
+
+427
+00:21:54.810 --> 00:21:57.960
+joke, which is also very
+true is that I spend
+
+428
+00:21:58.020 --> 00:22:03.390
+all of my free time
+at target, but ironically, it's
+
+429
+00:22:03.390 --> 00:22:05.700
+one of the places where,
+you know, there's a Starbucks
+
+430
+00:22:05.700 --> 00:22:07.140
+in there. So I run
+in there and I, I
+
+431
+00:22:07.140 --> 00:22:10.200
+grab an iced coffee, but
+there's the people there's always
+
+432
+00:22:10.200 --> 00:22:12.330
+something new to buy at
+target, which I have to
+
+433
+00:22:12.330 --> 00:22:15.300
+get away from. That's a
+whole separate other episode, the
+
+434
+00:22:15.300 --> 00:22:17.280
+whole show Right there, how
+to not buy things at
+
+435
+00:22:17.280 --> 00:22:19.680
+target is an entirely separate
+episode. But yet for those
+
+436
+00:22:19.680 --> 00:22:22.380
+of you who are not
+Americans target is the everything
+
+437
+00:22:22.380 --> 00:22:24.690
+store. And there's always something
+at target. It's very hard
+
+438
+00:22:24.690 --> 00:22:26.400
+to go into target with
+a dollar and not leave
+
+439
+00:22:26.400 --> 00:22:31.890
+minus 10. Exactly. But yeah,
+that, that just the energy
+
+440
+00:22:31.890 --> 00:22:34.050
+of having other people around
+is very important. So a
+
+441
+00:22:34.050 --> 00:22:37.590
+lot of times, you know,
+what I would do is
+
+442
+00:22:37.590 --> 00:22:40.200
+I would always drive. If,
+if I knew I wanted
+
+443
+00:22:40.200 --> 00:22:43.410
+a particular cup of coffee,
+maybe I didn't feel like
+
+444
+00:22:43.410 --> 00:22:46.020
+making it, I would drive
+and make sure I'd go
+
+445
+00:22:46.020 --> 00:22:49.710
+somewhere that was busy, which
+would be probably anti what
+
+446
+00:22:49.710 --> 00:22:50.940
+most people would do. They'd
+be like, Oh, let me
+
+447
+00:22:50.940 --> 00:22:53.010
+go to the coffee shop.
+That's the least busy so
+
+448
+00:22:53.010 --> 00:22:54.720
+I can get in and
+get out. And for me,
+
+449
+00:22:54.720 --> 00:22:56.310
+it's, if I'm going to
+take the 15 minutes and
+
+450
+00:22:56.310 --> 00:22:58.770
+I'm going to actually burn
+the gas, then let me
+
+451
+00:22:58.770 --> 00:23:01.290
+actually kind of feel what
+it's like to be out.
+
+452
+00:23:01.290 --> 00:23:04.320
+And amongst the people for
+the day. Another thing I've
+
+453
+00:23:04.320 --> 00:23:09.630
+done is start to prioritize
+meetups. One advantage of being
+
+454
+00:23:10.170 --> 00:23:12.990
+a remote worker and working
+from home is that because
+
+455
+00:23:12.990 --> 00:23:14.400
+I don't have a commute,
+I can make it to
+
+456
+00:23:14.400 --> 00:23:17.310
+a few more things. So
+why not go out in,
+
+457
+00:23:17.680 --> 00:23:19.650
+and not even just for
+the networking aspect and, you
+
+458
+00:23:19.650 --> 00:23:22.170
+know, trying to go super
+far in a career, but
+
+459
+00:23:22.170 --> 00:23:24.570
+just being around a sharing
+ideas with others and being
+
+460
+00:23:24.570 --> 00:23:27.690
+creative with others and learning
+from others, just that you
+
+461
+00:23:27.690 --> 00:23:29.610
+get that sense of connection
+that you don't get. If
+
+462
+00:23:29.610 --> 00:23:32.640
+you just stay in the
+house the entire time. I
+
+463
+00:23:32.640 --> 00:23:36.630
+mean, my doctor also prescribed
+me a weekly outdoor meetup
+
+464
+00:23:36.960 --> 00:23:38.460
+and he said, you need
+more fresh air and you
+
+465
+00:23:38.460 --> 00:23:40.530
+need more vitamin D your
+vitamin D is low. So
+
+466
+00:23:40.530 --> 00:23:42.600
+then that's the other aspect
+too, is that also being
+
+467
+00:23:42.600 --> 00:23:46.010
+out in connecting with other
+people, even if it's being
+
+468
+00:23:46.010 --> 00:23:49.460
+in their company is also
+good for your health. You
+
+469
+00:23:49.460 --> 00:23:51.220
+know, This is kind of,
+kind of related and kind
+
+470
+00:23:51.220 --> 00:23:53.380
+of unrelated, but I I've
+always talked about how important
+
+471
+00:23:53.380 --> 00:23:54.820
+it is to go to
+small businesses. So I will
+
+472
+00:23:54.820 --> 00:23:56.800
+always pick a small business
+over a large business. I'll
+
+473
+00:23:56.800 --> 00:23:58.930
+pick a small coffee shop.
+That's owned by a human
+
+474
+00:23:58.930 --> 00:24:02.410
+rather than Starbucks with all
+due respect to our corporate
+
+475
+00:24:02.410 --> 00:24:05.440
+overlords. And in doing that
+as a remote worker, it
+
+476
+00:24:05.440 --> 00:24:08.110
+has allowed me to build
+relationships with small business owners
+
+477
+00:24:08.230 --> 00:24:10.750
+where, you know, it's like,
+when you, if you remember
+
+478
+00:24:10.750 --> 00:24:13.600
+the show, cheers, when norm
+would come in and form,
+
+479
+00:24:13.600 --> 00:24:15.910
+you know, like you get,
+you can, you can support
+
+480
+00:24:15.910 --> 00:24:18.460
+a small business, a local
+business, your local bodega, or
+
+481
+00:24:18.460 --> 00:24:21.250
+your local coffee shop. And
+you will feel there that
+
+482
+00:24:21.250 --> 00:24:25.450
+friendship, that genuine friendship when
+you enter their space. And
+
+483
+00:24:25.450 --> 00:24:27.190
+then of course they won't
+give you the Sinai when
+
+484
+00:24:27.190 --> 00:24:30.100
+you use their wifi for
+an hour. Yeah. That's a
+
+485
+00:24:30.100 --> 00:24:33.790
+very great point. You know,
+whether you choose the super
+
+486
+00:24:33.790 --> 00:24:36.850
+big box spot or the
+small one, you know, something
+
+487
+00:24:36.850 --> 00:24:39.520
+as small as someone knowing
+your order when you first
+
+488
+00:24:39.520 --> 00:24:44.410
+walk in is, is such
+a, it's a, for me,
+
+489
+00:24:44.410 --> 00:24:46.990
+especially being remote worker. Now
+it's such a reaffirming thing
+
+490
+00:24:46.990 --> 00:24:49.600
+of like, Oh, I have
+some sort of connection with
+
+491
+00:24:49.600 --> 00:24:52.360
+this person. Yes. You know,
+we have this business transaction,
+
+492
+00:24:52.590 --> 00:24:54.610
+right. I hand them money.
+They hand me food and
+
+493
+00:24:54.610 --> 00:24:57.640
+or coffee, but there's also
+the, Hey, Jason, you're back
+
+494
+00:24:57.640 --> 00:25:00.610
+again. I know who you
+are, how you been. And,
+
+495
+00:25:00.610 --> 00:25:03.730
+or I walk in, Hey,
+you know, barista, how's your
+
+496
+00:25:03.730 --> 00:25:06.880
+life, how's it going? How's
+class. Like you build those
+
+497
+00:25:06.880 --> 00:25:09.340
+connections. And you know, we're
+not all going to be
+
+498
+00:25:09.340 --> 00:25:12.160
+super close friends, but that's
+not even the point of
+
+499
+00:25:12.160 --> 00:25:14.530
+it. It's just that just
+for that few minutes, you
+
+500
+00:25:14.530 --> 00:25:17.500
+have that connection spark that
+you otherwise won't have. If
+
+501
+00:25:17.500 --> 00:25:19.600
+you stay holed up in
+your office, Right. And that
+
+502
+00:25:19.600 --> 00:25:22.330
+becomes your, your water cooler
+and you make a point
+
+503
+00:25:22.330 --> 00:25:24.220
+that, yes, you're not going
+to be best friends with
+
+504
+00:25:24.220 --> 00:25:26.830
+the barista at the, at
+the coffee shop, just as
+
+505
+00:25:26.830 --> 00:25:30.370
+you're not necessarily going to
+be BFFs with your coworkers,
+
+506
+00:25:30.700 --> 00:25:34.660
+but you do need that,
+That virtual water Cooler, my
+
+507
+00:25:34.660 --> 00:25:38.260
+remote team, we try not
+to do work all the
+
+508
+00:25:38.260 --> 00:25:40.360
+time on teams or on
+Slack. We actually have a
+
+509
+00:25:40.360 --> 00:25:44.350
+WhatsApp that is the non-work
+WhatsApp. That's where the memes
+
+510
+00:25:44.350 --> 00:25:47.590
+and the goofiness happens. Work
+doesn't happen in WhatsApp, but
+
+511
+00:25:47.590 --> 00:25:50.620
+that is our, our back
+channel of silliness so that
+
+512
+00:25:50.620 --> 00:25:52.600
+we can at least build
+some culture and some camaraderie.
+
+513
+00:25:53.670 --> 00:25:56.680
+Yeah. We we've even brought
+some of that into our
+
+514
+00:25:56.680 --> 00:26:00.400
+like ritual meetings. So every
+Friday, standup for a while,
+
+515
+00:26:00.400 --> 00:26:02.620
+it was called treat yourself
+Fridays where someone had to
+
+516
+00:26:02.620 --> 00:26:05.500
+be on camera, showing whatever
+treat they were going to
+
+517
+00:26:05.500 --> 00:26:07.930
+treat themselves for that Friday,
+whether it was ice cream
+
+518
+00:26:07.930 --> 00:26:12.070
+or frozen yogurt or a
+cake or a new, you
+
+519
+00:26:12.070 --> 00:26:14.590
+know, something new that they
+wanted to buy. Just kind
+
+520
+00:26:14.590 --> 00:26:18.970
+of creating that non-work connection
+aspect. We've shifted it this
+
+521
+00:26:18.970 --> 00:26:22.480
+year. So this year we're
+going to start with trips
+
+522
+00:26:22.480 --> 00:26:25.300
+we're taking. Cause we talk
+a lot about travel in
+
+523
+00:26:25.300 --> 00:26:28.150
+our chats and talks before
+we get down to business.
+
+524
+00:26:28.150 --> 00:26:30.430
+So now it's like, Hey,
+every Friday. So I want
+
+525
+00:26:30.430 --> 00:26:32.020
+to just spend a minute
+or two and just talk
+
+526
+00:26:32.020 --> 00:26:34.360
+about somewhere. Cool. They want
+to go somewhere. They've been,
+
+527
+00:26:34.360 --> 00:26:37.540
+or somewhere they are planning
+to go. Just creating again,
+
+528
+00:26:37.600 --> 00:26:39.880
+like you said, those, those
+back channels and those non-work
+
+529
+00:26:40.210 --> 00:26:43.320
+connection points and streams for
+us to still relate each
+
+530
+00:26:43.320 --> 00:26:45.510
+other as people, much like
+you would in an office,
+
+531
+00:26:46.110 --> 00:26:49.140
+especially since, you know, when
+you have meetings in an
+
+532
+00:26:49.140 --> 00:26:51.570
+office, you usually have, you
+know, Oh, I've got to
+
+533
+00:26:51.570 --> 00:26:53.370
+walk to the eighth floor
+or I've got to go
+
+534
+00:26:53.400 --> 00:26:55.770
+down to 12 or, you
+know, you have all these
+
+535
+00:26:55.770 --> 00:27:00.060
+different points where you're in
+close proximity to, but also
+
+536
+00:27:00.120 --> 00:27:03.570
+in so many different connection
+points with other people. And
+
+537
+00:27:03.690 --> 00:27:05.820
+you know, the, even just
+the small talk that happens
+
+538
+00:27:05.820 --> 00:27:10.440
+before the person who organized
+the meeting walks in, you
+
+539
+00:27:10.440 --> 00:27:13.140
+want to not necessarily recreate
+that, but have that same
+
+540
+00:27:13.140 --> 00:27:16.490
+effect in different ways. And
+it seems like a small
+
+541
+00:27:16.490 --> 00:27:18.500
+thing. Some people might be
+listening and thinking that these
+
+542
+00:27:18.500 --> 00:27:20.870
+are silly advices and things
+like that. But as remotes,
+
+543
+00:27:20.870 --> 00:27:23.210
+I don't think people who
+are not remote realize how
+
+544
+00:27:23.210 --> 00:27:25.910
+isolating, how much of a
+hermit, how easy it is
+
+545
+00:27:25.910 --> 00:27:27.620
+to not leave the house
+for a week at a
+
+546
+00:27:27.620 --> 00:27:31.850
+time with all the video
+conferencing and zoom and let's
+
+547
+00:27:31.850 --> 00:27:33.620
+lack and whatnot. We can
+do. I might not see
+
+548
+00:27:33.620 --> 00:27:36.170
+a human for a week
+or two. And honestly, I,
+
+549
+00:27:36.230 --> 00:27:38.210
+you know, introverts are not,
+I don't think that's healthy.
+
+550
+00:27:38.330 --> 00:27:42.050
+So doing these small things
+in these camaraderie building activities
+
+551
+00:27:42.050 --> 00:27:44.420
+has a lot of value.
+Yeah. And it also builds
+
+552
+00:27:44.420 --> 00:27:50.420
+trust. A trust that you
+build. I won't say easier,
+
+553
+00:27:50.420 --> 00:27:55.250
+but perhaps not as visibly
+when you're literally yeah. When
+
+554
+00:27:55.250 --> 00:27:58.760
+you're in, in actual space
+with each other in person,
+
+555
+00:27:59.090 --> 00:28:01.430
+right. Cause I'll see you
+all the time and you'll
+
+556
+00:28:01.430 --> 00:28:04.130
+be in the same meetings
+as myself. Or we will
+
+557
+00:28:04.130 --> 00:28:07.850
+always talk together when X
+has been completed. So over
+
+558
+00:28:07.850 --> 00:28:11.030
+time you can make the,
+the visual and the physical
+
+559
+00:28:11.030 --> 00:28:15.380
+association with these colleagues equals
+things we're doing and we've
+
+560
+00:28:15.380 --> 00:28:17.870
+done it together. And so
+we have that trust. We
+
+561
+00:28:17.870 --> 00:28:21.170
+have that at least work
+bond. And when everyone is
+
+562
+00:28:21.320 --> 00:28:24.470
+sometimes just words on a
+screen, you do need those
+
+563
+00:28:24.470 --> 00:28:28.700
+other ways to build that
+same comradery. Definitely. You've also
+
+564
+00:28:28.700 --> 00:28:30.710
+made yourself a kind of
+a snack bar or a
+
+565
+00:28:30.710 --> 00:28:32.630
+coffee bar. Like we always
+have that place where you
+
+566
+00:28:32.630 --> 00:28:34.910
+can get a kitchen, you
+know, there's a kitchen at
+
+567
+00:28:34.910 --> 00:28:36.620
+the office, but you should
+have a space of your
+
+568
+00:28:36.620 --> 00:28:39.850
+own. You shouldn't just have
+people deliver you food. Yeah.
+
+569
+00:28:39.860 --> 00:28:42.920
+So, and this was a
+challenge for me as well.
+
+570
+00:28:43.340 --> 00:28:45.890
+Now, one thing is I
+love to cook. I will,
+
+571
+00:28:46.310 --> 00:28:50.710
+you know, try out new
+cookbooks. I, you know, I've,
+
+572
+00:28:50.710 --> 00:28:53.000
+I've still got fancy dreams
+one day of like, all
+
+573
+00:28:53.000 --> 00:28:55.040
+right, when I'm done with
+my career in tech, I'll
+
+574
+00:28:55.040 --> 00:28:58.700
+open a chicken and waffle
+food truck, which is about,
+
+575
+00:28:58.760 --> 00:29:02.660
+maybe about 65% on a
+real idea at this point.
+
+576
+00:29:02.690 --> 00:29:07.100
+Right. But it was important
+for me to kind of
+
+577
+00:29:07.700 --> 00:29:10.040
+make sure that I had
+some of the same conveniences
+
+578
+00:29:10.190 --> 00:29:13.340
+that I would in an
+office. Granted, yes, you are
+
+579
+00:29:13.340 --> 00:29:15.110
+paying for it yourself, but
+you're also at home, which
+
+580
+00:29:15.110 --> 00:29:17.210
+means you have your own
+choice. You can have your
+
+581
+00:29:17.210 --> 00:29:19.970
+own snacks where sometimes you
+don't have, you know, you're
+
+582
+00:29:19.970 --> 00:29:21.740
+in an office you're, you
+don't have the snacks that
+
+583
+00:29:21.740 --> 00:29:26.060
+you would prefer to have.
+And it also gives you
+
+584
+00:29:26.060 --> 00:29:29.210
+a point to get up,
+walk to the kitchen. I'll
+
+585
+00:29:29.210 --> 00:29:32.840
+walk to wherever you keep
+your snacks and still get
+
+586
+00:29:32.840 --> 00:29:37.280
+a few steps in. They
+all add up. And you
+
+587
+00:29:37.280 --> 00:29:42.370
+also don't fall into this
+feeling of everyone in the
+
+588
+00:29:42.370 --> 00:29:46.600
+office has more than what
+I have. Right. If we're
+
+589
+00:29:46.600 --> 00:29:49.030
+going to have this convenience
+of being in our own
+
+590
+00:29:49.030 --> 00:29:52.240
+space, then let's actually enjoy
+that space. Now, when it
+
+591
+00:29:52.240 --> 00:29:56.080
+comes to the delivery apps,
+especially now with the, you
+
+592
+00:29:56.080 --> 00:29:59.410
+know, the door dashes and
+the Uber eats and the
+
+593
+00:29:59.410 --> 00:30:02.170
+grub hub, most of the
+world, it's so easy to
+
+594
+00:30:02.170 --> 00:30:05.020
+never talk to another person
+except for, Hey, thanks for
+
+595
+00:30:05.020 --> 00:30:09.730
+my bag of food. That
+is so true. And so
+
+596
+00:30:09.730 --> 00:30:11.440
+for me, it was like,
+all right, I've got to
+
+597
+00:30:11.440 --> 00:30:13.750
+not be on the delivery
+apps. I will walk to
+
+598
+00:30:13.750 --> 00:30:16.870
+the store and buy a
+sandwich or I'll walk to
+
+599
+00:30:16.930 --> 00:30:21.400
+the tea shop or, or
+cook for yourself more importantly.
+
+600
+00:30:21.760 --> 00:30:25.630
+Yeah. Or I'll cook. Right.
+I get full control. And
+
+601
+00:30:25.870 --> 00:30:28.480
+you know, a lot of
+times, even when we're in
+
+602
+00:30:28.480 --> 00:30:31.030
+spaces, where if we're fortunate
+enough that the companies will
+
+603
+00:30:31.030 --> 00:30:33.760
+provide lunch and or dinner,
+you're going to buy the
+
+604
+00:30:33.760 --> 00:30:35.770
+same groceries that you buy
+for the most part. Anyway,
+
+605
+00:30:35.770 --> 00:30:38.740
+because you know where, you
+know, depending on who you're
+
+606
+00:30:38.740 --> 00:30:41.740
+with, where it's roommates, family,
+friends, whatever you have to
+
+607
+00:30:41.800 --> 00:30:45.070
+eat outside of the office
+every day, why not have
+
+608
+00:30:45.070 --> 00:30:47.980
+that same freedom and have
+the, you know, a wider
+
+609
+00:30:47.980 --> 00:30:50.950
+range of food to enjoy.
+And also just that action
+
+610
+00:30:50.950 --> 00:30:53.110
+of cooking for yourself. Even
+if it's just sitting in
+
+611
+00:30:53.110 --> 00:30:54.670
+a kitchen for two minutes
+to heat it up in
+
+612
+00:30:54.670 --> 00:30:57.280
+an oven or microwave, it
+still gets you away from
+
+613
+00:30:57.280 --> 00:31:02.260
+the screen. All of this
+is on your Twitter. I'm
+
+614
+00:31:02.260 --> 00:31:05.020
+going to include a link
+to this, this tweet. This
+
+615
+00:31:05.020 --> 00:31:08.620
+is currently your pinned tweet
+at underscore JJ Phillips. And
+
+616
+00:31:08.620 --> 00:31:10.150
+we'll make sure that there's
+links to this in the
+
+617
+00:31:10.150 --> 00:31:12.970
+show notes. And hopefully we'll
+see a followup on this
+
+618
+00:31:12.970 --> 00:31:15.850
+with more detail on a,
+on your blog. Yeah. That's
+
+619
+00:31:15.850 --> 00:31:20.080
+the plan just recently relaunched,
+as we talked about off
+
+620
+00:31:20.110 --> 00:31:24.880
+air it's right before some
+new content. So definitely want
+
+621
+00:31:24.880 --> 00:31:27.370
+to continue this conversation further
+because the other thing is,
+
+622
+00:31:27.370 --> 00:31:29.800
+even though I've shared a
+lot of these tips and
+
+623
+00:31:29.800 --> 00:31:31.060
+you know, you and I,
+and a lot of others
+
+624
+00:31:31.060 --> 00:31:34.240
+have resonated with it, it
+doesn't mean that we've stopped.
+
+625
+00:31:34.270 --> 00:31:37.750
+Right. There is always more
+things I can learn, especially
+
+626
+00:31:37.750 --> 00:31:41.290
+you haven't been remote for
+like 13 years of even
+
+627
+00:31:41.290 --> 00:31:43.300
+some tweaks and more things
+I could adapt to my
+
+628
+00:31:43.300 --> 00:31:45.670
+own way and make my
+own new defaults with absolutely
+
+629
+00:31:45.670 --> 00:31:48.340
+lot of great tips here.
+And lots more to come.
+
+630
+00:31:48.580 --> 00:31:51.520
+You can check out Jason Phillips
+at underscore JJ Phillips on
+
+631
+00:31:51.550 --> 00:31:54.400
+Twitter. Again, all that's in
+the show notes. This has
+
+632
+00:31:54.400 --> 00:31:57.010
+been another episode of Hansel
+minutes and we'll see you
+
+633
+00:31:57.010 --> 00:32:09.480
+again. <inaudible>.
+

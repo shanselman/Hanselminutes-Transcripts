@@ -1,0 +1,2481 @@
+WEBVTT FILE
+
+1
+00:00:00.180 --> 00:00:03.360
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.360 --> 00:00:06.300
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.300 --> 00:00:10.500
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.500 --> 00:00:15.030
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.420 --> 00:00:19.500
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.500 --> 00:00:23.610
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:23.700 --> 00:00:45.620
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com.
+Hi, this is Scott Hanselman.
+
+8
+00:00:45.620 --> 00:00:48.290
+This is another episode of
+Hansel minutes today. I'm talking
+
+9
+00:00:48.290 --> 00:00:51.350
+with Alena hall. She's formerly
+a software engineer at Microsoft
+
+10
+00:00:51.350 --> 00:00:54.650
+research. She works on Azure
+and big data and loves
+
+11
+00:00:54.980 --> 00:00:58.430
+functional programming and all kinds
+of distributed systems. And I'm
+
+12
+00:00:58.430 --> 00:01:00.290
+happy to be talking with
+you today. How are you?
+
+13
+00:01:00.620 --> 00:01:03.260
+Good. Thank you, Scott. How
+are you? I am great.
+
+14
+00:01:03.260 --> 00:01:06.320
+We're doing this over the
+holiday season, which means that
+
+15
+00:01:06.320 --> 00:01:09.710
+we probably need to spend
+more time. Now. We are
+
+16
+00:01:09.740 --> 00:01:14.660
+Merry Christmas, everyone Merry Christmas
+to you, but we have
+
+17
+00:01:14.660 --> 00:01:16.280
+a lot of fun working
+on this kind of stuff.
+
+18
+00:01:16.280 --> 00:01:19.160
+So you're a lot like
+me. You just can't stop
+
+19
+00:01:19.190 --> 00:01:21.560
+cause you have so much
+fun. Right? Right. I'm very
+
+20
+00:01:21.560 --> 00:01:24.620
+naturally curious first. And so
+I like to discover new
+
+21
+00:01:24.620 --> 00:01:29.090
+things and learn them during
+the holiday season and every
+
+22
+00:01:29.090 --> 00:01:32.120
+time. So I'm a big
+fan of functional programming and
+
+23
+00:01:32.120 --> 00:01:37.610
+distributed systems. You, I met
+you. Gosh, it's been several
+
+24
+00:01:37.610 --> 00:01:39.680
+years now, but I've always
+thought of you as a
+
+25
+00:01:39.680 --> 00:01:42.170
+functional person, but I don't.
+Did you start out functional?
+
+26
+00:01:42.470 --> 00:01:44.900
+I did not. I think
+we've met at that net
+
+27
+00:01:44.900 --> 00:01:50.090
+fringe 2015 first in Portland.
+And I was giving a
+
+28
+00:01:50.090 --> 00:01:54.360
+talk about F sharp and
+embrace framework, which is a
+
+29
+00:01:54.510 --> 00:01:59.300
+framework for cloud computations in
+a functional way. And at
+
+30
+00:01:59.300 --> 00:02:02.360
+that point I was doing
+functional programming already for a
+
+31
+00:02:02.360 --> 00:02:06.860
+few years, but I started
+as a Java and C
+
+32
+00:02:06.860 --> 00:02:11.990
+sharp engineers. So I, I
+did have to break my
+
+33
+00:02:11.990 --> 00:02:16.370
+mind and go into functional
+programming from object oriented background.
+
+34
+00:02:17.480 --> 00:02:20.330
+But in 2015, you know,
+when you were actually on
+
+35
+00:02:20.330 --> 00:02:23.270
+the board of the F
+sharp software foundation, you said
+
+36
+00:02:23.270 --> 00:02:25.310
+you were already thinking about
+functional for a few years.
+
+37
+00:02:25.610 --> 00:02:28.250
+When you did your master's
+degree, were you doing functional?
+
+38
+00:02:28.250 --> 00:02:32.030
+Were you writing Haskell and
+things like that? So Scala
+
+39
+00:02:32.060 --> 00:02:36.590
+and F sharp were my
+first functional programming languages. And
+
+40
+00:02:36.620 --> 00:02:40.040
+I have decided to learn
+them to just understand functional
+
+41
+00:02:40.040 --> 00:02:44.420
+programming in general, because previously
+I've just been exposed to
+
+42
+00:02:44.420 --> 00:02:47.090
+languages like Java and C
+sharp. And of course it
+
+43
+00:02:47.090 --> 00:02:51.380
+definitely broke my mind. At
+first, nothing seemed intuitive for
+
+44
+00:02:51.380 --> 00:02:54.350
+the first few weeks, but
+as I got through the
+
+45
+00:02:54.350 --> 00:02:58.820
+concept, sometimes reading the same
+article or chapter of the
+
+46
+00:02:58.820 --> 00:03:03.100
+book, 10 times I came
+to find that actually some
+
+47
+00:03:03.100 --> 00:03:05.710
+of the concepts are more
+intuitive than it seemed at
+
+48
+00:03:05.710 --> 00:03:08.770
+first. Yes, they were different
+from those that I've been
+
+49
+00:03:08.770 --> 00:03:11.980
+used to. And that's why
+it was hard at first
+
+50
+00:03:11.980 --> 00:03:14.890
+to wrap my head around
+them. But in general they
+
+51
+00:03:14.890 --> 00:03:17.950
+make sense. So yeah, I've
+used them during my masters
+
+52
+00:03:18.010 --> 00:03:21.540
+too. Do you, are you
+familiar of course with the
+
+53
+00:03:21.570 --> 00:03:26.910
+<inaudible> keyboard? Yeah, I am.
+Are you a direct person?
+
+54
+00:03:28.650 --> 00:03:31.860
+So I feel like I've
+got a buddy, you know,
+
+55
+00:03:31.860 --> 00:03:35.160
+Phil hack and he's, he's
+always telling me that I
+
+56
+00:03:35.160 --> 00:03:39.000
+should switch to <inaudible> and
+he always tells me, it'll
+
+57
+00:03:39.000 --> 00:03:41.790
+break your mind for a
+few weeks and then it'll
+
+58
+00:03:41.790 --> 00:03:45.450
+be, then it'll be this
+glorious, wondrous future. Like, and
+
+59
+00:03:45.450 --> 00:03:47.730
+you'll, you know, you'll be
+living in a parallel universe,
+
+60
+00:03:47.730 --> 00:03:53.370
+like, like Neo in the
+matrix is functional. I have
+
+61
+00:03:53.370 --> 00:03:56.250
+a feeling that this is
+something similar. I have not
+
+62
+00:03:56.250 --> 00:04:00.720
+tried this keyword, but I
+agree that yes, at first,
+
+63
+00:04:00.780 --> 00:04:03.330
+when you are exposed to
+any new concept like this
+
+64
+00:04:04.350 --> 00:04:07.860
+with previous experience in a
+different world, it will change
+
+65
+00:04:07.890 --> 00:04:11.220
+your world view. And at
+first you will try to
+
+66
+00:04:11.220 --> 00:04:17.760
+program using foreign wild loops
+and assignments of mutual variables,
+
+67
+00:04:17.790 --> 00:04:23.160
+but mutable variables. But then
+you realize that, okay, this
+
+68
+00:04:23.160 --> 00:04:25.530
+is not how I should
+think about it. I should
+
+69
+00:04:25.530 --> 00:04:30.870
+think about it as data
+pipelines and transformations and not
+
+70
+00:04:30.870 --> 00:04:34.620
+actually assigning something to a
+variable, but having values that
+
+71
+00:04:34.920 --> 00:04:38.610
+then return other values and
+having small set of functions
+
+72
+00:04:39.000 --> 00:04:46.020
+that sometimes you have to
+use some explicit, explicit wrapper
+
+73
+00:04:46.050 --> 00:04:49.000
+around side effects so that
+your program knows how to
+
+74
+00:04:49.020 --> 00:04:52.830
+handle them and how to
+communicate with the external world
+
+75
+00:04:52.830 --> 00:04:57.030
+correctly. So, yeah, so functional
+programming is just a different
+
+76
+00:04:57.030 --> 00:05:01.410
+abstraction from the foundation up
+and it goes in parallel
+
+77
+00:05:01.410 --> 00:05:05.310
+with this imperative programming world
+and Tulsa can be used
+
+78
+00:05:05.310 --> 00:05:08.760
+for general purpose programming. What
+do you feel about the
+
+79
+00:05:08.760 --> 00:05:11.940
+relationship between, and I'll just
+use these two languages, C
+
+80
+00:05:11.940 --> 00:05:15.570
+sharp and F sharp. Is
+it a competition or is
+
+81
+00:05:15.570 --> 00:05:20.370
+it just no brothers and
+sisters or step-brothers or do
+
+82
+00:05:20.370 --> 00:05:22.110
+you think that there are,
+are there F sharp people
+
+83
+00:05:22.110 --> 00:05:24.870
+that just think that F
+sharp should, and I've forgive
+
+84
+00:05:24.870 --> 00:05:30.210
+me for using this word
+should win. I feel like
+
+85
+00:05:30.810 --> 00:05:35.850
+they're a preference. Basically people
+can prefer one or another,
+
+86
+00:05:36.120 --> 00:05:40.020
+but I feel like C-sharp
+is slowly taking some of
+
+87
+00:05:40.020 --> 00:05:45.510
+the features of, of sharp
+into itself. So like pattern
+
+88
+00:05:45.510 --> 00:05:49.710
+matching, I feel like it's
+slowly taken, it's taking this
+
+89
+00:05:49.710 --> 00:05:54.690
+feature into a C sharp.
+So a sharp seems cleaner
+
+90
+00:05:54.690 --> 00:05:59.990
+to me. It, me discover
+bugs really much more quick
+
+91
+00:06:00.020 --> 00:06:07.580
+than in C-sharp. We basically,
+I can build prototypes in
+
+92
+00:06:07.580 --> 00:06:11.450
+a sharp, not depending on
+what language I finally will
+
+93
+00:06:11.450 --> 00:06:16.460
+implement the production solution with.
+I've heard many stories that
+
+94
+00:06:16.460 --> 00:06:19.400
+people who are using, for
+example, Java for their production
+
+95
+00:06:19.550 --> 00:06:24.170
+solution still implement the first
+initial prototyping of sharp, because
+
+96
+00:06:24.590 --> 00:06:28.190
+yes, because it's much easier
+to first build out your
+
+97
+00:06:28.190 --> 00:06:34.580
+logic and specify all the
+possible outcomes and basically make
+
+98
+00:06:34.580 --> 00:06:37.820
+sure that you're building what
+you really should be building.
+
+99
+00:06:38.380 --> 00:06:42.220
+Interesting. Do, do you feel
+that the moved of F
+
+100
+00:06:42.220 --> 00:06:46.600
+sharp recently to support like
+dotnet corn.net standard? I sure
+
+101
+00:06:46.600 --> 00:06:49.420
+that's all a good thing,
+right? This is definitely a
+
+102
+00:06:49.420 --> 00:06:54.490
+good thing. And I think
+this brings a sharp into
+
+103
+00:06:55.810 --> 00:07:01.480
+more wide usage compared to
+previous years, because like right
+
+104
+00:07:01.480 --> 00:07:04.030
+now I'm, I have a
+Mac and I'm using, I
+
+105
+00:07:04.030 --> 00:07:09.010
+have sharp with mano on
+it, and I can, I
+
+106
+00:07:09.010 --> 00:07:13.450
+use a sharp Kubernetes in
+my services. So I'm working
+
+107
+00:07:13.510 --> 00:07:16.540
+with it like an open
+source language, and basically I
+
+108
+00:07:16.540 --> 00:07:19.990
+can interact with any open
+source technology with no limitations.
+
+109
+00:07:19.990 --> 00:07:23.260
+So I feel like that
+net core support is the
+
+110
+00:07:23.260 --> 00:07:27.310
+next step in this process
+too. And it kind of
+
+111
+00:07:27.310 --> 00:07:29.860
+seems like a natural place
+for the F sharp community
+
+112
+00:07:29.860 --> 00:07:32.770
+because, you know, net people
+and F and C sharp
+
+113
+00:07:32.770 --> 00:07:36.490
+people are, are, are open
+source and becoming more open
+
+114
+00:07:36.490 --> 00:07:38.860
+source, but F sharp people
+feel like they've always been
+
+115
+00:07:38.860 --> 00:07:42.640
+very intensely focused on open
+source. So for the ability
+
+116
+00:07:42.640 --> 00:07:46.030
+for F sharp to interact
+with other open source distributed
+
+117
+00:07:46.030 --> 00:07:48.310
+systems is super important. And
+I know there's a bunch
+
+118
+00:07:48.310 --> 00:07:51.430
+of distributed systems and technologies
+that you're interested in. Yes,
+
+119
+00:07:52.390 --> 00:07:55.060
+I am currently working with
+a lot of distributed systems
+
+120
+00:07:55.060 --> 00:08:00.440
+technology like Cassandra spark Kafka,
+and I'm using a sharp
+
+121
+00:08:00.440 --> 00:08:05.630
+sharpened scholar to and direct
+with his technologist. So, yeah.
+
+122
+00:08:07.810 --> 00:08:10.810
+What are the, what are
+some of the technologies that
+
+123
+00:08:10.810 --> 00:08:13.690
+you've plugged F sharp into
+and been surprised that it
+
+124
+00:08:13.690 --> 00:08:18.610
+worked so well? For example,
+Cassandra SIM simply when you
+
+125
+00:08:18.610 --> 00:08:22.030
+were creating the Cassandra cluster,
+first thing that comes to
+
+126
+00:08:22.030 --> 00:08:24.880
+your mind, okay, so you
+can use Java or Scala
+
+127
+00:08:24.880 --> 00:08:28.510
+with Cassandra because they have
+basically a native support in
+
+128
+00:08:28.510 --> 00:08:31.390
+the Cassandra driver. But as
+you may discover, a sharp
+
+129
+00:08:31.390 --> 00:08:34.870
+is also supported. And then
+I just tried to check
+
+130
+00:08:35.170 --> 00:08:39.370
+how smooth is the support
+and whether everything works. And
+
+131
+00:08:39.520 --> 00:08:42.370
+I've discovered that it's really
+easy to do that. And
+
+132
+00:08:42.640 --> 00:08:46.960
+it's very smooth. There are
+no issues in my recent
+
+133
+00:08:47.140 --> 00:08:51.820
+demos at cube con in
+December in Austin, I was
+
+134
+00:08:51.820 --> 00:08:56.280
+showing basically how to write
+F sharp jobs to run
+
+135
+00:08:56.280 --> 00:09:00.030
+on Cassandra, to populate your
+Cassandra cluster that is running
+
+136
+00:09:00.900 --> 00:09:05.040
+on Kubernetes with stateful sets.
+So it's really amazing to
+
+137
+00:09:05.040 --> 00:09:10.470
+see that everything works together,
+functional programming, distributed systems, containers.
+
+138
+00:09:12.470 --> 00:09:14.690
+A lot of people are
+watching all of this happen
+
+139
+00:09:14.690 --> 00:09:17.870
+from the outside. They might
+be working on, you know,
+
+140
+00:09:17.870 --> 00:09:20.900
+dot net three or.net for
+maybe their company works a
+
+141
+00:09:20.900 --> 00:09:24.800
+little bit more slowly. They're
+not thinking about containers and
+
+142
+00:09:24.800 --> 00:09:28.250
+they might be a little
+bit overwhelmed, frankly, and feeling
+
+143
+00:09:28.250 --> 00:09:31.340
+like, well, I'll try Kubernetes
+or I'll play with it
+
+144
+00:09:31.340 --> 00:09:34.250
+on the weekend, and then
+I'll play with something else
+
+145
+00:09:34.910 --> 00:09:38.090
+the next week. And by
+then it's already changed. Do
+
+146
+00:09:38.090 --> 00:09:41.930
+you think things are moving
+too fast? They are definitely
+
+147
+00:09:41.930 --> 00:09:47.540
+moving. They're moving fast, but
+I feel like it's natural
+
+148
+00:09:47.540 --> 00:09:52.550
+evolution of technology. And at
+some point, I mean, when
+
+149
+00:09:52.550 --> 00:09:55.910
+technology becomes more popular, you
+have to look at it
+
+150
+00:09:55.940 --> 00:09:59.240
+because it might be the
+next standard. So I feel
+
+151
+00:09:59.240 --> 00:10:05.510
+like Kubernetes is becoming the
+next standard for services for
+
+152
+00:10:05.510 --> 00:10:08.150
+running distributed systems that you
+build on top of it.
+
+153
+00:10:08.660 --> 00:10:14.600
+So if your application is
+based on old standards, that
+
+154
+00:10:14.600 --> 00:10:18.350
+works good, it's fine. But
+if your application needs to
+
+155
+00:10:18.350 --> 00:10:23.360
+be more distributed, you should
+definitely look into Kubernedes and
+
+156
+00:10:23.870 --> 00:10:27.680
+see what benefits you can
+get using it, because it
+
+157
+00:10:27.680 --> 00:10:31.040
+supports many of the things
+that previously we needed to
+
+158
+00:10:31.040 --> 00:10:34.820
+think about implementing manually. Like
+if you ever have a
+
+159
+00:10:34.820 --> 00:10:38.390
+service that needs to be
+replicated and always available, you
+
+160
+00:10:38.390 --> 00:10:44.540
+can easily indicate this parameters
+in your configuration, and Kubernedes
+
+161
+00:10:44.540 --> 00:10:48.470
+will make sure that your
+services scheduled to run exactly
+
+162
+00:10:48.470 --> 00:10:52.880
+this many instances and recover
+any failures that can occur
+
+163
+00:10:53.180 --> 00:10:57.350
+in the meantime. And many
+other features. You know, you
+
+164
+00:10:57.350 --> 00:10:59.930
+probably know that I've been
+learning about Kubernetes over the
+
+165
+00:10:59.930 --> 00:11:03.050
+last year, and I've been
+doing some stuff with raspberry
+
+166
+00:11:03.050 --> 00:11:06.650
+pies. And a couple of
+weeks ago, I had Alex Ellis
+
+167
+00:11:06.940 --> 00:11:08.990
+on he's a Docker captain,
+and he's a big fan
+
+168
+00:11:08.990 --> 00:11:12.950
+of using Kubernetes on, on
+raspberry pies and, you know,
+
+169
+00:11:12.950 --> 00:11:15.020
+learning about it kind of
+in my own little lab.
+
+170
+00:11:15.530 --> 00:11:18.020
+But, and then I did
+of course, some stuff in
+
+171
+00:11:18.020 --> 00:11:19.940
+Azure, but one of the
+things that I realized that
+
+172
+00:11:19.940 --> 00:11:22.160
+a lot of us short
+doing kind of hello, world
+
+173
+00:11:22.160 --> 00:11:24.770
+demos and learning about the
+basics of Kubernetes are doing
+
+174
+00:11:25.160 --> 00:11:29.150
+is we're kind of ignoring
+the database. Yeah. Because it's
+
+175
+00:11:29.150 --> 00:11:34.460
+tricky because previously just like
+a year ago, we didn't
+
+176
+00:11:34.460 --> 00:11:38.630
+have the stateful sets, which
+is a concept in Kubernetes
+
+177
+00:11:38.630 --> 00:11:42.950
+that allows you to run
+stateful applications. Right now we
+
+178
+00:11:42.950 --> 00:11:46.430
+have this concept and it
+really simplifies how we manage
+
+179
+00:11:46.430 --> 00:11:50.810
+storage with Kubernetes. So we
+can, we can, of course,
+
+180
+00:11:51.230 --> 00:11:57.190
+Mount a persistent volume that
+Stateville sets help us with
+
+181
+00:11:57.190 --> 00:12:01.450
+automating all of this under,
+underneath. And we just define
+
+182
+00:12:01.450 --> 00:12:06.100
+our template with the persistent
+volume claim. And it manages
+
+183
+00:12:06.130 --> 00:12:11.650
+all the mounting automatically and
+make sure that if something
+
+184
+00:12:11.650 --> 00:12:15.250
+happens, it will remounted. And
+you can specify settings to
+
+185
+00:12:15.550 --> 00:12:20.530
+make sure that let's say,
+if you have multiple instances
+
+186
+00:12:20.530 --> 00:12:23.590
+of the application, that none
+of them are scheduled on
+
+187
+00:12:23.590 --> 00:12:27.430
+the same node, because it
+might be not really reliable.
+
+188
+00:12:28.300 --> 00:12:31.360
+So actually in my demo,
+it was showing exactly that
+
+189
+00:12:31.420 --> 00:12:37.540
+when I deployed Sandra on
+Kubernedes and mounted Azure disks
+
+190
+00:12:37.570 --> 00:12:41.770
+to it, manage discs and
+showed how, if something happens
+
+191
+00:12:41.770 --> 00:12:45.880
+to a container, it reads
+it restarts, and then data
+
+192
+00:12:45.880 --> 00:12:49.390
+is not lost. So basically
+it helps us to manage
+
+193
+00:12:49.390 --> 00:12:53.730
+this state. Maybe you could
+help me better understand stateful
+
+194
+00:12:53.730 --> 00:12:56.640
+sets. I've heard that number
+of times. You've said it
+
+195
+00:12:56.640 --> 00:13:00.660
+a couple of times, and
+I still don't quite understand
+
+196
+00:13:00.690 --> 00:13:05.010
+what, how that relates, like
+which part of my app
+
+197
+00:13:05.040 --> 00:13:07.920
+is supposed to be totally
+stateless and to be fired
+
+198
+00:13:07.920 --> 00:13:11.340
+up and shut down instantly.
+And then whether a stateful
+
+199
+00:13:11.340 --> 00:13:13.920
+set is going to make
+my site less likely to
+
+200
+00:13:13.920 --> 00:13:18.930
+scale. I see what you
+mean. So containers in general
+
+201
+00:13:19.200 --> 00:13:22.560
+are when you think about
+containers, they're basically meant as
+
+202
+00:13:22.620 --> 00:13:28.770
+stateless services. When we have
+some sort of important information
+
+203
+00:13:28.770 --> 00:13:32.970
+that we can't just, we
+can't allow to be lost,
+
+204
+00:13:33.660 --> 00:13:37.440
+we must have some sort
+of persistent storage, because if
+
+205
+00:13:37.440 --> 00:13:41.550
+something happens to pod, everything
+can happen. It can die.
+
+206
+00:13:43.290 --> 00:13:47.010
+We will lose our state
+with usual deployment or replica
+
+207
+00:13:47.010 --> 00:13:51.990
+set in Kubernetes. So we
+have to have persistent volumes
+
+208
+00:13:51.990 --> 00:13:59.190
+attached and manage our state,
+manage, manage our data in
+
+209
+00:13:59.190 --> 00:14:03.750
+the stateful way. So Kubernetes
+has this concept of storage
+
+210
+00:14:03.780 --> 00:14:07.260
+class that you can choose
+from. So I know that
+
+211
+00:14:07.260 --> 00:14:09.480
+I've played around with this
+on Azure, and it has
+
+212
+00:14:09.660 --> 00:14:14.730
+managed disks or a file
+storage, or some default storage
+
+213
+00:14:14.730 --> 00:14:17.520
+classes. You can choose what
+type of storage you can
+
+214
+00:14:17.910 --> 00:14:22.080
+have for your pots. And
+then in the template definition
+
+215
+00:14:23.180 --> 00:14:28.500
+of your service, like Cassandra
+service, we have an additional
+
+216
+00:14:28.530 --> 00:14:33.480
+section which is called volume
+clean templates. And there, we
+
+217
+00:14:33.480 --> 00:14:39.500
+indicate that we want each
+pod to start with a
+
+218
+00:14:39.510 --> 00:14:43.110
+mounted storage of the type
+of the storage class that
+
+219
+00:14:43.110 --> 00:14:47.670
+we have chosen. We're all
+saying indicating the amount of
+
+220
+00:14:47.670 --> 00:14:52.220
+storage, some like one gigabytes
+or how gigabytes your warrant,
+
+221
+00:14:52.880 --> 00:14:56.510
+and then when each part
+starts up, it requests the
+
+222
+00:14:56.510 --> 00:15:00.920
+storage ways for it to
+be provisioned and attaches it
+
+223
+00:15:01.070 --> 00:15:06.470
+to the noted resides on.
+So basically if something happens
+
+224
+00:15:06.470 --> 00:15:10.850
+to this container after a
+while, the volume will be
+
+225
+00:15:10.850 --> 00:15:14.690
+remounted and data will be
+still there and not lost.
+
+226
+00:15:16.090 --> 00:15:17.830
+Okay. So let me see
+if I can repeat some
+
+227
+00:15:17.830 --> 00:15:21.220
+of that back to you
+and like, paraphrases, can you
+
+228
+00:15:21.220 --> 00:15:25.060
+tell me if I got
+it right? Okay. So if
+
+229
+00:15:25.060 --> 00:15:27.730
+you're like an administrator or
+an it department who is
+
+230
+00:15:27.730 --> 00:15:32.050
+going to make Kubernetes and
+make hardware available to Kubernetes,
+
+231
+00:15:32.740 --> 00:15:34.930
+you have lots of different
+options on how you can
+
+232
+00:15:34.930 --> 00:15:39.670
+give them a storage. And
+the administrator can say, I
+
+233
+00:15:39.670 --> 00:15:42.340
+have different classes of storage,
+different things, and it could
+
+234
+00:15:42.340 --> 00:15:45.910
+be different speeds or different
+quality of service or different
+
+235
+00:15:45.910 --> 00:15:47.890
+whatever. And I can say,
+I've got an Azure disc
+
+236
+00:15:47.890 --> 00:15:51.100
+available, I've got an unmanaged
+Azure disc, I've got whatever.
+
+237
+00:15:51.460 --> 00:15:55.480
+Okay. And my app might
+need different kinds of storage.
+
+238
+00:15:55.510 --> 00:15:58.000
+Like I might just need
+temporary storage, or I might
+
+239
+00:15:58.000 --> 00:16:00.100
+need super fast storage and
+I need you to hold
+
+240
+00:16:00.100 --> 00:16:02.710
+onto it so that if
+I go away, the storage
+
+241
+00:16:02.710 --> 00:16:07.720
+doesn't go away. Okay. So
+then I describe in my,
+
+242
+00:16:08.980 --> 00:16:12.460
+basically in my, in my
+pod that, or in my
+
+243
+00:16:12.460 --> 00:16:16.030
+district, what's it called? What's
+the, where am I describing
+
+244
+00:16:16.030 --> 00:16:17.770
+this? How am I making
+this declaration? There is a
+
+245
+00:16:17.770 --> 00:16:21.600
+file. You can, you can
+have a Yammel file with
+
+246
+00:16:21.610 --> 00:16:24.400
+a definition of our state
+set, where you indicate all
+
+247
+00:16:24.400 --> 00:16:29.380
+of this parameters. Right. Okay.
+So then I'm describing in
+
+248
+00:16:29.380 --> 00:16:33.190
+there, what I want, and
+then persistent volumes can then
+
+249
+00:16:33.190 --> 00:16:36.100
+say, well, I need this
+much space. I need these
+
+250
+00:16:36.100 --> 00:16:38.050
+ways to talk to it.
+I need this class of
+
+251
+00:16:38.050 --> 00:16:41.050
+storage and I need to
+Mount it. And then I
+
+252
+00:16:41.050 --> 00:16:44.190
+think the term is reclaiming.
+Yeah. Yeah. So basically full
+
+253
+00:16:44.190 --> 00:16:48.130
+Luke, even deeper. What is
+happening when we perform the
+
+254
+00:16:48.130 --> 00:16:52.780
+command cube CTL dash create
+dash AF my stateful set
+
+255
+00:16:52.870 --> 00:16:58.390
+that Yammel, we will start
+noticing that. Okay. So there
+
+256
+00:16:58.390 --> 00:17:01.810
+is the first pod creating
+right now. And when we
+
+257
+00:17:01.810 --> 00:17:06.070
+look into persistent volume claims,
+we can also check them
+
+258
+00:17:06.070 --> 00:17:09.490
+using Kube CTL. We can
+do cube, CTL, get a
+
+259
+00:17:09.580 --> 00:17:12.670
+PVC, which is a persistent
+volume claim. We can see
+
+260
+00:17:12.670 --> 00:17:16.270
+that it starts to get
+created. So it's like a
+
+261
+00:17:16.300 --> 00:17:20.920
+request for storage. And then
+after we have the request
+
+262
+00:17:20.920 --> 00:17:24.640
+for storage, we can look
+into persistent volumes, which is
+
+263
+00:17:24.850 --> 00:17:27.880
+gives to TL, get BV.
+And then we will notice
+
+264
+00:17:27.880 --> 00:17:30.640
+that it is also starting
+to be created. As soon
+
+265
+00:17:30.640 --> 00:17:34.540
+as it's done, our pod
+will start pulling the container
+
+266
+00:17:34.540 --> 00:17:38.170
+image and we'll be ready
+and running, and then same
+
+267
+00:17:38.170 --> 00:17:43.030
+stuff for the next, for
+the next pod. And one
+
+268
+00:17:43.030 --> 00:17:46.300
+of the good things about
+stateful set is that all
+
+269
+00:17:46.300 --> 00:17:49.980
+the pods are created in
+order, because for some distributed
+
+270
+00:17:49.980 --> 00:17:56.190
+systems, it's really important. Like
+for Sandra, basically you need
+
+271
+00:17:56.430 --> 00:17:59.700
+the notes to be aware
+of some existing nodes in
+
+272
+00:17:59.700 --> 00:18:02.100
+the, in the cluster, because
+you have to indicate the
+
+273
+00:18:02.100 --> 00:18:04.860
+seed nodes, which has the
+way new nodes can join
+
+274
+00:18:04.860 --> 00:18:10.020
+the cluster and discover, discover
+other nodes. So syphilis says
+
+275
+00:18:10.020 --> 00:18:16.320
+help with state and with
+ordering of creation and deletion
+
+276
+00:18:16.320 --> 00:18:21.500
+and updates. So that is
+really useful When you're creating
+
+277
+00:18:21.500 --> 00:18:24.260
+these systems like this, when
+you're, and you're asking for
+
+278
+00:18:24.260 --> 00:18:28.610
+storage classes, you're asking for
+discs, I've found in all
+
+279
+00:18:28.610 --> 00:18:30.950
+the clouds. I mean, I
+know mostly more about Azure,
+
+280
+00:18:30.950 --> 00:18:33.320
+but I've found in every
+cloud that there's sometimes a
+
+281
+00:18:33.320 --> 00:18:35.990
+lot of latency. Like you
+think you, you're asking for
+
+282
+00:18:35.990 --> 00:18:39.410
+a real disk, but it's
+not real. It's out there
+
+283
+00:18:39.410 --> 00:18:43.550
+somewhere else on a network
+and you're talking over HTTP
+
+284
+00:18:43.550 --> 00:18:45.440
+or something else. When you
+think you're talking to a
+
+285
+00:18:45.440 --> 00:18:49.550
+real desk, can that be
+a problem with scale? Usually
+
+286
+00:18:49.550 --> 00:18:53.480
+not because for me, my
+experience that happens pretty fast.
+
+287
+00:18:53.600 --> 00:18:57.440
+And you can watch, you
+can watch that your followers
+
+288
+00:18:57.440 --> 00:18:59.870
+are creating pretty quick, and
+you can notice them on
+
+289
+00:18:59.870 --> 00:19:03.410
+Azure, for example, in your
+resource group, as actual resource
+
+290
+00:19:03.440 --> 00:19:07.040
+of data disk. So you
+can always check that they're
+
+291
+00:19:07.040 --> 00:19:10.250
+healthy up and running. And
+so I haven't seen this
+
+292
+00:19:10.250 --> 00:19:15.200
+issue And the, the, the
+premier D premium storage it's
+
+293
+00:19:15.200 --> 00:19:19.250
+quite fast. It feels like
+it's a, It does. That's
+
+294
+00:19:19.250 --> 00:19:25.040
+what I've tried for my
+demo managed storage. Yep. And
+
+295
+00:19:25.040 --> 00:19:27.470
+how long did it take
+you to get, you said
+
+296
+00:19:27.470 --> 00:19:30.350
+news, Cassandra to get that
+up and running on Kubernetes
+
+297
+00:19:30.350 --> 00:19:33.650
+on Azure? Well, I, I
+had previous experience with both
+
+298
+00:19:33.680 --> 00:19:39.710
+Kubernedes and Cassandra. So it,
+it took me about, I
+
+299
+00:19:39.710 --> 00:19:41.990
+think, a few hours to
+get this up and running.
+
+300
+00:19:42.020 --> 00:19:46.400
+So, yeah. Yeah. That's pretty
+exciting. Yeah. So does this
+
+301
+00:19:46.400 --> 00:19:49.070
+mean that is this mean,
+and this might be a
+
+302
+00:19:49.070 --> 00:19:52.580
+silly sentence, but it, can
+we start using Kubernetes for
+
+303
+00:19:52.580 --> 00:19:55.550
+basically anything? Could I take
+all kinds of apps that
+
+304
+00:19:55.550 --> 00:19:57.740
+don't belong in Kubernetes and
+put them in Kubernetes and
+
+305
+00:19:57.740 --> 00:20:01.280
+it'll be just fine? Well,
+I would say I've been
+
+306
+00:20:01.280 --> 00:20:05.780
+trying this for development purposes
+because of course there will
+
+307
+00:20:05.780 --> 00:20:09.440
+be. So when you were
+on a production database, our
+
+308
+00:20:09.440 --> 00:20:14.330
+production system was state. You
+expect some sort of performance
+
+309
+00:20:14.330 --> 00:20:16.400
+from it. So when you
+run it on bare metal,
+
+310
+00:20:16.430 --> 00:20:19.820
+you will, of course have
+more speed and you have
+
+311
+00:20:20.510 --> 00:20:25.100
+for more expectations from it.
+The benefit of doing a
+
+312
+00:20:25.220 --> 00:20:30.170
+distributed database on Kubernetes is
+that you can easily get
+
+313
+00:20:30.170 --> 00:20:32.810
+started with it and you
+don't have to, you can
+
+314
+00:20:32.840 --> 00:20:36.080
+easily remove it. You don't
+have to pay for the
+
+315
+00:20:36.110 --> 00:20:39.980
+service to be running because
+it's really hard to create
+
+316
+00:20:39.980 --> 00:20:42.200
+it and deleted. So when
+you have a bare metal
+
+317
+00:20:42.200 --> 00:20:46.250
+cluster, you will just have
+it for your in development,
+
+318
+00:20:46.250 --> 00:20:49.930
+intestine purposes, and production. And
+it's, it's hard to do
+
+319
+00:20:49.930 --> 00:20:52.480
+everything with it because it's
+up and running. You don't
+
+320
+00:20:52.480 --> 00:20:56.620
+want to touch it. And
+it's expensive with Kubernetes. You
+
+321
+00:20:57.430 --> 00:21:01.600
+have the benefit of spun
+this up quickly, being able
+
+322
+00:21:01.600 --> 00:21:04.780
+to be flexible and get
+rid of it at any
+
+323
+00:21:05.050 --> 00:21:08.770
+moment you want and then
+create it very easily. So
+
+324
+00:21:08.770 --> 00:21:12.250
+you don't have to overpay
+for your resources so you
+
+325
+00:21:12.250 --> 00:21:15.820
+can benefit from it right
+now for Devin. Test that
+
+326
+00:21:16.060 --> 00:21:19.330
+with production. I would probably
+wait a little bit because
+
+327
+00:21:20.500 --> 00:21:23.170
+there are some, there might
+be some issues because the
+
+328
+00:21:23.170 --> 00:21:26.320
+technology is still pretty new
+and there are still some
+
+329
+00:21:26.320 --> 00:21:29.980
+issues on GitHub regarding some
+corner cases and edge cases
+
+330
+00:21:29.980 --> 00:21:34.550
+that are now being worked
+on. Yeah. I think the
+
+331
+00:21:34.560 --> 00:21:37.650
+question that everyone wants to
+know is when Kubernetes will
+
+332
+00:21:37.650 --> 00:21:39.990
+be kind of like stop
+moving so fast, because it
+
+333
+00:21:39.990 --> 00:21:42.810
+always feels like there's just
+a couple of little things
+
+334
+00:21:42.810 --> 00:21:47.310
+that might change from, from
+minor, minor, minor point. I
+
+335
+00:21:47.310 --> 00:21:49.800
+feel like Cabrini does right
+now is going through its
+
+336
+00:21:49.800 --> 00:21:53.760
+stage of growth because everybody
+knows is dead. It is
+
+337
+00:21:53.760 --> 00:21:59.070
+useful. And we still don't
+have the ecosystem and standards
+
+338
+00:21:59.400 --> 00:22:02.400
+in the same way. And,
+and the same quality that
+
+339
+00:22:02.610 --> 00:22:07.830
+we had for VMs and
+usual, not containerized applications. So
+
+340
+00:22:08.250 --> 00:22:12.030
+the community is very vibrant.
+And at CubeCon in December,
+
+341
+00:22:12.030 --> 00:22:15.960
+I was shocked by number
+of little projects that are
+
+342
+00:22:16.080 --> 00:22:24.300
+in Kubernetes ecosystem related to
+everything, observability, logging, distributed, tracing,
+
+343
+00:22:24.330 --> 00:22:29.730
+machine learning, and this all
+starts to a fear around
+
+344
+00:22:29.730 --> 00:22:34.500
+Kubernetes. And I completely agree
+that it's hard to keep
+
+345
+00:22:34.500 --> 00:22:37.800
+track of it, but it
+is a necessary stage of
+
+346
+00:22:38.370 --> 00:22:43.920
+development for a tool that
+will finally probably obtain some
+
+347
+00:22:43.920 --> 00:22:49.020
+sort of stability eventually. So
+if we kind of popped
+
+348
+00:22:49.020 --> 00:22:51.480
+a few things off the
+stack and go back to
+
+349
+00:22:51.480 --> 00:22:54.980
+F sharp and, and functional
+programming in your language of
+
+350
+00:22:55.350 --> 00:22:58.200
+preference, when you take, you
+know, Cassandra, which you like
+
+351
+00:22:58.290 --> 00:23:01.950
+Docker, Azure and Kubernetes, and
+then you add F sharp
+
+352
+00:23:01.950 --> 00:23:06.120
+on top of them, does
+does the, the immutable functional
+
+353
+00:23:06.120 --> 00:23:08.910
+world of F sharp fit
+really well into the stateless
+
+354
+00:23:08.940 --> 00:23:13.350
+and scalable world of, of
+Kubernetes. It does fit pretty
+
+355
+00:23:13.350 --> 00:23:17.280
+well on Cabrini. I can
+mix and match languages that
+
+356
+00:23:17.280 --> 00:23:21.240
+I use on Kubernetes. So
+I'm using multiple languages for
+
+357
+00:23:21.240 --> 00:23:24.630
+my services. I can use
+Scala in one service, I've
+
+358
+00:23:24.630 --> 00:23:28.560
+sharpened and as a service.
+So whatever is more suitable
+
+359
+00:23:28.560 --> 00:23:33.090
+for piece of functionality that
+I'm deploying, but I agree
+
+360
+00:23:33.090 --> 00:23:39.060
+that functional programming is really
+fitting into the distributed systems
+
+361
+00:23:39.060 --> 00:23:44.070
+paradigm as well. And it's
+interesting to basically also go
+
+362
+00:23:44.070 --> 00:23:50.090
+deeper in how Kubernetes is
+built and see how scheduling
+
+363
+00:23:50.090 --> 00:23:56.030
+is made. So full look
+into components of Kubernetes ecosystem.
+
+364
+00:23:56.840 --> 00:24:00.470
+There is an it CD
+server, which is like a
+
+365
+00:24:00.470 --> 00:24:04.190
+key value store, the cluster
+database. And then we have
+
+366
+00:24:04.220 --> 00:24:08.480
+API server that excesses at
+CD, we have basically the
+
+367
+00:24:08.480 --> 00:24:13.670
+controller, is that, is it
+like a infinite reconciliation loop
+
+368
+00:24:13.730 --> 00:24:18.890
+pattern that checks for our
+state? That is, that is
+
+369
+00:24:18.890 --> 00:24:22.280
+we have currently and the
+desired state and then compares
+
+370
+00:24:22.280 --> 00:24:26.570
+it and makes our current
+state the same as desired
+
+371
+00:24:26.570 --> 00:24:30.710
+state and then scheduling pods.
+And if we look at
+
+372
+00:24:31.280 --> 00:24:34.730
+algorithms that are used underneath
+in distributed systems, we can
+
+373
+00:24:34.730 --> 00:24:38.360
+see that a lot of
+them are actually functional for
+
+374
+00:24:38.360 --> 00:24:44.240
+look at Prudential distributed commit
+log that Kafka uses, or
+
+375
+00:24:44.240 --> 00:24:47.780
+that spark uses. We can
+see that they're all based
+
+376
+00:24:47.780 --> 00:24:52.970
+in the concept of immutability
+and how two worlds collide
+
+377
+00:24:53.000 --> 00:24:58.210
+together. That's an interesting point.
+Have you seen, I'm sure
+
+378
+00:24:58.210 --> 00:25:05.170
+you have Julia Evans, Kubernetes zenes
+and Yes, I have. I'm
+
+379
+00:25:05.170 --> 00:25:10.870
+a big fan of her
+diagrams, I would say. Yeah,
+
+380
+00:25:11.170 --> 00:25:13.390
+well, you were, I was
+looking at them while you
+
+381
+00:25:13.390 --> 00:25:16.750
+were describing how, you know,
+at CD and just scheduling
+
+382
+00:25:16.750 --> 00:25:19.420
+and all that kind of
+things work. And it definitely,
+
+383
+00:25:19.420 --> 00:25:22.090
+I would recommend it to
+folks when you're listening to
+
+384
+00:25:22.090 --> 00:25:24.550
+this podcast or when you're
+learning about Kubernetes and distributed
+
+385
+00:25:24.550 --> 00:25:27.940
+systems, Julia Evans, as she is
+learning is, is drawing a
+
+386
+00:25:27.940 --> 00:25:30.160
+lot of these things up
+in a very, a very
+
+387
+00:25:30.160 --> 00:25:32.590
+clever kind of comic book
+Xen kind of way, which
+
+388
+00:25:32.590 --> 00:25:38.050
+is cool. Exactly. So I'm
+thinking about F sharp and
+
+389
+00:25:38.050 --> 00:25:41.800
+the future. I know that
+we've got F sharp roadmaps
+
+390
+00:25:41.830 --> 00:25:45.880
+published from August. We've got
+gotten at standard 2.0 coming.
+
+391
+00:25:46.270 --> 00:25:49.120
+You were saying that functional
+programming really lends itself to
+
+392
+00:25:49.120 --> 00:25:52.840
+this new world. If you
+think about micro services or
+
+393
+00:25:53.020 --> 00:25:54.910
+people are now telling me
+that they want even smaller
+
+394
+00:25:54.910 --> 00:25:58.120
+services, I don't know, Pecos
+services or nanoserver is making
+
+395
+00:25:58.120 --> 00:26:04.210
+a function, a distributed Well,
+yeah, people are, are trying
+
+396
+00:26:04.210 --> 00:26:08.710
+to experiment with the amount
+of code they've put into
+
+397
+00:26:08.710 --> 00:26:14.320
+services. And I see that
+functions are becoming pretty popular
+
+398
+00:26:15.280 --> 00:26:18.940
+when you want to have
+some event trigger and trigger
+
+399
+00:26:18.940 --> 00:26:22.060
+an execution of a function
+like you can use Azure
+
+400
+00:26:22.060 --> 00:26:25.570
+functions or AWS Lambda, and
+if sharp is supported. So
+
+401
+00:26:25.600 --> 00:26:28.090
+it was one of the
+first languages that was supported
+
+402
+00:26:28.480 --> 00:26:31.330
+by these tools. So you
+have many options to do
+
+403
+00:26:31.330 --> 00:26:37.450
+that. Have you looked at
+open, fast, open FAA functions
+
+404
+00:26:37.450 --> 00:26:41.500
+as a service? A couple
+of weeks ago, like I
+
+405
+00:26:41.500 --> 00:26:46.050
+mentioned, we had Alex Ellis and
+he's basically making like, it's
+
+406
+00:26:46.050 --> 00:26:50.280
+like Azure functions, except it's
+open it's its own, it's
+
+407
+00:26:50.280 --> 00:26:53.790
+his own Azure functions. And
+then we've also seen Azure
+
+408
+00:26:53.790 --> 00:26:56.760
+functions, runtime released. So you
+could go and run the
+
+409
+00:26:56.760 --> 00:27:00.630
+Azure functions, runtime on another
+cloud as a container if
+
+410
+00:27:00.630 --> 00:27:04.010
+you want it. That sounds
+cool. I also see a
+
+411
+00:27:04.010 --> 00:27:10.670
+lot of, a lot of
+technologists shift into streaming and
+
+412
+00:27:10.670 --> 00:27:17.750
+stream processing. So we have
+IOT devices and various devices
+
+413
+00:27:17.750 --> 00:27:22.190
+that have sensors or anything
+similar to that. And they
+
+414
+00:27:22.730 --> 00:27:25.550
+have a lot of data.
+So I have noticed that
+
+415
+00:27:26.180 --> 00:27:30.560
+use of technologies like Kafka
+and spark streaming increased traumatically
+
+416
+00:27:30.560 --> 00:27:33.500
+in the last few years,
+the kids there is a
+
+417
+00:27:33.500 --> 00:27:39.230
+need to gather data from
+various sources and they can
+
+418
+00:27:39.230 --> 00:27:42.950
+come in with different speed.
+They can be produced from
+
+419
+00:27:43.610 --> 00:27:46.610
+different producers. And then we
+have multiple consumers that are
+
+420
+00:27:46.640 --> 00:27:50.450
+independent of each other, and
+we need to somehow manage
+
+421
+00:27:50.480 --> 00:27:54.980
+the two parts of this
+process producing and consuming. We
+
+422
+00:27:54.980 --> 00:27:58.910
+need the thing between layer
+to be durable because anything
+
+423
+00:27:58.910 --> 00:28:02.780
+can happen to these events.
+So I've noticed a big
+
+424
+00:28:02.930 --> 00:28:06.890
+increase of usage in technologies
+like Kafka and spark streaming,
+
+425
+00:28:06.920 --> 00:28:12.200
+where basically, so I've tried
+it on Azure, on HD
+
+426
+00:28:12.200 --> 00:28:15.650
+insight and data bricks, and
+it works amazing. And it
+
+427
+00:28:15.800 --> 00:28:20.780
+basically integrates with a lot
+of existing tools. So just
+
+428
+00:28:20.780 --> 00:28:25.790
+another, another trend that appears
+to be popular. So doing
+
+429
+00:28:25.790 --> 00:28:28.790
+something like Kafka and that's
+K F K, and people
+
+430
+00:28:28.790 --> 00:28:31.460
+can go and check it
+out@kafkadotapache.org. And we've also got
+
+431
+00:28:31.460 --> 00:28:38.150
+Kafka on Azure. This is
+much more, much more custom
+
+432
+00:28:38.150 --> 00:28:39.860
+than just what we did
+in the old days, which
+
+433
+00:28:39.860 --> 00:28:41.840
+was put a bunch of
+stuff in a SQL server
+
+434
+00:28:41.840 --> 00:28:44.720
+table, and then read it
+from somewhere else like that
+
+435
+00:28:44.720 --> 00:28:46.820
+doesn't scale very much in
+a distributed system. Does it?
+
+436
+00:28:47.180 --> 00:28:52.820
+It does not because we
+have this problem of needing
+
+437
+00:28:52.820 --> 00:28:55.190
+to collect data from different
+sources. It can be a
+
+438
+00:28:55.190 --> 00:28:59.880
+database or like a database
+table that populates with different
+
+439
+00:28:59.880 --> 00:29:03.410
+speed, or we can have
+events that come in from
+
+440
+00:29:03.410 --> 00:29:08.840
+various systems. So, and we
+need to somehow integrate these
+
+441
+00:29:08.900 --> 00:29:15.170
+multiple sources. And if we
+do it by writing separate
+
+442
+00:29:15.170 --> 00:29:18.680
+thesis for each of them,
+it becomes unmanageable. And then
+
+443
+00:29:18.680 --> 00:29:21.170
+we have to basically write
+the same code for every
+
+444
+00:29:21.170 --> 00:29:25.760
+system, not the same, but
+similar code for our systems.
+
+445
+00:29:26.030 --> 00:29:28.820
+And when we have to
+solve problems, like your ability,
+
+446
+00:29:28.820 --> 00:29:34.790
+scalability, where they're all solved
+in Kafka, if you learn
+
+447
+00:29:34.790 --> 00:29:37.520
+how to use it, you'll
+be able to basically have
+
+448
+00:29:37.520 --> 00:29:43.150
+a reliable, scalable commit log
+of events that you don't
+
+449
+00:29:43.150 --> 00:29:46.000
+have to consume right away,
+because it's durable. It has
+
+450
+00:29:46.000 --> 00:29:49.780
+that retention period, and it
+can have a flexible number
+
+451
+00:29:49.780 --> 00:29:55.150
+of consumers and it solves
+all the problems that appear
+
+452
+00:29:55.150 --> 00:30:02.340
+in the multiple event, multiple
+data sources problem. It seems
+
+453
+00:30:02.340 --> 00:30:04.980
+like, and, and I'll put
+some words in your mouth
+
+454
+00:30:04.980 --> 00:30:07.050
+and you tell me if
+this is correct, that you're
+
+455
+00:30:07.050 --> 00:30:10.230
+an advocate in distributed systems
+of definitely not reinventing the
+
+456
+00:30:10.230 --> 00:30:12.240
+wheel. Like if there's a
+problem, you don't need to
+
+457
+00:30:12.240 --> 00:30:14.790
+necessarily write that yourself. There's
+something that will do it.
+
+458
+00:30:15.900 --> 00:30:18.660
+That is true because there
+are a lot of systems
+
+459
+00:30:18.690 --> 00:30:22.620
+that already solve really hard
+problems. You can try, you
+
+460
+00:30:22.620 --> 00:30:26.760
+can try to solve it
+yourself, but you will notice
+
+461
+00:30:26.790 --> 00:30:31.710
+the pattern that other tools
+already implement. And if you
+
+462
+00:30:31.710 --> 00:30:34.650
+look into the code, you'll
+see that it is not
+
+463
+00:30:34.680 --> 00:30:38.010
+very trivial. So like when
+you look at the websites
+
+464
+00:30:38.070 --> 00:30:41.850
+of the most popular databases
+or distributed systems, do you
+
+465
+00:30:41.850 --> 00:30:45.810
+see that they say it
+fall tolerance, scalable, fast, low
+
+466
+00:30:45.810 --> 00:30:50.250
+latency. And all of these
+words are very abstract. So
+
+467
+00:30:50.340 --> 00:30:52.440
+you know that they are
+good. They mean that your
+
+468
+00:30:52.440 --> 00:30:58.200
+system is cool for you.
+They mean different things. So
+
+469
+00:30:58.950 --> 00:31:02.130
+there are there's, there is
+a lot of non triviality
+
+470
+00:31:02.130 --> 00:31:04.890
+in how it is implement
+it. So there is consensus
+
+471
+00:31:05.940 --> 00:31:11.370
+algorithms to make sure that
+your events and next step
+
+472
+00:31:11.370 --> 00:31:16.980
+of your replication or anything
+that requires coordination is performed
+
+473
+00:31:17.010 --> 00:31:21.000
+in order. And there are
+no conflicts. There is configuration
+
+474
+00:31:21.000 --> 00:31:26.010
+exchange for, there are things
+like gossip and algorithms for
+
+475
+00:31:26.040 --> 00:31:31.350
+metadata exchange, like the Sandra
+cluster uses or yak. And
+
+476
+00:31:31.770 --> 00:31:34.920
+there are many other things
+to ensure that your consistency
+
+477
+00:31:34.920 --> 00:31:40.140
+across the cluster is correct
+because there are mistakes in
+
+478
+00:31:40.140 --> 00:31:42.750
+replication, and sometimes we have
+to fix them. So we
+
+479
+00:31:42.750 --> 00:31:45.990
+need to know about things
+like hint attend off or
+
+480
+00:31:45.990 --> 00:31:49.830
+read pair or on tie
+entropy repairs. So, and when
+
+481
+00:31:49.830 --> 00:31:53.490
+you go and serve through
+the internet for how to
+
+482
+00:31:53.490 --> 00:31:57.870
+do this and that you
+basically are sucked into bunch
+
+483
+00:31:57.930 --> 00:32:02.520
+of distributed system papers that
+are very formal and hard
+
+484
+00:32:02.520 --> 00:32:04.710
+to read, but then you
+start to realize that all
+
+485
+00:32:04.710 --> 00:32:09.030
+of this existing solutions already
+implement them and, you know,
+
+486
+00:32:09.060 --> 00:32:13.620
+started noticing patterns and see
+that this word like fault
+
+487
+00:32:13.620 --> 00:32:18.000
+tolerance actually means these algorithms.
+So if you create a
+
+488
+00:32:18.000 --> 00:32:22.260
+new distributed systems that does
+not implement something that is
+
+489
+00:32:22.260 --> 00:32:26.010
+already implemented, then you will
+have to know all of
+
+490
+00:32:26.010 --> 00:32:31.920
+these things. That's very well
+said. I appreciate that. Thanks
+
+491
+00:32:31.920 --> 00:32:35.670
+so much for chatting with
+me today. Thank you. Folks
+
+492
+00:32:35.670 --> 00:32:42.320
+can check out lena@twitterdotcomslashlinadroidandlenagithub.io. She's
+got a ton of great
+
+493
+00:32:42.320 --> 00:32:45.350
+information on distributed systems and
+Azure and large scale and
+
+494
+00:32:45.350 --> 00:32:48.770
+functional programming. And I appreciate
+you. Thanks so much. Thanks.
+
+495
+00:32:49.490 --> 00:32:52.460
+This has been another episode
+of Hansel minutes, and we'll
+
+496
+00:32:52.460 --> 00:32:53.780
+see you again next week.
+

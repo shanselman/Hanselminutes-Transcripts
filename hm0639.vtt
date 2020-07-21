@@ -1,0 +1,3476 @@
+WEBVTT FILE
+
+1
+00:00:00.480 --> 00:00:03.210
+Hey friends. I just want
+to thank our sponsor. Next
+
+2
+00:00:03.210 --> 00:00:07.020
+Mo next Mo is an
+API platform that allows developers
+
+3
+00:00:07.020 --> 00:00:10.560
+to integrate communications features like
+voice and SMS into their
+
+4
+00:00:10.560 --> 00:00:15.110
+projects. Next most comprehensive set
+of tools includes powerful API
+
+5
+00:00:15.110 --> 00:00:19.200
+APIs, libraries, and SDKs that
+allow developers to build and
+
+6
+00:00:19.200 --> 00:00:22.470
+iterate quickly in the language
+of their choice, whether it's
+
+7
+00:00:22.470 --> 00:00:28.320
+C-sharp node, PHP, Java, Python,
+and more visit developer dot
+
+8
+00:00:28.350 --> 00:00:35.040
+<inaudible> dot com that's N
+E X M o.com/hansel. To
+
+9
+00:00:35.040 --> 00:00:39.570
+learn more about next month
+that's developer Dutton next mo.com/hansel,
+
+10
+00:00:39.570 --> 00:00:55.070
+H a N S E
+L to learn more. <inaudible>.
+
+11
+00:00:55.130 --> 00:00:57.260
+Hi, this is Scott Hanselman.
+This is another episode of
+
+12
+00:00:57.260 --> 00:01:00.170
+Hansel minutes. And today I'm
+talking with Julia Evans. She is
+
+13
+00:01:00.170 --> 00:01:05.150
+a infrastructure engineer at Stripe
+and a famous Xen creator.
+
+14
+00:01:05.150 --> 00:01:08.210
+I love your zenes and
+I'm excited every time I
+
+15
+00:01:08.210 --> 00:01:10.490
+see one go by on
+my timeline. Thanks so much
+
+16
+00:01:10.490 --> 00:01:14.510
+for having me on the
+show. Yeah, absolutely. So you
+
+17
+00:01:14.540 --> 00:01:18.140
+make zenes, they are kind
+of hard to define. What,
+
+18
+00:01:18.140 --> 00:01:20.360
+how would you call what
+is a Xen from your
+
+19
+00:01:20.360 --> 00:01:23.750
+perspective? I think a lot
+of the time people confuse
+
+20
+00:01:23.750 --> 00:01:26.420
+the word, like Xen and
+comic, if that makes sense.
+
+21
+00:01:26.570 --> 00:01:29.270
+So what I need to
+do is it's like usually
+
+22
+00:01:29.540 --> 00:01:32.990
+a handmade 20 page ish
+thing that you make, and
+
+23
+00:01:32.990 --> 00:01:36.350
+you either like giveaway yourself
+to people or is like,
+
+24
+00:01:36.350 --> 00:01:39.860
+it's something which is usually
+independently published. It's not like
+
+25
+00:01:39.860 --> 00:01:42.350
+the production values are not
+usually that high, right? Like
+
+26
+00:01:42.620 --> 00:01:44.270
+when I make scenes, I
+like print them on my
+
+27
+00:01:44.270 --> 00:01:46.790
+home printer and like give
+them to full or sell
+
+28
+00:01:46.790 --> 00:01:49.550
+them to people. Sometimes I
+go to my local print
+
+29
+00:01:49.550 --> 00:01:52.030
+shop and I'll print like
+200, but it's like, it's
+
+30
+00:01:52.030 --> 00:01:54.950
+like an independent undertaking where
+you write like a small
+
+31
+00:01:54.950 --> 00:01:57.620
+booklet about something that you
+love or that you think
+
+32
+00:01:57.620 --> 00:02:01.970
+more people should know that
+this makes me, it makes
+
+33
+00:02:01.970 --> 00:02:03.500
+me feel like I was,
+I was in like in
+
+34
+00:02:03.500 --> 00:02:06.110
+the eighties when I was
+in school, I would print
+
+35
+00:02:06.110 --> 00:02:09.410
+out like, like I couldn't
+afford like trading cards for
+
+36
+00:02:09.410 --> 00:02:11.330
+like, you know, garbage pail
+kids or whatever. So we
+
+37
+00:02:11.330 --> 00:02:13.700
+just make our own like,
+and cut them out with
+
+38
+00:02:13.700 --> 00:02:15.230
+scissors and give them to
+our friends. And they're all
+
+39
+00:02:15.230 --> 00:02:17.930
+black and white. And if
+you could find someone's copy
+
+40
+00:02:17.930 --> 00:02:20.150
+machine where you didn't have
+to pay 5 cents a page,
+
+41
+00:02:20.210 --> 00:02:22.550
+like all the better. Yeah.
+I think that's the, that's
+
+42
+00:02:22.550 --> 00:02:25.760
+the aesthetic. And then so
+like I make scenes, which
+
+43
+00:02:25.760 --> 00:02:29.750
+are collections of comics. And
+sometimes people refer to those
+
+44
+00:02:29.750 --> 00:02:31.880
+comics as deans, but as
+Dean, as like a, it
+
+45
+00:02:31.880 --> 00:02:36.590
+has multiple pages, like a
+thing, and some of them
+
+46
+00:02:36.620 --> 00:02:39.830
+are, have a lot of
+text. Like there's like some
+
+47
+00:02:39.830 --> 00:02:41.660
+of the, some of your
+Linux comics you have like
+
+48
+00:02:41.660 --> 00:02:46.460
+really cool, 24 page scene
+of comics, Lennox. And sometimes
+
+49
+00:02:46.460 --> 00:02:48.680
+there'll be like an, a
+whole page with like one
+
+50
+00:02:48.680 --> 00:02:51.590
+stick figure, but then you'll
+do other ones, like you
+
+51
+00:02:51.590 --> 00:02:54.500
+have a whole Xen on
+TCP dump, which is like
+
+52
+00:02:54.980 --> 00:02:57.860
+totally different art style. And
+it's very, very sophisticated. Your
+
+53
+00:02:57.860 --> 00:03:01.630
+art style seems to with
+the topic, Is that true?
+
+54
+00:03:01.630 --> 00:03:03.520
+I think that, that those
+two are the same, like
+
+55
+00:03:03.520 --> 00:03:06.550
+their covers, the cover of
+the TCP Dempsey in is
+
+56
+00:03:06.550 --> 00:03:09.510
+different, but Oh, okay. So
+the cover has a different
+
+57
+00:03:09.510 --> 00:03:12.240
+style than the inside. Yeah,
+because I hired illustrators to
+
+58
+00:03:12.240 --> 00:03:14.880
+do the covers, but I
+did everything inside to myself
+
+59
+00:03:14.910 --> 00:03:17.310
+and I only know how
+to draw stick figures. Oh,
+
+60
+00:03:17.310 --> 00:03:18.870
+okay. I w I was
+always wondering that, cause I,
+
+61
+00:03:18.900 --> 00:03:20.940
+when I saw they're kind
+of your most famous one
+
+62
+00:03:20.940 --> 00:03:22.440
+and you want to be
+a, so you want to
+
+63
+00:03:22.440 --> 00:03:25.110
+be a wizard, like I'm
+like, wow, she can draw
+
+64
+00:03:25.110 --> 00:03:28.380
+stick figures and this, this
+like totally comic front end
+
+65
+00:03:28.380 --> 00:03:30.240
+front end. So that's cool.
+So the cover art is
+
+66
+00:03:30.240 --> 00:03:33.270
+by another person. Yeah. I
+can only draw stick figures
+
+67
+00:03:33.810 --> 00:03:37.440
+actually. For sure. It's still
+a successful Xen art doing
+
+68
+00:03:37.440 --> 00:03:40.320
+only stick figures, DDM on
+the computer or is it
+
+69
+00:03:40.320 --> 00:03:42.510
+like an iPad pencil or
+something? I do them on
+
+70
+00:03:42.510 --> 00:03:46.380
+an iPad with the Apple
+pencil. Yeah. Yeah. I'm looking
+
+71
+00:03:46.380 --> 00:03:49.620
+at one for example. And
+I'm thinking to myself, okay.
+
+72
+00:03:49.620 --> 00:03:53.580
+Like, let's say, how does
+DNS work? Right. It's like
+
+73
+00:03:53.580 --> 00:03:58.050
+four frames of a comic
+and it's got a minimal
+
+74
+00:03:58.050 --> 00:04:01.020
+amount of text and some
+stick figures. If I copied
+
+75
+00:04:01.020 --> 00:04:04.050
+it as a PowerPoint, I
+have a feeling it would
+
+76
+00:04:04.050 --> 00:04:06.900
+not go viral and no
+one would care and it
+
+77
+00:04:06.900 --> 00:04:09.930
+probably wouldn't teach anyone. But
+it's so fun in the
+
+78
+00:04:09.930 --> 00:04:12.990
+style. Like why does a
+Xen work when a PowerPoint
+
+79
+00:04:12.990 --> 00:04:16.530
+doesn't? So, one thing that
+I actually think is really
+
+80
+00:04:16.560 --> 00:04:19.620
+important about deans is kind
+of like the physical nature
+
+81
+00:04:19.620 --> 00:04:22.680
+of them. Like, like I
+write, I definitely like have
+
+82
+00:04:22.680 --> 00:04:24.900
+them on the internet and
+like, I let people read
+
+83
+00:04:24.900 --> 00:04:27.750
+them on the internet and
+you can read it on
+
+84
+00:04:27.750 --> 00:04:31.950
+your screen. Of course. But
+the reason I started writing
+
+85
+00:04:31.950 --> 00:04:34.380
+scenes is that I was
+going to a conference. I
+
+86
+00:04:34.380 --> 00:04:36.090
+was going to pike on
+actually. And I was giving
+
+87
+00:04:36.090 --> 00:04:38.070
+a talk at Python, which
+was a big deal. And
+
+88
+00:04:38.070 --> 00:04:40.110
+I was very excited and
+I decided to bring it
+
+89
+00:04:40.110 --> 00:04:42.480
+a long and hand it
+out to everyone in the
+
+90
+00:04:42.480 --> 00:04:44.670
+audience. Right. So I went
+to the fringe drop, like
+
+91
+00:04:44.670 --> 00:04:48.270
+paid $200, like printed, a
+few hundred scenes. And then
+
+92
+00:04:48.270 --> 00:04:50.910
+I gave them out to
+everyone. And like, people have
+
+93
+00:04:50.910 --> 00:04:52.320
+told me, they were like,
+Oh, I still have that
+
+94
+00:04:52.320 --> 00:04:54.390
+scene. And I still like,
+look at it like four
+
+95
+00:04:54.390 --> 00:04:57.270
+years later. Right. And of
+course it's never going to
+
+96
+00:04:57.270 --> 00:05:00.490
+happen with a PowerPoint. Right.
+Or the, or they'll say
+
+97
+00:05:00.490 --> 00:05:02.430
+like, Oh, I saw your
+Z. And like someone gave
+
+98
+00:05:02.430 --> 00:05:04.200
+it to me or I
+saw it in someone's office
+
+99
+00:05:04.200 --> 00:05:05.910
+and I picked it up
+and then I learned something.
+
+100
+00:05:06.210 --> 00:05:08.160
+And I think that, like
+the fact that it's like
+
+101
+00:05:08.160 --> 00:05:10.170
+an artifact in the world,
+but you can like pass
+
+102
+00:05:10.170 --> 00:05:12.360
+around and give to your
+friends. It makes it something
+
+103
+00:05:12.360 --> 00:05:14.040
+that I think is a
+lot easier to learn from.
+
+104
+00:05:14.370 --> 00:05:17.490
+Interesting. That it does. It's
+interesting because you want it
+
+105
+00:05:17.490 --> 00:05:22.710
+to seem small and personal,
+but if it's scales, like
+
+106
+00:05:22.710 --> 00:05:25.260
+if you became super famous
+Jean person, how would you
+
+107
+00:05:25.260 --> 00:05:27.810
+make them all small and
+personal for a million people?
+
+108
+00:05:28.500 --> 00:05:31.230
+Well, I don't know. This
+is a good question, but
+
+109
+00:05:31.230 --> 00:05:32.580
+I feel like I've read
+a lot of books, which
+
+110
+00:05:32.590 --> 00:05:36.180
+did feel like small and
+personal to me, if that
+
+111
+00:05:36.390 --> 00:05:38.790
+makes sense. Like, cause like
+sometimes when you, when you
+
+112
+00:05:38.790 --> 00:05:40.680
+read a book, it like,
+it feels like the person
+
+113
+00:05:40.680 --> 00:05:43.560
+is just speaking to you.
+Right. And you're like, Oh,
+
+114
+00:05:43.560 --> 00:05:45.450
+this is like, this book
+was written for me. How
+
+115
+00:05:45.450 --> 00:05:48.660
+did you know? And I
+think that's kind of the
+
+116
+00:05:48.660 --> 00:05:51.600
+feeling I want in part
+is like, hello, I wrote
+
+117
+00:05:51.600 --> 00:05:55.140
+this for you. Yeah. That's
+really cool. And I think
+
+118
+00:05:55.140 --> 00:05:57.880
+that's like the amazing thing
+about print. Right. And, and
+
+119
+00:05:57.880 --> 00:06:01.660
+about writing, Do you even
+like this, this started out
+
+120
+00:06:01.660 --> 00:06:03.550
+and you print it out
+for 200 people, but do
+
+121
+00:06:03.550 --> 00:06:06.070
+you do like thousand print
+runs now? And like it's
+
+122
+00:06:06.100 --> 00:06:09.580
+become a big thing. Yeah.
+So I spoke at deconstruct
+
+123
+00:06:09.580 --> 00:06:11.850
+recently, which is this conference
+in Seattle and we printed
+
+124
+00:06:11.860 --> 00:06:15.340
+two thousands genes. Oh wow.
+Which was really fun. Yeah.
+
+125
+00:06:15.340 --> 00:06:17.890
+We've like we printed copies,
+like maybe 300 copies of
+
+126
+00:06:17.990 --> 00:06:21.190
+all of, all of my
+scenes. Do you consciously try
+
+127
+00:06:21.190 --> 00:06:24.040
+to make them like, and
+forgive the way I'm phrasing
+
+128
+00:06:24.040 --> 00:06:27.700
+this? Like not polished, like
+for example, if a Xen
+
+129
+00:06:27.700 --> 00:06:31.120
+is like you photocopied and
+then slightly a skew, it
+
+130
+00:06:31.120 --> 00:06:34.360
+just means it has personality.
+Right. But if you did
+
+131
+00:06:34.360 --> 00:06:36.790
+like an actual print run
+for like a New York times
+
+132
+00:06:36.790 --> 00:06:39.340
+bestselling something and it was
+a skew, people would like
+
+133
+00:06:39.370 --> 00:06:43.930
+lose their minds. Yeah. It
+do. Is it intentional? I
+
+134
+00:06:43.930 --> 00:06:46.180
+mean, it's kind of a
+matter of like, I'm not
+
+135
+00:06:46.690 --> 00:06:51.370
+an extremely good designer or
+artist. Right. Like, so I
+
+136
+00:06:51.370 --> 00:06:52.990
+think that there's kind of
+like an upper limit to
+
+137
+00:06:52.990 --> 00:06:55.570
+like the metaphors. I'm probably
+as close as you can
+
+138
+00:06:55.570 --> 00:06:57.370
+go into produce, especially because
+I do it in my
+
+139
+00:06:57.370 --> 00:07:00.880
+spare time. Right. Like I
+do it after work. So
+
+140
+00:07:01.990 --> 00:07:04.030
+I think it's just not
+going to happen. Like maybe
+
+141
+00:07:04.030 --> 00:07:05.950
+at some point that'll make
+things that are more polished,
+
+142
+00:07:06.460 --> 00:07:10.000
+but I think people really
+like it too. Like I
+
+143
+00:07:10.000 --> 00:07:12.460
+think having something handwritten is,
+is, is a huge deal
+
+144
+00:07:12.460 --> 00:07:14.620
+in like the fact that
+like, like, I think a
+
+145
+00:07:14.630 --> 00:07:17.050
+part of a part of
+it is like, people are
+
+146
+00:07:17.050 --> 00:07:18.910
+like, Oh, you took the
+time to write all this
+
+147
+00:07:18.910 --> 00:07:23.680
+information down by hand. It
+must be important. Oh, that's
+
+148
+00:07:23.680 --> 00:07:27.310
+interesting. You think that people
+are like a scribing depth
+
+149
+00:07:27.340 --> 00:07:30.490
+to something that's not, that's
+consciously not deep because it
+
+150
+00:07:30.490 --> 00:07:34.960
+was handwritten. I think so
+like, well, cause I think
+
+151
+00:07:34.960 --> 00:07:36.670
+if you read something by
+hand, it does make it
+
+152
+00:07:36.670 --> 00:07:39.040
+more important. Right? Cause it
+takes me like five times
+
+153
+00:07:39.040 --> 00:07:40.750
+longer to write something by
+hand than at which type
+
+154
+00:07:40.750 --> 00:07:43.330
+it, How many times do
+you have to do these
+
+155
+00:07:43.330 --> 00:07:45.070
+before? You know that you've
+got it right. Because it's
+
+156
+00:07:45.070 --> 00:07:48.040
+not just like, you didn't
+just scribble you. Like there
+
+157
+00:07:48.040 --> 00:07:51.640
+is structure and thought because
+there is a learning style
+
+158
+00:07:51.640 --> 00:07:55.240
+where you ask a question,
+you present a problem and
+
+159
+00:07:55.240 --> 00:07:57.880
+then you make a helpful,
+you, you walk someone through
+
+160
+00:07:57.880 --> 00:08:00.940
+it, like there's, there's a
+linear as Asian to this.
+
+161
+00:08:00.940 --> 00:08:04.600
+That is important. Yeah. So
+what, like one hard thing
+
+162
+00:08:04.720 --> 00:08:06.730
+is like, so let's say
+like you're writing a comic
+
+163
+00:08:06.730 --> 00:08:09.730
+about some important concept. Like
+I don't know, virtual memory.
+
+164
+00:08:09.760 --> 00:08:13.420
+Right. And like in these,
+like, especially in these six
+
+165
+00:08:13.420 --> 00:08:16.360
+panel comics, I do, I'll
+often only write something like
+
+166
+00:08:16.360 --> 00:08:18.430
+50 words in that. Right.
+So you have this huge
+
+167
+00:08:18.430 --> 00:08:22.030
+topic and you to describe
+it in 50 words and
+
+168
+00:08:22.030 --> 00:08:24.100
+how do you do that?
+And so what I do
+
+169
+00:08:24.100 --> 00:08:25.360
+a lot of the time
+is it like, sit on
+
+170
+00:08:25.360 --> 00:08:27.730
+my couch with this like
+paint, look on my face
+
+171
+00:08:27.730 --> 00:08:30.310
+and I'll be like, what
+can I say? Like, what
+
+172
+00:08:30.310 --> 00:08:32.590
+are five words that I
+can say that are true
+
+173
+00:08:32.680 --> 00:08:36.580
+about this topic? It's really
+hard. Right? Cause like making
+
+174
+00:08:36.610 --> 00:08:41.260
+statements that are like, at
+least like 90% true that
+
+175
+00:08:41.260 --> 00:08:46.690
+are short and that are
+understandable is so hard, but
+
+176
+00:08:46.690 --> 00:08:48.280
+it's possible. Right. And then
+once I do it, people
+
+177
+00:08:48.280 --> 00:08:51.280
+are like, Oh wow, I
+understand this now. And so
+
+178
+00:08:51.280 --> 00:08:53.080
+maybe like sometimes it'll take
+me an hour to write
+
+179
+00:08:53.080 --> 00:08:57.480
+like a 10 word sentence.
+Like I usually, usually I
+
+180
+00:08:57.480 --> 00:09:00.140
+can come up with something
+faster than that. But Yeah,
+
+181
+00:09:00.140 --> 00:09:02.240
+like I'm looking, for example,
+like the memory allocation one,
+
+182
+00:09:02.240 --> 00:09:04.820
+like we've all read like
+entire books on memory allocation,
+
+183
+00:09:05.630 --> 00:09:07.940
+but you're, you're getting it
+down to the essence. And
+
+184
+00:09:07.940 --> 00:09:10.220
+it's clear that you didn't
+just like bang that out
+
+185
+00:09:10.220 --> 00:09:14.540
+in five minutes. Well, it
+says at any given time,
+
+186
+00:09:14.540 --> 00:09:16.640
+your program has a fixed
+amount of memory. And then
+
+187
+00:09:16.640 --> 00:09:19.850
+it shows like a kind
+of a, defragmentation kind of
+
+188
+00:09:19.850 --> 00:09:22.040
+a thing where it shows
+pieces of memory, some of
+
+189
+00:09:22.040 --> 00:09:24.080
+which is used in some
+which is free. And then
+
+190
+00:09:24.080 --> 00:09:26.630
+it says, and you can
+ask the OSTP for more
+
+191
+00:09:26.630 --> 00:09:28.580
+memory. And then you've got
+like this happy figure that
+
+192
+00:09:28.580 --> 00:09:32.210
+represents Google Chrome taking two
+gigabytes of your Ram, which
+
+193
+00:09:32.210 --> 00:09:35.060
+I thought was funny. And
+then it has like a
+
+194
+00:09:35.060 --> 00:09:37.790
+person who's allocating. It's like,
+Oh, can I allocate some?
+
+195
+00:09:37.790 --> 00:09:41.150
+And then you basically show
+pieces of memory being Malak.
+
+196
+00:09:41.810 --> 00:09:45.290
+And then you talk about
+different alternatives to Malik with
+
+197
+00:09:45.290 --> 00:09:48.590
+Facebook and Google having different
+Malik's Right. And like this
+
+198
+00:09:48.590 --> 00:09:51.440
+thing where you can ask
+your operating system for more
+
+199
+00:09:51.440 --> 00:09:54.830
+memory is like, it's like
+not a trivial piece of
+
+200
+00:09:54.830 --> 00:09:58.610
+information. Right. And like, it's
+not obvious that like this,
+
+201
+00:09:58.630 --> 00:10:00.830
+this interaction where you're like,
+Hey, offering system, can you,
+
+202
+00:10:01.130 --> 00:10:04.100
+can I have more memory
+is something that your program
+
+203
+00:10:04.100 --> 00:10:07.340
+is doing, but then you,
+like, when you explain it
+
+204
+00:10:07.340 --> 00:10:09.350
+like that, it seems simple.
+And I think it's cool
+
+205
+00:10:09.350 --> 00:10:13.400
+that you always have the
+little people having a conversation
+
+206
+00:10:13.400 --> 00:10:16.820
+with the computer, which somehow
+makes the computer more approachable.
+
+207
+00:10:17.150 --> 00:10:19.340
+What I think is interesting
+is that since you are
+
+208
+00:10:19.340 --> 00:10:22.610
+a infrastructure engineer and you're
+a backend engineer and you're
+
+209
+00:10:22.610 --> 00:10:26.840
+a low level Linux engineer,
+you're talking about like CIS
+
+210
+00:10:26.840 --> 00:10:30.050
+calls, which for a lot
+of people is a scary
+
+211
+00:10:30.050 --> 00:10:32.870
+thing. Right. And we have
+these happy little people making
+
+212
+00:10:32.870 --> 00:10:34.730
+six calls and I'm like,
+Oh, well, is that all
+
+213
+00:10:34.730 --> 00:10:36.140
+it's just called? It is.
+That's not as scary as
+
+214
+00:10:36.140 --> 00:10:38.990
+I thought it was. Right.
+Because there's this thing that
+
+215
+00:10:38.990 --> 00:10:41.270
+like where you asked for
+more memory, you're either using
+
+216
+00:10:41.270 --> 00:10:44.300
+like the Burke, like BRK
+Siskel or you're using the
+
+217
+00:10:44.330 --> 00:10:47.480
+map Siskel. And it's not
+like, I mean, I guess
+
+218
+00:10:47.480 --> 00:10:49.520
+if you, if you, like,
+you could write it in
+
+219
+00:10:49.520 --> 00:10:52.430
+a way that sounds really
+unapproachable, but really like computers
+
+220
+00:10:52.430 --> 00:10:54.890
+are just communicating all the
+time. And so I think
+
+221
+00:10:54.890 --> 00:10:57.590
+comics are a really good
+way to show that because
+
+222
+00:10:57.590 --> 00:11:00.620
+you're always doing networking. Right?
+Like your program is talking
+
+223
+00:11:00.620 --> 00:11:02.600
+to your operating system, your
+programs are talking to each
+
+224
+00:11:02.600 --> 00:11:04.940
+other. And so I, what
+I like to do is
+
+225
+00:11:04.940 --> 00:11:07.070
+kind of like break down
+what the interfaces are, right?
+
+226
+00:11:07.070 --> 00:11:09.350
+Like, like the system college
+or phase, and then just
+
+227
+00:11:09.350 --> 00:11:11.030
+like show that with a
+comic. And you're like, okay,
+
+228
+00:11:11.180 --> 00:11:13.670
+here's piece one and here's
+piece two. And then here's
+
+229
+00:11:13.670 --> 00:11:15.320
+like the interface where they
+talk to each other. And
+
+230
+00:11:15.320 --> 00:11:17.810
+then here's what they're saying.
+Cause that's just what happens
+
+231
+00:11:17.810 --> 00:11:20.750
+on computers. Right? Like that's
+how I think about it
+
+232
+00:11:20.870 --> 00:11:23.630
+is you just have these
+different components interacting. And I
+
+233
+00:11:23.630 --> 00:11:25.520
+think trying to explain it
+with comics makes it seem
+
+234
+00:11:25.520 --> 00:11:27.800
+a lot just like makes
+it a lot more straight
+
+235
+00:11:27.800 --> 00:11:30.920
+forward. Yeah. I like also
+that some of the comics
+
+236
+00:11:30.930 --> 00:11:33.800
+are kind of unapologetic about
+stuff. So for example, you've
+
+237
+00:11:33.800 --> 00:11:35.960
+got one on the OSI
+model for networking. I'm like,
+
+238
+00:11:35.990 --> 00:11:38.510
+Oh, she's going to explain
+like all the layers, right.
+
+239
+00:11:38.510 --> 00:11:42.440
+Layer seven. And she's like,
+Oh, well layer five and
+
+240
+00:11:42.440 --> 00:11:44.660
+six. No one ever talks
+about these. Like you just
+
+241
+00:11:44.660 --> 00:11:46.700
+like, we're not going to
+talk about those two layers
+
+242
+00:11:46.700 --> 00:11:50.180
+because they suck. Yeah. I
+thought that was awesome. They
+
+243
+00:11:50.180 --> 00:11:54.010
+do layers five and six.
+Are, are you willing to
+
+244
+00:11:54.010 --> 00:11:59.220
+speak with them again? Yeah.
+Yeah. Yeah. One thing that
+
+245
+00:11:59.220 --> 00:12:01.110
+I kind of think is
+important is I try not
+
+246
+00:12:01.110 --> 00:12:04.030
+to use metaphors. Cause I
+don't understand metaphors like, like
+
+247
+00:12:04.040 --> 00:12:05.550
+I try to make things
+simple, but I don't try
+
+248
+00:12:05.550 --> 00:12:07.020
+to be like, Oh, this
+is like this other thing.
+
+249
+00:12:07.020 --> 00:12:10.230
+Cause often it's like not,
+Hmm. Probably people use metaphors.
+
+250
+00:12:10.230 --> 00:12:12.000
+I'm like, I don't understand
+what you mean. Like, That's
+
+251
+00:12:12.000 --> 00:12:14.280
+really interesting because like I
+think of myself as a
+
+252
+00:12:14.280 --> 00:12:18.210
+teacher and all I have
+is metaphors. So that's very
+
+253
+00:12:18.210 --> 00:12:20.940
+interesting. So here we are
+two people presenting information in
+
+254
+00:12:20.940 --> 00:12:23.460
+two different ways and sometimes
+it's effective and sometimes it's
+
+255
+00:12:23.460 --> 00:12:26.760
+not. Yeah. Yeah. And I
+mean, obviously other people use
+
+256
+00:12:26.760 --> 00:12:28.890
+metaphors effectively, but I don't
+understand how to use them
+
+257
+00:12:28.890 --> 00:12:30.780
+at all. So I just
+try to simplify things and
+
+258
+00:12:30.780 --> 00:12:33.090
+then like the simplest version
+of the truth that I
+
+259
+00:12:33.090 --> 00:12:35.010
+can come up with. And
+then I just say that,
+
+260
+00:12:35.160 --> 00:12:37.440
+Hmm, this is a tough
+question. But have you ever
+
+261
+00:12:37.440 --> 00:12:40.050
+had a Xen? That was
+just a huge fail. Like
+
+262
+00:12:40.050 --> 00:12:41.880
+you put it out there
+and nobody got it and
+
+263
+00:12:41.880 --> 00:12:44.400
+no one understood. And then
+you just like made that
+
+264
+00:12:44.400 --> 00:12:49.650
+gene disappear and recruited. I
+don't think so. Well, I
+
+265
+00:12:49.650 --> 00:12:52.350
+don't know. I mean, I've,
+I've written like seventeens, right?
+
+266
+00:12:52.740 --> 00:12:55.030
+But you've written hundreds of
+hundred comics. I've written a
+
+267
+00:12:55.040 --> 00:12:56.310
+lot of comics. I mean,
+some of, some of the
+
+268
+00:12:56.310 --> 00:12:59.040
+comics are of course bad.
+Well, yeah, let me, let
+
+269
+00:12:59.040 --> 00:13:00.780
+me back it up. So
+not I'm misused, but I
+
+270
+00:13:00.780 --> 00:13:02.520
+see, I actually did what
+you want me to, I
+
+271
+00:13:02.520 --> 00:13:06.300
+misused zenes are collections of
+comics. Have you done an
+
+272
+00:13:06.300 --> 00:13:08.670
+individual comic that just didn't
+land the way you wanted
+
+273
+00:13:08.670 --> 00:13:11.730
+to do it? I can't
+remember a specific one that
+
+274
+00:13:11.730 --> 00:13:14.910
+I thought, okay. He here's
+like, this is more of
+
+275
+00:13:14.910 --> 00:13:18.090
+a blog post. Maybe there
+are all these Linux tracing
+
+276
+00:13:18.090 --> 00:13:21.660
+systems, which let you basically
+trace what your operating system
+
+277
+00:13:21.660 --> 00:13:25.880
+is doing. So like there's
+like F trays and they're,
+
+278
+00:13:25.880 --> 00:13:27.750
+they're all, they're all a
+little bit obscure, I guess
+
+279
+00:13:28.470 --> 00:13:30.570
+have like, most people don't
+know about them. And I
+
+280
+00:13:30.570 --> 00:13:32.790
+was really upset that I
+couldn't like find like a
+
+281
+00:13:32.790 --> 00:13:34.710
+summary of like what all
+the like Tracy's sister she's
+
+282
+00:13:34.710 --> 00:13:36.630
+of some floor. So I
+wrote this really long blog
+
+283
+00:13:36.630 --> 00:13:38.730
+post kind of summarizing, like
+at a high level, like
+
+284
+00:13:38.730 --> 00:13:41.100
+what all these systems do.
+And I thought, I think
+
+285
+00:13:41.100 --> 00:13:43.200
+that it would be, everyone
+would be really excited about
+
+286
+00:13:43.200 --> 00:13:45.450
+it. And what I forgot
+is that like, I don't
+
+287
+00:13:45.450 --> 00:13:48.990
+think most people really care
+about clinics, tracing systems. I
+
+288
+00:13:48.990 --> 00:13:52.230
+think it's mostly just me.
+And like, I mean, people
+
+289
+00:13:52.230 --> 00:13:54.300
+do like, I mean, my
+partner just told me the
+
+290
+00:13:54.300 --> 00:13:55.830
+other day, he was like,
+Oh, I saw someone like
+
+291
+00:13:55.830 --> 00:13:58.260
+link your blog post on
+this mailing list saying that
+
+292
+00:13:58.260 --> 00:13:59.760
+it was really useful. And
+I was like, Oh cool.
+
+293
+00:13:59.880 --> 00:14:05.130
+Like somebody did care. But
+like, I think like I
+
+294
+00:14:05.130 --> 00:14:08.790
+forgot how Nisha topic it
+was in a way fine.
+
+295
+00:14:08.790 --> 00:14:10.540
+Like I like to write
+about things that are niche
+
+296
+00:14:10.590 --> 00:14:13.170
+topics, because I guess, cause
+I think that those things
+
+297
+00:14:13.170 --> 00:14:16.320
+often end up being really
+underserved. And like I was
+
+298
+00:14:16.380 --> 00:14:18.120
+in a way rather write
+about that than write about
+
+299
+00:14:18.120 --> 00:14:20.790
+something like Jason, cause I'm
+like, well, people understand Jason.
+
+300
+00:14:20.820 --> 00:14:24.330
+Like I don't need to
+explain Jason. There's a lot
+
+301
+00:14:24.330 --> 00:14:26.640
+of material out there. I'd
+rather write about political tracing
+
+302
+00:14:26.640 --> 00:14:29.250
+systems and explain what's going
+on with like after race.
+
+303
+00:14:29.880 --> 00:14:31.860
+It is kind of frustrating
+though. Like I've, I've been
+
+304
+00:14:32.100 --> 00:14:34.200
+blogging for a long time
+and I'll feel like I'll
+
+305
+00:14:34.200 --> 00:14:36.450
+spend a week on a
+blog. It's like sample code
+
+306
+00:14:36.450 --> 00:14:40.080
+and charts and graphs and
+tables and like timings and
+
+307
+00:14:40.080 --> 00:14:42.180
+I get no comments and
+no one cares and you
+
+308
+00:14:42.180 --> 00:14:44.850
+get like 10 likes, but
+then you write a blog
+
+309
+00:14:44.880 --> 00:14:49.080
+post about like character turn
+line feed, and get internet
+
+310
+00:14:49.080 --> 00:14:52.910
+loses their mind. Yeah. I
+try To sort of time
+
+311
+00:14:52.910 --> 00:14:54.530
+box how much time I
+spend on it on any
+
+312
+00:14:54.530 --> 00:14:57.830
+given thing. Like this is
+part of why I like
+
+313
+00:14:57.830 --> 00:15:01.040
+to post like individual pages
+on Twitter as I go
+
+314
+00:15:01.250 --> 00:15:03.860
+to sort of like see
+what the reaction is and
+
+315
+00:15:03.860 --> 00:15:05.720
+just like get a sense
+of what people think about
+
+316
+00:15:05.720 --> 00:15:08.420
+it. And sometimes you will
+find mistakes also, which is
+
+317
+00:15:08.420 --> 00:15:12.230
+great. It's very helpful. But
+yeah, like for any individual
+
+318
+00:15:12.230 --> 00:15:14.030
+comic, I think I try
+not to spend more than
+
+319
+00:15:14.420 --> 00:15:17.440
+a couple of hours on
+it. Cool. And you're publishing
+
+320
+00:15:17.440 --> 00:15:19.510
+these though. Now, like you
+started making these and you
+
+321
+00:15:19.510 --> 00:15:21.340
+would just like put them
+out. You'd hand them to
+
+322
+00:15:21.340 --> 00:15:22.900
+people like a couple of
+hundred here. You'd print them
+
+323
+00:15:22.900 --> 00:15:25.720
+all yourself, but I can
+go up now and I
+
+324
+00:15:25.720 --> 00:15:28.450
+can buy these, like get
+the print version. If I
+
+325
+00:15:28.450 --> 00:15:30.040
+like do the, get the
+print version. Do you want
+
+326
+00:15:30.040 --> 00:15:32.230
+me to print this out
+or should I buy it
+
+327
+00:15:32.230 --> 00:15:34.120
+from kind of buy it
+from Amazon? Are you selling
+
+328
+00:15:34.120 --> 00:15:37.300
+them? You can't buy a
+printed version right now. That's
+
+329
+00:15:37.360 --> 00:15:41.530
+a project that I need
+to discover an extra few
+
+330
+00:15:41.920 --> 00:15:46.000
+dozens of hours. Get to
+have it. I haven't figured
+
+331
+00:15:46.000 --> 00:15:48.160
+out how to do it
+yet, but yeah. So is
+
+332
+00:15:48.160 --> 00:15:49.450
+it right now? If you
+buy it, you can print
+
+333
+00:15:49.450 --> 00:15:52.020
+it out. It does. Does
+it feel like it's a,
+
+334
+00:15:52.020 --> 00:15:53.950
+there's a business here though.
+Like I could go and
+
+335
+00:15:53.950 --> 00:15:57.850
+get like t-shirts of zines
+and comics. I don't know.
+
+336
+00:15:57.850 --> 00:16:01.660
+So I'm like, I feel
+like apparel is exciting. People
+
+337
+00:16:01.660 --> 00:16:05.740
+love apparel, but I'm really
+excited about selling like printed
+
+338
+00:16:06.130 --> 00:16:10.300
+stuff and like educational material,
+because I feel like there's
+
+339
+00:16:10.300 --> 00:16:15.070
+a huge need for it.
+And like, I guess I've
+
+340
+00:16:15.070 --> 00:16:17.320
+been writing for free for
+a long time. Right. And
+
+341
+00:16:17.360 --> 00:16:19.600
+that's been great and I
+love doing it, but I've
+
+342
+00:16:19.600 --> 00:16:21.070
+kind of realized, I think
+that there's sort of like
+
+343
+00:16:21.070 --> 00:16:22.810
+an upper bound, like how
+much you can do for
+
+344
+00:16:22.810 --> 00:16:27.910
+free actually really like, well,
+yeah, because like, if you
+
+345
+00:16:27.910 --> 00:16:29.950
+want to make something really
+good, you know, spend time
+
+346
+00:16:29.950 --> 00:16:34.480
+on it. Yeah. And there's
+like only so much time.
+
+347
+00:16:34.510 --> 00:16:36.640
+I think that it's possible
+to spend doing things for
+
+348
+00:16:36.640 --> 00:16:39.550
+free. If that makes sense.
+It's like, I've been thinking
+
+349
+00:16:39.550 --> 00:16:42.670
+about like, like sometimes I
+go to conferences and I
+
+350
+00:16:42.670 --> 00:16:47.380
+feel like frustrated with the
+talks, but what I realized
+
+351
+00:16:47.380 --> 00:16:49.540
+is like people don't get
+paid to give talks. Right?
+
+352
+00:16:49.660 --> 00:16:51.760
+Yeah. Well, most, well, some
+people, I guess, I guess
+
+353
+00:16:51.760 --> 00:16:54.250
+there's like there are paid
+like famous people that get
+
+354
+00:16:54.280 --> 00:16:58.150
+money, I guess. Yeah. Yeah.
+Right. I believe like the
+
+355
+00:16:58.150 --> 00:17:01.870
+incentives are sort of misaligned,
+right? Like, like people aren't
+
+356
+00:17:01.870 --> 00:17:04.600
+being paid to give educational
+talks. Yeah. And like, I
+
+357
+00:17:04.600 --> 00:17:06.150
+mean, to the extent that
+people at tech conferences do
+
+358
+00:17:06.160 --> 00:17:08.080
+get paid to give talks,
+they're getting paid to like
+
+359
+00:17:08.420 --> 00:17:11.530
+Market. Thanks to you. That's
+a good point. That's a
+
+360
+00:17:11.530 --> 00:17:13.360
+good point because the famous
+people all have a book
+
+361
+00:17:13.360 --> 00:17:16.930
+to sell or whatever. Yeah.
+And so I've been thinking
+
+362
+00:17:16.930 --> 00:17:19.000
+about sort of like, how
+can you structure like a
+
+363
+00:17:19.000 --> 00:17:21.880
+business so that the incentives
+are correctly aligned so that
+
+364
+00:17:21.910 --> 00:17:26.200
+you can actually like focus
+on education, which I feel
+
+365
+00:17:26.200 --> 00:17:28.630
+like isn't really true in
+the publishing industry right now.
+
+366
+00:17:28.840 --> 00:17:30.460
+Because if you publish a
+book with like a mainstream
+
+367
+00:17:30.460 --> 00:17:33.580
+tech publisher, you're not gonna
+make that much money. And
+
+368
+00:17:33.580 --> 00:17:36.460
+so like, it's like your
+financial incentives are not actually
+
+369
+00:17:36.460 --> 00:17:39.580
+set up to really focus
+on it. Right. Right. Well,
+
+370
+00:17:39.580 --> 00:17:41.590
+and they're going to go
+and sell red trees and
+
+371
+00:17:41.590 --> 00:17:43.690
+they'll sell the dead tree
+for like $40 to a
+
+372
+00:17:43.690 --> 00:17:46.510
+teacher who can't afford it
+and you'll get a dollar
+
+373
+00:17:46.510 --> 00:17:49.170
+or two and then their
+next year, they're going to
+
+374
+00:17:49.170 --> 00:17:50.760
+want you to update all
+of your stuff with the
+
+375
+00:17:50.760 --> 00:17:53.840
+latest version and they can
+sell more. Yeah. And part,
+
+376
+00:17:53.870 --> 00:17:55.670
+part of the reason I
+think scenes are exciting is
+
+377
+00:17:55.670 --> 00:17:58.880
+that they're pretty fast to
+produce. And because like technology
+
+378
+00:17:58.880 --> 00:18:02.270
+is always moving, you can
+write something like fairly quickly
+
+379
+00:18:02.270 --> 00:18:06.950
+about something maybe even relatively
+recent, which is, I mean,
+
+380
+00:18:06.950 --> 00:18:08.390
+I don't do this. Right.
+I read about things like
+
+381
+00:18:08.390 --> 00:18:10.700
+Sri are like 10 years
+old or about like GCP
+
+382
+00:18:10.700 --> 00:18:14.360
+that I actually write about
+extremely, relatively old stuff. Most
+
+383
+00:18:14.360 --> 00:18:16.430
+of the time that hasn't
+changed and probably isn't going
+
+384
+00:18:16.430 --> 00:18:19.550
+to change. But, but, but,
+but you can write and
+
+385
+00:18:19.550 --> 00:18:21.740
+I think it's a lot
+easier to write something short
+
+386
+00:18:21.890 --> 00:18:24.380
+and then people will actually
+read short things, unlike books,
+
+387
+00:18:24.380 --> 00:18:27.050
+which I think they mostly
+won't read. No, that's a
+
+388
+00:18:27.050 --> 00:18:30.740
+good point though, because like
+I've had, I have memorized
+
+389
+00:18:30.740 --> 00:18:33.200
+like every single line to
+Hamilton and the OT and
+
+390
+00:18:33.200 --> 00:18:35.090
+the audio book. And I
+follow the guy on Twitter
+
+391
+00:18:35.520 --> 00:18:37.970
+and I've been sitting on
+the actual book of Hamilton.
+
+392
+00:18:38.360 --> 00:18:40.400
+I think the one that
+he based the musical on,
+
+393
+00:18:40.430 --> 00:18:44.750
+it's like 600 pages. It's
+been moving around my house,
+
+394
+00:18:44.960 --> 00:18:47.390
+but it's never actually been
+read, which is stressing me
+
+395
+00:18:47.390 --> 00:18:49.910
+out. I feel like Twitter
+has ruined my ability to
+
+396
+00:18:49.910 --> 00:18:53.720
+read long form stuff, but
+I'll read your zenes there,
+
+397
+00:18:53.720 --> 00:18:56.540
+you know? Cause they're not
+600 pages. Yeah. Yeah. And
+
+398
+00:18:56.540 --> 00:18:58.490
+I think even some of
+my favorite tech books, I'll,
+
+399
+00:18:58.500 --> 00:19:02.120
+I've only read like two
+chapters of that. Yeah. Code
+
+400
+00:19:02.120 --> 00:19:06.860
+complete Steve McConnell's code complete.
+Right. And some of those
+
+401
+00:19:06.860 --> 00:19:10.100
+chapters are really good. Like
+they're not bad books, but
+
+402
+00:19:10.180 --> 00:19:11.840
+I've been thinking about like,
+well, like what if we
+
+403
+00:19:11.840 --> 00:19:14.360
+focus on smaller things and
+like really focused on being
+
+404
+00:19:14.360 --> 00:19:15.980
+like, what if we just
+make 20 pages, we'll make
+
+405
+00:19:15.980 --> 00:19:19.850
+those 20 pages so good
+and make them like really
+
+406
+00:19:19.850 --> 00:19:22.520
+what you need to know.
+Yeah. Like, like some of
+
+407
+00:19:22.520 --> 00:19:24.590
+your, like I could read
+an entire chapter on like
+
+408
+00:19:24.590 --> 00:19:27.980
+how the Linux proc directory
+works, but I read your
+
+409
+00:19:27.980 --> 00:19:29.630
+Xen and I feel like
+I pretty much get it.
+
+410
+00:19:29.750 --> 00:19:32.180
+And there's probably a hundred
+words on the entire thing.
+
+411
+00:19:32.750 --> 00:19:35.210
+Yeah. Yeah, exactly. And then
+you can always go to
+
+412
+00:19:35.210 --> 00:19:39.170
+the man page, right? Like
+if you want Exactly. Hey
+
+413
+00:19:39.170 --> 00:19:41.870
+folks, Intel is a sponsor
+this week and I welcome
+
+414
+00:19:41.870 --> 00:19:45.470
+them because they're bringing some
+high performance developer tools for
+
+415
+00:19:45.470 --> 00:19:49.640
+all of us check out
+Intel's parallel studio X, E
+
+416
+00:19:50.210 --> 00:19:52.430
+I've talked about parallelism before
+on the show and the
+
+417
+00:19:52.430 --> 00:19:56.270
+importance of using the complete
+instruction set, unlocking the power
+
+418
+00:19:56.270 --> 00:19:58.280
+of the process or that
+your code is running on.
+
+419
+00:19:58.820 --> 00:20:00.980
+Now, you all might be
+writing C or C plus
+
+420
+00:20:00.980 --> 00:20:04.670
+plus Python or even Fortran,
+but is your code building
+
+421
+00:20:04.670 --> 00:20:06.320
+in such a way and
+written in such a way
+
+422
+00:20:06.320 --> 00:20:11.780
+that it uses the latest
+techniques for vectorization multithreading multi-node
+
+423
+00:20:11.780 --> 00:20:16.790
+parallelization or memory optimization? Intel
+parallel studio ECC has a
+
+424
+00:20:16.790 --> 00:20:19.730
+lot of new stuff for
+2018 across all these languages.
+
+425
+00:20:20.180 --> 00:20:24.500
+Get a free download at
+<inaudible> dot com slash parallels
+
+426
+00:20:24.500 --> 00:20:28.040
+studio Z, or certainly go
+and Google or Google with
+
+427
+00:20:28.040 --> 00:20:32.000
+being for Intel parallel studio
+XE and get started boosting
+
+428
+00:20:32.000 --> 00:20:35.510
+your apps performance with smart
+parallel code with a lot
+
+429
+00:20:35.510 --> 00:20:43.070
+less effort, check them out.
+bitly.com/parallels, studio X, E. So
+
+430
+00:20:43.460 --> 00:20:46.430
+you know, you're, you know,
+you're somewhat senior. Would you
+
+431
+00:20:46.430 --> 00:20:48.580
+call yourself an intermediate developer?
+Him? How long have you
+
+432
+00:20:48.580 --> 00:20:51.990
+been in developing Helen? So
+I learned from him 15
+
+433
+00:20:51.990 --> 00:20:55.380
+years ago. Okay. So do
+you feel like there's a
+
+434
+00:20:55.380 --> 00:20:59.790
+special place for like that
+10, 15 year intermediate developer
+
+435
+00:20:59.790 --> 00:21:03.810
+learning where we want to
+learn more a certain way?
+
+436
+00:21:04.920 --> 00:21:08.160
+Like, I feel like there's
+so much material for beginners
+
+437
+00:21:08.280 --> 00:21:10.320
+right now. Like if you
+want to learn a programming
+
+438
+00:21:10.320 --> 00:21:12.900
+language, there's like these like
+learn Python the hard way.
+
+439
+00:21:12.930 --> 00:21:16.320
+Right. Which I've heard really
+good things about. And there's
+
+440
+00:21:16.320 --> 00:21:20.910
+so little material, I think
+for, for intermediate to like
+
+441
+00:21:21.150 --> 00:21:24.660
+maybe advanced developers. I think
+I had this really sort
+
+442
+00:21:24.660 --> 00:21:28.740
+of formative experience five years
+ago where someone told me
+
+443
+00:21:28.740 --> 00:21:31.020
+that Estrace, which is this
+tool that traces system calls
+
+444
+00:21:31.020 --> 00:21:33.720
+on Lex. And I didn't
+know. Well, I didn't know
+
+445
+00:21:33.720 --> 00:21:36.300
+that system calls existed. Like,
+I didn't know how Perkins
+
+446
+00:21:36.300 --> 00:21:38.220
+talked to the operating system
+at all. And I didn't
+
+447
+00:21:38.220 --> 00:21:40.350
+know that you could trace
+them with Estrace. I think
+
+448
+00:21:40.350 --> 00:21:42.930
+at that point I'd been
+programming for 10 years and
+
+449
+00:21:42.930 --> 00:21:45.270
+I felt kind of like
+angry almost like I was
+
+450
+00:21:45.270 --> 00:21:48.600
+like, why didn't anyone tell
+me before? Right. And like,
+
+451
+00:21:48.600 --> 00:21:51.750
+where was I supposed to
+learn this? And I realized
+
+452
+00:21:51.750 --> 00:21:53.250
+that for a lot of
+things, there's sort of no
+
+453
+00:21:53.250 --> 00:21:55.920
+way, like, I mean, of
+course, like someone could have
+
+454
+00:21:55.920 --> 00:21:58.560
+told me, right? Like it's
+possible that I guess I
+
+455
+00:21:58.560 --> 00:22:00.300
+could have met someone who
+told him, but I didn't.
+
+456
+00:22:00.330 --> 00:22:03.480
+Right. So I was like,
+wait, how am I supposed
+
+457
+00:22:03.480 --> 00:22:06.540
+to learn these straight? Like,
+how are we supposed to
+
+458
+00:22:06.540 --> 00:22:10.200
+learn new things that are
+pretty fundamental, right? Like the
+
+459
+00:22:10.200 --> 00:22:12.270
+fact that like system calls
+or how your program talks
+
+460
+00:22:12.270 --> 00:22:14.100
+to your operating system, it's
+like a pretty fundamental fact
+
+461
+00:22:14.100 --> 00:22:16.620
+about how computers work. And
+of course, like you can
+
+462
+00:22:16.620 --> 00:22:18.450
+say like, Oh, well Julia,
+you should have taken the
+
+463
+00:22:18.450 --> 00:22:21.120
+operating systems class in university
+instead of not taking it.
+
+464
+00:22:21.300 --> 00:22:25.320
+Right. But like university classes
+are not, I don't think
+
+465
+00:22:25.320 --> 00:22:28.440
+are like the solution to
+like ongoing developer education. Right?
+
+466
+00:22:28.440 --> 00:22:30.840
+Like once you graduated from
+university, you will have learned
+
+467
+00:22:30.840 --> 00:22:33.570
+some things. But like, no
+matter what university you went
+
+468
+00:22:33.570 --> 00:22:35.820
+to, you're still going, I'm
+not learn some like important
+
+469
+00:22:35.820 --> 00:22:38.430
+and fundamental things anyway. And
+so it's like, well, how
+
+470
+00:22:38.430 --> 00:22:40.830
+do you, how, how, how
+does it happen that you've
+
+471
+00:22:40.830 --> 00:22:42.960
+learned those things? Right? Well,
+like I was talking to
+
+472
+00:22:42.960 --> 00:22:46.380
+my, to my spouse a
+couple of days ago and
+
+473
+00:22:46.380 --> 00:22:48.450
+it turns out that she
+doesn't know how to change
+
+474
+00:22:48.450 --> 00:22:51.990
+her oil. Now here's a
+person who's been driving for
+
+475
+00:22:51.990 --> 00:22:55.770
+20 years. Right? Yeah. I
+could. So she's a senior
+
+476
+00:22:55.890 --> 00:22:59.640
+driving engineer. Yeah. Who am
+I to say? How do
+
+477
+00:22:59.640 --> 00:23:01.950
+you not know how to
+change your oil? Like, but
+
+478
+00:23:01.950 --> 00:23:04.110
+that seems to be the
+way the community approaches, stuff
+
+479
+00:23:04.110 --> 00:23:06.330
+like that. Like how do
+you not know that she
+
+480
+00:23:06.330 --> 00:23:08.490
+also doesn't know how to
+drive a stick shift? I
+
+481
+00:23:08.490 --> 00:23:11.100
+could like lose my mind
+and, and like, I don't
+
+482
+00:23:11.100 --> 00:23:13.680
+know, stick shift to shame
+her for not knowing how
+
+483
+00:23:13.680 --> 00:23:15.720
+to drive a stick, but
+at the same time, shouldn't
+
+484
+00:23:15.720 --> 00:23:18.570
+I be happy that automatic
+shift cars work and they
+
+485
+00:23:18.570 --> 00:23:20.730
+work great so much so
+that she doesn't need to
+
+486
+00:23:20.730 --> 00:23:22.950
+own to know that. So
+then the question is as
+
+487
+00:23:22.950 --> 00:23:25.440
+an intermediate developer, what am
+I supposed to know? And
+
+488
+00:23:25.440 --> 00:23:27.210
+what's a waste, like, do
+I need to know how
+
+489
+00:23:27.210 --> 00:23:29.100
+to change my own oil?
+Or do I just hire
+
+490
+00:23:29.100 --> 00:23:32.190
+someone to do that? Yeah.
+Right. So it's like, how
+
+491
+00:23:32.190 --> 00:23:34.140
+do you figure out what,
+what you do need to
+
+492
+00:23:34.140 --> 00:23:36.390
+know? And like, once you
+decide, you want to know
+
+493
+00:23:36.390 --> 00:23:38.220
+those things, like what are
+the resources you're going to
+
+494
+00:23:38.310 --> 00:23:40.770
+use to learn? Yeah. Yeah.
+There's no, like you wouldn't
+
+495
+00:23:40.770 --> 00:23:43.560
+go and find Python for
+intermediate people. There's not like
+
+496
+00:23:43.560 --> 00:23:46.400
+that book doesn't exist. Yeah.
+And I think Like I
+
+497
+00:23:46.400 --> 00:23:48.410
+was reading the C plus
+plus programming book a little
+
+498
+00:23:48.410 --> 00:23:49.760
+bit. Cause I wanted to
+learn a little bit of
+
+499
+00:23:49.760 --> 00:23:51.440
+C plus plus. And it
+was like, Oh, here's what
+
+500
+00:23:51.440 --> 00:23:54.200
+a variable is. And I
+was like, Oh, what, like,
+
+501
+00:23:54.200 --> 00:23:57.560
+what is this book? Like,
+I'm not reading this. Right.
+
+502
+00:23:57.770 --> 00:23:59.690
+Like I'm not reading someone
+like explain to me what
+
+503
+00:23:59.690 --> 00:24:02.660
+a function is for 10
+pages. Like I want to
+
+504
+00:24:02.660 --> 00:24:04.520
+learn like what I need
+to know about people's pluses,
+
+505
+00:24:04.520 --> 00:24:07.310
+someone who knows like these
+like eight other programming languages
+
+506
+00:24:07.310 --> 00:24:10.100
+already, but I don't know
+C plus plus, right? Like
+
+507
+00:24:10.100 --> 00:24:11.990
+they're their list is like
+tricky things about C plus
+
+508
+00:24:11.990 --> 00:24:15.860
+plus that are really surprising
+someone coming from another language.
+
+509
+00:24:16.520 --> 00:24:18.170
+But yeah, I dunno. I
+was like, this is really
+
+510
+00:24:18.170 --> 00:24:21.100
+hard. It is. It almost
+feels weird. Like I learned
+
+511
+00:24:21.520 --> 00:24:24.400
+that I was mispronouncing a
+word for the last 40
+
+512
+00:24:24.400 --> 00:24:28.680
+years of my life, like
+yesterday now that my wife
+
+513
+00:24:28.690 --> 00:24:31.210
+is not, you know, she's
+like, how did you make
+
+514
+00:24:31.210 --> 00:24:34.420
+it this far? So if
+that's happening to me as
+
+515
+00:24:34.420 --> 00:24:37.720
+a native English speaker, like
+imagine how much computer science
+
+516
+00:24:37.720 --> 00:24:40.660
+or software engineering that I've
+gotten wrong. That I'm like
+
+517
+00:24:40.660 --> 00:24:44.680
+walking around thinking I know
+X, and it's actually why
+
+518
+00:24:44.710 --> 00:24:47.260
+it's going to blow my
+mind. And there's not only
+
+519
+00:24:47.260 --> 00:24:48.640
+like, where do I go
+to learn it? And where
+
+520
+00:24:48.640 --> 00:24:50.230
+do I learn to fix
+that? But also like as
+
+521
+00:24:50.230 --> 00:24:52.540
+a community, we should be
+able to be public and
+
+522
+00:24:52.540 --> 00:24:54.580
+be comfortable to say, Oh,
+I never learned how to
+
+523
+00:24:54.580 --> 00:24:56.650
+do that. Right. But if
+you told someone, you didn't
+
+524
+00:24:56.650 --> 00:24:58.180
+know how to do a
+bubble sort, you probably lose
+
+525
+00:24:58.180 --> 00:25:01.480
+your job. Yeah. That's interesting.
+You know, I feel we
+
+526
+00:25:01.480 --> 00:25:04.090
+should be more kind of
+supportive of people in their
+
+527
+00:25:04.090 --> 00:25:07.900
+learning. And I always appreciate
+you on, on Twitter because
+
+528
+00:25:07.900 --> 00:25:10.360
+I know you are know
+what you're talking about. It's
+
+529
+00:25:10.360 --> 00:25:13.090
+clear in your writing, you
+have a great blog and
+
+530
+00:25:13.090 --> 00:25:15.610
+a mediums and all of
+your jeans are fantastic. But
+
+531
+00:25:15.610 --> 00:25:17.830
+at the same time, I
+feel like you're very enthusiastic
+
+532
+00:25:18.160 --> 00:25:21.580
+about learning stuff. And I
+wonder if people are ever
+
+533
+00:25:21.580 --> 00:25:23.770
+like, Oh, you should have
+known that Juliet. How did
+
+534
+00:25:23.770 --> 00:25:25.720
+you get this far? I
+hate it when people do
+
+535
+00:25:25.720 --> 00:25:28.570
+that kind of stuff, because
+I'm always learning new hotkeys
+
+536
+00:25:28.570 --> 00:25:33.910
+and new SIS calls. Yeah,
+I guess so I think,
+
+537
+00:25:33.910 --> 00:25:38.050
+I think I've spent a
+lot of time getting better
+
+538
+00:25:38.050 --> 00:25:41.140
+at learning. I think it's
+really exciting to come up
+
+539
+00:25:41.140 --> 00:25:44.550
+with like questions of things
+that I don't know. It's
+
+540
+00:25:44.550 --> 00:25:47.050
+like, to me, it's exciting
+to learn new things, right?
+
+541
+00:25:47.110 --> 00:25:49.480
+Like it's not exciting to
+say that like, Oh, I
+
+542
+00:25:49.480 --> 00:25:52.150
+know everything already. Cause like
+that's not true. And also
+
+543
+00:25:52.150 --> 00:25:54.550
+it's pretty boring. Like if
+I knew everything in programming,
+
+544
+00:25:54.550 --> 00:25:58.120
+I would probably quit. Like,
+I don't know. It sounds
+
+545
+00:25:58.120 --> 00:26:02.980
+awful. I would much rather
+be learning new things. And
+
+546
+00:26:02.980 --> 00:26:07.660
+so like, I think the
+idea that it's like even
+
+547
+00:26:07.690 --> 00:26:10.990
+desirable to know everything is
+something that I don't believe.
+
+548
+00:26:11.470 --> 00:26:14.860
+And like, I mean sometimes
+like maybe someone, a hacker
+
+549
+00:26:14.860 --> 00:26:17.980
+news, it would be like,
+Oh, like, I can't believe
+
+550
+00:26:17.980 --> 00:26:20.950
+he didn't know like such
+and such. That's your hacker
+
+551
+00:26:20.950 --> 00:26:25.390
+news accent, But it's just
+kind of silly, right? Like,
+
+552
+00:26:25.390 --> 00:26:27.850
+I mean, and like a
+lot of people don't know
+
+553
+00:26:27.850 --> 00:26:30.850
+a lot of things and
+like, it's like an exciting
+
+554
+00:26:30.850 --> 00:26:33.070
+opportunity to learn that thing.
+Right. You're like, Oh great.
+
+555
+00:26:33.070 --> 00:26:36.910
+Today is today that today's
+the day that I guess
+
+556
+00:26:36.920 --> 00:26:40.090
+lose that thing. And that's
+fine. Exactly. And that's, that's
+
+557
+00:26:40.090 --> 00:26:41.950
+the way we all should
+be. You know, we should
+
+558
+00:26:41.950 --> 00:26:45.390
+be positive that stuff. And
+because not everyone has, like,
+
+559
+00:26:45.390 --> 00:26:47.190
+we may all have 10
+or 15 years of experience,
+
+560
+00:26:47.190 --> 00:26:50.190
+but not everyone has the
+same years. Yeah. We're doing
+
+561
+00:26:50.190 --> 00:26:52.140
+different stuff. What were you
+doing before? You were an
+
+562
+00:26:52.140 --> 00:26:55.790
+infrastructure engineer. Okay. Machine learning.
+Okay. I switched from machine
+
+563
+00:26:55.790 --> 00:26:58.850
+learning to doing infrastructure engineering
+two years ago. Oh wow.
+
+564
+00:26:59.120 --> 00:27:00.710
+But like in like machine
+learning is like the new
+
+565
+00:27:00.710 --> 00:27:02.810
+hotness that everyone's talking about.
+So you're doing it before
+
+566
+00:27:02.810 --> 00:27:05.390
+it was the hotness. Well,
+I don't know. I think
+
+567
+00:27:05.390 --> 00:27:07.130
+it was good because it
+was also the hotness two
+
+568
+00:27:07.130 --> 00:27:09.380
+years ago. I don't know.
+I don't have a sense
+
+569
+00:27:09.380 --> 00:27:11.450
+in my mind. Like when
+machine learning started being amazing,
+
+570
+00:27:12.910 --> 00:27:18.350
+Cool for a minute, My
+bed, my bed. So you
+
+571
+00:27:18.350 --> 00:27:20.810
+also do a lot of
+open source and you actually
+
+572
+00:27:20.810 --> 00:27:23.690
+took a sabbatical from work
+to write a profiler. How
+
+573
+00:27:23.690 --> 00:27:26.420
+did you do that? Actually,
+I sort of don't do
+
+574
+00:27:26.420 --> 00:27:29.000
+a lot of opensource. I
+took a sabbatical from work
+
+575
+00:27:29.000 --> 00:27:31.010
+to do opensource for three
+months, but the reason I
+
+576
+00:27:31.010 --> 00:27:33.170
+did that was that I
+don't do open source. Am
+
+577
+00:27:33.170 --> 00:27:37.130
+I spare time at all?
+Really? Yeah. Well I do
+
+578
+00:27:37.130 --> 00:27:39.230
+a lot of other like
+writing in my spare time.
+
+579
+00:27:39.230 --> 00:27:41.690
+So if I also programmed
+in my spare time, in
+
+580
+00:27:41.690 --> 00:27:43.750
+addition, it would, I think
+it would not be healthy.
+
+581
+00:27:44.840 --> 00:27:47.390
+I think it would be
+too much, but yeah. So
+
+582
+00:27:47.420 --> 00:27:49.340
+I have this profiler I
+want to write and I
+
+583
+00:27:49.340 --> 00:27:51.150
+was like, well, I wanna
+do this programming project. And
+
+584
+00:27:51.150 --> 00:27:52.610
+it, realistically speaking, I'm not
+going to do it in
+
+585
+00:27:52.610 --> 00:27:56.660
+my spare time. So I
+applied for a fellowship and
+
+586
+00:27:56.930 --> 00:27:58.820
+they gave me the fellowship
+and then I took three
+
+587
+00:27:58.820 --> 00:28:02.240
+months off work and wrote
+this real violet. Wow. Was
+
+588
+00:28:02.340 --> 00:28:05.660
+that stressful? No, it was
+great. That's a good sign.
+
+589
+00:28:05.660 --> 00:28:08.060
+Amazing. I must be. That's
+something that only Canadians could
+
+590
+00:28:08.060 --> 00:28:09.500
+do because I don't know
+if I could get healthcare
+
+591
+00:28:09.500 --> 00:28:11.630
+if I took three months
+off work. Oh yeah. That's
+
+592
+00:28:11.630 --> 00:28:15.230
+true. I don't know about
+that. I think so someone
+
+593
+00:28:15.230 --> 00:28:16.430
+asks you, they're like, Oh,
+do you get health care
+
+594
+00:28:16.430 --> 00:28:17.570
+here? Your tobacco? And I
+was like, I have no
+
+595
+00:28:17.570 --> 00:28:20.900
+idea. I didn't think about
+that at all. Yeah. That's
+
+596
+00:28:20.900 --> 00:28:22.670
+what I got another whole
+podcast right there. If it's
+
+597
+00:28:22.670 --> 00:28:24.380
+like, Oh my goodness. A
+three months sabbatical to work
+
+598
+00:28:24.380 --> 00:28:26.060
+on something I want to
+work on. That would be
+
+599
+00:28:26.060 --> 00:28:29.720
+amazing. Yeah. Yeah. I just
+asked my manager for permission.
+
+600
+00:28:29.840 --> 00:28:32.810
+I'm like six months. Oh
+really? Okay. So you like
+
+601
+00:28:32.840 --> 00:28:35.720
+paused your job and came
+back to the same job.
+
+602
+00:28:36.320 --> 00:28:40.100
+Yeah. Yeah, exactly. That's amazing.
+That's amazing. So you made
+
+603
+00:28:40.190 --> 00:28:42.620
+a RB spy and people
+can go and Google for
+
+604
+00:28:42.620 --> 00:28:45.710
+our Spire go to Arby's
+by dot get hub.io. Have
+
+605
+00:28:45.710 --> 00:28:48.860
+other people gotten involved with
+this profiler? Cause it it's
+
+606
+00:28:48.860 --> 00:28:51.320
+got lots of, lots of
+forks and stars, but are
+
+607
+00:28:51.320 --> 00:28:53.840
+people using to and digging
+it? People that are using
+
+608
+00:28:53.840 --> 00:28:56.660
+it. Yeah. They've told one
+person left this really delightful
+
+609
+00:28:56.660 --> 00:28:59.660
+comment, but maybe happy where
+they said that they'd had
+
+610
+00:28:59.660 --> 00:29:02.150
+this like really bad performance
+problem and the Ruby program.
+
+611
+00:29:02.150 --> 00:29:04.730
+And then they used our
+baseline and then the, then
+
+612
+00:29:04.730 --> 00:29:06.200
+it was wrong right away.
+And they fixed it and
+
+613
+00:29:06.200 --> 00:29:08.750
+their boss thought that they
+were a genius, Which is
+
+614
+00:29:08.750 --> 00:29:11.930
+exactly like become a wizard
+programmer. Like they've done an
+
+615
+00:29:11.930 --> 00:29:14.090
+exactly what you told them
+they could do. Yeah. Which
+
+616
+00:29:14.090 --> 00:29:16.310
+is what you want. Right.
+I feel like it's like,
+
+617
+00:29:16.340 --> 00:29:18.980
+it's exciting to build tools
+to tell people like, it'd
+
+618
+00:29:18.980 --> 00:29:22.730
+be better and like make
+them feel like, I don't
+
+619
+00:29:22.730 --> 00:29:24.290
+know, like I don't want
+people to feel like they
+
+620
+00:29:24.290 --> 00:29:26.900
+can do anything. Right. And
+was it a, was it
+
+621
+00:29:26.900 --> 00:29:29.180
+a problem that had existed
+before? Like was there, is
+
+622
+00:29:29.180 --> 00:29:32.300
+there just no good profiling
+for Ruby right now Are
+
+623
+00:29:32.300 --> 00:29:34.490
+there is a good profiler,
+but it doesn't work the
+
+624
+00:29:34.490 --> 00:29:36.800
+same way that Arby's fireworks.
+So the way RVs fireworks
+
+625
+00:29:36.800 --> 00:29:38.660
+is you can just attach
+it to any running Ruby
+
+626
+00:29:38.660 --> 00:29:42.310
+program, no matter what. And
+the other profilers that already
+
+627
+00:29:42.310 --> 00:29:44.110
+existed, you need to just
+kind of like edit your
+
+628
+00:29:44.110 --> 00:29:47.230
+program source code. And so
+being able to just like
+
+629
+00:29:47.260 --> 00:29:49.000
+poke it something that's already
+running and be like, Hey,
+
+630
+00:29:49.020 --> 00:29:51.160
+what are you doing? What
+are some is something that
+
+631
+00:29:51.160 --> 00:29:53.460
+wasn't possible before. Cool. And
+I understand that it's a
+
+632
+00:29:53.460 --> 00:29:55.530
+sampling profiler, so you can
+actually run it like in
+
+633
+00:29:55.530 --> 00:29:59.730
+production without fear. Yeah, that's
+right. That's pretty sweet. And
+
+634
+00:29:59.730 --> 00:30:01.140
+are you continuing work on
+it or do you, have
+
+635
+00:30:01.140 --> 00:30:03.060
+you developed a community and
+a team around it or
+
+636
+00:30:03.060 --> 00:30:06.120
+is it just you? It's
+mostly, it's mostly just me.
+
+637
+00:30:06.240 --> 00:30:09.180
+I'm still working on it
+a little bit. And I
+
+638
+00:30:09.180 --> 00:30:11.010
+understand that you were trying
+to do some flame graphs
+
+639
+00:30:11.010 --> 00:30:13.830
+as well. Like it, it
+produces like information that you
+
+640
+00:30:13.830 --> 00:30:16.080
+can then use to go
+and visualize. Yeah. Yeah. So
+
+641
+00:30:16.080 --> 00:30:19.980
+it produces visualizations by default,
+which was an early important
+
+642
+00:30:19.980 --> 00:30:23.430
+design decision I made actually,
+because I think like a
+
+643
+00:30:23.430 --> 00:30:25.710
+lot of profilers will require
+you to do like extra
+
+644
+00:30:25.710 --> 00:30:28.740
+work, to get a visualization.
+And I thought, well, that
+
+645
+00:30:28.740 --> 00:30:30.630
+doesn't really work for people
+because I think people who
+
+646
+00:30:30.630 --> 00:30:33.990
+are profiling usually like if
+they're doing profiling, they probably
+
+647
+00:30:33.990 --> 00:30:36.630
+haven't done it for like
+two years. Right. Like they've
+
+648
+00:30:36.630 --> 00:30:38.520
+just decided, okay, today is
+the day that I'm going
+
+649
+00:30:38.520 --> 00:30:39.870
+to do profiling. And I
+don't know how to do
+
+650
+00:30:39.870 --> 00:30:42.660
+this. What's going on. So
+you really like want to
+
+651
+00:30:42.660 --> 00:30:44.280
+give them, like, you want
+to make the experience as
+
+652
+00:30:44.280 --> 00:30:47.100
+easy for them as possible
+because profiling is something that
+
+653
+00:30:47.100 --> 00:30:49.860
+people do do something frequently.
+Right. So I thought it
+
+654
+00:30:49.860 --> 00:30:52.410
+was really important to create
+the visualization by default. And
+
+655
+00:30:52.410 --> 00:30:53.910
+people have said, they're like,
+Oh wow. I didn't know
+
+656
+00:30:53.910 --> 00:30:56.340
+that you could make this
+kind of visualization. And so
+
+657
+00:30:56.340 --> 00:30:57.900
+I think they wouldn't have
+thought to go do it
+
+658
+00:30:57.960 --> 00:31:00.870
+themselves. Cause they didn't know
+that it existed. Right. Yeah.
+
+659
+00:31:00.870 --> 00:31:02.070
+Like, and if you have
+to go and do a
+
+660
+00:31:02.070 --> 00:31:04.080
+bunch of setup, just because
+you want to ask like,
+
+661
+00:31:04.350 --> 00:31:07.680
+answer and ask a question,
+then we won't bother doing
+
+662
+00:31:07.680 --> 00:31:09.990
+it. So the flame graph
+comes out of the box.
+
+663
+00:31:10.080 --> 00:31:13.590
+Yeah. That's cool. Awesome. And
+that you did that in
+
+664
+00:31:13.590 --> 00:31:15.840
+just a, in three months.
+Had you been working out
+
+665
+00:31:15.840 --> 00:31:18.450
+before or did you do
+it all like beginning to
+
+666
+00:31:18.450 --> 00:31:22.080
+end in three months I
+built a prototype before, so
+
+667
+00:31:22.080 --> 00:31:23.730
+I kind of had an
+idea that it was possible,
+
+668
+00:31:23.730 --> 00:31:25.740
+which is what kind of
+gave you the confidence to
+
+669
+00:31:25.800 --> 00:31:27.480
+actually take three months off
+work, to work on it.
+
+670
+00:31:27.480 --> 00:31:29.820
+Right. And did the, when
+you did the grant, like,
+
+671
+00:31:29.820 --> 00:31:31.080
+do you have to then
+go to the grant people
+
+672
+00:31:31.080 --> 00:31:33.090
+and say, look, I did
+a thing. Yeah. I mean,
+
+673
+00:31:33.090 --> 00:31:35.550
+I said like, I think
+I I've been blogging about
+
+674
+00:31:35.550 --> 00:31:37.230
+it. So they obviously knew
+that I had been working
+
+675
+00:31:37.230 --> 00:31:39.480
+on it. And so I
+think like at the end
+
+676
+00:31:39.480 --> 00:31:40.560
+I just sent them an
+email and I was like,
+
+677
+00:31:40.560 --> 00:31:42.300
+Hey, I did the thing.
+Can you send me the
+
+678
+00:31:42.300 --> 00:31:44.930
+money? It was, it was
+pretty simple. They were there.
+
+679
+00:31:44.940 --> 00:31:47.730
+They were really great to
+work with. That's that's really
+
+680
+00:31:47.730 --> 00:31:50.370
+cool. I didn't even realize
+that one could like ask
+
+681
+00:31:50.370 --> 00:31:52.110
+for a grant and get
+it and do something like
+
+682
+00:31:52.110 --> 00:31:54.450
+that. And that's inspirational to
+know that you can do
+
+683
+00:31:54.450 --> 00:31:57.930
+that. Yeah. Yeah. The program
+was called the segment opensource
+
+684
+00:31:57.930 --> 00:32:00.930
+fellowship. There's this analytics company
+called segment that ran it
+
+685
+00:32:02.040 --> 00:32:04.560
+So people can check out
+your zenes. Should they just
+
+686
+00:32:04.560 --> 00:32:07.170
+go to JV and s.ca
+or is there a better
+
+687
+00:32:07.170 --> 00:32:10.170
+homepage for your jeans? Yeah,
+they can go there. Cool.
+
+688
+00:32:10.290 --> 00:32:12.930
+So you can just Google
+for Julia Evans, jeans, your everywhere
+
+689
+00:32:12.930 --> 00:32:15.540
+and follow you on Twitter.
+And you're kind of working
+
+690
+00:32:15.540 --> 00:32:17.520
+on comics all the time
+and I follow you on
+
+691
+00:32:17.520 --> 00:32:20.310
+Twitter and see those things
+go by and RB spy
+
+692
+00:32:20.310 --> 00:32:23.670
+of course is RB spider
+github.io. Thanks so much for
+
+693
+00:32:23.670 --> 00:32:25.740
+chatting with me today. Thanks
+so much for having me.
+
+694
+00:32:25.980 --> 00:32:28.590
+This has been another episode
+of Hanselminutes and we'll see
+
+695
+00:32:28.590 --> 00:32:29.030
+you again.
+

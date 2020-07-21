@@ -1,0 +1,2702 @@
+WEBVTT FILE
+
+1
+00:00:38.070 --> 00:00:48.800
+Daniel Jones. Hi, this is Scott
+Hanselman. This is another episode
+
+2
+00:00:48.800 --> 00:00:52.400
+of Hansel minutes. And today
+I'm talking to Nathaniel Jones,
+
+3
+00:00:52.400 --> 00:00:56.630
+he runs image resizing.net. He's
+got a really great application
+
+4
+00:00:56.630 --> 00:00:59.420
+and module that you can
+pop into your asp.net application
+
+5
+00:00:59.750 --> 00:01:02.420
+to make image resizing simpler.
+And I recently did a
+
+6
+00:01:02.420 --> 00:01:05.360
+blog post on a called
+back to basics talking about
+
+7
+00:01:05.360 --> 00:01:09.200
+HTP modules and servers. And
+as with all great things
+
+8
+00:01:09.200 --> 00:01:11.600
+on my blog, the great
+things are in the comments.
+
+9
+00:01:12.290 --> 00:01:14.420
+I think that the comments
+that Nathaniel put in were
+
+10
+00:01:14.420 --> 00:01:16.430
+much more interesting than my
+post itself. So I wanted
+
+11
+00:01:16.430 --> 00:01:18.590
+to have you on the
+show. Thanks for chatting with
+
+12
+00:01:18.590 --> 00:01:23.480
+me. Thank you, Scott honor,
+to be here. My pleasure.
+
+13
+00:01:23.780 --> 00:01:25.790
+So we were just talking
+actually, before we started the
+
+14
+00:01:25.790 --> 00:01:28.730
+show and you, you immediately
+kind of launched this as
+
+15
+00:01:28.750 --> 00:01:32.120
+really interesting information. You said
+that most of the imagery
+
+16
+00:01:32.120 --> 00:01:34.310
+sizing code on the net
+is just kind of copy
+
+17
+00:01:34.310 --> 00:01:40.610
+pasted and it might be
+wrong, Unfortunate and true. There's
+
+18
+00:01:40.610 --> 00:01:42.650
+been a lot of really
+good coders write a lot
+
+19
+00:01:42.650 --> 00:01:46.130
+of blog articles about imagery
+sizing, probably more like 75
+
+20
+00:01:46.130 --> 00:01:51.680
+to 90 articles. I still
+haven't found one that wasn't
+
+21
+00:01:51.680 --> 00:01:57.020
+buggy in some way, the
+best article out there is
+
+22
+00:01:57.020 --> 00:02:01.940
+one that actually does it
+in code JPEGs quality, for
+
+23
+00:02:01.940 --> 00:02:04.550
+example, which will give you
+really big file sizes. It's
+
+24
+00:02:04.550 --> 00:02:11.450
+not really web appropriate because
+the difference between say it's
+
+25
+00:02:11.450 --> 00:02:19.430
+not visually perceptible in a
+web browser, and you'd have
+
+26
+00:02:19.430 --> 00:02:20.990
+to have really sharp lines
+in there to be able
+
+27
+00:02:20.990 --> 00:02:24.500
+to tell the difference. I
+did a blog post where
+
+28
+00:02:24.500 --> 00:02:27.200
+I was encoding some graphics
+on the fly. I would
+
+29
+00:02:27.200 --> 00:02:29.840
+basically make a bitmap and
+make an image. And then
+
+30
+00:02:29.840 --> 00:02:33.050
+I saved it. I said
+that mapped out, save response,
+
+31
+00:02:33.050 --> 00:02:35.600
+that output stream. And I
+went to a PNG and
+
+32
+00:02:35.600 --> 00:02:37.570
+you made a really great
+comment in the, in the
+
+33
+00:02:37.580 --> 00:02:40.220
+comments. I still need to
+update the blog post that
+
+34
+00:02:40.220 --> 00:02:45.650
+I was doing that wrong.
+The GDI P and G.
+
+35
+00:02:45.650 --> 00:02:50.900
+And most of the time,
+I believe that for simple
+
+36
+00:02:50.900 --> 00:03:01.360
+enough sequence line art, for
+example, a small enough that
+
+37
+00:03:01.360 --> 00:03:05.350
+it's, it never gets through
+the buffer and actually has
+
+38
+00:03:05.350 --> 00:03:09.190
+to seek on the underlying
+strength. Cause it cause those
+
+39
+00:03:09.190 --> 00:03:11.800
+streams are wrapped in an
+interface which has a buffer
+
+40
+00:03:12.430 --> 00:03:17.920
+between calm and.net. So, you
+know, for us really small
+
+41
+00:03:17.920 --> 00:03:19.570
+P and G it, you
+won't have to see a
+
+42
+00:03:19.570 --> 00:03:22.600
+problem because it'll either be
+small enough to fit in
+
+43
+00:03:22.600 --> 00:03:26.080
+that buffer or simple enough
+that it, the compression never
+
+44
+00:03:26.110 --> 00:03:28.540
+even has to really kick
+in, you know, basically a
+
+45
+00:03:28.540 --> 00:03:35.140
+runtime LinkedIn coding scenario, but
+for like photographic PNG, you
+
+46
+00:03:35.140 --> 00:03:37.210
+really have to have a
+speakable stream, which means you
+
+47
+00:03:37.210 --> 00:03:39.400
+have to write to a
+memory stream, seek back to
+
+48
+00:03:39.400 --> 00:03:42.040
+buy one, and then write
+that memory stream back to
+
+49
+00:03:42.040 --> 00:03:46.450
+the output stream because the
+asp.net response stream, it doesn't
+
+50
+00:03:46.450 --> 00:03:52.110
+support seeking even in dotnet
+for. I see. So I
+
+51
+00:03:52.110 --> 00:03:55.170
+was saying graphics from image.
+I was drawing onto the
+
+52
+00:03:55.170 --> 00:03:59.010
+graphics object and then I
+just said saved output streams.
+
+53
+00:03:59.040 --> 00:04:01.320
+That was like a right
+a right only, you can
+
+54
+00:04:01.320 --> 00:04:04.260
+only go forward on an
+output stream cause you're streaming
+
+55
+00:04:04.260 --> 00:04:07.140
+that out to the browser.
+And that works with JPEGs
+
+56
+00:04:07.140 --> 00:04:08.940
+because you can do that
+in one pass, but you're
+
+57
+00:04:08.940 --> 00:04:10.590
+saying P and G is
+need to move forward and
+
+58
+00:04:10.590 --> 00:04:13.650
+backward in order to do
+that right. Is that right?
+
+59
+00:04:13.720 --> 00:04:15.360
+Do they need to move
+forward and backward? They just
+
+60
+00:04:15.360 --> 00:04:16.740
+need to go to the
+beginning again, is it a
+
+61
+00:04:16.740 --> 00:04:21.360
+two pass operation? It probably,
+it depends on the implementation.
+
+62
+00:04:21.360 --> 00:04:24.270
+There's a lot of different
+ways to encode PNGs. Some
+
+63
+00:04:24.270 --> 00:04:28.290
+are more efficient, some are
+less efficient. I'm not sure
+
+64
+00:04:28.290 --> 00:04:35.490
+what GDI is. Algorithm is
+not really, exactly documented. Yeah.
+
+65
+00:04:35.610 --> 00:04:37.560
+We're trying to learn. He's
+got some really great articles
+
+66
+00:04:37.560 --> 00:04:41.310
+where he talks about the
+different ways to do JPEG
+
+67
+00:04:41.310 --> 00:04:43.800
+and PNG and coding. On
+the, on the server side,
+
+68
+00:04:43.830 --> 00:04:47.460
+I've noticed internally at Microsoft,
+we still haven't kind of
+
+69
+00:04:47.460 --> 00:04:52.410
+got official support for using
+system dot drawing in a
+
+70
+00:04:52.410 --> 00:04:55.080
+web context. And there's all
+sorts of warnings on MSDN
+
+71
+00:04:55.080 --> 00:04:56.730
+that say, you shouldn't do
+this and you shouldn't do
+
+72
+00:04:56.730 --> 00:04:59.580
+that. I honestly don't expect
+that sport to ever arrive
+
+73
+00:04:59.610 --> 00:05:01.890
+because of the amount of
+pitfalls there are with it.
+
+74
+00:05:02.310 --> 00:05:04.770
+You can use system dot
+drawing in a perfect manner,
+
+75
+00:05:05.670 --> 00:05:07.560
+but you're definitely not going
+to achieve that by copying
+
+76
+00:05:07.560 --> 00:05:15.660
+and pasting code even. So
+that's why, I mean, if
+
+77
+00:05:15.660 --> 00:05:20.520
+you can't, it's so complicated
+and difficult error prone to
+
+78
+00:05:20.520 --> 00:05:24.120
+use system dot drawing that
+there's no way Microsoft could
+
+79
+00:05:24.120 --> 00:05:28.410
+support it. In my opinion,
+you know, I, I believe
+
+80
+00:05:28.410 --> 00:05:31.350
+the official statement is that
+the WPF isn't supported either
+
+81
+00:05:31.350 --> 00:05:35.160
+on the server and unlike
+system dot drawing that requires
+
+82
+00:05:35.160 --> 00:05:41.160
+full trust. The only drawing
+API, I know that Microsoft
+
+83
+00:05:42.420 --> 00:05:47.850
+still supports is WIC, which
+is only available. You know,
+
+84
+00:05:47.850 --> 00:05:50.880
+the, the server safe version
+is only available on a
+
+85
+00:05:50.880 --> 00:05:55.890
+windows server, 2008, release two
+and up cause that's the
+
+86
+00:05:55.890 --> 00:05:59.780
+version that's free threaded, server's
+safe. And you know, you
+
+87
+00:05:59.780 --> 00:06:02.090
+have to work through a
+common interface to do that,
+
+88
+00:06:02.960 --> 00:06:05.950
+but you do get great
+performance. What would help me
+
+89
+00:06:05.950 --> 00:06:09.310
+understand this? I mean, many,
+many, many years ago, 10
+
+90
+00:06:09.310 --> 00:06:12.430
+years ago when Dominic's first
+started out, I was doing
+
+91
+00:06:12.460 --> 00:06:15.520
+banking software and I was
+processing check images on the
+
+92
+00:06:15.520 --> 00:06:20.470
+service side. And we did
+this for years. Never had
+
+93
+00:06:20.470 --> 00:06:24.160
+a problem. What, and I'm
+have no doubt that the
+
+94
+00:06:24.160 --> 00:06:26.650
+listeners are kind of thinking
+why I'm using systems not
+
+95
+00:06:26.650 --> 00:06:29.320
+drawing. And I'm using the
+graphics context and making images
+
+96
+00:06:29.320 --> 00:06:31.990
+dynamically. Millions of people are
+doing that. What are the
+
+97
+00:06:31.990 --> 00:06:35.200
+pitfalls? When, when, when would
+we see them? Because to
+
+98
+00:06:35.200 --> 00:06:37.360
+hear that it's totally unsupported
+and not something we should
+
+99
+00:06:37.360 --> 00:06:39.490
+do, but everyone's doing it
+anyway. And it probably will
+
+100
+00:06:39.490 --> 00:06:42.160
+work is a kind of
+a confusing thing to reconcile.
+
+101
+00:06:43.030 --> 00:06:47.080
+And that's, that's, that's a
+big topic. There was a
+
+102
+00:06:47.080 --> 00:06:49.360
+clarification article. I don't know
+if I link to it
+
+103
+00:06:49.420 --> 00:06:53.290
+on your blog or not,
+but it explained that it's
+
+104
+00:06:53.290 --> 00:06:54.910
+not that it won't work
+and it's not that it
+
+105
+00:06:54.910 --> 00:06:57.760
+won't be stable. It's just
+that you won't get support.
+
+106
+00:06:57.760 --> 00:07:00.130
+If you call Microsoft. I
+going, that's what it comes
+
+107
+00:07:00.130 --> 00:07:02.920
+down to is it's, it's
+one of those things. That's
+
+108
+00:07:02.920 --> 00:07:05.440
+just one of those situations,
+those cans of worms that
+
+109
+00:07:05.440 --> 00:07:10.450
+are not Microsoft deems, not
+worth trying to support. So
+
+110
+00:07:11.050 --> 00:07:14.650
+if you're generating imagery, there's
+fewer pitfalls and say, if
+
+111
+00:07:14.650 --> 00:07:17.920
+you're loading, you know, a
+10 megapixel camera image and
+
+112
+00:07:17.920 --> 00:07:22.960
+processing it, you're dealing with
+a lot less memory, make
+
+113
+00:07:22.960 --> 00:07:26.980
+it pixels matter because when
+you decompress that 500 kilobyte
+
+114
+00:07:26.980 --> 00:07:31.690
+JPEG, it might be 50
+megabytes of memory. And to
+
+115
+00:07:31.690 --> 00:07:34.810
+decompress it, you have to
+allocate all that contiguous amount
+
+116
+00:07:34.810 --> 00:07:42.490
+of space. So if you
+are not handling your memory
+
+117
+00:07:42.490 --> 00:07:48.040
+management properly, then you know,
+50 megabytes per image D
+
+118
+00:07:48.040 --> 00:07:54.520
+code that can stack up
+really fast. And then the
+
+119
+00:07:54.550 --> 00:07:57.880
+biggest, biggest problem with using
+system dot drawing is that
+
+120
+00:07:58.180 --> 00:08:01.750
+garbage collection is not implemented.
+When I say not implemented.
+
+121
+00:08:01.750 --> 00:08:05.590
+I mean that the.net, the
+CLR, it doesn't know how
+
+122
+00:08:05.590 --> 00:08:08.620
+big those sites, those images
+are a bitmap to the
+
+123
+00:08:08.620 --> 00:08:11.470
+CLR. It's one or two
+kilobytes. You know, if you've
+
+124
+00:08:11.470 --> 00:08:13.510
+got a lot of metadata,
+maybe, you know, a hundred
+
+125
+00:08:13.510 --> 00:08:17.710
+kilobytes, it's tiny little object,
+it's, you know, the size
+
+126
+00:08:17.710 --> 00:08:20.110
+of a big string. You
+know, it's not on the
+
+127
+00:08:20.110 --> 00:08:24.730
+high priority list for this
+disposal. So you can have,
+
+128
+00:08:24.730 --> 00:08:29.800
+you know, if you know,
+much smaller objects are getting
+
+129
+00:08:30.100 --> 00:08:35.260
+garbage collected, first those 50
+megabyte objects will just stay
+
+130
+00:08:35.260 --> 00:08:42.070
+around forever, especially under high
+load. There's a to dispose
+
+131
+00:08:42.070 --> 00:08:45.190
+or not dispose. That's one
+gigabyte question off often restaurant
+
+132
+00:08:45.190 --> 00:08:49.600
+reference blog post on that
+issue. Maybe we can add
+
+133
+00:08:49.600 --> 00:08:52.600
+a list of links or
+something. If you have a
+
+134
+00:08:52.600 --> 00:08:54.610
+list of valuable links or
+things that people need to
+
+135
+00:08:54.610 --> 00:08:57.600
+see, then we'll add them
+all to the show notes.
+
+136
+00:08:58.970 --> 00:09:05.360
+So basically if you aren't
+putting your GDI object and
+
+137
+00:09:05.360 --> 00:09:08.090
+a using clause, it's not
+going to get disposed reliably
+
+138
+00:09:08.690 --> 00:09:11.960
+and calling dot dispose on
+it is also not reliable
+
+139
+00:09:11.960 --> 00:09:14.510
+because GDI has a lot
+of different exceptions. It'll just
+
+140
+00:09:14.510 --> 00:09:18.020
+happen for lots of reasons
+like running out of memory.
+
+141
+00:09:18.710 --> 00:09:21.680
+You can't control all the
+situations in which GDI will
+
+142
+00:09:21.680 --> 00:09:24.110
+throw an exception, you know,
+say a user uploads, an
+
+143
+00:09:24.110 --> 00:09:27.710
+image, which is corrupt, you
+know, and, you know, you
+
+144
+00:09:27.710 --> 00:09:33.440
+have an exception before the
+dot dispose line that isn't
+
+145
+00:09:33.440 --> 00:09:37.310
+going to get garbage collected.
+And so it's really critical
+
+146
+00:09:37.310 --> 00:09:39.950
+that you either place you
+place your dispose statements and
+
+147
+00:09:39.950 --> 00:09:43.160
+using clauses by using a
+using clause or putting in
+
+148
+00:09:43.160 --> 00:09:48.500
+a try finally block because
+in a bad scenario, you
+
+149
+00:09:48.500 --> 00:09:51.380
+know, you're going to have
+exceptions and those exceptions are
+
+150
+00:09:51.380 --> 00:09:53.750
+going to trigger more exceptions
+because you're now going to
+
+151
+00:09:53.900 --> 00:09:59.480
+be having a memory leak.
+So it's really critical. Don't
+
+152
+00:09:59.480 --> 00:10:03.680
+call dot suppose use a
+finally block or a using
+
+153
+00:10:03.680 --> 00:10:07.790
+clause. And that's everything in
+system dot drawing, which implements
+
+154
+00:10:07.930 --> 00:10:12.350
+disposable like encoder parameters, image,
+attributes, stuff that is acts
+
+155
+00:10:12.350 --> 00:10:17.420
+like a structure yet it's
+actually allocating unmanaged memory. You
+
+156
+00:10:17.420 --> 00:10:20.660
+know, it's unlikely that it'll
+cause a server crash as
+
+157
+00:10:20.660 --> 00:10:23.990
+quickly as not disposing a
+bitmap or image instance, but
+
+158
+00:10:24.680 --> 00:10:28.970
+it's still subject to the
+same problems with garbage collection.
+
+159
+00:10:29.690 --> 00:10:32.090
+So are you saying that
+we should use the using,
+
+160
+00:10:32.120 --> 00:10:34.490
+which does try catch finally
+and we should never call
+
+161
+00:10:34.490 --> 00:10:36.880
+dispose directly? Or are you
+saying we shouldn't use, you're
+
+162
+00:10:36.890 --> 00:10:43.610
+using You if you nest
+using clauses that that works
+
+163
+00:10:43.610 --> 00:10:46.370
+too, but some scenario sometimes
+you need your, your code
+
+164
+00:10:46.370 --> 00:10:47.780
+flow in such a way
+you need a little more
+
+165
+00:10:47.780 --> 00:10:51.440
+control, like checking if it's
+no before disposing it. And
+
+166
+00:10:51.440 --> 00:10:53.090
+so you can do that
+in a try finally, just
+
+167
+00:10:53.090 --> 00:10:57.260
+make sure that you nest
+you're inside a finally block.
+
+168
+00:10:57.260 --> 00:10:59.810
+If you dispose one object
+that disposed call can fail.
+
+169
+00:11:00.140 --> 00:11:03.530
+So make sure inside that's
+another try finally block, you
+
+170
+00:11:03.530 --> 00:11:07.250
+know, and inside that finally
+block is the next disposed
+
+171
+00:11:07.250 --> 00:11:10.280
+statement. I see. So you're
+really saying that when you
+
+172
+00:11:10.280 --> 00:11:13.190
+start doing this kind of
+work, particularly around loading images,
+
+173
+00:11:13.190 --> 00:11:15.860
+that you can't trust anything,
+you should be as defensive
+
+174
+00:11:15.860 --> 00:11:20.120
+a coder, as you can
+be. Absolutely. And on top
+
+175
+00:11:20.120 --> 00:11:25.070
+of this, assuming the garbage
+collection did work properly, consistency
+
+176
+00:11:25.070 --> 00:11:27.440
+and throughput is a lot
+more important on a server
+
+177
+00:11:27.980 --> 00:11:33.110
+than a response time for
+a single request. And what,
+
+178
+00:11:33.110 --> 00:11:37.220
+what, what I mean by
+that is no manual memory
+
+179
+00:11:37.220 --> 00:11:40.190
+management is, should be applied.
+Even if you have automatic
+
+180
+00:11:40.190 --> 00:11:42.440
+memory management and your language
+when you're dealing with large
+
+181
+00:11:42.470 --> 00:11:45.230
+objects like this, you know,
+if you have, if you're,
+
+182
+00:11:46.190 --> 00:11:50.600
+you know, for example, resizing
+a standard compact camera, JPEG
+
+183
+00:11:50.900 --> 00:11:56.800
+10, 10, 10 megapixel, you're
+allocating, you know, probably about
+
+184
+00:11:56.800 --> 00:12:02.080
+40 megabytes of Ram, where
+to load the image and
+
+185
+00:12:02.080 --> 00:12:07.450
+then say, we're resizing it
+to five megapixels. And so
+
+186
+00:12:07.930 --> 00:12:11.680
+we're gonna need 20 megapixels
+of space allocated for that
+
+187
+00:12:11.920 --> 00:12:15.670
+20 megabytes. So you end
+up with 60 megabytes of
+
+188
+00:12:15.670 --> 00:12:22.600
+space, plus any temporary buffers
+you need. So a single
+
+189
+00:12:22.600 --> 00:12:24.610
+request can use a lot
+of Ram and it's important
+
+190
+00:12:24.610 --> 00:12:28.300
+that you dispose that as
+early as possible waiting for
+
+191
+00:12:28.300 --> 00:12:30.550
+garbage collection to do its
+thing is just a really
+
+192
+00:12:30.550 --> 00:12:35.640
+bad idea if you want
+a consistency. And Because now
+
+193
+00:12:35.640 --> 00:12:37.050
+that might sound like a
+lot of Ram, but it
+
+194
+00:12:37.050 --> 00:12:38.880
+kind of is swell. It
+kind of swells up. It
+
+195
+00:12:38.880 --> 00:12:40.470
+does its work and then
+it goes away. I mean,
+
+196
+00:12:40.470 --> 00:12:43.350
+it is okay for the
+CPU to do work, right?
+
+197
+00:12:43.350 --> 00:12:45.990
+That's what, it's what it's
+there for. But I'm hearing
+
+198
+00:12:45.990 --> 00:12:48.690
+you say for scale and
+throughput, you want to do
+
+199
+00:12:48.690 --> 00:12:50.880
+that work and get out
+of there as fast as
+
+200
+00:12:50.880 --> 00:12:54.120
+you can. So sure. Allocate
+the memory, allocate the least
+
+201
+00:12:54.120 --> 00:12:56.850
+amount you can, but the
+second that you don't need
+
+202
+00:12:56.850 --> 00:13:00.510
+it anymore, let it go.
+Right? So that someone else
+
+203
+00:13:00.510 --> 00:13:04.200
+can use it, Right? Because
+even an ideal garbage collector
+
+204
+00:13:04.200 --> 00:13:11.670
+struggles with large, large blob
+objects, it's especially, underload because
+
+205
+00:13:13.770 --> 00:13:16.740
+it's the most optimal time
+to just to get rid
+
+206
+00:13:16.740 --> 00:13:19.260
+of that Ram under load
+when you have large objects
+
+207
+00:13:19.260 --> 00:13:22.170
+is immediately. And so, you
+know, the garbage collection is
+
+208
+00:13:22.170 --> 00:13:26.070
+never going to be as
+optimal is doing it right
+
+209
+00:13:26.070 --> 00:13:30.210
+now. You know, a lot
+garbage collection is a performance
+
+210
+00:13:30.210 --> 00:13:34.650
+optimization for small objects, but
+not for large ones, I
+
+211
+00:13:34.650 --> 00:13:38.340
+guess that's the best way
+to sum it up. That
+
+212
+00:13:38.340 --> 00:13:39.960
+is a really good way
+to remind people that, I
+
+213
+00:13:39.960 --> 00:13:42.360
+mean, it's a convenience, it's
+a friendly thing to have
+
+214
+00:13:42.360 --> 00:13:45.150
+around. It's great when you're
+dealing with small amounts of
+
+215
+00:13:45.150 --> 00:13:48.360
+memory and you want to
+not think about them, but
+
+216
+00:13:48.360 --> 00:13:50.100
+if you're dealing, if you're
+dealing with something that you
+
+217
+00:13:50.100 --> 00:13:52.740
+know is megabytes, even though
+the garbage collector is your
+
+218
+00:13:52.740 --> 00:13:56.190
+partner in that ultimately when
+you put in a using
+
+219
+00:13:56.190 --> 00:14:00.480
+or you start using disposes
+appropriately, you're not just giving
+
+220
+00:14:00.480 --> 00:14:03.210
+hints, but you're being really
+explicit about that memory management,
+
+221
+00:14:03.940 --> 00:14:06.030
+as much as you can
+because you know, more than
+
+222
+00:14:06.030 --> 00:14:09.330
+the garbage collector And it's
+really flying blind when it
+
+223
+00:14:09.330 --> 00:14:12.780
+comes to unmanaged objects, you
+know, it's very hard to
+
+224
+00:14:12.780 --> 00:14:16.620
+inform the garbage collector about
+how much memory and unmanaged
+
+225
+00:14:16.620 --> 00:14:18.990
+objects using and when it's
+best to dispose it and
+
+226
+00:14:18.990 --> 00:14:21.270
+all that stuff. And with
+WPF, they did a much
+
+227
+00:14:21.270 --> 00:14:23.400
+better job of that, but
+it's still difficult and still
+
+228
+00:14:23.400 --> 00:14:27.750
+slightly flawed. Yeah. Well, I
+think that that was a
+
+229
+00:14:27.750 --> 00:14:30.270
+big deal early on. I
+mean, when Donna came out
+
+230
+00:14:30.270 --> 00:14:33.690
+2001, 2002, three in there,
+I remember that we were
+
+231
+00:14:33.690 --> 00:14:36.960
+all talking about that relationship
+between the unmanaged code and
+
+232
+00:14:36.960 --> 00:14:39.990
+the managed code. And it
+was, it was all, it
+
+233
+00:14:39.990 --> 00:14:41.880
+always came up when you
+were in the dotnet one,
+
+234
+00:14:41.880 --> 00:14:45.300
+one kind of world, you
+were always remembering that I'm
+
+235
+00:14:45.300 --> 00:14:49.410
+using a system dot whatever,
+but that's really a handle
+
+236
+00:14:49.410 --> 00:14:53.780
+to some unmanaged because there
+was this bridge between the
+
+237
+00:14:53.780 --> 00:14:56.960
+manage world, the unmanaged world,
+and then now fast forward
+
+238
+00:14:56.960 --> 00:15:00.440
+10 years. And there's so
+many convenience functions in so
+
+239
+00:15:00.440 --> 00:15:04.340
+many easy ways and easy
+libraries to do work. I
+
+240
+00:15:04.340 --> 00:15:07.040
+think that maybe newer people,
+younger people, people who are
+
+241
+00:15:07.040 --> 00:15:13.730
+just getting into.net forget that,
+that these unmanaged blobs that
+
+242
+00:15:13.730 --> 00:15:17.240
+are kind of fronted by
+managed Trendly libraries still exist
+
+243
+00:15:17.240 --> 00:15:20.390
+in that you really can't
+count on the garbage collector
+
+244
+00:15:20.390 --> 00:15:24.790
+to know everything about that
+world. Yeah. I, it seems
+
+245
+00:15:24.790 --> 00:15:29.620
+like everybody on, at least
+on stack overflow, they have,
+
+246
+00:15:29.650 --> 00:15:35.500
+they don't even realize it's
+unmanaged. It's this constant it's
+
+247
+00:15:35.500 --> 00:15:38.470
+constant thing. That's like every
+single time, there's a question
+
+248
+00:15:38.470 --> 00:15:42.070
+or post about managed dot
+memory and system dot drawing.
+
+249
+00:15:42.070 --> 00:15:44.260
+There's these people arguing that
+the garbage collector is going
+
+250
+00:15:44.260 --> 00:15:46.960
+to take care of it
+because it's, you know, it's
+
+251
+00:15:46.960 --> 00:15:51.250
+handled, but it's not. This
+actually brings up an interesting
+
+252
+00:15:51.250 --> 00:15:53.860
+opportunity to pivot the conversation
+because one of the other
+
+253
+00:15:53.860 --> 00:15:55.810
+things I thought was great
+about your comments was that
+
+254
+00:15:56.530 --> 00:16:00.250
+you point out kind of
+when managed code is appropriate
+
+255
+00:16:00.250 --> 00:16:02.980
+and when it's not. And
+you say that IIS is
+
+256
+00:16:02.980 --> 00:16:06.370
+way more efficient than asp.net.
+That's stir, that's serving static
+
+257
+00:16:06.370 --> 00:16:09.340
+files from the disc. And
+we should dig into that
+
+258
+00:16:09.340 --> 00:16:13.200
+a little bit because the,
+the, the, the blog posts
+
+259
+00:16:13.200 --> 00:16:16.150
+that I blogged about was
+trying to get people to
+
+260
+00:16:16.150 --> 00:16:20.230
+turn off this feature called
+Ram far Ram, far as
+
+261
+00:16:20.240 --> 00:16:23.080
+our a M M F
+a R run, all managed
+
+262
+00:16:23.080 --> 00:16:26.710
+modules for all requests. And
+basically it's this feature that
+
+263
+00:16:26.710 --> 00:16:30.550
+was turned on in order
+to enable ASP early, early
+
+264
+00:16:30.550 --> 00:16:35.560
+versions of asp.net, MVC, and
+routing. And it's no longer
+
+265
+00:16:35.560 --> 00:16:37.990
+required. It's really, there's really
+just no good reason to
+
+266
+00:16:37.990 --> 00:16:42.580
+do it. But the ramifications
+of running all managed modules,
+
+267
+00:16:42.580 --> 00:16:46.060
+running managed code for every
+single request is huge, particularly
+
+268
+00:16:46.060 --> 00:16:48.670
+around images and JavaScript and
+CSS. And you had a
+
+269
+00:16:48.670 --> 00:16:51.970
+lot of good opinions about
+that. Static files are a
+
+270
+00:16:51.970 --> 00:16:55.810
+completely different problems scenario than
+logic and managed code of
+
+271
+00:16:56.590 --> 00:17:01.090
+static file serving as a
+highly competitive area, because there's
+
+272
+00:17:01.090 --> 00:17:03.520
+so many ways to do
+it. In an ideal scenario,
+
+273
+00:17:03.520 --> 00:17:07.060
+you have one thread per
+virtual core on your server.
+
+274
+00:17:07.930 --> 00:17:11.590
+And for serving files, you
+use an event loop because
+
+275
+00:17:12.010 --> 00:17:15.400
+you can, you don't need
+those threads. And tried switching
+
+276
+00:17:15.400 --> 00:17:18.520
+is expensive. You can handle
+an unlimited number of requests
+
+277
+00:17:18.550 --> 00:17:23.020
+if the number of requests
+doesn't matter because you're not
+
+278
+00:17:23.020 --> 00:17:26.530
+allocating stuff for it. You
+know, it's a queue and
+
+279
+00:17:26.530 --> 00:17:31.480
+you have no threat overhead,
+no switch overhead, nothing. It's
+
+280
+00:17:31.480 --> 00:17:35.680
+just incredible. Now I a
+seven, I have six, nine,
+
+281
+00:17:35.750 --> 00:17:38.350
+five, not so much, but
+I, a seven is a
+
+282
+00:17:38.350 --> 00:17:41.770
+really great server for static
+files. When you don't have
+
+283
+00:17:41.770 --> 00:17:46.780
+ASP on that enabled, it's
+definitely competitive with anything else
+
+284
+00:17:46.780 --> 00:17:54.090
+on the windows platform. It
+uses the HTTP SIS Colonel
+
+285
+00:17:54.090 --> 00:17:57.960
+level code to do this,
+doing it in user spaces.
+
+286
+00:17:58.410 --> 00:18:01.800
+Not really, you know, you,
+you take a, a threefold
+
+287
+00:18:01.830 --> 00:18:05.700
+hit performance hit. If you
+try to, you know, serve
+
+288
+00:18:05.730 --> 00:18:08.370
+a static files or any
+kind of files and user
+
+289
+00:18:08.370 --> 00:18:15.810
+space, that's kind of the,
+the performance bottleneck on windows
+
+290
+00:18:15.810 --> 00:18:18.620
+there. When you've got three
+to three levels there. I
+
+291
+00:18:18.620 --> 00:18:20.360
+mean, I know that I
+did a lot of work
+
+292
+00:18:20.390 --> 00:18:24.020
+teaching. You know, you can
+basically teach HTP dot SIS
+
+293
+00:18:24.020 --> 00:18:25.700
+what you want it to
+do. You can, you can
+
+294
+00:18:25.700 --> 00:18:28.010
+make sure that, you know,
+kernel mode caching is on.
+
+295
+00:18:28.010 --> 00:18:31.070
+And that means that a
+port can open up a
+
+296
+00:18:31.070 --> 00:18:33.170
+TCP connection can be connected,
+and you can have all
+
+297
+00:18:33.170 --> 00:18:34.940
+that work happen in the
+kernel. And a file can
+
+298
+00:18:34.940 --> 00:18:40.760
+be returned without hopping out
+into, into userspace. And then
+
+299
+00:18:40.820 --> 00:18:44.150
+from userspace hopping into managed
+code. So you've got that
+
+300
+00:18:44.150 --> 00:18:48.200
+threefold hit jumping out of
+the kernel, and then another
+
+301
+00:18:48.200 --> 00:18:51.200
+couple of orders of magnitude
+to jump into manage code
+
+302
+00:18:51.230 --> 00:18:57.410
+and, and serve a file
+from asp.net itself. Exactly. And
+
+303
+00:18:57.980 --> 00:19:00.560
+when you lit lit MVC
+or a spin on that
+
+304
+00:19:00.560 --> 00:19:08.000
+service, it's, it can actually
+be worse than that, because
+
+305
+00:19:08.690 --> 00:19:12.470
+in addition to all the,
+all those overheads it's going,
+
+306
+00:19:13.400 --> 00:19:15.740
+if it tries to serve
+it from managed code, it's
+
+307
+00:19:15.740 --> 00:19:20.180
+going to allocate either a
+buffer or allocate for the
+
+308
+00:19:20.180 --> 00:19:25.010
+entire file per user downloading
+the file. And that's, what's
+
+309
+00:19:25.010 --> 00:19:29.450
+important because if you, if
+you buffer the entire file
+
+310
+00:19:29.450 --> 00:19:32.390
+into memory to serve it
+to a client, your scalability
+
+311
+00:19:32.390 --> 00:19:37.190
+is gone. You can't, you
+can't scale that, you know,
+
+312
+00:19:38.720 --> 00:19:41.180
+I hate to get off
+topic here. Back in 2007,
+
+313
+00:19:41.990 --> 00:19:45.140
+I was doing a content
+management system based on the
+
+314
+00:19:45.140 --> 00:19:48.110
+speed on it too. And
+I was using virtual path
+
+315
+00:19:48.110 --> 00:19:51.230
+providers. It turned out that
+back then, if there was
+
+316
+00:19:51.230 --> 00:19:54.740
+any virtual path providers enabled,
+it would switch to managed
+
+317
+00:19:54.740 --> 00:20:00.800
+code for serving static files.
+And they fixed that. They
+
+318
+00:20:00.800 --> 00:20:05.120
+actually, I reached out to
+Scott Guthrie and Thomas, I think
+
+319
+00:20:05.120 --> 00:20:07.940
+it's Mark Marquardt. I can't
+pronounce his last name, but
+
+320
+00:20:09.710 --> 00:20:12.530
+he, they got it. They
+rewrote the static file handler
+
+321
+00:20:13.220 --> 00:20:17.420
+based on my request and
+got a, really, a really
+
+322
+00:20:17.420 --> 00:20:21.980
+decent managed implementation of static
+file hundreds on, and also
+
+323
+00:20:21.980 --> 00:20:24.800
+made it, so that, that,
+that code path would only
+
+324
+00:20:24.800 --> 00:20:27.740
+take effect on a virtual
+file. Not just anyone was
+
+325
+00:20:27.740 --> 00:20:30.770
+registered. So it was much
+more efficient after that hotfix.
+
+326
+00:20:30.800 --> 00:20:32.990
+And I believe that was
+included in dotnet service back
+
+327
+00:20:32.990 --> 00:20:38.510
+to Early, early on. This
+was a while back, Right?
+
+328
+00:20:38.540 --> 00:20:41.150
+But the net result of
+that, that, that problem was
+
+329
+00:20:41.150 --> 00:20:44.960
+that there'd be a a
+hundred megabyte MP3 file being
+
+330
+00:20:44.960 --> 00:20:47.830
+served to the client. And
+after eight, eight clients downloading
+
+331
+00:20:47.830 --> 00:20:52.090
+it, the server would crash
+at eight because it was
+
+332
+00:20:52.090 --> 00:20:56.830
+getting buffered into memory and
+a 32 bit process. You
+
+333
+00:20:56.830 --> 00:20:58.720
+know, you don't have much
+room to work with maybe
+
+334
+00:20:58.720 --> 00:21:02.430
+about 1200 megabytes. So Right
+now this is low level
+
+335
+00:21:02.430 --> 00:21:04.140
+stuff that we're talking about
+here. And we don't want
+
+336
+00:21:04.140 --> 00:21:05.880
+to, I mean, I don't
+want to get people panicked
+
+337
+00:21:05.880 --> 00:21:09.840
+about, like, we're saying that
+you get this many times
+
+338
+00:21:09.960 --> 00:21:12.990
+worst performance and this and
+that. This is less about
+
+339
+00:21:13.020 --> 00:21:17.370
+asp.net being lousy at a
+particular task, as it is
+
+340
+00:21:17.370 --> 00:21:20.730
+about. Like, it's almost like
+comparing C-sharp to assembler what
+
+341
+00:21:20.730 --> 00:21:22.500
+we're, what I'm saying. I
+think what you're saying is
+
+342
+00:21:22.500 --> 00:21:25.080
+that there are tools for
+the job. And if you
+
+343
+00:21:25.080 --> 00:21:27.810
+want to serve static files
+from a disc, you do
+
+344
+00:21:27.810 --> 00:21:30.900
+that with IAS. You don't
+do that, right. Or you
+
+345
+00:21:30.900 --> 00:21:34.950
+segment it. I'm really fond
+of making your static files
+
+346
+00:21:34.980 --> 00:21:39.390
+and your dynamic files run
+separate run on separate software.
+
+347
+00:21:40.560 --> 00:21:42.480
+The easiest way to do
+that is with edge caching,
+
+348
+00:21:43.440 --> 00:21:46.830
+because you can basically just
+have a reverse proxy of
+
+349
+00:21:46.830 --> 00:21:49.020
+your static files. And then
+it doesn't matter that much,
+
+350
+00:21:51.570 --> 00:21:54.870
+but ideally you put, you
+put your static files, one
+
+351
+00:21:54.870 --> 00:21:57.660
+place on it on software,
+that's optimized for static files,
+
+352
+00:21:57.930 --> 00:21:59.880
+and you put your dynamic
+and all your, just your
+
+353
+00:21:59.880 --> 00:22:04.020
+dynamic requests, which is just
+your HTML and your XML,
+
+354
+00:22:04.020 --> 00:22:06.750
+your Ajax stuff that goes
+through a server that does
+
+355
+00:22:06.750 --> 00:22:11.460
+just that. And that's the
+best. And it, and it
+
+356
+00:22:11.460 --> 00:22:14.310
+doesn't matter if it's asp.net,
+Ruby on rails, whatever the
+
+357
+00:22:14.310 --> 00:22:19.890
+platform is, that's the best
+architecture because your, your, your
+
+358
+00:22:19.920 --> 00:22:24.840
+smarts server, your dynamic server
+can be optimized for being
+
+359
+00:22:24.840 --> 00:22:28.440
+dynamic and smart. Your static
+server can be optimized for
+
+360
+00:22:28.440 --> 00:22:32.550
+doing that, trying to do
+both on the same, same
+
+361
+00:22:32.550 --> 00:22:38.130
+website. It's not possible. You
+can get a compromise, but
+
+362
+00:22:39.210 --> 00:22:44.130
+it limits your optimization And,
+and segmenting. Like that seems
+
+363
+00:22:44.130 --> 00:22:47.100
+like such a, an obvious
+thing, but you'd be surprised
+
+364
+00:22:47.100 --> 00:22:48.420
+how few people do it.
+And it just has to
+
+365
+00:22:48.420 --> 00:22:52.950
+do with just general segmenting,
+kind of a very, very
+
+366
+00:22:52.950 --> 00:22:55.770
+brief, but funny story from
+the, I want to say
+
+367
+00:22:55.770 --> 00:22:59.910
+the late nineties, I was
+working@eighthundred.com and we came up
+
+368
+00:22:59.910 --> 00:23:02.220
+with this. It was, there
+was like best buy. They
+
+369
+00:23:02.220 --> 00:23:03.870
+got bought by best buy.
+I think actually in the
+
+370
+00:23:03.870 --> 00:23:07.920
+end, they had this deal
+where they said three DVDs
+
+371
+00:23:07.920 --> 00:23:11.550
+for a dollar. And this,
+this ratio that we had
+
+372
+00:23:11.550 --> 00:23:15.510
+been so comfortable with, of
+99% of people browsing, and
+
+373
+00:23:15.570 --> 00:23:19.800
+a 1% of people checking
+out of our shopping cart
+
+374
+00:23:19.980 --> 00:23:23.340
+changed and it switched. And
+suddenly everyone had got their
+
+375
+00:23:23.340 --> 00:23:25.320
+three DVDs, but they wanted
+to give us money. And
+
+376
+00:23:25.440 --> 00:23:30.390
+our shopping cart implementation didn't
+scale. The whole application flipped
+
+377
+00:23:30.390 --> 00:23:34.800
+on its side and had
+we segmented it into browsing,
+
+378
+00:23:34.800 --> 00:23:39.690
+which was read mostly and
+purchasing, which was right. Mostly
+
+379
+00:23:39.840 --> 00:23:41.490
+we would have been fine,
+but we ended up having
+
+380
+00:23:41.490 --> 00:23:44.910
+to segment it kind of
+on the fly. And that
+
+381
+00:23:44.930 --> 00:23:49.460
+basic segmenting thing almost 15
+years ago, you know, saved
+
+382
+00:23:49.460 --> 00:23:50.870
+our butts. Even though we
+had to do it on
+
+383
+00:23:50.870 --> 00:23:53.720
+the fly, I'm surprised how
+few people do it. They'll
+
+384
+00:23:53.720 --> 00:23:56.120
+put something in the cloud,
+but they won't have their
+
+385
+00:23:56.120 --> 00:23:58.730
+images on their own DNS.
+And they won't have their
+
+386
+00:23:58.730 --> 00:24:02.390
+images served by a CDN.
+And they won't segment the
+
+387
+00:24:02.750 --> 00:24:08.440
+product catalog from the checkout
+process. It's, it's attractive to,
+
+388
+00:24:08.530 --> 00:24:11.230
+for organization to have everything
+in one place, you know,
+
+389
+00:24:11.230 --> 00:24:15.610
+but it's possible to segment
+without, without destroying your organization
+
+390
+00:24:17.080 --> 00:24:21.130
+and basically to do that.
+You really need a reverse
+
+391
+00:24:21.130 --> 00:24:27.100
+proxy. And Microsoft has a
+reverse proxy in the form
+
+392
+00:24:27.100 --> 00:24:30.820
+of ISIS server. There's also
+engine X, you know, cloud
+
+393
+00:24:30.820 --> 00:24:36.280
+front. So reverse proxy and
+Application requests, rousing writing in
+
+394
+00:24:36.280 --> 00:24:39.520
+IAS as a reverse proxy.
+I've heard of that, but
+
+395
+00:24:39.520 --> 00:24:43.120
+I haven't used it myself.
+Well, maybe say something about
+
+396
+00:24:43.120 --> 00:24:44.860
+what a reverse proxy is.
+I don't know if it
+
+397
+00:24:44.860 --> 00:24:49.390
+necessarily, everyone is familiar with
+that concept, A reverse proxy
+
+398
+00:24:50.710 --> 00:24:55.150
+people probably everybody's familiar with
+a proxy, which is a
+
+399
+00:24:55.150 --> 00:25:00.400
+caching proxy is, is a
+proxy that will take local
+
+400
+00:25:00.400 --> 00:25:05.980
+copies of commonly requested content
+like microsoft.com, et cetera, and
+
+401
+00:25:06.460 --> 00:25:10.690
+send it back so that
+the, you know, usually the
+
+402
+00:25:10.690 --> 00:25:15.190
+corporate internet connection doesn't get
+overloaded so much. A reverse
+
+403
+00:25:15.190 --> 00:25:18.430
+proxy is a proxy that's
+right next to that application.
+
+404
+00:25:19.210 --> 00:25:21.670
+It sits there. And everybody
+who tries to get to
+
+405
+00:25:21.670 --> 00:25:23.960
+that application goes through it
+and it caches what the
+
+406
+00:25:23.960 --> 00:25:28.030
+application sends out. And so
+the application doesn't have to
+
+407
+00:25:28.120 --> 00:25:30.850
+do the same work over
+and over again, and it
+
+408
+00:25:30.850 --> 00:25:34.840
+can use HTTP level caching
+because HTTP level caching is
+
+409
+00:25:34.840 --> 00:25:38.200
+a lot more efficient and
+a lot more scalable than
+
+410
+00:25:38.200 --> 00:25:44.200
+application level caching. You can
+load balance among a lot
+
+411
+00:25:44.200 --> 00:25:48.340
+of, a lot of edge
+caching solutions, more easily, a
+
+412
+00:25:48.340 --> 00:25:51.370
+lot of edge caching servers,
+more easily. You're using HTTP
+
+413
+00:25:51.400 --> 00:25:55.900
+stateless a lot easier. And
+you can optimize for the
+
+414
+00:25:55.900 --> 00:25:59.980
+HTTP protocol versus application specific
+caching, headers and stuff like
+
+415
+00:25:59.980 --> 00:26:02.380
+that. That's a really important
+thing to remember. I mean,
+
+416
+00:26:02.410 --> 00:26:05.560
+people will do what they
+think is caching, which means
+
+417
+00:26:06.100 --> 00:26:10.150
+they'll throw something into the
+asp.net cash object and put
+
+418
+00:26:10.150 --> 00:26:12.130
+a little, if not, null
+check around it, and they'll
+
+419
+00:26:12.130 --> 00:26:18.870
+say, all right, I've done
+my caching. Now you're laughing.
+
+420
+00:26:18.890 --> 00:26:21.040
+You're making it gonna make
+our listeners feel bad. But
+
+421
+00:26:21.040 --> 00:26:23.110
+I think the point is,
+as we, as we talk
+
+422
+00:26:23.110 --> 00:26:26.650
+about scaling, do as little
+as possible and HTP level
+
+423
+00:26:26.650 --> 00:26:28.660
+caching is a way of,
+you know, all that's, all
+
+424
+00:26:28.660 --> 00:26:31.170
+the stuff like E tags.
+And if you know it
+
+425
+00:26:31.170 --> 00:26:34.210
+last modified and all that
+stuff, that's all built into
+
+426
+00:26:34.210 --> 00:26:37.780
+it to HTTP. And few
+people will take advantage of
+
+427
+00:26:37.780 --> 00:26:39.910
+that and be smart about
+that. You just don't want
+
+428
+00:26:39.910 --> 00:26:44.160
+to be serving anything that
+you don't have.net doesn't handle
+
+429
+00:26:44.160 --> 00:26:47.250
+The HTTP protocol as well
+as an edge caching solution.
+
+430
+00:26:47.250 --> 00:26:51.060
+Well, you know, ID tags
+and all that stuff, it's
+
+431
+00:26:51.450 --> 00:26:53.940
+a lot of complexity. And
+so it's not there for
+
+432
+00:26:53.940 --> 00:26:57.450
+a reason, but it's easy
+to add at HTTP caching
+
+433
+00:26:57.450 --> 00:27:01.020
+level really easy. And so,
+you know, you don't need
+
+434
+00:27:01.020 --> 00:27:02.730
+to accept range of support
+and all this stuff. It
+
+435
+00:27:02.730 --> 00:27:08.010
+can be handled by the,
+by the, the cash solves
+
+436
+00:27:08.010 --> 00:27:10.800
+a wide range of problems
+that, that you have when
+
+437
+00:27:10.800 --> 00:27:15.450
+you're trying to communicate through
+MVC or web forms, whatever
+
+438
+00:27:15.450 --> 00:27:18.800
+it is, You bring up
+a really interesting point about
+
+439
+00:27:19.010 --> 00:27:23.090
+HTTP handlers. And you talk
+about the ability to delegate
+
+440
+00:27:23.090 --> 00:27:26.090
+work back into AIS. And
+this is a really significant
+
+441
+00:27:26.090 --> 00:27:29.420
+because I want people to
+understand the relationship between HTP
+
+442
+00:27:29.420 --> 00:27:33.050
+dot SIS IIS and asp.net
+as we move our way
+
+443
+00:27:33.440 --> 00:27:37.820
+up, farther into application code.
+But as you, as you
+
+444
+00:27:37.820 --> 00:27:41.270
+make those transitions, as you
+transitioned from AIS into asp.net,
+
+445
+00:27:41.720 --> 00:27:44.600
+there's a brief, brief opportunity
+for you to delegate work
+
+446
+00:27:44.600 --> 00:27:49.370
+back to IIS. Can you
+talk about that? Yes. It's,
+
+447
+00:27:49.470 --> 00:27:51.560
+it's not too brief, but
+it's a really brief if
+
+448
+00:27:51.560 --> 00:27:57.800
+you want to take advantage
+of authorization and authentication after
+
+449
+00:27:57.800 --> 00:28:02.210
+post authorized request, you can't
+send work back to I
+
+450
+00:28:02.210 --> 00:28:06.070
+S because it's already marked
+for processing by the manager
+
+451
+00:28:06.080 --> 00:28:12.170
+and time. So for example,
+even in beginning request, you
+
+452
+00:28:12.170 --> 00:28:18.620
+could call a HTTP context
+dot rewrite path, and you
+
+453
+00:28:18.620 --> 00:28:21.860
+can say, okay, I want
+this request to go here
+
+454
+00:28:21.860 --> 00:28:24.470
+instead. And that's how that's
+how URL rewriting is implemented.
+
+455
+00:28:24.470 --> 00:28:29.510
+It's it's with, with rewrite
+path. And it's this invisible
+
+456
+00:28:29.510 --> 00:28:33.380
+thing. It's not a redirect,
+it's a invisible rewrite of
+
+457
+00:28:33.380 --> 00:28:36.320
+what, of that request that
+came into another path and
+
+458
+00:28:36.320 --> 00:28:44.480
+other query string. However, if
+you want to get authorization
+
+459
+00:28:44.480 --> 00:28:46.880
+authentication for the original URL,
+first, you have to do
+
+460
+00:28:46.880 --> 00:28:51.620
+it in post authorize request.
+Cause that's after authentications already
+
+461
+00:28:51.620 --> 00:28:56.240
+happened after authorizations already happened.
+And what that does is
+
+462
+00:28:56.240 --> 00:29:00.050
+if you use that, that
+event handler, you can allow
+
+463
+00:29:00.200 --> 00:29:04.100
+a URL, authentic URL or
+authorization to take effect, to
+
+464
+00:29:04.100 --> 00:29:08.870
+protect resources, and then rewrite
+the result to either, you
+
+465
+00:29:08.870 --> 00:29:15.260
+know, the <inaudible> image without
+exposing, you know, private files
+
+466
+00:29:15.260 --> 00:29:20.090
+to the internet. If you
+wait until process or the
+
+467
+00:29:20.090 --> 00:29:23.750
+process request stage, which is
+were an action result, executes
+
+468
+00:29:23.780 --> 00:29:28.100
+a we're an HTTP handler
+executes, anything implementing HTTP handler.
+
+469
+00:29:29.600 --> 00:29:33.140
+If you call that you
+won't, the request is already
+
+470
+00:29:33.140 --> 00:29:34.880
+being handled by us beyond
+that, you can't send it
+
+471
+00:29:34.880 --> 00:29:39.200
+back to iOS seven and
+there's certain service packs in
+
+472
+00:29:39.200 --> 00:29:42.160
+which it works and certain
+than it doesn't, but in
+
+473
+00:29:42.160 --> 00:29:44.050
+the latest version, it does
+it. So basically you just
+
+474
+00:29:44.050 --> 00:29:48.970
+can't do it, especially if
+you want to have a
+
+475
+00:29:49.030 --> 00:29:52.650
+same deployment scenario. I mean,
+how much do you recommend
+
+476
+00:29:52.650 --> 00:29:54.150
+that people look at that?
+I mean, it should, should
+
+477
+00:29:54.150 --> 00:29:57.060
+we be looking for optimizations
+where we can bail out
+
+478
+00:29:57.060 --> 00:30:00.720
+of M and a managed
+module and delegate work back?
+
+479
+00:30:00.810 --> 00:30:03.120
+Or is that something that's
+more complicated than it's worth?
+
+480
+00:30:04.560 --> 00:30:07.440
+Basically, my advice is don't
+use routes for static content
+
+481
+00:30:07.440 --> 00:30:10.980
+use URL, rewriting it's, it's
+your URL rewriting is way
+
+482
+00:30:10.980 --> 00:30:14.610
+more powerful than ASP on
+that route, which is also
+
+483
+00:30:14.610 --> 00:30:18.420
+why it's intimidating. But if
+you haven't already learned a
+
+484
+00:30:18.420 --> 00:30:23.100
+little bit about regular expressions,
+they're really powerful tool. There's
+
+485
+00:30:23.100 --> 00:30:26.170
+something every developer needs to
+learn about some time, and
+
+486
+00:30:26.170 --> 00:30:28.380
+it's better to make the
+jump earlier than later, because
+
+487
+00:30:29.370 --> 00:30:32.070
+if you wait, like I
+did and learn them later,
+
+488
+00:30:32.550 --> 00:30:34.680
+you'll go back and look
+at those thousands and thousands
+
+489
+00:30:34.680 --> 00:30:36.540
+of lines of harnessing code
+and replace them with a
+
+490
+00:30:36.540 --> 00:30:38.670
+single line of regexes and
+hit yourself on the head
+
+491
+00:30:38.670 --> 00:30:41.010
+with a baseball bat or
+something for your own stupidity.
+
+492
+00:30:43.010 --> 00:30:49.320
+It's really a really great
+time saver for I was
+
+493
+00:30:49.320 --> 00:30:53.400
+there. I did that. I've
+had entire programs that could
+
+494
+00:30:53.400 --> 00:30:55.140
+have been handled by a
+couple of lines of wretched,
+
+495
+00:30:55.170 --> 00:30:59.400
+regular expressions, but you're a
+rewriting we'll call it rewrite
+
+496
+00:30:59.430 --> 00:31:02.880
+rewrite path early enough to
+where I S handled things.
+
+497
+00:31:03.060 --> 00:31:06.180
+So the scenario in which
+you call rewrite path manually
+
+498
+00:31:06.300 --> 00:31:12.180
+is like, for example, an
+imagery sizing.net project, where you're
+
+499
+00:31:12.180 --> 00:31:14.160
+doing this caching, you know,
+you have to do a
+
+500
+00:31:14.160 --> 00:31:16.470
+little bit of processing to
+determine what file it goes
+
+501
+00:31:16.470 --> 00:31:18.750
+to, and which in our
+case is we build a
+
+502
+00:31:18.750 --> 00:31:22.350
+hash of the modified data,
+the source file, the URL
+
+503
+00:31:22.410 --> 00:31:24.990
+and the query string. We
+hashed that, and that determines
+
+504
+00:31:24.990 --> 00:31:28.650
+where the file gets cashed.
+Now hash is a pretty
+
+505
+00:31:28.650 --> 00:31:31.980
+efficient operation. So there's very
+little time spitting manage space,
+
+506
+00:31:32.730 --> 00:31:38.580
+but without that, there's no
+way to implement authorization authentication
+
+507
+00:31:39.060 --> 00:31:43.680
+and to support those and
+that. And that's important because
+
+508
+00:31:43.830 --> 00:31:47.490
+all this stuff we talked
+about reverse proxy is great
+
+509
+00:31:47.490 --> 00:31:50.490
+for public static content, but
+private static content is a
+
+510
+00:31:50.490 --> 00:31:53.970
+more challenging problem. And that's
+where you need, you need
+
+511
+00:31:53.970 --> 00:31:59.310
+to do this kind of
+thing because there's no other,
+
+512
+00:31:59.310 --> 00:32:01.830
+you know, if your application
+is the only serve as
+
+513
+00:32:01.830 --> 00:32:05.820
+the only layer that has
+access to authentication authorization information,
+
+514
+00:32:06.560 --> 00:32:08.880
+it's the only layer in
+which you can implement a
+
+515
+00:32:08.910 --> 00:32:13.350
+caching for that for protected
+files. Well, this is really,
+
+516
+00:32:13.380 --> 00:32:15.750
+this is really, really useful
+information. And all of this
+
+517
+00:32:15.750 --> 00:32:19.920
+is built up over your
+experience, building your, your product,
+
+518
+00:32:19.920 --> 00:32:24.150
+which is the imagery sizing.net
+library. And you've got lots
+
+519
+00:32:24.150 --> 00:32:25.980
+of good information up there
+that people can check out.
+
+520
+00:32:26.460 --> 00:32:30.180
+And just to be clear
+to the, to the listener,
+
+521
+00:32:30.510 --> 00:32:34.650
+I, I reached out to
+Nathaniel and I talking about
+
+522
+00:32:34.650 --> 00:32:37.890
+his, his product, because I
+think it's amazing and awesome.
+
+523
+00:32:37.890 --> 00:32:40.850
+And I've talked about it
+before the blog. He's not
+
+524
+00:32:40.850 --> 00:32:44.360
+an advertiser. This is just
+me Scott saying that this
+
+525
+00:32:44.360 --> 00:32:47.720
+is a rocking awesome library.
+He's got a really, really
+
+526
+00:32:47.720 --> 00:32:51.860
+great license for both open
+source and commercial. And you
+
+527
+00:32:51.860 --> 00:32:55.220
+can even talk to Nathaniel
+and have him look at
+
+528
+00:32:55.220 --> 00:32:59.720
+your architecture for a very
+reasonable for feet reasonable fee.
+
+529
+00:33:00.140 --> 00:33:01.970
+And you can check out
+all of his content up
+
+530
+00:33:01.970 --> 00:33:04.850
+at image, resizing.net. And we'll
+put that in the show
+
+531
+00:33:04.850 --> 00:33:07.790
+notes as well. I really
+appreciate you sitting down and
+
+532
+00:33:07.790 --> 00:33:10.520
+talking with me today. This
+is a huge topic. We
+
+533
+00:33:10.520 --> 00:33:12.320
+could probably go for another
+couple of shows. We might
+
+534
+00:33:12.320 --> 00:33:14.630
+want to do that in
+a couple of weeks and
+
+535
+00:33:14.630 --> 00:33:17.960
+dig even deeper, dig even
+deeper into maybe the cloud
+
+536
+00:33:17.990 --> 00:33:22.310
+and web farms. It's a
+really, really big topic. It's
+
+537
+00:33:22.310 --> 00:33:25.310
+hard to cover it quickly.
+It sure is. Well, I
+
+538
+00:33:25.310 --> 00:33:27.950
+appreciate the overview and, and
+thanks for coming on the
+
+539
+00:33:27.950 --> 00:33:32.450
+show. Thank you, Scott. Appreciate
+it. This has been another
+
+540
+00:33:32.450 --> 00:33:34.940
+episode of Hanselminutes and we'll
+see you again next week.
+

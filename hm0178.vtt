@@ -1,0 +1,4327 @@
+WEBVTT FILE
+
+1
+00:00:12.180 --> 00:00:17.010
+From Hanselman it's dot com.
+It's Hansel minutes, a weekly
+
+2
+00:00:17.010 --> 00:00:21.030
+discussion with web developer and
+technologists. Scott Hanselman. This is
+
+3
+00:00:21.030 --> 00:00:26.810
+Lawrence Ryan announcing show number one
+78. Recorded live Thursday, September 3rd, 2009.
+
+4
+00:00:27.860 --> 00:00:31.580
+Support for Hanselman. This is
+provided by Tellerik rad controls.
+
+5
+00:00:31.820 --> 00:00:34.250
+The most comprehend It's a
+suite of components for windows
+
+6
+00:00:34.250 --> 00:00:43.520
+forms. Yeah, Usp.net web applications
+online@wwwdottelerik.com. In this episode, Scott
+
+7
+00:00:43.520 --> 00:00:46.850
+talks about the visual studio
+plugin code rush with Mark Miller.
+
+8
+00:00:49.160 --> 00:00:51.200
+Hi, this is Scott Hanselman
+and this is another episode
+
+9
+00:00:51.200 --> 00:00:53.990
+of Hansel minutes. And I'm
+sitting down today with Mark Miller,
+
+10
+00:00:54.110 --> 00:00:59.870
+from developer express, the famous
+architect of code, rush, and
+
+11
+00:01:00.020 --> 00:01:02.960
+refactor. How's it going, Mark?
+It's going well, Scott, how
+
+12
+00:01:02.960 --> 00:01:06.080
+are you doing? I'm not
+doing too bad. Good. I,
+
+13
+00:01:06.160 --> 00:01:09.050
+I wanted to talk to
+you because I got an
+
+14
+00:01:09.050 --> 00:01:11.510
+interesting email from a guy
+who was trying to decide
+
+15
+00:01:11.540 --> 00:01:14.450
+whether he would use code
+rush or a tool called
+
+16
+00:01:14.450 --> 00:01:18.620
+ReSharper and both of these
+tools plug into visual studio
+
+17
+00:01:18.950 --> 00:01:21.440
+and, and, and change it
+in some, in some fundamental
+
+18
+00:01:21.440 --> 00:01:24.980
+way. Could you maybe me
+start by explaining what the,
+
+19
+00:01:25.190 --> 00:01:28.670
+what your tool does and
+then your competitor ReSharper is
+
+20
+00:01:28.670 --> 00:01:30.740
+kind of a as a
+similar thing. And the reason
+
+21
+00:01:30.740 --> 00:01:33.110
+I bring up with sharper
+is that code rush is
+
+22
+00:01:33.110 --> 00:01:36.350
+kind of my favorite and
+kind of my favorite little
+
+23
+00:01:36.350 --> 00:01:39.170
+tool like this, but I'm
+interested in how you write
+
+24
+00:01:39.350 --> 00:01:41.150
+something like this. So, so
+let's talk about first, what
+
+25
+00:01:41.150 --> 00:01:42.530
+it does, and then I
+want to get into some
+
+26
+00:01:42.530 --> 00:01:44.780
+technical details about what exactly
+you had to do to
+
+27
+00:01:44.780 --> 00:01:47.930
+make it happen. Okay. Well,
+the essence behind coders is
+
+28
+00:01:47.930 --> 00:01:52.640
+to help you write code,
+see the code navigate to
+
+29
+00:01:52.640 --> 00:01:55.550
+the code faster, through navigate
+through the code faster. So
+
+30
+00:01:55.550 --> 00:02:00.800
+it's essentially visualization code creation
+and navigation are the main
+
+31
+00:02:00.800 --> 00:02:04.580
+areas that it helps you
+with. And anything that kind
+
+32
+00:02:04.580 --> 00:02:08.000
+of falls into those categories,
+including kind of, I guess
+
+33
+00:02:08.000 --> 00:02:11.210
+what I would call outside
+of the box ideas in
+
+34
+00:02:11.210 --> 00:02:13.310
+terms of how we can
+make people write code faster
+
+35
+00:02:13.310 --> 00:02:17.420
+are, are certainly considered. And
+if they're useful and functional
+
+36
+00:02:17.420 --> 00:02:19.970
+and deficient, they put their
+put into the product. So
+
+37
+00:02:19.970 --> 00:02:23.360
+the product kind of encapsulates
+those things to give you
+
+38
+00:02:23.360 --> 00:02:26.300
+some more specific examples. Part
+of the product is refactoring
+
+39
+00:02:26.300 --> 00:02:30.020
+tools. So coders includes refactor
+pro, which has about a
+
+40
+00:02:30.020 --> 00:02:35.030
+hundred, 185 refactorings in it
+that cover a lot of
+
+41
+00:02:36.080 --> 00:02:38.690
+all the languages we support
+C plus plus C sharp,
+
+42
+00:02:38.840 --> 00:02:43.880
+visual, basic JavaScript, asp.net. So
+you got refactorings in all
+
+43
+00:02:43.880 --> 00:02:47.090
+those areas and more XAML
+too, I should mention XAML
+
+44
+00:02:47.090 --> 00:02:53.240
+as well. And, and then,
+and then in addition to
+
+45
+00:02:53.240 --> 00:02:56.900
+the refactorings, you've got a
+code declaration tool. So if
+
+46
+00:02:56.900 --> 00:03:00.340
+you need to, if you're
+doing like TDD or a
+
+47
+00:03:00.370 --> 00:03:03.820
+consume first development, where you
+write the consumption code first,
+
+48
+00:03:04.450 --> 00:03:07.780
+then based on, on clues
+at the consumption code, we
+
+49
+00:03:07.780 --> 00:03:10.960
+can then make the declarations
+for you. A simple example
+
+50
+00:03:10.960 --> 00:03:14.650
+is if you have like
+my instance.my new property equals
+
+51
+00:03:14.650 --> 00:03:17.290
+false, you can declare my
+new property as a Boolean
+
+52
+00:03:17.290 --> 00:03:20.350
+type. There is a, that's
+a simple example, but they,
+
+53
+00:03:20.440 --> 00:03:23.380
+of course it can get
+very, very complex and sophisticated
+
+54
+00:03:23.380 --> 00:03:26.260
+where, where the inference in
+terms of the type based
+
+55
+00:03:26.260 --> 00:03:30.430
+on the assignment is, is,
+is evaluated at while you're
+
+56
+00:03:30.430 --> 00:03:34.280
+working in writing the code.
+So let me, let me
+
+57
+00:03:34.290 --> 00:03:37.230
+interrupt your advertisement because I
+want to talk about that's
+
+58
+00:03:37.230 --> 00:03:40.710
+a lot of stuff. So
+your tool does everything. It's
+
+59
+00:03:40.710 --> 00:03:43.830
+like a Swiss army knife,
+but it's to be clear
+
+60
+00:03:43.830 --> 00:03:45.510
+to that, to people who
+maybe haven't used tools like
+
+61
+00:03:45.510 --> 00:03:49.230
+this before it's living inside
+visual studio, right, where this
+
+62
+00:03:49.230 --> 00:03:51.750
+whole thing is in process,
+there's no little code rush
+
+63
+00:03:51.750 --> 00:03:54.360
+dot exe that pops out
+right, Right into, and to
+
+64
+00:03:54.360 --> 00:03:56.580
+make it, you know, make
+things more intelligence. Like, for
+
+65
+00:03:56.580 --> 00:03:58.710
+example, if I have an
+assignment to something I need
+
+66
+00:03:58.710 --> 00:04:02.460
+to actually evaluate that assignment,
+you know, add, add, add
+
+67
+00:04:02.490 --> 00:04:05.010
+design time, essentially while you're
+writing the code, not at
+
+68
+00:04:05.010 --> 00:04:08.040
+runtime. And so, and so
+we have to have a
+
+69
+00:04:08.040 --> 00:04:12.480
+sophisticated, you know, ability to
+do that. And it's essentially
+
+70
+00:04:12.480 --> 00:04:15.180
+the same as what IntelliSense
+uses inside of visual studio
+
+71
+00:04:15.180 --> 00:04:18.360
+to be able to infer
+types and, and, and things
+
+72
+00:04:18.360 --> 00:04:21.360
+like that. So, so there's,
+there's a lot going on
+
+73
+00:04:21.360 --> 00:04:25.530
+in the background while you're
+working and, and yes, it
+
+74
+00:04:25.530 --> 00:04:28.800
+is inside of visual studio.
+It's it's go ahead. What
+
+75
+00:04:28.800 --> 00:04:31.290
+do you hook in, I
+mean, this is, this has
+
+76
+00:04:31.290 --> 00:04:35.820
+been working since 2003, 2005.
+I'm actually know since 2002.
+
+77
+00:04:35.820 --> 00:04:38.220
+We've actually we've we shifted
+in 2003, but it was
+
+78
+00:04:38.220 --> 00:04:40.830
+working for 2002 when we
+shipped it in 2003. So,
+
+79
+00:04:40.830 --> 00:04:43.530
+okay. So since the very
+first version of visual studio
+
+80
+00:04:43.530 --> 00:04:47.310
+for.net and it hooks in
+through the, the out in
+
+81
+00:04:47.310 --> 00:04:51.060
+technology and the, the visa
+package technology Sip is a
+
+82
+00:04:51.060 --> 00:04:55.440
+visual studio, integration partner integration.
+Yeah. I think that's right.
+
+83
+00:04:55.440 --> 00:04:58.770
+It's integration program or partners
+or something like that. I
+
+84
+00:04:58.770 --> 00:05:01.290
+think that's what it is.
+Yeah. And, but basically it's
+
+85
+00:05:01.290 --> 00:05:04.770
+a sophisticated way to hook
+into visual studio and extend
+
+86
+00:05:04.770 --> 00:05:08.670
+it. And, and so, so
+that's the first entry point.
+
+87
+00:05:09.600 --> 00:05:11.970
+And then, and then there's
+a number of other points
+
+88
+00:05:11.970 --> 00:05:15.030
+where we connect in, in,
+in, in the versions of
+
+89
+00:05:15.030 --> 00:05:17.910
+visual studio up through 2008,
+because we do some things
+
+90
+00:05:17.910 --> 00:05:20.430
+that, that visa does not
+allow like, like painting on
+
+91
+00:05:20.430 --> 00:05:23.670
+the editor, for example. So
+when you, for example, do
+
+92
+00:05:23.670 --> 00:05:26.730
+a refactoring like inline temp,
+where it takes a temporary
+
+93
+00:05:26.730 --> 00:05:29.550
+variable and inlines it you'll
+see us paint on the
+
+94
+00:05:29.550 --> 00:05:33.000
+editor will cross out the
+declaration for the temporary variable
+
+95
+00:05:33.360 --> 00:05:35.250
+and give you a little
+indication that that's going to
+
+96
+00:05:35.250 --> 00:05:38.310
+be moving down. Okay. So
+I want to dig into
+
+97
+00:05:38.310 --> 00:05:39.720
+this. So forgive me a
+little bit as I steer,
+
+98
+00:05:39.720 --> 00:05:41.340
+as I steer you around.
+Cause I know you've got,
+
+99
+00:05:41.870 --> 00:05:44.850
+if you've, haven't met Mark Miller,
+he has his massive head
+
+100
+00:05:45.150 --> 00:05:48.540
+and a huge amount of
+information inside said head. And
+
+101
+00:05:48.540 --> 00:05:50.820
+it can be, it can
+be very tricky because the
+
+102
+00:05:50.820 --> 00:05:52.380
+man has a huge amount
+of information he wants to
+
+103
+00:05:52.380 --> 00:05:55.230
+get out very quickly. So
+we know each other well
+
+104
+00:05:55.230 --> 00:05:56.640
+enough. I think you'll forgive
+me if I say no,
+
+105
+00:05:56.640 --> 00:05:59.420
+you're fine. I usually jump
+in the middle Anyway. So
+
+106
+00:06:00.160 --> 00:06:03.130
+I want to understand, I
+I've written a little add
+
+107
+00:06:03.130 --> 00:06:04.990
+ins before and when I
+little add ins, I mean,
+
+108
+00:06:04.990 --> 00:06:08.020
+I've added a menu, I've
+added a button and things
+
+109
+00:06:08.020 --> 00:06:10.960
+like that. And this is
+all using the older comm
+
+110
+00:06:11.410 --> 00:06:14.050
+based stuff. I think it
+was called eye extensibility too,
+
+111
+00:06:14.050 --> 00:06:16.420
+or something like that. Is
+that, is that right? The
+
+112
+00:06:16.420 --> 00:06:19.300
+DTE is, I think what
+I'm, I'm familiar with the
+
+113
+00:06:19.360 --> 00:06:25.180
+environment. Yeah, that's right. Yes.
+Yep. Wow. DTE. That's really
+
+114
+00:06:25.210 --> 00:06:28.450
+old. Yeah. I think it's
+designed time environment. Maybe. I'm
+
+115
+00:06:28.450 --> 00:06:30.100
+not sure even what, that,
+I don't remember what it
+
+116
+00:06:30.100 --> 00:06:33.370
+stands for. So you've got
+a, you get your plugin
+
+117
+00:06:33.370 --> 00:06:36.670
+at a very, very low
+level and you kind of
+
+118
+00:06:36.670 --> 00:06:40.810
+get your hooks into visual
+studio, not at the level
+
+119
+00:06:40.810 --> 00:06:42.640
+that I was doing where
+it's like add a toolbar,
+
+120
+00:06:43.210 --> 00:06:45.070
+but it's at some more
+fundamental level and you really
+
+121
+00:06:45.070 --> 00:06:48.010
+start messing around with, with
+a lot of stuff you
+
+122
+00:06:48.010 --> 00:06:50.860
+have to, like you said,
+paint to the right, you
+
+123
+00:06:50.860 --> 00:06:53.560
+know, paint. Do they want
+you painting on the text
+
+124
+00:06:53.560 --> 00:06:55.900
+editor or is there an
+official way to do that
+
+125
+00:06:55.900 --> 00:06:57.700
+or are you just, Well,
+there's not an official way
+
+126
+00:06:57.700 --> 00:06:59.440
+to do it, but they
+do want us to do
+
+127
+00:06:59.440 --> 00:07:01.900
+it because, you know, we
+add value to visual studio.
+
+128
+00:07:03.000 --> 00:07:05.740
+I, well, I say they
+want us to, I think
+
+129
+00:07:05.740 --> 00:07:09.190
+maybe unofficially, they want us
+to do that because it
+
+130
+00:07:09.220 --> 00:07:12.070
+adds value at exit excitement.
+People are like, Hey, can
+
+131
+00:07:12.070 --> 00:07:14.110
+I do that too? And,
+and it actually, I think
+
+132
+00:07:14.860 --> 00:07:18.520
+significantly influenced the direction of
+visual studio 2010 based on
+
+133
+00:07:18.520 --> 00:07:20.440
+what we could do in
+2008, what we were able
+
+134
+00:07:20.440 --> 00:07:23.200
+to do. So, so, you
+know, yes, we hook in
+
+135
+00:07:23.200 --> 00:07:26.680
+using the officially sanctioned mechanisms,
+use the term, you use
+
+136
+00:07:26.680 --> 00:07:28.630
+the term mess around. And
+I like to, I would
+
+137
+00:07:28.630 --> 00:07:31.750
+replace that word with carefully
+constructing a safety net. That's
+
+138
+00:07:31.750 --> 00:07:34.330
+what would, what I would
+replace that word with lots
+
+139
+00:07:34.330 --> 00:07:38.830
+of Point, because you're doing
+things that are really out
+
+140
+00:07:38.830 --> 00:07:41.860
+there in the sense of
+animations, painting on a scrolling
+
+141
+00:07:41.860 --> 00:07:44.230
+background that you really have
+no business painting on. Cause
+
+142
+00:07:44.230 --> 00:07:45.670
+they don't give you a
+fake. You said no official
+
+143
+00:07:45.670 --> 00:07:48.820
+hooks to say, right, paint,
+a pretty arrow over this
+
+144
+00:07:48.820 --> 00:07:51.580
+XML content. Right? So to
+make all this work, there's
+
+145
+00:07:51.580 --> 00:07:53.990
+a lot of things going
+on in the background that,
+
+146
+00:07:54.000 --> 00:07:56.770
+that can compose this safety
+net that I'm, that I'm
+
+147
+00:07:56.770 --> 00:08:00.040
+talking about. So for example,
+in, in, you know, up
+
+148
+00:08:00.070 --> 00:08:03.760
+through 2008, we've got, we've
+got a subclass in going
+
+149
+00:08:03.760 --> 00:08:06.160
+on. So we subclass class
+the window we see when
+
+150
+00:08:06.160 --> 00:08:09.620
+windows messages are coming in
+and based. And, and, and
+
+151
+00:08:10.150 --> 00:08:12.910
+based on what messages come
+through that actually goes in
+
+152
+00:08:12.910 --> 00:08:14.950
+and influences the safety net
+in terms of what we're
+
+153
+00:08:14.950 --> 00:08:18.700
+showing you. So the other
+thing is, you know, just
+
+154
+00:08:18.700 --> 00:08:20.680
+figuring out the positions of
+all the characters on the
+
+155
+00:08:20.680 --> 00:08:23.080
+screen. For example, when we,
+in that example, I mentioned
+
+156
+00:08:23.080 --> 00:08:26.140
+earlier where I talked about
+inline temp and we do
+
+157
+00:08:26.140 --> 00:08:29.620
+a strike through, we cross
+out that we cross out
+
+158
+00:08:29.620 --> 00:08:33.040
+the, the declaration. Well, we
+have to know exactly where
+
+159
+00:08:33.040 --> 00:08:35.590
+the declaration is on the
+screen in order to get
+
+160
+00:08:35.590 --> 00:08:38.680
+that nail that correctly and
+their subtleties, there are actually
+
+161
+00:08:38.680 --> 00:08:40.900
+a lot of subtleties in
+terms of getting that calculation,
+
+162
+00:08:40.900 --> 00:08:43.510
+right? Because the font can
+change and other factors can
+
+163
+00:08:43.510 --> 00:08:46.660
+change as well. That changed
+line height and character position.
+
+164
+00:08:47.020 --> 00:08:49.540
+So, so yeah, there was
+a lot of challenging stuff
+
+165
+00:08:49.540 --> 00:08:51.370
+that we had to write
+it. I remember when this
+
+166
+00:08:51.370 --> 00:08:52.990
+was some of the first
+stuff we did Scott, and
+
+167
+00:08:53.440 --> 00:08:55.620
+as I recall, it took
+us like a good weeks
+
+168
+00:08:55.620 --> 00:08:57.570
+of solid development time before
+we got to a point
+
+169
+00:08:57.570 --> 00:08:59.310
+where we felt like we
+accurately knew where all the
+
+170
+00:08:59.310 --> 00:09:02.300
+characters were on screen. So
+let me, let me interrupt
+
+171
+00:09:02.450 --> 00:09:04.460
+for a second because this,
+this is a significant thing
+
+172
+00:09:04.460 --> 00:09:07.460
+that if you're not familiar
+with code rush or tools
+
+173
+00:09:07.460 --> 00:09:09.650
+like it, as you can
+probably figure it out by
+
+174
+00:09:09.650 --> 00:09:11.870
+now, it really integrates with
+the IDE and does a
+
+175
+00:09:11.870 --> 00:09:15.440
+lot of stuff such that
+it's kind of fundamental to
+
+176
+00:09:15.440 --> 00:09:18.260
+the experience. One of the
+things that I like about
+
+177
+00:09:18.290 --> 00:09:20.300
+code rush, and I, I
+say this as a, just
+
+178
+00:09:20.300 --> 00:09:22.310
+a listener understands, I've been
+a fan boy and a
+
+179
+00:09:22.310 --> 00:09:25.610
+friend of yours for a
+million years. And I've been,
+
+180
+00:09:26.450 --> 00:09:29.210
+I tell people about code
+rush, but you don't have
+
+181
+00:09:29.210 --> 00:09:32.300
+any code. Rush has no
+relationship with the podcast. You
+
+182
+00:09:32.300 --> 00:09:34.640
+guys don't give me a
+sack of money. Actually. You've
+
+183
+00:09:34.640 --> 00:09:38.030
+given never given me anything
+in ever. You've actually taken
+
+184
+00:09:38.030 --> 00:09:40.640
+things from me, Mark. But
+so we, we have no
+
+185
+00:09:40.640 --> 00:09:42.740
+relationship. I'm not trying to
+Right. I let you ride
+
+186
+00:09:42.740 --> 00:09:45.150
+a segway once. And that
+was about it. That was
+
+187
+00:09:45.170 --> 00:09:47.060
+about it. Yeah. I think
+you got me a diet
+
+188
+00:09:47.060 --> 00:09:50.180
+Coke one time. Did I?
+No, no. That was at
+
+189
+00:09:50.180 --> 00:09:53.150
+a conference from a free
+vending free day. Oh yeah.
+
+190
+00:09:53.150 --> 00:09:55.280
+The free one. Yeah. The
+point I'm making is I'm
+
+191
+00:09:55.280 --> 00:09:57.440
+a fan of code rush.
+No more. I just want
+
+192
+00:09:57.440 --> 00:09:59.210
+to make sure that you
+understand that I'm talking about
+
+193
+00:09:59.210 --> 00:10:02.900
+this because I think it's
+interesting, but what's interesting about
+
+194
+00:10:02.900 --> 00:10:04.910
+code rush is that there's
+a lot of what, what
+
+195
+00:10:05.150 --> 00:10:07.880
+people will call eye candy,
+but I call it good
+
+196
+00:10:07.880 --> 00:10:11.150
+user interface and user experience
+design. One of the things
+
+197
+00:10:11.150 --> 00:10:13.160
+that, COVID one of the
+examples that I want to
+
+198
+00:10:13.160 --> 00:10:14.960
+understand, and maybe you can
+walk me through, this is
+
+199
+00:10:14.960 --> 00:10:18.830
+that you've got a lot
+of these refactorings right. One
+
+200
+00:10:18.830 --> 00:10:22.040
+of them is reorder parameters.
+So what I want to
+
+201
+00:10:22.040 --> 00:10:24.620
+blow somebody's mind with code
+rush, I'd go over to
+
+202
+00:10:24.620 --> 00:10:29.960
+a function and I've got
+a string Y a date
+
+203
+00:10:29.990 --> 00:10:33.800
+Z as nice as parameters
+to the method. And I
+
+204
+00:10:33.800 --> 00:10:36.440
+put the cursor over it
+and I hit the, what
+
+205
+00:10:36.440 --> 00:10:39.320
+I call the, you know,
+the refactor button. I think
+
+206
+00:10:39.320 --> 00:10:41.420
+it's teal date on my
+machine. Cause it's a button
+
+207
+00:10:41.420 --> 00:10:46.850
+I never push. Right. Then
+suddenly those three parameters get
+
+208
+00:10:46.850 --> 00:10:49.070
+highlighted and I can use
+the left arrow in the
+
+209
+00:10:49.070 --> 00:10:52.010
+Mount and the right arrow
+to move them, to reorder
+
+210
+00:10:52.010 --> 00:10:55.190
+them. So that in itself
+is interesting. Actually, the only
+
+211
+00:10:55.190 --> 00:10:57.530
+one of those parameters is
+highlighted, but you get arrows
+
+212
+00:10:57.530 --> 00:10:59.240
+showing you which way you
+can move it. And then
+
+213
+00:10:59.460 --> 00:11:01.520
+the arrow keys and they
+move, right. I can move
+
+214
+00:11:01.520 --> 00:11:03.560
+left and right. And those
+parameters will move so that
+
+215
+00:11:03.560 --> 00:11:06.470
+I can go X, Y,
+Z Y X. Right? Yay.
+
+216
+00:11:06.770 --> 00:11:09.350
+Well, we're on a audio
+podcast. You can't see this,
+
+217
+00:11:09.350 --> 00:11:14.510
+but literally if I hit
+the right arrow, the index
+
+218
+00:11:14.510 --> 00:11:17.900
+will jump up and make
+a little froggy hop over
+
+219
+00:11:17.900 --> 00:11:20.810
+to where a string Y
+is. And then string, Y
+
+220
+00:11:20.810 --> 00:11:24.650
+will rush away while a
+is simultaneously jumping over. So
+
+221
+00:11:24.650 --> 00:11:29.510
+it's this completely unexpected experience,
+Right? This animation moves them.
+
+222
+00:11:29.510 --> 00:11:32.900
+You, you see them actually
+move the text, actually move
+
+223
+00:11:32.900 --> 00:11:36.880
+smoothly as they re exchanged
+positions. Right? And for, for,
+
+224
+00:11:36.880 --> 00:11:39.050
+for old timers on the,
+on the show, it makes
+
+225
+00:11:39.050 --> 00:11:42.080
+me, it always made me
+think of, of the CD
+
+226
+00:11:42.080 --> 00:11:45.740
+ROMs of the, the early,
+early nineties, where it was
+
+227
+00:11:45.740 --> 00:11:48.860
+like a mist or the
+sound of things where it
+
+228
+00:11:48.860 --> 00:11:50.530
+was like, you'd have a
+video that you'd have a
+
+229
+00:11:50.540 --> 00:11:53.030
+plain background, which in this
+case, it's the text editor.
+
+230
+00:11:53.470 --> 00:11:56.710
+And then you'd have a
+video maybe inside of a,
+
+231
+00:11:57.320 --> 00:11:59.290
+a picture frame on the
+wall or whatever. And they
+
+232
+00:11:59.290 --> 00:12:02.350
+were using these tricks where
+the video was seamlessly integrated,
+
+233
+00:12:02.500 --> 00:12:04.990
+or at least as best
+they could. I'm talking like
+
+234
+00:12:05.230 --> 00:12:07.540
+quick time pops up in
+a three 20 by two
+
+235
+00:12:07.540 --> 00:12:10.150
+40 hole and they try
+to make it look like
+
+236
+00:12:10.150 --> 00:12:12.780
+the whole screen is active.
+Yeah. But it's only that
+
+237
+00:12:12.780 --> 00:12:14.730
+little area. Yeah. That's kind
+of it's to some degree,
+
+238
+00:12:14.730 --> 00:12:17.640
+a similar trick that what
+we're doing there, we're, we're
+
+239
+00:12:17.640 --> 00:12:20.220
+painting directly on the window,
+right on that, on that
+
+240
+00:12:20.220 --> 00:12:24.660
+JDAI, you know, canvas. And
+we are, we're doing that
+
+241
+00:12:24.660 --> 00:12:27.060
+at, you know, we're animating,
+so we're doing it updating
+
+242
+00:12:27.060 --> 00:12:29.670
+it pretty frequently, but we're
+also taking care of a
+
+243
+00:12:29.670 --> 00:12:31.710
+lot of other things. For
+example, if you have word
+
+244
+00:12:31.710 --> 00:12:34.260
+wrapping turned on, we need
+to know where that's going
+
+245
+00:12:34.260 --> 00:12:36.840
+to go. Right. And that
+might be an option. Like
+
+246
+00:12:36.840 --> 00:12:38.880
+for example, in VB, you
+know, having word wrapping on
+
+247
+00:12:38.880 --> 00:12:41.780
+is, is, is not that
+uncommon of an option to
+
+248
+00:12:41.790 --> 00:12:44.010
+have. And so we have
+to support word wrapping and
+
+249
+00:12:44.010 --> 00:12:45.900
+we also have to support
+what happens if you're changing
+
+250
+00:12:45.900 --> 00:12:49.890
+positions with another parameter that's
+off screen, right. Cause if
+
+251
+00:12:49.890 --> 00:12:52.710
+it's off screen, we need
+to actually scroll, scroll horizontally.
+
+252
+00:12:52.710 --> 00:12:54.960
+So you can now see
+the new position. So it's
+
+253
+00:12:54.960 --> 00:12:57.270
+a combination Scott of that
+kind of painting trick, but
+
+254
+00:12:57.270 --> 00:13:00.330
+also being aware of where
+everything is and scrolling if
+
+255
+00:13:00.330 --> 00:13:03.900
+necessary to make that happen.
+And I want to throw
+
+256
+00:13:03.900 --> 00:13:06.120
+in why we do this,
+right? Because it's like, you
+
+257
+00:13:06.120 --> 00:13:09.000
+know, it's this kind of,
+whenever I see eye candy,
+
+258
+00:13:09.000 --> 00:13:11.970
+I, my first thought is,
+well, it's, I consider it
+
+259
+00:13:11.970 --> 00:13:14.970
+as a, as possibilities that
+really do. We just really
+
+260
+00:13:14.970 --> 00:13:17.760
+make eye candy or is
+there some functional purpose behind
+
+261
+00:13:17.760 --> 00:13:20.850
+it? And usually I get
+past the first question pretty
+
+262
+00:13:20.850 --> 00:13:22.740
+quickly with Ono and there
+is a functional purpose. And
+
+263
+00:13:22.740 --> 00:13:25.770
+in this case, there is
+if, if, if we take
+
+264
+00:13:25.770 --> 00:13:30.510
+away that animation and we
+move instantly, it's hard to
+
+265
+00:13:30.660 --> 00:13:34.200
+see what just happened. And,
+and unless you totally are
+
+266
+00:13:34.200 --> 00:13:36.120
+expecting it, right. If you
+say, Oh, I know what's
+
+267
+00:13:36.120 --> 00:13:37.980
+going to happen. And I,
+I hit the key and
+
+268
+00:13:37.980 --> 00:13:40.440
+instantly it jumps, then you're
+maybe okay. And comfortable with
+
+269
+00:13:40.440 --> 00:13:43.430
+that. But if we show
+you the animation, then you,
+
+270
+00:13:44.080 --> 00:13:48.330
+it totally confirms visually what
+just happened. In fact, if
+
+271
+00:13:48.330 --> 00:13:51.030
+you look at new UIs
+that are coming out, like,
+
+272
+00:13:51.030 --> 00:13:52.830
+for example, I like looking
+at the iPhone UI a
+
+273
+00:13:52.830 --> 00:13:55.590
+lot and they've got animation
+all over the place there.
+
+274
+00:13:55.590 --> 00:13:58.080
+If I delete, for example,
+a picture, I actually see
+
+275
+00:13:58.080 --> 00:14:00.150
+the picture kind of gets
+sucked down into the garbage
+
+276
+00:14:00.180 --> 00:14:02.850
+can, right. For example, on
+the iPhone. So it it's,
+
+277
+00:14:02.880 --> 00:14:05.520
+it's this, you know, somebody
+worked on this animation and
+
+278
+00:14:05.520 --> 00:14:07.680
+the reason they did it
+is because it serves a
+
+279
+00:14:07.680 --> 00:14:10.830
+purpose. It's not simply eye
+candy. You get confirmation that
+
+280
+00:14:10.830 --> 00:14:12.990
+the piece was deleted and
+you feel good about it
+
+281
+00:14:12.990 --> 00:14:15.360
+because you actually saw it
+go down into the trashcan.
+
+282
+00:14:15.390 --> 00:14:17.040
+Just like it happens in
+real life when you throw
+
+283
+00:14:17.040 --> 00:14:19.590
+stuff away. Yeah. I guess
+it's very interesting. It's an
+
+284
+00:14:19.590 --> 00:14:21.990
+interesting idea. What happened? What
+would happen if when I
+
+285
+00:14:21.990 --> 00:14:24.750
+was throwing trash away in
+real life, I picked up
+
+286
+00:14:24.750 --> 00:14:26.850
+my arm and I threw
+the trash and then the
+
+287
+00:14:26.850 --> 00:14:29.900
+paper disappeared from my hand
+and into the trash. It
+
+288
+00:14:29.900 --> 00:14:31.410
+would bite. It might take
+me a second to go,
+
+289
+00:14:31.620 --> 00:14:32.970
+okay, wait a second. Where's
+the paper? Oh, it's in
+
+290
+00:14:32.970 --> 00:14:35.370
+the trash. Right? In fact,
+if you, if, and here's
+
+291
+00:14:35.370 --> 00:14:37.800
+the thing now we do,
+we do actually support, like,
+
+292
+00:14:37.800 --> 00:14:39.450
+say for example, you have
+many parameters. You want to
+
+293
+00:14:39.450 --> 00:14:41.370
+take the first one, move
+it to the end. Let's
+
+294
+00:14:41.370 --> 00:14:42.930
+say you hit that right.
+Arrow key one, two, three,
+
+295
+00:14:42.930 --> 00:14:45.210
+four, five, really fast like
+that. We actually do jump
+
+296
+00:14:45.210 --> 00:14:47.310
+at as fast as you
+hit it. But if you,
+
+297
+00:14:47.310 --> 00:14:48.870
+if you would just hit
+it once and you don't
+
+298
+00:14:48.870 --> 00:14:51.560
+hit the key again, Oh,
+you'll need it. You'll if
+
+299
+00:14:51.560 --> 00:14:53.600
+you detect That, I'm hitting
+the key really fast. You'll
+
+300
+00:14:53.600 --> 00:14:55.070
+go, Oh, he's in a
+hurry. I'll turn off the
+
+301
+00:14:55.090 --> 00:14:56.800
+animation for now. Yeah. It
+took us a while to
+
+302
+00:14:56.800 --> 00:14:58.480
+figure this out and to
+get it to a point
+
+303
+00:14:58.480 --> 00:15:01.630
+where it felt perfect for
+everybody. And this was one
+
+304
+00:15:01.630 --> 00:15:04.210
+of these last kind of
+the last things we added
+
+305
+00:15:04.210 --> 00:15:06.970
+is when we realized that
+some people knew in advance,
+
+306
+00:15:06.970 --> 00:15:08.710
+they wanted to move it
+like three or four over.
+
+307
+00:15:08.710 --> 00:15:10.720
+They hit it and they
+were waiting. And so we
+
+308
+00:15:10.720 --> 00:15:12.940
+took that away. So they
+didn't have to wait and
+
+309
+00:15:13.000 --> 00:15:15.430
+getting that balance. Right. So
+that there was still animation
+
+310
+00:15:15.430 --> 00:15:17.350
+if it made sense and
+not animation at all, if
+
+311
+00:15:17.350 --> 00:15:19.660
+it didn't make sense was
+a little bit tricky. But,
+
+312
+00:15:19.720 --> 00:15:23.080
+but I think we've, we've
+nailed it on there. Speaking
+
+313
+00:15:23.080 --> 00:15:26.290
+of, of UI in the
+code, the, the, my favorite
+
+314
+00:15:26.320 --> 00:15:29.950
+is for rename and it's
+a real simple refactoring, but
+
+315
+00:15:29.950 --> 00:15:32.650
+you what's cool about it.
+Did you get this inline
+
+316
+00:15:33.220 --> 00:15:35.350
+experience, right? You say, I
+want to, I want to
+
+317
+00:15:35.350 --> 00:15:39.400
+rename this and, and you
+can, you can select a
+
+318
+00:15:39.400 --> 00:15:42.370
+portion of the identifier and
+hit rename. And then that
+
+319
+00:15:42.370 --> 00:15:44.800
+piece remains selected and just
+type in the new replacement
+
+320
+00:15:44.800 --> 00:15:47.500
+for it. And it renames
+all the, all the, all
+
+321
+00:15:47.500 --> 00:15:50.830
+the corresponding references to that
+identifier everywhere throughout the code.
+
+322
+00:15:51.580 --> 00:15:53.890
+And it's, it's very fast
+as well. So if you,
+
+323
+00:15:53.890 --> 00:15:56.440
+even if you've got a,
+an identifier that's showing up
+
+324
+00:15:56.440 --> 00:15:59.470
+in, in, you know, tens
+of thousands of places inside
+
+325
+00:15:59.470 --> 00:16:02.440
+of your source code, you
+still have this instantaneous experience
+
+326
+00:16:02.440 --> 00:16:04.780
+where you are able to
+edit and rename right there,
+
+327
+00:16:04.780 --> 00:16:07.690
+live in the code. The
+commit is also something we
+
+328
+00:16:07.690 --> 00:16:09.430
+had to work out. When
+do we commit to this?
+
+329
+00:16:09.430 --> 00:16:11.680
+You know, how do we
+know you've committed? Cause normally
+
+330
+00:16:11.680 --> 00:16:13.210
+when you bring up a
+dialogue, we know you commit
+
+331
+00:16:13.210 --> 00:16:17.080
+by hitting, okay, Hey everybody,
+this is Scott coming at
+
+332
+00:16:17.080 --> 00:16:19.540
+you from another place in
+time. No doubt. You'll probably
+
+333
+00:16:19.540 --> 00:16:22.090
+bump into testing tasks now,
+and then, and your work
+
+334
+00:16:22.600 --> 00:16:24.730
+and, you know, writing functional
+tests is probably not your
+
+335
+00:16:24.730 --> 00:16:26.980
+favorite thing. It's kind of
+difficult. It takes time and
+
+336
+00:16:26.980 --> 00:16:29.350
+the results can be dubious.
+Well, I'll get ready to
+
+337
+00:16:29.350 --> 00:16:32.470
+start liking tests. Thanks to
+Tellerik with the, the new
+
+338
+00:16:32.470 --> 00:16:36.370
+web testing framework. Building web
+automation test is a breeze.
+
+339
+00:16:36.940 --> 00:16:40.150
+You've got code automation with
+advanced asp.net Ajax and several
+
+340
+00:16:40.150 --> 00:16:42.700
+light applications. You can write
+a single test, have it
+
+341
+00:16:42.700 --> 00:16:46.180
+executed against multiple browsers at
+once. You'd benefit from a
+
+342
+00:16:46.180 --> 00:16:49.630
+rich API there's link support
+integration with visual studio unit
+
+343
+00:16:49.630 --> 00:16:53.530
+testing, also in unit X
+unit and MBA unit, not
+
+344
+00:16:53.530 --> 00:16:56.230
+to mention the free rappers
+for Telerik rad controls for
+
+345
+00:16:56.230 --> 00:16:59.530
+ESPN and Ajax and several
+lines, all shipping with Telerik's
+
+346
+00:16:59.530 --> 00:17:02.950
+new testing tool. One of
+the best features, the webinar
+
+347
+00:17:02.980 --> 00:17:06.070
+testing framework, which is developed
+by art of test is
+
+348
+00:17:06.070 --> 00:17:09.820
+it's absolutely free. Freddie got
+hooked on web by testing
+
+349
+00:17:09.820 --> 00:17:13.090
+framework, start using it right
+away, go to tellerik.com for
+
+350
+00:17:13.090 --> 00:17:16.780
+more info. Thanks a lot.
+Well, yeah. Right. And let
+
+351
+00:17:16.780 --> 00:17:18.250
+me interrupt because this is
+the thing, that's the very
+
+352
+00:17:18.250 --> 00:17:20.950
+thing that's significant about not
+just code, rush as a
+
+353
+00:17:20.950 --> 00:17:23.920
+product, but your style. And
+I think it's a different
+
+354
+00:17:23.920 --> 00:17:25.990
+style than typical is that
+if one was going to
+
+355
+00:17:25.990 --> 00:17:27.430
+tip, if I was going
+to sit down today and
+
+356
+00:17:27.430 --> 00:17:30.310
+Scott, Hanson's going to write
+a refactoring tool, I'd hook
+
+357
+00:17:30.310 --> 00:17:32.770
+up some hot key, I'd
+push a button to do
+
+358
+00:17:32.770 --> 00:17:35.770
+a rename and I'd probably
+pop a dialogue box. Right.
+
+359
+00:17:35.830 --> 00:17:37.630
+And I would tell them
+the name of the text
+
+360
+00:17:37.630 --> 00:17:39.700
+underneath the cursor. And I
+would, and they would spend
+
+361
+00:17:39.700 --> 00:17:42.670
+this time in this modal
+dialog and by modal, that
+
+362
+00:17:42.670 --> 00:17:46.030
+means that they they're, they're
+stuck. It's basically forcing their
+
+363
+00:17:46.030 --> 00:17:48.700
+attention. And it changes the
+view, right. Instead of looking
+
+364
+00:17:48.700 --> 00:17:51.330
+at the code, you're looking
+at a picture, a representation
+
+365
+00:17:51.600 --> 00:17:53.250
+of the thing you want
+to change, same thing with
+
+366
+00:17:53.250 --> 00:17:55.800
+reorder parameters. I mean, most
+people bring up a dialogue
+
+367
+00:17:55.800 --> 00:17:57.540
+with a list of parameters
+and buttons that you have
+
+368
+00:17:57.540 --> 00:17:59.880
+to press up and down,
+right? So you're reaching for
+
+369
+00:17:59.880 --> 00:18:01.920
+the mouse to click on
+those buttons. Cause they usually
+
+370
+00:18:01.920 --> 00:18:04.470
+don't have hot keys on
+them. And it's, it's, it's
+
+371
+00:18:04.470 --> 00:18:06.600
+a total in my, from
+my perspective, it's a total
+
+372
+00:18:06.600 --> 00:18:09.990
+interruption in the flow and,
+and, and, and, and you're
+
+373
+00:18:09.990 --> 00:18:12.960
+right. My style is like
+no modal dialogues. I want
+
+374
+00:18:12.960 --> 00:18:15.180
+to get all the UI
+flat down into the source
+
+375
+00:18:15.180 --> 00:18:17.880
+code. So if there's an
+opportunity, if, if, if there's
+
+376
+00:18:17.880 --> 00:18:22.320
+an interactive point of a
+refactoring requires interactivity, we do
+
+377
+00:18:22.320 --> 00:18:24.810
+everything we can to make
+that interactivity at the level
+
+378
+00:18:24.810 --> 00:18:26.400
+of the code that you're
+looking at. So you're right
+
+379
+00:18:26.400 --> 00:18:28.230
+there working in it and
+you never leave the editor.
+
+380
+00:18:28.380 --> 00:18:31.760
+That's, that's our goal, right?
+Yeah. I mean, that's insane.
+
+381
+00:18:32.060 --> 00:18:33.380
+And well, I mean, not
+that you're in, but you're
+
+382
+00:18:33.380 --> 00:18:35.480
+insane. I mean, that's insane
+though. I mean the amount
+
+383
+00:18:35.480 --> 00:18:36.800
+of work that you must
+have done to get it
+
+384
+00:18:36.800 --> 00:18:39.350
+right. Well, painting on the
+edit, like all those things
+
+385
+00:18:39.350 --> 00:18:41.000
+you were describing that you
+needed to know about word
+
+386
+00:18:41.000 --> 00:18:43.190
+wrap and where the, where
+the, where the, what font
+
+387
+00:18:43.190 --> 00:18:46.070
+they're using, you know, if
+you did that wrong and
+
+388
+00:18:46.070 --> 00:18:47.690
+I'm sure at some point
+it didn't work while you
+
+389
+00:18:47.690 --> 00:18:50.210
+were in the process of
+doing the coding. You must
+
+390
+00:18:50.210 --> 00:18:52.070
+have been off by a
+few pixels or you'd have
+
+391
+00:18:52.100 --> 00:18:55.100
+visual glitches. It must've been
+very irritating, Everybody on the,
+
+392
+00:18:55.220 --> 00:18:56.480
+I think Everett, a lot
+of people on the team
+
+393
+00:18:56.480 --> 00:18:58.190
+thought I was insane when
+I was telling them how
+
+394
+00:18:58.190 --> 00:19:00.650
+we were going to do
+rename. And, and there was
+
+395
+00:19:00.650 --> 00:19:03.140
+a fair amount of pushback,
+but because I was leading
+
+396
+00:19:03.140 --> 00:19:05.630
+the team, there was, you
+know, it was ineffective. They
+
+397
+00:19:05.630 --> 00:19:07.850
+couldn't, they couldn't stop it
+from happening. I said, no,
+
+398
+00:19:07.850 --> 00:19:10.700
+we're going to do it.
+And then afterwards, when they
+
+399
+00:19:10.700 --> 00:19:14.210
+started seeing, you know, the
+reaction and they started kind
+
+400
+00:19:14.210 --> 00:19:17.120
+of understanding what was going
+on, then it's like, there's
+
+401
+00:19:17.120 --> 00:19:20.120
+no more pushback on anything.
+Right. And, and, but, but,
+
+402
+00:19:20.180 --> 00:19:21.950
+but I think it's unusual
+even for the team to
+
+403
+00:19:21.950 --> 00:19:24.470
+have that kind of pushback.
+Right. But that was definitely
+
+404
+00:19:24.470 --> 00:19:26.390
+the case with reorder parameters.
+Cause you know, I was
+
+405
+00:19:26.390 --> 00:19:27.830
+saying, no, we have to
+animate. We need to move
+
+406
+00:19:27.830 --> 00:19:31.070
+it. We need to show
+people that it's moving, but
+
+407
+00:19:31.070 --> 00:19:32.810
+it is, it is a
+kind of a unique style.
+
+408
+00:19:32.810 --> 00:19:35.300
+But the payoff is there
+from, from a, I think
+
+409
+00:19:35.300 --> 00:19:38.840
+a customer satisfaction standpoint. If
+you use this and try
+
+410
+00:19:38.840 --> 00:19:40.310
+it and then you go
+try it, you know, the
+
+411
+00:19:40.310 --> 00:19:42.500
+old way, the modal way,
+or you know, something without
+
+412
+00:19:42.500 --> 00:19:45.710
+animation, you definitely realize something
+is missing. And when you
+
+413
+00:19:45.710 --> 00:19:49.160
+realize that you're thinking about
+not, your, you're not thinking
+
+414
+00:19:49.160 --> 00:19:51.230
+about coding when you're using
+that other interface, you're thinking
+
+415
+00:19:51.230 --> 00:19:52.880
+about why it's not as
+good as it could be.
+
+416
+00:19:53.570 --> 00:19:55.490
+So yeah, it is, it
+is insane. And it does
+
+417
+00:19:55.490 --> 00:19:57.500
+take a lot more effort,
+but you know, the one
+
+418
+00:19:57.500 --> 00:20:00.050
+thing though that we've done,
+Scott is for example, like
+
+419
+00:20:00.050 --> 00:20:02.810
+to do those strikethroughs, you
+know, our strikethroughs, I actually
+
+420
+00:20:02.810 --> 00:20:04.250
+take a lot of pride
+in the strike-through. If you
+
+421
+00:20:04.250 --> 00:20:06.230
+look closely that it actually
+looks like somebody took a
+
+422
+00:20:06.230 --> 00:20:10.220
+pen and drew across the
+code and actually it was
+
+423
+00:20:10.220 --> 00:20:12.200
+lifting up the pen, you
+know, felt at pen as
+
+424
+00:20:12.200 --> 00:20:14.150
+they got to the, and
+it actually gets thinner and
+
+425
+00:20:14.150 --> 00:20:17.910
+slightly translucent, you know, as
+it, and it curves, It
+
+426
+00:20:17.910 --> 00:20:21.170
+looks like someone actually took
+a pen on your screen
+
+427
+00:20:21.650 --> 00:20:25.010
+and then struck, struck out
+a, you know, like an
+
+428
+00:20:25.010 --> 00:20:27.350
+editor, right? Like a, like
+a red pen that someone
+
+429
+00:20:27.350 --> 00:20:29.390
+would use when you wrote
+a paper for English class,
+
+430
+00:20:30.020 --> 00:20:31.670
+it doesn't just look like
+a line. It looks like.
+
+431
+00:20:32.360 --> 00:20:34.580
+Yeah, exactly. And the thing
+is though is strikethrough is
+
+432
+00:20:34.580 --> 00:20:37.460
+a very common kind of
+preview markup thing that we
+
+433
+00:20:37.460 --> 00:20:41.240
+do. And so we've got,
+you know, consequently we've got
+
+434
+00:20:41.600 --> 00:20:43.490
+methods that come in our
+event, or so we've got
+
+435
+00:20:43.490 --> 00:20:45.320
+like when we write a
+refactoring, one of our events
+
+436
+00:20:45.320 --> 00:20:48.460
+is prepare preview. And the
+is what show comes up
+
+437
+00:20:48.490 --> 00:20:51.070
+when you're hovering over a
+menu item or you've got
+
+438
+00:20:51.070 --> 00:20:53.350
+it selected with the arrow
+keys. And you're about to
+
+439
+00:20:53.350 --> 00:20:55.570
+hit enter on that menu
+item for the refactoring, for
+
+440
+00:20:55.570 --> 00:20:59.290
+example, rename or reorder parameters
+or something like that. And
+
+441
+00:20:59.290 --> 00:21:01.420
+what we'll do is in,
+in that event handler for
+
+442
+00:21:01.420 --> 00:21:03.940
+the refactoring that prepare preview,
+we have an opportunity to
+
+443
+00:21:03.940 --> 00:21:06.700
+actually paint on the editor,
+will the event orgs have
+
+444
+00:21:06.700 --> 00:21:08.920
+got something that says, add
+strike through, and we simply
+
+445
+00:21:08.920 --> 00:21:10.780
+just give it a range
+of code and we can
+
+446
+00:21:10.780 --> 00:21:13.090
+even give it multiple lines
+of code and that's all
+
+447
+00:21:13.090 --> 00:21:14.650
+we need to do. And
+it'll draw the strike through
+
+448
+00:21:14.650 --> 00:21:17.380
+there intelligently it won't, it'll
+only draw it over code.
+
+449
+00:21:17.380 --> 00:21:19.630
+It will ignore white space.
+And so it's a simple
+
+450
+00:21:19.630 --> 00:21:22.540
+one call kind of thing.
+So, so it's, and it's
+
+451
+00:21:22.540 --> 00:21:24.430
+very fast and easy to
+do. So if you want
+
+452
+00:21:24.430 --> 00:21:27.190
+to write your own refactoring,
+you handle this event and
+
+453
+00:21:27.190 --> 00:21:30.580
+you make that call right
+in the event. <inaudible> dot
+
+454
+00:21:30.970 --> 00:21:34.420
+add strike-through and, and that's
+it. You're done. So, so
+
+455
+00:21:34.450 --> 00:21:36.400
+even though, yes, there's been
+a lot of work and
+
+456
+00:21:36.400 --> 00:21:39.850
+kind of insane amount of
+preparation almost to make this
+
+457
+00:21:39.850 --> 00:21:42.700
+so that we can do
+these, these, these, you know,
+
+458
+00:21:42.700 --> 00:21:45.560
+beautiful things on the editor,
+this eye candy, or, or,
+
+459
+00:21:45.670 --> 00:21:47.470
+you know, ease of use,
+whatever you want to call
+
+460
+00:21:47.470 --> 00:21:50.560
+it, we've made it so
+that our developers and people
+
+461
+00:21:50.560 --> 00:21:54.040
+who extend it can, can,
+can access that easy easily.
+
+462
+00:21:54.280 --> 00:21:55.900
+So now we're at a
+point where we're simply, it's
+
+463
+00:21:55.900 --> 00:21:57.790
+just, we have nothing but
+a lot to gain from
+
+464
+00:21:57.790 --> 00:22:00.690
+all that work. Is this
+because, I mean, is this
+
+465
+00:22:00.810 --> 00:22:02.940
+a matter of like, you
+know, what is it they
+
+466
+00:22:02.940 --> 00:22:05.280
+say? I think this was
+an old joke that any,
+
+467
+00:22:05.280 --> 00:22:09.000
+any technology, any sufficiently advanced
+technology is indistinguishable from magic,
+
+468
+00:22:09.030 --> 00:22:12.000
+right? That's one thing the
+other one was that any
+
+469
+00:22:12.000 --> 00:22:14.520
+problem in computer science can
+be solved by one additional
+
+470
+00:22:14.520 --> 00:22:19.410
+layer of indirection, therefore, any
+sufficiently, any technology, any sufficiently
+
+471
+00:22:19.410 --> 00:22:24.390
+advanced technology required several layers
+of interaction. I mean, you've
+
+472
+00:22:24.420 --> 00:22:28.290
+really layered this thing such
+that this common interface and
+
+473
+00:22:28.290 --> 00:22:31.140
+the low level GDI stuff
+is, is a, it's a
+
+474
+00:22:31.140 --> 00:22:33.750
+distant memory Far away. It
+really is. If you were
+
+475
+00:22:33.750 --> 00:22:36.380
+at task me, you know,
+sit me down and do
+
+476
+00:22:36.420 --> 00:22:38.130
+how many do a quiz
+on this? I would probably
+
+477
+00:22:38.130 --> 00:22:41.880
+fail it, you know, spectacularly.
+So you, you wrote that
+
+478
+00:22:41.880 --> 00:22:46.350
+engine, like, like we were
+talking about where, where, where
+
+479
+00:22:46.350 --> 00:22:49.950
+letters are, where things rap
+that was figured out with
+
+480
+00:22:49.950 --> 00:22:53.700
+magic and buried long ago.
+Yeah. Yeah. I think so
+
+481
+00:22:53.700 --> 00:22:55.620
+to some degree it is,
+although it's that code's being
+
+482
+00:22:55.620 --> 00:23:01.080
+resurrected now as we move
+to 2010 and because, you
+
+483
+00:23:01.080 --> 00:23:02.970
+know, we've got, we're no
+longer in GDI world we're
+
+484
+00:23:02.970 --> 00:23:05.520
+in WPF world. Yeah. Let's
+just take a moment. I
+
+485
+00:23:05.520 --> 00:23:06.600
+just want to make sure,
+cause I always want to
+
+486
+00:23:06.600 --> 00:23:08.370
+make sure that when we
+use a three letter acronym
+
+487
+00:23:08.370 --> 00:23:11.040
+or a TLA that people
+know what that means. So
+
+488
+00:23:11.040 --> 00:23:13.980
+GDI is that graphics device
+interface. That's the way that
+
+489
+00:23:13.980 --> 00:23:17.400
+we've been painting in windows
+since time began. Right. And
+
+490
+00:23:17.400 --> 00:23:20.790
+then WPF is the windows
+presentation foundation. And the thing
+
+491
+00:23:20.790 --> 00:23:23.220
+that I think you're alluding
+to is that the editor
+
+492
+00:23:23.220 --> 00:23:27.960
+and most of visual studio
+changed from GDI the 25
+
+493
+00:23:27.960 --> 00:23:31.140
+year old technology to WPF
+a newer technology and the,
+
+494
+00:23:31.410 --> 00:23:36.060
+the entire editor swapped out
+from underneath you. Yeah, It
+
+495
+00:23:36.060 --> 00:23:38.400
+did it well kind of.
+I mean, they have some,
+
+496
+00:23:38.490 --> 00:23:40.890
+they have, some of the
+old editor is still there,
+
+497
+00:23:41.250 --> 00:23:44.790
+but we kind of consider
+that dangerous to work with
+
+498
+00:23:44.790 --> 00:23:47.990
+in two and 10, they
+provided shims and stuff and,
+
+499
+00:23:47.990 --> 00:23:50.420
+and, and things like that.
+But our goal is to
+
+500
+00:23:50.420 --> 00:23:54.200
+go all with the new
+interfaces for w for, for
+
+501
+00:23:54.200 --> 00:23:57.560
+2010, but we also have
+the goal of making it
+
+502
+00:23:57.560 --> 00:24:00.830
+so that our plugins simply
+just need to be recompiled
+
+503
+00:24:01.220 --> 00:24:04.130
+and, and without any changes
+to them. And, and, and
+
+504
+00:24:04.130 --> 00:24:05.660
+for the most part, I
+think all of our refactoring
+
+505
+00:24:05.660 --> 00:24:09.050
+plugins will we'll meet that
+criteria. We'll simply just need
+
+506
+00:24:09.050 --> 00:24:11.870
+to rebuild them and they'll
+work. So they, so they
+
+507
+00:24:11.870 --> 00:24:14.720
+will need to be rebuilt.
+Yes. But even what's cool
+
+508
+00:24:14.720 --> 00:24:17.090
+about that is those plugins
+are, are making calls right?
+
+509
+00:24:17.090 --> 00:24:21.020
+To like, you know, ad
+strikethrough, they're not directly painting
+
+510
+00:24:21.020 --> 00:24:23.120
+on the editor there. They
+don't really have a canvas
+
+511
+00:24:23.120 --> 00:24:25.730
+that they're working with or,
+you know, a graphics object.
+
+512
+00:24:25.760 --> 00:24:27.200
+They don't, they're not, I'm
+sorry. They don't have a
+
+513
+00:24:27.200 --> 00:24:31.160
+graphics object that they're working
+with. They simply make that,
+
+514
+00:24:31.280 --> 00:24:33.830
+that call through the vet
+arcs, right. To add strikethrough
+
+515
+00:24:33.830 --> 00:24:36.620
+or to add insert point
+or, you know, draw arrow,
+
+516
+00:24:36.620 --> 00:24:38.780
+that sort of thing. That's
+all that is all done
+
+517
+00:24:38.780 --> 00:24:42.080
+in the refactorings. And so
+we've already kind of, even,
+
+518
+00:24:42.230 --> 00:24:46.010
+even in the refactorings, we've
+kind of decoupled away GDI
+
+519
+00:24:46.250 --> 00:24:50.440
+to some degree right. Already
+in there. And so, and
+
+520
+00:24:50.450 --> 00:24:51.920
+then our goal is to
+do the same with everything
+
+521
+00:24:51.920 --> 00:24:54.080
+else. There are some plugins
+that actually do work with
+
+522
+00:24:54.080 --> 00:24:56.840
+the graphics object in GDI.
+And so those plugins will
+
+523
+00:24:56.840 --> 00:24:58.580
+have to be changed a
+bit. But what we're doing
+
+524
+00:24:58.580 --> 00:25:01.910
+actually is we are actually
+something kind of interesting is
+
+525
+00:25:01.910 --> 00:25:05.840
+we're making we're, we're creating
+a, an abstraction layer over
+
+526
+00:25:05.840 --> 00:25:08.510
+both WPF and GDI so
+that all of our plugins
+
+527
+00:25:08.510 --> 00:25:11.840
+can, can ultimately be in
+one source code base. And
+
+528
+00:25:11.840 --> 00:25:14.780
+then, you know, depending on,
+on what engine is installed
+
+529
+00:25:14.780 --> 00:25:18.440
+at leader work in 2010
+or 2008 and below, and
+
+530
+00:25:18.440 --> 00:25:20.360
+that's very cool from a
+plugin writer standpoint, cause you
+
+531
+00:25:20.360 --> 00:25:22.010
+write it once and then
+it works on all the
+
+532
+00:25:22.010 --> 00:25:26.180
+others. It's also, it also
+has the possibility. This is
+
+533
+00:25:26.180 --> 00:25:28.970
+not any kind of promise,
+but it's certainly technically possible
+
+534
+00:25:29.300 --> 00:25:30.980
+that if we were, we
+could move code, rush to
+
+535
+00:25:30.980 --> 00:25:33.290
+a completely different dry platform
+that had a different kind
+
+536
+00:25:33.290 --> 00:25:35.840
+of, of, of drawing mechanism
+on it. There was wasn't
+
+537
+00:25:35.840 --> 00:25:39.760
+GDI, wasn't WPF and, and
+it would still work. So
+
+538
+00:25:39.760 --> 00:25:42.070
+you're saying that really, when
+a plugin writer, a code
+
+539
+00:25:42.070 --> 00:25:45.130
+rush, plugin writer writes something
+there's these surface area they
+
+540
+00:25:45.130 --> 00:25:47.290
+sit on is entirely code
+rush. You don't let them,
+
+541
+00:25:47.590 --> 00:25:51.190
+you don't let VisualStudio leak
+out at all. They can
+
+542
+00:25:51.190 --> 00:25:52.900
+get to it. Like if
+they ask for something that
+
+543
+00:25:52.900 --> 00:25:56.620
+we don't support that is
+supported through like ENV DTE
+
+544
+00:25:56.620 --> 00:25:59.860
+or sip, we say, go,
+go round us. But for
+
+545
+00:25:59.860 --> 00:26:03.400
+the most part, they, they
+don't, they, they really don't
+
+546
+00:26:03.400 --> 00:26:06.190
+need it in, in many
+cases, we're better to like,
+
+547
+00:26:06.190 --> 00:26:08.320
+for example, one of the
+things that just came to
+
+548
+00:26:08.320 --> 00:26:10.810
+mind is the way we
+represent source code to plug
+
+549
+00:26:10.810 --> 00:26:13.600
+in writers is a, is
+a really neat way. We
+
+550
+00:26:13.600 --> 00:26:16.210
+give them a tree and
+they can modify that tree,
+
+551
+00:26:16.210 --> 00:26:18.640
+that parse tree, and then
+give the tree back. And
+
+552
+00:26:18.640 --> 00:26:21.760
+then we can generate code
+with that. Whereas with visual
+
+553
+00:26:21.760 --> 00:26:24.850
+studio, they there's, it's, it's
+two different mechanisms. If you
+
+554
+00:26:24.850 --> 00:26:26.920
+want to generate code, use
+one mechanism. If you want
+
+555
+00:26:26.920 --> 00:26:30.130
+to understand code it's a
+different mechanism. Plus plus there's
+
+556
+00:26:30.130 --> 00:26:33.310
+no there, just to date,
+there's not been agreement from
+
+557
+00:26:33.340 --> 00:26:36.070
+the visual studio, the different
+language teams of visual studio.
+
+558
+00:26:36.400 --> 00:26:40.210
+There's not been agreement over
+how to universally represent a
+
+559
+00:26:40.240 --> 00:26:43.030
+source code. And so what
+happens is you get to
+
+560
+00:26:43.050 --> 00:26:45.690
+a point where, where everybody's
+represented the same way you
+
+561
+00:26:45.690 --> 00:26:48.030
+have like classes and then
+you have methods and you
+
+562
+00:26:48.030 --> 00:26:50.700
+have parameters. And then after
+that, we stop, we there's
+
+563
+00:26:50.700 --> 00:26:53.670
+no inside of methods, that's
+available. If you're just going
+
+564
+00:26:53.670 --> 00:26:56.430
+to use the, the sensibility
+mechanisms that come out of
+
+565
+00:26:56.430 --> 00:26:59.550
+Microsoft. And that's one of
+the cool things about the
+
+566
+00:26:59.640 --> 00:27:02.190
+DX core, which both code
+rush and refactor are built
+
+567
+00:27:02.190 --> 00:27:04.830
+on in the DX core
+is this free sensibility engine
+
+568
+00:27:04.830 --> 00:27:07.170
+that we also, the extensible
+engine we use and we
+
+569
+00:27:07.170 --> 00:27:09.360
+make free for other developers
+to download and use as
+
+570
+00:27:09.360 --> 00:27:12.240
+well is the DX core.
+It gives you this, this
+
+571
+00:27:12.240 --> 00:27:17.100
+really sweet, universal way of
+modifying working with code and
+
+572
+00:27:17.100 --> 00:27:20.520
+understanding it and maybe modifying
+it as well. And the
+
+573
+00:27:20.520 --> 00:27:22.350
+cool thing about this Scott
+is that all of our
+
+574
+00:27:22.350 --> 00:27:26.280
+refactorings are written in without
+any checks to see what
+
+575
+00:27:26.280 --> 00:27:28.830
+language we're writing, we're working
+in. So there's no check
+
+576
+00:27:28.830 --> 00:27:30.600
+to see, are we in
+visual basic? Are we in
+
+577
+00:27:30.600 --> 00:27:33.270
+C sharp? We just simply
+take the tree. We manipulate
+
+578
+00:27:33.270 --> 00:27:35.760
+it and hand it back
+and then generate the code.
+
+579
+00:27:36.240 --> 00:27:38.400
+We might make checks with
+regard to the act of
+
+580
+00:27:38.400 --> 00:27:40.770
+language to say, Hey, does
+the act of language support
+
+581
+00:27:40.770 --> 00:27:43.620
+a with block, for example?
+And if it was JavaScript,
+
+582
+00:27:43.620 --> 00:27:45.270
+it would say yes. And
+if it was visual basic,
+
+583
+00:27:45.270 --> 00:27:46.830
+it would say yes. And
+if it was C sharp
+
+584
+00:27:46.830 --> 00:27:48.540
+and C plus, plus it
+would say no, but we
+
+585
+00:27:48.540 --> 00:27:51.090
+asked the active language questions
+about what it supports and
+
+586
+00:27:51.090 --> 00:27:54.450
+that may influence how we
+generate the code. We might
+
+587
+00:27:54.450 --> 00:27:56.640
+take advantage of a feature
+for example, of a language
+
+588
+00:27:56.640 --> 00:27:59.790
+feature if it's there. But
+there's nothing it's, it's, there's
+
+589
+00:27:59.790 --> 00:28:01.920
+nothing in our code that
+checks to see what language
+
+590
+00:28:01.920 --> 00:28:04.380
+is out there. So as
+a result, when you write
+
+591
+00:28:04.380 --> 00:28:08.010
+a refactoring, if you write
+some code declaration piece or
+
+592
+00:28:08.010 --> 00:28:11.040
+something, that's maybe calculating metrics,
+you don't really have to
+
+593
+00:28:11.040 --> 00:28:13.140
+worry about what language you're
+working with. And it works
+
+594
+00:28:13.140 --> 00:28:15.420
+with all the languages we
+support after you compile it.
+
+595
+00:28:16.200 --> 00:28:18.510
+So that is, that's another
+cool thing about this. That's
+
+596
+00:28:18.510 --> 00:28:20.490
+actually the way it should
+be in visual studio as
+
+597
+00:28:20.490 --> 00:28:22.590
+well, but we're just not
+at a point yet there,
+
+598
+00:28:22.590 --> 00:28:25.410
+we're not at a point
+yet where we can universally
+
+599
+00:28:25.410 --> 00:28:29.520
+represent all languages in one
+way. And, and that's something
+
+600
+00:28:29.520 --> 00:28:31.940
+DX Corp does. Do, How
+much have you had to
+
+601
+00:28:31.940 --> 00:28:33.800
+do that? You shouldn't have
+had to do like how
+
+602
+00:28:33.800 --> 00:28:35.810
+much, I mean, are you,
+are you, do you have
+
+603
+00:28:35.810 --> 00:28:38.450
+a little C-sharp compiler and
+you're off compiling C-sharp and
+
+604
+00:28:38.900 --> 00:28:41.780
+you're off compiling VB in
+memory to think that you
+
+605
+00:28:41.780 --> 00:28:45.050
+have to. Yeah, we, we,
+we do have parsers for
+
+606
+00:28:45.050 --> 00:28:47.660
+all the languages and we
+also have cogeneration aspects of
+
+607
+00:28:47.660 --> 00:28:51.560
+it as well. So our,
+we have, we have something
+
+608
+00:28:51.560 --> 00:28:55.520
+similar to language services that
+visual studio has language services.
+
+609
+00:28:55.520 --> 00:28:57.290
+So like there's a C
+sharp language service and the
+
+610
+00:28:57.290 --> 00:29:00.560
+VB language service, and those
+things are responsible for compiling
+
+611
+00:29:00.560 --> 00:29:04.460
+and parsing and IntelliSense, things
+like that. We have a
+
+612
+00:29:04.460 --> 00:29:07.670
+similar, a similar structure as
+well to our framework where
+
+613
+00:29:07.670 --> 00:29:12.320
+we have, where we have
+language services essentially, and, and
+
+614
+00:29:12.340 --> 00:29:15.890
+ours are responsible for parsing
+for co-generation. And also for
+
+615
+00:29:16.670 --> 00:29:20.690
+the rules of, of resolving
+types, finding out where types
+
+616
+00:29:20.690 --> 00:29:26.570
+are located. For example, in
+one language, we might find
+
+617
+00:29:26.570 --> 00:29:30.440
+types by going through the
+imports or using statements from
+
+618
+00:29:30.440 --> 00:29:33.020
+top to bottom. And in
+another language, it might go
+
+619
+00:29:33.020 --> 00:29:35.180
+from like bottom to top.
+It might say the most
+
+620
+00:29:35.180 --> 00:29:38.420
+recently imported one reference is
+going to be the first
+
+621
+00:29:38.420 --> 00:29:41.530
+one I check for example.
+And so, so those rules
+
+622
+00:29:41.530 --> 00:29:44.680
+sometimes differ from language to
+language. And so we'll put
+
+623
+00:29:44.680 --> 00:29:48.310
+in some, some, some code
+there that helps out in
+
+624
+00:29:48.310 --> 00:29:50.830
+terms of resolving types in
+when we create a new
+
+625
+00:29:50.830 --> 00:29:53.650
+language service, but those are
+the three components. Oh, and
+
+626
+00:29:53.650 --> 00:29:55.480
+the, I actually, there's a
+fourth one. The fourth one
+
+627
+00:29:55.750 --> 00:29:58.630
+is essentially the description of
+the language, which is essentially
+
+628
+00:29:58.630 --> 00:30:01.990
+a whole bunch of properties
+that, that describe, you know,
+
+629
+00:30:01.990 --> 00:30:04.990
+like for example, does it
+support, does this language support
+
+630
+00:30:04.990 --> 00:30:08.500
+with blocks, for example? And
+so it'll, we'll fill all
+
+631
+00:30:08.500 --> 00:30:10.870
+those out, like yes or
+no, we'll answer those questions
+
+632
+00:30:11.470 --> 00:30:13.120
+all the way down the
+board for that language. And
+
+633
+00:30:13.120 --> 00:30:16.150
+so when, when that language
+is active and we're modifying
+
+634
+00:30:16.150 --> 00:30:18.640
+it, we can go out
+and find out what it
+
+635
+00:30:18.640 --> 00:30:22.450
+supports. Hmm. What, what do
+you think the future of
+
+636
+00:30:22.450 --> 00:30:24.550
+this is? I mean, how
+far can you take this
+
+637
+00:30:24.550 --> 00:30:26.440
+whole thing? Well, actually, you
+know, I just realized, I
+
+638
+00:30:26.440 --> 00:30:28.510
+didn't answer your last question.
+Let me answer that question.
+
+639
+00:30:28.510 --> 00:30:31.330
+And the question was how,
+how, how much did we
+
+640
+00:30:31.330 --> 00:30:33.740
+write that we shouldn't have
+had to write? And, and
+
+641
+00:30:33.750 --> 00:30:35.950
+I really, my answer that
+I think is pretty much
+
+642
+00:30:35.950 --> 00:30:38.770
+zero Scott. And the reason
+why is because if it's
+
+643
+00:30:38.770 --> 00:30:40.660
+hard to do what we're
+doing, that gives us a
+
+644
+00:30:40.660 --> 00:30:43.480
+competitive advantage. If it's hard
+to paint on the editor,
+
+645
+00:30:43.480 --> 00:30:46.660
+that gives us a competitive
+advantage. And so we'll take
+
+646
+00:30:46.690 --> 00:30:49.360
+any competitive advantage we can
+get, right? If we can,
+
+647
+00:30:49.390 --> 00:30:51.880
+if, if there's w whatever
+it is, if there's something
+
+648
+00:30:51.880 --> 00:30:54.280
+that Jay is widely considered
+impossible, and we figured out
+
+649
+00:30:54.280 --> 00:30:56.530
+a way to do it,
+we'll take that. So I'm
+
+650
+00:30:56.530 --> 00:30:59.020
+all over those kinds of
+challenges. Those are actually I'm.
+
+651
+00:30:59.020 --> 00:31:01.600
+So my answer to the
+question is zero. Your, your
+
+652
+00:31:01.600 --> 00:31:03.520
+next question was, what, what
+do I see for the
+
+653
+00:31:03.520 --> 00:31:06.240
+future of this? Well, I
+think that, you know, the,
+
+654
+00:31:06.240 --> 00:31:08.380
+the UI is still got
+a long ways to go
+
+655
+00:31:08.380 --> 00:31:10.510
+in for most tools that
+are out there, including visual
+
+656
+00:31:10.510 --> 00:31:14.140
+studio. I think that, that
+this flattened, you know, experience
+
+657
+00:31:14.140 --> 00:31:17.320
+where I'm renaming right inside
+the editor, it's a really
+
+658
+00:31:17.320 --> 00:31:20.170
+slick, good feeling. I feel
+like after I've renamed, I
+
+659
+00:31:20.170 --> 00:31:22.570
+feel good, right? Because I've,
+I've, I've done it in
+
+660
+00:31:22.570 --> 00:31:26.070
+the fewest keystrokes possible. I
+haven't distracted myself from, from
+
+661
+00:31:26.260 --> 00:31:29.470
+my focus, which is writing
+code and I, and I,
+
+662
+00:31:29.470 --> 00:31:31.480
+and I'm, and I, and
+I haven't slowed down my
+
+663
+00:31:31.480 --> 00:31:33.550
+momentum at all. That's kind
+of the goal in this.
+
+664
+00:31:33.550 --> 00:31:37.060
+So I think you guys
+got God's some place, you
+
+665
+00:31:37.060 --> 00:31:39.790
+know, room, definitely room to
+grow in the UI area.
+
+666
+00:31:40.120 --> 00:31:43.060
+And also, I think in
+the area of, of finding
+
+667
+00:31:43.060 --> 00:31:45.460
+out what is, you know,
+what's wrong with your code
+
+668
+00:31:45.460 --> 00:31:48.340
+in the background, finding things
+that are maybe hard for
+
+669
+00:31:48.340 --> 00:31:50.800
+humans to find, but are
+not so hard for computers
+
+670
+00:31:50.800 --> 00:31:53.740
+to find as an example,
+you're working on some code
+
+671
+00:31:53.770 --> 00:31:56.890
+and, and you get a
+little message nearby that says,
+
+672
+00:31:56.890 --> 00:31:59.370
+Hey, you know what? This
+code is really similar to
+
+673
+00:31:59.530 --> 00:32:01.420
+code that I'm seeing in
+a few other places in
+
+674
+00:32:01.420 --> 00:32:04.810
+the solution, we could take
+all of these different methods
+
+675
+00:32:04.810 --> 00:32:07.930
+and bring them into one
+in an ancestor class, as
+
+676
+00:32:07.930 --> 00:32:11.350
+an example with maybe only
+a few minor changes. And
+
+677
+00:32:11.410 --> 00:32:13.480
+that I think is, you
+know, I think we'll definitely
+
+678
+00:32:13.480 --> 00:32:15.700
+see things like that in
+the future where you see,
+
+679
+00:32:16.000 --> 00:32:19.090
+you know, more assistance, more
+pointing things out that are
+
+680
+00:32:19.090 --> 00:32:21.280
+not obvious that are hard
+to see. Cause right now,
+
+681
+00:32:21.280 --> 00:32:24.280
+when we write code Scott,
+we're looking at a small,
+
+682
+00:32:24.610 --> 00:32:27.760
+almost a postage stamps, you
+know, size window relative to
+
+683
+00:32:27.760 --> 00:32:30.430
+the entire, you know, book,
+the stamp book of, of
+
+684
+00:32:30.430 --> 00:32:32.620
+code, right. We're looking at
+it, you know, a single
+
+685
+00:32:32.620 --> 00:32:35.320
+screen in one file that
+can be one class out
+
+686
+00:32:35.320 --> 00:32:39.350
+of thousands. And being able
+to go out and detect
+
+687
+00:32:39.650 --> 00:32:42.320
+potential problems at alert, you
+know, and, and show those
+
+688
+00:32:42.320 --> 00:32:44.840
+to you in a way
+that doesn't distract you from
+
+689
+00:32:44.840 --> 00:32:47.780
+what you're doing, I think
+is, is also something that
+
+690
+00:32:47.780 --> 00:32:52.570
+you'll see in the future.
+So, huh, that's longterm. One
+
+691
+00:32:52.570 --> 00:32:55.960
+of the things that, and
+I'm talking about the competition,
+
+692
+00:32:55.960 --> 00:32:58.300
+right? Because I'm going to
+be a, a, an, an,
+
+693
+00:32:58.300 --> 00:33:04.390
+a biased journalist, but we
+sharper, it's pretty clear to
+
+694
+00:33:04.390 --> 00:33:07.000
+people that it's a, it's
+a refactoring tool, and it's
+
+695
+00:33:07.000 --> 00:33:08.950
+a test driven development tool,
+and they're kind of carving
+
+696
+00:33:08.950 --> 00:33:11.890
+out their niche over the
+years as I've used code
+
+697
+00:33:11.890 --> 00:33:13.210
+rush and tried to like,
+you know, when you, when
+
+698
+00:33:13.210 --> 00:33:14.860
+you talk to a friend
+and you go, Hey, kudos
+
+699
+00:33:14.860 --> 00:33:17.440
+is cool. You should try
+it. And then they say,
+
+700
+00:33:17.440 --> 00:33:19.300
+Oh, great. Or I'll check
+it out. What is it?
+
+701
+00:33:20.110 --> 00:33:23.560
+I'm always like, it's kind
+of this thing. And it's
+
+702
+00:33:23.590 --> 00:33:28.960
+kinda, the elevator speech is
+hard because it does so
+
+703
+00:33:28.960 --> 00:33:32.820
+much. Why do you think
+that that's difficult? That it
+
+704
+00:33:32.830 --> 00:33:35.350
+is kind of everything in
+the kitchen sink? Yeah. I
+
+705
+00:33:35.350 --> 00:33:37.120
+usually say, let me show
+you a demo is what
+
+706
+00:33:37.120 --> 00:33:38.800
+I usually do. If I,
+if I can get a
+
+707
+00:33:38.800 --> 00:33:42.520
+demo going that usually, you
+know, it usually holds people's
+
+708
+00:33:42.520 --> 00:33:44.620
+interest for a long time,
+and I can start showing
+
+709
+00:33:44.620 --> 00:33:46.480
+them the different things that
+are there, Because it lets
+
+710
+00:33:46.480 --> 00:33:49.720
+you read code fast because
+it has an individualizes. It
+
+711
+00:33:49.720 --> 00:33:51.880
+lets you write code. Cause
+it's got all sorts of
+
+712
+00:33:51.880 --> 00:33:55.360
+expansions and things, and then
+it's got ability to refactor
+
+713
+00:33:55.360 --> 00:33:57.340
+code. Right? The thing is
+though, Scott, I think if
+
+714
+00:33:57.340 --> 00:34:00.160
+you tell somebody these things,
+who's never used these things,
+
+715
+00:34:00.190 --> 00:34:02.680
+they are, their first thought
+is probably like, well, okay.
+
+716
+00:34:03.190 --> 00:34:05.560
+You know, I, how do
+I know I need those?
+
+717
+00:34:05.560 --> 00:34:07.330
+I probably don't need those
+things. Those aren't things I've
+
+718
+00:34:07.330 --> 00:34:10.810
+ever really realized I've needed.
+Right. It's it's that? So
+
+719
+00:34:10.810 --> 00:34:12.520
+that's one of the challenge.
+That's why a demo is
+
+720
+00:34:12.520 --> 00:34:17.380
+usually usually better. Okay. I'm
+just thinking about the idea
+
+721
+00:34:17.380 --> 00:34:20.680
+that, that, well, one of
+course, visual studio itself is
+
+722
+00:34:20.710 --> 00:34:23.080
+kind of always going to
+be nipping at your heels,
+
+723
+00:34:23.170 --> 00:34:25.150
+trying to do similar things
+when it comes to like
+
+724
+00:34:25.150 --> 00:34:30.280
+refactorings and stuff. Right. Although,
+you know, certainly slower and
+
+725
+00:34:30.320 --> 00:34:33.100
+I, that doesn't appear to
+be any danger for either
+
+726
+00:34:33.100 --> 00:34:37.600
+code rush or ReSharper, you
+know, not being useful in
+
+727
+00:34:37.600 --> 00:34:40.240
+the sense of you guys
+are so far ahead doing
+
+728
+00:34:40.240 --> 00:34:42.700
+stuff that's so out there,
+I don't, I don't see
+
+729
+00:34:42.700 --> 00:34:46.930
+visual studio eclipsing you guys
+in any in time soon.
+
+730
+00:34:47.530 --> 00:34:50.230
+I'm just trying to understand
+that. Like whenever at this
+
+731
+00:34:50.230 --> 00:34:51.910
+point, it's basically in the
+last couple of years, when
+
+732
+00:34:51.910 --> 00:34:53.560
+people say, well, should I
+use code Russia? Should I
+
+733
+00:34:53.560 --> 00:34:55.540
+use, are we sharp? I
+said, well, you know, try
+
+734
+00:34:55.540 --> 00:34:58.390
+them both watch the demos,
+watch the screen screencast. But
+
+735
+00:34:59.020 --> 00:35:03.350
+it seems that amongst kind
+of alpha geeks, you know,
+
+736
+00:35:03.350 --> 00:35:05.740
+the kind of the, the,
+the folks that really demand
+
+737
+00:35:05.860 --> 00:35:09.670
+performance from their system, everyone's
+using one of these tools
+
+738
+00:35:09.700 --> 00:35:12.460
+that I think it's become
+clear that the visual studio
+
+739
+00:35:12.460 --> 00:35:18.400
+editor by itself isn't enough
+to really do crazy stuff
+
+740
+00:35:18.400 --> 00:35:21.310
+with huge code bases. Yeah.
+I think that's true. I
+
+741
+00:35:21.310 --> 00:35:23.980
+think that there's, you know,
+there's, I mean, if you
+
+742
+00:35:23.980 --> 00:35:26.140
+think about, if you think
+about just the number of
+
+743
+00:35:26.140 --> 00:35:28.540
+Russia refactorings that are shipping
+with visual studio, it's like,
+
+744
+00:35:28.540 --> 00:35:31.420
+I think seven or maybe
+eight with C sharp and
+
+745
+00:35:31.420 --> 00:35:34.600
+one which has renamed with
+visual basic, there were factories
+
+746
+00:35:34.600 --> 00:35:37.620
+that we have are extremely
+useful. And once you get
+
+747
+00:35:37.620 --> 00:35:39.960
+a sense of what's there,
+you realize that there are
+
+748
+00:35:39.960 --> 00:35:42.060
+things that you do all
+the time and, and or
+
+749
+00:35:42.060 --> 00:35:44.160
+things that would be really
+nice that you could do
+
+750
+00:35:44.190 --> 00:35:47.640
+that. If you could do
+them with the equivalent energy
+
+751
+00:35:47.640 --> 00:35:51.390
+investment of a whim. Right.
+For, for, for example, you
+
+752
+00:35:51.390 --> 00:35:53.580
+know, sometimes I'm writing code
+and I'm working on and
+
+753
+00:35:53.580 --> 00:35:54.990
+I'm thinking, Oh, you know
+what, I want to, I
+
+754
+00:35:54.990 --> 00:35:56.370
+want to take this and
+I want to move this
+
+755
+00:35:56.370 --> 00:35:58.170
+over here. Or I want
+to extract this, or I
+
+756
+00:35:58.170 --> 00:36:01.320
+want to, let's take a
+look at this. And, and
+
+757
+00:36:01.620 --> 00:36:04.560
+without a tool that makes
+it easy, easy, easy to
+
+758
+00:36:04.560 --> 00:36:07.770
+do these things, to fix
+the code. What happens is
+
+759
+00:36:07.770 --> 00:36:12.390
+this design debt, this technical
+debt accumulates, and, and you,
+
+760
+00:36:13.080 --> 00:36:15.820
+you end up having code.
+That's not as clean and
+
+761
+00:36:15.870 --> 00:36:17.310
+doesn't give you as good
+of a feeling when you're
+
+762
+00:36:17.310 --> 00:36:21.000
+working with it. And so
+you really want subtle changes,
+
+763
+00:36:21.000 --> 00:36:25.500
+like refactorings to be effortless,
+effortless, effortless, to apply into
+
+764
+00:36:25.500 --> 00:36:28.650
+use. And, and, and, and
+once you start seeing these
+
+765
+00:36:28.650 --> 00:36:30.720
+refactorings and you see where
+they are, you realize that
+
+766
+00:36:30.750 --> 00:36:33.240
+yes, there are things you
+do all the time. You
+
+767
+00:36:33.240 --> 00:36:35.070
+just didn't realize that there
+was a tool out there
+
+768
+00:36:35.070 --> 00:36:37.980
+for doing those kinds of
+things. So, yes, even though
+
+769
+00:36:37.980 --> 00:36:40.710
+the alpha guys use it,
+it turns out that almost
+
+770
+00:36:40.710 --> 00:36:43.410
+all developers could benefit from,
+you know, the funk from
+
+771
+00:36:43.410 --> 00:36:46.980
+the functionality in tools like
+this. They can certainly work
+
+772
+00:36:46.980 --> 00:36:50.040
+faster. It's it's there, there
+is a learning curve that
+
+773
+00:36:50.040 --> 00:36:52.830
+that is, is there, but
+the, the learning curve is,
+
+774
+00:36:53.130 --> 00:36:55.680
+you know, I think bolts
+were sharper. And I know,
+
+775
+00:36:55.710 --> 00:36:57.600
+I know we certainly worked
+really hard to flatten that
+
+776
+00:36:57.600 --> 00:37:00.750
+out and to make it
+so that even, even programmers,
+
+777
+00:37:00.750 --> 00:37:02.610
+who've never seen a demo
+of code rush can go
+
+778
+00:37:02.610 --> 00:37:05.400
+in and get something from
+it within, you know, within
+
+779
+00:37:05.400 --> 00:37:08.040
+a small amount of time
+of small investment. So we
+
+780
+00:37:08.040 --> 00:37:10.580
+started getting that return on
+investment very quickly. That's cool.
+
+781
+00:37:10.580 --> 00:37:12.620
+Well, thanks a lot. I
+really appreciate it. Where can,
+
+782
+00:37:13.200 --> 00:37:15.260
+can people learn more about
+the architecture and what, what
+
+783
+00:37:15.260 --> 00:37:16.520
+you're doing? Like if, if
+you want, if people want
+
+784
+00:37:16.520 --> 00:37:18.980
+the technical details, they check
+your blog or they check
+
+785
+00:37:20.030 --> 00:37:23.030
+the Tim express blog. Cause
+I find this to be
+
+786
+00:37:23.030 --> 00:37:25.640
+the, kind of the most
+complicated and most interesting visual
+
+787
+00:37:25.640 --> 00:37:28.690
+studio plugin that I've, that
+I've ever seen. Well, you,
+
+788
+00:37:28.690 --> 00:37:32.570
+you can, you can find
+plugin tutorials actually on my
+
+789
+00:37:32.570 --> 00:37:38.450
+blog. So it's a dev
+express.com/blog/ Mark Miller, I think is
+
+790
+00:37:38.450 --> 00:37:41.060
+what it is. Maybe working
+on the show notes. Yeah.
+
+791
+00:37:41.060 --> 00:37:42.710
+We'll put that in the
+show notes. So whatever that
+
+792
+00:37:42.710 --> 00:37:46.160
+link is, and, and then
+also if you just search
+
+793
+00:37:46.160 --> 00:37:49.580
+for DX core, you can
+find out where to download
+
+794
+00:37:49.580 --> 00:37:52.310
+that. If you're in sin,
+writing plugins and, and learning
+
+795
+00:37:52.310 --> 00:37:54.800
+more about that. And we
+also have a forum, a
+
+796
+00:37:54.830 --> 00:37:57.890
+forum slash newsgroup where people
+can ask questions about building
+
+797
+00:37:57.890 --> 00:38:01.100
+plugins. And there's a lot
+of plugin authors out there
+
+798
+00:38:01.100 --> 00:38:03.740
+that are, that are more
+than happy to help out
+
+799
+00:38:03.740 --> 00:38:05.420
+new plugin authors in terms
+of what they want to
+
+800
+00:38:05.420 --> 00:38:07.910
+do. Cool. So that's, that's
+where they can learn more
+
+801
+00:38:07.910 --> 00:38:09.650
+about that. And then also,
+Oh, one other thing, Scott,
+
+802
+00:38:09.650 --> 00:38:12.770
+we should plug coders express
+because it's free and it's
+
+803
+00:38:12.770 --> 00:38:16.430
+a, alright, so it is
+free. It's a, it's free
+
+804
+00:38:16.430 --> 00:38:19.790
+and it's got a, I
+think something like 60 refactorings
+
+805
+00:38:19.790 --> 00:38:24.530
+in it, it's got something
+like 20 consume first declaration
+
+806
+00:38:24.530 --> 00:38:28.490
+features in it. It's got
+some cool navigation features, duplicate
+
+807
+00:38:28.490 --> 00:38:32.900
+lines, mother, other neat features
+inside of there. So, so
+
+808
+00:38:33.740 --> 00:38:36.970
+to look for a, you
+can code rush, express And
+
+809
+00:38:36.970 --> 00:38:39.130
+express is spelled without the
+first D it's just a
+
+810
+00:38:39.130 --> 00:38:41.830
+capital X and then press,
+or you can Google it
+
+811
+00:38:41.830 --> 00:38:45.520
+with bang or you can
+Google it with big. Thank
+
+812
+00:38:45.520 --> 00:38:47.470
+you for saying that. I
+have actually have that on
+
+813
+00:38:48.040 --> 00:38:50.200
+tape. I have you saying,
+is that helping you for
+
+814
+00:38:50.200 --> 00:38:55.660
+your review period, Scott, this
+year, I actually, somebody got
+
+815
+00:38:55.780 --> 00:38:58.060
+someone who was mad at
+me on Twitter a couple
+
+816
+00:38:58.060 --> 00:38:59.710
+of days out mad, but
+they were like, yeah, you've
+
+817
+00:38:59.710 --> 00:39:02.470
+been really using it. You've
+been even the pimping being
+
+818
+00:39:02.470 --> 00:39:06.460
+too much if someone was
+complaining because what basically a
+
+819
+00:39:06.460 --> 00:39:08.230
+month and a half ago,
+two months ago, I promised
+
+820
+00:39:08.230 --> 00:39:10.030
+that I would, I mean,
+I've been, I use Google
+
+821
+00:39:10.030 --> 00:39:12.130
+apps and I've been a
+Google user for a long
+
+822
+00:39:12.130 --> 00:39:15.040
+time, but I said, I'm
+going to use being for
+
+823
+00:39:15.040 --> 00:39:18.250
+a month and I'm gonna,
+you know, I'm gonna, you
+
+824
+00:39:18.250 --> 00:39:20.530
+know, I didn't say I
+was gonna blindly use it
+
+825
+00:39:20.530 --> 00:39:22.540
+as a, as a member
+of the big blue monster
+
+826
+00:39:22.540 --> 00:39:24.340
+and of the collective. But
+I said, I will try
+
+827
+00:39:24.340 --> 00:39:28.800
+being for one month and,
+you know, darn it, it's
+
+828
+00:39:28.810 --> 00:39:30.430
+working pretty well. I mean,
+they've had a number of
+
+829
+00:39:30.430 --> 00:39:33.250
+releases since then and the
+index is getting updated and
+
+830
+00:39:33.280 --> 00:39:37.810
+I find myself for searches
+specifically using Google, maybe two
+
+831
+00:39:37.810 --> 00:39:40.720
+out of 10 times. So
+being's getting maybe 80 plus
+
+832
+00:39:40.720 --> 00:39:42.570
+percent of the time for
+me. So plus I liked
+
+833
+00:39:42.570 --> 00:39:45.220
+the pictures and I liked
+the, the news and the
+
+834
+00:39:45.220 --> 00:39:48.550
+images search. So I'm using,
+being for my homepage on
+
+835
+00:39:48.550 --> 00:39:51.310
+a number of my machines.
+Interesting. Yeah. So I like
+
+836
+00:39:51.310 --> 00:39:53.320
+the pictures too. I've only
+tried it a few times,
+
+837
+00:39:53.320 --> 00:39:55.990
+but I was in my
+mind while you're seeing this,
+
+838
+00:39:55.990 --> 00:39:58.690
+I'm thinking, well, you know,
+if you Google for great
+
+839
+00:39:58.690 --> 00:40:02.170
+UI, you get my blog.
+Posts is like number one
+
+840
+00:40:02.170 --> 00:40:05.080
+or two on Google. Great.
+But if you, you a
+
+841
+00:40:05.620 --> 00:40:07.780
+great UI, but if you
+bring it, I'm like number
+
+842
+00:40:07.780 --> 00:40:12.460
+eight down there. And so
+unlike I'm like, come on,
+
+843
+00:40:12.820 --> 00:40:15.040
+guys, give me, pop me
+up there. Somebody, I don't
+
+844
+00:40:15.040 --> 00:40:16.900
+know. I haven't quite figured
+out what the secret is.
+
+845
+00:40:17.410 --> 00:40:19.720
+It's like Google bombing. When
+you have somebody linked to
+
+846
+00:40:19.720 --> 00:40:21.430
+it, you need to get
+your friends and then you
+
+847
+00:40:21.430 --> 00:40:23.110
+need to bang bomb yourself.
+You need to have a
+
+848
+00:40:23.110 --> 00:40:27.190
+lot of people link to
+you with that word. There's
+
+849
+00:40:27.190 --> 00:40:29.040
+a Bing bomb out there.
+Huh? Well, he ever done
+
+850
+00:40:29.050 --> 00:40:32.080
+a Google bomb. You know,
+I've never done it, but
+
+851
+00:40:32.080 --> 00:40:34.320
+I've, I think you showed
+me one of the best
+
+852
+00:40:34.340 --> 00:40:36.490
+Google bomb is you go
+to Google and you type
+
+853
+00:40:36.490 --> 00:40:40.750
+in French military victories. Yes.
+And then you hit, I'm
+
+854
+00:40:40.750 --> 00:40:43.330
+feeling lucky. And then Google
+says, did you mean French
+
+855
+00:40:43.330 --> 00:40:46.420
+military defeats? And it's all
+a, it's all really true.
+
+856
+00:40:46.420 --> 00:40:49.210
+It's all a lie where
+someone got enough people to
+
+857
+00:40:49.210 --> 00:40:53.680
+point to this other site.
+So yeah, being, being Bollinger,
+
+858
+00:40:53.680 --> 00:40:55.510
+Google bombing is when you
+have a lot of people
+
+859
+00:40:55.510 --> 00:40:57.970
+linked to a term so
+that the, you basically fool
+
+860
+00:40:57.970 --> 00:41:01.420
+Google into thinking that the
+internet thinks something about a
+
+861
+00:41:01.420 --> 00:41:05.620
+certain topic is relevant and
+apparently great UI being thinks
+
+862
+00:41:05.620 --> 00:41:11.020
+your eighth. Yeah. Which is
+very sad. So anyway, well,
+
+863
+00:41:11.020 --> 00:41:13.360
+thanks for taking the time
+to switch over. Hey, you're
+
+864
+00:41:13.360 --> 00:41:15.550
+welcome, Scott. It has been
+fun. This has been another
+
+865
+00:41:15.550 --> 00:41:25.020
+episode of Hanselminutes and we'll
+see you again. <inaudible>.
+

@@ -1,0 +1,3176 @@
+WEBVTT FILE
+
+1
+00:00:12.090 --> 00:00:17.430
+From Hansel minutes.com it's Hansel
+minutes, a weekly discussion with
+
+2
+00:00:17.430 --> 00:00:21.900
+web developer and technologists and
+Scott Hanselman posted by Carl Franklin.
+
+3
+00:00:23.070 --> 00:00:27.210
+This is Lauren's Ryan announcing
+show number one 21 recorded
+
+4
+00:00:27.210 --> 00:00:33.990
+live Tuesday, July 8th, 2008. Support for
+Hanselman is provided by Tellerik
+
+5
+00:00:34.080 --> 00:00:37.830
+rad controls, the most comprehensive
+suite of components for windows
+
+6
+00:00:37.830 --> 00:00:47.580
+forms and asp.net web applications.
+online@wwwdottelerik.com. Support is also provided
+
+7
+00:00:47.580 --> 00:00:52.920
+by.net developers journal. The world's
+leading.net developer magazine online at
+
+8
+00:00:53.130 --> 00:00:58.710
+www dot <inaudible> dot com.
+In this episode, Scott talks
+
+9
+00:00:58.710 --> 00:01:03.030
+to architect Rick Barraza and
+developer Brian Profoto about porting
+
+10
+00:01:03.030 --> 00:01:10.080
+a flash game to Silverlight.
+Hi, this is Scott Hanselman,
+
+11
+00:01:10.080 --> 00:01:12.300
+and this is another episode
+of Hansel minutes. And I'm
+
+12
+00:01:12.300 --> 00:01:16.560
+sitting down today with the
+authors of line writer. Line
+
+13
+00:01:16.560 --> 00:01:19.170
+writer was a physics internet
+toy that came out in
+
+14
+00:01:19.170 --> 00:01:23.240
+2006. And it has recently
+been ported from flash to
+
+15
+00:01:23.800 --> 00:01:28.170
+Silverlight to sitting down today
+with Brian Perfetto, from exile
+
+16
+00:01:28.200 --> 00:01:31.170
+and Rick Barraza from synergy.
+Thanks guys for taking the
+
+17
+00:01:31.170 --> 00:01:36.120
+time to talk to me
+today. So this was a
+
+18
+00:01:36.120 --> 00:01:40.410
+really popular internet kind of
+flash game. And I think
+
+19
+00:01:40.410 --> 00:01:43.050
+that a flash in game
+or two words that go
+
+20
+00:01:43.050 --> 00:01:46.290
+together, you know, just like
+Apple pie. I mean, people
+
+21
+00:01:46.290 --> 00:01:48.720
+always say, Oh, it's a
+flash game, but you have
+
+22
+00:01:48.720 --> 00:01:51.960
+poured it over to us
+to Silverlight to that's correct.
+
+23
+00:01:52.050 --> 00:01:56.310
+That's correct. Is that, is
+that a, was that because
+
+24
+00:01:56.520 --> 00:01:58.710
+did Microsoft come calling and
+say, we really want you
+
+25
+00:01:58.710 --> 00:02:00.810
+to move this? Or was
+there no. What was it
+
+26
+00:02:00.810 --> 00:02:02.700
+that was so compelling about
+several light, two that you
+
+27
+00:02:02.700 --> 00:02:06.120
+would literally rewrite a popular
+application, like line writer, a
+
+28
+00:02:06.120 --> 00:02:10.000
+firm from scratch? Well, I
+think the, the main reason
+
+29
+00:02:10.010 --> 00:02:13.100
+was, was the performance. And
+I know, you know, Silverlight
+
+30
+00:02:13.100 --> 00:02:16.130
+is just, just bounds and
+leaps, you know, leaps and
+
+31
+00:02:16.130 --> 00:02:19.910
+bounds faster than, than flashes.
+So performance wise with people
+
+32
+00:02:19.910 --> 00:02:22.040
+that make tracks that are
+thousands and thousands of lines
+
+33
+00:02:22.040 --> 00:02:25.280
+long, we're able to get
+much better performance. We're also
+
+34
+00:02:25.280 --> 00:02:29.900
+able to do things like
+the MSN messaging, music downloading
+
+35
+00:02:29.900 --> 00:02:31.760
+and playing while you're, while
+you're making the tracks that
+
+36
+00:02:31.760 --> 00:02:34.760
+you just couldn't do in
+flash. And that was kind
+
+37
+00:02:34.760 --> 00:02:37.220
+of a throwaway statement, but
+I think it's pretty powerful.
+
+38
+00:02:37.220 --> 00:02:38.990
+We should back up and,
+and talk about that for
+
+39
+00:02:38.990 --> 00:02:41.690
+a second. You said that
+performance in several ideas is
+
+40
+00:02:41.690 --> 00:02:45.770
+leaps and bounds over, over
+flash and you, and you
+
+41
+00:02:45.770 --> 00:02:48.710
+are both Brian, you're a
+flash and a Silverlight developer.
+
+42
+00:02:49.790 --> 00:02:51.830
+This is actually my first
+software project that I've done.
+
+43
+00:02:51.830 --> 00:02:53.540
+And I'm not too experienced
+with flash to tell you
+
+44
+00:02:53.540 --> 00:02:56.330
+the truth, but just from
+seeing the demos that Microsoft
+
+45
+00:02:56.330 --> 00:02:59.440
+came at, you know, we
+had David Chad who came
+
+46
+00:02:59.440 --> 00:03:01.330
+in and showed us the
+demos of the stuff of
+
+47
+00:03:01.410 --> 00:03:04.150
+whatever, like can actually do.
+One of the things that
+
+48
+00:03:04.150 --> 00:03:05.770
+sticks out in my mind
+is a chess program that
+
+49
+00:03:05.770 --> 00:03:08.230
+he, that he showed us
+that could do, you know,
+
+50
+00:03:08.230 --> 00:03:13.210
+millions and millions of times
+calculations, faster and deeper trees
+
+51
+00:03:13.210 --> 00:03:15.670
+to figure out chess moves
+and the flash version of,
+
+52
+00:03:15.700 --> 00:03:20.970
+you know, the same exact
+code Compiled as opposed to
+
+53
+00:03:20.970 --> 00:03:23.460
+being interpreted. Yeah, exactly. You
+know, you actually have a
+
+54
+00:03:23.460 --> 00:03:25.890
+real backend code base. You
+have the.net framework and you
+
+55
+00:03:25.890 --> 00:03:28.890
+have C-sharp as opposed to,
+you know, action script, which
+
+56
+00:03:28.930 --> 00:03:33.060
+is not as fast. Clearly.
+I, I would think I'd
+
+57
+00:03:33.060 --> 00:03:35.040
+like to answer it there.
+Cause at synergy, we actually
+
+58
+00:03:35.040 --> 00:03:38.100
+do a lot of flash
+and flex as well as
+
+59
+00:03:38.100 --> 00:03:40.980
+Silverlight and WPF. And I've
+spent quite a bit of
+
+60
+00:03:40.980 --> 00:03:43.500
+time and I come from,
+from a flash background too.
+
+61
+00:03:43.500 --> 00:03:46.050
+And I'd probably want to
+qualify that just a little
+
+62
+00:03:46.050 --> 00:03:52.200
+bit by saying that it's
+easier to write that flash,
+
+63
+00:03:52.470 --> 00:03:55.770
+especially if we're coming from
+action script one action. It's
+
+64
+00:03:55.770 --> 00:03:58.950
+a lot easier for people
+to start playing in this
+
+65
+00:03:58.950 --> 00:04:03.540
+professional environment when they're really
+not qualified. If people are,
+
+66
+00:04:03.540 --> 00:04:05.660
+don't have the training that
+you find a lot in,
+
+67
+00:04:05.660 --> 00:04:08.160
+in the Microsoft developer center,
+because the barrier of entry
+
+68
+00:04:08.160 --> 00:04:13.140
+is a bit higher. And
+so I think, cause I've
+
+69
+00:04:13.140 --> 00:04:15.210
+seen and, and, and we've,
+we've written and, and we've
+
+70
+00:04:15.210 --> 00:04:19.230
+seen, and I've experienced very,
+very powerful flash games as
+
+71
+00:04:19.230 --> 00:04:22.770
+well, this particular game, because
+we're doing a lot of
+
+72
+00:04:22.770 --> 00:04:26.040
+relay integration with the physics
+and, and just the nature
+
+73
+00:04:26.040 --> 00:04:29.340
+of it. And the algorithms
+Silverlight was a good fit
+
+74
+00:04:29.610 --> 00:04:31.890
+for this type of problem
+in that when you are
+
+75
+00:04:31.890 --> 00:04:36.870
+dealing with these types of
+complexities and you want to
+
+76
+00:04:36.870 --> 00:04:39.270
+lean on that type of
+environment, you definitely have a
+
+77
+00:04:39.270 --> 00:04:42.900
+lot more support in the
+Microsoft developer community, because there
+
+78
+00:04:42.900 --> 00:04:44.760
+are developers who are used
+to eating these types of
+
+79
+00:04:44.760 --> 00:04:47.070
+algorithms for breakfast. And if
+you will also, so they
+
+80
+00:04:47.070 --> 00:04:49.620
+really care about it. Whereas
+you go to flash since
+
+81
+00:04:49.620 --> 00:04:51.630
+it covers such a broad
+audience, and there's so many
+
+82
+00:04:51.630 --> 00:04:54.990
+different types of people developing
+flash, you, you do get,
+
+83
+00:04:55.680 --> 00:04:57.730
+you do see a lot
+of bad flash, but, but
+
+84
+00:04:57.750 --> 00:05:00.720
+I did just want to
+defend that there is actually
+
+85
+00:05:00.720 --> 00:05:03.540
+good flash out there. Very
+powerful flash as well for
+
+86
+00:05:03.540 --> 00:05:06.270
+this game though. Silverlight was
+a good choice. I've seen
+
+87
+00:05:06.270 --> 00:05:10.710
+a lot of really amazing
+flex applications that are doing
+
+88
+00:05:10.710 --> 00:05:13.770
+a lot of pretty, pretty
+powerful stuff. Yeah. But I
+
+89
+00:05:13.770 --> 00:05:17.010
+think that your point about
+this particular application, because line
+
+90
+00:05:17.010 --> 00:05:20.640
+writer is an application where
+people basically paint on the
+
+91
+00:05:20.640 --> 00:05:23.430
+screen, they draw lines and
+then they release this little
+
+92
+00:05:23.430 --> 00:05:27.880
+man, this little man named
+Bosch who rides on a
+
+93
+00:05:27.880 --> 00:05:34.440
+little sled flash version, you
+would draw these lines and
+
+94
+00:05:34.440 --> 00:05:36.420
+it's keeping track of how
+many lines there are. And
+
+95
+00:05:36.810 --> 00:05:39.840
+once you get over a
+couple, several hundred lines, you
+
+96
+00:05:39.840 --> 00:05:42.390
+know, you're, you're starting to
+do a lot of computational
+
+97
+00:05:42.390 --> 00:05:46.440
+computationally intensive work because you
+have basically a physics engine
+
+98
+00:05:46.440 --> 00:05:50.280
+you wrote, you wrote in
+inaction script. But now as
+
+99
+00:05:50.280 --> 00:05:53.010
+I understand it you've poured
+it you've created a complex
+
+100
+00:05:53.010 --> 00:05:57.530
+physics engine that's entirely in
+managed code. Yeah. And you
+
+101
+00:05:57.530 --> 00:05:59.810
+know, I wasn't Trying to
+bash flash or anything as
+
+102
+00:05:59.810 --> 00:06:02.960
+far as performance goes, but
+it definitely having that entire,
+
+103
+00:06:02.990 --> 00:06:06.710
+you know, real programming language
+backend and having the.net framework,
+
+104
+00:06:06.710 --> 00:06:08.300
+you know, and, and like
+you said, it's compiled it
+
+105
+00:06:08.300 --> 00:06:11.480
+doesn't, you know, you get
+so much more, you get
+
+106
+00:06:11.720 --> 00:06:14.360
+such a better benefit than
+you would as if you
+
+107
+00:06:14.360 --> 00:06:17.440
+wrote it in straight action
+script. Yeah, absolutely. I do
+
+108
+00:06:17.440 --> 00:06:20.680
+agree with that. I definitely
+when, when, when someone sits
+
+109
+00:06:20.680 --> 00:06:22.510
+down and does a show
+like we're doing right now,
+
+110
+00:06:22.510 --> 00:06:27.040
+that is, you know, here
+is someone who's, don't feel
+
+111
+00:06:27.040 --> 00:06:30.010
+like you have to apologize
+because you know, flashes are
+
+112
+00:06:30.010 --> 00:06:32.920
+really good technology service. That's
+a really good technology, but
+
+113
+00:06:33.460 --> 00:06:36.100
+you know, there are things
+that some do better than
+
+114
+00:06:36.100 --> 00:06:38.260
+the others. And I think
+that, you know, we're going
+
+115
+00:06:38.260 --> 00:06:40.210
+to get letters, we're going
+to get emails. People say
+
+116
+00:06:40.360 --> 00:06:42.160
+I did this in flash
+and it was awesome. And
+
+117
+00:06:42.160 --> 00:06:46.030
+you're, you're fully yourself. Cause
+I wanted to find out
+
+118
+00:06:46.030 --> 00:06:49.000
+what, what was it about
+Silverlight in this particular instance
+
+119
+00:06:49.090 --> 00:06:52.630
+that made line writer want
+to switch over? Cause it's
+
+120
+00:06:52.630 --> 00:06:54.310
+a pretty big deal to
+say, you know, we're going
+
+121
+00:06:54.310 --> 00:06:55.840
+to jump ship and we're
+going to jump to a
+
+122
+00:06:55.840 --> 00:06:59.440
+different engine. So there were,
+like you said, there's the
+
+123
+00:06:59.440 --> 00:07:04.600
+physics engine. And then what
+are some other features that
+
+124
+00:07:04.600 --> 00:07:07.960
+you really wanted that you
+couldn't do in flash that
+
+125
+00:07:07.960 --> 00:07:10.800
+you wanted when you moved
+over to silver light? Well,
+
+126
+00:07:10.870 --> 00:07:12.400
+one of the cool things
+that you can do in
+
+127
+00:07:12.400 --> 00:07:16.330
+the silver version is it's
+actually got MSN messenger integration,
+
+128
+00:07:16.360 --> 00:07:18.940
+which of course is not,
+not available in actual script
+
+129
+00:07:18.940 --> 00:07:21.490
+or flash. And what that
+allows us to do is
+
+130
+00:07:21.850 --> 00:07:23.940
+you can create a track.
+You can, you know, you
+
+131
+00:07:23.940 --> 00:07:25.810
+know, make the best track
+you've ever made and send
+
+132
+00:07:25.810 --> 00:07:28.450
+it to your friend through
+MSN messenger and say, here,
+
+133
+00:07:28.450 --> 00:07:30.670
+look at this track and
+tell me, you know, tell
+
+134
+00:07:30.670 --> 00:07:31.900
+me how awesome it is
+or tell me how cool
+
+135
+00:07:31.900 --> 00:07:34.420
+it is. And it just
+wasn't possible in flash and
+
+136
+00:07:34.420 --> 00:07:38.890
+action script Libraries that Microsoft
+has on how to integrate
+
+137
+00:07:39.370 --> 00:07:43.330
+with It's part of, I
+mean, it's a, I think
+
+138
+00:07:43.330 --> 00:07:44.560
+Rick can touch on it
+a little more. Cause that
+
+139
+00:07:44.560 --> 00:07:47.480
+was more of the synergy.
+I'm a part of other
+
+140
+00:07:47.480 --> 00:07:50.860
+developer process, but I'm pretty
+sure correct me if I'm
+
+141
+00:07:50.860 --> 00:07:53.110
+wrong, Rick, but that's just
+part of Silverlight, you know,
+
+142
+00:07:53.110 --> 00:07:55.270
+base base code. It's just
+an API that you can
+
+143
+00:07:55.270 --> 00:07:59.470
+add onto to interface with
+MSN messenger. It definitely is
+
+144
+00:07:59.470 --> 00:08:02.440
+one of the advantages. One
+of the things we're excited
+
+145
+00:08:02.440 --> 00:08:05.710
+about it and Silverlight, and
+one of the reasons why,
+
+146
+00:08:05.980 --> 00:08:08.050
+but for this project, Silverlight
+what is the right choices
+
+147
+00:08:08.950 --> 00:08:13.270
+since they're both Microsoft properties
+and of course they're designed
+
+148
+00:08:13.270 --> 00:08:17.230
+to work well together. Like
+the Adobe properties will, but
+
+149
+00:08:17.230 --> 00:08:19.360
+if we want MSN messenger
+and we wanted to integrate
+
+150
+00:08:19.360 --> 00:08:23.650
+it inside of the rich
+experience, then silver light too,
+
+151
+00:08:24.130 --> 00:08:27.370
+was a very strong choice
+for that because that's a
+
+152
+00:08:27.370 --> 00:08:29.080
+lot of the push that's
+going forward. So we were
+
+153
+00:08:29.080 --> 00:08:32.800
+able to integrate from Silverlight
+within the game to bring
+
+154
+00:08:32.800 --> 00:08:36.040
+in your messenger contacts, to
+sign in directly, to send
+
+155
+00:08:36.040 --> 00:08:40.200
+messages and receive messages as
+well as game information. And,
+
+156
+00:08:40.200 --> 00:08:43.540
+and just as a reminder,
+this was ported over and
+
+157
+00:08:43.540 --> 00:08:47.050
+the interface was built in,
+in a relatively very short
+
+158
+00:08:47.050 --> 00:08:50.260
+period of time. And that
+was only possible because of
+
+159
+00:08:50.470 --> 00:08:54.700
+how closely integrated Silverlight and
+the messenger and the live
+
+160
+00:08:55.860 --> 00:08:59.940
+API work together. <inaudible>. Now
+I know that they're there,
+
+161
+00:08:59.960 --> 00:09:01.730
+you know, the silver lights
+of beta technology, and there
+
+162
+00:09:01.730 --> 00:09:05.210
+are definitely places where silver
+light, you know, falls short.
+
+163
+00:09:05.840 --> 00:09:08.570
+I understand that there are
+places in Silverlight where you
+
+164
+00:09:08.570 --> 00:09:10.850
+get, you know, the library
+support isn't there because you
+
+165
+00:09:10.850 --> 00:09:14.900
+don't have the full base
+class library underneath you, but
+
+166
+00:09:14.930 --> 00:09:17.150
+that you could potentially pull
+in different libraries. You could
+
+167
+00:09:17.150 --> 00:09:20.720
+pull in JavaScript, you could
+pull in, you know, we
+
+168
+00:09:20.720 --> 00:09:22.850
+could talk to HTML. How
+many times did you have
+
+169
+00:09:22.850 --> 00:09:25.160
+to say, well, we need
+to stop working Silverlight and
+
+170
+00:09:25.160 --> 00:09:27.110
+we're going to, you call
+out to some JavaScript library
+
+171
+00:09:27.110 --> 00:09:30.890
+and then jump back in
+There. There was a spot
+
+172
+00:09:30.950 --> 00:09:34.010
+when we were sending information
+back again, since this was
+
+173
+00:09:34.010 --> 00:09:36.920
+a, a game port and
+we're building off of a
+
+174
+00:09:36.920 --> 00:09:39.410
+lot of the great work
+and Excel already had with
+
+175
+00:09:39.410 --> 00:09:44.060
+the flash game, with the
+flash client, addressing data pages
+
+176
+00:09:44.060 --> 00:09:52.190
+on the server side, there's
+there's certain data interfaces that
+
+177
+00:09:52.190 --> 00:09:54.530
+required that aren't currently there
+in Silverlight because it was
+
+178
+00:09:54.530 --> 00:09:59.240
+a beta. So there was
+certain types of encoding that
+
+179
+00:09:59.240 --> 00:10:03.470
+we needed to do through
+the Java three JavaScript, but
+
+180
+00:10:03.530 --> 00:10:06.050
+we, we found the support
+to be there. The good
+
+181
+00:10:06.050 --> 00:10:09.200
+thing is that these, these
+are known issues. So we'd
+
+182
+00:10:09.200 --> 00:10:11.840
+raise them up as we
+had, we get some, and
+
+183
+00:10:11.900 --> 00:10:14.510
+we had a lot of
+very good support from Microsoft
+
+184
+00:10:14.870 --> 00:10:18.260
+and a lot of the
+community Jose of who isn't
+
+185
+00:10:18.260 --> 00:10:20.600
+on the call today, but
+he's down from Australia, he's
+
+186
+00:10:20.600 --> 00:10:24.680
+working closely with Microsoft in
+Australia, specifically with this messenger
+
+187
+00:10:24.920 --> 00:10:27.170
+and a lot of these
+encoding issues where we're really
+
+188
+00:10:27.380 --> 00:10:30.230
+working on that edge, where
+Silverlight to is still in
+
+189
+00:10:30.230 --> 00:10:33.080
+beta. The features are there,
+but they're not feature complete
+
+190
+00:10:33.080 --> 00:10:35.240
+yet, or they're still getting
+developed. So you ran into
+
+191
+00:10:35.240 --> 00:10:37.850
+a couple of those on
+this project. And those were
+
+192
+00:10:37.850 --> 00:10:40.580
+definitely interesting times to, to
+be working under such a
+
+193
+00:10:40.580 --> 00:10:44.990
+quick, quick deadline That was
+Jose for, from synergy also
+
+194
+00:10:45.020 --> 00:10:49.340
+that you were referring to.
+Yes, yes. Now, now, now
+
+195
+00:10:49.340 --> 00:10:52.730
+Rick, you did, you know,
+the UI designs. So you,
+
+196
+00:10:52.760 --> 00:10:54.320
+did you do this in
+blend or where did you
+
+197
+00:10:54.320 --> 00:11:01.910
+design the, the overall user
+interface? My, my methodology in,
+
+198
+00:11:02.000 --> 00:11:06.080
+in Silverlight is, is similar
+to how I would do
+
+199
+00:11:06.080 --> 00:11:08.420
+the exact same work in
+flash or flex, where I
+
+200
+00:11:08.420 --> 00:11:10.910
+usually do a lot of
+my comps in Photoshop. And
+
+201
+00:11:10.910 --> 00:11:14.120
+that's more of probably a
+designer preference of what I'm
+
+202
+00:11:14.120 --> 00:11:16.100
+here with the clients. So
+I came up and I
+
+203
+00:11:16.100 --> 00:11:18.690
+met with Brian and David Haley
+and a lot of the
+
+204
+00:11:18.710 --> 00:11:21.230
+other great guys here at
+an exile. And we, we
+
+205
+00:11:21.230 --> 00:11:23.300
+sketch stuff out. We talked
+about what we wanted the
+
+206
+00:11:23.300 --> 00:11:26.030
+experience to be. I was
+able to quickly do some
+
+207
+00:11:26.030 --> 00:11:29.480
+static comps in Photoshop. Cause
+I really wanted to, to
+
+208
+00:11:29.480 --> 00:11:31.460
+focus on kind of the
+look at a very blue
+
+209
+00:11:31.460 --> 00:11:34.610
+sky level, but they wanted
+it to do once we
+
+210
+00:11:34.610 --> 00:11:38.570
+go from the photo from
+the Photoshop comps, I personally
+
+211
+00:11:39.080 --> 00:11:42.170
+start developing right off the
+bat with visual studio and
+
+212
+00:11:42.170 --> 00:11:44.960
+blend both open up the
+same time. I like writing
+
+213
+00:11:44.960 --> 00:11:48.140
+XAML by hand so I
+can block out a lot
+
+214
+00:11:48.140 --> 00:11:51.980
+of things by hand, bring
+in PNGs when needed as
+
+215
+00:11:51.980 --> 00:11:56.530
+placeholders in blend and also
+visual studio. The, the DPI
+
+216
+00:11:56.530 --> 00:12:00.370
+issue is an issue because
+of silver lighter and, and
+
+217
+00:12:00.370 --> 00:12:04.420
+windows in general, one in
+96, DPI and Photoshop automatically
+
+218
+00:12:04.420 --> 00:12:07.690
+saving for web at 72
+DPI. So, so that caused
+
+219
+00:12:07.690 --> 00:12:09.340
+a bit of a headache
+from time to time in
+
+220
+00:12:09.340 --> 00:12:12.010
+the process. But, but that's
+usually how we go. Once,
+
+221
+00:12:12.010 --> 00:12:15.670
+once we go from static
+Photoshop comps, we start building
+
+222
+00:12:15.670 --> 00:12:20.550
+out interactive skeletons with visual
+studio and blend simultaneously. Do
+
+223
+00:12:20.550 --> 00:12:22.260
+you know how to make
+the possible out of the
+
+224
+00:12:22.260 --> 00:12:25.710
+impossible? Well, the dotnet ninjas
+at Telerik do they just
+
+225
+00:12:25.710 --> 00:12:28.110
+released a huge pack of
+web controls, all built on
+
+226
+00:12:28.110 --> 00:12:31.110
+top of ASP done at
+Ajax. That'll help you build
+
+227
+00:12:31.110 --> 00:12:33.990
+impossibly fast and interactive applications
+in no time at all.
+
+228
+00:12:34.890 --> 00:12:38.910
+They've made the impossible possible
+in desktop development. If you
+
+229
+00:12:38.910 --> 00:12:41.310
+think you can't have a
+carousel component and wind forms,
+
+230
+00:12:41.310 --> 00:12:44.640
+well you can. They're windows
+form suite features a super
+
+231
+00:12:44.640 --> 00:12:47.850
+powerful grid view control and
+32 other crazy desktop components.
+
+232
+00:12:47.850 --> 00:12:51.510
+That'll give you a dazzling
+WPF like features, but in
+
+233
+00:12:51.510 --> 00:12:54.450
+wind forms, they do the
+same thing in reporting solutions
+
+234
+00:12:54.450 --> 00:12:56.640
+with a new design surface,
+like nothing else looks just
+
+235
+00:12:56.640 --> 00:13:01.200
+like graph paper, cause you
+advanced page layout capabilities makes
+
+236
+00:13:01.200 --> 00:13:03.150
+it feel more like a
+graphic design software than a
+
+237
+00:13:03.150 --> 00:13:06.990
+reporting solution. Go check them
+out@telerik.com and be a dotnet
+
+238
+00:13:06.990 --> 00:13:09.930
+Ninja. And thanks for listening.
+And how long did it
+
+239
+00:13:09.930 --> 00:13:12.810
+take you to get used
+to XAML? Cause you know,
+
+240
+00:13:12.810 --> 00:13:16.560
+we had some XAML guys
+on last week from contango
+
+241
+00:13:16.560 --> 00:13:19.980
+and when, when they found
+the limitation of the tool,
+
+242
+00:13:19.980 --> 00:13:23.730
+they immediately dropped down into
+basically notepad as well. I'm
+
+243
+00:13:23.730 --> 00:13:25.950
+hearing that over and over
+that if you really want
+
+244
+00:13:25.950 --> 00:13:32.700
+to exploit XAML, you need
+to understand it Since I'm
+
+245
+00:13:32.700 --> 00:13:35.430
+very comfortable being a developer.
+And we also we've been
+
+246
+00:13:35.430 --> 00:13:39.240
+working with silver light from
+the beginning and we were
+
+247
+00:13:39.330 --> 00:13:42.660
+in the fist pop the
+regional and national design challenge.
+
+248
+00:13:42.690 --> 00:13:44.580
+So, so we've been in
+a lot of situations where
+
+249
+00:13:44.580 --> 00:13:47.340
+we've already needed to be
+living and breathing XAML for
+
+250
+00:13:47.340 --> 00:13:49.350
+quite some time. So when
+we started the, an exile
+
+251
+00:13:49.350 --> 00:13:55.500
+project, I'm kind of already
+at that point, professionally aware
+
+252
+00:13:55.500 --> 00:13:58.440
+where XAML isn't anything new
+to me anymore. So I
+
+253
+00:13:58.440 --> 00:14:01.140
+feel very comfortable writing it
+by hand working with it
+
+254
+00:14:01.140 --> 00:14:04.470
+in blend, but, but usually
+most of the time just
+
+255
+00:14:04.470 --> 00:14:08.700
+going straight in visual studio.
+And was there anything about
+
+256
+00:14:08.700 --> 00:14:11.970
+server lights that, that just
+didn't work? Is there anything
+
+257
+00:14:11.970 --> 00:14:14.310
+you dislike about it? Cause
+you know, I've done a
+
+258
+00:14:14.310 --> 00:14:16.950
+couple of server light applications.
+I think I'm more of
+
+259
+00:14:16.950 --> 00:14:20.700
+a WPF person and you
+know, it's a beta technology,
+
+260
+00:14:20.760 --> 00:14:24.600
+but you know what, what's
+bad about it. Everyone says
+
+261
+00:14:24.630 --> 00:14:27.300
+things that are glowing, but
+I'm trying to understand surely
+
+262
+00:14:27.300 --> 00:14:30.300
+it must fall down in
+some way. Brian, do you
+
+263
+00:14:30.300 --> 00:14:32.190
+want to, do you want
+to give your impression? Yeah.
+
+264
+00:14:32.700 --> 00:14:35.100
+You know, as far as
+far as this game was
+
+265
+00:14:35.100 --> 00:14:37.770
+concerned and I can't speak
+for other Silverlight experiences, but
+
+266
+00:14:38.070 --> 00:14:40.380
+since this is such a
+simple game and you know,
+
+267
+00:14:40.380 --> 00:14:43.830
+it was created basically with,
+you know, the object oriented
+
+268
+00:14:43.860 --> 00:14:47.880
+mindset in the actual ship
+code already in place, putting
+
+269
+00:14:47.880 --> 00:14:50.190
+up to Silverlight, you know,
+to see C sharp from
+
+270
+00:14:50.190 --> 00:14:53.480
+actual script was there's really
+no problem with that. I
+
+271
+00:14:53.480 --> 00:14:57.110
+mean, as far as the
+Silverlight is concerned, you know,
+
+272
+00:14:57.170 --> 00:14:59.630
+coming from Asher script, it
+was really easy. There's no,
+
+273
+00:14:59.780 --> 00:15:01.640
+there wasn't really anything that
+I fell down on as
+
+274
+00:15:01.640 --> 00:15:05.480
+far as the game game
+side was concerned. Now I
+
+275
+00:15:05.480 --> 00:15:07.910
+know maybe we had a
+few problems, like, like, you
+
+276
+00:15:07.910 --> 00:15:10.640
+know, Rick is already touched
+on as far as stuff,
+
+277
+00:15:10.640 --> 00:15:14.870
+not being, being there. Cause
+it's the beta version or
+
+278
+00:15:14.870 --> 00:15:21.370
+you know, not fully. Yeah,
+exactly. But as far as
+
+279
+00:15:21.370 --> 00:15:23.980
+the actual, you know, the
+straight game code, it was
+
+280
+00:15:23.980 --> 00:15:25.600
+there's really nothing that it
+didn't do. It was an
+
+281
+00:15:25.630 --> 00:15:28.240
+easy port and it was
+pointing up from actual script.
+
+282
+00:15:28.240 --> 00:15:32.710
+So it was an easy
+street and easy process. Okay.
+
+283
+00:15:34.030 --> 00:15:36.670
+From the user experience side,
+I think it kind of
+
+284
+00:15:36.670 --> 00:15:40.480
+breaks down into two primary
+camps, one, one being a
+
+285
+00:15:40.480 --> 00:15:44.050
+paradigm of what these experiences
+and what tools need to
+
+286
+00:15:44.050 --> 00:15:46.510
+do to develop it. And
+then the other one actually
+
+287
+00:15:46.510 --> 00:15:51.250
+just being the implementation of
+it, where a Silverlight with,
+
+288
+00:15:51.310 --> 00:15:54.340
+with the XAML, with the
+code behind it and having
+
+289
+00:15:54.340 --> 00:15:57.190
+that distinction there and having
+these two different applications, open
+
+290
+00:15:57.190 --> 00:16:00.580
+up visual studio and blend
+it if you really want
+
+291
+00:16:00.580 --> 00:16:03.040
+to be serious with it.
+Cause, cause if you're doing
+
+292
+00:16:03.040 --> 00:16:05.260
+any type of developing in
+itself, blend, as it currently
+
+293
+00:16:05.260 --> 00:16:08.410
+exists where you're, it's really
+just your XAML editor, but
+
+294
+00:16:08.410 --> 00:16:11.080
+then you want to be
+doing the code. You switch
+
+295
+00:16:11.090 --> 00:16:16.510
+over to visual studio, 2008,
+the, the, the visualizer inside
+
+296
+00:16:16.510 --> 00:16:19.240
+visual studio, 2008, I never
+used it myself. I opened
+
+297
+00:16:19.240 --> 00:16:22.030
+straight into the XAML and
+then Paul goes to blend
+
+298
+00:16:22.060 --> 00:16:27.460
+when required. But that environment
+for, for most user experience,
+
+299
+00:16:27.460 --> 00:16:31.030
+people who we can just
+assume are coming from a
+
+300
+00:16:31.030 --> 00:16:34.030
+flash world, coming from an
+Adobe world, if you're doing
+
+301
+00:16:34.210 --> 00:16:37.300
+rich experiences up until last
+year, of course you were
+
+302
+00:16:37.300 --> 00:16:38.770
+doing it in flash, of
+course we were doing in
+
+303
+00:16:38.770 --> 00:16:42.040
+flexo. It was the primary
+technology. So, but you're used
+
+304
+00:16:42.040 --> 00:16:44.170
+to doing it in, in
+one program. You're used to
+
+305
+00:16:44.320 --> 00:16:46.960
+being in flash where you
+can design press one button
+
+306
+00:16:46.960 --> 00:16:49.990
+and instantly you're in the
+code environment. So that took
+
+307
+00:16:49.990 --> 00:16:54.130
+a while, several months ago,
+I made that transition already.
+
+308
+00:16:54.130 --> 00:16:56.410
+And then all of us,
+you know, at synergy, of
+
+309
+00:16:56.410 --> 00:16:58.270
+course we made that transition,
+but that was the first
+
+310
+00:16:58.570 --> 00:17:01.390
+big hurdle to get over
+in that the approach to
+
+311
+00:17:01.390 --> 00:17:04.060
+it is different. We're not
+used to having that separated
+
+312
+00:17:04.060 --> 00:17:07.450
+out for us design in
+one application development and another
+
+313
+00:17:07.450 --> 00:17:09.910
+application, we've kind of been
+used to everything being a
+
+314
+00:17:09.910 --> 00:17:12.040
+little bit more sloppy, but
+a little bit more mixed
+
+315
+00:17:12.040 --> 00:17:15.580
+together in one primary product.
+And the other approach of
+
+316
+00:17:15.580 --> 00:17:18.670
+course is, is the difference
+between time-based animations and frame
+
+317
+00:17:18.670 --> 00:17:23.320
+based animations. And that's more
+again, what have we been
+
+318
+00:17:23.320 --> 00:17:26.110
+used to over the years?
+So that's a, that's another
+
+319
+00:17:26.110 --> 00:17:29.080
+transition, be it right or
+wrong, you know, whatever side
+
+320
+00:17:29.080 --> 00:17:31.000
+of the debate people fall
+on, it still needs to
+
+321
+00:17:31.000 --> 00:17:34.810
+be acknowledged that for years
+and years, most rich experience
+
+322
+00:17:35.260 --> 00:17:39.280
+architects have, we've needed to
+think in terms of frame
+
+323
+00:17:39.280 --> 00:17:43.390
+based animations and placing things
+on the timeline that we
+
+324
+00:17:43.390 --> 00:17:45.520
+can control a lot of
+frame by frame basis. And
+
+325
+00:17:45.520 --> 00:17:48.970
+so switching over to WPF
+and Silverlight, it does require
+
+326
+00:17:48.970 --> 00:17:52.020
+a mental shift to think
+in terms of time-based animations.
+
+327
+00:17:52.160 --> 00:17:54.110
+No, that's a very, very
+interesting point. I think that
+
+328
+00:17:54.110 --> 00:17:56.780
+that's kind of one of
+the, the fundamental things that's
+
+329
+00:17:56.780 --> 00:17:59.840
+different in moving from flash
+in the last time that
+
+330
+00:17:59.840 --> 00:18:02.510
+I worked in flash, it
+was called future wave. So
+
+331
+00:18:02.510 --> 00:18:05.630
+that dates me a pretty
+considerably that may have been
+
+332
+00:18:05.630 --> 00:18:10.760
+before Brian was born. And,
+but I remember all the
+
+333
+00:18:10.760 --> 00:18:13.280
+onion skinning and it was
+definitely a frame based animation
+
+334
+00:18:13.280 --> 00:18:15.620
+and having many, many things
+happening on the screen at
+
+335
+00:18:15.620 --> 00:18:17.810
+once now, Brian, you had
+said, this is a simple
+
+336
+00:18:17.810 --> 00:18:20.720
+application, but I, I drew
+some line writer lines that
+
+337
+00:18:20.720 --> 00:18:23.420
+were, you know, four or
+five, 600 lines. And it
+
+338
+00:18:23.420 --> 00:18:25.550
+went on for a while.
+I thought I was pretty
+
+339
+00:18:25.550 --> 00:18:27.980
+clever. And then I went
+and saw some YouTube videos
+
+340
+00:18:27.980 --> 00:18:31.070
+where people were making some
+unbelievably complex, One of the
+
+341
+00:18:31.070 --> 00:18:33.320
+big issues that we still
+have in the civilized version
+
+342
+00:18:33.320 --> 00:18:35.870
+that we're trying, you know,
+we're working really hard on
+
+343
+00:18:35.870 --> 00:18:37.880
+trying to figure it out,
+but it doesn't look like
+
+344
+00:18:37.880 --> 00:18:42.080
+there's an easy solution for
+it. Essentially the floating point
+
+345
+00:18:42.320 --> 00:18:45.530
+precision as far, you know,
+with round off air and
+
+346
+00:18:46.700 --> 00:18:49.910
+the way it's handled and
+implemented it, action script versus
+
+347
+00:18:50.360 --> 00:18:53.690
+Silverlight is just fundamentally different.
+And it's only slightly different.
+
+348
+00:18:54.710 --> 00:18:57.410
+I know the problem we're
+running into is literally 12
+
+349
+00:18:57.410 --> 00:19:00.320
+places past the decimal point
+are off by one number
+
+350
+00:19:00.320 --> 00:19:02.480
+and that throws off an
+entire track. So when you
+
+351
+00:19:02.480 --> 00:19:03.800
+have a feature like we
+have in the silver light
+
+352
+00:19:03.800 --> 00:19:06.200
+version where you can import
+a track that you've already
+
+353
+00:19:06.200 --> 00:19:08.480
+made an actual script and
+bring it in the physics
+
+354
+00:19:08.480 --> 00:19:11.320
+act differently and the lighter
+the writer can crash at
+
+355
+00:19:11.320 --> 00:19:13.160
+it at a point that
+he didn't crash in the
+
+356
+00:19:13.520 --> 00:19:16.400
+flash version and your track
+is just fundamentally different. So
+
+357
+00:19:16.430 --> 00:19:18.650
+it's something that we definitely
+want to fix because we
+
+358
+00:19:18.650 --> 00:19:20.600
+want people to be able
+to play the same tracks
+
+359
+00:19:20.600 --> 00:19:23.060
+that they made in flash,
+but it's turning out to
+
+360
+00:19:23.060 --> 00:19:25.940
+be a really tough problem.
+That's interesting. Then that brings
+
+361
+00:19:25.940 --> 00:19:28.430
+up one of the, one
+of the more interesting features,
+
+362
+00:19:28.430 --> 00:19:30.740
+which is what you just
+said, that you can import
+
+363
+00:19:31.190 --> 00:19:35.120
+existing tracks from the flash
+system into Silverlight. Now, how
+
+364
+00:19:35.120 --> 00:19:37.100
+does that work? I mean,
+where do these tracks live?
+
+365
+00:19:37.100 --> 00:19:39.020
+Is this just a matter
+of pulling them from the
+
+366
+00:19:39.020 --> 00:19:43.400
+server? Well, actually the tracks
+actually live in the Sol
+
+367
+00:19:43.460 --> 00:19:46.490
+Sol files, which are the
+saved objects or shared objects
+
+368
+00:19:46.490 --> 00:19:50.480
+from flash. And we literally
+pulled that in directly to
+
+369
+00:19:50.480 --> 00:19:54.290
+Silverlight and I actually wasn't
+the one who did that.
+
+370
+00:19:54.290 --> 00:19:56.570
+So I can't tell you
+the specifics about it, unfortunately,
+
+371
+00:19:57.470 --> 00:20:01.160
+but I believe we go
+through, through Java in some
+
+372
+00:20:01.160 --> 00:20:04.250
+form to Silverlight. Yeah, I'm
+pretty sure that's the way
+
+373
+00:20:04.280 --> 00:20:08.060
+it's handled, but yeah, essentially
+Shared object in flash is
+
+374
+00:20:08.060 --> 00:20:10.970
+kind of like a flash
+cookie, right? It's flash is
+
+375
+00:20:10.970 --> 00:20:13.880
+isolated storage. So I would
+guess you'd need to have
+
+376
+00:20:13.880 --> 00:20:16.610
+a flash applicate. You'd have
+to have a flash instance,
+
+377
+00:20:16.610 --> 00:20:19.310
+a server light instance and
+the JavaScript bridge all working
+
+378
+00:20:19.310 --> 00:20:23.450
+together. Right, exactly. That's exactly
+how it was done. Wow.
+
+379
+00:20:23.930 --> 00:20:29.270
+That's hardcore. It really wasn't
+like Bryan, like Bryan was,
+
+380
+00:20:29.330 --> 00:20:31.670
+was just bringing up a,
+when you go into import
+
+381
+00:20:31.670 --> 00:20:34.700
+it, it was also interesting
+because then you have your
+
+382
+00:20:34.700 --> 00:20:37.880
+domain issues and your security
+issues between who can open
+
+383
+00:20:37.880 --> 00:20:41.540
+who's shared objects. So if
+you, if you played the
+
+384
+00:20:41.570 --> 00:20:45.230
+crop, the classic version of
+lion rider that was written
+
+385
+00:20:45.230 --> 00:20:49.630
+in flash, and you did
+shared objects, flash shared objects
+
+386
+00:20:49.630 --> 00:20:51.880
+on your local machine, and
+now you come into the
+
+387
+00:20:51.880 --> 00:20:55.660
+upgraded beta version of line,
+right. Written in Silverlight Silverlight
+
+388
+00:20:55.660 --> 00:21:00.730
+actually needs to, to talk
+to a flash importer because
+
+389
+00:21:00.730 --> 00:21:03.670
+it's only the flashing Porter
+that can, that can legally
+
+390
+00:21:03.670 --> 00:21:06.340
+have access to the flash
+shirt objects, pick it up,
+
+391
+00:21:06.370 --> 00:21:08.860
+translate the information and then
+bridge it over through JavaScript.
+
+392
+00:21:08.860 --> 00:21:12.730
+So, so it was a
+very interesting procedure. They're getting,
+
+393
+00:21:13.060 --> 00:21:17.050
+getting information that's shared, that's
+saved in one format locally
+
+394
+00:21:17.440 --> 00:21:20.530
+to just another folder, a
+couple, a couple folders down
+
+395
+00:21:20.800 --> 00:21:23.740
+on your Silverlight shared objects
+under the new Silverlight data
+
+396
+00:21:23.740 --> 00:21:26.860
+structure that we had. But,
+but it was a very
+
+397
+00:21:26.860 --> 00:21:32.790
+interesting, it was a very
+challenging problem. It definitely underscores
+
+398
+00:21:32.790 --> 00:21:35.790
+the fact that these two
+technologies have their own sandboxes
+
+399
+00:21:35.790 --> 00:21:37.560
+and they really are going
+out of their way to
+
+400
+00:21:37.770 --> 00:21:39.750
+keep you from messing around
+in your sandbox. I mean,
+
+401
+00:21:40.020 --> 00:21:42.300
+certainly it may be just
+right. There are a couple
+
+402
+00:21:42.300 --> 00:21:44.190
+of folders away on your
+hard drive, but we can't
+
+403
+00:21:44.190 --> 00:21:47.010
+have them talking to each
+other, but it does make
+
+404
+00:21:47.010 --> 00:21:49.380
+me wonder how much JavaScript
+did you end up with
+
+405
+00:21:49.410 --> 00:21:52.620
+is this, this is 99%
+Silverlight or how much JavaScript's
+
+406
+00:21:52.620 --> 00:21:56.100
+in the background they're making
+things happen. Well, what was
+
+407
+00:21:56.100 --> 00:21:59.850
+interesting specifically on the importer
+is that there wasn't that
+
+408
+00:21:59.850 --> 00:22:03.810
+much JavaScript at all required
+at all. If you're, if
+
+409
+00:22:03.810 --> 00:22:05.970
+you remember, or, or anybody
+who used to work with
+
+410
+00:22:06.000 --> 00:22:10.110
+flash a couple versions ago,
+having flash play nicely with
+
+411
+00:22:10.110 --> 00:22:13.740
+JavaScript across all different browsers
+was, was actually quite a
+
+412
+00:22:13.740 --> 00:22:17.100
+challenge, but they've done a
+lot of improvements over the
+
+413
+00:22:17.100 --> 00:22:19.920
+last several versions where JavaScript
+can now call in and
+
+414
+00:22:19.920 --> 00:22:23.940
+flash can register its, its
+functions out to JavaScript. Now
+
+415
+00:22:23.940 --> 00:22:28.260
+Silverlight, although it's only on
+version two in beta from
+
+416
+00:22:28.260 --> 00:22:31.050
+the BA from the beginning,
+they've really been focusing on,
+
+417
+00:22:31.050 --> 00:22:34.500
+on JavaScript integration. So we
+have this pro we have
+
+418
+00:22:34.500 --> 00:22:37.830
+this situation where we had
+flash I believe version version
+
+419
+00:22:37.830 --> 00:22:41.430
+eight of the classic game.
+And we have Silverlight version
+
+420
+00:22:41.430 --> 00:22:46.350
+two, but they're both very
+good at interfacing with very
+
+421
+00:22:46.350 --> 00:22:49.050
+few lines of code to
+JavaScript in a stable fashion.
+
+422
+00:22:49.320 --> 00:22:52.350
+So we're actually doing a
+lot of the initiating of
+
+423
+00:22:52.350 --> 00:22:56.250
+stuff from Silverlight. The bridge
+is basically a very simple
+
+424
+00:22:56.250 --> 00:22:59.430
+handoff and, and relating all
+the other work happened in
+
+425
+00:22:59.430 --> 00:23:02.400
+both flash and in Silverlight.
+So it's not as much
+
+426
+00:23:02.400 --> 00:23:05.850
+JavaScript as you might think,
+only because Silverlight did flash
+
+427
+00:23:06.030 --> 00:23:08.970
+play with JavaScript very well.
+Yeah. I think that there's
+
+428
+00:23:08.970 --> 00:23:13.290
+definitely an expectation of, of
+plugins now and now that
+
+429
+00:23:13.740 --> 00:23:17.130
+the JavaScript Dom's have finally
+kind of coalesced around some
+
+430
+00:23:17.130 --> 00:23:20.400
+agreement amongst the major browsers,
+that there's a certain expectation
+
+431
+00:23:20.400 --> 00:23:23.380
+of, of, of quality and
+functionality when it comes to
+
+432
+00:23:23.400 --> 00:23:27.330
+JavaScript talking to plugins. Now
+this works on a Mac,
+
+433
+00:23:28.290 --> 00:23:30.600
+It does work on the
+Mac. I know that that
+
+434
+00:23:30.810 --> 00:23:36.090
+the Silverlight is supported on,
+I don't believe it's support
+
+435
+00:23:36.100 --> 00:23:38.280
+on power PC, is that
+correct? Right. It's only it's
+
+436
+00:23:38.280 --> 00:23:42.450
+Intel based max. Yeah. Intel-based
+but it actually, it's interesting
+
+437
+00:23:43.590 --> 00:23:45.650
+that, you know, we get
+a of complaints from the
+
+438
+00:23:45.650 --> 00:23:48.280
+people on the forums For,
+you know, this new civil
+
+439
+00:23:48.360 --> 00:23:51.380
+version that it does run
+considerably slower on, on the
+
+440
+00:23:51.380 --> 00:23:54.770
+Mac and I'm even slower
+than, than the flash version.
+
+441
+00:23:54.770 --> 00:23:58.940
+So it's interesting that it's
+not, you know, the performance
+
+442
+00:23:58.970 --> 00:24:03.460
+doesn't enhance the Mac version
+where it does, Why that
+
+443
+00:24:03.460 --> 00:24:06.550
+is or talk to the
+team, You know, we had,
+
+444
+00:24:06.790 --> 00:24:09.040
+I think Jose was down
+in yeah. At the Microsoft
+
+445
+00:24:09.490 --> 00:24:12.250
+he's at the camp break.
+Is that correct earlier when
+
+446
+00:24:12.250 --> 00:24:14.500
+we brought this issue up
+and yeah, I think it
+
+447
+00:24:14.500 --> 00:24:16.360
+was just a known issue
+that it's just not, you
+
+448
+00:24:16.360 --> 00:24:18.730
+know, it doesn't run as
+great as it does on
+
+449
+00:24:18.730 --> 00:24:23.440
+the PC when it's on
+the Mac. Hmm. Interesting. Yeah.
+
+450
+00:24:23.520 --> 00:24:27.700
+And that's not, that's not
+a surprise in the Microsoft
+
+451
+00:24:27.700 --> 00:24:32.320
+or Silverlight community and it
+was similar to, again, early
+
+452
+00:24:32.320 --> 00:24:36.550
+versions in, in flash only
+up until recently, I believe
+
+453
+00:24:36.550 --> 00:24:40.210
+with the new ActionScript three
+O compilers, are we really
+
+454
+00:24:40.210 --> 00:24:44.230
+seeing a lot of increased
+performance on, on the flash
+
+455
+00:24:44.230 --> 00:24:51.590
+experience in, in browsers, in,
+in Mac that Silverlight is
+
+456
+00:24:51.640 --> 00:24:54.370
+duplicating to the same kind
+of a procedural path? I
+
+457
+00:24:54.370 --> 00:24:58.600
+think it just, the experience
+slows down on the Mac
+
+458
+00:24:58.630 --> 00:25:01.960
+for most of these objects
+inside of browsers on a
+
+459
+00:25:01.960 --> 00:25:04.420
+Mac. So I wonder if
+that has something to do
+
+460
+00:25:04.420 --> 00:25:06.700
+with the way that Mac
+deals with plugins or, or
+
+461
+00:25:06.700 --> 00:25:08.680
+what that is because it's
+very interesting. I've got two
+
+462
+00:25:08.680 --> 00:25:10.810
+max, I've got a Mac
+book pro, which is an
+
+463
+00:25:10.810 --> 00:25:12.700
+Intel based Mac, and then
+I've got a small Mac
+
+464
+00:25:12.700 --> 00:25:16.960
+mini and I can barely
+watch full screen flash videos
+
+465
+00:25:16.960 --> 00:25:20.470
+on YouTube, on my Mac
+mini, which is power PC
+
+466
+00:25:20.470 --> 00:25:23.440
+based. I find flash just
+brings that thing to its
+
+467
+00:25:23.440 --> 00:25:26.440
+knees. Yeah, of course, because
+it's power PC based. I
+
+468
+00:25:26.440 --> 00:25:30.070
+can't run, but even on
+my Mac book pro if
+
+469
+00:25:30.070 --> 00:25:32.560
+I go out to a
+terminal and run top a
+
+470
+00:25:32.560 --> 00:25:35.380
+Safari is just killing itself.
+If I run anything, that's
+
+471
+00:25:35.380 --> 00:25:38.620
+centralized based on my, on
+my very, very fast Intel-based
+
+472
+00:25:38.620 --> 00:25:42.760
+Mac. Yeah. I have a
+Mac myself since I've been
+
+473
+00:25:42.760 --> 00:25:46.300
+working so much with WPF
+and Silverlight though I dual
+
+474
+00:25:46.300 --> 00:25:49.180
+boot and I've been doing
+into Vista so that I
+
+475
+00:25:49.180 --> 00:25:52.510
+can have immediate and access
+to, to visual studio and
+
+476
+00:25:52.550 --> 00:25:56.800
+all of my, my Vista
+development products here. But I
+
+477
+00:25:56.800 --> 00:26:00.820
+noticed that the same thing
+based on interesting, I'll have
+
+478
+00:26:00.820 --> 00:26:02.260
+to ask the team about
+that. Cause I think that
+
+479
+00:26:02.260 --> 00:26:04.690
+would be a very interesting
+discussion to find out how
+
+480
+00:26:04.690 --> 00:26:08.050
+much code they're sharing. And
+if that is an issue
+
+481
+00:26:08.050 --> 00:26:09.760
+with Silverlight or if it's
+an issue with the plugin
+
+482
+00:26:09.760 --> 00:26:12.160
+model, how that works. I
+don't know a whole lot
+
+483
+00:26:12.160 --> 00:26:15.910
+about, about the Mac and
+how that plugin model operates.
+
+484
+00:26:16.540 --> 00:26:18.520
+It is a challenge. We,
+we find out when the
+
+485
+00:26:18.610 --> 00:26:21.380
+out in the trenches of
+building Rhea and making it
+
+486
+00:26:21.390 --> 00:26:24.820
+cross browser is that that
+benchmark is there. That things
+
+487
+00:26:24.820 --> 00:26:27.220
+drop when you're switching it
+on the Mac under certain
+
+488
+00:26:27.220 --> 00:26:29.530
+environments, you know? And so
+we were trying to figure
+
+489
+00:26:29.530 --> 00:26:31.960
+out how to, how to
+work around it or fix
+
+490
+00:26:31.960 --> 00:26:35.470
+it. Now, did you guys
+have to write any, you
+
+491
+00:26:35.470 --> 00:26:37.690
+know, if I'm on a
+Mac, do this else do
+
+492
+00:26:37.690 --> 00:26:39.520
+that kind of code. I
+spent a lot of time
+
+493
+00:26:39.790 --> 00:26:43.320
+working in Java, Java applets
+at Nike and we up,
+
+494
+00:26:43.670 --> 00:26:48.990
+we used to call it
+everywhere and we ended up
+
+495
+00:26:48.990 --> 00:26:54.870
+having to go and write
+code that literally said this
+
+496
+00:26:54.870 --> 00:27:01.010
+way. I know from the
+game side of things, we
+
+497
+00:27:01.010 --> 00:27:04.370
+didn't have any, any, any
+of that, but Rick, maybe
+
+498
+00:27:04.370 --> 00:27:08.510
+you can touch on. Yeah,
+Yeah. There wasn't an internationalization
+
+499
+00:27:08.510 --> 00:27:11.300
+issue. And again, I wish
+Jose were here cause he's,
+
+500
+00:27:11.540 --> 00:27:13.640
+he's the one who both
+found it and then addressed
+
+501
+00:27:13.640 --> 00:27:16.800
+it. And I think right
+after he addressed it, when
+
+502
+00:27:16.870 --> 00:27:19.760
+he addressed it through some,
+through some code, I believe
+
+503
+00:27:19.760 --> 00:27:22.800
+silver light, as it continues
+to, to push forward on,
+
+504
+00:27:22.800 --> 00:27:25.280
+on beta, came out with
+a fixed, like the exact
+
+505
+00:27:25.280 --> 00:27:26.750
+same fixed, like a, like
+a week later. So it
+
+506
+00:27:26.750 --> 00:27:30.080
+was kind of funny, but
+there are some internet internationalization
+
+507
+00:27:30.080 --> 00:27:32.900
+issues that working on on
+a real game, you know,
+
+508
+00:27:32.920 --> 00:27:34.460
+cause a lot of us
+have played with Silverlight and
+
+509
+00:27:34.460 --> 00:27:37.040
+WPF and we've done demos
+or, or, or done, you
+
+510
+00:27:37.040 --> 00:27:39.830
+know, projects, but, but line
+writer is a very popular
+
+511
+00:27:39.830 --> 00:27:43.400
+game. It gets hit globally
+by many, many, many people.
+
+512
+00:27:43.580 --> 00:27:49.430
+So the deployment of this
+very, very serious exposure Silverlight
+
+513
+00:27:49.430 --> 00:27:54.440
+application online had a lot
+of issues that you really
+
+514
+00:27:54.560 --> 00:27:57.380
+wouldn't run into another environment.
+And one of them has
+
+515
+00:27:57.380 --> 00:28:00.780
+to do with Silverlight and
+how they handle internationalization or,
+
+516
+00:28:00.780 --> 00:28:04.160
+or their lack of support.
+As of right now for
+
+517
+00:28:04.430 --> 00:28:08.510
+four different keyboard arrangements, for
+example, and for different keystrokes
+
+518
+00:28:08.800 --> 00:28:12.680
+were causing errors and needing
+to capture for that. So
+
+519
+00:28:12.920 --> 00:28:15.890
+I think we were, we
+were one of the most
+
+520
+00:28:15.890 --> 00:28:19.280
+vocal people that, and that
+would be Jose on the
+
+521
+00:28:19.280 --> 00:28:21.890
+phone conference with Microsoft, with
+the Silverlight team and getting
+
+522
+00:28:21.890 --> 00:28:23.810
+a lot of great support,
+but kind of saying, you
+
+523
+00:28:23.810 --> 00:28:26.120
+know, Hey, these are issues
+that we're finding again right
+
+524
+00:28:26.120 --> 00:28:28.670
+here in the trenches pushing
+Silverlight at this, at this
+
+525
+00:28:28.670 --> 00:28:32.180
+level of scope out we're,
+we're running into crashes when
+
+526
+00:28:32.180 --> 00:28:34.670
+somebody has a German keyboard
+layout, you know, for example,
+
+527
+00:28:34.670 --> 00:28:36.290
+or when somebody is doing
+this or when somebody is
+
+528
+00:28:36.290 --> 00:28:40.100
+doing that. So, so that's
+an area where it's still
+
+529
+00:28:40.100 --> 00:28:44.720
+getting flushed out in, into
+Silverlight beta interesting perspective. I
+
+530
+00:28:44.720 --> 00:28:47.390
+would think you would need
+full control over the keys
+
+531
+00:28:47.390 --> 00:28:51.230
+you would need. Did you
+end up doing mouse wheel
+
+532
+00:28:51.230 --> 00:28:55.850
+work? I don't think it's
+it's important. We didn't have
+
+533
+00:28:55.850 --> 00:28:59.450
+any zoom. I believe it
+does work in the flash
+
+534
+00:28:59.450 --> 00:29:01.970
+version, but we didn't, we
+actually took it out because
+
+535
+00:29:01.970 --> 00:29:05.390
+we were seeing weird issues
+with, with silver light when
+
+536
+00:29:05.390 --> 00:29:09.830
+you would actually use the
+scroll wheel. I don't know
+
+537
+00:29:09.830 --> 00:29:13.460
+if you remember that this
+Rick, but the actual hotspots
+
+538
+00:29:13.460 --> 00:29:16.070
+for locations where the mouseover
+would be, would be off
+
+539
+00:29:16.100 --> 00:29:18.110
+by the amount that you'd
+scroll down on the page.
+
+540
+00:29:21.740 --> 00:29:25.520
+I ended up doing and
+had a lot of trouble
+
+541
+00:29:25.520 --> 00:29:28.250
+with it and then ended
+up doing it all on
+
+542
+00:29:28.250 --> 00:29:43.720
+JavaScript rather than JavaScript support
+When doing a Silverlight deep
+
+543
+00:29:43.720 --> 00:29:47.680
+zoom sample. Recently, we just
+ended up using a JavaScript
+
+544
+00:29:47.800 --> 00:29:51.130
+event, sourcer that would then
+pass those events down into
+
+545
+00:29:51.130 --> 00:29:55.120
+Silverlight. And that gave me
+really, really reliable mouse wheel
+
+546
+00:29:55.120 --> 00:29:58.000
+support. And, and you can
+get all that sample code.
+
+547
+00:29:58.000 --> 00:30:00.970
+Now, if you look for
+deep zoom and mouse wheel,
+
+548
+00:30:01.060 --> 00:30:04.150
+it's all JavaScript. That works
+really, really well. Interesting. I'm
+
+549
+00:30:04.150 --> 00:30:07.110
+going to write that down.
+Yeah, it was, it was,
+
+550
+00:30:07.110 --> 00:30:09.120
+it was very interesting. There's
+a, there's so many different
+
+551
+00:30:09.120 --> 00:30:12.690
+things, but even in that
+mouse wheel support, you have
+
+552
+00:30:12.690 --> 00:30:15.660
+to go and check. Are
+we on opera? Because opera
+
+553
+00:30:15.660 --> 00:30:18.600
+pasts is a different Delta
+format than if you're on
+
+554
+00:30:18.600 --> 00:30:22.410
+Firefox. So while the browsers
+have wheel event support for
+
+555
+00:30:22.410 --> 00:30:25.950
+JavaScript, now they haven't agreed
+on what format that's going
+
+556
+00:30:25.950 --> 00:30:28.230
+to look like. So you
+can do that translation inside
+
+557
+00:30:28.230 --> 00:30:30.450
+of the JavaScript, but I
+bet you, you could get
+
+558
+00:30:30.450 --> 00:30:34.800
+your job as your, your
+JavaScript mouse wheel back. If
+
+559
+00:30:34.800 --> 00:30:37.290
+you took a look at
+that. So let me think
+
+560
+00:30:37.380 --> 00:30:39.540
+a couple of last questions
+as we get ready to,
+
+561
+00:30:39.780 --> 00:30:42.540
+to wrap up the show
+here, how long did this
+
+562
+00:30:42.540 --> 00:30:44.400
+take you to do I
+get the impression? It was
+
+563
+00:30:44.610 --> 00:30:50.940
+pretty quick Of the, not
+any of the MSN messenger
+
+564
+00:30:50.940 --> 00:30:53.730
+stuff or the new UX
+stuff, but just straight port
+
+565
+00:30:53.730 --> 00:30:56.700
+from flash to Silverlight took
+about a week. It was
+
+566
+00:30:56.700 --> 00:31:00.390
+very, very short timeline and
+that's everything fully functional. And
+
+567
+00:31:00.390 --> 00:31:04.050
+then the, the rest of
+the port, I wanna, I
+
+568
+00:31:04.050 --> 00:31:07.620
+want to say two months,
+Rick. Yeah. W we, we
+
+569
+00:31:07.620 --> 00:31:13.890
+started around the beginning of
+may and we were getting
+
+570
+00:31:14.400 --> 00:31:18.720
+into the debugging of it
+and, and really looking at
+
+571
+00:31:18.720 --> 00:31:21.810
+getting it released, ready by
+the middle of June and
+
+572
+00:31:21.810 --> 00:31:24.060
+then getting those bugs out.
+So yeah, around four, four
+
+573
+00:31:24.060 --> 00:31:28.320
+to five weeks of the
+development of it, or three
+
+574
+00:31:28.320 --> 00:31:29.850
+or four weeks for the
+development of it. And then,
+
+575
+00:31:29.850 --> 00:31:31.710
+and then several weeks finishing
+up a lot of the
+
+576
+00:31:31.710 --> 00:31:35.160
+issues, getting importing working and
+stuff like that. So it
+
+577
+00:31:35.160 --> 00:31:37.560
+was pretty aggressive. One of
+the things that didn't help
+
+578
+00:31:37.590 --> 00:31:41.370
+and I guess this was
+another small technical point was
+
+579
+00:31:41.400 --> 00:31:43.800
+from beta two. They deprecated
+a lot of, a lot
+
+580
+00:31:43.800 --> 00:31:49.280
+of techniques. So, and I'm
+still amazed Brian's one week
+
+581
+00:31:49.290 --> 00:31:52.470
+port because it was a
+substantial amount of amount of
+
+582
+00:31:52.470 --> 00:31:55.680
+code and the challenge. So,
+so we at synergy came
+
+583
+00:31:55.680 --> 00:31:58.260
+to the table, they had
+already done an initial port
+
+584
+00:31:58.350 --> 00:32:02.820
+of the actual game core
+to silver light and based
+
+585
+00:32:02.820 --> 00:32:06.420
+on, based on what had
+been available at the time.
+
+586
+00:32:06.450 --> 00:32:08.760
+And one of the things
+that one of the techniques
+
+587
+00:32:08.760 --> 00:32:12.570
+was still initialized from XAML.
+So around halfway through when
+
+588
+00:32:12.570 --> 00:32:16.680
+we started getting the, the
+beta two bits access to
+
+589
+00:32:16.680 --> 00:32:19.560
+them, the core, all of
+a sudden broke. So that,
+
+590
+00:32:19.560 --> 00:32:22.140
+that took a couple of
+days there because all of
+
+591
+00:32:22.140 --> 00:32:26.700
+a sudden the, the primary
+methodology of implementing UI that
+
+592
+00:32:26.700 --> 00:32:29.400
+the core had been taken
+advantage of the initialize from
+
+593
+00:32:29.400 --> 00:32:33.000
+XAML was deprecated. And so
+all of those sections needed
+
+594
+00:32:33.000 --> 00:32:36.480
+to be needed to be
+modified. So, so that was
+
+595
+00:32:36.480 --> 00:32:40.220
+kind of interesting. Yeah, definitely
+working beta software and it's,
+
+596
+00:32:40.220 --> 00:32:43.750
+it's, it's moving under your
+feet. Exactly. It was funny
+
+597
+00:32:43.750 --> 00:32:46.150
+to the, when, when Rick
+first came here and he
+
+598
+00:32:46.150 --> 00:32:47.770
+had actually, we gave him
+a drop of the code.
+
+599
+00:32:48.070 --> 00:32:49.780
+He, the first thing that
+he said when he came,
+
+600
+00:32:49.810 --> 00:32:52.090
+when I came in, was
+it, it clearly looked like
+
+601
+00:32:52.090 --> 00:32:54.910
+it had been written actual
+script forwarded to a one
+
+602
+00:32:54.910 --> 00:32:56.830
+point that was overnight. And
+then put it again at
+
+603
+00:32:56.840 --> 00:32:59.710
+one point once overlay to
+see the, you know, the
+
+604
+00:32:59.710 --> 00:33:02.380
+transitions there. Well, you can
+write, you know, they say
+
+605
+00:33:02.380 --> 00:33:05.170
+you can write for Tran
+in any language. Right. You
+
+606
+00:33:05.170 --> 00:33:07.630
+can smell it. Yeah. You
+can, you can smell your
+
+607
+00:33:07.630 --> 00:33:10.770
+action script. If you look
+through your seashore. Exactly. And
+
+608
+00:33:10.770 --> 00:33:13.450
+then having come in from
+that background, you could definitely,
+
+609
+00:33:13.510 --> 00:33:16.630
+you could definitely tell the
+action script, cause I've taught
+
+610
+00:33:16.630 --> 00:33:19.930
+action script to designers and
+old school actions for porno.
+
+611
+00:33:20.100 --> 00:33:22.990
+And we're working on a
+series of tutorials with Microsoft
+
+612
+00:33:22.990 --> 00:33:26.550
+and in moving from action
+script to silver light. But,
+
+613
+00:33:26.550 --> 00:33:29.800
+but there's certain just ways
+of problem solving and certain
+
+614
+00:33:29.800 --> 00:33:32.110
+things you do. And if
+you've been programming for a
+
+615
+00:33:32.110 --> 00:33:34.960
+long time and you're not
+at a developer level, but
+
+616
+00:33:34.960 --> 00:33:38.350
+more of an experienced development
+level, it gives you a
+
+617
+00:33:38.350 --> 00:33:41.140
+lot of it lets you
+be very sloppy with your
+
+618
+00:33:41.140 --> 00:33:43.450
+code. If you want to
+just, everything's a VAR, everything's
+
+619
+00:33:43.450 --> 00:33:46.210
+an object and you don't
+need to explicitly do anything
+
+620
+00:33:46.210 --> 00:33:49.720
+and you can still create
+these very beautiful things that
+
+621
+00:33:49.720 --> 00:33:52.450
+might not have that same
+level of data robustness. So,
+
+622
+00:33:52.780 --> 00:33:54.960
+so when I saw the
+code, I go, this looked
+
+623
+00:33:54.960 --> 00:33:57.220
+like, like it originally came
+from action script and then
+
+624
+00:33:57.220 --> 00:34:00.460
+it was part of the
+1.1 and sure enough, it
+
+625
+00:34:00.460 --> 00:34:02.290
+looked like some of the
+things would be deprecated for,
+
+626
+00:34:02.310 --> 00:34:05.920
+for beta two, but it
+was interesting working, working with
+
+627
+00:34:05.920 --> 00:34:08.470
+beta software. It's fun though.
+It's has that wild West
+
+628
+00:34:08.470 --> 00:34:13.000
+feeling Cool. Well, thanks so
+much, Rick Barraza experience architect
+
+629
+00:34:13.000 --> 00:34:16.780
+at synergy and Brian Perfetto
+developer in exile, and you
+
+630
+00:34:16.780 --> 00:34:20.200
+can check out line writer
+at <inaudible> dot com and
+
+631
+00:34:20.200 --> 00:34:21.700
+you want to keep an
+eye out for the Nintendo
+
+632
+00:34:21.700 --> 00:34:24.700
+DS version coming out this
+August again, guys, thanks so
+
+633
+00:34:24.700 --> 00:34:27.850
+much for sitting down with
+me here. Thank you, Scott.
+
+634
+00:34:28.930 --> 00:34:31.360
+This has been another episode
+of Hanselminutes and we'll see
+
+635
+00:34:31.360 --> 00:34:32.170
+you again next week.
+

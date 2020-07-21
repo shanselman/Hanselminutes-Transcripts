@@ -1,0 +1,2867 @@
+WEBVTT FILE
+
+1
+00:00:00.330 --> 00:00:03.480
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.480 --> 00:00:06.450
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.450 --> 00:00:10.650
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.650 --> 00:00:15.150
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.540 --> 00:00:19.620
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.650 --> 00:00:23.730
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:23.850 --> 00:00:46.800
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com
+from Hanselman it's dot com.
+
+8
+00:00:47.250 --> 00:00:51.060
+It's Hanselman. It's a weekly
+discussion with web developer and
+
+9
+00:00:51.060 --> 00:00:57.150
+technologist Scott Hanselman. This is
+Lawrence Ryan announcing show number 536.
+
+10
+00:00:57.480 --> 00:01:01.170
+In this episode, Scott talks
+with Richard Astbury about the
+
+11
+00:01:01.170 --> 00:01:08.640
+Orleans distributed virtual actor model.
+Hi, this is Scott Hanselman.
+
+12
+00:01:08.640 --> 00:01:11.760
+This is another episode of
+Hanselminutes today. I'm talking with
+
+13
+00:01:11.760 --> 00:01:16.260
+Richard Ashbery and he is
+a worker on the Orleans
+
+14
+00:01:16.260 --> 00:01:18.780
+framework. You called yourself kind
+of an evangelist of the
+
+15
+00:01:18.780 --> 00:01:22.440
+Orleans virtual actor framework for.net.
+That's right. I'd really like
+
+16
+00:01:22.440 --> 00:01:25.170
+to be more of a
+contributor, but I don't have
+
+17
+00:01:25.470 --> 00:01:29.070
+huge amounts of spare time.
+So I try to talk
+
+18
+00:01:29.070 --> 00:01:31.200
+about all ends whenever I
+can. And I, I run
+
+19
+00:01:31.200 --> 00:01:35.610
+the contrib organization on GitHub
+as well to try and
+
+20
+00:01:36.090 --> 00:01:40.740
+encourage more open source projects
+around the audience space. But
+
+21
+00:01:40.740 --> 00:01:45.300
+you, you don't work for
+Microsoft? No, no. I work
+
+22
+00:01:45.690 --> 00:01:49.050
+for a little company in
+the backwaters of East Anglia
+
+23
+00:01:49.050 --> 00:01:54.090
+in England, but you fear
+focuses on, on cloud computing.
+
+24
+00:01:54.090 --> 00:01:57.960
+And in the context of
+your consultancy, you, at some
+
+25
+00:01:57.960 --> 00:02:03.360
+point you discovered Orleans. Yeah.
+Before Orleans was launched, a
+
+26
+00:02:03.360 --> 00:02:06.360
+Microsoft friend of mine showed
+me this thing on his
+
+27
+00:02:06.360 --> 00:02:08.040
+computer and said, Oh, you'd
+be really interested in this
+
+28
+00:02:08.040 --> 00:02:10.920
+is it's. It's really cool.
+It's solves some really hard
+
+29
+00:02:10.920 --> 00:02:14.520
+problems in distributed computing. It's
+it's right up your street.
+
+30
+00:02:14.580 --> 00:02:18.810
+And so I got involved
+and kind of had access
+
+31
+00:02:19.230 --> 00:02:22.830
+before it was publicly released.
+And then as Orleans kind
+
+32
+00:02:22.830 --> 00:02:24.930
+of came out, I was,
+I was quite involved in
+
+33
+00:02:24.930 --> 00:02:27.570
+trying to, trying to help
+a community grow around it.
+
+34
+00:02:28.770 --> 00:02:31.920
+So sometimes we're, we're doing
+our thing and we're, we're
+
+35
+00:02:32.010 --> 00:02:36.690
+focusing on technology and then
+another technology comes along and
+
+36
+00:02:36.690 --> 00:02:38.820
+it lights up something in
+our brains and it goes,
+
+37
+00:02:38.850 --> 00:02:41.430
+Oh, this is the one
+I've been waiting for. This
+
+38
+00:02:41.430 --> 00:02:43.770
+is the framework. This is
+the language. This is the
+
+39
+00:02:44.070 --> 00:02:47.820
+pattern as that. This is
+that pattern for you. Yeah,
+
+40
+00:02:47.820 --> 00:02:52.290
+I think so. I think
+this is the first C-sharp
+
+41
+00:02:52.920 --> 00:02:56.070
+kind of thought in that
+project, which tried to solve
+
+42
+00:02:56.070 --> 00:02:58.730
+some of the hard things
+in distributed computing and make
+
+43
+00:02:59.200 --> 00:03:02.590
+distributed computing accessible to the
+masses without you having to
+
+44
+00:03:02.590 --> 00:03:06.340
+go and do a PhD
+in some obscure computer science
+
+45
+00:03:06.430 --> 00:03:10.960
+stuff, you could just write
+C sharp as you normally
+
+46
+00:03:10.960 --> 00:03:13.690
+do. And it just runs
+across a cluster of machines,
+
+47
+00:03:13.720 --> 00:03:18.120
+which seemed really appealing to
+me. Now I'm in the
+
+48
+00:03:18.420 --> 00:03:22.050
+I'm I'm old ish older.
+I don't think I'm following
+
+49
+00:03:22.070 --> 00:03:24.450
+you to be honest. Yeah.
+Yeah. Know, I'm in my,
+
+50
+00:03:24.450 --> 00:03:28.770
+you know, I'm 43 and
+I have, it feels like
+
+51
+00:03:28.770 --> 00:03:31.800
+every 10 or 15 years
+there comes along a framework
+
+52
+00:03:31.800 --> 00:03:34.350
+that promises to make stuff
+easy. You know, and I
+
+53
+00:03:34.350 --> 00:03:37.920
+was there doing common D
+calm. And before that I
+
+54
+00:03:37.920 --> 00:03:40.830
+was doing RMI and Java
+and they were all these
+
+55
+00:03:40.830 --> 00:03:45.840
+different frameworks that would promise
+me easy distributed computing is,
+
+56
+00:03:46.320 --> 00:03:48.120
+and it was always a
+lie, right. It never really
+
+57
+00:03:48.120 --> 00:03:52.920
+worked. The abstraction leaked is,
+is this one also alive?
+
+58
+00:03:52.940 --> 00:03:55.560
+Or is this, do we
+finally get it right? Well,
+
+59
+00:03:55.560 --> 00:03:58.530
+I think you're you're right.
+Nothing is new in computer
+
+60
+00:03:58.530 --> 00:04:02.550
+science and Orleans is an
+implementation of the act model,
+
+61
+00:04:03.210 --> 00:04:08.880
+which was pioneered in the
+1970s by Carl Hewitt, really for
+
+62
+00:04:08.880 --> 00:04:11.190
+a different set of problems.
+He was trying to solve
+
+63
+00:04:12.090 --> 00:04:16.230
+artificial intelligence problems and thinking
+about newer networks. And he
+
+64
+00:04:16.230 --> 00:04:20.550
+was inspired by particle physics
+to design this actor model
+
+65
+00:04:21.840 --> 00:04:26.190
+and Lang popularized this in
+the eighties with their, their
+
+66
+00:04:26.190 --> 00:04:33.060
+system. And Microsoft approached the
+to model in Microsoft research.
+
+67
+00:04:33.060 --> 00:04:37.680
+They have a extreme computing
+group building hard stuff for
+
+68
+00:04:37.680 --> 00:04:41.880
+fun, I think. And they
+decided to take a new
+
+69
+00:04:42.180 --> 00:04:44.940
+look at the actor model.
+And rather than go down
+
+70
+00:04:44.940 --> 00:04:50.520
+the Erling implementation route of
+having supervision trees, they went
+
+71
+00:04:50.520 --> 00:04:52.860
+down a kind of a
+new thing, which they then
+
+72
+00:04:53.160 --> 00:04:57.990
+coined the virtual actor model,
+where you have these actors
+
+73
+00:04:57.990 --> 00:05:01.410
+that may or may not
+exist in memory. And then
+
+74
+00:05:01.410 --> 00:05:04.620
+when you ask for them,
+they're created and then some
+
+75
+00:05:04.620 --> 00:05:07.860
+time after you're finished with
+them, they're removed from memory.
+
+76
+00:05:07.950 --> 00:05:12.120
+So the Orleans runtime takes
+away the burden of having
+
+77
+00:05:12.120 --> 00:05:16.920
+to supervise lots of these
+little objects in memory. So
+
+78
+00:05:17.370 --> 00:05:19.140
+can I ask a couple
+of ignorant questions that have
+
+79
+00:05:19.140 --> 00:05:22.860
+popped up in my head
+when we say virtual actor
+
+80
+00:05:22.860 --> 00:05:24.720
+model, and you're saying it's
+a virtual and it may
+
+81
+00:05:24.720 --> 00:05:27.390
+or may not exist. That
+makes me think about like
+
+82
+00:05:27.450 --> 00:05:31.050
+pointers versus handles. And it
+also makes me think about
+
+83
+00:05:32.160 --> 00:05:35.070
+dependency injection and the idea
+that there's a service out
+
+84
+00:05:35.070 --> 00:05:37.200
+there and it has scope
+and it'll be waiting for
+
+85
+00:05:37.200 --> 00:05:39.240
+me when I need it.
+And I just ask for
+
+86
+00:05:39.240 --> 00:05:41.160
+it and it may, I
+may get a new one
+
+87
+00:05:41.160 --> 00:05:42.390
+or I may get one
+that came out of a
+
+88
+00:05:42.390 --> 00:05:45.270
+pool and I don't really
+care are all of those
+
+89
+00:05:45.270 --> 00:05:50.400
+things underneath this. Yeah. That's
+the kind of concept I
+
+90
+00:05:50.400 --> 00:05:54.120
+think that the framework takes
+away from you. Some of
+
+91
+00:05:54.120 --> 00:05:59.030
+the problems you have in
+distributed, which are given a
+
+92
+00:05:59.030 --> 00:06:02.720
+set of machines, which one
+has got my actor on
+
+93
+00:06:02.720 --> 00:06:05.480
+it. And if I want
+to go and create a
+
+94
+00:06:05.480 --> 00:06:07.460
+new actor, which machines should
+I put it on, then
+
+95
+00:06:07.670 --> 00:06:09.500
+I don't want to have
+on more than one machine
+
+96
+00:06:09.500 --> 00:06:12.530
+because then I'll have my
+state duplicated in two places.
+
+97
+00:06:12.530 --> 00:06:16.370
+And that's, that's a bad
+thing. So yeah, it's an
+
+98
+00:06:16.370 --> 00:06:19.430
+abstraction that takes away complexity
+and gives you a more
+
+99
+00:06:19.430 --> 00:06:22.760
+simple API to program against
+where you don't have to
+
+100
+00:06:22.760 --> 00:06:26.180
+think about those problems. So,
+so yeah, I think it
+
+101
+00:06:26.180 --> 00:06:30.080
+is just a higher level
+of programming, I suppose, where
+
+102
+00:06:30.080 --> 00:06:33.470
+you don't worry about many
+of the mundane pieces of
+
+103
+00:06:34.400 --> 00:06:36.590
+where your code runs. You
+just write your code and
+
+104
+00:06:36.590 --> 00:06:39.230
+it goes and runs on
+this somewhere across this cluster
+
+105
+00:06:39.230 --> 00:06:42.260
+of machines, you don't even
+know where in fact the
+
+106
+00:06:42.260 --> 00:06:46.490
+ideal placement strategy is, is
+random. I just randomly picked
+
+107
+00:06:46.490 --> 00:06:49.240
+some machine and put your
+code on there. What has
+
+108
+00:06:49.240 --> 00:06:52.840
+changed in the last 10
+or 20 years that made
+
+109
+00:06:52.840 --> 00:06:56.440
+what was a hard problem
+now, a as you said,
+
+110
+00:06:56.440 --> 00:06:59.230
+a mundane problem, because what
+I'm hearing you say is
+
+111
+00:06:59.230 --> 00:07:02.740
+that these were hard problems
+and now they are solved.
+
+112
+00:07:02.920 --> 00:07:06.130
+So why do we as
+application developers have to worry
+
+113
+00:07:06.130 --> 00:07:08.560
+about them anymore? Like it
+should just be a solved
+
+114
+00:07:08.590 --> 00:07:12.280
+computer science problem, have the
+PhDs write a framework. And
+
+115
+00:07:12.280 --> 00:07:15.880
+we talked to that framework
+and problem solved. I think
+
+116
+00:07:17.830 --> 00:07:21.430
+it's hard. W w what's
+changed in the environment is
+
+117
+00:07:21.430 --> 00:07:25.090
+that we now have cloud
+computing. So we have these
+
+118
+00:07:26.080 --> 00:07:29.890
+almost compete infrastructures where we
+can deploy our software and
+
+119
+00:07:30.220 --> 00:07:32.380
+you will have failure all
+the time because you're running
+
+120
+00:07:32.380 --> 00:07:37.570
+on thousands of nodes and
+these things fall over. And
+
+121
+00:07:37.570 --> 00:07:40.060
+you're also seeing requirements from
+customers where they want to
+
+122
+00:07:40.060 --> 00:07:42.580
+do more and more stuff.
+They've got, you know, IOT
+
+123
+00:07:42.580 --> 00:07:45.310
+kind of scenarios where you've
+got millions of sensors and
+
+124
+00:07:45.310 --> 00:07:48.340
+you want to get all
+this information into a system,
+
+125
+00:07:48.340 --> 00:07:52.840
+and then reason about it.
+And you can't use traditional
+
+126
+00:07:52.840 --> 00:07:55.900
+programming techniques in those scenarios.
+You have to, you can't
+
+127
+00:07:55.900 --> 00:07:59.630
+just put it all in
+a secret database and push
+
+128
+00:07:59.650 --> 00:08:03.490
+your, your locking and thread
+safety stuff into some other
+
+129
+00:08:03.490 --> 00:08:07.570
+system. You've got a kind
+of, you gotta either come
+
+130
+00:08:07.570 --> 00:08:10.390
+up with radical new architecture,
+like CQRS and event sourcing
+
+131
+00:08:10.390 --> 00:08:13.690
+and have eventual consistency, or
+you have to go down
+
+132
+00:08:13.790 --> 00:08:16.870
+a stateful route, which has
+one of the actor model
+
+133
+00:08:16.870 --> 00:08:22.480
+suppliers. So these aren't solve
+problems. There are a bunch
+
+134
+00:08:22.480 --> 00:08:26.050
+of good solutions out there
+of which new Erlang is
+
+135
+00:08:26.050 --> 00:08:29.080
+one, and has been using
+some of these techniques for
+
+136
+00:08:29.080 --> 00:08:33.730
+a long time, but innovation
+continues to happen. And they've
+
+137
+00:08:33.730 --> 00:08:37.270
+got some really fantastic people
+in still in Microsoft research,
+
+138
+00:08:37.510 --> 00:08:42.250
+still contributing to all ends.
+So Phil Bernstein, the pioneer
+
+139
+00:08:42.250 --> 00:08:46.330
+of acid transactions and databases
+is I'm running a small
+
+140
+00:08:46.330 --> 00:08:50.410
+team, which are looking at
+doing transactions across an audience
+
+141
+00:08:50.410 --> 00:08:54.610
+cluster. So there's still research
+work and interesting stuff going
+
+142
+00:08:54.610 --> 00:08:57.990
+on. And as a community
+in Orleans, we're looking out
+
+143
+00:08:57.990 --> 00:09:02.040
+at what's happening in the
+world of research and industry
+
+144
+00:09:02.040 --> 00:09:06.000
+and trying to pick out
+interesting technologies and thinking about
+
+145
+00:09:06.000 --> 00:09:08.670
+how we can pull them
+into Orleans and, and learn
+
+146
+00:09:08.670 --> 00:09:10.890
+from them and implement them.
+So looking at things like
+
+147
+00:09:10.890 --> 00:09:14.520
+the bond serializer, looking at
+the raft protocol and how
+
+148
+00:09:14.520 --> 00:09:17.370
+we implant that in an
+application on all lens and
+
+149
+00:09:17.370 --> 00:09:20.130
+so on and so forth.
+So I don't think everything's
+
+150
+00:09:20.130 --> 00:09:24.330
+solved, but I think we're
+on a interesting trajectory trajectory
+
+151
+00:09:24.600 --> 00:09:27.450
+of trying to solve these
+things because of these problems.
+
+152
+00:09:28.520 --> 00:09:34.400
+Could you, you mentioned CQRS
+command query responsibility, segregation, and
+
+153
+00:09:34.400 --> 00:09:40.970
+extension of the CQS principle.
+Could you briefly explain where
+
+154
+00:09:40.970 --> 00:09:43.070
+that splits off and it
+goes in one direction and
+
+155
+00:09:43.070 --> 00:09:45.170
+the actor model goes in
+another, or how are those
+
+156
+00:09:45.170 --> 00:09:47.930
+related? And the same are
+not the same at all?
+
+157
+00:09:48.410 --> 00:09:52.190
+Yeah. That there are different
+approaches. I think, to solving
+
+158
+00:09:52.550 --> 00:09:58.100
+high scalability problems CQRS, which
+goes hand in hand with
+
+159
+00:09:58.100 --> 00:10:02.150
+event, sourcing says he needs
+to separate your read and
+
+160
+00:10:02.150 --> 00:10:06.650
+your right concerns into different
+channels. And when you do
+
+161
+00:10:06.650 --> 00:10:10.730
+that, you introduce eventual consistency.
+So you don't expect to
+
+162
+00:10:10.730 --> 00:10:15.650
+see your rights immediately in
+your read channel, but that
+
+163
+00:10:15.650 --> 00:10:17.870
+then enables you to get
+over some of the scalability
+
+164
+00:10:17.870 --> 00:10:22.760
+limitations of traditional databases. You
+can kind of store your
+
+165
+00:10:22.760 --> 00:10:26.500
+data in several different places
+in Charlotte and push it
+
+166
+00:10:26.780 --> 00:10:30.470
+across it to the other
+side of the world. And
+
+167
+00:10:30.950 --> 00:10:34.430
+that's okay because you've got
+this eventual consistency and this
+
+168
+00:10:34.430 --> 00:10:40.430
+licensee, and you, you kind
+of give those, give those
+
+169
+00:10:40.430 --> 00:10:43.160
+cards away. And in the
+world of distributed systems, you,
+
+170
+00:10:43.280 --> 00:10:45.710
+you can't have it all,
+you gotta decide, what are
+
+171
+00:10:45.710 --> 00:10:48.500
+you going to give away?
+What, what trade offs are
+
+172
+00:10:48.500 --> 00:10:50.810
+you gonna make? So they
+are different approaches that make
+
+173
+00:10:50.810 --> 00:10:52.910
+different trade offs. And it
+just depends on what your
+
+174
+00:10:52.910 --> 00:10:57.980
+requirements are. Yeah, many years
+ago, I want to say
+
+175
+00:10:58.130 --> 00:11:04.280
+2004, 2005, I was working
+in, in banking. And certainly
+
+176
+00:11:04.280 --> 00:11:07.280
+I wasn't sophisticated enough to
+come up with a name
+
+177
+00:11:07.280 --> 00:11:10.940
+like CQRS or have conversations
+with Martin Fowler about it.
+
+178
+00:11:10.940 --> 00:11:14.420
+But we, we basically had
+the same idea that, well,
+
+179
+00:11:14.730 --> 00:11:16.730
+if you had a giant
+distributed system, which we had
+
+180
+00:11:16.730 --> 00:11:19.730
+built in decom, you can
+either get, you know, they
+
+181
+00:11:19.730 --> 00:11:23.540
+say good, fast or cheap,
+right. Pick two, you know,
+
+182
+00:11:23.540 --> 00:11:25.550
+you can get it fast
+or you can get it
+
+183
+00:11:25.670 --> 00:11:28.370
+consistent, meaning I do a
+right. And then I do
+
+184
+00:11:28.370 --> 00:11:32.150
+an immediate read and I
+get guaranteed that it's gonna
+
+185
+00:11:32.180 --> 00:11:34.880
+reflect the reality. Or maybe
+you just can't have a
+
+186
+00:11:34.880 --> 00:11:39.050
+really real time system. Like
+how real is real time.
+
+187
+00:11:39.620 --> 00:11:43.100
+Are you saying that with
+these virtual models, that it
+
+188
+00:11:43.100 --> 00:11:45.440
+will eventually all work itself
+out, as you say, eventual
+
+189
+00:11:45.440 --> 00:11:51.290
+consistency, but you can't have
+it perfectly to the millisecond
+
+190
+00:11:51.290 --> 00:11:55.450
+UpToDate and also fast, also
+scalable all at the same
+
+191
+00:11:55.450 --> 00:11:58.650
+time. I think you get
+some of that with Orleans,
+
+192
+00:11:59.310 --> 00:12:01.770
+the normal kind of trade
+offs you make in distributed
+
+193
+00:12:01.770 --> 00:12:04.200
+systems is around the cap
+theorem, right? So you can
+
+194
+00:12:04.200 --> 00:12:08.970
+have, you're going to have
+partition tolerance because that's going
+
+195
+00:12:08.970 --> 00:12:10.590
+to happen in your app,
+has to deal with it.
+
+196
+00:12:10.590 --> 00:12:13.170
+So it's really then does
+the app steer to the
+
+197
+00:12:13.380 --> 00:12:17.790
+consistency side or the availability
+side. And so in the
+
+198
+00:12:17.790 --> 00:12:22.440
+event of a network partition,
+when nodes kind of splits
+
+199
+00:12:22.440 --> 00:12:24.510
+and they can't speak to
+each other, what do you
+
+200
+00:12:24.510 --> 00:12:26.580
+want your application to do?
+Do you want it to
+
+201
+00:12:26.580 --> 00:12:30.090
+be available or do you
+want it to be consistent
+
+202
+00:12:30.090 --> 00:12:33.870
+and therefore not available or
+partially available? And there's all
+
+203
+00:12:33.870 --> 00:12:37.200
+kinds of nuances in between
+where you can have different
+
+204
+00:12:37.200 --> 00:12:40.440
+levels of guarantees, but that's
+broadly that the trade off
+
+205
+00:12:41.160 --> 00:12:45.210
+or Me, make sure we
+give context for some people
+
+206
+00:12:45.210 --> 00:12:48.450
+who may not know some
+of these acronyms. So I
+
+207
+00:12:48.450 --> 00:12:51.450
+use the common computer science
+joke, you know, good, faster,
+
+208
+00:12:51.450 --> 00:12:55.860
+cheap pick two, the cap
+theorem CAAP was called, you
+
+209
+00:12:55.860 --> 00:13:00.090
+know, as Eric Brewer's theorem
+that says something, a computer
+
+210
+00:13:00.090 --> 00:13:05.010
+science that a can distributed
+system can't be consistent where
+
+211
+00:13:05.250 --> 00:13:09.120
+everyone has the same data
+all the time available, where
+
+212
+00:13:09.330 --> 00:13:11.940
+every request gets a response
+and says, yes, it worked,
+
+213
+00:13:12.000 --> 00:13:14.970
+it didn't work or have
+partition tolerance where it's going
+
+214
+00:13:14.970 --> 00:13:18.630
+to continue to work during,
+you know, network failures. So
+
+215
+00:13:18.630 --> 00:13:24.540
+consistency, availability, and partition tolerance,
+hence cap. Are you saying
+
+216
+00:13:24.540 --> 00:13:27.780
+that, that, have we proven
+this wrong or is that
+
+217
+00:13:28.260 --> 00:13:33.330
+still an issue? New Orleans
+strictly keeps to cap theorem
+
+218
+00:13:33.330 --> 00:13:37.260
+and on the availability side,
+I see. So that is
+
+219
+00:13:37.260 --> 00:13:39.990
+the most important of the
+three from its perspective, From
+
+220
+00:13:39.990 --> 00:13:44.190
+his perspective, he has to
+maintain availability. So in the
+
+221
+00:13:45.330 --> 00:13:48.570
+situation of a partition in
+the network, you may well
+
+222
+00:13:48.570 --> 00:13:52.260
+get two activations of your
+actor. We call them grains
+
+223
+00:13:52.260 --> 00:13:56.130
+and Orleans, but there's things
+you can do to compensate
+
+224
+00:13:56.130 --> 00:13:59.070
+for that many. There's some
+active research going on into
+
+225
+00:13:59.490 --> 00:14:03.780
+how to reconcile these kinds
+of things. Or you can
+
+226
+00:14:04.980 --> 00:14:07.980
+defer to a consistent store,
+like the storage systems in
+
+227
+00:14:07.980 --> 00:14:10.800
+Azure to say, I need
+to be, I need to
+
+228
+00:14:11.040 --> 00:14:13.140
+be very certain that I'm
+the only activation. And then
+
+229
+00:14:13.140 --> 00:14:17.640
+you can, you can make
+your grain more C than
+
+230
+00:14:17.640 --> 00:14:22.260
+a, so you can make
+those trade offs at an
+
+231
+00:14:22.260 --> 00:14:25.650
+application level as well. But
+yet That's really interesting. I
+
+232
+00:14:25.650 --> 00:14:29.130
+think like it's one thing
+to say our framework values
+
+233
+00:14:29.160 --> 00:14:33.180
+CA ERP in a weighted
+way, but to allow the
+
+234
+00:14:33.180 --> 00:14:37.200
+programmer to decide as they,
+as they want, as the
+
+235
+00:14:37.200 --> 00:14:40.230
+situation applies, what is most
+important to them is interesting.
+
+236
+00:14:40.350 --> 00:14:44.010
+That's right. Yeah. So this
+started off as a Microsoft
+
+237
+00:14:44.010 --> 00:14:48.000
+research project, but this isn't
+a toy that they use
+
+238
+00:14:48.000 --> 00:14:51.920
+this for halo. They did.
+Yeah. Three, four, three industries
+
+239
+00:14:52.340 --> 00:14:56.240
+kind of approached MSR and
+said, but bringing out in
+
+240
+00:14:56.240 --> 00:14:58.520
+this game in three months
+and we really need a
+
+241
+00:14:58.520 --> 00:15:03.770
+system to support the back
+end services. And I said,
+
+242
+00:15:03.770 --> 00:15:07.160
+well, three months, yeah, we
+got this thing called Orleans.
+
+243
+00:15:07.760 --> 00:15:10.610
+And they, they got it.
+They got it done. We
+
+244
+00:15:10.610 --> 00:15:13.460
+got this thing called halo
+and it'll be fine. I
+
+245
+00:15:13.460 --> 00:15:15.680
+think it was one of
+the other games, not Haley
+
+246
+00:15:15.710 --> 00:15:19.100
+for, there was a game
+before then I forget the
+
+247
+00:15:19.100 --> 00:15:22.670
+name, but then the, it
+proved it with that game
+
+248
+00:15:22.670 --> 00:15:24.260
+that it could do the
+job. So when the halo
+
+249
+00:15:24.260 --> 00:15:26.780
+four came around, they pretty
+much got all the backend
+
+250
+00:15:26.780 --> 00:15:31.400
+services with Orleans and say,
+whenever you take a headshot
+
+251
+00:15:31.400 --> 00:15:35.030
+or something that all goes
+through your lens cluster, and
+
+252
+00:15:36.560 --> 00:15:39.680
+it supports the kind of
+second screen gaming and the,
+
+253
+00:15:40.020 --> 00:15:41.990
+the portal where you can
+see your stats and all
+
+254
+00:15:41.990 --> 00:15:44.800
+that stuff. So this has
+been proven. This is something
+
+255
+00:15:44.800 --> 00:15:47.500
+that we shouldn't worry about.
+We shouldn't say, Oh no,
+
+256
+00:15:47.500 --> 00:15:50.640
+one's using this or no,
+this can't be successful. This
+
+257
+00:15:50.930 --> 00:15:54.250
+is and has been successful.
+Yeah. It's, it's used on
+
+258
+00:15:54.250 --> 00:15:57.790
+several kind of internal Microsoft
+projects as well. So it's
+
+259
+00:15:57.790 --> 00:16:00.730
+not just the games that
+supports like the halos. It's
+
+260
+00:16:00.730 --> 00:16:06.190
+the Skype calls I run
+divert in Orleans and the
+
+261
+00:16:06.190 --> 00:16:09.580
+windows phone. If you remember
+those, they, they make use
+
+262
+00:16:09.580 --> 00:16:11.920
+of all ends as well.
+And bits of as your
+
+263
+00:16:12.220 --> 00:16:13.780
+so it's used all over
+the place and there's of
+
+264
+00:16:13.780 --> 00:16:16.600
+course, lots of external customers.
+You need people like visa
+
+265
+00:16:17.200 --> 00:16:21.640
+or using Orleans and, and
+some other projects. I probably
+
+266
+00:16:21.640 --> 00:16:25.720
+can't mention This episode of
+Hansel minutes is brought to
+
+267
+00:16:25.720 --> 00:16:29.440
+you by brain tree payments.
+Why make payment integration more
+
+268
+00:16:29.440 --> 00:16:32.890
+difficult than it has to
+be? Braintree's powerful. Full stack
+
+269
+00:16:32.920 --> 00:16:36.010
+payment platform allows you to
+accept nearly any type of
+
+270
+00:16:36.010 --> 00:16:39.850
+payment from any device. With
+one integration, it's flexible to
+
+271
+00:16:39.850 --> 00:16:43.180
+your system's needs, supports most
+programming languages. So whether you're
+
+272
+00:16:43.180 --> 00:16:46.870
+using Java, Ruby, or Python,
+you'll always have a range
+
+273
+00:16:46.870 --> 00:16:51.010
+of service side and client
+side SDKs available. Braintree makes
+
+274
+00:16:51.010 --> 00:16:54.100
+payments and your job a
+whole lot easier. You can
+
+275
+00:16:54.100 --> 00:17:07.210
+learn more@braintreepayments.com slash Hanselman. That's
+Braintree payments.com/hanselman. So why would
+
+276
+00:17:07.210 --> 00:17:09.250
+we use this for everything?
+Like this might be a
+
+277
+00:17:09.250 --> 00:17:13.570
+dumb question, but you've got
+perpetual existence where the actors
+
+278
+00:17:13.780 --> 00:17:15.880
+are just out there and
+you just ask for them.
+
+279
+00:17:15.940 --> 00:17:19.570
+And they're cool. They're always
+addressable. They get, they're always,
+
+280
+00:17:19.570 --> 00:17:22.690
+you know, they get in
+stance. It automatically you get
+
+281
+00:17:22.690 --> 00:17:25.240
+location transparency, which is what
+they always promised us in
+
+282
+00:17:25.240 --> 00:17:28.480
+deacon for, you know, 40
+years they've been promising us
+
+283
+00:17:28.870 --> 00:17:32.680
+location transparency. And this now
+is real. And then the
+
+284
+00:17:32.680 --> 00:17:36.760
+Holy grail automatic scale-out this
+means that doesn't this mean
+
+285
+00:17:36.760 --> 00:17:41.620
+we should write every application
+this way forever. Good question.
+
+286
+00:17:41.650 --> 00:17:47.170
+So thank you. I think
+Orleans has its strengths, but
+
+287
+00:17:47.170 --> 00:17:49.500
+it's not perfect for everything.
+You should pick the right
+
+288
+00:17:49.770 --> 00:17:53.520
+technology for your set of
+problems. And it's sometimes hard
+
+289
+00:17:53.520 --> 00:17:58.290
+to model your scenario with
+the constraints that all landscapes
+
+290
+00:17:58.290 --> 00:18:01.440
+you. So sometimes you want
+to do things like aggregate
+
+291
+00:18:01.650 --> 00:18:04.800
+queries. You want to say,
+give me the top five
+
+292
+00:18:05.610 --> 00:18:08.040
+best scores in the game
+or something like that, or
+
+293
+00:18:08.220 --> 00:18:12.150
+how many players I've got
+at the moment, the kind
+
+294
+00:18:12.150 --> 00:18:14.340
+of aggregate queries that you
+can run very easily in
+
+295
+00:18:14.340 --> 00:18:19.080
+a database select count star,
+but they don't work very
+
+296
+00:18:19.080 --> 00:18:23.730
+well in Orleans because you
+don't know what's activated or
+
+297
+00:18:23.730 --> 00:18:26.250
+not. You just got a
+bunch of objects and pool
+
+298
+00:18:26.250 --> 00:18:30.330
+their memory. And so to
+answer those aggregate queries, you've
+
+299
+00:18:30.330 --> 00:18:32.250
+got to go and do
+a bit more work. So
+
+300
+00:18:32.970 --> 00:18:35.330
+it's kind of things don't
+fit so well. And then
+
+301
+00:18:35.330 --> 00:18:37.220
+they're distributed, right? So if
+you decided to go and
+
+302
+00:18:37.220 --> 00:18:41.030
+model, you know, a universe
+or, you know, halo, and,
+
+303
+00:18:41.060 --> 00:18:44.030
+you know, you could certainly
+have you and I shooting
+
+304
+00:18:44.030 --> 00:18:47.450
+at each other. And presumably
+the Orleans system is going
+
+305
+00:18:47.450 --> 00:18:49.310
+to figure out the best
+way for us to be
+
+306
+00:18:49.310 --> 00:18:50.780
+able to do that. And
+maybe we'll end up on
+
+307
+00:18:50.780 --> 00:18:53.870
+the same machine. But then
+I want to suddenly say,
+
+308
+00:18:53.870 --> 00:18:56.780
+you know, for each player
+I'm going to for each
+
+309
+00:18:56.780 --> 00:19:01.370
+over 40 million players on X
+number of machines, that's not,
+
+310
+00:19:01.730 --> 00:19:04.040
+this is not that this
+is not a SQL database,
+
+311
+00:19:04.160 --> 00:19:07.400
+Correct? Yeah. You're not gonna
+write up. Don't want to
+
+312
+00:19:07.400 --> 00:19:09.290
+query, they're going to be
+talking to every single actor
+
+313
+00:19:09.290 --> 00:19:11.540
+in your system then that's,
+that's not going to scale.
+
+314
+00:19:12.170 --> 00:19:14.450
+Okay. Well, what about persistence
+then what's in the back
+
+315
+00:19:14.450 --> 00:19:17.270
+end, is it magical persistence
+or is it like a
+
+316
+00:19:17.270 --> 00:19:22.160
+giant distributed hash table? It's
+a swappable. So by default
+
+317
+00:19:22.160 --> 00:19:25.640
+you can have either as
+yours table storage, or you
+
+318
+00:19:25.640 --> 00:19:29.300
+can have blob storage, which
+was contributed by the community,
+
+319
+00:19:31.400 --> 00:19:34.850
+or you can have SQL
+or where you can go
+
+320
+00:19:34.850 --> 00:19:37.280
+and plug in your own
+thing. So people have written
+
+321
+00:19:37.280 --> 00:19:42.050
+providers for Reddis and for
+other database systems and Raven
+
+322
+00:19:42.050 --> 00:19:45.140
+DB, and you can go
+and plug it into that.
+
+323
+00:19:45.170 --> 00:19:48.350
+So you, you could in
+theory, just go and connect
+
+324
+00:19:48.350 --> 00:19:50.870
+to any data store. And
+there's this kind of automatic
+
+325
+00:19:50.870 --> 00:19:53.420
+persistence layer where it just
+persists, they're going in state
+
+326
+00:19:53.420 --> 00:19:55.730
+for you, but you can
+always go and just load
+
+327
+00:19:55.730 --> 00:19:57.650
+your own state by yourself.
+So you could take a
+
+328
+00:19:58.370 --> 00:20:02.690
+existing traditional database. That's been
+the property of your company
+
+329
+00:20:02.690 --> 00:20:04.670
+for years and just stick
+all in some on top
+
+330
+00:20:04.670 --> 00:20:09.710
+of that. And is this,
+this is a.net thing only,
+
+331
+00:20:09.710 --> 00:20:13.070
+right? So this runs in
+doesn't it? Yeah. I still
+
+332
+00:20:13.070 --> 00:20:17.840
+write for six one at
+the moment, Four 61. And
+
+333
+00:20:18.260 --> 00:20:20.720
+this is, is it a
+only a Microsoft thing now?
+
+334
+00:20:20.720 --> 00:20:24.260
+Because I understand that one
+of the original people on
+
+335
+00:20:24.260 --> 00:20:27.770
+the Microsoft research team, Gabriel
+Cleo now works at Google.
+
+336
+00:20:27.770 --> 00:20:31.070
+So this has kind of
+become a cross-company project. That's
+
+337
+00:20:31.070 --> 00:20:34.550
+right. So yeah, it is,
+it is full on that,
+
+338
+00:20:34.550 --> 00:20:37.520
+but we're looking, we are
+actively working on porting it
+
+339
+00:20:37.520 --> 00:20:41.900
+to.net core. So that'll give
+us the cross platform capability
+
+340
+00:20:41.900 --> 00:20:45.350
+that people are asking for,
+which is really good. And
+
+341
+00:20:45.560 --> 00:20:48.790
+yeah, there's a core team
+as a team of Microsoft
+
+342
+00:20:48.790 --> 00:20:51.910
+employees, about five or six
+of them who are paid
+
+343
+00:20:52.090 --> 00:20:57.010
+full time to work on
+this in Microsoft studios as
+
+344
+00:20:57.010 --> 00:21:00.100
+a kind of extended team
+in Microsoft research, research, civil
+
+345
+00:21:00.100 --> 00:21:03.940
+who are contributing. And then
+there's people in the core
+
+346
+00:21:03.940 --> 00:21:06.370
+team who are not Microsoft
+employees. So people that come
+
+347
+00:21:06.370 --> 00:21:09.640
+from the community and being
+given commit rights to the
+
+348
+00:21:09.640 --> 00:21:12.850
+repository, it's like Gabriel. Yeah.
+He left for Google, but
+
+349
+00:21:12.850 --> 00:21:16.060
+he's still merging pull requests
+and commenting on all threads.
+
+350
+00:21:16.660 --> 00:21:19.780
+And we've got people who've
+been recognized for being really
+
+351
+00:21:19.780 --> 00:21:24.130
+good contributors and made outstanding
+contributions. And they've been given
+
+352
+00:21:24.130 --> 00:21:27.910
+the keys to accept pull
+requests as well say this
+
+353
+00:21:28.180 --> 00:21:32.650
+fantastic is could you imagine
+saying this a few years
+
+354
+00:21:32.650 --> 00:21:36.460
+ago that you've given people
+in the community access to
+
+355
+00:21:37.630 --> 00:21:42.580
+maintain Microsoft's property? It's a
+fantastic situation to be in
+
+356
+00:21:42.580 --> 00:21:44.650
+isn't that way you can,
+you have enough trust in
+
+357
+00:21:44.650 --> 00:21:48.010
+people, random people on the
+internet. You've never met to
+
+358
+00:21:49.150 --> 00:21:51.070
+have permission to do anything.
+They want me to go
+
+359
+00:21:51.070 --> 00:21:54.930
+products. So how does, how
+does the sound like a
+
+360
+00:21:55.320 --> 00:21:57.990
+community is quite healthy? How
+do you make such a
+
+361
+00:21:57.990 --> 00:22:01.650
+successful and healthy community around
+something that is so, so
+
+362
+00:22:02.340 --> 00:22:04.890
+for lack of a better
+word, you know, PhD feeling,
+
+363
+00:22:05.220 --> 00:22:08.640
+Yeah, it is surprising how,
+how good the community is.
+
+364
+00:22:08.670 --> 00:22:13.560
+And I think there's lots
+of things, lots of reasons
+
+365
+00:22:13.560 --> 00:22:16.410
+why, why it's been successful.
+But I think the main
+
+366
+00:22:16.410 --> 00:22:21.030
+reason is that the human
+factors. So I think with
+
+367
+00:22:21.050 --> 00:22:23.970
+large open source projects, like
+no JS, you have a
+
+368
+00:22:24.150 --> 00:22:28.230
+committee of people who maintain
+and steer the projects, but
+
+369
+00:22:28.230 --> 00:22:30.630
+in smaller projects like this,
+I don't think that's so
+
+370
+00:22:30.630 --> 00:22:35.740
+appropriate. And what we have
+is, is a leader, the
+
+371
+00:22:36.060 --> 00:22:39.270
+main dev lead who's been
+running the project since it
+
+372
+00:22:39.270 --> 00:22:42.450
+was started as Sergei bike
+off. And he's fantastic. He's,
+
+373
+00:22:43.410 --> 00:22:46.200
+he's the best leader you
+could have is humble and
+
+374
+00:22:46.200 --> 00:22:49.980
+approachable and inclusive and encouraging.
+And he reaches out to
+
+375
+00:22:49.980 --> 00:22:52.740
+people in the community and
+he talks to them about
+
+376
+00:22:53.880 --> 00:22:56.430
+what I'm trying to do
+with Orleans and points them
+
+377
+00:22:56.430 --> 00:22:59.280
+in the right direction, everything
+else. So I don't think
+
+378
+00:22:59.280 --> 00:23:00.660
+we can be in a,
+I don't think we could
+
+379
+00:23:00.660 --> 00:23:05.490
+have a better guy behind
+the wheel already. So strong
+
+380
+00:23:05.490 --> 00:23:07.680
+leadership at the top is
+what you're saying the best
+
+381
+00:23:07.680 --> 00:23:09.630
+way is. And then is
+that, does the do then
+
+382
+00:23:09.690 --> 00:23:13.410
+set the, the attitude going
+down as far as like,
+
+383
+00:23:13.410 --> 00:23:15.300
+how are we going to
+treat, pull requests and how
+
+384
+00:23:15.300 --> 00:23:17.880
+are we going to treat
+our architecture and all that,
+
+385
+00:23:17.880 --> 00:23:20.310
+That kind of stuff. I
+definitely think, yeah, that, that
+
+386
+00:23:20.310 --> 00:23:25.350
+good community starts with, it's
+a good, strong leadership and
+
+387
+00:23:25.350 --> 00:23:28.200
+setting the right culture and
+then the rest will follow.
+
+388
+00:23:29.670 --> 00:23:32.550
+And he goes out of
+his way to try and
+
+389
+00:23:33.300 --> 00:23:35.970
+encourage the community and, and
+set a direction. So for
+
+390
+00:23:35.970 --> 00:23:39.000
+example, we have a clear
+roadmap of things we're trying
+
+391
+00:23:39.000 --> 00:23:42.600
+to achieve in the product
+with the, in the project.
+
+392
+00:23:43.170 --> 00:23:46.490
+And that's something went out
+to the community to go
+
+393
+00:23:46.490 --> 00:23:50.000
+and gather and put together
+and then presented back to
+
+394
+00:23:50.000 --> 00:23:53.840
+get feedback. So he's engaging
+people and working with people
+
+395
+00:23:54.200 --> 00:23:57.290
+in the community to build
+a roadmap that fits what
+
+396
+00:23:57.620 --> 00:24:01.610
+what's best for Orleans, not
+what's best, particularly for any
+
+397
+00:24:01.610 --> 00:24:06.190
+of his internal customers. And
+then that gives people a
+
+398
+00:24:06.680 --> 00:24:10.670
+focus, you know, something to
+work against some big things
+
+399
+00:24:10.670 --> 00:24:13.580
+in that roadmap to try
+and do like the port
+
+400
+00:24:13.580 --> 00:24:17.630
+to net core. And when
+you do that, it gives,
+
+401
+00:24:18.030 --> 00:24:19.880
+gives us kind of guidance
+to say, know, this is
+
+402
+00:24:19.880 --> 00:24:21.740
+what we're trying to achieve.
+And if you want to
+
+403
+00:24:21.740 --> 00:24:23.600
+go in, come to be
+a big feature, then have
+
+404
+00:24:23.600 --> 00:24:25.610
+a look at these things
+that are on the roadmap
+
+405
+00:24:25.610 --> 00:24:28.730
+and put your energy into
+these things rather than people
+
+406
+00:24:28.730 --> 00:24:31.250
+were taking off in odd
+tangents and directions of places
+
+407
+00:24:31.250 --> 00:24:35.080
+that you don't want your
+software to go. And is
+
+408
+00:24:35.080 --> 00:24:38.620
+a lot of this done
+in chat or virtual Hangouts,
+
+409
+00:24:38.620 --> 00:24:40.330
+or how do you, how
+do you collect this? Cause
+
+410
+00:24:40.330 --> 00:24:43.900
+everyone's so distributed now. Yeah,
+that's right. We've got lots
+
+411
+00:24:43.900 --> 00:24:49.030
+of channels. So we kind
+of do a virtual meetup,
+
+412
+00:24:49.060 --> 00:24:53.620
+which we stole from you
+where we a bit like.net
+
+413
+00:24:53.650 --> 00:24:57.970
+Hangouts, but we have a
+couple of presentations. People talk
+
+414
+00:24:57.970 --> 00:25:02.590
+about some feature they're working
+on in Orleans or some
+
+415
+00:25:02.590 --> 00:25:04.870
+ideas they have or how
+they use it, for example,
+
+416
+00:25:05.710 --> 00:25:08.440
+with the presentation. And then
+we have some questions afterwards,
+
+417
+00:25:08.500 --> 00:25:11.500
+such much more of a
+kind of meetup concept. We
+
+418
+00:25:11.500 --> 00:25:13.480
+try and get as many
+presenters in as possible and
+
+419
+00:25:13.480 --> 00:25:17.320
+have a conversation and a
+dialogue. So that's one means
+
+420
+00:25:17.320 --> 00:25:19.090
+there's anything that's really important
+for the kind of deep
+
+421
+00:25:19.660 --> 00:25:22.870
+techie stuff. We also have
+a Gitter channel, which is
+
+422
+00:25:22.870 --> 00:25:26.860
+the kind of new IRC
+I suppose. And that allows
+
+423
+00:25:26.860 --> 00:25:29.560
+us to have the kind
+of water cooler moments, I
+
+424
+00:25:29.560 --> 00:25:31.540
+think, where you all kind
+of hang out together and
+
+425
+00:25:31.540 --> 00:25:35.920
+chat about an issue probably
+more detailed than you would
+
+426
+00:25:35.920 --> 00:25:39.280
+want to put in the
+issues list, or just shoot
+
+427
+00:25:39.280 --> 00:25:41.980
+the breeze and talk about
+random stuff. That's not related
+
+428
+00:25:41.980 --> 00:25:45.460
+to a lens. And then
+we have the GitHub issues.
+
+429
+00:25:45.460 --> 00:25:47.830
+It's just oppose is the
+real engine of the decision
+
+430
+00:25:47.830 --> 00:25:51.010
+making and the fostering of
+ideas. And of course the,
+
+431
+00:25:51.130 --> 00:25:53.980
+the pull requests in there
+and the code reviews. So
+
+432
+00:25:53.980 --> 00:25:57.640
+I think there's no one,
+one way of, of running
+
+433
+00:25:57.640 --> 00:26:02.230
+it. Well, these things work
+together, but they're all very
+
+434
+00:26:02.230 --> 00:26:04.870
+useful. I think probably the
+most useful, most surprising to
+
+435
+00:26:04.870 --> 00:26:07.930
+me was that the getter
+channel, because that's really used
+
+436
+00:26:10.090 --> 00:26:13.120
+just as much as a
+kind of support mechanism as
+
+437
+00:26:13.120 --> 00:26:15.340
+it is for us to
+get together and people pop
+
+438
+00:26:15.340 --> 00:26:19.060
+in there, they ask a
+question often the questions are
+
+439
+00:26:19.060 --> 00:26:21.040
+quite open ended and not
+the kind of questions you
+
+440
+00:26:21.040 --> 00:26:23.680
+can really ask on stack
+overflow. You know, I've got
+
+441
+00:26:23.680 --> 00:26:27.100
+this problem, there's this kind
+of all lens problem. You
+
+442
+00:26:27.100 --> 00:26:29.350
+know, we cannot ask further
+questions and kind of try
+
+443
+00:26:29.350 --> 00:26:32.830
+and figure out what he's
+trying to do. And people
+
+444
+00:26:32.830 --> 00:26:34.840
+find that really, really helpful.
+I think being able to
+
+445
+00:26:34.840 --> 00:26:37.720
+have a dialogue rather than
+a kind of short, short
+
+446
+00:26:37.720 --> 00:26:41.440
+answer on stack overflow answer,
+Do you think it'll scale
+
+447
+00:26:41.440 --> 00:26:44.730
+though? I mean, at some
+point don't you think at
+
+448
+00:26:44.730 --> 00:26:47.520
+some point a framework will
+become so popular or so,
+
+449
+00:26:47.970 --> 00:26:52.500
+you know, so, so, so
+used that, that kind of
+
+450
+00:26:52.530 --> 00:26:56.720
+high touch can't scale, Essentially
+question, isn't it? I think
+
+451
+00:26:58.490 --> 00:27:01.940
+I hope that when the,
+when the popularity grows and
+
+452
+00:27:01.940 --> 00:27:04.550
+you get more users at
+the same time, your community
+
+453
+00:27:04.550 --> 00:27:07.010
+grows as well. And then
+you've got a bigger kind
+
+454
+00:27:07.010 --> 00:27:11.510
+of contact area to touch
+with. We don't know until
+
+455
+00:27:11.510 --> 00:27:14.420
+we scale it. I mean,
+it's not something where we're
+
+456
+00:27:14.420 --> 00:27:17.000
+worrying too much about it
+at the moment, but it'd
+
+457
+00:27:17.000 --> 00:27:20.000
+be a nice problem to
+have. So we'll wait and
+
+458
+00:27:20.000 --> 00:27:23.990
+see. So how hard is
+this to get started? What's
+
+459
+00:27:23.990 --> 00:27:26.480
+the hello world scenario? Cause
+you know, when we think
+
+460
+00:27:26.480 --> 00:27:31.070
+about these new frameworks that
+are opinionated, that declare, you
+
+461
+00:27:31.070 --> 00:27:33.530
+know, you should do your
+things like this. Sometimes it
+
+462
+00:27:33.530 --> 00:27:35.510
+can be a little overwhelming
+to set up and get
+
+463
+00:27:35.510 --> 00:27:40.220
+started. Yeah. Trying to reduce
+friction, both for developers and
+
+464
+00:27:40.220 --> 00:27:42.650
+for, for users of all
+ends has been really quite
+
+465
+00:27:42.650 --> 00:27:44.840
+important. And so we've tried
+to make it as easy
+
+466
+00:27:44.840 --> 00:27:50.240
+as possible to get started
+by providing documentation and samples
+
+467
+00:27:50.240 --> 00:27:54.170
+and everything else. But you
+can literally new get installed
+
+468
+00:27:55.370 --> 00:27:58.940
+a couple of packages and
+you create a peninsula face,
+
+469
+00:27:58.940 --> 00:28:04.280
+you create a concrete class,
+download a kind of runtime,
+
+470
+00:28:04.280 --> 00:28:07.310
+or you host the aliens,
+runtime yourself, and you're going,
+
+471
+00:28:08.330 --> 00:28:12.440
+so it's not that tricky.
+It's quite straight forward. Lots
+
+472
+00:28:12.440 --> 00:28:15.290
+of people managed to get
+a hell of a well
+
+473
+00:28:15.290 --> 00:28:18.950
+to work. So I encourage
+you to have it. Have
+
+474
+00:28:18.950 --> 00:28:22.010
+you had a go Scott?
+I have not had a
+
+475
+00:28:22.010 --> 00:28:25.880
+go, but I apparently I
+have to. Now It is
+
+476
+00:28:25.880 --> 00:28:29.930
+easy here. It's too easy.
+Are there other frameworks though,
+
+477
+00:28:29.930 --> 00:28:32.060
+like, is Orleans the only
+way to do the actor
+
+478
+00:28:32.060 --> 00:28:36.410
+model? And I know that
+there's a, there's a aca.net.
+
+479
+00:28:36.470 --> 00:28:38.630
+I know that there's service
+fabric. I'm sure there's probably
+
+480
+00:28:38.630 --> 00:28:41.960
+others. How do I, Yeah,
+it's funny. Five years ago,
+
+481
+00:28:41.960 --> 00:28:44.450
+they were kind of no
+actor models on that to
+
+482
+00:28:44.450 --> 00:28:46.970
+choose from. And now there
+are three and you're right.
+
+483
+00:28:46.970 --> 00:28:50.630
+Their service fabric has a
+actor model over the top
+
+484
+00:28:50.630 --> 00:28:53.750
+of it. I can.net, which
+is a port of the
+
+485
+00:28:53.750 --> 00:28:57.530
+Java hacker projects. And of
+course all ins now, so
+
+486
+00:28:57.530 --> 00:29:01.310
+choice is good. And we
+actively try and reach out
+
+487
+00:29:01.310 --> 00:29:04.070
+to those people as well
+and see how we can
+
+488
+00:29:04.070 --> 00:29:08.510
+work together. They're all slightly
+different. They make different trade
+
+489
+00:29:08.510 --> 00:29:11.600
+offs. So I wouldn't say
+they're all direct competitors. They're
+
+490
+00:29:11.600 --> 00:29:16.400
+in kind of slightly different
+markets. It's really interesting to
+
+491
+00:29:16.400 --> 00:29:22.220
+see that a chap called
+Evan Bravo has built an
+
+492
+00:29:22.220 --> 00:29:24.140
+API over the top of
+all ends to make it
+
+493
+00:29:24.140 --> 00:29:26.990
+look more like Aker. He
+calls it that Orlean anchor,
+
+494
+00:29:28.160 --> 00:29:30.200
+and you can go and
+download that. And an ACA
+
+495
+00:29:30.560 --> 00:29:32.990
+user probably feel more comfortable
+using a lens that way.
+
+496
+00:29:33.230 --> 00:29:37.370
+And it's got fantastic gift
+shop support. And another guy
+
+497
+00:29:37.670 --> 00:29:41.150
+ribbon bond has got Orleans
+running on top of service.
+
+498
+00:29:41.740 --> 00:29:43.540
+So you can kind of
+get the base best of
+
+499
+00:29:43.540 --> 00:29:47.890
+both worlds together. They cluster
+membership and that data locality
+
+500
+00:29:47.890 --> 00:29:51.910
+of service fabric. But the,
+I would say slightly better
+
+501
+00:29:52.030 --> 00:29:56.310
+AXA model that Orleans provides
+certainly has more features. So
+
+502
+00:29:56.310 --> 00:29:58.980
+how do you run an
+actor model on top of
+
+503
+00:29:58.980 --> 00:30:01.440
+an actor model and why
+is that Good thing? Well,
+
+504
+00:30:01.440 --> 00:30:08.970
+the ribbons developed this project
+that's he's opensourced, which kind
+
+505
+00:30:08.970 --> 00:30:12.720
+of bootstraps all ends on
+top of service fabric. I
+
+506
+00:30:12.720 --> 00:30:16.440
+think it bypasses service fabrics
+actors and goes straight into
+
+507
+00:30:16.890 --> 00:30:20.610
+their services cause it's kind
+of multi-tiered system, isn't it
+
+508
+00:30:20.610 --> 00:30:23.550
+service fabric where you can
+pick your level of abstraction.
+
+509
+00:30:23.550 --> 00:30:26.850
+So he's gone down deeper
+and we're currently working on
+
+510
+00:30:26.850 --> 00:30:32.580
+ways to make Orleans plug
+better into service fabric, which
+
+511
+00:30:32.580 --> 00:30:36.810
+will slowly get through. Hopefully
+That means you kind of,
+
+512
+00:30:36.810 --> 00:30:38.550
+you, you do get the
+best of all the different
+
+513
+00:30:38.550 --> 00:30:41.160
+things that are available to
+you. There's there's value on
+
+514
+00:30:41.160 --> 00:30:42.810
+all these sides. And when
+you add them up, you
+
+515
+00:30:42.810 --> 00:30:44.790
+do get something that is
+better than the sum of
+
+516
+00:30:44.790 --> 00:30:47.730
+it. I think so I
+think the service fabric and
+
+517
+00:30:47.730 --> 00:30:52.080
+Orleans combination could be, could
+be really strong. I think
+
+518
+00:30:53.100 --> 00:30:56.250
+there's a bit of complexity
+because you're introducing more moving
+
+519
+00:30:56.250 --> 00:31:00.300
+parts, but there might be,
+might be the way to
+
+520
+00:31:00.300 --> 00:31:03.120
+go in the future here.
+It'd be really nice to
+
+521
+00:31:03.120 --> 00:31:06.660
+see the service fabric team
+kind of cooperating and kind
+
+522
+00:31:06.660 --> 00:31:10.650
+of embrace all ends a
+bit more that we'll see
+
+523
+00:31:10.890 --> 00:31:13.590
+maybe one day I'll open
+source that as well. Well,
+
+524
+00:31:13.590 --> 00:31:15.480
+it sounds like with all
+of these things, if they're
+
+525
+00:31:15.480 --> 00:31:19.650
+open source and if they
+run hopefully cross platform and
+
+526
+00:31:19.710 --> 00:31:24.960
+they have enthusiastic communities while
+there is competition, there can
+
+527
+00:31:24.960 --> 00:31:30.000
+also be coopertition. Yeah, I
+don't, I certainly don't see
+
+528
+00:31:30.000 --> 00:31:34.830
+these other projects as a
+threat. So I think Stephanie Good
+
+529
+00:31:34.830 --> 00:31:40.080
+to, to have yeah. Kind
+of a friendly rivalry to
+
+530
+00:31:40.080 --> 00:31:44.700
+see. Yeah. W it's not
+about which is the best
+
+531
+00:31:44.700 --> 00:31:47.550
+or anything is it's just
+about how, you know, how
+
+532
+00:31:47.550 --> 00:31:49.320
+can we all serve the
+domain community? Really, these are
+
+533
+00:31:49.320 --> 00:31:52.710
+all acted on that and
+all ends are open source.
+
+534
+00:31:52.710 --> 00:31:55.260
+So it's not like we're
+making any money out of
+
+535
+00:31:55.260 --> 00:32:00.180
+it. It's just, it's just
+giving.net guys much more, more
+
+536
+00:32:00.180 --> 00:32:04.290
+choices in it and more
+freedom. Very cool. So folks
+
+537
+00:32:04.290 --> 00:32:11.490
+can learn about orleans@a.net dot
+github.io/orleans or L E a
+
+538
+00:32:11.490 --> 00:32:15.810
+N S. And it's got
+a very, very real approachable
+
+539
+00:32:16.680 --> 00:32:20.130
+website. The code is on
+GitHub. There's both stable and
+
+540
+00:32:20.130 --> 00:32:24.270
+unstable releases that you can
+get it's regularly being worked
+
+541
+00:32:24.270 --> 00:32:28.290
+on. And it has really
+lovely and complete documentation as
+
+542
+00:32:28.290 --> 00:32:32.640
+well. It is a very
+well run project. And as
+
+543
+00:32:32.640 --> 00:32:37.530
+you may have seen during
+the.net comp kind of opening
+
+544
+00:32:37.560 --> 00:32:40.580
+a state of the union
+address, I, it Shows up
+
+545
+00:32:40.580 --> 00:32:43.700
+as one of the most
+active projects within the entire.net
+
+546
+00:32:43.700 --> 00:32:48.080
+open source community. That's right.
+Yep. This has been great.
+
+547
+00:32:48.080 --> 00:32:50.090
+I really appreciate you taking
+the time to break it
+
+548
+00:32:50.090 --> 00:32:52.280
+all down for us today.
+Thank you for having me
+
+549
+00:32:52.370 --> 00:32:55.880
+this it's good. It's I
+can't really stress enough. How,
+
+550
+00:32:56.290 --> 00:32:59.450
+how important it is to
+have a good community around
+
+551
+00:32:59.450 --> 00:33:03.140
+these kinds of projects. When
+I could have come on
+
+552
+00:33:03.140 --> 00:33:06.170
+the show and you invited
+me on, and I went
+
+553
+00:33:06.170 --> 00:33:07.880
+onto, I guess, a channel
+and said, has anyone got
+
+554
+00:33:07.880 --> 00:33:10.190
+any ideas of what I
+can talk about? And one
+
+555
+00:33:10.190 --> 00:33:14.030
+guy, the overwhelming response was
+we came to all ends
+
+556
+00:33:14.030 --> 00:33:17.030
+because of the community, because
+we tried a few other
+
+557
+00:33:17.030 --> 00:33:21.260
+places and they weren't very
+friendly or they didn't really
+
+558
+00:33:21.260 --> 00:33:24.560
+want the contribution, or we
+didn't, they didn't answer our
+
+559
+00:33:24.560 --> 00:33:27.470
+questions. And so we bounced
+around the bed and we
+
+560
+00:33:27.470 --> 00:33:29.060
+ended up on the lens
+and there has been great.
+
+561
+00:33:29.090 --> 00:33:30.380
+And we going to stay
+here and we're going to
+
+562
+00:33:30.380 --> 00:33:32.750
+become contributors, and we're going
+to help you build this
+
+563
+00:33:32.750 --> 00:33:36.530
+thing and we're going to
+talk about it and come
+
+564
+00:33:36.530 --> 00:33:41.390
+to be features. So I
+think in several cases, the
+
+565
+00:33:41.450 --> 00:33:44.180
+strength of the community has
+won a small, more business.
+
+566
+00:33:44.180 --> 00:33:46.850
+If you like an open
+source product and projects, then
+
+567
+00:33:47.570 --> 00:33:51.020
+say more users. That's great.
+It's better, isn't it? Well,
+
+568
+00:33:51.020 --> 00:33:53.990
+hopefully people will look at
+it and watch how you
+
+569
+00:33:53.990 --> 00:33:57.230
+all react to pull requests
+and issues and see what
+
+570
+00:33:57.230 --> 00:34:00.380
+a healthy community looks like
+and try to mirror and
+
+571
+00:34:00.380 --> 00:34:05.210
+emulate that. Super thanks so
+much. Richard Asprey for chatting
+
+572
+00:34:05.210 --> 00:34:08.630
+with me today. This has
+been another episode of Hanselminutes
+
+573
+00:34:08.630 --> 00:34:10.250
+and we'll see you again
+next week.
+

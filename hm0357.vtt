@@ -1,0 +1,2836 @@
+WEBVTT FILE
+
+1
+00:00:12.080 --> 00:00:16.490
+From Hanselman it's dot com.
+It's Hansel minutes. Oh, weekly
+
+2
+00:00:16.490 --> 00:00:20.510
+discussion with web developer and
+technologist Scott Hanselman. This is
+
+3
+00:00:20.510 --> 00:00:27.200
+Lawrence Ryan announcing show number three
+60 recorded live Thursday, February 28th, 2013.
+
+4
+00:00:27.830 --> 00:00:31.190
+Support for Hanselman is this
+provided by Tellerik offering the
+
+5
+00:00:31.190 --> 00:00:38.240
+best in developer tools and
+support online@telerik.com and by Franklin
+
+6
+00:00:38.240 --> 00:00:41.930
+stock net training developers to
+work smarter and now offering
+
+7
+00:00:41.930 --> 00:00:45.380
+gesture pack a powerful gesture,
+recording and recognition system for
+
+8
+00:00:45.380 --> 00:00:52.670
+Microsoft connect for windows developers
+details@gesturepak.com. In this episode, Scott
+
+9
+00:00:52.670 --> 00:00:56.330
+talks with dwell and Falco
+about his approval tests, open
+
+10
+00:00:56.330 --> 00:01:01.310
+source project. Hi, this is
+Scott Hanselman and this is
+
+11
+00:01:01.310 --> 00:01:03.410
+another episode of Hansel minutes
+and I'm here at agile
+
+12
+00:01:03.410 --> 00:01:06.950
+open Northwest in Portland. Oregon
+just came over from a
+
+13
+00:01:06.980 --> 00:01:09.740
+lovely lunch and all sorts
+of agile luminaries and really
+
+14
+00:01:09.740 --> 00:01:11.510
+cool people in there. But
+now I'm sitting here with
+
+15
+00:01:11.510 --> 00:01:14.480
+you, Llewellyn, Falco. How are
+you, sir? I'm doing great.
+
+16
+00:01:14.510 --> 00:01:16.970
+Good to be here. Now
+you've got a project called
+
+17
+00:01:16.970 --> 00:01:19.940
+approval tests. Yes, people can
+go out and Google for
+
+18
+00:01:19.940 --> 00:01:21.260
+it and find that it's
+up on GitHub and you've
+
+19
+00:01:21.260 --> 00:01:23.390
+got lots of videos and
+you've actually got a little
+
+20
+00:01:23.390 --> 00:01:28.010
+course where series about approval
+tests on YouTube. Why should
+
+21
+00:01:28.010 --> 00:01:30.710
+I care about approval tests?
+Well, why should you care
+
+22
+00:01:30.710 --> 00:01:32.660
+about approval tests or why
+should you care about testing
+
+23
+00:01:32.690 --> 00:01:34.670
+at all? Well, that's a
+good question. Let's start with
+
+24
+00:01:34.670 --> 00:01:36.350
+your project and we'll get
+into why I should care
+
+25
+00:01:36.350 --> 00:01:39.260
+about testing at all. So
+if you care about testing,
+
+26
+00:01:39.860 --> 00:01:42.380
+you'll run up against things
+that are harder to test.
+
+27
+00:01:43.310 --> 00:01:47.360
+And that I find personally
+that when I have something
+
+28
+00:01:47.360 --> 00:01:49.430
+that's harder to do, I
+tend to do it less.
+
+29
+00:01:50.450 --> 00:01:53.240
+And so there's that sort
+of natural feed and approval
+
+30
+00:01:53.240 --> 00:01:55.310
+test will make things easier
+for you to test. And
+
+31
+00:01:55.310 --> 00:01:57.890
+that means you will do
+it more. And, you know,
+
+32
+00:01:58.040 --> 00:02:00.650
+I think sort of a
+tenant of programming is let's
+
+33
+00:02:00.650 --> 00:02:03.740
+be lazy. Yeah, exactly. The
+best programmers are the laziest.
+
+34
+00:02:03.740 --> 00:02:07.280
+Exactly. So I know that
+just setting up unit tests
+
+35
+00:02:07.280 --> 00:02:10.010
+can be frustrating and there's
+X unit and unit and
+
+36
+00:02:10.010 --> 00:02:11.810
+ms. Test and lots of
+different things to choose from.
+
+37
+00:02:12.200 --> 00:02:15.680
+But then there's also integration
+tests and people are always
+
+38
+00:02:15.680 --> 00:02:19.550
+asking about like selenium for
+browser testing or different testing
+
+39
+00:02:19.550 --> 00:02:23.540
+things. Leash do informs. Then
+there's things like BDD behavior
+
+40
+00:02:23.540 --> 00:02:27.800
+driven testing and there's spec
+flow and cucumber even deciding
+
+41
+00:02:27.800 --> 00:02:30.200
+on a test framework can
+itself be a little bit
+
+42
+00:02:30.200 --> 00:02:33.110
+difficult and confusing a lot
+to choose from really. And
+
+43
+00:02:33.140 --> 00:02:35.600
+I think in the.net world,
+we have more choices than
+
+44
+00:02:35.660 --> 00:02:38.480
+many other places. So it
+just adds more to the,
+
+45
+00:02:39.440 --> 00:02:42.290
+to that upfront decision. So
+if I buy into approval
+
+46
+00:02:42.290 --> 00:02:44.450
+test, which is your framework,
+is that something that is
+
+47
+00:02:44.450 --> 00:02:46.580
+going to work with an
+existing framework I have, or
+
+48
+00:02:46.700 --> 00:02:49.910
+am I going to layer
+your stuff on top of,
+
+49
+00:02:49.910 --> 00:02:52.550
+and it's just, you're going
+to layer underneath. Yeah. Underneath.
+
+50
+00:02:52.670 --> 00:02:55.370
+Yeah. So I have a
+very big, I hate making
+
+51
+00:02:55.370 --> 00:02:57.860
+that choice myself and there's
+all these great tools that
+
+52
+00:02:57.860 --> 00:03:01.390
+are already out there supporting
+these other frameworks. And so
+
+53
+00:03:01.390 --> 00:03:03.520
+I, you know, in the
+spirit of being lazy, I
+
+54
+00:03:03.520 --> 00:03:06.580
+wanted to keep using all
+those things for me. And
+
+55
+00:03:06.580 --> 00:03:09.970
+so we are just a
+deal that sits underneath that
+
+56
+00:03:09.970 --> 00:03:12.520
+gives you a more powerful
+way of doing an assert.
+
+57
+00:03:13.110 --> 00:03:17.070
+Okay. Interesting. So rather than
+wrapping existing things or sitting
+
+58
+00:03:17.070 --> 00:03:20.040
+on top of, or buying
+into, which I think some
+
+59
+00:03:20.040 --> 00:03:23.670
+other frameworks Yeah. When those
+frameworks work that way, right?
+
+60
+00:03:24.180 --> 00:03:26.120
+Like, like some of the
+BDD things, it's like, you
+
+61
+00:03:26.130 --> 00:03:27.540
+know, they'll shout test this
+way. So I'm going to
+
+62
+00:03:27.540 --> 00:03:29.730
+test the same way I
+tested before. But then when
+
+63
+00:03:29.730 --> 00:03:32.280
+things get complicated for an
+assert, like for example, if
+
+64
+00:03:32.280 --> 00:03:36.240
+I wanted to assert the
+output of a certain array,
+
+65
+00:03:36.600 --> 00:03:38.190
+let's say I've got an
+array of a hundred things.
+
+66
+00:03:38.190 --> 00:03:40.800
+And I want to say,
+did this look exactly as
+
+67
+00:03:40.800 --> 00:03:43.980
+I expect? And that's something
+that asserts were never meant
+
+68
+00:03:43.980 --> 00:03:46.410
+to do well. And part
+of the skill of unit
+
+69
+00:03:46.410 --> 00:03:49.560
+testing was a figuring out,
+how do I test that
+
+70
+00:03:49.560 --> 00:03:52.440
+array? But actually you'll see
+if you sit with a
+
+71
+00:03:52.440 --> 00:03:54.780
+lot of the people who
+do unit testing a lot,
+
+72
+00:03:55.080 --> 00:03:57.330
+their skill was figuring out
+how do I write a
+
+73
+00:03:57.330 --> 00:04:00.600
+test that doesn't need a
+hundred things, but will give
+
+74
+00:04:00.600 --> 00:04:02.610
+me the results. And that
+takes a lot of effort.
+
+75
+00:04:02.880 --> 00:04:04.620
+And what I found is
+once I was able to,
+
+76
+00:04:05.160 --> 00:04:08.370
+you know, verify a hundred
+Ray array, I had to
+
+77
+00:04:08.370 --> 00:04:10.710
+do a lot less work
+to just write a regular
+
+78
+00:04:10.710 --> 00:04:12.420
+unit test. And I could
+write unit tests that were
+
+79
+00:04:12.420 --> 00:04:14.850
+closer to what my customers
+were thinking closer to what
+
+80
+00:04:14.850 --> 00:04:18.120
+I was thinking. Interesting. So
+I'm hearing you say that
+
+81
+00:04:18.430 --> 00:04:21.660
+that purist of unit testing
+might not appreciate some of
+
+82
+00:04:21.660 --> 00:04:23.670
+the things that we're trying
+to test. Like you're trying
+
+83
+00:04:23.670 --> 00:04:25.770
+to test that a hundred
+things are exactly as they
+
+84
+00:04:25.770 --> 00:04:27.630
+should be in an array.
+What are you doing? You're
+
+85
+00:04:27.630 --> 00:04:30.210
+doing it wrong well, and
+you're making it easy for
+
+86
+00:04:30.210 --> 00:04:32.070
+me to do it that
+way. Exactly. I think any
+
+87
+00:04:32.070 --> 00:04:35.340
+time that you spend effort
+to get good at something,
+
+88
+00:04:36.480 --> 00:04:38.760
+you feel like that effort
+should be there. And I
+
+89
+00:04:38.760 --> 00:04:41.220
+see that in programmers all
+the time, especially around stuff
+
+90
+00:04:41.220 --> 00:04:43.650
+like VI and suffers, like
+I have learned to do
+
+91
+00:04:43.650 --> 00:04:45.750
+this. Why, what do you
+mean you're using these shortcuts?
+
+92
+00:04:45.750 --> 00:04:47.760
+Or what are you using
+this visual editor for? Like,
+
+93
+00:04:48.210 --> 00:04:50.790
+they forget that just because
+they put effort in, it
+
+94
+00:04:50.790 --> 00:04:54.300
+doesn't necessarily mean it has
+to be that way. Okay.
+
+95
+00:04:54.300 --> 00:04:57.230
+So let's say I like
+X unit. Can I use
+
+96
+00:04:57.250 --> 00:05:00.540
+X unit with approval tests?
+Absolutely. So whether you call
+
+97
+00:05:00.540 --> 00:05:03.210
+them assertions, but they, you
+know, they, they, the different
+
+98
+00:05:03.240 --> 00:05:05.580
+unit testing frameworks may not
+call them that. But the
+
+99
+00:05:05.670 --> 00:05:07.770
+essence is the same Essence
+is usually the same. And
+
+100
+00:05:07.770 --> 00:05:09.690
+usually it maps one to
+one, whether you use the
+
+101
+00:05:09.690 --> 00:05:13.320
+word assert or should be
+or whatever language it is,
+
+102
+00:05:13.350 --> 00:05:16.500
+I have a primitive, usually
+on one side, matching a
+
+103
+00:05:16.500 --> 00:05:19.830
+primitive on the other side
+and approval tests takes a
+
+104
+00:05:19.860 --> 00:05:24.990
+very fundamentally different approach to
+this. It says, produce your
+
+105
+00:05:24.990 --> 00:05:28.290
+object. I'm going to show
+it to you. And once
+
+106
+00:05:28.290 --> 00:05:30.270
+you say, it's okay, as
+long as you continue to
+
+107
+00:05:30.270 --> 00:05:33.990
+produce it, I'm going to
+pass. And if you fail,
+
+108
+00:05:34.230 --> 00:05:36.540
+I'm then going to show
+you what you used to
+
+109
+00:05:36.570 --> 00:05:38.700
+have and what you have
+now. And I'm going to
+
+110
+00:05:38.700 --> 00:05:40.880
+give you different tools. One
+of the things approval test
+
+111
+00:05:40.880 --> 00:05:44.250
+does is it opens up
+other programs to help you
+
+112
+00:05:44.250 --> 00:05:46.860
+do that. So if you
+do have that long string
+
+113
+00:05:46.860 --> 00:05:49.710
+of, you know, array of
+a hundred, we will open
+
+114
+00:05:49.710 --> 00:05:53.100
+it up in a text
+editor or a dif program
+
+115
+00:05:53.130 --> 00:05:55.710
+of your choice, right? There's
+lots of different options because
+
+116
+00:05:55.860 --> 00:05:58.580
+everyone has their favorite diff
+tool. But the diff tool
+
+117
+00:05:58.580 --> 00:06:00.890
+then gives you extra information.
+So you don't just see
+
+118
+00:06:01.100 --> 00:06:02.810
+here's a hundred lines of
+texts. Here's a hundred lines
+
+119
+00:06:02.810 --> 00:06:05.840
+of texts. What's different. It
+will start highlighting on line
+
+120
+00:06:05.840 --> 00:06:08.990
+99. You know, we're missing
+this line and that can
+
+121
+00:06:08.990 --> 00:06:12.920
+help you see, you know,
+the line is missing. Another
+
+122
+00:06:12.920 --> 00:06:16.910
+line got added or the
+line got changed. All different
+
+123
+00:06:16.910 --> 00:06:19.840
+things that you don't normally
+get from an assert. So
+
+124
+00:06:19.840 --> 00:06:22.120
+you're saying that this though,
+that that's concerning to me,
+
+125
+00:06:22.120 --> 00:06:24.190
+I think of unit tests
+as something that are very
+
+126
+00:06:25.000 --> 00:06:27.310
+not interactive. Is this something
+that I see while I'm
+
+127
+00:06:27.310 --> 00:06:29.560
+developing the test or while
+the test is running on
+
+128
+00:06:29.560 --> 00:06:33.790
+a headless surface somewhere? So
+there's two stages it's interactive
+
+129
+00:06:33.790 --> 00:06:37.300
+until you get it working.
+Once you get it working
+
+130
+00:06:37.300 --> 00:06:41.910
+it's then non-interactive I see
+until it fails, right? So
+
+131
+00:06:41.980 --> 00:06:44.140
+it can run on a
+headless server and just fail.
+
+132
+00:06:44.200 --> 00:06:46.990
+Right. But when you go
+back and you say, why
+
+133
+00:06:46.990 --> 00:06:48.910
+is this failing? Then it's
+going to interact with you
+
+134
+00:06:48.910 --> 00:06:51.700
+and say, Hey, this is
+why it's failing. Okay. So
+
+135
+00:06:51.700 --> 00:06:54.640
+how do I tell the
+system that it is a
+
+136
+00:06:54.670 --> 00:06:57.850
+headless and shouldn't be popping
+dialogue boxes with tortoise diff.
+
+137
+00:06:58.330 --> 00:07:04.120
+So we use attributes called
+reporters, and you can configure
+
+138
+00:07:04.120 --> 00:07:07.120
+those sort of at multiple
+levels. You can configure them
+
+139
+00:07:07.120 --> 00:07:10.390
+at the method level, use
+this reporter. You can configure
+
+140
+00:07:10.390 --> 00:07:13.450
+them at the class level,
+use this reporter and you
+
+141
+00:07:13.450 --> 00:07:18.190
+can configure them at the
+assembly level. And it uses
+
+142
+00:07:18.190 --> 00:07:21.550
+the method of least surprise.
+So if it's a method
+
+143
+00:07:21.820 --> 00:07:23.860
+it's going to show up
+there, it's going to override
+
+144
+00:07:23.860 --> 00:07:25.420
+the class. If it's on
+the class, it's going to
+
+145
+00:07:25.420 --> 00:07:28.120
+override what's at the assembly
+level, but there is also
+
+146
+00:07:28.150 --> 00:07:30.550
+a in front of things.
+So it can detect I'm
+
+147
+00:07:30.550 --> 00:07:33.670
+on a build server or
+I'm on a headless system
+
+148
+00:07:33.880 --> 00:07:35.470
+and it won't do it.
+And does it do that
+
+149
+00:07:35.470 --> 00:07:37.510
+with a config switch somewhere?
+Or how do you know
+
+150
+00:07:37.510 --> 00:07:39.820
+that I'm going to build
+server Approval test knows based
+
+151
+00:07:39.820 --> 00:07:43.720
+on some of just the
+builds servers. Right? So right
+
+152
+00:07:43.720 --> 00:07:45.910
+now that we use team
+city a lot and it
+
+153
+00:07:45.910 --> 00:07:49.330
+will detect that team city
+is running it, conversely, we
+
+154
+00:07:49.330 --> 00:07:52.150
+use in crunch a lot,
+which in crunch will run
+
+155
+00:07:52.150 --> 00:07:55.120
+every second. As you do
+keystrokes, you don't want stuff
+
+156
+00:07:55.150 --> 00:07:56.950
+popping up all the time.
+So it will detect if
+
+157
+00:07:56.950 --> 00:08:01.210
+in crunches running it, versus
+if, if you're running it
+
+158
+00:08:01.210 --> 00:08:05.110
+through ms. Test and visual
+studio interactively. Exactly. And it
+
+159
+00:08:05.410 --> 00:08:09.250
+will sort of default to
+not be interactive if it
+
+160
+00:08:09.250 --> 00:08:13.330
+doesn't need to in general
+approval test uses convention over
+
+161
+00:08:13.330 --> 00:08:16.780
+configuration. Right. But you can
+always go to configuration. You
+
+162
+00:08:16.780 --> 00:08:19.930
+can always hard put in
+if I haven't thought about
+
+163
+00:08:19.930 --> 00:08:23.950
+your situation or you're doing
+something unique. So some testing
+
+164
+00:08:23.950 --> 00:08:29.440
+frameworks say assert and other
+ones say, expect yours uses
+
+165
+00:08:29.440 --> 00:08:33.220
+this verb verify a lot.
+Yeah. And that seems as
+
+166
+00:08:33.220 --> 00:08:35.440
+generic, a verb, as one
+could imagine. I mean, that
+
+167
+00:08:35.440 --> 00:08:39.820
+just seemed super generic, like
+verify, which is like Exactly.
+
+168
+00:08:40.540 --> 00:08:42.910
+And that's why we ended
+up, we actually started with
+
+169
+00:08:42.910 --> 00:08:45.250
+a prove, which turned out
+to be the wrong verb,
+
+170
+00:08:45.670 --> 00:08:48.370
+but I kept, I'm a
+big believer that you will
+
+171
+00:08:48.370 --> 00:08:52.720
+write better code on multiple
+levels. If you write your
+
+172
+00:08:52.720 --> 00:08:56.850
+intention in English first, that
+brain you have that works
+
+173
+00:08:56.850 --> 00:08:59.010
+in English, that knows how
+to tell stories that knows
+
+174
+00:08:59.010 --> 00:09:04.410
+how to write paragraphs or
+choose words is multiple times
+
+175
+00:09:04.410 --> 00:09:07.290
+order of magnitudes more developed
+than our brain that can
+
+176
+00:09:07.290 --> 00:09:11.010
+think in C-sharp or VB.
+Like we just have so
+
+177
+00:09:11.010 --> 00:09:14.010
+much more value there. So
+if you start in English
+
+178
+00:09:14.040 --> 00:09:17.070
+and then you keep pulling
+to code, you'll get cleaner
+
+179
+00:09:17.070 --> 00:09:21.840
+code, more modular code, just
+overall better code. And what
+
+180
+00:09:21.840 --> 00:09:23.640
+I found I was doing
+is I kept saying like,
+
+181
+00:09:24.390 --> 00:09:27.360
+well, I'm making a triangle
+with links three, four, five,
+
+182
+00:09:27.360 --> 00:09:30.120
+and now I need to
+verify that the perimeters. Right.
+
+183
+00:09:31.410 --> 00:09:33.330
+And then I would translate
+it to some other word,
+
+184
+00:09:33.360 --> 00:09:36.120
+like uproot. And I was
+like, why does verify, I'm
+
+185
+00:09:36.120 --> 00:09:38.190
+saying in English, I want
+to verify the perimeter. Why
+
+186
+00:09:38.190 --> 00:09:40.950
+aren't I just saying in
+my code, verify T dot
+
+187
+00:09:40.950 --> 00:09:44.420
+perimeter. And so that's why
+that word came up. So
+
+188
+00:09:44.420 --> 00:09:47.480
+verify in my mind just
+kind of means make sure
+
+189
+00:09:47.480 --> 00:09:52.340
+it's okay. Exactly. Okay. So
+if I've got a method
+
+190
+00:09:52.340 --> 00:09:55.340
+that, that does, you know,
+does some stuff and then
+
+191
+00:09:55.550 --> 00:09:57.680
+the, the output of that
+is an array of a
+
+192
+00:09:57.680 --> 00:10:01.160
+hundred somethings. Yep. I think
+what I would probably do
+
+193
+00:10:01.160 --> 00:10:04.040
+in a regular unit testing
+scenario is assert a bunch
+
+194
+00:10:04.040 --> 00:10:06.170
+of things. Maybe I would
+assert the first five and
+
+195
+00:10:06.530 --> 00:10:08.960
+get lazy and not do
+the rest. How would I
+
+196
+00:10:08.960 --> 00:10:11.240
+do that with approval test
+to assert that this array
+
+197
+00:10:11.240 --> 00:10:15.170
+of a hundred names is
+sorted. Exactly. Exactly. So let's
+
+198
+00:10:15.170 --> 00:10:17.300
+say that you're doing like
+a word count. You put
+
+199
+00:10:17.300 --> 00:10:19.610
+in a block of text,
+it's going to create out
+
+200
+00:10:19.610 --> 00:10:23.660
+a dictionary. You would just
+say approvals dot, verify all,
+
+201
+00:10:24.260 --> 00:10:26.720
+and then give it the
+dictionary. And that would be
+
+202
+00:10:26.720 --> 00:10:29.240
+it. And what approvals we'll
+do is we'll actually sort
+
+203
+00:10:29.240 --> 00:10:33.680
+the dictionary keys. So it's
+consistent, right? Cause there's no
+
+204
+00:10:33.710 --> 00:10:38.510
+order there's because there's no
+order for the way the
+
+205
+00:10:38.510 --> 00:10:40.850
+keys will come out. Right.
+And then it will print
+
+206
+00:10:40.850 --> 00:10:42.710
+them out as a file.
+And you'll see this key
+
+207
+00:10:42.710 --> 00:10:45.530
+has this value and you'll
+see them all. You'll look
+
+208
+00:10:45.530 --> 00:10:47.630
+at them, you get to
+harness a whole bunch of
+
+209
+00:10:47.630 --> 00:10:53.000
+recognition over intent, which is
+really nice. Right. I, I
+
+210
+00:10:53.000 --> 00:10:55.400
+might not realize exactly that
+this word was supposed to
+
+211
+00:10:55.400 --> 00:10:58.520
+have five, but when I
+scroll through, I can recognize
+
+212
+00:10:58.520 --> 00:11:01.490
+that, Oh yeah, that's the
+way it was. And then
+
+213
+00:11:01.490 --> 00:11:05.660
+you just rename the file
+from received to approved and
+
+214
+00:11:05.660 --> 00:11:07.400
+in a diff tool that
+rename has just hit the
+
+215
+00:11:07.400 --> 00:11:09.770
+right and say, use on
+the left side. Okay. So
+
+216
+00:11:09.770 --> 00:11:11.540
+let me think about this.
+If I've got a class
+
+217
+00:11:11.540 --> 00:11:15.290
+called person test and I've
+got a method called sorting
+
+218
+00:11:16.040 --> 00:11:17.810
+and I worked, you know,
+verify sorting or something like
+
+219
+00:11:17.810 --> 00:11:20.990
+that, you're going to make
+a file called person, test
+
+220
+00:11:20.990 --> 00:11:26.870
+dot, verify, sorting dot, approved,
+or received, rather We'll make
+
+221
+00:11:26.870 --> 00:11:29.210
+the receive file. And then
+as soon as you see
+
+222
+00:11:29.210 --> 00:11:31.640
+what you like, you're going
+to rename it to approved.
+
+223
+00:11:32.090 --> 00:11:34.580
+And after that, as long
+as they match Tesla, So
+
+224
+00:11:34.580 --> 00:11:38.030
+you'll take my data structure
+and you're, you're a serializer,
+
+225
+00:11:38.390 --> 00:11:40.220
+right? You're not doing a
+two string on it because
+
+226
+00:11:40.220 --> 00:11:45.410
+otherwise I'd see system dot
+dictionary, prime, whatever. So by
+
+227
+00:11:45.410 --> 00:11:48.110
+default, we'll do a two
+string, but yes, we do
+
+228
+00:11:48.110 --> 00:11:50.630
+a lot of convenient serializing.
+Cause a lot of the
+
+229
+00:11:50.630 --> 00:11:55.120
+default, two strings in the.net
+framework are not very useful.
+
+230
+00:11:55.740 --> 00:11:57.240
+And now you're going to
+serialize it in your own
+
+231
+00:11:57.240 --> 00:11:59.160
+format. You're going to serialize
+it in a format that
+
+232
+00:11:59.700 --> 00:12:01.680
+makes sense for someone who's
+trying to do an approval
+
+233
+00:12:01.680 --> 00:12:04.740
+test. Exactly. What if I'm,
+you know, hardcore Jason or
+
+234
+00:12:04.740 --> 00:12:06.750
+I really just love Jason.
+I really love XML. Can
+
+235
+00:12:06.750 --> 00:12:10.950
+I make my own serializer?
+Okay. Absolutely. Approval tests in
+
+236
+00:12:10.950 --> 00:12:13.410
+general is very modular. So
+you can fit whatever you
+
+237
+00:12:13.410 --> 00:12:16.500
+want. Serialization. You can actually
+put as a step in
+
+238
+00:12:16.500 --> 00:12:19.290
+front of Collin approval tests
+so that you can make
+
+239
+00:12:19.290 --> 00:12:22.680
+just a convenience file that
+says, verify my Jason and
+
+240
+00:12:22.860 --> 00:12:26.340
+passing your object and format
+correctly. XML we already have.
+
+241
+00:12:26.370 --> 00:12:28.080
+You can put it in
+and it will format that
+
+242
+00:12:28.080 --> 00:12:31.170
+for you using the default
+XML, formatters that come with
+
+243
+00:12:31.170 --> 00:12:33.840
+that. Yeah. Pass. So then
+in the future, if I've
+
+244
+00:12:33.840 --> 00:12:36.630
+got 500 approval tests, am
+I going to have 500
+
+245
+00:12:37.140 --> 00:12:41.550
+reflection created, you know, a
+class dot method named dot,
+
+246
+00:12:41.610 --> 00:12:45.390
+approved dot text files. My,
+And you need to check
+
+247
+00:12:45.390 --> 00:12:48.810
+the profiles into your source
+control. Okay. And it creates
+
+248
+00:12:48.810 --> 00:12:53.250
+a couple of very interesting
+scenarios. One is while we
+
+249
+00:12:53.250 --> 00:12:56.400
+don't have customers that actually
+look at the code, we
+
+250
+00:12:56.400 --> 00:12:59.160
+will have customers that say,
+Oh, I need this XML
+
+251
+00:12:59.160 --> 00:13:01.380
+to change. And they will
+just go and actually change
+
+252
+00:13:01.470 --> 00:13:05.940
+the approval file. And literally
+like put a story into
+
+253
+00:13:05.940 --> 00:13:10.170
+our backlog directly. We're like,
+Oh, it's failing here. I
+
+254
+00:13:10.170 --> 00:13:12.360
+need to fix this. And
+they can also do that
+
+255
+00:13:12.360 --> 00:13:16.470
+with drawing. We can serialize
+strings, but we can serialize
+
+256
+00:13:16.470 --> 00:13:20.790
+images or sound files or
+anything really. And so, yeah.
+
+257
+00:13:20.880 --> 00:13:23.160
+Well let's say let's put
+a pin on that cause
+
+258
+00:13:23.170 --> 00:13:24.480
+I want to talk about
+that. Cause that's a really
+
+259
+00:13:24.480 --> 00:13:27.030
+interesting thing. We'll talk about
+serializing, non textual based things
+
+260
+00:13:27.030 --> 00:13:29.280
+in just a moment. So
+if I have 500 of
+
+261
+00:13:29.280 --> 00:13:33.660
+these and they're, they're now
+sourced, they are artifacts, source
+
+262
+00:13:33.660 --> 00:13:37.140
+artifacts. I might have a
+business person on the team
+
+263
+00:13:37.140 --> 00:13:39.060
+who doesn't know code, but
+he can open a text
+
+264
+00:13:39.060 --> 00:13:41.460
+file. You're saying he's going
+to go poking around in
+
+265
+00:13:41.460 --> 00:13:43.950
+there now if he wants
+to potentially, If he wants
+
+266
+00:13:43.950 --> 00:13:47.220
+to. And I mean, so
+this is a limited case,
+
+267
+00:13:47.250 --> 00:13:52.180
+right? But yeah, if they
+are saying so if the,
+
+268
+00:13:52.180 --> 00:13:56.070
+the closer the test is
+to an acceptance test where
+
+269
+00:13:56.070 --> 00:14:00.330
+you're speaking in the language
+of the user, the more
+
+270
+00:14:00.540 --> 00:14:04.170
+chances of that happening, but
+we allow you to verify
+
+271
+00:14:04.170 --> 00:14:07.500
+anything. And just because you
+can speak at the big
+
+272
+00:14:07.500 --> 00:14:09.870
+level, doesn't mean you always
+should. I want to be
+
+273
+00:14:09.870 --> 00:14:11.970
+clear. I think you should
+speak at the customer level
+
+274
+00:14:11.970 --> 00:14:14.130
+a lot, but a lot
+of times, as you go
+
+275
+00:14:14.130 --> 00:14:17.430
+in, you need to speak
+more in a program. If
+
+276
+00:14:17.430 --> 00:14:20.340
+I had an existing system
+with, you know, X unit
+
+277
+00:14:20.340 --> 00:14:22.530
+or, and unit or ms.
+Test for my low-level unit
+
+278
+00:14:22.530 --> 00:14:26.490
+testing, I've got an existing
+integration testing framework. I've got
+
+279
+00:14:26.490 --> 00:14:29.250
+maybe spec flow or something
+like that, where I'm doing
+
+280
+00:14:29.250 --> 00:14:32.070
+my specification testing. Am I
+pretty much done? Or do
+
+281
+00:14:32.070 --> 00:14:35.040
+I still need approval test
+to, to, to fill a
+
+282
+00:14:35.040 --> 00:14:37.980
+gap that I may not
+realize I have Test is
+
+283
+00:14:37.980 --> 00:14:41.670
+a place that can aid
+all of those. And so
+
+284
+00:14:41.730 --> 00:14:45.990
+if you're doing your unit
+test in X unit and
+
+285
+00:14:46.020 --> 00:14:48.870
+you have a dictionary that
+you want to verify, this
+
+286
+00:14:48.870 --> 00:14:51.080
+will help you to do
+that. If you're doing an
+
+287
+00:14:51.080 --> 00:14:53.180
+integration test and you have
+a webpage that you want
+
+288
+00:14:53.180 --> 00:14:57.230
+to verify, this can help
+you do that. It's it's
+
+289
+00:14:57.410 --> 00:15:00.110
+not what level are you
+at? It's at any level
+
+290
+00:15:00.140 --> 00:15:03.830
+where just a simple integer
+or string is no longer
+
+291
+00:15:03.830 --> 00:15:08.860
+sufficient to do the verification.
+Okay. Playing devil's advocate then
+
+292
+00:15:09.100 --> 00:15:13.630
+how is this not just
+different text files? So to
+
+293
+00:15:13.630 --> 00:15:17.080
+some extent it is just
+thing, text files, you could
+
+294
+00:15:17.080 --> 00:15:19.420
+write, you know, a poor
+man's approval test that just
+
+295
+00:15:19.420 --> 00:15:23.230
+says, here's how I figure
+out the file name. And
+
+296
+00:15:23.230 --> 00:15:25.180
+here's how I write the
+file. And here's how I
+
+297
+00:15:25.180 --> 00:15:28.990
+define it. And that's really
+all we're doing. We are
+
+298
+00:15:28.990 --> 00:15:32.650
+just wrapping that around. When
+you say approvals are verify,
+
+299
+00:15:32.830 --> 00:15:35.320
+the first thing it does
+is it says, what's the
+
+300
+00:15:35.530 --> 00:15:37.660
+file name that I'm going
+to need and where's that
+
+301
+00:15:37.660 --> 00:15:40.090
+location going to be? And
+then it says, how do
+
+302
+00:15:40.090 --> 00:15:42.880
+I serialize this information to
+that file? And then it
+
+303
+00:15:42.880 --> 00:15:45.280
+says, let me compare it.
+And then finally it says,
+
+304
+00:15:45.280 --> 00:15:47.410
+if it doesn't compare, let
+me launch something to help
+
+305
+00:15:47.410 --> 00:15:50.380
+you. That's really all it's
+doing. It is just comparing
+
+306
+00:15:50.380 --> 00:15:53.500
+files. It's just taking the
+redundancy and the duplication of
+
+307
+00:15:53.500 --> 00:15:55.840
+that away from you. Okay.
+And then it sounds like
+
+308
+00:15:55.840 --> 00:15:59.320
+adding a series of opportunities
+to plug in things like
+
+309
+00:15:59.320 --> 00:16:02.470
+serializers to plug in strategies.
+If I don't like my
+
+310
+00:16:02.470 --> 00:16:05.380
+500 text files sitting in
+the root of my director,
+
+311
+00:16:05.380 --> 00:16:07.420
+I'm suppose I could tell
+you to put them somewhere
+
+312
+00:16:07.420 --> 00:16:10.330
+else. Absolutely. And in fact,
+when we do stuff like
+
+313
+00:16:10.330 --> 00:16:13.630
+with node and other languages,
+we'll put them into databases
+
+314
+00:16:13.630 --> 00:16:15.850
+where we might not have
+access to a file system.
+
+315
+00:16:16.180 --> 00:16:19.390
+So this means this isn't
+just for.net. No, I am
+
+316
+00:16:19.390 --> 00:16:23.110
+a large believer in pair
+programming. And so we have
+
+317
+00:16:23.110 --> 00:16:26.290
+this in Java. We have
+it in Ruby. We have
+
+318
+00:16:26.290 --> 00:16:29.080
+it in PHP. We have
+it in Pearl. We have
+
+319
+00:16:29.080 --> 00:16:31.720
+an, a node and we
+have it in.net. Now you're
+
+320
+00:16:31.720 --> 00:16:35.530
+just showing off I am.
+Okay. Well that answers the
+
+321
+00:16:35.530 --> 00:16:37.810
+question of how is this
+not just doing textbook. This
+
+322
+00:16:37.810 --> 00:16:40.690
+is where a utility function
+to compare text files, which
+
+323
+00:16:40.690 --> 00:16:45.010
+someone could dismiss this as
+has now become a framework
+
+324
+00:16:45.040 --> 00:16:47.380
+and a style for conventions
+and a style of developing
+
+325
+00:16:47.380 --> 00:16:51.070
+tests. Exactly. And you know,
+it's a tool to help
+
+326
+00:16:51.070 --> 00:16:53.620
+you. I still use asserts
+and there are still times
+
+327
+00:16:53.620 --> 00:16:56.950
+when just a simple verification
+of a number or a
+
+328
+00:16:56.950 --> 00:17:00.160
+Boolean is appropriate, but there's
+a lot of places where
+
+329
+00:17:00.160 --> 00:17:03.040
+I want to verify something
+rich. Then, then that is
+
+330
+00:17:03.040 --> 00:17:05.740
+another important point because you're
+telling me that approval test
+
+331
+00:17:05.740 --> 00:17:08.260
+doesn't take over my test.
+It doesn't demand that I
+
+332
+00:17:08.260 --> 00:17:10.180
+do things a certain way.
+If I've got a search
+
+333
+00:17:10.180 --> 00:17:12.670
+that works, Oh yeah, you
+can put them right alongside.
+
+334
+00:17:12.910 --> 00:17:17.080
+Okay. Can I only verify
+one thing per test? Cause
+
+335
+00:17:17.090 --> 00:17:18.970
+I saw that there's a
+file that's created. What if
+
+336
+00:17:18.970 --> 00:17:21.700
+I want to verify multiple
+things? Is that a limitation
+
+337
+00:17:21.700 --> 00:17:25.810
+of a pool test or
+am I testing wrong? So
+
+338
+00:17:25.840 --> 00:17:28.390
+you can verify more than
+one thing by default. You
+
+339
+00:17:28.390 --> 00:17:30.910
+only can verify one thing
+because it will take the
+
+340
+00:17:30.910 --> 00:17:33.940
+name of your test, others,
+a name or factory. So
+
+341
+00:17:33.940 --> 00:17:36.790
+you can do things like
+put steps in if you
+
+342
+00:17:36.790 --> 00:17:39.370
+need to, or if you
+have something that's very machine
+
+343
+00:17:39.370 --> 00:17:43.390
+specific right. Or operating system
+is going to verify one
+
+344
+00:17:43.390 --> 00:17:47.230
+way on windows seven and
+another way on windows eight
+
+345
+00:17:47.260 --> 00:17:48.910
+or We're one way under
+motto and one way under
+
+346
+00:17:49.110 --> 00:17:52.070
+that. Exactly. That would be
+a really useful. And so,
+
+347
+00:17:52.070 --> 00:17:54.980
+so we do have that
+facility most of the time
+
+348
+00:17:54.980 --> 00:18:00.260
+though, it's one approval per
+unit test. And while an
+
+349
+00:18:00.260 --> 00:18:05.210
+approval is definitely richer than,
+than an assert, it does
+
+350
+00:18:05.210 --> 00:18:08.930
+uphold to the idea of
+verifying one thing for your
+
+351
+00:18:08.930 --> 00:18:12.050
+test. Okay. Which is kind
+of the point of testing.
+
+352
+00:18:12.410 --> 00:18:16.520
+Yes. It's a good principle
+to hold to these Quarters
+
+353
+00:18:16.520 --> 00:18:18.620
+though, that you talked about,
+these attributes can be added
+
+354
+00:18:18.620 --> 00:18:21.950
+on by default, we are
+deferring text files, but then
+
+355
+00:18:21.950 --> 00:18:25.130
+you said something about diffing
+sound files and graphics. Talk
+
+356
+00:18:25.130 --> 00:18:27.290
+to me about that. Yeah.
+Yeah. So I do a
+
+357
+00:18:27.290 --> 00:18:29.300
+lot of work in.net and
+I'm a huge fan of
+
+358
+00:18:29.300 --> 00:18:31.790
+C sharp. And that means
+working with a lot of
+
+359
+00:18:31.790 --> 00:18:36.110
+Microsoft technologies and that can
+sometimes be difficult to test
+
+360
+00:18:36.560 --> 00:18:40.190
+because they weren't always invented
+with testing in mind. And
+
+361
+00:18:40.190 --> 00:18:43.340
+so as I have moved
+across and gone to different
+
+362
+00:18:43.340 --> 00:18:45.770
+technologies, I've been able to
+find patterns of how to
+
+363
+00:18:45.770 --> 00:18:48.500
+test them. And the nice
+thing about approval tests is
+
+364
+00:18:48.500 --> 00:18:51.320
+you can encode that pattern
+into just an API call.
+
+365
+00:18:51.860 --> 00:18:54.740
+And so if I'm testing
+a wind farm, then I
+
+366
+00:18:54.740 --> 00:18:55.940
+just want to pull that
+up and I want to
+
+367
+00:18:55.940 --> 00:18:59.630
+see the form. And so
+I just say approval or
+
+368
+00:18:59.630 --> 00:19:01.730
+when form approvals dot verify,
+and I pass it, the
+
+369
+00:19:01.730 --> 00:19:04.320
+wind form, it'll take a
+screen capture of that. And
+
+370
+00:19:04.430 --> 00:19:06.020
+now I don't want to
+see it in a text
+
+371
+00:19:06.020 --> 00:19:07.880
+different, but I will want
+to see it in an
+
+372
+00:19:07.880 --> 00:19:10.850
+image diff. And so it
+knows that this is an
+
+373
+00:19:10.850 --> 00:19:13.400
+image and we'll use a
+different set on its reporters
+
+374
+00:19:13.730 --> 00:19:17.000
+and open something like torta
+Gemma's diff or beyond compare
+
+375
+00:19:17.420 --> 00:19:19.310
+and show me those images
+and let me compare them
+
+376
+00:19:19.310 --> 00:19:21.260
+that way. And that's really
+helpful. And you can do
+
+377
+00:19:21.260 --> 00:19:24.400
+that with WPF on, you
+can do that with wind
+
+378
+00:19:24.400 --> 00:19:27.590
+WinForms. You can do it
+with our DLC reports, which
+
+379
+00:19:27.590 --> 00:19:31.610
+is a very hard thing
+to test out. So if
+
+380
+00:19:31.610 --> 00:19:34.250
+you want to do reporting
+inside of your wind forums,
+
+381
+00:19:34.280 --> 00:19:38.570
+there's a reporting package from
+Microsoft called RDC reports, and
+
+382
+00:19:39.230 --> 00:19:41.570
+this will test them with
+no problem. You just give
+
+383
+00:19:41.570 --> 00:19:44.590
+it there and make a
+really fake dataset. And in
+
+384
+00:19:44.590 --> 00:19:46.790
+fact, there's even utilities in
+it to make a fake
+
+385
+00:19:46.810 --> 00:19:52.790
+dataset, Totally brainstorming random tangent.
+What if I'm doing dethrone,
+
+386
+00:19:52.820 --> 00:19:56.870
+JavaScript, charting in a browser.
+And I want to verify
+
+387
+00:19:56.870 --> 00:19:58.640
+that I know I can
+do selenium and I can
+
+388
+00:19:58.640 --> 00:20:00.380
+verify the Dom, but what
+if I want to verify
+
+389
+00:20:00.380 --> 00:20:03.140
+that it looks right. Exactly.
+And I take a screenshot
+
+390
+00:20:03.140 --> 00:20:05.780
+of that somehow with this
+tool. So by default, what
+
+391
+00:20:05.780 --> 00:20:09.020
+it will actually do is
+it will capture the HTML,
+
+392
+00:20:09.380 --> 00:20:12.710
+not rendered as a screenshot
+and it'll take that HTML
+
+393
+00:20:12.710 --> 00:20:14.300
+and then it will launch
+it to you in a
+
+394
+00:20:14.300 --> 00:20:16.910
+browser, which will render it
+for you. You'll see it.
+
+395
+00:20:16.910 --> 00:20:18.800
+You'll be like, Hey, that's
+nice. And you'll verify the
+
+396
+00:20:18.800 --> 00:20:21.290
+HTML the next time it
+runs, it won't render it
+
+397
+00:20:21.290 --> 00:20:24.020
+all. But if the HTML
+ever changes, it will launch
+
+398
+00:20:24.020 --> 00:20:26.120
+it in the browsers and
+you can see what changes
+
+399
+00:20:26.630 --> 00:20:30.050
+it is actually possible to
+capture it as a screenshot,
+
+400
+00:20:30.050 --> 00:20:32.150
+but that's a lot of
+work and usually not necessary.
+
+401
+00:20:32.390 --> 00:20:34.970
+So we try to go
+to what's as far as
+
+402
+00:20:34.970 --> 00:20:37.430
+you need to go to
+make it practical. Okay. So
+
+403
+00:20:37.430 --> 00:20:40.490
+if I were generating dynamically
+a PNG of a pie
+
+404
+00:20:40.490 --> 00:20:43.610
+chart, that might be an
+appropriate thing. Absolutely appropriate. Okay.
+
+405
+00:20:43.940 --> 00:20:47.410
+But an example of a
+Dominic population, that's where you're
+
+406
+00:20:47.410 --> 00:20:49.570
+getting really close to customer
+acceptance testing and you can't
+
+407
+00:20:49.570 --> 00:20:52.710
+automate all of it. Yeah.
+And the manipulation of the
+
+408
+00:20:52.710 --> 00:20:57.030
+Dom is the doing of
+the test approval test. Really
+
+409
+00:20:57.030 --> 00:20:59.460
+doesn't give you much for
+the doing, it gives you
+
+410
+00:20:59.460 --> 00:21:03.570
+for the verification after like
+in the JavaScript side, after
+
+411
+00:21:03.570 --> 00:21:05.850
+you manipulate that on. Now,
+if you want to say,
+
+412
+00:21:06.030 --> 00:21:07.860
+what does my Dom look
+like? You can do that.
+
+413
+00:21:07.860 --> 00:21:09.840
+And you can do that
+through Simeon as well. Just
+
+414
+00:21:09.840 --> 00:21:11.700
+say, verify the Dom and
+it will print out the
+
+415
+00:21:11.700 --> 00:21:15.360
+Dom structure for you. Now
+you said reporters. I think
+
+416
+00:21:15.360 --> 00:21:16.830
+I was looking at the
+code and I saw something
+
+417
+00:21:16.830 --> 00:21:21.540
+called a clipboard report. Yes.
+What is that? So every
+
+418
+00:21:21.540 --> 00:21:26.700
+different diff tool has some
+different way of slightly modifying
+
+419
+00:21:26.700 --> 00:21:29.790
+things. It seems when they
+want to, they'll either trim
+
+420
+00:21:29.790 --> 00:21:34.440
+off the last tailing space
+or they'll switch out your
+
+421
+00:21:34.440 --> 00:21:37.710
+returns or they just do
+stuff. And so every once
+
+422
+00:21:37.710 --> 00:21:39.060
+in a while, you'll get
+to a place where it's,
+
+423
+00:21:39.300 --> 00:21:41.580
+even though you move it
+over, it's actually not making
+
+424
+00:21:41.580 --> 00:21:44.250
+an exact copy. So there's
+always the thing of just
+
+425
+00:21:44.250 --> 00:21:47.130
+going to the command line
+and typing in manually, you
+
+426
+00:21:47.130 --> 00:21:49.200
+know, move this file over
+to this file. But then
+
+427
+00:21:49.200 --> 00:21:50.370
+you have to remember how
+to do that on the
+
+428
+00:21:50.370 --> 00:21:53.670
+command line, the clipboard reporter
+generates that command and puts
+
+429
+00:21:53.670 --> 00:21:55.800
+it on your clipboard. So
+if you use a clipboard
+
+430
+00:21:55.800 --> 00:21:58.800
+reporter, you can just drop
+to your command line and
+
+431
+00:21:58.800 --> 00:22:01.230
+paste and it will approve
+the file for you that
+
+432
+00:22:01.230 --> 00:22:03.780
+way. And it will do
+it. You can do it
+
+433
+00:22:03.780 --> 00:22:06.150
+in combinations of other reporters
+as well, but you don't
+
+434
+00:22:06.150 --> 00:22:08.520
+always want to mess up
+your clipboard. So we don't
+
+435
+00:22:08.520 --> 00:22:10.290
+do it unless you ask
+for it. And these are,
+
+436
+00:22:10.290 --> 00:22:14.730
+these reporters are then presented
+as attributes that I then
+
+437
+00:22:14.730 --> 00:22:17.460
+decorate on my, my test
+class. Exactly. What are some
+
+438
+00:22:17.460 --> 00:22:18.990
+other reporters that I might
+make? Or what are some
+
+439
+00:22:18.990 --> 00:22:21.630
+interesting third-party kind of reporters
+you've seen in the wall?
+
+440
+00:22:22.290 --> 00:22:25.140
+So the diff reporter is
+a real common one and
+
+441
+00:22:25.140 --> 00:22:28.770
+that's actually, it uses change
+the responsibility. So it will
+
+442
+00:22:28.770 --> 00:22:32.160
+go and say, do I
+have a reporter code compare?
+
+443
+00:22:32.160 --> 00:22:34.290
+I think is the first
+one. Oh, you don't have
+
+444
+00:22:34.290 --> 00:22:36.120
+that. Okay. Well, do you
+have beyond comparable? You don't
+
+445
+00:22:36.120 --> 00:22:37.890
+have that. Well, do you
+have tortoise diff we don't
+
+446
+00:22:37.890 --> 00:22:39.870
+have that G of wind
+diff and it will keep
+
+447
+00:22:39.870 --> 00:22:42.660
+going until it finds the
+first one you have and
+
+448
+00:22:42.660 --> 00:22:47.310
+we'll bring it up there.
+There's one for the, the
+
+449
+00:22:47.310 --> 00:22:51.330
+web config or the app
+config file where you can
+
+450
+00:22:51.330 --> 00:22:53.370
+configure in your app config.
+So if you want to
+
+451
+00:22:53.370 --> 00:22:58.260
+have different reporters by default
+and a teammate has, there's
+
+452
+00:22:58.260 --> 00:23:01.560
+lots of combination reporters where
+you can say, use this
+
+453
+00:23:01.560 --> 00:23:04.140
+reporter and this report. So
+open a web browser and
+
+454
+00:23:04.140 --> 00:23:09.210
+open a diff tool. The
+file launch reporters are really
+
+455
+00:23:09.210 --> 00:23:13.650
+interesting when people start going
+into different tools. So when
+
+456
+00:23:13.650 --> 00:23:18.450
+something fails, you want to
+understand why it failed and
+
+457
+00:23:19.110 --> 00:23:21.390
+the richer, your object is
+maybe the more you need
+
+458
+00:23:21.390 --> 00:23:24.240
+to understand that. And so
+people always sort of say,
+
+459
+00:23:24.270 --> 00:23:28.590
+Oh, I wish I had
+it opened here. Right? And
+
+460
+00:23:28.740 --> 00:23:32.490
+so if you wanted that
+opened in a tool, you
+
+461
+00:23:32.490 --> 00:23:35.820
+just extend a very simple
+interface and say, I'm going
+
+462
+00:23:35.820 --> 00:23:38.490
+to pass you the receive
+file and the profile. And
+
+463
+00:23:38.490 --> 00:23:41.100
+you do whatever you want,
+launch, whatever program you want.
+
+464
+00:23:41.430 --> 00:23:44.010
+That's what people usually do
+to say, I want this
+
+465
+00:23:44.010 --> 00:23:46.550
+tool that, that I had
+not thought of. You know,
+
+466
+00:23:46.550 --> 00:23:49.310
+one thing that, that you're
+getting me thinking about that
+
+467
+00:23:49.310 --> 00:23:51.590
+I hadn't thought about before
+is I'm hearing you say
+
+468
+00:23:52.070 --> 00:23:54.260
+that there are a number
+of times when your tool
+
+469
+00:23:54.620 --> 00:23:57.230
+will open up the thing
+that I'm going to need,
+
+470
+00:23:57.230 --> 00:23:59.450
+or another way of phrasing.
+It would be the thing
+
+471
+00:23:59.450 --> 00:24:02.990
+I was going to open
+anyway. Exactly. And, and part
+
+472
+00:24:02.990 --> 00:24:05.630
+of like my, my, my
+unit testing lizard brain is
+
+473
+00:24:05.630 --> 00:24:07.850
+like, that's not what unit
+tests you're supposed to do.
+
+474
+00:24:07.850 --> 00:24:09.680
+You're not supposed to be
+launching stuff. I keep going
+
+475
+00:24:09.680 --> 00:24:11.750
+back to like headless, headless,
+headless. This thing needs to
+
+476
+00:24:11.750 --> 00:24:13.550
+run on the build server.
+But at the same time
+
+477
+00:24:13.550 --> 00:24:15.560
+when I'm writing the test
+and I'm in visual studio
+
+478
+00:24:15.560 --> 00:24:19.940
+and I'm goofing around, there's
+this unconscious action where it's
+
+479
+00:24:19.940 --> 00:24:23.360
+like, Oh, the test failed
+all tab over to the
+
+480
+00:24:23.870 --> 00:24:27.230
+console type in notepad, duh,
+dig around on the XML
+
+481
+00:24:27.230 --> 00:24:31.130
+file. You're saying that your
+testing framework recognizes that there
+
+482
+00:24:31.130 --> 00:24:33.350
+is a time when you
+are getting ready to write
+
+483
+00:24:33.350 --> 00:24:36.620
+tests and you're actively debugging
+tests and you're saving me
+
+484
+00:24:36.620 --> 00:24:40.840
+those tedious lizard brain actions.
+There are different personalities that
+
+485
+00:24:40.840 --> 00:24:43.120
+you put on when you
+are, when something has never
+
+486
+00:24:43.120 --> 00:24:47.470
+worked. I want different information
+from my tests then when
+
+487
+00:24:47.470 --> 00:24:50.320
+it is working and I
+want different information yet again,
+
+488
+00:24:50.380 --> 00:24:52.660
+when it used to be
+working and then it stopped,
+
+489
+00:24:53.290 --> 00:24:55.780
+these are different. That just
+blew my mind. Like there's
+
+490
+00:24:55.780 --> 00:24:58.840
+different information when it's never
+actually worked. That's when I
+
+491
+00:24:58.840 --> 00:25:01.840
+spend the most time slapping
+the keyboard open and diff
+
+492
+00:25:01.870 --> 00:25:05.560
+tools, copy paste and stuff
+into paint.net, you know, all
+
+493
+00:25:05.560 --> 00:25:07.300
+those kinds of things. And
+you're saying paint dot, and
+
+494
+00:25:07.300 --> 00:25:08.530
+that's what I need to
+open that I write a
+
+495
+00:25:08.530 --> 00:25:11.020
+little interface and it launches
+paint.net. And I can remove
+
+496
+00:25:11.020 --> 00:25:13.780
+that later when I switch
+over into end crunch or
+
+497
+00:25:13.780 --> 00:25:15.070
+whatever is going to be
+doing that work for me.
+
+498
+00:25:15.310 --> 00:25:17.620
+Yeah. And one of the
+reasons I love writing tests
+
+499
+00:25:17.710 --> 00:25:22.480
+is because they helped me
+get my idea quicker into
+
+500
+00:25:22.480 --> 00:25:26.020
+the world. And it's that
+sort of example, that's really
+
+501
+00:25:26.020 --> 00:25:29.080
+servicing me. And in fact,
+when I am writing my
+
+502
+00:25:29.080 --> 00:25:32.920
+own tests, the example services
+meet to focus my ideas
+
+503
+00:25:33.100 --> 00:25:34.810
+on what it is I
+want to write and help
+
+504
+00:25:34.820 --> 00:25:36.820
+me actually write it. And
+so an example is really
+
+505
+00:25:36.820 --> 00:25:38.440
+useful. And a lot of
+times when I sit down
+
+506
+00:25:38.440 --> 00:25:41.800
+with people who are interested
+in testing, but haven't gotten
+
+507
+00:25:41.830 --> 00:25:45.640
+to testing yet, I find
+that they're going directly to
+
+508
+00:25:45.640 --> 00:25:48.100
+the code and trying to
+write a test and they've
+
+509
+00:25:48.100 --> 00:25:50.950
+actually skipped that step. So
+if you have people out
+
+510
+00:25:50.950 --> 00:25:52.390
+there who are listening, who
+are like, Oh, I've always
+
+511
+00:25:52.390 --> 00:25:55.150
+thought about testing. Maybe this
+is the place to start.
+
+512
+00:25:55.570 --> 00:25:58.360
+I would suggest write an
+example on paper, get away
+
+513
+00:25:58.360 --> 00:26:00.580
+from the keyboard, write it
+on paper. This is what
+
+514
+00:26:00.580 --> 00:26:02.740
+my, I want my example
+to do. And then see
+
+515
+00:26:02.740 --> 00:26:04.150
+if you can write that
+as a unit test. And
+
+516
+00:26:04.150 --> 00:26:06.640
+maybe you can, maybe you
+can't, but if you keep
+
+517
+00:26:06.640 --> 00:26:08.680
+doing that, you'll find more
+and more often that you
+
+518
+00:26:08.680 --> 00:26:11.890
+can. And that's where you
+really sort of walk your
+
+519
+00:26:11.890 --> 00:26:15.550
+way into testing. My biggest
+struggle with testing is probably
+
+520
+00:26:15.550 --> 00:26:18.490
+the way I'm writing my
+code, where it's just too
+
+521
+00:26:18.490 --> 00:26:22.390
+tied up into reality. Well,
+I feel tested very abstract.
+
+522
+00:26:22.750 --> 00:26:24.460
+And then if I struggle
+and go off and try
+
+523
+00:26:24.460 --> 00:26:26.290
+to write these tests, I
+end up writing tests that
+
+524
+00:26:26.290 --> 00:26:28.150
+don't really do anything. They
+just kind of move bits
+
+525
+00:26:28.150 --> 00:26:30.820
+around, but nothing really gets
+tested. Like, for example, I'm
+
+526
+00:26:30.820 --> 00:26:33.670
+writing this windows phone app
+right now. It goes out
+
+527
+00:26:33.670 --> 00:26:35.230
+to a data feed and
+it gets the data feed,
+
+528
+00:26:35.230 --> 00:26:37.090
+it, parses the data feed,
+and then it gets an
+
+529
+00:26:37.090 --> 00:26:39.760
+MP3 and then it plays
+the MP3. So unless it's
+
+530
+00:26:39.760 --> 00:26:44.730
+running in the phone, actually
+going the internet, actually playing
+
+531
+00:26:44.730 --> 00:26:46.620
+the thing, all I can
+really write a test around
+
+532
+00:26:46.620 --> 00:26:51.440
+is the parsing. Yeah. And,
+and that's always a struggle
+
+533
+00:26:51.440 --> 00:26:53.570
+with testing is figuring out
+what do I want to
+
+534
+00:26:53.570 --> 00:26:55.460
+test? And what do I
+not want to test? One
+
+535
+00:26:55.460 --> 00:26:58.520
+of the things that guides
+me is the same test
+
+536
+00:26:58.520 --> 00:27:02.030
+until board. So this is
+something you're going to do
+
+537
+00:27:02.030 --> 00:27:04.370
+anyways, because once you get
+bored, you'll have to stop
+
+538
+00:27:04.370 --> 00:27:07.670
+doing it. And you'll no
+longer be bored, but find
+
+539
+00:27:07.670 --> 00:27:09.740
+the pieces that give you
+a good return on investment
+
+540
+00:27:09.740 --> 00:27:12.380
+and test those and the
+pieces that aren't let them
+
+541
+00:27:12.380 --> 00:27:15.770
+go. And if you turned
+out you're wrong, you're going
+
+542
+00:27:15.770 --> 00:27:18.320
+to get an iteration. When
+your customers complain about bugs
+
+543
+00:27:18.320 --> 00:27:20.540
+and then maybe you'll be
+a little less bored. And
+
+544
+00:27:20.540 --> 00:27:23.300
+so let that be your
+guide. You don't have to
+
+545
+00:27:23.360 --> 00:27:26.930
+test everything. And if you
+try to test everything, you'll
+
+546
+00:27:26.930 --> 00:27:30.110
+fail because there's just too
+many things test until bored.
+
+547
+00:27:30.110 --> 00:27:33.320
+When you're bored. Stop. I
+love that test until board.
+
+548
+00:27:33.320 --> 00:27:35.930
+So I'm Llewellyn Falco. Where
+can people go online to
+
+549
+00:27:35.930 --> 00:27:38.690
+find approval test and learn
+more about it. So to
+
+550
+00:27:38.690 --> 00:27:40.700
+add it to your project,
+just go to new, get,
+
+551
+00:27:41.060 --> 00:27:43.550
+and that's if nominal thing
+that has occurred in the
+
+552
+00:27:43.550 --> 00:27:46.490
+last two years in the.net
+world is new get, has
+
+553
+00:27:46.490 --> 00:27:48.860
+really made it just so
+much easier to find and
+
+554
+00:27:48.860 --> 00:27:52.160
+use tools. So go to
+new, get, and just type
+
+555
+00:27:52.160 --> 00:27:56.240
+in approval tests, all one
+word. If you want to
+
+556
+00:27:56.240 --> 00:27:59.120
+learn more about it, I
+suggest go to approval tests
+
+557
+00:27:59.120 --> 00:28:02.030
+that come watch the videos.
+You can find them on
+
+558
+00:28:02.030 --> 00:28:04.820
+YouTube as well. You can
+also find them. We recently
+
+559
+00:28:04.820 --> 00:28:07.640
+moved everything over to get
+hub. And so if you
+
+560
+00:28:07.640 --> 00:28:10.220
+go to get hub, look
+for approvals too. So get
+
+561
+00:28:10.220 --> 00:28:13.400
+hubs slash approvals is the
+foundation and all the languages
+
+562
+00:28:13.400 --> 00:28:18.170
+are there. All the languages
+are in get hub, except
+
+563
+00:28:18.170 --> 00:28:20.000
+for Java. Java is still
+in the process of being
+
+564
+00:28:20.000 --> 00:28:22.430
+moved over. Very cool. Well,
+I appreciate you chatting with
+
+565
+00:28:22.430 --> 00:28:24.800
+me today. It's been great
+to be here. This has
+
+566
+00:28:24.800 --> 00:28:27.110
+been another episode of Hansel
+minutes and we'll see you
+
+567
+00:28:27.110 --> 00:28:31.970
+again next week. <inaudible>.
+

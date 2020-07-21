@@ -1,0 +1,2527 @@
+WEBVTT FILE
+
+1
+00:00:00.210 --> 00:00:02.850
+This episode is brought to
+you by Datadog a full
+
+2
+00:00:02.850 --> 00:00:06.810
+stack monitoring platform that integrates
+with over 400 technologies like
+
+3
+00:00:06.870 --> 00:00:12.810
+gremlin, PagerDuty, AWS Lambda, Spinnaker,
+and more with rich visualizations
+
+4
+00:00:12.810 --> 00:00:16.200
+and algorithmic alerts. Datadog can
+help you monitor the effects
+
+5
+00:00:16.200 --> 00:00:20.640
+of chaos, experiments, identify weaknesses,
+and improve the reliability of
+
+6
+00:00:20.640 --> 00:00:26.580
+your systems. Visit Datadog hq.com/hansel
+minutes to get a free
+
+7
+00:00:26.580 --> 00:00:30.300
+14 day trial and receive
+one of Datadog's famously cozy.
+
+8
+00:00:30.330 --> 00:00:46.680
+T-shirts. Hi, this is Scott
+Hanselman. This is another episode
+
+9
+00:00:46.680 --> 00:00:49.170
+of Hansel minutes today. I'm
+talking with Simon for co
+
+10
+00:00:49.440 --> 00:00:51.900
+he's, a senior software engineer
+at Docker. How are you,
+
+11
+00:00:51.900 --> 00:00:55.200
+sir? I'm really fine. I
+am very happy to be
+
+12
+00:00:55.200 --> 00:00:57.660
+talking to you. I'm a
+big fan. I like to
+
+13
+00:00:57.660 --> 00:00:59.970
+follow you on Twitter and
+see all of your you're
+
+14
+00:00:59.970 --> 00:01:02.640
+so helpful. You're very kind
+because everyone's always asking you
+
+15
+00:01:02.640 --> 00:01:05.550
+Docker questions and you're always
+there to help, but I
+
+16
+00:01:05.550 --> 00:01:07.560
+know it's not your, it's
+not your job to be
+
+17
+00:01:07.560 --> 00:01:10.170
+helpful on, on Twitter, but
+you, you just love the
+
+18
+00:01:10.170 --> 00:01:13.950
+product, right? Yeah, actually, it's,
+it's really interesting for me
+
+19
+00:01:13.950 --> 00:01:17.390
+to stay in touch with
+our users. And I agree,
+
+20
+00:01:17.400 --> 00:01:20.640
+this is really easy for
+me to be empathetic with
+
+21
+00:01:21.000 --> 00:01:26.240
+our users because our target
+is actually developers. And, and
+
+22
+00:01:26.520 --> 00:01:29.720
+when, when some of the
+rigorous program we've looked at
+
+23
+00:01:29.720 --> 00:01:31.830
+the stuff, I really really
+feel, it feels a pain.
+
+24
+00:01:32.490 --> 00:01:34.650
+It's nice to be able
+to, to talk to 'em
+
+25
+00:01:35.190 --> 00:01:38.880
+to, to them on Twitter
+or YouTube, et cetera. I
+
+26
+00:01:38.880 --> 00:01:41.790
+think that's really cool. Sometimes.
+You know, companies like Microsoft,
+
+27
+00:01:41.790 --> 00:01:44.280
+I think does this a
+lot. They separate the developer
+
+28
+00:01:44.280 --> 00:01:47.400
+and the program manager, like
+the PM is supposed to
+
+29
+00:01:47.400 --> 00:01:50.550
+talk to the customers and
+they hide the developer in
+
+30
+00:01:50.550 --> 00:01:53.850
+the closet somewhere. But at
+Docker it seems like the
+
+31
+00:01:53.850 --> 00:01:58.220
+developers like to be visible.
+It might be because of
+
+32
+00:01:58.230 --> 00:02:02.580
+our open source background and
+the fact that we always
+
+33
+00:02:02.610 --> 00:02:05.430
+have out a culture of
+developing things in the open,
+
+34
+00:02:05.490 --> 00:02:09.120
+even if DACA itself is
+not open source, we are
+
+35
+00:02:09.120 --> 00:02:12.450
+still in, I'm in this
+kind of mindset where we
+
+36
+00:02:12.450 --> 00:02:16.170
+do open source projects and
+we are, we share a
+
+37
+00:02:16.170 --> 00:02:20.100
+lot with the community. We
+leverage our community to, to
+
+38
+00:02:20.100 --> 00:02:22.710
+build stuff that's really cool.
+And that actually brings up
+
+39
+00:02:22.710 --> 00:02:25.110
+a good point. So you
+say that Docker desktop I'm
+
+40
+00:02:25.110 --> 00:02:27.570
+on a windows machine, Docker,
+desktop is not open source.
+
+41
+00:02:27.570 --> 00:02:31.530
+Maybe you could explain the
+stack because people use the
+
+42
+00:02:31.530 --> 00:02:34.500
+word Docker kind of like
+in America, the way we
+
+43
+00:02:34.500 --> 00:02:37.200
+use the word Kleenex, right?
+Like the Kleenex is a
+
+44
+00:02:37.200 --> 00:02:41.160
+tissue, right. But if you
+say hand me a Kleenex,
+
+45
+00:02:42.030 --> 00:02:45.480
+it could be any brand,
+you know, or in America
+
+46
+00:02:45.480 --> 00:02:47.700
+you can say, give me
+a Coke. And then they
+
+47
+00:02:47.700 --> 00:02:50.490
+say, what kind of Coke?
+Well, Sprite or Pepsi. Like,
+
+48
+00:02:50.520 --> 00:02:54.300
+you know, it's becoming a
+word that means containers. But
+
+49
+00:02:54.300 --> 00:02:56.880
+when I install Docker, desktop,
+what am I getting? And
+
+50
+00:02:56.880 --> 00:02:59.620
+what is the stack and
+what, what does each do?
+
+51
+00:02:59.950 --> 00:03:03.520
+Yeah. So look at it.
+Some basically it's a, it's
+
+52
+00:03:03.520 --> 00:03:07.870
+a distribution of, of all
+our tools. The first thing
+
+53
+00:03:07.870 --> 00:03:12.310
+that is ships is, is
+a Docker demon. And on
+
+54
+00:03:12.310 --> 00:03:15.850
+windows, we ship factory to
+the, we ship the windows,
+
+55
+00:03:15.850 --> 00:03:19.840
+containers, emails, but runs natively
+on windows. And we also
+
+56
+00:03:19.840 --> 00:03:25.390
+ship so Linux demon. So
+Booker D VAT friends, either
+
+57
+00:03:25.420 --> 00:03:30.130
+inside of an IPO, hyper
+V VM, or if you
+
+58
+00:03:30.400 --> 00:03:34.060
+are running WSL to, it
+can also run within WSL
+
+59
+00:03:34.060 --> 00:03:38.320
+to itself. As high vis
+was demons. We also shape
+
+60
+00:03:39.070 --> 00:03:45.010
+or necessarily client, client site
+tunings likes Docker, CLI, and
+
+61
+00:03:45.010 --> 00:03:49.210
+also Docker compose. We should
+pause on Atari. We should,
+
+62
+00:03:49.240 --> 00:03:57.130
+we should. <inaudible> the Kubernetes
+CLI and something that we
+
+63
+00:03:57.160 --> 00:04:01.420
+also ship. And that is
+not necessarily a well known
+
+64
+00:04:01.420 --> 00:04:05.750
+is, but we, we distribute
+Coobernetti's as well. So with
+
+65
+00:04:05.770 --> 00:04:10.360
+<inaudible> you can just enable
+the community CPI just by
+
+66
+00:04:10.390 --> 00:04:13.650
+clicking a button into UI.
+So it's, it's a toolkit,
+
+67
+00:04:13.650 --> 00:04:15.990
+it's a complete toolkit for
+all those things. And I
+
+68
+00:04:15.990 --> 00:04:18.240
+remember just a few years
+ago, we would have to
+
+69
+00:04:18.240 --> 00:04:21.420
+install each of these things
+kind of separately. I remember
+
+70
+00:04:21.420 --> 00:04:23.490
+installing Docker and then setting
+that up and then getting
+
+71
+00:04:23.490 --> 00:04:26.340
+Docker compose. And then Kubernetes
+was a whole other thing
+
+72
+00:04:27.000 --> 00:04:30.600
+after that. Yeah. Yeah. So
+the ID, the MBI and
+
+73
+00:04:30.600 --> 00:04:33.870
+I'm looking at a stuff
+is to get the seamless
+
+74
+00:04:33.900 --> 00:04:38.940
+Docker development experience on Mac
+and windows. So what we,
+
+75
+00:04:38.970 --> 00:04:42.840
+what we do is we
+try to similar to seamlessly
+
+76
+00:04:43.260 --> 00:04:48.720
+when both things together and
+make them feel like you
+
+77
+00:04:48.720 --> 00:04:52.440
+are running on, on your
+production server. So something that,
+
+78
+00:04:52.980 --> 00:04:57.150
+for example, that we under
+for you is bind mounting
+
+79
+00:04:57.150 --> 00:05:03.030
+files from the windows environment,
+into your Linux container environment.
+
+80
+00:05:03.600 --> 00:05:09.000
+And this particular example is,
+is very tricky. And this
+
+81
+00:05:09.000 --> 00:05:12.570
+is part of the sort
+of shine, but we are
+
+82
+00:05:13.110 --> 00:05:16.980
+the police that we make,
+we make with Docker desktop.
+
+83
+00:05:17.010 --> 00:05:20.370
+It's not something that you
+could do yourself and that
+
+84
+00:05:20.370 --> 00:05:23.070
+we are really happy to,
+to bring, Well, some people
+
+85
+00:05:23.070 --> 00:05:26.250
+who have used windows before,
+who are not windows people
+
+86
+00:05:26.580 --> 00:05:30.780
+complain because they say that
+installing Docker on windows is,
+
+87
+00:05:31.080 --> 00:05:34.050
+is too hard, or it's
+a hack. And they say,
+
+88
+00:05:34.080 --> 00:05:37.740
+Oh, on Linux, it's super
+easy because you know, Docker
+
+89
+00:05:37.740 --> 00:05:41.340
+and the idea of containers
+is kind of baked into
+
+90
+00:05:41.340 --> 00:05:45.450
+Linux, but it's not exactly
+baked into windows. Is that
+
+91
+00:05:45.450 --> 00:05:48.720
+right? Yeah, that's right. And
+I trade, it does change
+
+92
+00:05:48.720 --> 00:05:53.330
+a little bit with, since
+windows eight, I think wherever
+
+93
+00:05:53.940 --> 00:05:57.030
+is this notion yeah. Painters
+on windows. It's a, it's
+
+94
+00:05:57.050 --> 00:05:59.900
+a different kind of Container
+of what we do with
+
+95
+00:05:59.930 --> 00:06:04.700
+Docker, but it shares some
+seminar aspects like on windows,
+
+96
+00:06:06.260 --> 00:06:09.740
+some books, the apps don't
+share the same registry don't
+
+97
+00:06:09.740 --> 00:06:13.760
+have access to the real
+file system, but they go
+
+98
+00:06:13.760 --> 00:06:16.580
+through a broker or something
+like that. So there are
+
+99
+00:06:16.580 --> 00:06:23.120
+some, some, some common things
+between windows, sandbox apps and
+
+100
+00:06:23.120 --> 00:06:27.800
+Docker containers, but to come
+back to the question and
+
+101
+00:06:28.100 --> 00:06:32.030
+why it's out to install
+Docker on windows, I think
+
+102
+00:06:32.030 --> 00:06:36.080
+it's mostly because what we
+do for making the experience
+
+103
+00:06:36.080 --> 00:06:39.620
+seamless is actually quite complicated.
+We have to deal with
+
+104
+00:06:40.310 --> 00:06:44.330
+transition. We have to deal
+with bringing network. You're trying
+
+105
+00:06:44.330 --> 00:06:48.230
+to network interfaces. We have
+to deal with so many
+
+106
+00:06:48.230 --> 00:06:54.890
+different kind of windows configuration
+and conflicting software. Like if
+
+107
+00:06:54.890 --> 00:06:59.360
+you run VMware, for example,
+and as the credit stuff
+
+108
+00:06:59.630 --> 00:07:04.310
+depends on, on APRV on
+the, on windows found basically
+
+109
+00:07:04.310 --> 00:07:08.330
+nothing that we can do.
+So yeah, there are kind
+
+110
+00:07:08.330 --> 00:07:11.990
+of a, kind of a
+long list of prerequisites. And
+
+111
+00:07:11.990 --> 00:07:15.860
+we try to make this
+list a lot shorter by
+
+112
+00:07:15.860 --> 00:07:20.990
+leveraging on things like WSL
+too, but it will always
+
+113
+00:07:20.990 --> 00:07:24.140
+be something complicated because at
+the end of the day,
+
+114
+00:07:24.140 --> 00:07:27.020
+we need to run Linux
+and we, we need to
+
+115
+00:07:27.020 --> 00:07:32.080
+run Linux executive builds on
+your windows machine And early
+
+116
+00:07:32.080 --> 00:07:35.410
+versions of Docker, desktop. I'm
+thinking maybe a year or
+
+117
+00:07:35.410 --> 00:07:39.340
+two ago, I remember installing
+it. And I knew that
+
+118
+00:07:39.340 --> 00:07:41.710
+it would use hyper V
+and it would fire up
+
+119
+00:07:41.770 --> 00:07:43.960
+a virtual machine. And I
+would go into the hyper
+
+120
+00:07:43.960 --> 00:07:46.630
+V manager and I would
+see a virtual machine and
+
+121
+00:07:46.630 --> 00:07:53.080
+its name was Moby. What
+is Moby? Yeah. Maybe that's,
+
+122
+00:07:53.140 --> 00:07:56.780
+that's kind of fun because
+it's the name of this
+
+123
+00:07:57.030 --> 00:08:01.930
+VM predates as a launch
+of the Moby project, but
+
+124
+00:08:01.930 --> 00:08:05.440
+we did a few years
+ago and it was just
+
+125
+00:08:05.440 --> 00:08:09.160
+kind of a very cool
+name to use side as
+
+126
+00:08:09.160 --> 00:08:13.450
+I don't care. Like maybe
+it's the name of the
+
+127
+00:08:13.450 --> 00:08:16.930
+way to, by the way.
+So this Moby VM was
+
+128
+00:08:16.930 --> 00:08:22.210
+like, Trudy's a way, but,
+but mostly around containers and
+
+129
+00:08:22.510 --> 00:08:25.600
+yeah, it was kind of
+fun to use that name.
+
+130
+00:08:26.380 --> 00:08:29.830
+So Moby Dick is the
+whale in the, in the,
+
+131
+00:08:29.830 --> 00:08:32.290
+in the book of the
+same name and the, the
+
+132
+00:08:32.290 --> 00:08:35.530
+Docker logo is a whale
+with containers, like a container
+
+133
+00:08:35.530 --> 00:08:39.430
+ship on top. And this
+is because everything's not a
+
+134
+00:08:39.430 --> 00:08:43.630
+coal right. Kubernetes uses nautical
+names. Everything's about The ocean.
+
+135
+00:08:44.230 --> 00:08:49.480
+Yes, exactly. We always have
+used this analogy with shipping
+
+136
+00:08:49.480 --> 00:08:54.130
+containers and we've, I would
+say the big boats, but
+
+137
+00:08:55.230 --> 00:09:00.000
+container ships. Yes. Container ships
+actually. Yeah. In communities as,
+
+138
+00:09:00.900 --> 00:09:04.320
+as they can, this analogy
+of a bit further than
+
+139
+00:09:04.320 --> 00:09:08.310
+that. But if we, if
+we come like a few
+
+140
+00:09:08.310 --> 00:09:12.090
+years ago, we, we don't
+Moby project that you might
+
+141
+00:09:12.090 --> 00:09:15.240
+be aware of. And I
+treat, it was a way
+
+142
+00:09:15.240 --> 00:09:20.550
+for us to separate Docker
+as a project, to our
+
+143
+00:09:20.550 --> 00:09:25.860
+open source project, which, which
+we rely on for building
+
+144
+00:09:25.860 --> 00:09:29.990
+this local demon. Okay. So
+when I would install this,
+
+145
+00:09:29.990 --> 00:09:32.030
+I would, and this is
+a couple of years ago,
+
+146
+00:09:32.300 --> 00:09:34.820
+I would see this little
+virtual machine kind of get
+
+147
+00:09:34.820 --> 00:09:39.260
+created. So you were basically
+automating hyper V making a
+
+148
+00:09:39.260 --> 00:09:41.810
+virtual machine in the background.
+And I had other virtual
+
+149
+00:09:41.810 --> 00:09:44.270
+machines, like I had a
+no boon to virtual machine
+
+150
+00:09:44.540 --> 00:09:47.120
+that I would run in
+hyper V. It seemed to
+
+151
+00:09:47.120 --> 00:09:50.120
+work pretty well, but I
+felt that the startup time
+
+152
+00:09:50.120 --> 00:09:52.970
+was really long. Like I
+would wait for quite a
+
+153
+00:09:52.970 --> 00:09:56.600
+while. And it was pretty
+clear that there was windows.
+
+154
+00:09:57.110 --> 00:09:59.720
+And then there was Docker
+talking to hyper V with
+
+155
+00:09:59.720 --> 00:10:02.540
+this, you know, couple of
+megs of memory, a couple
+
+156
+00:10:02.540 --> 00:10:06.380
+of gigs of memory rather.
+And you were basically sitting
+
+157
+00:10:06.380 --> 00:10:10.880
+on top of hyper V,
+but then most recently that
+
+158
+00:10:10.880 --> 00:10:13.790
+went away and things just
+got faster and better and
+
+159
+00:10:13.790 --> 00:10:17.600
+more integrated. And now I
+don't feel like Docker is
+
+160
+00:10:17.600 --> 00:10:19.490
+sitting on top of a
+hack. I feel like it's
+
+161
+00:10:19.490 --> 00:10:22.820
+very native and very fast
+inside of windows. Can you
+
+162
+00:10:22.820 --> 00:10:25.760
+help me understand what changed
+and what the, what the
+
+163
+00:10:25.760 --> 00:10:32.450
+architecture differences? Yeah. So Originally
+we, we created our own
+
+164
+00:10:32.780 --> 00:10:36.320
+VM and as you said,
+we, we actually automated IPV
+
+165
+00:10:36.710 --> 00:10:41.090
+in a way to run
+our VM, wait for services
+
+166
+00:10:41.120 --> 00:10:46.370
+to start there and set
+up interconnection with this up
+
+167
+00:10:46.370 --> 00:10:49.430
+front end, et cetera. And
+yeah. And starting a VM
+
+168
+00:10:49.430 --> 00:10:53.150
+it's it takes, it takes
+some time. It takes some
+
+169
+00:10:53.150 --> 00:10:57.920
+time, except if you are
+actually Microsoft and you have
+
+170
+00:10:57.950 --> 00:11:02.290
+total control on both the
+IVR values or the us,
+
+171
+00:11:02.290 --> 00:11:07.460
+the OAS and the Linux
+environment itself. And that's what
+
+172
+00:11:07.460 --> 00:11:11.780
+Microsoft did with, with WSL
+too. So what we are
+
+173
+00:11:11.780 --> 00:11:14.870
+relying on now, now that
+they've just so two is,
+
+174
+00:11:15.110 --> 00:11:19.910
+is shipping is as the
+fact that Microsoft provides a
+
+175
+00:11:19.910 --> 00:11:24.680
+real Linux Darnell running in
+no UTVs, but boots under
+
+176
+00:11:24.710 --> 00:11:29.510
+two seconds, I think. And
+so we liberate this on
+
+177
+00:11:29.570 --> 00:11:34.520
+a Linux environment to run
+our, our, our services. And
+
+178
+00:11:34.520 --> 00:11:37.490
+often the factors that we
+run the, exactly the same
+
+179
+00:11:37.760 --> 00:11:40.520
+payload as what we run
+in our own new TTVM
+
+180
+00:11:40.520 --> 00:11:44.570
+with IPLV. But it says
+that instead of putting a
+
+181
+00:11:44.570 --> 00:11:50.770
+fully full fledged VM, we
+actually run the lookout is
+
+182
+00:11:50.780 --> 00:11:54.880
+a backend in a container
+within WSL, too, as a
+
+183
+00:11:54.880 --> 00:11:57.790
+tricky part is to create
+this container, or we would
+
+184
+00:11:58.000 --> 00:12:01.540
+without having Docker in the
+first place. So we, we
+
+185
+00:12:01.540 --> 00:12:05.650
+dealt directly with, with Linux,
+John API is to, to
+
+186
+00:12:05.650 --> 00:12:09.910
+set up our isolated environment
+within the, your TTVM and,
+
+187
+00:12:10.560 --> 00:12:13.770
+and spin up things from
+there. So it was announced
+
+188
+00:12:13.770 --> 00:12:16.800
+this week at build that
+the version of windows, I
+
+189
+00:12:16.800 --> 00:12:22.860
+think it's 2004 or 2004,
+which means 2020 April, or,
+
+190
+00:12:22.860 --> 00:12:26.520
+you know, spring is the
+one that has WSL two,
+
+191
+00:12:26.970 --> 00:12:30.000
+which is our favorite version
+of the windows subsystem for
+
+192
+00:12:30.000 --> 00:12:32.910
+Linux. This is the one
+that is the best choice.
+
+193
+00:12:32.940 --> 00:12:35.640
+So if you're doing Docker
+on windows, you really are
+
+194
+00:12:35.640 --> 00:12:37.110
+going to have a great
+experience. If you stand at
+
+195
+00:12:37.110 --> 00:12:39.570
+WSL two, you would not
+recommend doing it any other
+
+196
+00:12:39.570 --> 00:12:44.370
+way. Yeah, it's really, it's
+a, it's, it's, it's much,
+
+197
+00:12:44.370 --> 00:12:47.700
+much better with WSL too,
+in term of difference. In
+
+198
+00:12:47.700 --> 00:12:50.820
+term of, of startup, we
+start in under 10 seconds
+
+199
+00:12:50.850 --> 00:12:53.760
+on the moderate muddle machine,
+which is really awesome compared
+
+200
+00:12:53.760 --> 00:12:57.780
+to what we had with
+IP before and after that,
+
+201
+00:12:57.810 --> 00:13:02.100
+it also integrates really well
+with your own WSL to
+
+202
+00:13:02.100 --> 00:13:06.870
+these tools so that you
+can have native IO performance
+
+203
+00:13:06.870 --> 00:13:10.290
+when you buy in months
+things from, from your destroyer
+
+204
+00:13:10.320 --> 00:13:15.800
+to a Docker container and
+yeah. And things like the
+
+205
+00:13:15.840 --> 00:13:21.300
+WSL to VM runs with
+dynamic crystal set location. So
+
+206
+00:13:21.480 --> 00:13:25.380
+we can consume as liter,
+as little resources as we
+
+207
+00:13:25.380 --> 00:13:28.860
+need and scale to as
+much as we need in
+
+208
+00:13:28.860 --> 00:13:32.460
+term of CPU and memory
+to run your better payloads.
+
+209
+00:13:32.460 --> 00:13:36.960
+So yeah, overall the performance
+are merged merger, bitter river,
+
+210
+00:13:36.990 --> 00:13:40.770
+we've Ogilvy a van with
+a w two and a
+
+211
+00:13:40.770 --> 00:13:44.040
+on a, on an APV.
+And so, yeah, I would
+
+212
+00:13:44.100 --> 00:13:49.110
+really recommend that to upgrade
+to 20 or four. And
+
+213
+00:13:50.160 --> 00:13:54.360
+an interesting fact is that
+w two is also running
+
+214
+00:13:54.360 --> 00:13:59.670
+on windows and previously, as
+we leveraged APRV we, we
+
+215
+00:13:59.670 --> 00:14:03.270
+could only run on windows
+10 pro and we'll just
+
+216
+00:14:03.270 --> 00:14:06.090
+have to, now you can
+sell Docker, desktop on windows
+
+217
+00:14:06.540 --> 00:14:10.180
+and develop bleeding containers from,
+from when you were windows.
+
+218
+00:14:10.980 --> 00:14:13.590
+That's really huge. I know
+I it's a little confusing.
+
+219
+00:14:13.590 --> 00:14:17.760
+Cause if you go to
+windows features, there's hyper V
+
+220
+00:14:18.030 --> 00:14:21.510
+and then there's virtual. What
+is it? Virtual something platform.
+
+221
+00:14:21.780 --> 00:14:27.180
+Yes. Windows virtualization platform. I
+think, yeah, that's, that's quite
+
+222
+00:14:27.180 --> 00:14:31.830
+funny because it's truly just
+two ways and two ways
+
+223
+00:14:31.830 --> 00:14:35.370
+to install the same iPad.
+So when, when you install
+
+224
+00:14:35.400 --> 00:14:38.520
+the fully fledged, Adobe, you
+don't really need this new
+
+225
+00:14:38.520 --> 00:14:42.690
+feature, a windows virtualization platform
+for WC two to work.
+
+226
+00:14:43.430 --> 00:14:46.380
+It just needed. If, if
+you are running on a
+
+227
+00:14:46.380 --> 00:14:50.100
+home or if you don't
+want to install APRV or
+
+228
+00:14:50.100 --> 00:14:52.460
+the Walla and set of
+IPV services on your mission.
+
+229
+00:14:52.750 --> 00:14:57.550
+So this unlocks the ability
+to use Docker on anyone
+
+230
+00:14:57.550 --> 00:15:00.970
+out there who has home.
+So that means students, anyone
+
+231
+00:15:00.970 --> 00:15:03.130
+who doesn't want to pay
+the extra money for pro,
+
+232
+00:15:03.130 --> 00:15:06.580
+because pro includes a whole
+bunch of other stuff. And
+
+233
+00:15:07.030 --> 00:15:09.280
+that's a huge thing to
+make that available. So you
+
+234
+00:15:09.280 --> 00:15:12.580
+can't, if you have home,
+you turn on the virtualization
+
+235
+00:15:12.580 --> 00:15:15.010
+platform, you can use Docker,
+your doctor, desktop, Kubernetes, all
+
+236
+00:15:15.010 --> 00:15:18.940
+this stuff, you just can't
+use the hyper V virtual
+
+237
+00:15:18.940 --> 00:15:22.480
+machine stuff where you're actually
+opening up like a boon
+
+238
+00:15:22.480 --> 00:15:26.200
+to full square, like a
+full virtual machine on, on
+
+239
+00:15:26.200 --> 00:15:29.070
+Lennox, right? Yes. And there
+is a fun fact it's
+
+240
+00:15:29.080 --> 00:15:34.180
+that you can choose a
+IPV backend, but you can't
+
+241
+00:15:34.240 --> 00:15:38.710
+use windows containers back in
+either because windows containers is
+
+242
+00:15:38.710 --> 00:15:42.580
+a windows 10 pro feature.
+So that's really funny because
+
+243
+00:15:42.580 --> 00:15:47.380
+you can develop Phoenix containers,
+run capabilities, et cetera. But
+
+244
+00:15:47.890 --> 00:15:52.600
+the windows container support is,
+is not very long. Well,
+
+245
+00:15:52.600 --> 00:15:54.820
+what's really nice though, is
+that you can use WSL,
+
+246
+00:15:54.820 --> 00:15:57.520
+you can use visual studio
+code and you can get
+
+247
+00:15:57.520 --> 00:16:01.630
+a really lovely experience for
+developing. Yeah, no, just the
+
+248
+00:16:01.630 --> 00:16:04.630
+Island. I really like to,
+I like the experience with,
+
+249
+00:16:05.650 --> 00:16:10.750
+yes. COVID remote to the
+WSL feature, which allows you
+
+250
+00:16:10.750 --> 00:16:15.400
+to run. Yes. COVID backend
+within WSL itself within your,
+
+251
+00:16:15.400 --> 00:16:20.320
+your distro. And so it
+fits really, really well with,
+
+252
+00:16:20.710 --> 00:16:24.220
+we look at stuff and
+the WSL backend. So this
+
+253
+00:16:24.220 --> 00:16:29.920
+way you can actually target
+early next production environment using
+
+254
+00:16:29.950 --> 00:16:34.870
+Linux builds crates and things
+like that, and get your
+
+255
+00:16:34.870 --> 00:16:39.490
+nice idea experience on windows.
+And yeah, that's, that's really,
+
+256
+00:16:39.490 --> 00:16:43.900
+really awesome. And that's actually
+is a way I developed
+
+257
+00:16:43.900 --> 00:16:46.300
+to day to day on
+the, on the desktop. When
+
+258
+00:16:46.300 --> 00:16:49.150
+I, when I have to
+deal with, with, with the
+
+259
+00:16:49.190 --> 00:16:52.810
+WSL backend, I've used WSL
+to develop the WSL backend.
+
+260
+00:16:52.870 --> 00:16:58.330
+That's really good. No one
+wants to manage databases if
+
+261
+00:16:58.330 --> 00:17:01.570
+they can avoid it. And
+that's why Mongo DB made
+
+262
+00:17:01.570 --> 00:17:05.860
+Mongo DB Atlas, a global
+cloud database service that runs
+
+263
+00:17:05.860 --> 00:17:10.270
+on AWS, GCP and Azure.
+You can deploy a fully
+
+264
+00:17:10.270 --> 00:17:13.840
+managed Mongo DB database in
+minutes with just a few
+
+265
+00:17:13.840 --> 00:17:18.010
+clicks or a few API
+calls, Mongo DB, Atlas, automates
+
+266
+00:17:18.010 --> 00:17:21.970
+deployment, automates updates, handles scaling,
+and more so that you
+
+267
+00:17:21.970 --> 00:17:24.880
+can focus on your application
+instead of taking care of
+
+268
+00:17:24.880 --> 00:17:31.900
+your database, you can get
+started free@mongodb.com slash Atlas. Now,
+
+269
+00:17:31.900 --> 00:17:34.930
+if you're already managing a
+Mongo DB deployment, Atlas has
+
+270
+00:17:34.930 --> 00:17:38.590
+a live migration service, so
+you can migrate it easily
+
+271
+00:17:38.620 --> 00:17:41.320
+with minimal downtime and then
+get back to what matters.
+
+272
+00:17:41.500 --> 00:17:45.790
+Stop managing your database and
+start using Mongo DB Atlas.
+
+273
+00:17:46.480 --> 00:17:49.950
+Now there's, there's being able
+to go into WSL type
+
+274
+00:17:49.950 --> 00:17:53.910
+code, and then you're in
+windows using vs code, and
+
+275
+00:17:53.910 --> 00:17:56.400
+you're doing your compilations in
+Linux. But then there is
+
+276
+00:17:56.400 --> 00:18:00.270
+what are called dev containers,
+where you have a.dev container
+
+277
+00:18:00.270 --> 00:18:04.020
+file. And that works amazingly
+with Docker desktop. So you
+
+278
+00:18:04.020 --> 00:18:06.990
+can go and have a
+folder, put some stuff in
+
+279
+00:18:06.990 --> 00:18:09.270
+it that is some source
+code, but you don't have,
+
+280
+00:18:09.270 --> 00:18:12.720
+for example, go or rust
+or Python. And then visual
+
+281
+00:18:12.720 --> 00:18:15.270
+studio code fires up and
+says, Oh, this is a
+
+282
+00:18:15.270 --> 00:18:18.510
+development container because it sees
+a little text file that
+
+283
+00:18:18.510 --> 00:18:23.430
+says.container.dev container. Then it opens
+again and does all the
+
+284
+00:18:23.430 --> 00:18:25.950
+Docker work. It installs everything
+you need so that your
+
+285
+00:18:25.950 --> 00:18:30.870
+entire stack of development exists
+only in Docker and with
+
+286
+00:18:30.870 --> 00:18:33.210
+Docker desktop on windows. It
+just, it just works. It's
+
+287
+00:18:33.210 --> 00:18:37.610
+like impossible. Yeah. So I
+really like this approach of
+
+288
+00:18:37.610 --> 00:18:41.600
+working and some to, to
+go a little further than
+
+289
+00:18:41.600 --> 00:18:47.870
+that. It's also allowed us
+to work on longterm supported
+
+290
+00:18:47.870 --> 00:18:53.360
+software and don't have to
+deal with issues whenever you
+
+291
+00:18:53.360 --> 00:18:57.020
+need to upgrade and as
+DKA or something like that
+
+292
+00:18:57.410 --> 00:19:01.010
+for building your software over
+time, you don't have to
+
+293
+00:19:01.280 --> 00:19:04.430
+think about, Oh, by the
+way, I have a version
+
+294
+00:19:04.550 --> 00:19:06.860
+that dates from one year
+ago, but I still need
+
+295
+00:19:06.860 --> 00:19:10.340
+to support for three years,
+we did work with the
+
+296
+00:19:10.340 --> 00:19:13.970
+new version of the tools,
+et cetera. One thing that
+
+297
+00:19:14.150 --> 00:19:18.350
+the development containers feature allows
+you to do is to
+
+298
+00:19:18.380 --> 00:19:23.840
+actually Vashon your tool set
+alongside your source code. And
+
+299
+00:19:24.020 --> 00:19:27.560
+that's really, really cool. So
+that at any given time
+
+300
+00:19:27.660 --> 00:19:30.830
+given point of time, I
+can go back to a
+
+301
+00:19:30.840 --> 00:19:35.240
+version of tuning that I
+use to build my product
+
+302
+00:19:35.240 --> 00:19:38.750
+advertising. That's really, really cool.
+And I wish we could
+
+303
+00:19:38.750 --> 00:19:40.910
+use that. We've, we've looked
+at a list of Beethoven.
+
+304
+00:19:42.080 --> 00:19:45.590
+Oh yeah. That would be
+amazing. I'm looking at my
+
+305
+00:19:45.590 --> 00:19:50.120
+WSL. So I typed WSL
+dash dash list and it
+
+306
+00:19:50.120 --> 00:19:52.820
+lists out like I have
+wound two and I have
+
+307
+00:19:52.820 --> 00:19:54.740
+w Linux and I, you
+know, I have the different
+
+308
+00:19:54.740 --> 00:19:56.930
+loan and then I have
+one that's called Docker desktop.
+
+309
+00:19:57.260 --> 00:20:02.000
+That's your WSL distribution. You're
+effectively, rather than making a
+
+310
+00:20:02.060 --> 00:20:05.750
+big, heavy VM and hyper
+V you're making a tiny,
+
+311
+00:20:05.900 --> 00:20:10.970
+lightweight WSL distribution. And when
+I run a container, it
+
+312
+00:20:10.970 --> 00:20:14.190
+runs inside of that distribution.
+Is that correct? Yeah. So
+
+313
+00:20:14.190 --> 00:20:18.710
+w we actually run two
+distributions, one that has absolutely
+
+314
+00:20:18.710 --> 00:20:22.640
+no executive, which is just
+therefore backing your container of
+
+315
+00:20:22.700 --> 00:20:27.260
+configuration volumes and things like
+that. We use, we use
+
+316
+00:20:27.260 --> 00:20:30.770
+it basically as a, as
+an additional VHD, but we
+
+317
+00:20:30.770 --> 00:20:35.390
+attach to our, to our
+main district and various local,
+
+318
+00:20:35.390 --> 00:20:39.380
+the sub distro. And what
+it does is it's a
+
+319
+00:20:39.380 --> 00:20:44.600
+very small destroyer which contains
+occurred that creates the actual
+
+320
+00:20:44.600 --> 00:20:51.280
+container that France our backend,
+our set of backend services.
+
+321
+00:20:52.360 --> 00:20:57.040
+So it contains a single
+WSL bootstrap executable. If you,
+
+322
+00:20:57.040 --> 00:21:01.330
+if you enter it using
+WSL, the, and where you
+
+323
+00:21:01.330 --> 00:21:04.750
+look at this top is
+running and you, you run
+
+324
+00:21:04.790 --> 00:21:10.540
+<inaudible>, you'll see that various
+WSL bootstrap that creates a
+
+325
+00:21:10.540 --> 00:21:13.450
+new container. And you can
+see as a unit process
+
+326
+00:21:13.720 --> 00:21:16.470
+within this container, I've actually
+just did that. I said,
+
+327
+00:21:16.470 --> 00:21:20.310
+WSL dash D Docker, desktop,
+WSL bootstrap. And it says
+
+328
+00:21:20.370 --> 00:21:24.810
+program files, Docker, Docker for
+WSO dot ISO. You mounted
+
+329
+00:21:24.810 --> 00:21:30.120
+an ISO. Yeah, yeah, yeah.
+That's actually, we, we use
+
+330
+00:21:30.120 --> 00:21:34.140
+the same, the same tooling
+that what we use for
+
+331
+00:21:34.140 --> 00:21:37.590
+building the APL VVM. So
+the APL VVM is actually
+
+332
+00:21:37.590 --> 00:21:40.200
+based on two ways over
+at, we kind of merged
+
+333
+00:21:40.200 --> 00:21:45.180
+together one that contains the
+base of the, a Linux
+
+334
+00:21:45.180 --> 00:21:50.910
+distro and one that contains
+the Docker, the version and
+
+335
+00:21:50.910 --> 00:21:55.680
+things like that. Veta roses
+to easily swap the Booker
+
+336
+00:21:55.740 --> 00:21:59.880
+demon version from <inaudible> and
+the same, the same for
+
+337
+00:21:59.880 --> 00:22:02.430
+communities and things like that.
+So we stitched Vista way
+
+338
+00:22:02.490 --> 00:22:07.680
+tweezers together, and we attached
+a VAT. And what we
+
+339
+00:22:07.680 --> 00:22:10.440
+do with WSL too, is
+that we basically does the
+
+340
+00:22:10.440 --> 00:22:14.520
+same thing. We have the
+same was saying two ways
+
+341
+00:22:14.520 --> 00:22:19.050
+or five, those one, but
+is a little bit different
+
+342
+00:22:19.050 --> 00:22:22.740
+than the IPO. I probably
+say, but it's mostly the
+
+343
+00:22:22.740 --> 00:22:26.520
+same code, but packaged in
+a slightly different way. And
+
+344
+00:22:26.520 --> 00:22:31.200
+we, and we bind mounts,
+a directory that lives in
+
+345
+00:22:31.200 --> 00:22:38.550
+the local data destroy inside
+what we call our Linux
+
+346
+00:22:38.550 --> 00:22:44.310
+get environment so that we,
+we have the same feature
+
+347
+00:22:44.310 --> 00:22:47.340
+as a VHD, but implemented
+as a bine monk from
+
+348
+00:22:47.370 --> 00:22:50.400
+the COVID data to look
+at this stuff district, One
+
+349
+00:22:50.400 --> 00:22:53.250
+of the things that's most
+amazing as I have kind
+
+350
+00:22:53.250 --> 00:22:56.370
+of now I'm in the
+WSL two environment compared to
+
+351
+00:22:56.370 --> 00:22:58.950
+when it used to work
+was, I always felt like
+
+352
+00:22:59.250 --> 00:23:03.600
+Docker was kind of layered
+on top of windows. But
+
+353
+00:23:03.600 --> 00:23:06.000
+now when I say Docker
+images right now, I'm looking
+
+354
+00:23:06.000 --> 00:23:08.880
+in my PowerShell, I see
+Docker images. And I see
+
+355
+00:23:08.880 --> 00:23:11.580
+my images. I go over
+to my Boone two on
+
+356
+00:23:11.580 --> 00:23:14.550
+the same machine. And I
+say, Docker images, I see
+
+357
+00:23:14.550 --> 00:23:18.630
+the exact same images. Like
+it's, it is one Docker
+
+358
+00:23:18.630 --> 00:23:21.060
+on the machine rather than
+what I used to see,
+
+359
+00:23:21.450 --> 00:23:23.940
+which was different contexts. But
+when I go and say
+
+360
+00:23:23.940 --> 00:23:30.150
+Docker context LS inside of
+Ubuntu, it says, Docker, end
+
+361
+00:23:30.150 --> 00:23:34.890
+point VAR run. And I
+go over into the, the
+
+362
+00:23:34.890 --> 00:23:38.160
+windows world. And I see
+a different thing, which one,
+
+363
+00:23:38.190 --> 00:23:40.950
+which one is real we're
+we're piping somehow. I don't
+
+364
+00:23:40.950 --> 00:23:44.700
+understand this idea of context.
+Can you explain that? Yeah,
+
+365
+00:23:44.730 --> 00:23:49.440
+obviously of context is It's
+nothing really to do with
+
+366
+00:23:49.610 --> 00:23:51.980
+the Dakota stuff. It's something
+that we added to the
+
+367
+00:23:51.980 --> 00:23:57.110
+CLI, but it allows you
+to a store, the credit.
+
+368
+00:23:57.110 --> 00:23:59.630
+It was a credit on
+shows and configuration to talk
+
+369
+00:23:59.630 --> 00:24:04.010
+to various Docker endpoints with
+the same CLA and switched
+
+370
+00:24:04.010 --> 00:24:06.950
+from one to the other,
+just by using a Docker
+
+371
+00:24:06.950 --> 00:24:12.250
+context, use a common. And
+that's, that's pretty cool for,
+
+372
+00:24:12.640 --> 00:24:16.970
+for ups. People must be,
+I'd have to deal with
+
+373
+00:24:16.970 --> 00:24:22.940
+many different production and staging
+environments and deploy things on
+
+374
+00:24:23.140 --> 00:24:27.500
+endpoints. Hmm. Actually, if you,
+if you don't get those
+
+375
+00:24:27.510 --> 00:24:34.640
+different several address on, on
+two and on, on the
+
+376
+00:24:34.640 --> 00:24:38.060
+windows side, actually, they are
+both right. And that's because
+
+377
+00:24:38.090 --> 00:24:41.870
+they don't talk directly to
+the, to the demon. We
+
+378
+00:24:41.870 --> 00:24:45.590
+actually run a little proxy
+on the windows side and
+
+379
+00:24:45.590 --> 00:24:52.820
+on each distro where you
+have activity integration. And this
+
+380
+00:24:52.820 --> 00:24:55.970
+little proxy allows us to
+do a couple of things.
+
+381
+00:24:56.510 --> 00:25:00.340
+And the most important thing
+is to actually rewrite all
+
+382
+00:25:00.360 --> 00:25:04.220
+the bind months that you,
+but you do, like if
+
+383
+00:25:04.220 --> 00:25:09.140
+I'm on, on windows and
+I want to share my
+
+384
+00:25:09.170 --> 00:25:15.590
+C drive inside the container,
+we need actually to instruct
+
+385
+00:25:15.710 --> 00:25:22.400
+to change the path that
+you say, your input. So
+
+386
+00:25:22.430 --> 00:25:24.740
+in your criminal line, you,
+you say, I want to
+
+387
+00:25:24.740 --> 00:25:30.830
+move C colon, something into
+a slash Val data, for
+
+388
+00:25:30.830 --> 00:25:34.940
+example, and to do that,
+we, we actually need to
+
+389
+00:25:34.940 --> 00:25:40.010
+map this secret thing into
+a bus that corresponds to
+
+390
+00:25:40.960 --> 00:25:47.240
+<inaudible> within our own Linux
+environment, and actually about the
+
+391
+00:25:47.240 --> 00:25:50.060
+same thing. When you are
+on Ubuntu and you want
+
+392
+00:25:50.060 --> 00:25:54.830
+to bind munch your own
+drive inside a entitle container,
+
+393
+00:25:55.280 --> 00:25:59.780
+as we are running Docker
+in, you know, different namespace,
+
+394
+00:26:00.620 --> 00:26:05.600
+we need to actually convert
+as a past vet. You,
+
+395
+00:26:05.630 --> 00:26:09.770
+you give us some input
+into something that the colors
+
+396
+00:26:09.980 --> 00:26:16.270
+can actually see and various,
+various tricky part. And the,
+
+397
+00:26:16.280 --> 00:26:20.390
+the biggest complexity in, in
+the WRC and integration is
+
+398
+00:26:20.390 --> 00:26:25.700
+actually there. It's making sure
+that we, we get very,
+
+399
+00:26:25.700 --> 00:26:29.720
+very good. Are your performance
+really negative or your performance
+
+400
+00:26:31.670 --> 00:26:34.360
+when you buy in mom's
+thing and that we, and
+
+401
+00:26:34.400 --> 00:26:37.610
+at the same time, we
+need to translate paths correctly
+
+402
+00:26:37.640 --> 00:26:42.830
+and share, share data between
+one, these two and our
+
+403
+00:26:42.900 --> 00:26:45.710
+own local rest of the
+store. For the most part,
+
+404
+00:26:45.800 --> 00:26:48.260
+everything just works. Like you're
+saying, well, this is a
+
+405
+00:26:48.260 --> 00:26:50.360
+little tricky, and this is
+a little tricky, but you're
+
+406
+00:26:50.360 --> 00:26:54.560
+doing the work. So the
+result is I'm able to
+
+407
+00:26:54.560 --> 00:26:58.580
+go and do my development
+very, very naturally without having
+
+408
+00:26:58.580 --> 00:27:01.730
+to worry about anything. Like
+it feels native. And it
+
+409
+00:27:01.730 --> 00:27:05.180
+is incredibly fast. I, in
+fact, I'm doing all my.net
+
+410
+00:27:05.210 --> 00:27:08.780
+core builds and using Docker
+on a local machine now.
+
+411
+00:27:09.170 --> 00:27:12.860
+And because I'm using WSL
+too, it feels like I'm
+
+412
+00:27:12.860 --> 00:27:15.680
+on the metal. Yeah. And,
+and we are really, really
+
+413
+00:27:15.680 --> 00:27:20.210
+up here. We've had actually
+it's and sometimes, you know,
+
+414
+00:27:20.510 --> 00:27:23.690
+we, we, we have some
+bugs with this kind of
+
+415
+00:27:23.690 --> 00:27:28.160
+system and, and as it
+feels so easy to use,
+
+416
+00:27:28.280 --> 00:27:32.600
+most of, of our users
+think it's it's what do
+
+417
+00:27:32.600 --> 00:27:35.570
+you see in Belinda's they
+would, and actually it's not.
+
+418
+00:27:36.650 --> 00:27:41.900
+And sometimes our users complain
+about, yeah, you know, Biden,
+
+419
+00:27:41.900 --> 00:27:46.310
+monsters don't work correctly on
+the windows side. Performance is
+
+420
+00:27:46.310 --> 00:27:49.490
+not as good as if
+I buy in one from
+
+421
+00:27:49.490 --> 00:27:53.840
+WSL itself or something like
+that. And actually, yes, it's
+
+422
+00:27:53.840 --> 00:27:58.430
+true. It's, it's tricky and
+very, a lot of work
+
+423
+00:27:58.430 --> 00:28:01.940
+behind, beyond those kind of
+features. And, and for a
+
+424
+00:28:01.940 --> 00:28:06.080
+long time, we, we had,
+we had problems with Bain
+
+425
+00:28:06.080 --> 00:28:13.070
+months, with April and Vera
+award category of issues that,
+
+426
+00:28:13.590 --> 00:28:19.730
+that we add to, to
+walk around with sharing, sharing
+
+427
+00:28:19.730 --> 00:28:22.490
+your Sid rave into a
+container of our friends in
+
+428
+00:28:22.610 --> 00:28:30.620
+Naperville things like the sambar
+pro server on, on the
+
+429
+00:28:30.620 --> 00:28:35.090
+windows side can be disabled
+by your GPO. Or it's
+
+430
+00:28:35.090 --> 00:28:38.900
+not reachable from a foreign,
+from a foreign computer. If
+
+431
+00:28:38.900 --> 00:28:41.990
+you are on the world
+in Asia, active directory or
+
+432
+00:28:41.990 --> 00:28:45.290
+things like that, there are
+so many, many cases where
+
+433
+00:28:45.470 --> 00:28:48.730
+we just can't do anything.
+And it's not really, really
+
+434
+00:28:48.950 --> 00:28:51.830
+able, and we are not
+happy with that, but yeah.
+
+435
+00:28:51.860 --> 00:28:58.160
+And this, this tension between
+user feedback saying vis doesn't
+
+436
+00:28:58.160 --> 00:29:03.380
+work and saying, yes, we
+know, and it's already so
+
+437
+00:29:03.380 --> 00:29:06.710
+difficult to, to make it
+work the way it Fox
+
+438
+00:29:06.710 --> 00:29:11.780
+today. And yeah. Okay. So,
+but if people have windows
+
+439
+00:29:11.960 --> 00:29:15.470
+2000 or 2004, so windows
+10, the version that is
+
+440
+00:29:15.470 --> 00:29:21.440
+in the first quarter of
+2020, and they get the
+
+441
+00:29:21.440 --> 00:29:26.150
+Docker desktop latest stuff, they
+go into resources, WSL integration.
+
+442
+00:29:26.480 --> 00:29:28.880
+They just have to click
+enable integration with my default
+
+443
+00:29:28.880 --> 00:29:33.950
+distro. You handle everything. They
+don't install Docker in WSL
+
+444
+00:29:33.980 --> 00:29:36.620
+to get started. Yeah, no,
+they don't need to. We
+
+445
+00:29:36.620 --> 00:29:44.410
+actually ships a Linux as
+CLI with, with <inaudible> and
+
+446
+00:29:44.470 --> 00:29:50.350
+we actually create SIM links
+to, to the binaries that
+
+447
+00:29:50.410 --> 00:29:56.800
+live within <inaudible> from your
+environment. So everything is in
+
+448
+00:29:56.800 --> 00:29:59.420
+your past your type, you,
+when you were unable to,
+
+449
+00:30:00.260 --> 00:30:04.920
+as integration, you can type
+Docker or occipital, and it
+
+450
+00:30:05.020 --> 00:30:10.810
+just gets, gets resolved. Those
+are only one keys where
+
+451
+00:30:10.810 --> 00:30:14.590
+it's a little bit trickier
+is for just tools that
+
+452
+00:30:14.590 --> 00:30:20.020
+doesn't come with a, with
+a GDC, this was like
+
+453
+00:30:20.050 --> 00:30:22.900
+Alpine on or things like
+that, where we, you need
+
+454
+00:30:22.900 --> 00:30:28.450
+to, to install a gypsy
+combat layer so that our,
+
+455
+00:30:28.570 --> 00:30:32.260
+our executable scan can run
+on the, on your environment.
+
+456
+00:30:32.880 --> 00:30:35.100
+So the easiest way to
+get started is to make
+
+457
+00:30:35.100 --> 00:30:38.940
+sure you've got the latest
+windows you have enabled WSL,
+
+458
+00:30:38.940 --> 00:30:41.250
+and now at build, they
+announced they're going to make
+
+459
+00:30:41.250 --> 00:30:44.610
+it even easier to just
+say, WSL dash dash install,
+
+460
+00:30:44.940 --> 00:30:47.310
+install, Docker, desktop, and then
+you're ready to go. And
+
+461
+00:30:47.310 --> 00:30:49.230
+you can just, even, like
+you said, check a box
+
+462
+00:30:49.230 --> 00:30:52.350
+and get Kubernetes, and then
+all it gets better with
+
+463
+00:30:52.350 --> 00:30:56.090
+visual studio code. Of course.
+Yeah, sure. Yeah. That's a,
+
+464
+00:30:56.090 --> 00:30:59.940
+that's exactly that then. Yeah.
+I really wish that we
+
+465
+00:30:59.940 --> 00:31:06.930
+could brought this level of
+experience and performance to more
+
+466
+00:31:06.930 --> 00:31:12.180
+users like people running when
+current investment in windows 10
+
+467
+00:31:12.690 --> 00:31:16.050
+or 1909 or something like
+that. I really, I really
+
+468
+00:31:16.050 --> 00:31:18.930
+have that we can, at
+some point reach them with,
+
+469
+00:31:19.140 --> 00:31:23.220
+with visit WSL to backend
+as well, but that doesn't
+
+470
+00:31:23.220 --> 00:31:27.360
+depend on us and yeah,
+maybe, maybe Microsoft will want
+
+471
+00:31:27.360 --> 00:31:31.770
+to Blackboard WSL two or
+something like that. That's really
+
+472
+00:31:31.770 --> 00:31:34.320
+cool that people could do
+this kind of good stuff
+
+473
+00:31:34.350 --> 00:31:36.510
+and not, cause not everyone
+can upgrade to the absolute
+
+474
+00:31:36.510 --> 00:31:41.070
+latest, latest windows. Yes. Yes.
+And yeah, that's, that's always
+
+475
+00:31:41.070 --> 00:31:44.490
+a problem with new APIs.
+And in the, in the
+
+476
+00:31:44.490 --> 00:31:48.960
+past, we, we have struggled
+with doing the choice of
+
+477
+00:31:49.200 --> 00:31:53.190
+leverage, leveraging a very recent
+API. And it's mostly because
+
+478
+00:31:53.640 --> 00:31:55.560
+on our side of the
+curve, we need to support
+
+479
+00:31:55.930 --> 00:32:03.270
+people with very broad runs
+of veterans. And yeah, and
+
+480
+00:32:03.270 --> 00:32:04.980
+for that, we just had
+to, it was a view
+
+481
+00:32:04.980 --> 00:32:06.960
+of vet. It was a
+very good fit and we
+
+482
+00:32:06.960 --> 00:32:12.660
+wanted to leverage that. But
+for, for many cases before
+
+483
+00:32:12.660 --> 00:32:17.630
+we were just went back
+and say, Oh, it's, it's
+
+484
+00:32:17.630 --> 00:32:22.440
+likely adds so much complexity
+to the take windows versions
+
+485
+00:32:22.440 --> 00:32:26.820
+detectives. The API is where
+I've fallen back solutions and
+
+486
+00:32:26.820 --> 00:32:30.440
+things like that. So for
+now, from now on, we
+
+487
+00:32:30.450 --> 00:32:33.990
+consider for example, that the
+wall IPLV back in is
+
+488
+00:32:34.050 --> 00:32:36.930
+our fallback mechanism for when
+the resell two is not
+
+489
+00:32:37.650 --> 00:32:43.550
+available. D it gives you
+some kind of a view
+
+490
+00:32:43.590 --> 00:32:47.030
+about the choice that we,
+that we have to do
+
+491
+00:32:47.390 --> 00:32:52.880
+between leveraging a new API
+and having to maintain multiple
+
+492
+00:32:53.110 --> 00:32:56.880
+paths for, for doing the
+same thing. And I think
+
+493
+00:32:56.910 --> 00:32:59.180
+the research too is, is
+just a very bright example
+
+494
+00:32:59.180 --> 00:33:02.600
+for, for that. Like, if
+you, if you don't have
+
+495
+00:33:02.630 --> 00:33:05.480
+WSL two, we need to
+do something and make it
+
+496
+00:33:05.510 --> 00:33:10.460
+work anyway. And yeah. Advertise
+via the previous VR back
+
+497
+00:33:10.460 --> 00:33:13.450
+in. Yeah. I think that
+WSL two is definitely the
+
+498
+00:33:13.450 --> 00:33:15.780
+future and it's just going
+to get better. And there's
+
+499
+00:33:15.780 --> 00:33:18.160
+stuff that we learned at
+build this week. I'll make
+
+500
+00:33:18.160 --> 00:33:20.710
+sure I put links in
+the show notes. I'll also
+
+501
+00:33:20.710 --> 00:33:23.140
+put links to both of
+you on Twitter as well
+
+502
+00:33:23.140 --> 00:33:26.140
+as to go and download
+Docker desktop that folks can
+
+503
+00:33:26.140 --> 00:33:28.720
+do right now. Thank you
+so much for chatting with
+
+504
+00:33:28.720 --> 00:33:31.900
+me today. This has been
+another episode of Hanselminutes and
+
+505
+00:33:31.900 --> 00:33:45.340
+we'll see you again next
+week. <inaudible>.
+

@@ -1,0 +1,3021 @@
+WEBVTT FILE
+
+1
+00:00:00.450 --> 00:00:04.200
+Hey folks. Today's episode was
+sponsored by Datadog it's. A
+
+2
+00:00:04.200 --> 00:00:08.400
+cloud scale monitoring and analytics
+platform. Datadog was built to
+
+3
+00:00:08.400 --> 00:00:12.450
+bring clarity to complex dynamic
+applications in the cloud, on
+
+4
+00:00:12.450 --> 00:00:16.860
+premises in containers or wherever
+they run with beautiful dashboards,
+
+5
+00:00:16.950 --> 00:00:21.300
+distributed tracing, and seamless integrations
+with more than 200 technologies,
+
+6
+00:00:21.750 --> 00:00:26.160
+including Azure and Docker and
+PagerDuty Datadog provides deep end
+
+7
+00:00:26.160 --> 00:00:28.800
+to end visibility into the
+health and performance of modern
+
+8
+00:00:28.800 --> 00:00:33.240
+apps. Visualize key metrics, set
+alerts to identify anomalies and
+
+9
+00:00:33.240 --> 00:00:36.510
+collaborate with your team to
+troubleshoot and fix issues fast.
+
+10
+00:00:37.050 --> 00:00:39.270
+I'd like you to try
+it yourself by starting a
+
+11
+00:00:39.270 --> 00:00:43.260
+free 14 day trial today,
+listeners of this podcast will
+
+12
+00:00:43.260 --> 00:00:49.500
+also get a free Datadog
+t-shirt get started at bitly.com/data
+
+13
+00:00:49.500 --> 00:01:10.130
+dog shirt. That's bitly.com/data dog
+shirt. <inaudible> Hansel minutes. And
+
+14
+00:01:10.130 --> 00:01:12.770
+today I'm talking with Steve
+Sanderson, he's a senior software
+
+15
+00:01:12.770 --> 00:01:16.970
+engineer on the asp.net team
+at Microsoft full disclosure. I
+
+16
+00:01:16.970 --> 00:01:19.970
+also work on the asp.net
+team, although Steve and I
+
+17
+00:01:19.970 --> 00:01:22.280
+don't work directly together. We
+have known each other for
+
+18
+00:01:22.280 --> 00:01:24.980
+a long time. And he
+worked on a, or wrote
+
+19
+00:01:25.220 --> 00:01:28.190
+a knockout JS, which you
+may have used in the
+
+20
+00:01:28.190 --> 00:01:30.740
+earlier days of JavaScript. And
+doesn't knock out power a
+
+21
+00:01:30.740 --> 00:01:34.010
+lot of the Azure portal.
+Yeah, it does. Yeah. It's
+
+22
+00:01:34.010 --> 00:01:38.450
+been used since the third
+iteration of the Azure portal,
+
+23
+00:01:38.450 --> 00:01:40.190
+which has been around for
+a few years now. It's
+
+24
+00:01:40.190 --> 00:01:43.730
+the current iteration and yeah,
+I'm pretty certain, it's the
+
+25
+00:01:43.730 --> 00:01:47.570
+biggest knockout application in the
+world. It's hundreds of developers
+
+26
+00:01:47.570 --> 00:01:51.590
+working on it and it's
+still holding together. So yes,
+
+27
+00:01:51.830 --> 00:01:54.110
+that's pretty cool. Oh, that's
+got to feel good. And
+
+28
+00:01:54.110 --> 00:01:57.680
+that certainly is proof that
+you can ship software and
+
+29
+00:01:57.680 --> 00:02:00.590
+put it into production. So
+today we're going to talk
+
+30
+00:02:00.590 --> 00:02:05.300
+about Blaser B L a
+Z O R, but what
+
+31
+00:02:05.300 --> 00:02:09.770
+is blazer blazer? It's a
+experimental project that we're doing
+
+32
+00:02:09.770 --> 00:02:13.640
+within the ASP net team
+to think about what the
+
+33
+00:02:13.700 --> 00:02:18.920
+future of dotnet as a
+client side, a web application
+
+34
+00:02:18.920 --> 00:02:27.200
+platform could be because this
+year the WebAssembly standard is
+
+35
+00:02:27.230 --> 00:02:31.190
+now available in all mainstream
+browsers on that create some
+
+36
+00:02:31.190 --> 00:02:34.880
+pretty exciting new possibilities for
+how you can write software
+
+37
+00:02:34.970 --> 00:02:37.670
+and deliver it through a
+browser. And so we got
+
+38
+00:02:37.670 --> 00:02:42.470
+thinking, can we put.net on
+WebAssembly? And if we could,
+
+39
+00:02:42.770 --> 00:02:46.100
+what sort of applications would
+people write? What would the
+
+40
+00:02:46.100 --> 00:02:49.340
+programming model look like? Could
+this be really productive? What
+
+41
+00:02:49.340 --> 00:02:51.680
+sort of tooling would we
+do around this? You know,
+
+42
+00:02:51.680 --> 00:02:55.940
+how could the whole concept
+of Donna application development be
+
+43
+00:02:56.180 --> 00:03:00.430
+reborn for the browser? You
+know, obviously existed a Few
+
+44
+00:03:00.430 --> 00:03:02.980
+years ago and was an
+example of dotnet in the
+
+45
+00:03:02.980 --> 00:03:06.490
+browser, but that was best
+on plugins. Now, plugins are
+
+46
+00:03:06.490 --> 00:03:09.790
+not really viable in the
+modern world, but WebAssembly is
+
+47
+00:03:09.790 --> 00:03:14.410
+very viable. WebAssembly is the
+modern way of delivering all
+
+48
+00:03:14.410 --> 00:03:17.560
+kinds of applications that are
+not written with JavaScript into
+
+49
+00:03:17.560 --> 00:03:21.370
+a browser. And so we're
+excited about the possibility of
+
+50
+00:03:22.180 --> 00:03:25.690
+doing.net development that way. And
+blazer is an attempt to
+
+51
+00:03:25.750 --> 00:03:29.560
+build an application framework that
+uses those technologies. And at
+
+52
+00:03:29.560 --> 00:03:32.950
+this stage it's not a
+committed product, but we are
+
+53
+00:03:33.040 --> 00:03:34.810
+very much hoping some of
+us on the team are
+
+54
+00:03:34.820 --> 00:03:37.570
+very much hoping that it
+will become eventually a committed
+
+55
+00:03:37.570 --> 00:03:40.810
+product that people will be
+able to build production applications
+
+56
+00:03:40.810 --> 00:03:43.230
+with. Hmm. Okay. So there's
+a lot, I want to
+
+57
+00:03:43.290 --> 00:03:45.660
+parse and take apart there.
+So let's, let me kind
+
+58
+00:03:45.660 --> 00:03:47.760
+of break down a couple
+of precise questions. So I
+
+59
+00:03:47.760 --> 00:03:50.340
+kind of get an understanding
+here. So back in the
+
+60
+00:03:50.340 --> 00:03:53.580
+day, when you wanted to
+do something, the browser didn't
+
+61
+00:03:53.580 --> 00:03:55.950
+support, when you wanted to
+run native code, or you
+
+62
+00:03:55.950 --> 00:03:58.380
+want to run your own
+stuff, or just generally break
+
+63
+00:03:58.380 --> 00:04:01.410
+the rule, you'd install a
+plugin and wasn't there a
+
+64
+00:04:01.410 --> 00:04:04.470
+thing called NS API or
+like the Netscape way of
+
+65
+00:04:04.860 --> 00:04:08.340
+attaching native things to browsers.
+Yeah, that's right. Plugins have
+
+66
+00:04:08.340 --> 00:04:12.540
+been around for longer than
+I've been doing any software
+
+67
+00:04:12.540 --> 00:04:16.560
+development, like looking for a
+very old concept for sure.
+
+68
+00:04:17.610 --> 00:04:23.040
+But they were not really
+viable as of the whole
+
+69
+00:04:23.040 --> 00:04:26.820
+move to mobile house. Some
+people claim that Apple is
+
+70
+00:04:26.820 --> 00:04:30.570
+largely responsible for killing plugins
+because they, you know, Steve
+
+71
+00:04:30.570 --> 00:04:33.660
+jobs was so adamant that
+flash was never going to
+
+72
+00:04:33.660 --> 00:04:37.710
+run on iOS and the
+mechanism for ensuring that was
+
+73
+00:04:37.710 --> 00:04:41.760
+to not have any way
+of doing plugins. And given
+
+74
+00:04:41.760 --> 00:04:45.780
+that, you know, considering how
+many people have iOS mobile
+
+75
+00:04:45.780 --> 00:04:48.720
+devices, it is not really
+viable to, to ship a
+
+76
+00:04:48.720 --> 00:04:50.940
+product that depends on that.
+And I don't know if
+
+77
+00:04:50.940 --> 00:04:53.790
+that really is the thing
+that shifted the industry, but
+
+78
+00:04:53.790 --> 00:04:56.250
+a lot of people claim
+that. And in any case,
+
+79
+00:04:56.520 --> 00:04:59.880
+the net result of whatever
+has happened is the modern
+
+80
+00:04:59.880 --> 00:05:03.360
+browsers don't allow plugins of
+that kind of anymore. Well,
+
+81
+00:05:03.360 --> 00:05:05.070
+and then there's, there were
+secure. I know there were
+
+82
+00:05:05.080 --> 00:05:09.540
+some security concerns because the
+plugin doesn't run necessarily in
+
+83
+00:05:09.540 --> 00:05:12.150
+a sandbox, in a formal
+sandbox. I mean, they were,
+
+84
+00:05:12.630 --> 00:05:15.930
+they were in process DLLs
+that ran within a process
+
+85
+00:05:16.080 --> 00:05:18.270
+that was managed by the
+browser, but there was always
+
+86
+00:05:18.270 --> 00:05:20.850
+this idea of native code
+that could do evil things.
+
+87
+00:05:21.480 --> 00:05:23.460
+I know that was a
+concern. Yeah. Yeah. I mean,
+
+88
+00:05:23.490 --> 00:05:26.850
+the minute you install a
+plugin, you're trusting a third
+
+89
+00:05:26.850 --> 00:05:32.220
+party to protect your machine
+against running third party code.
+
+90
+00:05:32.430 --> 00:05:35.490
+And it's very, very hard
+problem to solve. And browser
+
+91
+00:05:35.490 --> 00:05:38.430
+makers spend a huge proportion
+of their time trying to
+
+92
+00:05:38.430 --> 00:05:40.740
+keep this sunblocks robust. And
+when you start bringing in
+
+93
+00:05:40.740 --> 00:05:44.790
+third parties plugins into it,
+it is very, very difficult
+
+94
+00:05:44.790 --> 00:05:47.730
+to guarantee that security. And
+I think in practice, the
+
+95
+00:05:47.730 --> 00:05:52.170
+security didn't turn out to
+be that solid. So the
+
+96
+00:05:52.170 --> 00:05:55.290
+other thing was that Brown,
+when, when a browser didn't
+
+97
+00:05:55.290 --> 00:05:58.970
+do what we wanted it
+to do, we used, we
+
+98
+00:05:58.970 --> 00:06:02.390
+like the, not the browser
+people. We, the community used
+
+99
+00:06:02.420 --> 00:06:06.020
+plugins as a way to
+make our own virtual machines.
+
+100
+00:06:06.020 --> 00:06:10.070
+Like we had flash, we
+had Java, we had Silverlight
+
+101
+00:06:10.670 --> 00:06:14.190
+all as a way to
+break out of that, that
+
+102
+00:06:14.210 --> 00:06:17.360
+sandbox, for lack of a
+better word, and then build
+
+103
+00:06:17.360 --> 00:06:18.920
+on top of that and
+have plugins of their own.
+
+104
+00:06:18.920 --> 00:06:21.860
+You could almost look at
+it as a flash file,
+
+105
+00:06:21.860 --> 00:06:24.260
+as a plugin to the
+flash plugin, as a plug
+
+106
+00:06:24.260 --> 00:06:27.620
+into the web itself, we
+were building ecosystems on top
+
+107
+00:06:27.620 --> 00:06:32.390
+of plugins that were themselves
+virtual machines. Right. So what
+
+108
+00:06:32.390 --> 00:06:36.170
+is web assembly then is
+WebAssembly a solution to the
+
+109
+00:06:36.170 --> 00:06:41.200
+plugin problem or is it
+something more? Yeah, so WebAssembly
+
+110
+00:06:41.260 --> 00:06:44.950
+is not a way of
+changing the sandbox that the
+
+111
+00:06:44.950 --> 00:06:47.830
+code runs inside. A lot
+of people, when they first
+
+112
+00:06:47.830 --> 00:06:51.610
+hear about web assembly, developers
+immediately run around with their
+
+113
+00:06:51.610 --> 00:06:53.800
+arms and their eyes showing,
+Oh, it's going to cause
+
+114
+00:06:53.800 --> 00:06:57.190
+terrible security issues because people
+are running machine code inside
+
+115
+00:06:57.190 --> 00:07:00.430
+a webpage, and we can't
+protect ourselves against that, but
+
+116
+00:07:00.430 --> 00:07:03.160
+that's, that's not what it
+is. And that's not a
+
+117
+00:07:03.160 --> 00:07:06.460
+problem that is triggered by
+WebAssembly. Any thing that is
+
+118
+00:07:06.460 --> 00:07:09.910
+running under WebAssembly is within
+the same browser sandbox. So
+
+119
+00:07:10.210 --> 00:07:15.460
+what WebAssembly actually is, is
+a specification for a byte
+
+120
+00:07:15.460 --> 00:07:21.040
+code format. So it's a
+format for machine instructions. That's
+
+121
+00:07:21.040 --> 00:07:24.610
+quite a low level format,
+hence the name web assembly.
+
+122
+00:07:24.880 --> 00:07:28.780
+It's not regular assembly, it's
+not X eight, six machine
+
+123
+00:07:28.780 --> 00:07:33.070
+code or, or any other
+specific instruction Schatz set that
+
+124
+00:07:33.100 --> 00:07:37.300
+runs directly on the CPU.
+But rather is an instruction
+
+125
+00:07:37.300 --> 00:07:40.540
+set. That's more like a,
+the instructions for the Java
+
+126
+00:07:40.540 --> 00:07:45.340
+virtual machine or the Microsoft
+intermediate language for.net. So it's
+
+127
+00:07:45.340 --> 00:07:49.420
+a, a more high level,
+low level language that makes
+
+128
+00:07:49.420 --> 00:07:52.510
+sense. And then the browser
+is going to take that
+
+129
+00:07:52.720 --> 00:07:55.360
+and it's going to execute
+it. And it does. So
+
+130
+00:07:55.360 --> 00:07:59.050
+by just in time, compiling
+that to the real machine
+
+131
+00:07:59.050 --> 00:08:02.350
+code format of whatever machine
+it's actually running on and
+
+132
+00:08:02.350 --> 00:08:05.260
+exactly the same, whether it
+is for JavaScript. So when
+
+133
+00:08:05.290 --> 00:08:10.480
+the browser downloads a normal
+JavaScript file, it can interpreter
+
+134
+00:08:10.690 --> 00:08:13.330
+and stepping over each of
+the instructions in the original
+
+135
+00:08:13.330 --> 00:08:16.960
+JavaScript text format. And to
+some extent, browsers do that.
+
+136
+00:08:17.320 --> 00:08:21.010
+But browse is also just
+in time compile parts of
+
+137
+00:08:21.010 --> 00:08:24.280
+the JavaScript for better performance
+to machine code. And they
+
+138
+00:08:24.280 --> 00:08:28.840
+do that after having run
+certain verification checks to make
+
+139
+00:08:28.840 --> 00:08:31.870
+sure that the code is
+definitely only going to do
+
+140
+00:08:31.870 --> 00:08:35.050
+things that are absolutely known
+to be safe. And then
+
+141
+00:08:35.050 --> 00:08:37.390
+they have this process for
+generating machine code that is
+
+142
+00:08:37.630 --> 00:08:41.470
+definitely known to not step
+outside the sandbox in any
+
+143
+00:08:41.470 --> 00:08:44.980
+way at all. So that
+works well as a way
+
+144
+00:08:44.980 --> 00:08:47.950
+of speeding up JavaScript. But
+I suppose a number of
+
+145
+00:08:47.950 --> 00:08:52.090
+years back, people got this
+idea of, well, if we're
+
+146
+00:08:52.090 --> 00:08:54.520
+going to jet compile this
+stuff anyway, why are we
+
+147
+00:08:54.520 --> 00:08:58.500
+starting JavaScript, which is a
+super high level language. And
+
+148
+00:08:58.500 --> 00:09:02.820
+it's expressed in this very
+inefficient human readable text format.
+
+149
+00:09:02.850 --> 00:09:06.180
+What if we had a
+more low level bytecode format
+
+150
+00:09:06.510 --> 00:09:10.050
+that expressed just a smaller
+set of instructions, and we
+
+151
+00:09:10.050 --> 00:09:13.980
+expressed it in an efficient
+binary format, and then we
+
+152
+00:09:13.980 --> 00:09:17.610
+use the same rules to
+jet compile to some bucks
+
+153
+00:09:17.820 --> 00:09:21.900
+compliant code. Could we then
+compile to that byte code
+
+154
+00:09:21.900 --> 00:09:24.360
+format from other languages? For
+example, could we take some
+
+155
+00:09:24.360 --> 00:09:29.340
+C code and compile that
+to the WebAssembly bytecode format?
+
+156
+00:09:29.670 --> 00:09:33.690
+And then the browser in
+turn receives that and execute
+
+157
+00:09:34.380 --> 00:09:37.050
+much, much faster than you
+would normally be able to
+
+158
+00:09:37.050 --> 00:09:40.770
+execute a high level language
+because it's starting with this
+
+159
+00:09:40.770 --> 00:09:44.130
+low level bytecode format, which
+jet compiles to machine code,
+
+160
+00:09:44.130 --> 00:09:46.920
+and then that can hopefully
+execute very fast while still
+
+161
+00:09:46.920 --> 00:09:50.490
+being within the same security
+sandbox that JavaScript runs in
+
+162
+00:09:50.960 --> 00:09:54.170
+Is web assembly, like assembly
+in that it's moving things
+
+163
+00:09:54.170 --> 00:09:58.010
+around registers and doing low-level
+things on a virtual CPU.
+
+164
+00:09:58.520 --> 00:10:04.130
+Yeah, basically. Yeah. So if
+anyone's seen L the assembly
+
+165
+00:10:04.220 --> 00:10:08.360
+format for.net is extremely similar
+to that, it's also a
+
+166
+00:10:08.360 --> 00:10:11.540
+stack best virtual machine. So
+if you read the code,
+
+167
+00:10:11.960 --> 00:10:13.880
+which you hopefully never need
+to do, but if for
+
+168
+00:10:13.880 --> 00:10:17.300
+whatever reason, you, you do
+end up reading some WebAssembly
+
+169
+00:10:17.390 --> 00:10:20.000
+compiled code, you'll see that
+most of what it's doing
+
+170
+00:10:20.000 --> 00:10:22.670
+is pushing stuff into a
+stock and popping stuff off
+
+171
+00:10:22.670 --> 00:10:26.060
+a stock, and then doing
+instructions that operate on the
+
+172
+00:10:26.060 --> 00:10:29.420
+top items from a stack.
+So to add two numbers
+
+173
+00:10:29.420 --> 00:10:31.940
+together, it's going to have
+one instruction that pushes the
+
+174
+00:10:31.940 --> 00:10:34.100
+first number onto a stack.
+The second number that pushes
+
+175
+00:10:34.370 --> 00:10:36.380
+the second number onto the
+stack. And then it will
+
+176
+00:10:36.380 --> 00:10:39.770
+call the add instruction, which
+adds together the top two
+
+177
+00:10:39.800 --> 00:10:42.470
+numbers on the stack and
+adds the result onto the
+
+178
+00:10:42.470 --> 00:10:44.690
+stock. And then you'd have
+another instruction that gets set
+
+179
+00:10:44.690 --> 00:10:46.610
+off the stack and so
+on. So that's just what
+
+180
+00:10:46.610 --> 00:10:49.280
+it keeps doing all the
+time. And from that basic
+
+181
+00:10:49.280 --> 00:10:53.150
+primitive, you can build up
+normal logic that you implement
+
+182
+00:10:53.150 --> 00:10:57.620
+in higher level languages. Hmm.
+Okay. So we don't have
+
+183
+00:10:57.620 --> 00:11:01.190
+to worry about the sandbox.
+And we know that the
+
+184
+00:11:01.190 --> 00:11:05.720
+browsers JavaScript kind of universe
+has been hardened because JavaScript
+
+185
+00:11:05.720 --> 00:11:09.020
+has taken such a, a
+front seat in the last
+
+186
+00:11:09.020 --> 00:11:11.960
+few years that everyone is
+focusing on it. So we're
+
+187
+00:11:11.960 --> 00:11:14.810
+building on top of a
+thing that's already well thought
+
+188
+00:11:14.810 --> 00:11:18.920
+of and already well well-managed,
+but how many layers? Like
+
+189
+00:11:18.920 --> 00:11:20.690
+how many, you know, how
+they say it's turtles all
+
+190
+00:11:20.690 --> 00:11:23.690
+the way down. You're saying
+we're going to take C-sharp
+
+191
+00:11:23.780 --> 00:11:25.910
+and compile it in IFL
+and put that into a
+
+192
+00:11:25.910 --> 00:11:28.700
+DLL and then run that
+on a virtual machine, which
+
+193
+00:11:28.700 --> 00:11:32.480
+runs on a browser, which
+has its own, like, do
+
+194
+00:11:32.480 --> 00:11:34.940
+we worry about layers or
+do we revel in the
+
+195
+00:11:34.940 --> 00:11:37.070
+idea that we don't have
+to think about the underlying
+
+196
+00:11:37.070 --> 00:11:40.670
+computer anymore? Yeah. Well, I
+guess there's, there's pros and
+
+197
+00:11:40.670 --> 00:11:44.450
+cons. When you have more
+abstraction that often creates a
+
+198
+00:11:44.450 --> 00:11:47.930
+high level program environment that
+can make developers more productive,
+
+199
+00:11:47.930 --> 00:11:50.000
+but at the same time,
+you have to balance that
+
+200
+00:11:50.000 --> 00:11:54.190
+against the need for runtime
+performance. And so WebAssembly is
+
+201
+00:11:54.250 --> 00:11:57.940
+an attempt to create the
+right level of abstraction where
+
+202
+00:11:58.930 --> 00:12:02.590
+you can compile from an
+arbitrarily high level language to
+
+203
+00:12:02.920 --> 00:12:07.750
+some instruction set that itself
+can be executed very efficiently.
+
+204
+00:12:08.080 --> 00:12:10.450
+So yes, there's quite a
+lot of levels involved, but
+
+205
+00:12:10.540 --> 00:12:13.930
+by the time you get
+to WebAssembly, bytecode, you're only
+
+206
+00:12:13.930 --> 00:12:17.710
+one jet compile step away
+from native machine code. And
+
+207
+00:12:17.920 --> 00:12:20.770
+the idea is that the
+specific web assembly instructions that
+
+208
+00:12:20.770 --> 00:12:24.100
+exist can be modeled very
+efficiently on the kind of
+
+209
+00:12:24.100 --> 00:12:29.050
+CPS that exists today. So
+generally people claim that WebAssembly
+
+210
+00:12:29.170 --> 00:12:33.310
+code is more or less
+equivalent to native performance. So
+
+211
+00:12:33.310 --> 00:12:36.040
+if you have some C
+code that you compile to
+
+212
+00:12:36.220 --> 00:12:40.000
+regular machine code and executed
+directly, or you compile it
+
+213
+00:12:40.000 --> 00:12:42.940
+to WebAssembly and run it
+under a browser, then the
+
+214
+00:12:42.940 --> 00:12:46.150
+performance is going to be
+more or less comparable, not
+
+215
+00:12:46.150 --> 00:12:48.520
+exactly equal. Maybe there's going
+to be a factor of
+
+216
+00:12:48.520 --> 00:12:51.760
+two different. So something like
+that, but when we're talking
+
+217
+00:12:51.760 --> 00:12:55.450
+about a, a single constant
+factor like that, that's probably
+
+218
+00:12:55.450 --> 00:12:57.220
+not going to change the
+kind of software that you
+
+219
+00:12:57.220 --> 00:12:59.560
+write. If it was a,
+you know, orders of magnitude
+
+220
+00:12:59.560 --> 00:13:02.010
+difference, then that would be
+a big deal, but a
+
+221
+00:13:02.010 --> 00:13:04.690
+smallest factor like that, you
+can still write the same
+
+222
+00:13:04.690 --> 00:13:07.330
+kind of code. So when
+we take a, an even
+
+223
+00:13:07.330 --> 00:13:12.070
+higher level thing, like.net and
+compile it, there's two different
+
+224
+00:13:12.070 --> 00:13:15.580
+ways that we could execute
+that dotnet code the most
+
+225
+00:13:15.580 --> 00:13:18.670
+obvious way that people usually
+assume that we're doing is
+
+226
+00:13:18.670 --> 00:13:22.540
+that we take the.net code
+and we convert it into
+
+227
+00:13:22.540 --> 00:13:27.610
+WebAssembly and that's the end.
+And that would probably produce
+
+228
+00:13:27.610 --> 00:13:31.570
+the most efficient runtime performance
+that we could get. But
+
+229
+00:13:31.600 --> 00:13:34.330
+that's not what we're doing
+right now in blazer and
+
+230
+00:13:34.330 --> 00:13:39.790
+blazer, we are blending the.net
+code on an interpreter, which
+
+231
+00:13:39.820 --> 00:13:44.080
+is itself implemented in WebAssembly.
+And the reason we're doing
+
+232
+00:13:44.080 --> 00:13:48.160
+that is because it produces
+a very, very nice development
+
+233
+00:13:48.160 --> 00:13:50.830
+experience, because it means that
+you write your C sharp
+
+234
+00:13:50.830 --> 00:13:53.980
+code and you can compile
+it to normal Donna assemblies
+
+235
+00:13:54.280 --> 00:13:59.290
+using your normal.net build process,
+which is very fast. You
+
+236
+00:13:59.290 --> 00:14:03.190
+know, even a moderate sized
+application can be bill in
+
+237
+00:14:03.220 --> 00:14:07.060
+like one second, more or
+less. And then every time
+
+238
+00:14:07.060 --> 00:14:08.860
+you make that change, you
+do your one second build,
+
+239
+00:14:08.860 --> 00:14:11.350
+you refreshing the browser and
+you carry on and you
+
+240
+00:14:11.350 --> 00:14:15.490
+get a very nice fluid
+development experience. But eventually when
+
+241
+00:14:15.490 --> 00:14:17.920
+you want to go into
+production, it might be worth
+
+242
+00:14:18.160 --> 00:14:21.880
+going through a bigger build
+process where you actually compile
+
+243
+00:14:21.880 --> 00:14:26.260
+all the way to WebAssembly
+code. And, and that's a
+
+244
+00:14:26.260 --> 00:14:28.120
+thing that we haven't implemented
+yet in blazer, but we
+
+245
+00:14:28.120 --> 00:14:30.430
+do have an actual plan
+for doing that and that's
+
+246
+00:14:30.430 --> 00:14:35.440
+underway. So that should produce
+a performance at the cost
+
+247
+00:14:35.440 --> 00:14:40.020
+of spending more time building
+your application. Let me back
+
+248
+00:14:40.020 --> 00:14:41.640
+up a couple of steps,
+just to make sure that
+
+249
+00:14:41.640 --> 00:14:44.160
+I understood something and that
+the audience understood it as
+
+250
+00:14:44.160 --> 00:14:49.530
+well. When I was describing
+kind of the conceptual stack
+
+251
+00:14:49.680 --> 00:14:54.980
+as being deep and implying
+That there's possibly concerns or,
+
+252
+00:14:54.980 --> 00:14:59.630
+you know, an unspecified concerns
+around perf or whatever, I
+
+253
+00:14:59.630 --> 00:15:02.390
+felt like what you said
+really explained a lot to
+
+254
+00:15:02.390 --> 00:15:05.570
+me. Like, just, just because
+the conceptual stack is quote
+
+255
+00:15:05.570 --> 00:15:09.170
+unquote 10 deep doesn't necessarily
+mean that that is representative
+
+256
+00:15:09.170 --> 00:15:11.720
+of a call stack, nor
+is it representative of 10
+
+257
+00:15:11.720 --> 00:15:14.540
+X performance. Like you just
+said, we're going to collapse
+
+258
+00:15:14.540 --> 00:15:16.610
+this all the way down
+to a machine code and
+
+259
+00:15:16.610 --> 00:15:19.070
+it's going to get executed
+pretty darn close to the
+
+260
+00:15:19.070 --> 00:15:22.520
+metal. And that conceptual stack
+was there for a number
+
+261
+00:15:22.520 --> 00:15:26.480
+of reasons, but not, not
+at runtime effectively. Yeah, that's
+
+262
+00:15:26.480 --> 00:15:30.170
+right. Yeah. And my hope
+is that most developers who
+
+263
+00:15:30.170 --> 00:15:34.040
+are writing logic and C-sharp,
+and not really thinking about
+
+264
+00:15:34.040 --> 00:15:36.020
+anything apart from their shop
+logic, that's the thing that
+
+265
+00:15:36.020 --> 00:15:39.410
+you focused on, you know,
+roughly what the performance characteristics
+
+266
+00:15:39.410 --> 00:15:43.520
+of different C-sharp code is.
+And that will be reflected
+
+267
+00:15:43.520 --> 00:15:46.370
+in the, the reality of
+your application. You don't have
+
+268
+00:15:46.640 --> 00:15:48.800
+some new special rules for
+the fact that it's on
+
+269
+00:15:48.800 --> 00:15:53.930
+WebAssembly cause the actual eventual
+set of instructions that the
+
+270
+00:15:53.930 --> 00:15:56.600
+CPU is executing is not
+that different from what it
+
+271
+00:15:56.600 --> 00:16:01.400
+would have been under normal
+dotnet desktop runtime. Hmm. Okay.
+
+272
+00:16:01.400 --> 00:16:03.230
+So then that gets to
+the, you know, at this
+
+273
+00:16:03.230 --> 00:16:05.030
+point in the podcast, there
+may be someone who made
+
+274
+00:16:05.030 --> 00:16:06.770
+it this far. Who's like,
+yeah, but why don't you
+
+275
+00:16:06.770 --> 00:16:09.110
+just lose and learn JavaScript?
+Why are you doing this?
+
+276
+00:16:09.530 --> 00:16:11.720
+And it seems like the
+answer is because she sharp
+
+277
+00:16:11.720 --> 00:16:15.590
+makes us happy. And because.net
+is an enjoyable environment and
+
+278
+00:16:15.620 --> 00:16:18.770
+maybe this could be something
+that.net developers would enjoy doing
+
+279
+00:16:18.770 --> 00:16:22.190
+and be productive doing. Yeah,
+that's right. That's right. And
+
+280
+00:16:22.280 --> 00:16:27.020
+I, I personally aspire to
+see the day when web
+
+281
+00:16:27.020 --> 00:16:30.950
+development expands beyond its current
+scope a little bit. I
+
+282
+00:16:30.950 --> 00:16:33.470
+think web development has certainly
+come a long way over
+
+283
+00:16:33.470 --> 00:16:37.250
+the last 15 years or
+so, but it's still a
+
+284
+00:16:37.250 --> 00:16:43.190
+very constraining kind of development
+environment. Software developers, building web
+
+285
+00:16:43.190 --> 00:16:46.310
+applications are much, much more
+limited in their choices of
+
+286
+00:16:46.310 --> 00:16:49.850
+a technology than developers building
+desktop apps or mobile apps
+
+287
+00:16:49.850 --> 00:16:53.930
+or games or embedded software.
+You know, all these different
+
+288
+00:16:53.930 --> 00:16:56.600
+areas of software, give you
+the flexibility to use a
+
+289
+00:16:56.600 --> 00:16:59.840
+really wide range of languages
+and tool chains and teams
+
+290
+00:16:59.840 --> 00:17:02.510
+pick the ones that are
+best for them, for the
+
+291
+00:17:02.510 --> 00:17:05.780
+problems that they're solving for
+the particular development culture that
+
+292
+00:17:05.780 --> 00:17:08.690
+they want to be part
+of, whether it's functional programming
+
+293
+00:17:08.690 --> 00:17:13.160
+or scientific programming, or really
+low level programming for embedded
+
+294
+00:17:13.160 --> 00:17:16.160
+devices or whatever people pick,
+what is best for them.
+
+295
+00:17:16.160 --> 00:17:19.100
+And that's good and healthy
+and mature, but web development
+
+296
+00:17:19.460 --> 00:17:21.410
+has always liked style a
+little bit because we've been
+
+297
+00:17:21.410 --> 00:17:24.890
+so constrained of, you know,
+basically everything has to be
+
+298
+00:17:24.890 --> 00:17:28.370
+JavaScript or has to be
+something that compiles to JavaScript
+
+299
+00:17:28.370 --> 00:17:30.290
+and has more or less
+the same semantics as that.
+
+300
+00:17:30.590 --> 00:17:35.090
+So I hope that web
+development as a discipline will
+
+301
+00:17:35.090 --> 00:17:37.400
+be able to grow up
+and mature a little bit
+
+302
+00:17:37.790 --> 00:17:40.940
+and give teams a much
+wider, different set of choices
+
+303
+00:17:40.940 --> 00:17:45.110
+that meet their needs specific
+ways. And so.net, I hope
+
+304
+00:17:45.110 --> 00:17:49.110
+is just one of the
+forerunners of that. Yeah. I,
+
+305
+00:17:49.120 --> 00:17:51.870
+I, we hear a lot
+about Browser monoculture and we're
+
+306
+00:17:51.870 --> 00:17:56.190
+getting into language monoculture with
+WebAssembly. We could have go
+
+307
+00:17:56.190 --> 00:17:58.740
+and rushed and C sharp
+all running in the same,
+
+308
+00:17:58.980 --> 00:18:04.680
+you know, application, and then
+inter-operate interoperative interrupting inter-operating, you
+
+309
+00:18:04.680 --> 00:18:08.300
+know, with JavaScript as the,
+as that service. Yeah, that's
+
+310
+00:18:08.310 --> 00:18:09.890
+right. Yeah. And I know
+some people will hear that
+
+311
+00:18:09.890 --> 00:18:12.200
+and they'll think, Oh my
+goodness, I'm now supposed to
+
+312
+00:18:12.200 --> 00:18:14.090
+learn 10 new languages. This
+is going to be a
+
+313
+00:18:14.090 --> 00:18:17.990
+nightmare. And I can somewhat
+sympathize with that perspective. But
+
+314
+00:18:18.320 --> 00:18:22.550
+if you think about what
+developers building mobile apps, or,
+
+315
+00:18:23.090 --> 00:18:27.470
+you know, scientific apps or
+machine learning apps that run
+
+316
+00:18:27.470 --> 00:18:30.560
+across cloud services, they don't
+really complain that there are
+
+317
+00:18:30.560 --> 00:18:33.530
+too many languages. That's not
+really a thing that software
+
+318
+00:18:33.530 --> 00:18:36.020
+developers do. Normally they find
+things that work well for
+
+319
+00:18:36.020 --> 00:18:39.740
+them and, and become good
+and, and established their career
+
+320
+00:18:39.740 --> 00:18:43.340
+within a particular technology area.
+And I hope that that
+
+321
+00:18:43.550 --> 00:18:45.550
+would be the case for
+web developer as well. And
+
+322
+00:18:45.550 --> 00:18:49.670
+not that it just becomes
+this nightmarish mishmash of 20
+
+323
+00:18:49.670 --> 00:18:51.740
+different languages that you're meant
+to know. And I don't
+
+324
+00:18:51.740 --> 00:18:53.300
+see any reason why it
+would be, you know, web
+
+325
+00:18:53.300 --> 00:18:57.290
+development can become like other
+aspects of software development. Hey
+
+326
+00:18:57.290 --> 00:18:59.600
+friends, this is Scott. You
+know, listening to podcasts is
+
+327
+00:18:59.600 --> 00:19:01.880
+a great way to keep
+up to date on technology.
+
+328
+00:19:01.880 --> 00:19:04.790
+Since we're always learning as
+software people. And you can
+
+329
+00:19:04.790 --> 00:19:07.550
+also find a job by
+listening to a podcast. If
+
+330
+00:19:07.550 --> 00:19:10.880
+you check out our new
+sponsor, hired.com, that's H I
+
+331
+00:19:10.880 --> 00:19:16.130
+R E d.com/hansel minutes on
+hire.com. Software engineers can get
+
+332
+00:19:16.160 --> 00:19:19.520
+interview requests from companies that
+want to hire you. Each
+
+333
+00:19:19.520 --> 00:19:22.040
+offer will have the salary
+and the equity upfront. You
+
+334
+00:19:22.040 --> 00:19:25.160
+can view those interview requests
+and, you know, except project
+
+335
+00:19:25.160 --> 00:19:27.260
+changed the offer before even
+talking to a company. It's
+
+336
+00:19:27.260 --> 00:19:29.420
+a great way to find
+out what's out there and
+
+337
+00:19:29.420 --> 00:19:32.690
+maybe make a move they're
+working with over 6,000 companies
+
+338
+00:19:32.690 --> 00:19:36.380
+from startups to large companies
+from 14 major tech hubs
+
+339
+00:19:36.380 --> 00:19:39.260
+throughout North America and Europe.
+What's great about this is
+
+340
+00:19:39.260 --> 00:19:42.560
+it's totally free for software
+engineers. And if you get
+
+341
+00:19:42.560 --> 00:19:45.920
+a job through hire.com, they'll
+ordinarily give you a $300,
+
+342
+00:19:45.930 --> 00:19:48.890
+thank you bonus. But if
+you use our special link,
+
+343
+00:19:48.950 --> 00:19:51.860
+they'll double that bonus. So
+you'll actually get paid $600
+
+344
+00:19:52.310 --> 00:19:55.100
+when you accept that job.
+Now, if you're not looking
+
+345
+00:19:55.100 --> 00:19:57.200
+for a job, but you
+know, someone who is refer
+
+346
+00:19:57.200 --> 00:20:00.740
+them to hire.com/hansel minutes, and
+they'll give you a lead
+
+347
+00:20:00.740 --> 00:20:05.540
+bonus, a $1,337 bonus when
+they accept a job. So
+
+348
+00:20:05.540 --> 00:20:10.670
+check them out at hired.com/hansel
+minutes. Now, recently in the
+
+349
+00:20:10.670 --> 00:20:13.760
+last few years, dot net
+went from being a thing
+
+350
+00:20:13.760 --> 00:20:16.430
+that runs on windows to
+being a thing that runs
+
+351
+00:20:16.520 --> 00:20:21.590
+everywhere. And it seems like
+there are multiple instances of.net
+
+352
+00:20:22.160 --> 00:20:26.210
+where the dominant framework is
+a.net and the core CLR
+
+353
+00:20:26.630 --> 00:20:30.590
+is a.net. And then motto
+is around there as well.
+
+354
+00:20:30.590 --> 00:20:33.740
+And some people in the
+past may have felt like
+
+355
+00:20:33.740 --> 00:20:36.680
+motto. Like wasn't a thing
+that was going to be
+
+356
+00:20:36.680 --> 00:20:38.780
+around for a long time,
+but they've been quietly and
+
+357
+00:20:38.780 --> 00:20:43.100
+very strongly like improving Bano.
+It's a very competent runtime.
+
+358
+00:20:43.100 --> 00:20:46.580
+It's not a toy. It's
+not buggy. It's really solid.
+
+359
+00:20:46.820 --> 00:20:50.620
+Yeah, right. Yeah. There was
+A time when people thought
+
+360
+00:20:51.010 --> 00:20:57.010
+mano was this sort of
+semi capable way of running
+
+361
+00:20:57.340 --> 00:20:59.620
+SP now on a Linux
+server. And that was kind
+
+362
+00:20:59.620 --> 00:21:02.470
+of the only application that
+anyone had in mind. And
+
+363
+00:21:02.470 --> 00:21:04.120
+then they tried to, and
+they found that things were
+
+364
+00:21:04.120 --> 00:21:06.100
+complicated and they would say,
+Oh, just don't do it.
+
+365
+00:21:07.090 --> 00:21:09.940
+And so some developers have
+ended up getting stuck in
+
+366
+00:21:09.940 --> 00:21:11.710
+this idea that that's all
+that mano is. But in
+
+367
+00:21:11.710 --> 00:21:15.970
+fact, like you say, Monarch
+has really expanded to become
+
+368
+00:21:16.420 --> 00:21:20.380
+a very competent runtime that
+runs on the widest range
+
+369
+00:21:20.380 --> 00:21:24.190
+of devices, of any of
+the dotnet runtimes. And in
+
+370
+00:21:24.190 --> 00:21:28.330
+particular, mano is the runtime
+for the unity game engine,
+
+371
+00:21:28.330 --> 00:21:32.200
+which runs some of the
+most demanding, a high performance,
+
+372
+00:21:32.440 --> 00:21:36.010
+low level, and generally complex.
+Don't let logic there is,
+
+373
+00:21:36.250 --> 00:21:37.570
+and it has to run
+on a wide range of
+
+374
+00:21:37.570 --> 00:21:41.380
+devices that, you know, the
+promise is super critical and
+
+375
+00:21:41.490 --> 00:21:44.980
+Amano has been very successful
+in that for unity, particularly
+
+376
+00:21:44.980 --> 00:21:50.470
+on iOS and Android. And
+speaking of mobile apps, unity
+
+377
+00:21:50.470 --> 00:21:55.330
+is also the, the Microsoft
+supported runtime for, for general
+
+378
+00:21:55.330 --> 00:21:58.540
+native apps, even not games.
+So Xamarin, which is part
+
+379
+00:21:58.540 --> 00:22:03.670
+of Microsoft uses mano as
+its runtime for delivering native
+
+380
+00:22:03.670 --> 00:22:07.120
+mobile applications. And yeah, like
+you say, it is very
+
+381
+00:22:07.120 --> 00:22:12.370
+robust these days. It's very
+complete in its support for
+
+382
+00:22:12.370 --> 00:22:17.590
+the.net API surface. And generally
+it's is part of Microsoft.
+
+383
+00:22:17.590 --> 00:22:20.350
+It's solid and it's, and
+it's going well. Yeah, yeah.
+
+384
+00:22:20.840 --> 00:22:22.740
+The way I've been describing
+it, and you can correct
+
+385
+00:22:22.740 --> 00:22:25.680
+me if I'm wrong is
+that, you know, core CLR
+
+386
+00:22:25.680 --> 00:22:28.530
+runs on a half dozen
+Linuxes and Mac and windows.
+
+387
+00:22:28.530 --> 00:22:32.010
+And it's really focused on
+that, that server side workload
+
+388
+00:22:32.010 --> 00:22:36.420
+that, that micro service, but
+mano is just very portable
+
+389
+00:22:36.570 --> 00:22:39.510
+C code. It's very, it's
+it compiles anywhere I've seen
+
+390
+00:22:39.780 --> 00:22:43.320
+versions of mano compiled for
+like the Nintendo wi or,
+
+391
+00:22:43.320 --> 00:22:45.540
+you know, like it is,
+it is the most portable
+
+392
+00:22:45.540 --> 00:22:49.380
+of the dot nets. Yeah.
+That's absolutely right. Yeah. So
+
+393
+00:22:49.440 --> 00:22:52.800
+as such, did you then
+compile it into web assembly
+
+394
+00:22:52.800 --> 00:22:55.530
+and is that what's coming
+down, I'm running mano as
+
+395
+00:22:55.530 --> 00:22:59.370
+a.net in my browser compiled
+into WebAssembly Right. Yeah. So
+
+396
+00:22:59.940 --> 00:23:04.020
+mano is the runtime that,
+so behind blazer applications, and
+
+397
+00:23:04.560 --> 00:23:09.270
+the reason why we are
+going with mano is that
+
+398
+00:23:09.360 --> 00:23:12.060
+it is like you say,
+the most portable of the
+
+399
+00:23:12.060 --> 00:23:15.120
+dotnet run times and the
+one that was most ready
+
+400
+00:23:15.180 --> 00:23:19.080
+to be compiled to WebAssembly.
+Now I didn't do that
+
+401
+00:23:19.080 --> 00:23:21.300
+myself and no one on
+the laser team did it,
+
+402
+00:23:21.870 --> 00:23:26.430
+but this is something that
+the mano group has committed
+
+403
+00:23:26.430 --> 00:23:30.150
+to delivering. They've decided that
+mano is going to ship
+
+404
+00:23:30.150 --> 00:23:33.600
+on WebAssembly and that's a
+general decision that they've made
+
+405
+00:23:33.600 --> 00:23:37.530
+about making their own time
+available at independently of blazer
+
+406
+00:23:37.530 --> 00:23:41.430
+or any specific application stack.
+And they've got lots of
+
+407
+00:23:41.430 --> 00:23:43.500
+reasons for wanting to do
+that, but one of them
+
+408
+00:23:43.500 --> 00:23:46.670
+is related to gaming. Again,
+like I just mentioned mano
+
+409
+00:23:46.680 --> 00:23:53.420
+being the unity runtime, unity
+also has shipped the ability
+
+410
+00:23:53.420 --> 00:23:55.490
+to compile to WebAssembly for
+a while. And they've done
+
+411
+00:23:55.490 --> 00:24:00.890
+that best on their own,
+their own separate mechanism for
+
+412
+00:24:00.890 --> 00:24:06.530
+compiling dotnet to WebAssembly. But
+mano, since that is going
+
+413
+00:24:06.530 --> 00:24:10.640
+to officially support WebAssembly is
+going to provide a different
+
+414
+00:24:10.640 --> 00:24:14.300
+way of doing that. That
+is significantly simpler. And then
+
+415
+00:24:14.300 --> 00:24:16.850
+there's potentially lots of other
+reasons why mano wants to
+
+416
+00:24:17.060 --> 00:24:20.600
+target running in the browser
+for applications in general. So
+
+417
+00:24:20.600 --> 00:24:23.870
+yeah, that definitely makes sense
+for why we would choose
+
+418
+00:24:23.930 --> 00:24:28.310
+Manara is the runtime for
+that. The other most likely
+
+419
+00:24:28.310 --> 00:24:31.220
+option, I suppose, would be
+core RT, which is a
+
+420
+00:24:31.220 --> 00:24:37.280
+different dotnet runtime that is
+designed for being, for running
+
+421
+00:24:37.280 --> 00:24:42.680
+on low resource embedded devices.
+And maybe one day blazer
+
+422
+00:24:42.680 --> 00:24:44.480
+might run on Cora T
+as well, but it's not
+
+423
+00:24:44.810 --> 00:24:50.390
+particularly close right now because
+Corti is as much less
+
+424
+00:24:50.390 --> 00:24:54.760
+complete developed WebAssembly support. Hmm.
+What if I have a
+
+425
+00:24:54.760 --> 00:24:57.610
+browser that doesn't support web
+assembly, but it does support
+
+426
+00:24:57.610 --> 00:25:00.040
+JavaScript, is it, will it,
+will it be possible to
+
+427
+00:25:00.040 --> 00:25:02.830
+run blazer and.net on that?
+Yeah, it is. Yeah. So
+
+428
+00:25:03.070 --> 00:25:07.330
+one of the very nice
+features about how WebAssembly was
+
+429
+00:25:07.780 --> 00:25:12.070
+designed and probably reflects the
+decade of experience that we've
+
+430
+00:25:12.340 --> 00:25:18.520
+finally gotten designing new web
+specifications is that WebAssembly is
+
+431
+00:25:18.520 --> 00:25:22.240
+designed to be easily able
+to fall back on regular
+
+432
+00:25:22.330 --> 00:25:25.870
+JavaScript. So WebAssembly is a
+bytecode format like I've said,
+
+433
+00:25:25.960 --> 00:25:29.200
+and if your browser doesn't
+know how to support it
+
+434
+00:25:29.200 --> 00:25:32.170
+directly, it's possible to polyfill
+it. So you can have
+
+435
+00:25:32.190 --> 00:25:36.550
+a relatively small bit of
+JavaScript that knows how to
+
+436
+00:25:37.060 --> 00:25:42.100
+execute WebAssembly. So it's acting
+like an interpreter over the
+
+437
+00:25:42.100 --> 00:25:46.720
+WebAssembly, but there's an even
+more direct way of running
+
+438
+00:25:46.720 --> 00:25:51.460
+WebAssembly, which is the way
+that the WebAssembly compilation tool
+
+439
+00:25:51.460 --> 00:25:56.080
+chain itself works. So most
+of the time when people
+
+440
+00:25:56.080 --> 00:25:59.800
+create WebAssembly binary files at
+the moment they do so
+
+441
+00:25:59.800 --> 00:26:04.060
+using a compiler cold and
+scripting, and that is part
+
+442
+00:26:04.120 --> 00:26:08.740
+of the clang tool chain.
+Now climbing is a very
+
+443
+00:26:08.740 --> 00:26:14.200
+widely used system for representing
+applications, such that they can
+
+444
+00:26:14.200 --> 00:26:18.370
+be compiled to different target
+architectures. So you could take
+
+445
+00:26:18.370 --> 00:26:20.680
+some code that's written in
+C plus plus, or rust
+
+446
+00:26:20.680 --> 00:26:25.600
+or Swift, and compile it
+to a clanging intermediate representation,
+
+447
+00:26:25.600 --> 00:26:30.280
+which has a virtual machine
+by code format called LLVM.
+
+448
+00:26:30.580 --> 00:26:32.590
+And once you've got the
+LLVM bite code, you can
+
+449
+00:26:32.590 --> 00:26:35.560
+compile the out for lots
+of different target architectures like
+
+450
+00:26:35.560 --> 00:26:39.040
+XXX or arm or Macko
+or all kinds of other
+
+451
+00:26:39.040 --> 00:26:42.850
+things like that. And the
+M script and tool chain,
+
+452
+00:26:43.290 --> 00:26:47.610
+which what that actually does
+is it takes input in
+
+453
+00:26:47.610 --> 00:26:53.310
+this LLVM intermediate representation and
+writes that out as WebAssembly.
+
+454
+00:26:53.340 --> 00:26:57.810
+So that's really a hidden
+internal part of the compilation
+
+455
+00:26:57.810 --> 00:27:00.510
+process. But one cool thing
+that it can do is
+
+456
+00:27:00.810 --> 00:27:03.510
+as well as producing WebAssembly
+binary, is it can produce
+
+457
+00:27:04.050 --> 00:27:07.200
+JavaScript files dot, JS files
+that just run in any
+
+458
+00:27:07.200 --> 00:27:12.120
+browser without needing any special
+WebAssembly support. So it's just
+
+459
+00:27:12.120 --> 00:27:16.320
+a different compilation target format.
+A lot of people have
+
+460
+00:27:16.320 --> 00:27:19.770
+said, Java script is the
+assembly language of the web.
+
+461
+00:27:19.770 --> 00:27:22.290
+And I think Scott, you
+are one of the first
+
+462
+00:27:22.290 --> 00:27:26.490
+people who popularized that thing.
+And that is literally the
+
+463
+00:27:26.490 --> 00:27:31.770
+case for unscripted acting as
+a Java script, being a
+
+464
+00:27:31.770 --> 00:27:35.640
+target output format for LLVM
+bite code. And so in
+
+465
+00:27:35.640 --> 00:27:39.120
+the case of the laser
+specifically, we have got two
+
+466
+00:27:39.120 --> 00:27:41.850
+versions of the mano runtime
+that are embedded into your
+
+467
+00:27:41.850 --> 00:27:45.420
+application. We've got a WebAssembly
+version of it, and we've
+
+468
+00:27:45.420 --> 00:27:48.600
+gotten as some JS version,
+as some JS is the
+
+469
+00:27:49.050 --> 00:27:53.250
+plan Java script representation of
+the WebAssembly output. And so
+
+470
+00:27:53.250 --> 00:27:55.200
+what we do when your
+application is starting up, we
+
+471
+00:27:55.200 --> 00:27:58.440
+just do the classic thing
+of feature detection. We detect
+
+472
+00:27:58.440 --> 00:28:01.470
+whether the browser currently that's
+running supports web assembly. If
+
+473
+00:28:01.470 --> 00:28:04.380
+it does we'll load the
+mano WebAssembly runtime. And if
+
+474
+00:28:04.380 --> 00:28:06.930
+it doesn't, we'll load the
+monitor as some Jasper run
+
+475
+00:28:06.930 --> 00:28:09.720
+time, and then your application
+just carries on and works
+
+476
+00:28:09.780 --> 00:28:12.630
+and everything is the same.
+The only thing that's really
+
+477
+00:28:12.630 --> 00:28:16.620
+different is performance. And there's
+a fairly substantial performance gap,
+
+478
+00:28:16.650 --> 00:28:20.430
+probably at least about five
+times performance difference between the
+
+479
+00:28:20.430 --> 00:28:23.580
+WebAssembly and the JavaScript versions
+of the run time. But,
+
+480
+00:28:23.670 --> 00:28:26.550
+you know, your application still
+works. Even if the browser
+
+481
+00:28:26.550 --> 00:28:32.210
+doesn't support web assembly, The,
+the dominant standard is an
+
+482
+00:28:32.210 --> 00:28:34.970
+agreement, a list of APIs
+that's that are a way
+
+483
+00:28:34.970 --> 00:28:38.090
+for you to say, Oh,
+my runtime, my.net is net
+
+484
+00:28:38.110 --> 00:28:39.950
+standard compliant and can run
+all of these kinds of
+
+485
+00:28:39.950 --> 00:28:43.970
+things. But underneath, when you
+write dotnet code, we, we
+
+486
+00:28:44.000 --> 00:28:47.810
+P invoke, we platform invoke
+into native stuff. So I
+
+487
+00:28:47.810 --> 00:28:50.840
+can just arbitrarily call a
+function on a DLL and
+
+488
+00:28:50.840 --> 00:28:54.890
+make my computer beep if
+I wrote some C sharp
+
+489
+00:28:54.890 --> 00:28:57.560
+code to load up, you
+know, when 30 to whatever
+
+490
+00:28:57.560 --> 00:29:00.500
+dot DLL and called beep,
+and then upload that into
+
+491
+00:29:00.500 --> 00:29:03.590
+blazer, what's going to happen.
+Well, it's not going to
+
+492
+00:29:03.590 --> 00:29:06.290
+work that's for sure. I'm
+not certain, I can guess
+
+493
+00:29:06.320 --> 00:29:08.870
+precisely what the error message
+is going to be. It
+
+494
+00:29:08.870 --> 00:29:12.080
+would probably be something like
+file not found, which has,
+
+495
+00:29:12.080 --> 00:29:14.660
+seems a bit surprising, but
+I think something like what
+
+496
+00:29:14.660 --> 00:29:18.290
+would happen is that the.net
+run time would say, Oh,
+
+497
+00:29:18.290 --> 00:29:21.530
+you've got a P invoke
+to a particular DLL. And
+
+498
+00:29:21.530 --> 00:29:23.180
+then it's going to go
+out to the file system
+
+499
+00:29:23.180 --> 00:29:25.700
+and try and find that
+DLL. But because it's running
+
+500
+00:29:25.700 --> 00:29:28.610
+within the browser sandbox, what
+it's going to see is
+
+501
+00:29:28.610 --> 00:29:31.040
+not really the files that
+are on desk, but a
+
+502
+00:29:31.040 --> 00:29:35.420
+sort of virtual file system
+that atom script and creates
+
+503
+00:29:35.420 --> 00:29:37.370
+it runtime. And it will
+look for your DLL there,
+
+504
+00:29:37.370 --> 00:29:39.140
+and it's obviously not going
+to be there. And so
+
+505
+00:29:39.140 --> 00:29:42.730
+it's going to fail at
+that point. I see. So
+
+506
+00:29:42.760 --> 00:29:45.520
+if I write portable code,
+if I write code that
+
+507
+00:29:45.520 --> 00:29:48.310
+doesn't have a lot of
+native bindings that isn't Linux
+
+508
+00:29:48.310 --> 00:29:51.280
+specific, that isn't windows specific,
+like business logic code or
+
+509
+00:29:52.330 --> 00:29:54.610
+calculations and stuff like that,
+it's going to work great.
+
+510
+00:29:55.030 --> 00:29:58.720
+But then if we up-level,
+it, blazer is also a
+
+511
+00:29:58.720 --> 00:30:01.630
+framework to design UIs, but
+it's not like Silverlight right.
+
+512
+00:30:01.630 --> 00:30:05.560
+You're not painting buttons and
+stuff. You're you're on the
+
+513
+00:30:05.560 --> 00:30:07.570
+web. So you just do
+web stuff. We just write
+
+514
+00:30:07.570 --> 00:30:10.890
+HTML. Yeah, that's right. Yeah.
+So blazer is trying to
+
+515
+00:30:10.890 --> 00:30:16.140
+provide a dotnet way of
+writing your application, logic and
+
+516
+00:30:16.380 --> 00:30:21.090
+conventions around structured application that
+are productive and tie in
+
+517
+00:30:21.090 --> 00:30:24.600
+with what C sharp developers
+expect. But blazer is not
+
+518
+00:30:24.600 --> 00:30:29.280
+trying to replace the actual
+UI presentation layer within the
+
+519
+00:30:29.280 --> 00:30:34.350
+browser. So blazer applications still
+use HTML and CSS and
+
+520
+00:30:34.620 --> 00:30:36.660
+maybe five years ago, or
+10 years ago, at least
+
+521
+00:30:36.660 --> 00:30:39.900
+that might have been a
+dubious choice. But I think
+
+522
+00:30:40.020 --> 00:30:45.960
+over recent years, CSS has
+become pretty effective at representing
+
+523
+00:30:45.990 --> 00:30:49.800
+typical application UI things like
+Flexbox and CSS grid and
+
+524
+00:30:49.800 --> 00:30:53.490
+all that kind of stuff
+as largely eliminated the sense
+
+525
+00:30:53.490 --> 00:30:58.230
+that CSS is select suitability.
+And now CSS is generally
+
+526
+00:30:58.470 --> 00:31:02.770
+a very productive way of
+representing application UIs and HTML,
+
+527
+00:31:02.770 --> 00:31:04.980
+obviously going with that. So
+we didn't feel there was
+
+528
+00:31:04.980 --> 00:31:07.980
+any need to try and
+replace HTML and CSS. And
+
+529
+00:31:07.980 --> 00:31:10.080
+certainly when we talked to
+developers, although there's a, a
+
+530
+00:31:10.230 --> 00:31:12.540
+passionate minority, you do want
+us to get rid of
+
+531
+00:31:12.540 --> 00:31:17.280
+CSS. Certainly the majority feel
+pretty happy with that and
+
+532
+00:31:17.370 --> 00:31:21.840
+are just excited about using.net
+to replace the logic that
+
+533
+00:31:21.840 --> 00:31:25.590
+they would otherwise have written
+in Java script. How opinionated
+
+534
+00:31:25.620 --> 00:31:29.280
+is blazer? Is it opinionated
+to the point where you
+
+535
+00:31:29.280 --> 00:31:31.830
+would just use Placer by
+itself, or would you use
+
+536
+00:31:31.830 --> 00:31:35.370
+plays or with react or
+with angular or with knockout?
+
+537
+00:31:35.880 --> 00:31:38.730
+I definitely shouldn't have to
+use a different JavaScript UI
+
+538
+00:31:38.730 --> 00:31:40.710
+library. Like I can get
+a react on our account.
+
+539
+00:31:41.190 --> 00:31:44.790
+A blazer provides all of
+the stuff that you would
+
+540
+00:31:44.790 --> 00:31:48.180
+need from your single page
+application frameworks. So blase, our
+
+541
+00:31:48.180 --> 00:31:52.950
+applications are written with a
+combination of C-sharp and razor
+
+542
+00:31:52.980 --> 00:31:56.040
+files. Now razor, most listeners
+will know about, but for
+
+543
+00:31:56.040 --> 00:32:00.600
+anyone who isn't razor is
+a syntax for generating HTML
+
+544
+00:32:00.600 --> 00:32:05.430
+from the middle of C-sharp
+logic. So it's somewhat akin
+
+545
+00:32:05.430 --> 00:32:09.480
+to, I don't know, let's
+say JSX from developers or,
+
+546
+00:32:09.840 --> 00:32:14.220
+or angular templates, but really
+it very closely matches what
+
+547
+00:32:14.380 --> 00:32:16.920
+C sharp developers are looking
+for. And it's a pretty
+
+548
+00:32:16.920 --> 00:32:19.410
+well established the text. So
+in blazer, each one of
+
+549
+00:32:19.410 --> 00:32:22.830
+your raise of files is
+a component, a component in
+
+550
+00:32:22.830 --> 00:32:25.050
+the same sense that you
+have angular components or react
+
+551
+00:32:25.050 --> 00:32:28.320
+components or knockout components. So
+it's a self contained bit
+
+552
+00:32:28.320 --> 00:32:32.220
+of user interface, and you
+construct your whole application out
+
+553
+00:32:32.220 --> 00:32:34.980
+of a collection of components.
+You can do all kinds
+
+554
+00:32:34.980 --> 00:32:37.260
+of things with them, like
+pass parameters in and get
+
+555
+00:32:37.260 --> 00:32:40.490
+callbacks from them and derive
+of them and all that
+
+556
+00:32:40.490 --> 00:32:43.940
+kind of stuff. So components
+are a very flexible pattern
+
+557
+00:32:43.940 --> 00:32:48.230
+for building an application. And
+our intention is that blazer
+
+558
+00:32:48.230 --> 00:32:50.180
+provides all of the infrastructure
+that you're going to need
+
+559
+00:32:50.180 --> 00:32:54.980
+sun as well as components
+related infrastructure like rooting and
+
+560
+00:32:55.280 --> 00:32:59.450
+validation and just all those
+kinds of details. So hopefully
+
+561
+00:32:59.450 --> 00:33:02.630
+you don't need to deal
+with the mismatch of trying
+
+562
+00:33:02.630 --> 00:33:06.170
+to write, say our react
+application, but in C sharp,
+
+563
+00:33:06.650 --> 00:33:08.360
+because there'd be all kinds
+of reasons why that would
+
+564
+00:33:08.360 --> 00:33:11.300
+be messy and difficult, and
+it would be difficult to
+
+565
+00:33:12.020 --> 00:33:15.560
+represent all of the kind
+of semantics that react expects
+
+566
+00:33:15.560 --> 00:33:19.310
+within C-sharp. We don't want
+that kind of awkward mismatch.
+
+567
+00:33:19.490 --> 00:33:22.550
+So we've created an application
+framework that's really tailored to
+
+568
+00:33:22.550 --> 00:33:25.940
+C sharp as a language.
+So as of the time
+
+569
+00:33:25.940 --> 00:33:29.570
+of this recording, this is
+an experiment in that you
+
+570
+00:33:29.570 --> 00:33:33.260
+are kind of collecting feedback
+or hoping that the bosses
+
+571
+00:33:33.440 --> 00:33:35.600
+at Microsoft will say, this
+is a great idea, and
+
+572
+00:33:35.600 --> 00:33:37.730
+then put a team on
+it. Yeah, exactly. Both of
+
+573
+00:33:37.730 --> 00:33:41.300
+those things. So I'm hoping
+that we're coming up to
+
+574
+00:33:41.300 --> 00:33:44.510
+close to our experimental phase,
+and we might be able
+
+575
+00:33:44.510 --> 00:33:48.350
+to make some announcements about
+that, but those decisions have
+
+576
+00:33:48.350 --> 00:33:51.320
+not been made yet to
+my knowledge, it's looking good
+
+577
+00:33:51.320 --> 00:33:54.950
+though. We've had some very,
+very positive response from the
+
+578
+00:33:54.950 --> 00:33:59.210
+community. We've collected lots of
+data about how great people
+
+579
+00:33:59.210 --> 00:34:03.770
+say it is. And I'm
+feeling fairly optimistic that we'll
+
+580
+00:34:03.770 --> 00:34:05.300
+be able to build a
+product out of this. And
+
+581
+00:34:05.480 --> 00:34:08.540
+depending on one people listening
+to this podcast, hopefully there
+
+582
+00:34:08.540 --> 00:34:10.400
+might be some news about
+that, but not as of
+
+583
+00:34:10.670 --> 00:34:13.610
+the date of recording. Okay.
+And people can check this
+
+584
+00:34:13.610 --> 00:34:16.730
+out. I think their website
+is blaze or B L
+
+585
+00:34:16.730 --> 00:34:20.390
+H O r.net. And it's
+pretty easy to get started
+
+586
+00:34:20.390 --> 00:34:23.450
+and it works, works anywhere.
+It works on Linux and
+
+587
+00:34:23.450 --> 00:34:25.970
+windows and Mac. And you
+just do it in visual
+
+588
+00:34:25.970 --> 00:34:27.890
+studio code, I suppose. Hey,
+or do you need visual
+
+589
+00:34:27.890 --> 00:34:32.120
+studio proper? Well, that's one
+of the things that we
+
+590
+00:34:32.150 --> 00:34:35.300
+definitely want to improve on.
+If we build this into
+
+591
+00:34:35.300 --> 00:34:38.090
+a real product at the
+moment, the best tooling is
+
+592
+00:34:38.090 --> 00:34:41.690
+definitely in visual studio and
+windows. And we've started there
+
+593
+00:34:41.690 --> 00:34:44.840
+because we had a lot
+of expertise with doing razor
+
+594
+00:34:44.840 --> 00:34:48.050
+there at <inaudible> in general
+is a bit limited right
+
+595
+00:34:48.050 --> 00:34:50.570
+now, but it's definitely our
+hope that we would bring
+
+596
+00:34:50.570 --> 00:34:54.260
+a complete tooling story cross-platform
+with vs. Code is not
+
+597
+00:34:54.260 --> 00:34:57.380
+there today. Very cool. Very
+cool. Well, I wish you
+
+598
+00:34:57.380 --> 00:34:59.990
+all the best. I think
+it's pretty exciting project and
+
+599
+00:34:59.990 --> 00:35:02.380
+I've, I've presented at local
+user groups and stuff, so
+
+600
+00:35:02.380 --> 00:35:03.740
+I'm gonna do my best
+to go out and spread
+
+601
+00:35:03.740 --> 00:35:05.600
+the word. Excellent. And I
+hope that people check it
+
+602
+00:35:05.600 --> 00:35:09.200
+out at <inaudible> dot net.
+Thanks so much. This has
+
+603
+00:35:09.200 --> 00:35:11.960
+been another episode of Hanselminutes
+and we'll see you again.
+
+604
+00:35:14.350 --> 00:35:33.010
+<inaudible>.
+

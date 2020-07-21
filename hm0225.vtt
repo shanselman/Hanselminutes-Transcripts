@@ -1,0 +1,2901 @@
+WEBVTT FILE
+
+1
+00:00:12.090 --> 00:00:16.890
+From Hanselman it's dot com.
+It's Ansul minutes, a weekly
+
+2
+00:00:16.890 --> 00:00:21.150
+discussion with web developer and
+technologist Scott Hanselman. This is
+
+3
+00:00:21.150 --> 00:00:26.880
+Lawrence Ryan announcing show number two
+25 reported live Thursday, July 29th, 2010.
+
+4
+00:00:27.840 --> 00:00:30.780
+Support for Hanselman it's just
+provided by Tellerik. Our AB
+
+5
+00:00:30.780 --> 00:00:34.320
+controls the most comprehensive suite
+of components for windows forms
+
+6
+00:00:34.320 --> 00:00:43.860
+and asp.net web applications online@wwwdottelerik.com.
+In this episode, Scott talks
+
+7
+00:00:43.860 --> 00:00:49.310
+about in hibernate with Jason
+Denton. Hi, this is Scott
+
+8
+00:00:49.310 --> 00:00:51.410
+Hanselman, and this is another
+episode of Hansel minutes. And
+
+9
+00:00:51.410 --> 00:00:54.590
+we're talking today about an
+hibernate with author Jason Dentler.
+
+10
+00:00:55.130 --> 00:00:57.470
+He's an author of a
+book called an hibernate free
+
+11
+00:00:57.470 --> 00:01:00.410
+cookbook from PAC publishing. He'll
+be out later this year.
+
+12
+00:01:00.410 --> 00:01:01.850
+And one of the nice
+things about this book is
+
+13
+00:01:01.850 --> 00:01:03.740
+that PAC publishing will be
+donating a portion of the
+
+14
+00:01:03.740 --> 00:01:07.160
+revenue from the N hibernate
+three cookbook back to the
+
+15
+00:01:07.670 --> 00:01:10.520
+open source project. So this
+is great. Thanks Jason, for
+
+16
+00:01:10.520 --> 00:01:13.010
+sitting down and chat with
+me today. Hi Scott. It's
+
+17
+00:01:13.010 --> 00:01:16.310
+great to be here. So
+I did a couple of
+
+18
+00:01:16.310 --> 00:01:18.650
+shows recently about entity framework,
+and I've been thinking about
+
+19
+00:01:18.650 --> 00:01:21.110
+entity framework. This is the
+Microsoft a way to talk
+
+20
+00:01:21.110 --> 00:01:23.600
+to a database and I
+haven't done a show on,
+
+21
+00:01:23.600 --> 00:01:25.910
+in hibernate, and I want
+to make sure that everybody
+
+22
+00:01:25.910 --> 00:01:29.030
+gets, gets heard and, you
+know, and hibernate. It's been
+
+23
+00:01:29.030 --> 00:01:30.710
+one of those things where
+I've kind of like, I've
+
+24
+00:01:31.040 --> 00:01:32.990
+heard about it a lot
+and I've danced around it.
+
+25
+00:01:32.990 --> 00:01:35.540
+I've orbited a little bit
+on a couple of small
+
+26
+00:01:35.540 --> 00:01:38.630
+projects, but I'm just not
+like hardcore. I don't quite
+
+27
+00:01:38.630 --> 00:01:40.490
+get it. So can you
+tell me what is an
+
+28
+00:01:40.490 --> 00:01:42.800
+hibernate? You know, what, what's
+the heritage? Where did it
+
+29
+00:01:42.800 --> 00:01:47.930
+come from? Well, in hibernate
+is an object relational mapper
+
+30
+00:01:49.190 --> 00:01:54.230
+framework. It started as a
+Java project called hibernate back
+
+31
+00:01:54.230 --> 00:02:00.230
+in. Wow. So it's like
+10 years old is mature
+
+32
+00:02:04.040 --> 00:02:07.820
+around 2003 or so some
+guys got together and started
+
+33
+00:02:07.820 --> 00:02:14.240
+putting it over to.net. From
+there, we added generics with
+
+34
+00:02:14.240 --> 00:02:18.410
+version two, brought up feature
+parody along with hibernate three.
+
+35
+00:02:20.180 --> 00:02:24.350
+And then here we are
+today at version three, significant
+
+36
+00:02:24.350 --> 00:02:26.030
+that it came from Java.
+Like, is that, is that
+
+37
+00:02:26.030 --> 00:02:28.490
+meaningful in some way? Like,
+does it feel like Java
+
+38
+00:02:28.490 --> 00:02:30.620
+or does it have Java
+ish stuff in it or
+
+39
+00:02:30.630 --> 00:02:33.500
+is it just that the
+original idea name came from
+
+40
+00:02:33.500 --> 00:02:38.360
+Java? Well, no, there's actually,
+some of the vocabulary is
+
+41
+00:02:38.360 --> 00:02:44.120
+taken straight from Java, our
+entity mappings, you know, we
+
+42
+00:02:44.120 --> 00:02:48.110
+use the term maps instead
+of dictionary in.net it's dictionary
+
+43
+00:02:48.110 --> 00:02:52.250
+in Java it's maps. Oh,
+I see. Also in the
+
+44
+00:02:52.250 --> 00:02:57.170
+mapping we use the term
+extents, which is basically subclasses
+
+45
+00:02:57.170 --> 00:03:01.960
+of class. So you said
+object relational mapper. So this
+
+46
+00:03:01.960 --> 00:03:04.030
+is something that takes my
+objects and like, if I
+
+47
+00:03:04.030 --> 00:03:05.920
+have a person object and
+it has first name and
+
+48
+00:03:05.920 --> 00:03:08.170
+last name and it describes
+what it's going to take
+
+49
+00:03:08.560 --> 00:03:12.700
+to persist that into a
+relational database, hence object relational
+
+50
+00:03:13.000 --> 00:03:17.560
+mapper. Right, right. Is this
+a bunch of DLLs that
+
+51
+00:03:17.560 --> 00:03:19.690
+I download? Is this a
+program? And you're like, how
+
+52
+00:03:19.690 --> 00:03:21.760
+do I get started with,
+with this? How do I
+
+53
+00:03:21.760 --> 00:03:24.250
+sit down and start using
+this? How do I persist
+
+54
+00:03:24.250 --> 00:03:27.990
+my person? Okay. Well, let
+me just take you through
+
+55
+00:03:27.990 --> 00:03:30.720
+the whole process. First of
+all, you're going to go
+
+56
+00:03:30.720 --> 00:03:36.060
+and download our assemblies. We're
+hosted on, SourceForge just Google
+
+57
+00:03:36.060 --> 00:03:39.630
+for in hibernate SourceForge and
+take you right there. Download
+
+58
+00:03:39.630 --> 00:03:43.890
+the in hibernate three alpha
+one. It's rock solid. You
+
+59
+00:03:43.890 --> 00:03:45.840
+know, it's still alpha, but
+it's rock solid. People are
+
+60
+00:03:45.840 --> 00:03:50.640
+using it in production already.
+Wow, that's cool. Yeah. There's
+
+61
+00:03:50.640 --> 00:03:53.490
+going to be a couple
+of DLLs in there. You'll
+
+62
+00:03:53.490 --> 00:03:56.670
+have in hibernate dot DLL,
+that's sort of the in
+
+63
+00:03:56.670 --> 00:04:02.220
+hibernate core from there you
+will have in hibernate bytecode
+
+64
+00:04:02.250 --> 00:04:08.370
+castle. That DLL, that is
+our proxy framework. We support
+
+65
+00:04:08.370 --> 00:04:15.750
+castle proxies when food proxies
+and spring proxies proxies is
+
+66
+00:04:15.750 --> 00:04:19.500
+just a term. It's basically
+what we use to support
+
+67
+00:04:19.500 --> 00:04:24.420
+Lacy loading. We're going to
+take your class and in
+
+68
+00:04:24.420 --> 00:04:28.620
+runtime, inherit from it and
+add on all of our
+
+69
+00:04:28.620 --> 00:04:31.200
+lazy loading support on top
+of that on top of
+
+70
+00:04:31.200 --> 00:04:33.990
+it. Okay. So does this
+mean if I have a
+
+71
+00:04:33.990 --> 00:04:38.040
+person and that person has
+an address, I could have
+
+72
+00:04:38.040 --> 00:04:39.900
+that person object, I'm going
+to assume a C sharp
+
+73
+00:04:39.900 --> 00:04:43.170
+or VP programmer. And I
+say person P and then
+
+74
+00:04:43.170 --> 00:04:45.420
+I say P dot address.
+And when you say lazy
+
+75
+00:04:45.420 --> 00:04:48.540
+loading, it's the moment when
+I access address that it
+
+76
+00:04:48.540 --> 00:04:49.950
+will go to the database.
+Is that what you mean
+
+77
+00:04:49.950 --> 00:04:54.030
+by that? That's exactly right.
+Yes. See, and then the
+
+78
+00:04:54.030 --> 00:04:56.250
+product that dynamic proxy is
+the thing that makes that
+
+79
+00:04:56.250 --> 00:05:00.340
+possible. Well, my person object
+look all like database and
+
+80
+00:05:00.340 --> 00:05:02.370
+in hibernating or will it
+just look like public class
+
+81
+00:05:02.370 --> 00:05:07.530
+person? No, actually that's one
+of the core design principles
+
+82
+00:05:07.530 --> 00:05:12.480
+in hibernate. We believe very
+strongly in code first. Pocos
+
+83
+00:05:12.990 --> 00:05:17.070
+plain old CLR objects. Don't
+have to add attributes. You
+
+84
+00:05:17.070 --> 00:05:20.640
+don't have to add any
+of this sort of persistence
+
+85
+00:05:20.850 --> 00:05:25.710
+stuff. It's complete persistence ignorance.
+So does this mean that
+
+86
+00:05:25.710 --> 00:05:27.930
+I can take an existing
+object that maybe I'm already
+
+87
+00:05:27.930 --> 00:05:30.150
+working on and I can
+persist it? Or do you
+
+88
+00:05:30.150 --> 00:05:33.690
+usually design your objects explicitly
+for going into the database?
+
+89
+00:05:35.640 --> 00:05:39.690
+Personally, I designed my whole
+persistence model first, all of
+
+90
+00:05:39.690 --> 00:05:42.000
+the classes that don't want
+to persist. And then I
+
+91
+00:05:42.000 --> 00:05:44.910
+build on top of that,
+but there's, you know, countless
+
+92
+00:05:44.910 --> 00:05:48.210
+ways to go through that
+whole process. Yes. You could
+
+93
+00:05:48.210 --> 00:05:53.790
+take an existing class and
+persistent later, So I've got
+
+94
+00:05:53.790 --> 00:05:56.070
+your DLLs and I add
+references to them. And then
+
+95
+00:05:56.070 --> 00:06:00.170
+what? Well, you're Going to
+first design your pocos. So
+
+96
+00:06:00.170 --> 00:06:02.690
+you'll build your person class.
+You'll build your OB your
+
+97
+00:06:02.750 --> 00:06:06.020
+address class. You will map
+from one to the other.
+
+98
+00:06:06.830 --> 00:06:08.600
+I'm sorry. He will make
+a reference from one to
+
+99
+00:06:08.600 --> 00:06:13.460
+the other. Then you'll start
+building your mappings within hibernate.
+
+100
+00:06:13.490 --> 00:06:18.740
+The default supported mapping is
+XML. So you will create
+
+101
+00:06:18.740 --> 00:06:23.930
+an XML file person dot
+HBM dot XML, and you
+
+102
+00:06:23.930 --> 00:06:27.170
+will build this whole XML
+mapping. It's real easy. We
+
+103
+00:06:27.170 --> 00:06:30.470
+ship XML schema that you
+can drop into your solution.
+
+104
+00:06:30.920 --> 00:06:33.800
+So that visual studio will
+give you full intelligence when
+
+105
+00:06:33.800 --> 00:06:37.310
+you're building your, your XML.
+And then you just set
+
+106
+00:06:37.310 --> 00:06:42.310
+that as an embedded resource
+in your assembly. Ah, so
+
+107
+00:06:42.310 --> 00:06:45.520
+the XML file that tells
+me where, what part of
+
+108
+00:06:45.520 --> 00:06:47.410
+the object goes in, what
+part of the database is
+
+109
+00:06:47.470 --> 00:06:50.320
+embedded inside the DLL? So
+it's not losing lying around
+
+110
+00:06:50.770 --> 00:06:55.240
+it's effectively code just happens
+to look like XML, right?
+
+111
+00:06:55.390 --> 00:06:58.540
+That's exactly right. Is that
+the only way to make
+
+112
+00:06:58.540 --> 00:07:00.580
+a mapping? Cause I've seen
+some of those files and
+
+113
+00:07:00.580 --> 00:07:04.570
+they look kind of scary.
+Yeah. There's lots of different
+
+114
+00:07:04.570 --> 00:07:07.360
+ways. That's the only way
+that's built into in hibernate
+
+115
+00:07:07.390 --> 00:07:12.850
+core. We also have fluent
+in hibernate. Basically you build
+
+116
+00:07:12.850 --> 00:07:15.610
+it with sort of a
+fluent syntax with generics and
+
+117
+00:07:15.610 --> 00:07:19.960
+Lambdas and that sort of
+stuff, and that, you know,
+
+118
+00:07:19.960 --> 00:07:23.620
+that's code. So you get
+full IntelliSense there. So fluent
+
+119
+00:07:23.620 --> 00:07:26.170
+means kind of like writing
+a sentence, like, you know,
+
+120
+00:07:26.170 --> 00:07:28.810
+map the person object to
+the such and such table.
+
+121
+00:07:28.810 --> 00:07:30.550
+And you're like, write it
+all out. Like you're writing
+
+122
+00:07:30.550 --> 00:07:34.300
+C sharp as if it
+were a declaration. Yes, that's
+
+123
+00:07:34.300 --> 00:07:39.070
+exactly right. Okay. And that's
+something that's an add on
+
+124
+00:07:39.070 --> 00:07:41.260
+fluent and hibernate I can
+add on, but it gives
+
+125
+00:07:41.260 --> 00:07:43.120
+me all the same kind
+of functionality. It's just, I
+
+126
+00:07:43.120 --> 00:07:45.850
+don't have to deal with
+XML, Right? To add on
+
+127
+00:07:45.850 --> 00:07:48.250
+fluid in hibernate, you go
+to the fluent in hibernate
+
+128
+00:07:48.250 --> 00:07:52.150
+project, download their DLL and
+reference it. And then from
+
+129
+00:07:52.150 --> 00:07:55.870
+there you just create a
+class map, which is a,
+
+130
+00:07:56.110 --> 00:08:01.840
+just another poco. Okay. So
+I've done my mapping. I've
+
+131
+00:08:01.840 --> 00:08:04.810
+added my references. How do
+I talk? How do I
+
+132
+00:08:04.810 --> 00:08:08.620
+connect to the database? Where's
+my connection string live. There's
+
+133
+00:08:08.620 --> 00:08:11.320
+a couple of different ways
+you can do configuration within
+
+134
+00:08:11.320 --> 00:08:14.320
+hibernate. Also you can put
+it in your app dot
+
+135
+00:08:14.320 --> 00:08:19.600
+config as its own section.
+So you'll actually have a
+
+136
+00:08:19.630 --> 00:08:24.640
+hibernate dash configuration section in
+your app dot config. You
+
+137
+00:08:24.640 --> 00:08:28.510
+can store it separately in
+an XML file. The default
+
+138
+00:08:28.510 --> 00:08:33.010
+is hibernate dot CFG dot
+XML. You can change that
+
+139
+00:08:33.010 --> 00:08:36.700
+if you like. We also
+have sort of a fluent,
+
+140
+00:08:36.940 --> 00:08:41.380
+not really fluent. We call
+it location code syntax for
+
+141
+00:08:41.380 --> 00:08:44.920
+configuring in hibernate. And the
+influence in hibernate also has
+
+142
+00:08:44.920 --> 00:08:49.030
+a fluent syntax for configuring
+it hibernate. So you'll set
+
+143
+00:08:49.030 --> 00:08:54.310
+your connection string in your
+app dot config. From there,
+
+144
+00:08:54.310 --> 00:08:58.350
+you'll build a, an in
+hibernate configuration object. So you'll
+
+145
+00:08:58.350 --> 00:09:02.610
+just new up in hibernate
+dot CFG dot configuration. You'll
+
+146
+00:09:02.610 --> 00:09:07.200
+call dot configure. Now you've
+got a built configuration object.
+
+147
+00:09:07.560 --> 00:09:10.230
+It's pulled in all of
+your mappings. It's loaded those
+
+148
+00:09:10.230 --> 00:09:13.470
+up. It's reflected on your
+model and it's ready to
+
+149
+00:09:13.470 --> 00:09:17.760
+go from there. You call.build
+session factory, and now you've
+
+150
+00:09:17.760 --> 00:09:24.000
+got a session factory that's
+sort of the one Singleton
+
+151
+00:09:24.300 --> 00:09:32.690
+entry point into in hibernate
+factory per application. Okay. And
+
+152
+00:09:32.690 --> 00:09:36.650
+the session in hibernate usually
+used for web applications or
+
+153
+00:09:36.650 --> 00:09:38.090
+is it just that I
+usually see it for web
+
+154
+00:09:38.090 --> 00:09:41.390
+applications. Cause I see when
+someone starts a request, they
+
+155
+00:09:41.390 --> 00:09:43.760
+start a session. And then
+when this request ends, they
+
+156
+00:09:43.760 --> 00:09:48.470
+end the session, Right? You
+can use in hibernate for
+
+157
+00:09:48.470 --> 00:09:52.340
+any type of application. One
+of the most common scenarios
+
+158
+00:09:52.370 --> 00:09:57.920
+is web applications, web forms,
+NBC, you name it. And
+
+159
+00:09:57.950 --> 00:10:00.890
+what you just talked about
+was session per request, where
+
+160
+00:10:00.890 --> 00:10:04.850
+you start a session. When
+the request begins, you close
+
+161
+00:10:04.850 --> 00:10:09.820
+the session when the request
+ends, But with it, but
+
+162
+00:10:09.830 --> 00:10:13.190
+a session is not a
+connection. No a session is
+
+163
+00:10:13.190 --> 00:10:17.060
+not a connection. The session,
+the unit of work, it's
+
+164
+00:10:17.060 --> 00:10:20.600
+sort of a code pattern.
+That's find out on Martin
+
+165
+00:10:20.600 --> 00:10:23.840
+Fowler's website. And a couple
+of other places. Basically what
+
+166
+00:10:23.840 --> 00:10:27.050
+you're doing is building up
+a list of all the
+
+167
+00:10:27.050 --> 00:10:30.080
+changes that you've made to
+your entities. So you may
+
+168
+00:10:30.230 --> 00:10:35.030
+insert a person, change an
+address, delete another person, and
+
+169
+00:10:35.030 --> 00:10:38.090
+then you flush that whole
+session of work or that
+
+170
+00:10:38.090 --> 00:10:40.880
+whole unit of work down
+to the database all at
+
+171
+00:10:40.880 --> 00:10:44.270
+once. So the connection is
+only open when you're flushing.
+
+172
+00:10:45.230 --> 00:10:47.270
+Can I have multiple units
+of work within a session,
+
+173
+00:10:50.300 --> 00:10:53.120
+Start a unit of work
+by opening the session, do
+
+174
+00:10:53.120 --> 00:10:57.710
+some work, flush it, then
+keep using the session and
+
+175
+00:10:57.710 --> 00:11:00.470
+flush it again. You don't
+have to open a new
+
+176
+00:11:00.470 --> 00:11:05.300
+session each time. Okay. Sometimes
+I get the impression that
+
+177
+00:11:05.300 --> 00:11:10.640
+Ann hibernate is hard and
+I tried to sit down
+
+178
+00:11:10.640 --> 00:11:15.080
+and work with it yesterday.
+And I found that there
+
+179
+00:11:15.080 --> 00:11:16.760
+were bits of it all
+kind of spread all over
+
+180
+00:11:16.760 --> 00:11:22.160
+the web. You know, is
+this an, I think, I
+
+181
+00:11:22.160 --> 00:11:25.340
+think I'm saying this as
+a person who wants to
+
+182
+00:11:25.340 --> 00:11:27.290
+use it, like, it feels
+like I have to work
+
+183
+00:11:27.320 --> 00:11:30.440
+to want to get excited
+about using an hibernate. Is
+
+184
+00:11:30.860 --> 00:11:32.870
+that, that doesn't sound like
+a technical limitation though. It
+
+185
+00:11:32.870 --> 00:11:35.150
+just seems like it's just
+not fun to make websites
+
+186
+00:11:35.810 --> 00:11:39.530
+that are really have documentation
+and to screenshots and download
+
+187
+00:11:39.540 --> 00:11:40.820
+all that kind of stuff.
+What do you, what do
+
+188
+00:11:40.820 --> 00:11:44.480
+you think is that hibernate
+hard? No, in hibernate, definitely
+
+189
+00:11:44.480 --> 00:11:46.850
+not hard, but like you
+said, we are scattered all
+
+190
+00:11:46.850 --> 00:11:51.500
+across the web. It's sort
+of a loose community of
+
+191
+00:11:51.500 --> 00:11:55.330
+projects. You know, we have
+in hibernate core, we have
+
+192
+00:11:55.330 --> 00:11:59.050
+fluent in hibernate. There's the
+conformed project. We have a
+
+193
+00:11:59.050 --> 00:12:03.250
+couple of contrib projects. Then
+there's sharp architecture, which is
+
+194
+00:12:03.340 --> 00:12:06.190
+kind of using in hibernate
+to build an entire web
+
+195
+00:12:06.190 --> 00:12:11.320
+app. So we are scattered
+all across the web. You
+
+196
+00:12:11.320 --> 00:12:14.740
+know, that we have a
+real problem with marketing in
+
+197
+00:12:14.740 --> 00:12:18.520
+hibernate. You know, we're all
+programmers. We don't have designers,
+
+198
+00:12:18.520 --> 00:12:21.850
+we don't have marketers. We
+don't have technical writers for
+
+199
+00:12:21.850 --> 00:12:25.830
+our project. It seems like
+that's an open source problem.
+
+200
+00:12:25.860 --> 00:12:28.680
+I mean, ultimately like with
+DAS blog, which is a
+
+201
+00:12:28.680 --> 00:12:33.210
+smaller, much less significant little
+application, we had this guy,
+
+202
+00:12:33.210 --> 00:12:36.360
+Tom Watts, who was just
+this amazing organizer, you know,
+
+203
+00:12:36.360 --> 00:12:39.300
+he wasn't a programmer, but
+he, he runs the forums,
+
+204
+00:12:39.360 --> 00:12:41.280
+you know, to this day,
+he's still in the forums.
+
+205
+00:12:41.280 --> 00:12:45.600
+He maintain the, the website
+he paid for having a
+
+206
+00:12:45.600 --> 00:12:48.240
+website. You know, he, he
+made it, he funneled, he
+
+207
+00:12:48.240 --> 00:12:51.180
+funneled all of the, all
+of us idiot programmers that
+
+208
+00:12:51.180 --> 00:12:54.090
+were trying to put the
+thing together into a cohesive
+
+209
+00:12:54.090 --> 00:12:59.130
+team. He effectively herded the
+cats. Is that, is that
+
+210
+00:12:59.130 --> 00:13:01.710
+a challenge to do that?
+Or do you think you'll
+
+211
+00:13:01.710 --> 00:13:06.120
+become that person for an
+hibernate man? No, I wouldn't
+
+212
+00:13:06.120 --> 00:13:09.090
+say so. I don't think
+anybody's really picked up that
+
+213
+00:13:09.090 --> 00:13:13.890
+role. You know, used to
+be in hibernate was sort
+
+214
+00:13:13.890 --> 00:13:17.520
+of managed by this company
+called J boss. So if
+
+215
+00:13:17.520 --> 00:13:21.060
+you actually go out to
+Google right now and just
+
+216
+00:13:21.060 --> 00:13:23.190
+Google for in hibernate, the
+first link is going to
+
+217
+00:13:23.190 --> 00:13:26.880
+take you to J boss.org,
+which that hasn't been the
+
+218
+00:13:26.880 --> 00:13:29.130
+home of in hibernate for,
+I don't know, a couple
+
+219
+00:13:29.130 --> 00:13:32.250
+of years now, the home
+of, in hibernate on the
+
+220
+00:13:32.250 --> 00:13:39.960
+web is NH forge.org. We
+have blogs, tons of people
+
+221
+00:13:39.960 --> 00:13:44.520
+posting on the blog. We
+have a Wiki, we have
+
+222
+00:13:44.520 --> 00:13:48.660
+links to downloads all that
+sort of stuff, but we
+
+223
+00:13:48.660 --> 00:13:55.530
+don't really have sort of
+a centralized message out on
+
+224
+00:13:55.530 --> 00:13:59.910
+the web. Hi, this is
+Scott. I just want to
+
+225
+00:13:59.910 --> 00:14:03.480
+remind you guys that there's
+no show without a sponsor,
+
+226
+00:14:03.960 --> 00:14:06.510
+someone who's going to pay
+for all this bandwidth. And
+
+227
+00:14:06.510 --> 00:14:09.000
+the more popular the show
+becomes. The more important is
+
+228
+00:14:09.420 --> 00:14:13.500
+that we thank our sponsors
+folks like Tellerik I wanna
+
+229
+00:14:13.500 --> 00:14:15.570
+let you guys know that
+Tellerik has got a pretty
+
+230
+00:14:15.570 --> 00:14:23.220
+cool deal going between June 1st, 2010
+and August 31st, 2010. Any interested listener,
+
+231
+00:14:23.250 --> 00:14:32.190
+just send an email to
+podcast@telleriktlerik.com mentioned Hansel minutes and
+
+232
+00:14:32.190 --> 00:14:34.710
+they will reply and they'll
+give you a special $50
+
+233
+00:14:34.710 --> 00:14:39.570
+off coupon code. So just
+remember podcast at <inaudible> dot
+
+234
+00:14:39.570 --> 00:14:45.900
+com mentioned Hansel minutes, $50
+off. It goes until August 31st, 2010
+
+235
+00:14:46.590 --> 00:14:49.260
+and big thanks again for
+the folks at Tellerik for
+
+236
+00:14:49.260 --> 00:14:52.760
+believing in our show and
+for continuing to help pay
+
+237
+00:14:52.760 --> 00:14:56.150
+for our expenses. I went
+to an hibernate.com. It looks
+
+238
+00:14:56.150 --> 00:14:59.270
+like a consulting company has
+that, but they have been
+
+239
+00:14:59.270 --> 00:15:02.790
+kind enough to put links
+to NH forge the source
+
+240
+00:15:02.790 --> 00:15:05.750
+SourceForge and that fluent and
+irony. Maybe we could get
+
+241
+00:15:05.750 --> 00:15:08.780
+those guys to give up
+that domain or make it
+
+242
+00:15:08.780 --> 00:15:11.330
+more tidy, but you're right.
+I'm looking here. I see
+
+243
+00:15:11.330 --> 00:15:14.690
+Wikipedia. I see SourceForge the
+CNH forge. Okay. But the
+
+244
+00:15:14.690 --> 00:15:17.930
+point is that even though
+it's spread a PA around
+
+245
+00:15:18.200 --> 00:15:20.510
+a little bit, that's not
+a reason for someone to
+
+246
+00:15:20.510 --> 00:15:23.180
+not use it, but I
+think it might make people
+
+247
+00:15:23.180 --> 00:15:26.870
+more afraid just because it
+a it's not like, you
+
+248
+00:15:26.870 --> 00:15:29.840
+know, subsonic.com boom download. Now,
+you know what I mean?
+
+249
+00:15:30.400 --> 00:15:33.310
+Right. That's exactly right. You
+know, if you want to
+
+250
+00:15:33.310 --> 00:15:35.590
+go to the one place
+on the web for in
+
+251
+00:15:35.590 --> 00:15:39.130
+hibernate information, you should go
+to <inaudible> dot org and
+
+252
+00:15:39.130 --> 00:15:42.520
+we are working to consolidate
+stuff there. We're bringing in
+
+253
+00:15:42.520 --> 00:15:45.490
+all of a whole bunch
+of bloggers. We're adding people
+
+254
+00:15:45.760 --> 00:15:49.030
+to post on the wikis.
+We're really making an effort
+
+255
+00:15:49.030 --> 00:15:52.780
+to consolidate things so that
+that's not such a problem
+
+256
+00:15:52.780 --> 00:15:56.530
+anymore. So I'm visiting an
+area. This is, this is
+
+257
+00:15:56.530 --> 00:16:00.670
+nice. Look at this NH
+forge home blog, download groups
+
+258
+00:16:00.670 --> 00:16:04.540
+reference. This is, yeah, this
+is nice. Yeah, this is
+
+259
+00:16:04.540 --> 00:16:07.300
+really cool. Yeah. So this
+is a very nice, I
+
+260
+00:16:07.300 --> 00:16:10.630
+should have gone here yesterday.
+I was running around on,
+
+261
+00:16:12.130 --> 00:16:14.320
+on SourceForge cause I assume
+that's where things live and
+
+262
+00:16:14.320 --> 00:16:16.090
+I was having trouble finding
+things there. So you now
+
+263
+00:16:16.090 --> 00:16:18.640
+you've got a nice reference
+documentation for version two as
+
+264
+00:16:18.640 --> 00:16:20.950
+well. It's almost like a,
+kind of a little mini
+
+265
+00:16:20.950 --> 00:16:24.130
+book here just to get
+people started. Yeah. And we're
+
+266
+00:16:24.370 --> 00:16:26.710
+in the work we're in
+the process of updating that
+
+267
+00:16:26.710 --> 00:16:31.630
+for <inaudible>. So what's new
+and inherited three. What, what
+
+268
+00:16:31.630 --> 00:16:33.070
+are the kinds of things
+that people can get excited
+
+269
+00:16:33.070 --> 00:16:35.830
+about and is NH three,
+a good time for people
+
+270
+00:16:35.830 --> 00:16:39.790
+to jump in and try
+and hibernate? Absolutely. You know,
+
+271
+00:16:39.790 --> 00:16:42.010
+we still have all of
+the features from NH to,
+
+272
+00:16:42.340 --> 00:16:45.280
+you know, we still have
+hibernate query language. We still
+
+273
+00:16:45.280 --> 00:16:48.730
+have the criteria API and
+we still support SQL. You
+
+274
+00:16:48.730 --> 00:16:50.650
+know, we can do crazy
+stuff with stored procedures and
+
+275
+00:16:50.650 --> 00:16:55.540
+all of that business. What
+we've added, basically we've moved
+
+276
+00:16:55.540 --> 00:16:59.140
+from dotnet two Oh two.net
+35. So we get all
+
+277
+00:16:59.140 --> 00:17:01.840
+of the goodness of Lambdas
+and link and all of
+
+278
+00:17:01.840 --> 00:17:05.830
+that kind of stuff. So
+like they've mentioned the locations
+
+279
+00:17:05.830 --> 00:17:10.120
+configuration, the code configuration, that's
+all brand new in hibernate
+
+280
+00:17:10.120 --> 00:17:13.600
+three for the first time
+ever. We have a real
+
+281
+00:17:13.600 --> 00:17:18.400
+actual in hibernate link provider
+that was mostly written by
+
+282
+00:17:18.400 --> 00:17:23.110
+Steve strong from Metta about
+300 unit tests behind that
+
+283
+00:17:23.110 --> 00:17:26.110
+it's rock solid. It's ready
+to go. Wow. So this
+
+284
+00:17:26.110 --> 00:17:27.850
+is linked to and hibernate.
+So like if I'm a
+
+285
+00:17:27.850 --> 00:17:29.800
+link to say, I use
+linked to SQL myself a
+
+286
+00:17:29.800 --> 00:17:32.170
+lot and I'm just now
+starting to move over to
+
+287
+00:17:32.440 --> 00:17:36.160
+entity framework. So the same
+link that I'm using in
+
+288
+00:17:36.160 --> 00:17:37.930
+those two, I can use
+an N hibernate and it'll
+
+289
+00:17:37.930 --> 00:17:43.240
+feel like home. Absolutely. Yeah.
+To get to the eye
+
+290
+00:17:43.240 --> 00:17:48.970
+queryable. It's real easy. You
+just import the in hibernate.link
+
+291
+00:17:49.260 --> 00:17:52.650
+namespace. And then you'll write
+your link statement from P
+
+292
+00:17:52.650 --> 00:17:58.050
+in session dot query post
+where p.author equals as Hanselman,
+
+293
+00:17:59.700 --> 00:18:03.230
+you know, just your standard
+link. And I saw that
+
+294
+00:18:03.230 --> 00:18:05.930
+there's two there's tools around
+there. There's there's tooling that
+
+295
+00:18:05.930 --> 00:18:08.300
+supports it. Like we said,
+it is spread around a
+
+296
+00:18:08.300 --> 00:18:10.220
+little bit, but then again,
+Microsoft spread around a little
+
+297
+00:18:10.220 --> 00:18:13.160
+bit. So there's like a
+profile. Cause when you just
+
+298
+00:18:13.160 --> 00:18:14.780
+said you were describing a
+link query, I was thinking
+
+299
+00:18:14.780 --> 00:18:17.480
+to myself, well, what SQL
+is it making? Right. I
+
+300
+00:18:17.480 --> 00:18:20.040
+know I can look at
+SQL profiler, but it doesn't
+
+301
+00:18:20.070 --> 00:18:23.570
+doesn't Oren have a, an
+entity as an Oren, had
+
+302
+00:18:23.570 --> 00:18:27.230
+an N hibernate profile out
+there. Yeah, that's exactly right.
+
+303
+00:18:28.580 --> 00:18:31.400
+He wrote an in hibernate
+profiler. It's a great tool.
+
+304
+00:18:31.760 --> 00:18:33.830
+It is a commercial tool.
+It's not open source. So
+
+305
+00:18:33.830 --> 00:18:36.110
+you do have to pay
+for it. But if you're
+
+306
+00:18:36.110 --> 00:18:39.620
+working within hibernate, that's definitely
+the way to go. It's
+
+307
+00:18:39.620 --> 00:18:45.290
+fully integrated. When your application
+runs a SQL statement, it
+
+308
+00:18:45.290 --> 00:18:47.210
+will show up in, in
+hibernate profile or it will
+
+309
+00:18:47.210 --> 00:18:50.240
+tell you if anything's wrong
+with it, what's wrong with
+
+310
+00:18:50.240 --> 00:18:52.910
+it. It'll give you a
+full stack trace. You can
+
+311
+00:18:52.910 --> 00:18:55.130
+double click on a stack
+frame in the stack trace
+
+312
+00:18:55.460 --> 00:18:57.860
+and it will bounce you
+back into that exact location
+
+313
+00:18:57.860 --> 00:19:02.300
+in visual studio. It's really
+cool. Highly recommended. That's cool.
+
+314
+00:19:02.300 --> 00:19:05.300
+That's pretty integrated then. So
+it sounds like if I
+
+315
+00:19:05.300 --> 00:19:07.460
+have, do we using an
+hibernate in a professional sense,
+
+316
+00:19:07.460 --> 00:19:09.860
+I might want to buy
+a couple of small products
+
+317
+00:19:09.860 --> 00:19:13.280
+from a couple of different
+different vendors, right? But it
+
+318
+00:19:13.280 --> 00:19:15.710
+doesn't sound like it's going
+to break the bank. No,
+
+319
+00:19:15.740 --> 00:19:17.930
+no. All of these are
+very cheap and you don't
+
+320
+00:19:17.930 --> 00:19:21.470
+really need them. It just
+makes it much easier to
+
+321
+00:19:21.470 --> 00:19:24.200
+work with, you know, but
+it's not required for the
+
+322
+00:19:24.200 --> 00:19:28.850
+amateur that just wants to
+try writing a blog, you
+
+323
+00:19:28.850 --> 00:19:30.680
+know, a blog engine behind
+it. That's the way to
+
+324
+00:19:30.680 --> 00:19:34.850
+go. And if I need
+help, is it just go,
+
+325
+00:19:35.150 --> 00:19:36.680
+you know, do I have
+to go Google with bang
+
+326
+00:19:36.680 --> 00:19:38.930
+and figure that out or
+who who's going to help
+
+327
+00:19:38.930 --> 00:19:42.980
+me if I'm kind of
+all alone? Well, it depends
+
+328
+00:19:42.980 --> 00:19:46.310
+how far you want to
+take that. We can answer
+
+329
+00:19:46.310 --> 00:19:49.670
+your questions on the Google
+group. We have NH users
+
+330
+00:19:50.390 --> 00:19:53.750
+is the name of our
+Google group. If you need
+
+331
+00:19:53.750 --> 00:19:58.010
+professional support, you can get
+it through orange company, hibernating
+
+332
+00:19:58.010 --> 00:20:02.780
+rhinos. Hmm. So there's like
+basically orange company is behind,
+
+333
+00:20:02.860 --> 00:20:04.850
+is behind this in the
+sense of that at a
+
+334
+00:20:04.850 --> 00:20:11.510
+large enterprise could have backing
+by. And that's cool. Yeah.
+
+335
+00:20:11.510 --> 00:20:15.200
+So you can get professional
+support through hibernating rhinos with
+
+336
+00:20:15.200 --> 00:20:20.660
+Orrin or through, I met
+Steve Strong's company. So two
+
+337
+00:20:20.660 --> 00:20:24.050
+different directions to go, you
+know, and that's sort of,
+
+338
+00:20:24.530 --> 00:20:26.360
+you know, the way I
+think about that, it's like
+
+339
+00:20:26.360 --> 00:20:29.630
+calling up Microsoft product support
+and your ticket gets assigned
+
+340
+00:20:29.630 --> 00:20:34.340
+to Phil hack. If it's
+an NBC issue, you know,
+
+341
+00:20:34.340 --> 00:20:39.410
+so you will get taken
+care of What kind of
+
+342
+00:20:39.410 --> 00:20:42.590
+tooling is there is a,
+is there a designer? Like
+
+343
+00:20:43.580 --> 00:20:46.580
+I think that Microsoft people
+get, get accused of being
+
+344
+00:20:46.580 --> 00:20:52.030
+lame. We drag tables around
+on, on design surfaces. And
+
+345
+00:20:52.030 --> 00:20:55.000
+you know, there's always that
+constant does a visual designer
+
+346
+00:20:55.000 --> 00:20:57.340
+rot your brain, or should
+you just do it on
+
+347
+00:20:57.340 --> 00:21:00.820
+notepad? You know, does syntax
+coloring light watch your brain
+
+348
+00:21:00.820 --> 00:21:03.820
+does intelligence, Roger brain. You
+said that you, you get
+
+349
+00:21:04.060 --> 00:21:07.450
+IntelliSense for the XML and
+you get IntelliSense for the
+
+350
+00:21:07.870 --> 00:21:10.210
+flu, the fluent interface. So,
+you know, you do get
+
+351
+00:21:10.210 --> 00:21:13.540
+helped along. Is there any
+kind of a visual designer
+
+352
+00:21:13.540 --> 00:21:15.760
+or is there a product
+that does visual design for
+
+353
+00:21:15.760 --> 00:21:20.880
+an hibernate? Well, in hibernate
+core, we sort of made
+
+354
+00:21:20.880 --> 00:21:24.150
+a design decision upfront. It's
+just, pocos, that's where we
+
+355
+00:21:24.150 --> 00:21:27.600
+start. That's where we stop.
+Now. There's all sorts of
+
+356
+00:21:27.600 --> 00:21:29.670
+add ons to that. Like
+you said, you know, you
+
+357
+00:21:29.670 --> 00:21:32.070
+can drop the schema into
+your visual studio project and
+
+358
+00:21:32.070 --> 00:21:34.950
+you'll get IntelliSense and that's
+just built into visual studio.
+
+359
+00:21:35.550 --> 00:21:38.280
+But on top of that,
+there are some commercial products
+
+360
+00:21:38.280 --> 00:21:43.770
+out there with designers, there's
+company called slice software. So
+
+361
+00:21:43.770 --> 00:21:46.470
+Y C E and they
+have a tool called visual
+
+362
+00:21:46.470 --> 00:21:49.500
+in hibernate that lets you
+do some dragging and dropping
+
+363
+00:21:49.500 --> 00:21:53.940
+and building stuff that way.
+And there's also LLB L
+
+364
+00:21:54.000 --> 00:21:58.530
+gin pro by a guy
+by the name of Franz
+
+365
+00:21:58.530 --> 00:22:03.420
+Burma. And he's actually really
+big on the NH user's
+
+366
+00:22:03.420 --> 00:22:06.660
+group, helping people out. So
+we really appreciate his contribution
+
+367
+00:22:07.110 --> 00:22:10.380
+back to in hibernate. Yeah.
+LLB El gen is pretty
+
+368
+00:22:10.440 --> 00:22:13.230
+amazing because it not only
+supports on hibernate, but also,
+
+369
+00:22:13.320 --> 00:22:15.690
+you know, entity framework, including
+the new version as well
+
+370
+00:22:15.690 --> 00:22:19.410
+as like SQL. So you
+can basically use his designer
+
+371
+00:22:20.100 --> 00:22:22.710
+for all of your projects
+regardless. It's pretty neat stuff.
+
+372
+00:22:23.430 --> 00:22:27.150
+Yeah. Yeah. It's really great.
+You know, one of the,
+
+373
+00:22:28.140 --> 00:22:30.330
+one of the new things
+with in hibernate three, we've
+
+374
+00:22:30.330 --> 00:22:33.690
+sort of rebuilt our hibernate
+query language on top of
+
+375
+00:22:33.690 --> 00:22:37.830
+the antler Lexar and parser.
+Steve strong did a lot
+
+376
+00:22:37.830 --> 00:22:40.980
+of that workforce as well.
+One of the things that
+
+377
+00:22:41.190 --> 00:22:45.960
+antler gives us, we can
+sort of integrate that with
+
+378
+00:22:45.990 --> 00:22:50.250
+visual studio language services. So
+there's a guy by the
+
+379
+00:22:50.250 --> 00:22:56.730
+name of Jose ramen, yellow,
+who has written an actual
+
+380
+00:22:57.120 --> 00:23:02.250
+gallery, a visual studio gallery
+code project called HQL add
+
+381
+00:23:02.250 --> 00:23:07.050
+in. So you'll go to
+tools, extension manager, online gallery,
+
+382
+00:23:07.440 --> 00:23:09.660
+and then search for HQ,
+all add in and you'll
+
+383
+00:23:09.660 --> 00:23:12.900
+get this great little tool
+where you can create dot
+
+384
+00:23:12.900 --> 00:23:17.490
+HQL files and you get
+full syntax checking, we'll send
+
+385
+00:23:17.490 --> 00:23:21.000
+tax coloring. And then he's
+also going to be adding
+
+386
+00:23:21.000 --> 00:23:25.110
+IntelliSense in the next few
+days or hibernate query language
+
+387
+00:23:25.140 --> 00:23:31.320
+queries. Wow. All of that
+is instead of being a
+
+388
+00:23:31.350 --> 00:23:33.630
+separate third party tool, all
+of that's going to be
+
+389
+00:23:33.630 --> 00:23:38.190
+integrated into visual studio now.
+So it's interesting. You have
+
+390
+00:23:38.190 --> 00:23:39.930
+to kind of walk a
+fine line. I mean, you've
+
+391
+00:23:39.930 --> 00:23:42.120
+got a bunch of different
+projects that are all doing
+
+392
+00:23:42.120 --> 00:23:44.400
+a bunch of different things
+and different versions. And that
+
+393
+00:23:44.400 --> 00:23:48.500
+in itself is a strength.
+And as a core tenant,
+
+394
+00:23:49.280 --> 00:23:52.250
+the in hibernate core team
+has said, pocos are our
+
+395
+00:23:52.850 --> 00:23:54.380
+bread and butter. That's what
+we're going to do. We're
+
+396
+00:23:54.380 --> 00:23:56.930
+not going to start doing
+drag and drop designers. We're
+
+397
+00:23:56.930 --> 00:23:59.150
+not going to even go
+and do fluent and hibernate.
+
+398
+00:23:59.450 --> 00:24:02.810
+You know, it's a, it's
+our core engine and we're
+
+399
+00:24:02.810 --> 00:24:05.180
+going to focus on being
+the core engine. And then
+
+400
+00:24:05.180 --> 00:24:07.670
+you've got people kind of
+orbiting around it and doing
+
+401
+00:24:07.670 --> 00:24:10.310
+all sorts of different stuff
+that makes it a strong,
+
+402
+00:24:10.310 --> 00:24:14.420
+almost like its own open
+source ecosystem. But then from
+
+403
+00:24:14.420 --> 00:24:19.490
+an onboarding perspective, it's challenging
+because you know, I want
+
+404
+00:24:19.490 --> 00:24:21.350
+to use an hibernate three
+alpha, do I have to
+
+405
+00:24:21.350 --> 00:24:24.050
+go get a special version
+of the fluent down hibernate?
+
+406
+00:24:24.080 --> 00:24:29.450
+Will they be bundled together?
+You know, where's the instant
+
+407
+00:24:29.450 --> 00:24:31.940
+and hibernate, get it all,
+get all the useful stuff.
+
+408
+00:24:32.000 --> 00:24:34.760
+I guess that's probably in
+your book, but the, you
+
+409
+00:24:34.760 --> 00:24:38.830
+know, the best practice in
+a box. Yeah. And like
+
+410
+00:24:38.830 --> 00:24:42.910
+you mentioned before, it is
+hurting cats. Yeah, exactly. I
+
+411
+00:24:42.910 --> 00:24:45.580
+think sometimes people use the
+Microsoft product because if it's
+
+412
+00:24:45.580 --> 00:24:48.820
+out of the box it's,
+it's, you know, mostly complete.
+
+413
+00:24:49.780 --> 00:24:52.270
+And what do you think
+about when people say, well,
+
+414
+00:24:52.270 --> 00:24:54.640
+why didn't Microsoft just using
+hibernate? Why did they write
+
+415
+00:24:54.640 --> 00:24:56.980
+any framework at all? What's,
+what's your personal take on
+
+416
+00:24:56.980 --> 00:25:03.130
+that? You know, I think
+it's just another alternative. I
+
+417
+00:25:03.130 --> 00:25:07.600
+think Microsoft at the time
+probably wasn't quite as big
+
+418
+00:25:07.630 --> 00:25:11.110
+into open source. And so
+they just kind of went
+
+419
+00:25:11.110 --> 00:25:14.950
+down their, their link road
+and NAD framework is where
+
+420
+00:25:14.950 --> 00:25:16.960
+they ended up. And I
+think it's a great product.
+
+421
+00:25:16.990 --> 00:25:23.230
+And you know, I think
+we can both coexist. I
+
+422
+00:25:23.230 --> 00:25:25.840
+think that the, I mean,
+I know that there are
+
+423
+00:25:25.840 --> 00:25:28.210
+people who think, I think
+other, other, other ways, but
+
+424
+00:25:28.360 --> 00:25:32.260
+from, from my point of
+view, if you're using whatever
+
+425
+00:25:32.260 --> 00:25:34.060
+you're using, if you're getting
+the job done and you're
+
+426
+00:25:34.060 --> 00:25:35.650
+feeling good about your job
+and you're doing it on
+
+427
+00:25:35.650 --> 00:25:39.970
+the CLR, then you're, you're
+in the dotnet space and
+
+428
+00:25:40.030 --> 00:25:45.310
+good for you. I mean,
+it really is that simple,
+
+429
+00:25:46.450 --> 00:25:48.490
+Right. You know, and at
+the end of the day
+
+430
+00:25:48.490 --> 00:25:52.780
+in hibernate is just about
+getting the job done. We
+
+431
+00:25:52.780 --> 00:25:55.510
+started with pocos and that's
+where we stop. If that's
+
+432
+00:25:55.510 --> 00:25:59.080
+all you need, great use
+us and we're ready to
+
+433
+00:25:59.080 --> 00:26:02.020
+go. If you need all
+this extra third party stuff,
+
+434
+00:26:02.470 --> 00:26:05.590
+you know, we've got a
+whole community ecosystem built around
+
+435
+00:26:05.590 --> 00:26:08.650
+us and you can pick
+and choose the different Lego
+
+436
+00:26:08.650 --> 00:26:12.940
+bricks that you need to
+use. Hmm. I love the
+
+437
+00:26:12.940 --> 00:26:16.540
+Lego metaphor I've been using
+that lately. I was just
+
+438
+00:26:16.540 --> 00:26:18.790
+saying that like, not just
+Microsoft, but open source in
+
+439
+00:26:18.790 --> 00:26:22.270
+general that the Legos are
+the right size. Now, you
+
+440
+00:26:22.270 --> 00:26:26.800
+know, it's not like a
+giant Lego BizTalk around SharePoint
+
+441
+00:26:27.160 --> 00:26:28.990
+and then a little tiny
+Lego. It's just like this
+
+442
+00:26:28.990 --> 00:26:31.960
+tiny log for net, you
+know, the, this, that everything
+
+443
+00:26:31.960 --> 00:26:35.620
+is about the right size
+and that you can, the
+
+444
+00:26:35.620 --> 00:26:37.690
+idea that you can swap
+things out and they are
+
+445
+00:26:37.690 --> 00:26:42.340
+appropriately sized is, is powerful.
+Now I think we probably
+
+446
+00:26:42.340 --> 00:26:43.680
+said this earlier, but want
+to make sure it was
+
+447
+00:26:43.680 --> 00:26:46.110
+clear? What are the databases
+that in hibernate can talk
+
+448
+00:26:46.110 --> 00:26:51.320
+to? Well, of course we
+support SQL server starting with
+
+449
+00:26:51.320 --> 00:26:56.030
+version seven all the way
+up through 2008 SQL CE
+
+450
+00:26:56.390 --> 00:27:01.970
+Azure. Let's see, we support
+Oracle starting with version eight,
+
+451
+00:27:02.390 --> 00:27:07.640
+my sequel DB to Informix
+Sybase Firebird. Well, how do
+
+452
+00:27:07.640 --> 00:27:13.100
+you test all this? It's
+a community. All of our,
+
+453
+00:27:15.980 --> 00:27:18.800
+I'm sorry. I'd like you
+to think people are out
+
+454
+00:27:18.800 --> 00:27:20.630
+there testing and how many,
+how many people are doing
+
+455
+00:27:20.630 --> 00:27:22.430
+this. This is amazing how
+many people are doing that
+
+456
+00:27:22.430 --> 00:27:24.770
+and who sits down and
+says, yeah, go get my
+
+457
+00:27:24.770 --> 00:27:27.350
+old SQL server seven version
+and let's get that tested.
+
+458
+00:27:28.190 --> 00:27:32.570
+Who's that guy. Well, you
+know, we don't probably test
+
+459
+00:27:33.290 --> 00:27:36.410
+every single version of SQL
+server, but we do have
+
+460
+00:27:36.440 --> 00:27:41.090
+different dialects. So like we
+have the SQL seven dialect
+
+461
+00:27:42.560 --> 00:27:45.800
+that sort of has all
+of the SQL syntax for
+
+462
+00:27:45.800 --> 00:27:50.210
+Microsoft SQL server and then
+any new syntax in version
+
+463
+00:27:50.210 --> 00:27:54.170
+2000, that's added on top
+and we just subclass the
+
+464
+00:27:54.170 --> 00:27:56.990
+SQL seven dialect for SQL
+2000. And so it just
+
+465
+00:27:56.990 --> 00:28:01.670
+builds on top of that.
+So we have all these
+
+466
+00:28:01.670 --> 00:28:04.880
+unit tests, we run everything
+for SQL server. And then
+
+467
+00:28:04.880 --> 00:28:08.270
+before we make a great
+big release, they sort of
+
+468
+00:28:08.300 --> 00:28:10.460
+divvy up, okay, I'm going
+to test Oracle. You go
+
+469
+00:28:10.460 --> 00:28:14.120
+test my SQL, you test
+these on DB to go
+
+470
+00:28:14.120 --> 00:28:20.120
+test Informix, SQL Lite, et
+cetera, et cetera. Exactly. It's
+
+471
+00:28:20.120 --> 00:28:22.160
+one of the great things
+about having a, a huge
+
+472
+00:28:22.160 --> 00:28:26.360
+community behind the project. You
+just make the call, you
+
+473
+00:28:26.360 --> 00:28:28.910
+just put the call out
+and say, let's all push
+
+474
+00:28:28.910 --> 00:28:32.510
+behind this. Yeah. And actually
+that call doesn't even go
+
+475
+00:28:32.510 --> 00:28:35.540
+into NHS users that even
+just stays within the dev
+
+476
+00:28:35.540 --> 00:28:39.230
+list. You know, I mean,
+there's probably a dozen committers
+
+477
+00:28:39.230 --> 00:28:43.910
+on it, hibernate alone, just
+the core. How do you
+
+478
+00:28:43.910 --> 00:28:48.620
+coordinate that? Well, that's all
+managed by Fabio mellow. He's
+
+479
+00:28:48.620 --> 00:28:52.580
+the in hibernate project leader
+and it's just kind of
+
+480
+00:28:52.760 --> 00:28:56.450
+black magic. He just gets
+it done. It's amazing. What
+
+481
+00:28:56.450 --> 00:29:00.770
+a really good leader will
+do in that way. You
+
+482
+00:29:00.770 --> 00:29:02.150
+know, it's like, how do
+you describe it? What you
+
+483
+00:29:02.150 --> 00:29:03.890
+just don't, but it works.
+You know what I mean?
+
+484
+00:29:04.850 --> 00:29:08.900
+That's exactly right. You know,
+he's very, one of the
+
+485
+00:29:08.900 --> 00:29:11.150
+things I've said about Fabio,
+I can have a five
+
+486
+00:29:11.150 --> 00:29:14.930
+minute chat session with him
+and I will have ideas
+
+487
+00:29:14.930 --> 00:29:17.720
+for open source projects and
+hibernate ad-ons to keep me
+
+488
+00:29:17.720 --> 00:29:20.540
+busy for three months, just
+from a little five minutes.
+
+489
+00:29:20.570 --> 00:29:24.260
+I am conversation. Wow. Is
+he, is he working on
+
+490
+00:29:24.260 --> 00:29:26.330
+this full time and someone's
+sponsoring him or is this,
+
+491
+00:29:26.330 --> 00:29:29.990
+does he have a regular
+job? He's he's just got
+
+492
+00:29:29.990 --> 00:29:32.750
+a regular job. Just like
+the rest of us. This
+
+493
+00:29:32.750 --> 00:29:34.460
+is all just out of
+the kindness of his heart.
+
+494
+00:29:34.940 --> 00:29:37.250
+I tell ya, open source
+is such a thankless job.
+
+495
+00:29:40.900 --> 00:29:42.910
+Yeah. One of the last
+things that I wanted to
+
+496
+00:29:42.910 --> 00:29:46.360
+talk about was that last
+week, the entity framework came
+
+497
+00:29:46.360 --> 00:29:50.050
+up with a new CTP
+community technology preview. I call
+
+498
+00:29:50.050 --> 00:29:52.030
+it the magic unicorn edition
+because it's got a lot
+
+499
+00:29:52.030 --> 00:29:54.100
+of really cool stuff. That
+means I don't have to
+
+500
+00:29:54.100 --> 00:29:56.920
+make a database and it's
+got a lot more conventions
+
+501
+00:29:57.010 --> 00:30:00.130
+and it seems to embrace
+poco a lot more. And
+
+502
+00:30:00.130 --> 00:30:04.130
+I was just curious what
+kinds of features that RN
+
+503
+00:30:04.130 --> 00:30:06.580
+and hibernate. So if someone's
+is likes those features and
+
+504
+00:30:06.580 --> 00:30:08.620
+they want to compare the
+two, the two products, what
+
+505
+00:30:08.620 --> 00:30:12.660
+can they look at and
+then hibernate? Sure. Okay. Well,
+
+506
+00:30:12.660 --> 00:30:15.330
+like I said before, we
+started with pocos and that's
+
+507
+00:30:15.330 --> 00:30:18.570
+where we stop with hibernate
+core. So sort of the
+
+508
+00:30:18.600 --> 00:30:22.260
+code first poco design stuff,
+that's just core in hibernate.
+
+509
+00:30:22.290 --> 00:30:25.710
+You get that straight out
+of the box. If you
+
+510
+00:30:25.710 --> 00:30:27.690
+want to go with sort
+of the attributes, you know,
+
+511
+00:30:27.690 --> 00:30:32.400
+all the data annotation stuff,
+we have a contrib project
+
+512
+00:30:32.520 --> 00:30:36.810
+called in hibernate mapping attributes.
+And so you go out
+
+513
+00:30:36.810 --> 00:30:40.920
+to NH contrib, download this
+one, extra DLL and start
+
+514
+00:30:40.920 --> 00:30:45.390
+decorating attributes all over your
+entities. You know, if you're
+
+515
+00:30:45.390 --> 00:30:49.200
+looking for sort of the
+equivalent of the model builder,
+
+516
+00:30:50.310 --> 00:30:52.500
+you know, well, that would
+be fluent in hibernate. You
+
+517
+00:30:52.500 --> 00:30:54.660
+know, you can do sort
+of all of the code
+
+518
+00:30:54.660 --> 00:30:59.430
+mapping stuff through Flemington hibernate.
+If you're looking for conventions,
+
+519
+00:30:59.460 --> 00:31:02.910
+well, fluent in hibernate has
+an auto mapper. You basically
+
+520
+00:31:02.910 --> 00:31:05.790
+just pointed at your pocos
+and it figures everything out.
+
+521
+00:31:06.840 --> 00:31:10.290
+The same thing with conform.
+You follow a set of
+
+522
+00:31:10.290 --> 00:31:15.120
+conventions. You can point the
+conform project at your pocos
+
+523
+00:31:15.120 --> 00:31:18.840
+and it will build all
+of your mapping. Oh, that's
+
+524
+00:31:18.840 --> 00:31:21.300
+cool. Okay. So that's interesting.
+So we've got three options.
+
+525
+00:31:21.300 --> 00:31:24.450
+Now we've got the XML
+option, the fluent option and
+
+526
+00:31:24.450 --> 00:31:27.840
+the conventions one where we'll
+build the conventions without you
+
+527
+00:31:27.840 --> 00:31:30.540
+seeing them we'll build the
+mapper, rather that you're seeing
+
+528
+00:31:30.540 --> 00:31:35.370
+them based entirely on convention
+and naming. Absolutely. And the
+
+529
+00:31:35.400 --> 00:31:39.090
+conformed project, especially all of
+the conventions are pluggable. So
+
+530
+00:31:39.090 --> 00:31:40.410
+if you don't like the
+one that comes out of
+
+531
+00:31:40.410 --> 00:31:44.460
+the box, you can swap
+it or your own, Who
+
+532
+00:31:44.460 --> 00:31:46.860
+makes the database like do
+you make the database and
+
+533
+00:31:46.860 --> 00:31:50.100
+who actually makes the schema
+and creates a database and
+
+534
+00:31:50.220 --> 00:31:54.270
+puts it, you know, makes
+the tables In hibernate. Four
+
+535
+00:31:54.360 --> 00:31:58.740
+comes with a little class
+it's in the HBM to
+
+536
+00:31:59.070 --> 00:32:04.410
+EDL namespace that stands for
+hibernate mapping to data definition,
+
+537
+00:32:04.410 --> 00:32:07.980
+language. Basically it looks at
+your mapping. It reflects on
+
+538
+00:32:07.980 --> 00:32:12.210
+your pocos and it spits
+out a SQL script. We're
+
+539
+00:32:12.210 --> 00:32:15.270
+building your database. You can
+point it, give it a
+
+540
+00:32:15.660 --> 00:32:19.050
+connection and pointed at a
+server and it will build
+
+541
+00:32:19.050 --> 00:32:22.710
+your database. And you're done.
+You can also build it
+
+542
+00:32:22.710 --> 00:32:25.950
+by hand. If you have
+a legacy database, you know,
+
+543
+00:32:25.950 --> 00:32:29.460
+you can, we have third
+party tools that can sort
+
+544
+00:32:29.460 --> 00:32:34.290
+of reverse engineer that into
+mappings and into pocos. You
+
+545
+00:32:34.290 --> 00:32:37.380
+can go from pocos to
+mappings, to database from database
+
+546
+00:32:37.380 --> 00:32:42.110
+to mappings, to pocos any
+which way, Third party tool.
+
+547
+00:32:45.830 --> 00:32:47.780
+Do you think that you'll
+think that you guys will
+
+548
+00:32:47.780 --> 00:32:51.890
+support the new SQL server
+compact edition? Do you think
+
+549
+00:32:51.890 --> 00:33:01.550
+you maybe already do because
+it's you already do. That's
+
+550
+00:33:01.550 --> 00:33:05.390
+great. Well, cool. Well, I
+hope that a lot of
+
+551
+00:33:05.390 --> 00:33:08.900
+people have had their, their
+eyes opened by the fact
+
+552
+00:33:08.900 --> 00:33:11.210
+that this is out there.
+And I know that choice
+
+553
+00:33:11.210 --> 00:33:15.860
+always makes a having choice
+always makes choice difficult, but
+
+554
+00:33:15.860 --> 00:33:19.220
+I want people to have
+both sides of the story.
+
+555
+00:33:19.370 --> 00:33:23.270
+And I always like to,
+to point and hibernate is
+
+556
+00:33:23.270 --> 00:33:26.510
+really one of the dominant
+open source communities kind of
+
+557
+00:33:26.510 --> 00:33:30.740
+like flagship products. I mean,
+it's it's well run, well
+
+558
+00:33:30.740 --> 00:33:34.670
+thought of it's well tested.
+It's a, it's a great,
+
+559
+00:33:35.300 --> 00:33:38.330
+it's a great learning tool.
+I download the source yesterday.
+
+560
+00:33:38.330 --> 00:33:40.340
+I was actually using the
+source for an hibernate to
+
+561
+00:33:41.030 --> 00:33:43.430
+test my new computer, to
+see how fast I could
+
+562
+00:33:43.430 --> 00:33:47.480
+compile it on my machine.
+It's a pretty big project.
+
+563
+00:33:48.110 --> 00:33:50.780
+Yeah. It's extremely large. It's
+extremely large. There's a lot
+
+564
+00:33:50.780 --> 00:33:53.150
+going on there. And I
+was able to build it
+
+565
+00:33:53.150 --> 00:33:59.720
+in 30 seconds. I felt
+pretty good about that. And
+
+566
+00:33:59.720 --> 00:34:02.060
+hibernate is out there in
+the real world. It's used
+
+567
+00:34:02.060 --> 00:34:08.120
+by big companies, small companies
+and hibernate is going to
+
+568
+00:34:08.120 --> 00:34:11.210
+be used to run the
+new channel nine website. I
+
+569
+00:34:11.210 --> 00:34:16.430
+just saw a video about
+that this morning. That's pretty
+
+570
+00:34:16.430 --> 00:34:21.920
+cool. Congratulations. When does your
+book and having any three
+
+571
+00:34:21.920 --> 00:34:25.700
+cookbook come out, it should
+be out in late October,
+
+572
+00:34:25.760 --> 00:34:29.510
+early November around the same
+time as the official in
+
+573
+00:34:29.510 --> 00:34:34.490
+hibernate three release. And like
+we mentioned before in the
+
+574
+00:34:34.490 --> 00:34:37.190
+show that if you buy
+in hibernate three cookbook from
+
+575
+00:34:37.190 --> 00:34:40.610
+PAC publishing, then they'll donate
+a portion of the revenue
+
+576
+00:34:40.610 --> 00:34:47.060
+back to and hibernate plastic
+as well. Thanks so much,
+
+577
+00:34:47.120 --> 00:34:49.130
+Jason gentler for sitting down
+and chatting with me today
+
+578
+00:34:49.130 --> 00:34:52.490
+about and hibernate. Thanks a
+lot, Scott. Great to be
+
+579
+00:34:52.490 --> 00:34:56.960
+here. This has been another
+episode of Hanselminutes and we'll
+
+580
+00:34:56.960 --> 00:34:58.100
+see you again next week.
+

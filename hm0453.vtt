@@ -1,0 +1,3016 @@
+WEBVTT FILE
+
+1
+00:00:00.630 --> 00:00:03.780
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.780 --> 00:00:06.750
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.750 --> 00:00:10.920
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.920 --> 00:00:15.480
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.840 --> 00:00:19.920
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.950 --> 00:00:24.030
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:24.120 --> 00:00:47.960
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com
+From a Hansel minutes.com it's
+
+8
+00:00:47.960 --> 00:00:52.220
+Hansel minutes. Our weekly discussion
+with web developer and technologist
+
+9
+00:00:52.250 --> 00:00:56.300
+Scott Hanselman. This is Lawrence Ryan
+announcing showing them We're four
+
+10
+00:00:56.300 --> 00:01:01.400
+56. In this episode, Scott
+talks with Adrian Rose Brock about
+
+11
+00:01:01.520 --> 00:01:08.390
+computer vision. Hi there. So
+Scott Hanselman, this is another
+
+12
+00:01:08.390 --> 00:01:10.880
+episode of Hansel minutes, and
+I am talking with Adrian
+
+13
+00:01:10.880 --> 00:01:14.390
+Rose Brock. He's a PhD in
+computer science and focuses on
+
+14
+00:01:14.390 --> 00:01:17.870
+computer vision and machine learning.
+How are you? I'm awesome,
+
+15
+00:01:17.870 --> 00:01:20.390
+Scott, thank you for having
+me. This is really, really
+
+16
+00:01:20.390 --> 00:01:22.730
+cool. Oh, wow. Well, I
+think it's really cool that
+
+17
+00:01:22.730 --> 00:01:25.100
+you have a PhD and
+I went to community college,
+
+18
+00:01:25.160 --> 00:01:27.890
+which is pretty exciting because
+I, it's not every day
+
+19
+00:01:27.890 --> 00:01:29.810
+that I get to sit
+down with, with people who
+
+20
+00:01:29.810 --> 00:01:32.720
+are this smart, but more
+specifically people who are really
+
+21
+00:01:32.960 --> 00:01:35.690
+into a topic that I'm
+interested in. And that is
+
+22
+00:01:35.690 --> 00:01:40.280
+a computer vision. Computer vision
+is a really, really cool
+
+23
+00:01:40.280 --> 00:01:43.940
+course or a really cool
+subject. And not many people
+
+24
+00:01:43.940 --> 00:01:47.000
+really realize how prevalent it
+is in their everyday lives.
+
+25
+00:01:47.510 --> 00:01:52.280
+Yeah, it seems like almost
+impossibly magical thing. You know,
+
+26
+00:01:52.280 --> 00:01:54.980
+like if, if you're a
+programmer, like you're listening to
+
+27
+00:01:54.980 --> 00:01:58.340
+this show, your life has
+four loops. And the occasional,
+
+28
+00:01:58.340 --> 00:02:02.030
+if statement, it's not super
+sophisticated with all due respect
+
+29
+00:02:02.030 --> 00:02:06.170
+to the people who are
+listening the leap between basic,
+
+30
+00:02:06.170 --> 00:02:08.420
+you know, I'm looping through
+some records. I did some
+
+31
+00:02:08.420 --> 00:02:12.350
+crud. I learned some Ruby
+and I recognized a face
+
+32
+00:02:12.350 --> 00:02:14.360
+on 30 frames, a second
+high Def video. It's just
+
+33
+00:02:14.360 --> 00:02:16.430
+like, I didn't even know
+where to start. How do
+
+34
+00:02:16.430 --> 00:02:19.370
+you teach a computer to
+see? Well, that's, that's an
+
+35
+00:02:19.370 --> 00:02:23.270
+interesting topic. I mean, computer
+vision captures and studies so
+
+36
+00:02:23.270 --> 00:02:26.000
+many, so many different areas,
+the acquisition of an image,
+
+37
+00:02:26.420 --> 00:02:28.820
+how to process an image
+out of find objects and
+
+38
+00:02:28.820 --> 00:02:31.730
+images, and there's all types
+of sub fields around it.
+
+39
+00:02:31.730 --> 00:02:34.040
+And for humans, it's really
+easy for us to look
+
+40
+00:02:34.040 --> 00:02:35.590
+at a picture of a
+cat or a dog and
+
+41
+00:02:35.610 --> 00:02:38.240
+recognize instantly, Hey, that's a
+cat or, Hey, that's a
+
+42
+00:02:38.240 --> 00:02:41.030
+dog, but for computers, it's
+not like that. All they
+
+43
+00:02:41.030 --> 00:02:43.310
+see is a bunch of
+a bunch of pixels. So
+
+44
+00:02:43.310 --> 00:02:45.890
+one of the main goals
+of computer vision is image,
+
+45
+00:02:45.890 --> 00:02:48.800
+understanding, being able to interpret
+the contents of the image
+
+46
+00:02:49.310 --> 00:02:53.000
+and the quality is very,
+is very iffy. Like in
+
+47
+00:02:53.000 --> 00:02:55.790
+the sense of, you might
+think that a computer could
+
+48
+00:02:55.790 --> 00:02:59.210
+recognize a face because it's
+a super high Rez picture,
+
+49
+00:02:59.530 --> 00:03:01.900
+but, and while people could
+look at even like a
+
+50
+00:03:01.900 --> 00:03:05.050
+hundred by a hundred black
+and white and still kind
+
+51
+00:03:05.050 --> 00:03:07.630
+of make out that maybe
+someone's there does the image
+
+52
+00:03:07.630 --> 00:03:10.860
+quality matter a lot. It's
+in some cases it does,
+
+53
+00:03:10.860 --> 00:03:13.350
+in some cases, it doesn't,
+it really depends on your,
+
+54
+00:03:13.350 --> 00:03:17.460
+on your application. If you're
+doing real cellular analysis, you
+
+55
+00:03:17.460 --> 00:03:20.130
+know, if you're working in
+a biological sense, you need
+
+56
+00:03:20.130 --> 00:03:24.270
+extremely high quality images that
+could be cube gigabytes and
+
+57
+00:03:24.270 --> 00:03:28.920
+sized as they're compressed. So
+it's incredible. The amount, the
+
+58
+00:03:28.920 --> 00:03:31.410
+amount of data you can
+get working in the biological
+
+59
+00:03:31.410 --> 00:03:34.200
+sciences with computer vision, but
+on the flip side of
+
+60
+00:03:34.200 --> 00:03:36.810
+the coin, sometimes actually resizing
+the image and making it
+
+61
+00:03:36.810 --> 00:03:40.980
+smaller, actually improves algorithm. Performance
+allows you to kind of
+
+62
+00:03:41.910 --> 00:03:44.700
+down sample, make your algorithm
+a lot more efficient. It's
+
+63
+00:03:44.700 --> 00:03:47.670
+kind of like looping over
+records in a database it's
+
+64
+00:03:47.670 --> 00:03:50.280
+faster to loop over a
+smaller amount of records that
+
+65
+00:03:50.280 --> 00:03:52.320
+a large amount of records,
+the same is true with
+
+66
+00:03:52.320 --> 00:03:55.020
+computer vision. Sometimes it's faster
+to work on smaller size
+
+67
+00:03:55.020 --> 00:03:58.410
+images That points out a
+couple of interesting, you know,
+
+68
+00:03:58.410 --> 00:04:00.660
+pens of problems that computer
+vision can kind of help
+
+69
+00:04:00.660 --> 00:04:02.910
+solve. On the one side.
+I think about it in
+
+70
+00:04:02.910 --> 00:04:06.020
+the terms of there's a
+stream, like some video that
+
+71
+00:04:06.020 --> 00:04:08.160
+the kind of the classic
+people are walking by a
+
+72
+00:04:08.160 --> 00:04:10.980
+camera in the mall. And
+if you see a person,
+
+73
+00:04:11.310 --> 00:04:13.110
+you can say, Hey, you
+know, how are you? Cause
+
+74
+00:04:13.110 --> 00:04:16.080
+you saw that person. That's
+many frames, a second, very
+
+75
+00:04:16.080 --> 00:04:19.110
+fluid motion. And on the
+other side, you've got, like
+
+76
+00:04:19.110 --> 00:04:23.580
+you said, gigapixel sized images
+of, of cells. Are those
+
+77
+00:04:23.580 --> 00:04:26.370
+very different or is the
+same kind of same core
+
+78
+00:04:26.370 --> 00:04:31.050
+concept shared? They're, they're very,
+very different concepts with, if
+
+79
+00:04:31.050 --> 00:04:34.710
+you're working in those types
+of large cellular structure images,
+
+80
+00:04:34.710 --> 00:04:38.100
+the techniques you're gonna use
+are substantially different. If we're
+
+81
+00:04:38.110 --> 00:04:42.060
+going to be working with
+a very large mainframe systems
+
+82
+00:04:42.060 --> 00:04:45.270
+or distributed distributed systems, as
+opposed to, if you wanted
+
+83
+00:04:45.270 --> 00:04:48.640
+to build a simple system
+to track people walking in
+
+84
+00:04:48.640 --> 00:04:50.910
+and out of your apartment
+or office, you could run
+
+85
+00:04:50.910 --> 00:04:53.610
+that on a small little
+raspberry PI. Does it take
+
+86
+00:04:53.610 --> 00:04:55.710
+a lot of processing power
+to build something like that?
+
+87
+00:04:56.430 --> 00:04:59.460
+Really? So, so I could
+recognize faces or heads and
+
+88
+00:04:59.460 --> 00:05:02.790
+maybe turn on a camera
+with as little processing power
+
+89
+00:05:02.790 --> 00:05:04.950
+as a raspberry PI. Yup.
+You could, you could connect
+
+90
+00:05:04.950 --> 00:05:07.290
+that raspberry pie to the
+internet. And when someone walks
+
+91
+00:05:07.560 --> 00:05:09.660
+through your front door, you
+could send them a tweet
+
+92
+00:05:09.660 --> 00:05:12.210
+and be like, Hey, welcome.
+Welcome to my house. Sit
+
+93
+00:05:12.210 --> 00:05:15.480
+down, play a game. Let's
+cover that, that, that kind
+
+94
+00:05:15.480 --> 00:05:20.340
+of low powered, you know,
+high, a lot of frames
+
+95
+00:05:20.340 --> 00:05:22.620
+going on at the same
+time question first, and then
+
+96
+00:05:22.620 --> 00:05:25.170
+we'll get into the medical
+stuff that might be 20,
+
+97
+00:05:25.170 --> 00:05:27.900
+30 frames a second. Are
+you looking at every single
+
+98
+00:05:27.900 --> 00:05:32.010
+frame? It depends on the
+algorithm you're implementing. A lot
+
+99
+00:05:32.010 --> 00:05:35.430
+of algorithms will try and
+obtain real time performance. So
+
+100
+00:05:35.430 --> 00:05:38.370
+if, if you're working in,
+you know, a compiled language
+
+101
+00:05:38.370 --> 00:05:40.770
+like C or C plus
+plus, and you generate these
+
+102
+00:05:40.770 --> 00:05:45.060
+binaries, it's possible to look
+at every single frame. And
+
+103
+00:05:45.180 --> 00:05:47.160
+as long as you're not
+doing too much for simple
+
+104
+00:05:47.160 --> 00:05:50.910
+face detection, you can actually
+do real time image processing.
+
+105
+00:05:51.240 --> 00:05:53.760
+And I think one of
+the coolest success stories of
+
+106
+00:05:53.760 --> 00:05:56.370
+all time, at least on
+the consumer side of things
+
+107
+00:05:56.370 --> 00:05:59.210
+for computer vision is, is
+the Xbox connect. I mean,
+
+108
+00:05:59.210 --> 00:06:03.140
+this is, this is something
+that can interpret your body
+
+109
+00:06:03.140 --> 00:06:06.830
+motions that allows you to
+be a controller. And that
+
+110
+00:06:06.860 --> 00:06:10.880
+absolutely requires real time performance
+and, and computer vision has
+
+111
+00:06:11.150 --> 00:06:14.440
+really just solved that problem.
+It's amazing. Why do we
+
+112
+00:06:14.440 --> 00:06:16.090
+see kind of weird things
+though, not to have you
+
+113
+00:06:16.090 --> 00:06:18.010
+pick on the connect folks
+at all, because it is
+
+114
+00:06:18.160 --> 00:06:21.040
+everyone in the space agrees.
+It's amazing. But then every
+
+115
+00:06:21.040 --> 00:06:23.410
+once in awhile, you know,
+my leg will just fly
+
+116
+00:06:23.410 --> 00:06:25.710
+up by my head and
+just like, why did, what
+
+117
+00:06:25.750 --> 00:06:29.590
+was it thinking I'm clearly
+not doing that It's in.
+
+118
+00:06:29.950 --> 00:06:31.570
+And that's kind of a
+weird thing to try and
+
+119
+00:06:31.600 --> 00:06:34.540
+try and teach programmers. At
+least that's what, what I've
+
+120
+00:06:34.540 --> 00:06:37.780
+struggled with personally is to
+a program or two plus
+
+121
+00:06:37.780 --> 00:06:40.210
+two is, is going to
+equal four, or you can
+
+122
+00:06:40.210 --> 00:06:43.060
+write a function to generate
+a Fibonacci sequence and that's,
+
+123
+00:06:43.540 --> 00:06:46.330
+and once you write that
+function, that's always going to
+
+124
+00:06:46.330 --> 00:06:48.850
+be the correct answer. When
+you start doing a little
+
+125
+00:06:48.850 --> 00:06:52.600
+bit more advanced concepts in
+computer vision and machine learning
+
+126
+00:06:52.600 --> 00:06:56.290
+and advanced topics in computer
+science in general, you know,
+
+127
+00:06:56.290 --> 00:06:59.770
+it's, it's not always clear
+cut like that. There are
+
+128
+00:06:59.770 --> 00:07:03.760
+edge cases that are based
+on probabilities when things aren't
+
+129
+00:07:03.760 --> 00:07:05.170
+going to work out the
+way you want them to.
+
+130
+00:07:05.440 --> 00:07:08.290
+And that's a really hard
+concept to teach. So then
+
+131
+00:07:08.290 --> 00:07:10.330
+you get into this kind
+of, is it called fuzzy
+
+132
+00:07:10.330 --> 00:07:15.130
+logic? It's to a degree
+it's not, not exactly fuzzy
+
+133
+00:07:15.130 --> 00:07:18.250
+logic in terms of the
+Xbox connect. It's really based
+
+134
+00:07:18.250 --> 00:07:22.090
+off of probability estimates. I
+see. So they're basically saying
+
+135
+00:07:22.240 --> 00:07:24.730
+there's an X percentage chance
+that his foot is up
+
+136
+00:07:24.730 --> 00:07:28.150
+by his head and something
+in this case triggered that
+
+137
+00:07:28.150 --> 00:07:31.360
+threshold and it went over
+the threshold and then it
+
+138
+00:07:31.360 --> 00:07:34.150
+said, okay, well our skeleton
+processing detected that his foot's
+
+139
+00:07:34.150 --> 00:07:37.210
+up there like that, right.
+It could have been a
+
+140
+00:07:37.210 --> 00:07:40.090
+Glint off of a window
+behind me or something that
+
+141
+00:07:40.090 --> 00:07:44.110
+got it. That got it
+confused. Yep. So you can
+
+142
+00:07:44.110 --> 00:07:47.350
+recognize faces. What else can
+you do with computer vision?
+
+143
+00:07:48.130 --> 00:07:51.010
+It's really cool when you
+think about it, because you
+
+144
+00:07:51.010 --> 00:07:53.020
+normally think of computer vision
+and kind of like a
+
+145
+00:07:53.080 --> 00:07:55.690
+surveillance or security point of
+view where you want to
+
+146
+00:07:55.690 --> 00:07:58.060
+know if someone's breaking into
+your house or you want
+
+147
+00:07:58.060 --> 00:08:00.820
+to know if someone's trying
+to Rob a bank and
+
+148
+00:08:00.820 --> 00:08:02.830
+you want to call the
+police, but there's also a
+
+149
+00:08:02.830 --> 00:08:05.860
+less, I'll say scary side
+of it, or it may
+
+150
+00:08:05.860 --> 00:08:08.410
+actually be scary depending on
+your opinion on, on this
+
+151
+00:08:08.410 --> 00:08:11.920
+story. But imagine your hearing
+game stop and you pick
+
+152
+00:08:11.920 --> 00:08:15.280
+up the latest edition of
+call of duty and, you
+
+153
+00:08:15.280 --> 00:08:18.430
+know, GameStop as these security
+cameras mounted around there around
+
+154
+00:08:18.430 --> 00:08:21.340
+their store and they could
+read what, what's your facial
+
+155
+00:08:21.340 --> 00:08:23.320
+expression when you like picked
+up that game where you
+
+156
+00:08:23.320 --> 00:08:26.440
+interested like unhappy with it,
+did you put it back
+
+157
+00:08:26.440 --> 00:08:28.330
+down? Did you take it
+to the counter or purchase
+
+158
+00:08:28.330 --> 00:08:30.760
+it? So you see this
+type of stuff in retail
+
+159
+00:08:30.760 --> 00:08:35.260
+stores and they're, they're gathering
+this information. They can actually
+
+160
+00:08:35.290 --> 00:08:38.940
+kind of perform a motion
+detection and determine what, what
+
+161
+00:08:38.950 --> 00:08:42.160
+people are interested in. So
+it's pretty, pretty interesting from
+
+162
+00:08:42.160 --> 00:08:44.170
+that point of view, are
+they doing that or is
+
+163
+00:08:44.170 --> 00:08:47.230
+that something that they could
+do? That's something that a
+
+164
+00:08:47.230 --> 00:08:50.140
+few companies are just starting
+to get into. Now it's
+
+165
+00:08:50.170 --> 00:08:53.320
+a new, it's a new
+field. It's not as, not
+
+166
+00:08:53.320 --> 00:08:56.910
+as easy, but you see
+it a lot in kiosks.
+
+167
+00:08:57.030 --> 00:08:59.310
+So you go up to
+best buy and they have
+
+168
+00:08:59.310 --> 00:09:02.640
+a little motion detection detector
+that says you just walked
+
+169
+00:09:02.640 --> 00:09:05.560
+by this kiosk and a
+presentation pops up about the
+
+170
+00:09:05.590 --> 00:09:10.440
+latest iPhone or whatever. So
+they're combining motion detection with
+
+171
+00:09:10.440 --> 00:09:13.470
+computer vision to analyze your
+facial expressions, to see how
+
+172
+00:09:13.470 --> 00:09:16.050
+you react to two different
+products. And then all of
+
+173
+00:09:16.050 --> 00:09:18.900
+that's relayed back to the
+company for, for big analytic
+
+174
+00:09:18.900 --> 00:09:22.730
+processing. Yeah. That's really powerful.
+It has some interesting privacy
+
+175
+00:09:23.900 --> 00:09:25.850
+ramifications. It'll be interesting to
+see if they can do
+
+176
+00:09:25.850 --> 00:09:27.920
+that in such a way
+that we all appreciate it
+
+177
+00:09:27.980 --> 00:09:30.470
+and then we don't find
+it Creepy. Yeah, for sure.
+
+178
+00:09:30.740 --> 00:09:35.240
+Yeah. I also have seen
+the like real time translation
+
+179
+00:09:35.240 --> 00:09:38.600
+applications where someone will hold
+up a sign in Spanish
+
+180
+00:09:38.630 --> 00:09:41.390
+I'll point my smartphone at
+it. And then it actually
+
+181
+00:09:41.390 --> 00:09:45.080
+overlays the English over that
+sign. And that seems almost
+
+182
+00:09:45.080 --> 00:09:50.300
+impossible because they even replicate
+the font and things like
+
+183
+00:09:50.300 --> 00:09:54.800
+that. And that all happens
+in real time. Yep. That's
+
+184
+00:09:54.800 --> 00:09:59.270
+a pretty interesting topic. It's
+called OCR optical character recognition.
+
+185
+00:09:59.270 --> 00:10:01.640
+It's basically a process of
+holding, as you said, a
+
+186
+00:10:01.640 --> 00:10:03.620
+piece of text up to
+a camera and the camera's
+
+187
+00:10:03.620 --> 00:10:06.200
+able to not only find
+the text and to the
+
+188
+00:10:06.200 --> 00:10:09.140
+image, but convert it into
+like a string variable type
+
+189
+00:10:09.170 --> 00:10:12.620
+piece of text that you
+can perform normal operations on
+
+190
+00:10:12.620 --> 00:10:16.700
+into computer vision or computer
+science take. So it's really,
+
+191
+00:10:16.700 --> 00:10:19.340
+really cool to see what
+they've done. I've seen wine
+
+192
+00:10:19.340 --> 00:10:22.640
+apps where you can actually,
+it scans like the entire
+
+193
+00:10:22.640 --> 00:10:26.390
+wine menu and then gives
+you the ratings right next
+
+194
+00:10:26.390 --> 00:10:27.920
+to it. So, you know,
+which wine to order at
+
+195
+00:10:27.920 --> 00:10:30.500
+a restaurant. So that's a,
+I would say call it
+
+196
+00:10:30.500 --> 00:10:34.460
+augmented reality. So it's seeing
+where it's seeing what you're
+
+197
+00:10:34.460 --> 00:10:37.460
+seeing and then providing additional
+information and, you know, recognition
+
+198
+00:10:37.460 --> 00:10:40.430
+and classification of that. Yep.
+That makes me feel like
+
+199
+00:10:40.430 --> 00:10:42.230
+we might be able to
+see like a Google glass
+
+200
+00:10:42.230 --> 00:10:44.300
+or something like that, where
+I could pick up my
+
+201
+00:10:44.300 --> 00:10:47.030
+call of duty. Like you
+said, maybe they're using computer
+
+202
+00:10:47.030 --> 00:10:48.920
+vision to detect whether or
+not I want to buy
+
+203
+00:10:48.920 --> 00:10:51.230
+it, but maybe my phone
+or my Google glass is
+
+204
+00:10:51.230 --> 00:10:53.870
+going to show me a
+cheaper price, you know, down
+
+205
+00:10:53.870 --> 00:10:56.720
+the street and hover that
+price Nice over the product.
+
+206
+00:10:57.050 --> 00:11:00.290
+Exactly. And we do that
+already. And Amazon does this
+
+207
+00:11:00.290 --> 00:11:02.570
+type of stuff in their
+Amazon flow app. You know,
+
+208
+00:11:02.570 --> 00:11:04.550
+you could hold up a
+cover of a book or
+
+209
+00:11:04.550 --> 00:11:06.890
+a blue Ray blue Ray
+disc and take a picture
+
+210
+00:11:06.890 --> 00:11:09.890
+of it. And Amazon will
+say like, here's the price
+
+211
+00:11:09.950 --> 00:11:12.500
+of what you just showed
+me on your right there
+
+212
+00:11:12.500 --> 00:11:15.950
+on your device. And why
+would you go to target
+
+213
+00:11:15.950 --> 00:11:18.110
+and spend an extra $10
+on it, but you can
+
+214
+00:11:18.110 --> 00:11:20.240
+get it to get it
+from Amazon for cheaper and
+
+215
+00:11:20.240 --> 00:11:22.820
+have it shipped right to
+your door. Have I seen,
+
+216
+00:11:22.820 --> 00:11:24.800
+is it true that there
+are people who are using
+
+217
+00:11:24.800 --> 00:11:27.590
+this to analyze like football
+games and see how the
+
+218
+00:11:27.590 --> 00:11:29.900
+people are moving on the
+field and getting a sense
+
+219
+00:11:29.900 --> 00:11:32.360
+of, you know, the flow
+of the game? Yep. For
+
+220
+00:11:32.360 --> 00:11:35.990
+sure. There's, there's a whole
+field related to sports analytics
+
+221
+00:11:36.050 --> 00:11:39.050
+and computer vision plays a
+big part in that, especially
+
+222
+00:11:39.560 --> 00:11:43.010
+and football games and soccer
+games over overseas in the
+
+223
+00:11:43.010 --> 00:11:46.220
+UK, they use, they track
+players as they move, they
+
+224
+00:11:46.220 --> 00:11:49.220
+tracked how the ball passes
+and they, they look for
+
+225
+00:11:49.220 --> 00:11:52.220
+ways that they can beat
+the other team. So if
+
+226
+00:11:52.220 --> 00:11:54.490
+I'm, if I'm listening to
+you, I'm listening to this
+
+227
+00:11:54.490 --> 00:11:56.830
+podcast and I want to
+get involved in this space.
+
+228
+00:11:57.130 --> 00:12:00.220
+Do I just jump in
+and get a library or
+
+229
+00:12:00.220 --> 00:12:02.980
+do I, and this might
+be oversimplifying it, or I
+
+230
+00:12:02.980 --> 00:12:06.010
+just go into paintbrush, draw
+a black circle and then
+
+231
+00:12:06.010 --> 00:12:08.710
+try to write some code
+that finds that black circle
+
+232
+00:12:08.710 --> 00:12:10.060
+and then get the, you
+know, at the, at the
+
+233
+00:12:10.060 --> 00:12:14.220
+basics where's hello world when
+it comes to computers. Right.
+
+234
+00:12:14.220 --> 00:12:17.040
+And that's the cool part
+is that computer vision, while
+
+235
+00:12:17.040 --> 00:12:19.580
+it seems like an advanced
+field has been around for
+
+236
+00:12:19.680 --> 00:12:22.740
+a very long time, and
+we have this library called
+
+237
+00:12:22.740 --> 00:12:26.670
+open CV. It's like the
+defacto standard for learning, for
+
+238
+00:12:26.670 --> 00:12:29.670
+learning computer vision. So when
+you're learning computer vision, you
+
+239
+00:12:29.670 --> 00:12:33.540
+don't want to have to
+learn low level, low level
+
+240
+00:12:33.540 --> 00:12:35.910
+information, like how I load
+a JPEG off of a
+
+241
+00:12:36.060 --> 00:12:39.030
+disc and decode it and
+then display it to my
+
+242
+00:12:39.030 --> 00:12:41.730
+screen and then write it
+back out in PNG format.
+
+243
+00:12:41.970 --> 00:12:45.090
+That's not, that's a waste
+of your time. And if
+
+244
+00:12:45.090 --> 00:12:47.850
+you're just getting started, you
+should be really, as you
+
+245
+00:12:47.850 --> 00:12:50.820
+said, developing the whole, the
+hello world type of stuff.
+
+246
+00:12:51.120 --> 00:12:54.810
+So there's open CV. If
+you're in the academia world,
+
+247
+00:12:54.810 --> 00:12:57.510
+you might be using something
+like mat lab and the
+
+248
+00:12:57.780 --> 00:13:01.200
+image processing toolkit. Although people
+are starting to really move
+
+249
+00:13:01.200 --> 00:13:04.140
+away from that over to
+Python now. And if you're
+
+250
+00:13:04.140 --> 00:13:07.890
+working in the biological sciences
+doing some cellular analysis, there's
+
+251
+00:13:07.890 --> 00:13:10.770
+a program called image J
+and that was developed by
+
+252
+00:13:10.770 --> 00:13:13.830
+the national institutes of health.
+It's more of a point
+
+253
+00:13:13.860 --> 00:13:17.790
+click approach to image processing.
+So you'll go to a
+
+254
+00:13:17.790 --> 00:13:20.400
+sub menu and select, I
+want to detect edges and
+
+255
+00:13:20.400 --> 00:13:22.980
+this images or image or
+whatnot. And then it does,
+
+256
+00:13:23.140 --> 00:13:26.280
+does the result for you?
+I refer to it as
+
+257
+00:13:26.280 --> 00:13:29.580
+Photoshop for image processing and
+computer vision, but it's obviously
+
+258
+00:13:29.580 --> 00:13:31.560
+a lot more, a lot
+more advanced than that, but
+
+259
+00:13:31.560 --> 00:13:33.300
+it gives a general idea
+of what it is. I
+
+260
+00:13:33.300 --> 00:13:35.250
+see. So you might, let's
+say that you're working with
+
+261
+00:13:35.250 --> 00:13:37.380
+a doctor, the doctor might
+use the point and click
+
+262
+00:13:37.380 --> 00:13:39.060
+to kind of train it
+and point out a few
+
+263
+00:13:39.060 --> 00:13:41.040
+things and then give you
+that model. And then you
+
+264
+00:13:41.040 --> 00:13:43.200
+might re you know, modify
+it and do it in
+
+265
+00:13:43.200 --> 00:13:46.350
+code to be more efficient
+or more Correct. Right. So
+
+266
+00:13:46.350 --> 00:13:49.320
+it image J does take
+a basic level of image,
+
+267
+00:13:49.320 --> 00:13:52.200
+processing knowledge to understand what
+you don't have to write
+
+268
+00:13:52.200 --> 00:13:54.960
+any code to do anything
+it's very potent point and
+
+269
+00:13:54.960 --> 00:13:57.810
+click based. And you mentioned
+that it's looking at that
+
+270
+00:13:57.810 --> 00:14:01.740
+mat lab is something, does
+this become just like arrays
+
+271
+00:14:01.800 --> 00:14:05.880
+of, of, of bites and
+memory, like, eh, at the
+
+272
+00:14:05.880 --> 00:14:08.070
+root of course, you're going
+to load up this, this,
+
+273
+00:14:08.250 --> 00:14:11.520
+this grid with color depth
+and alpha and all that
+
+274
+00:14:11.520 --> 00:14:14.640
+kind of stuff. And it's
+all matrix math, isn't it?
+
+275
+00:14:14.910 --> 00:14:18.630
+Yep. It's an entirely matrix
+matrix based on images, just
+
+276
+00:14:18.630 --> 00:14:22.920
+a multi multidimensional array. And
+there's tons of libraries that
+
+277
+00:14:22.920 --> 00:14:26.040
+are, that are optimized for
+these multi-dimensional res no matter
+
+278
+00:14:26.040 --> 00:14:28.770
+what programming language you're using.
+So it often leads to
+
+279
+00:14:28.770 --> 00:14:33.030
+very, very fast out algorithms,
+including real time processing. You
+
+280
+00:14:33.030 --> 00:14:37.230
+mentioned OCR. I remember in
+the maybe 93, 94, when
+
+281
+00:14:37.230 --> 00:14:39.870
+I very first got a
+scanner and I did OCR,
+
+282
+00:14:40.140 --> 00:14:42.420
+this was black and white.
+This was before gray and
+
+283
+00:14:42.420 --> 00:14:45.210
+I was absolutely blown away,
+but it would take 15,
+
+284
+00:14:45.210 --> 00:14:49.380
+20 minutes to go and
+OCR a page, you know,
+
+285
+00:14:49.840 --> 00:14:53.060
+that we got faxed to
+us, but now you're seeing
+
+286
+00:14:53.060 --> 00:14:56.690
+OCR and image processing that's
+happening in requisite in real
+
+287
+00:14:56.690 --> 00:14:58.910
+time. Is that just a
+matter of processing power or
+
+288
+00:14:58.910 --> 00:15:01.520
+is that a matter of
+math people getting smarter and
+
+289
+00:15:01.520 --> 00:15:04.000
+algorithms getting fast? Sure. It's
+a combination of both. For
+
+290
+00:15:04.000 --> 00:15:07.360
+sure. Computers are definitely getting
+faster. There's no doubt. And
+
+291
+00:15:07.360 --> 00:15:10.630
+our algorithms have gotten a
+lot smarter. Okay. So we're
+
+292
+00:15:10.630 --> 00:15:14.020
+not just for looping around
+in a multidimensional array in
+
+293
+00:15:14.020 --> 00:15:18.550
+the most inefficient way possible
+anymore. Correct. So, so open
+
+294
+00:15:18.550 --> 00:15:22.570
+CV, that's the, that's the
+canonical place to start? Absolutely.
+
+295
+00:15:23.110 --> 00:15:25.510
+But you said you're using
+Python though. Why, why? I
+
+296
+00:15:25.510 --> 00:15:28.630
+think of Python as a
+scripting language, Python is actually
+
+297
+00:15:28.630 --> 00:15:32.050
+one of the most used
+languages for, for sign computer
+
+298
+00:15:32.050 --> 00:15:35.020
+scientists who are doing research
+or, or that type of
+
+299
+00:15:35.020 --> 00:15:38.920
+stuff. It's amazing. The amount
+of libraries that Python provides.
+
+300
+00:15:39.220 --> 00:15:42.040
+So one of the main
+reasons I recommend Python is
+
+301
+00:15:42.040 --> 00:15:44.860
+that it's, it's an easy
+language to learn. It's forgiving
+
+302
+00:15:44.890 --> 00:15:47.410
+and you can get a
+lot done very, very quickly.
+
+303
+00:15:47.680 --> 00:15:50.470
+So maybe you're not going
+to get the performance you
+
+304
+00:15:50.470 --> 00:15:52.600
+would get if you wrote
+it in C or C
+
+305
+00:15:52.600 --> 00:15:55.510
+plus plus, and compiled it
+down to a binary, but
+
+306
+00:15:55.510 --> 00:15:59.080
+allows you to prototype really,
+really quickly. And in many
+
+307
+00:15:59.080 --> 00:16:02.650
+cases, you're the Python's, CO's
+gonna run fast enough anyway.
+
+308
+00:16:03.460 --> 00:16:06.090
+And probably because computers are
+faster as well. And it's
+
+309
+00:16:06.090 --> 00:16:08.980
+like I said, it's fast
+enough. Exactly. And if you
+
+310
+00:16:08.980 --> 00:16:10.750
+need any type of machine
+learning on top of it,
+
+311
+00:16:10.750 --> 00:16:13.630
+you have tons and tons
+of libraries at your disposal.
+
+312
+00:16:14.050 --> 00:16:16.300
+I see. And then it
+removes that barrier to entry
+
+313
+00:16:16.300 --> 00:16:21.160
+that a C based language
+might, might cause It's amazing
+
+314
+00:16:21.160 --> 00:16:24.040
+that a scripting language, a
+loosely typed scripting language like
+
+315
+00:16:24.040 --> 00:16:27.430
+that can do such amazing
+things with the libraries that
+
+316
+00:16:27.430 --> 00:16:30.730
+are out there To go
+to production with Python in
+
+317
+00:16:30.730 --> 00:16:32.830
+computer vision, or would you
+prototype in Python and then
+
+318
+00:16:32.830 --> 00:16:34.930
+move to something else when
+once you've got it nailed
+
+319
+00:16:34.930 --> 00:16:37.480
+down. So for me, I
+tend to go to production
+
+320
+00:16:37.480 --> 00:16:40.000
+right in, right in Python.
+That's because a lot of
+
+321
+00:16:40.000 --> 00:16:42.610
+the stuff I've developed acts
+as an API or a
+
+322
+00:16:42.610 --> 00:16:44.890
+service. So it kind of
+just gets deployed to the
+
+323
+00:16:44.890 --> 00:16:48.160
+cloud and people can interact
+with interact with the API
+
+324
+00:16:48.160 --> 00:16:52.900
+that way, if you were
+developing a realtime application, then
+
+325
+00:16:52.900 --> 00:16:54.430
+that might be an issue.
+So you might want to
+
+326
+00:16:54.430 --> 00:16:56.980
+write it in a, in
+a compile language and distribute
+
+327
+00:16:56.980 --> 00:17:00.520
+the binary, or if you're
+kind of licensing your software
+
+328
+00:17:00.520 --> 00:17:03.370
+and distributing it out to
+people, you can't really do
+
+329
+00:17:03.370 --> 00:17:06.430
+that effectively with Python because
+you're worried about people taking
+
+330
+00:17:06.430 --> 00:17:09.310
+your code and running away.
+Okay. So there are cases
+
+331
+00:17:09.310 --> 00:17:11.920
+where Python would not be
+a good choice. Oh, absolutely.
+
+332
+00:17:13.570 --> 00:17:15.370
+A couple of days ago,
+I got a check in
+
+333
+00:17:15.370 --> 00:17:18.280
+the mail for, you know,
+rarely you get a check,
+
+334
+00:17:18.280 --> 00:17:21.370
+right. And the option was
+either take the check to
+
+335
+00:17:21.370 --> 00:17:24.400
+the bank or take a
+picture with my phone and
+
+336
+00:17:24.400 --> 00:17:27.580
+send it up and deposit
+it. So I assume that
+
+337
+00:17:27.610 --> 00:17:32.140
+that image was sent in
+some presumably fairly high megapixel,
+
+338
+00:17:32.150 --> 00:17:35.680
+some high resolution set off
+to the bank and some
+
+339
+00:17:35.680 --> 00:17:38.500
+image processing was done in
+the backend because one of
+
+340
+00:17:38.500 --> 00:17:41.530
+the checks was rejected. They
+said that it was crooked
+
+341
+00:17:42.040 --> 00:17:45.100
+when I took the picture
+and they wanted me to
+
+342
+00:17:45.100 --> 00:17:47.470
+take the picture again of
+the check, which I thought
+
+343
+00:17:47.470 --> 00:17:50.340
+was pretty impressive. Another one
+I forgot to. And they
+
+344
+00:17:50.340 --> 00:17:51.990
+didn't know, they said, well,
+you need to turn around
+
+345
+00:17:51.990 --> 00:17:54.330
+and sign this. How are
+they knowing those things seem
+
+346
+00:17:54.360 --> 00:17:59.090
+very application specific. They are.
+And some, and some of
+
+347
+00:17:59.090 --> 00:18:03.320
+the most advanced computer vision
+applications are very domain specific.
+
+348
+00:18:03.320 --> 00:18:06.410
+For example, check recognition. You,
+there's a lot of heuristics
+
+349
+00:18:06.410 --> 00:18:08.660
+that you can, and domain
+knowledge, you can apply. You
+
+350
+00:18:08.660 --> 00:18:10.580
+know, the check is a
+rectangle. So you can look
+
+351
+00:18:10.580 --> 00:18:13.370
+for a rectangular structures in
+the image and you know,
+
+352
+00:18:13.370 --> 00:18:15.950
+that the signature has gotten
+to be on the bottom
+
+353
+00:18:15.980 --> 00:18:17.570
+right hand corner. And you
+know, that there's going to
+
+354
+00:18:17.570 --> 00:18:19.730
+be a little box where
+you're writing the amount that
+
+355
+00:18:19.730 --> 00:18:22.310
+the check is for. So
+you can, you can apply
+
+356
+00:18:22.310 --> 00:18:24.920
+your domain knowledge with computer
+vision, and then that can
+
+357
+00:18:24.950 --> 00:18:27.110
+help you out a lot
+as opposed to kind of
+
+358
+00:18:27.110 --> 00:18:30.050
+a free for all approach.
+I see. So I'm trying
+
+359
+00:18:30.050 --> 00:18:31.730
+to put them kind of,
+kind of put this all
+
+360
+00:18:31.730 --> 00:18:33.980
+together. As far as like
+this, I want computer vision
+
+361
+00:18:33.980 --> 00:18:37.040
+to be another toolkit, another
+tool in my toolkit. So
+
+362
+00:18:37.040 --> 00:18:40.430
+for example, if I were
+doing speech recognition and I
+
+363
+00:18:40.430 --> 00:18:42.500
+wanted to make it so
+I could understand three or
+
+364
+00:18:42.500 --> 00:18:45.020
+four words, it would be
+foolish for me to drop
+
+365
+00:18:45.020 --> 00:18:48.860
+in a generic, all the
+words in English speech recognition
+
+366
+00:18:48.860 --> 00:18:51.290
+system, because the user's only
+going to say three words.
+
+367
+00:18:51.290 --> 00:18:55.010
+I want to constrain that
+domain. So applying that same
+
+368
+00:18:55.010 --> 00:18:57.560
+kind of thinking to computer
+vision, they're not taking pictures
+
+369
+00:18:57.560 --> 00:19:00.530
+of CDs or not taking
+pictures of faces. They're taking
+
+370
+00:19:00.530 --> 00:19:04.550
+pictures of rectangles checks are
+always rectangles. So am I
+
+371
+00:19:04.550 --> 00:19:07.160
+going to build like a
+flow chart from a business
+
+372
+00:19:07.160 --> 00:19:10.370
+person's perspective about what are
+the characteristics of a check
+
+373
+00:19:10.370 --> 00:19:13.970
+that we want to tell
+the user? Yep. There's always
+
+374
+00:19:14.000 --> 00:19:16.460
+for problems like that. There's
+always some sort of underlying
+
+375
+00:19:16.520 --> 00:19:19.130
+assumptions that you're going to
+make. And the more of
+
+376
+00:19:19.130 --> 00:19:23.570
+those assumptions you make, the
+more domain constraint here problem
+
+377
+00:19:23.570 --> 00:19:26.210
+becomes. But in the, in
+the case of, you know,
+
+378
+00:19:26.210 --> 00:19:28.850
+recognizing checks, that's actually a
+good thing. It allows you
+
+379
+00:19:28.850 --> 00:19:32.630
+to, to build those algorithms
+quite effectively. So if I'm,
+
+380
+00:19:32.630 --> 00:19:34.940
+if I am not a
+scientist and I don't have
+
+381
+00:19:34.940 --> 00:19:37.400
+this level of understanding that
+you do, but I still
+
+382
+00:19:37.400 --> 00:19:39.680
+want to write, I will
+use the check writing as
+
+383
+00:19:39.680 --> 00:19:41.300
+an example. If I want
+to write something like that,
+
+384
+00:19:42.050 --> 00:19:44.660
+would I be able to
+do a fairly decent check
+
+385
+00:19:44.660 --> 00:19:48.290
+writing, you know, recognition system
+with something like open CV?
+
+386
+00:19:48.290 --> 00:19:50.270
+And what would that code
+look like? Would it be
+
+387
+00:19:50.900 --> 00:19:53.900
+each of the characteristics would
+be separate subsystems that would
+
+388
+00:19:53.900 --> 00:19:55.940
+go and check? Or would
+it be one giant function?
+
+389
+00:19:55.970 --> 00:19:57.140
+I mean, give me a
+sense of how I would
+
+390
+00:19:57.140 --> 00:20:00.320
+create a check writing a
+check recognition system rather than
+
+391
+00:20:00.320 --> 00:20:03.200
+something like open CV. Okay.
+So again, you would start
+
+392
+00:20:03.200 --> 00:20:05.930
+off with your assumptions. So
+you, you would assume that
+
+393
+00:20:05.930 --> 00:20:08.660
+a check is a rectangle.
+So rectangle was four points,
+
+394
+00:20:09.080 --> 00:20:11.330
+and you're going to load
+up your image off of
+
+395
+00:20:11.330 --> 00:20:14.780
+disk. You want to convert
+it to gray scale rather
+
+396
+00:20:14.780 --> 00:20:17.690
+than using the RGB coordinate
+system. And the reason for
+
+397
+00:20:17.690 --> 00:20:20.480
+that is really interested in
+one and one channel of
+
+398
+00:20:20.480 --> 00:20:23.180
+the image, realistically, as you
+can throw away all that,
+
+399
+00:20:23.270 --> 00:20:25.700
+all that color information. And
+I assume that better, the
+
+400
+00:20:25.700 --> 00:20:28.580
+thing that'll speed things up
+then too. Yep, absolutely. Okay.
+
+401
+00:20:28.970 --> 00:20:30.560
+So then once you have
+it in gray scale, like
+
+402
+00:20:30.560 --> 00:20:33.620
+you want to do, what's
+called an edge detection. You
+
+403
+00:20:33.620 --> 00:20:37.070
+want to find edges and
+these images. So in this
+
+404
+00:20:37.070 --> 00:20:39.470
+case, when you, when you
+perform edge detection, you'll find
+
+405
+00:20:39.470 --> 00:20:43.070
+the outline of the check
+and then you'll make an
+
+406
+00:20:43.070 --> 00:20:45.170
+assumption again, that a check
+is a rectangle, what is
+
+407
+00:20:45.170 --> 00:20:48.670
+four points? So I'm going
+to the outline in the
+
+408
+00:20:48.670 --> 00:20:51.430
+image that has four points.
+And I'm gonna assume that
+
+409
+00:20:51.430 --> 00:20:54.010
+the largest outline in that
+image that has four points
+
+410
+00:20:54.040 --> 00:20:56.490
+is much. Yeah. Ah, because
+there could be a business
+
+411
+00:20:56.490 --> 00:20:58.290
+card on the table that
+they took the picture of
+
+412
+00:20:58.290 --> 00:21:00.900
+the check with. I didn't
+even think about that. And
+
+413
+00:21:00.900 --> 00:21:02.820
+that would also make me
+assume that it would be
+
+414
+00:21:02.820 --> 00:21:04.410
+easier to take a picture
+of a check, like on
+
+415
+00:21:04.410 --> 00:21:06.690
+a kitchen counter, as opposed
+to me holding one up
+
+416
+00:21:07.110 --> 00:21:08.820
+in front of a bunch
+of picture frames, as you
+
+417
+00:21:08.820 --> 00:21:11.400
+might think that some photograph
+on the wall was the
+
+418
+00:21:11.400 --> 00:21:14.220
+check And due to holding
+the check, there might, you
+
+419
+00:21:14.220 --> 00:21:17.250
+might increase or insert a
+tiny bend in the check,
+
+420
+00:21:17.250 --> 00:21:20.850
+which may throw off the
+approximation of the outline. So
+
+421
+00:21:20.850 --> 00:21:24.660
+that's, that's again, it's all
+about the underlying assumptions, just
+
+422
+00:21:24.660 --> 00:21:28.110
+as you're building a normal
+program, you have assumptions regarding
+
+423
+00:21:28.110 --> 00:21:30.660
+the input and output of
+functions and computer visions the
+
+424
+00:21:30.660 --> 00:21:33.480
+same, the same. Okay. So
+then I would go looking
+
+425
+00:21:33.480 --> 00:21:35.670
+for maybe the account number
+at the bottom, which I
+
+426
+00:21:35.670 --> 00:21:38.190
+know is in a certain
+font, because everything in the
+
+427
+00:21:38.190 --> 00:21:42.210
+check checking world is using
+that specific account number font
+
+428
+00:21:42.210 --> 00:21:45.600
+there, right? Yep. So, so
+once you have the image
+
+429
+00:21:45.720 --> 00:21:48.390
+or the check found in
+the image, and you're looking
+
+430
+00:21:48.420 --> 00:21:50.610
+down on it, you're gonna
+look at the bottom portion
+
+431
+00:21:50.610 --> 00:21:52.740
+of the image to find
+the, find that series of
+
+432
+00:21:52.740 --> 00:21:56.580
+texts and you'll do the
+same type of thing all
+
+433
+00:21:56.580 --> 00:21:59.070
+over again. You'll apply some
+edge detection, you'll find each
+
+434
+00:21:59.070 --> 00:22:02.430
+of the digits on the
+check, and then you'll pass
+
+435
+00:22:02.430 --> 00:22:07.440
+that off to your OCR,
+your character recognition, subsystem. That's
+
+436
+00:22:07.440 --> 00:22:11.490
+probably something that w there
+were libraries that exist that
+
+437
+00:22:11.490 --> 00:22:13.540
+already do that for you,
+or if you wanted to
+
+438
+00:22:13.560 --> 00:22:15.720
+build your own, it wouldn't
+be, wouldn't be too challenging.
+
+439
+00:22:16.380 --> 00:22:18.690
+So let's say that I
+put this into production then,
+
+440
+00:22:19.050 --> 00:22:20.880
+and I discover that maybe
+a new kind of check
+
+441
+00:22:20.880 --> 00:22:24.480
+comes out and my algorithms
+have maybe some hard-coded things
+
+442
+00:22:24.480 --> 00:22:26.520
+and I make some assumptions.
+And suddenly I'm unable to
+
+443
+00:22:26.520 --> 00:22:30.600
+see, you know, the check
+number in the corner, because
+
+444
+00:22:30.630 --> 00:22:32.460
+you know, this new kind
+of check it's closer in,
+
+445
+00:22:32.460 --> 00:22:34.890
+or something like that. What
+I want to, when I
+
+446
+00:22:34.890 --> 00:22:38.460
+created my, my computer vision
+application have a series of
+
+447
+00:22:38.460 --> 00:22:40.740
+thresholds and a series of
+inputs where I could basically
+
+448
+00:22:40.740 --> 00:22:42.630
+adjust it as a way
+to make sure that my
+
+449
+00:22:42.630 --> 00:22:47.670
+rejection rate is, is not
+too aggressive. Yeah, absolutely. You
+
+450
+00:22:47.670 --> 00:22:51.660
+can, you can certainly do
+that. What, for situations like
+
+451
+00:22:51.660 --> 00:22:55.890
+that, I recommend trying to
+recognize what type of object
+
+452
+00:22:55.890 --> 00:22:57.900
+it is that you're looking
+at in this case checks.
+
+453
+00:22:58.110 --> 00:23:00.810
+So you could, once you
+know, where the check is
+
+454
+00:23:00.810 --> 00:23:03.540
+in the image, you could
+compute what are called feature
+
+455
+00:23:03.540 --> 00:23:08.400
+vectors. They're abstract representations of
+the contents of the image.
+
+456
+00:23:08.580 --> 00:23:10.860
+Basically, it's a fancy way
+of saying here's a list
+
+457
+00:23:10.860 --> 00:23:14.130
+of numbers that represents this
+content and the image, and
+
+458
+00:23:14.130 --> 00:23:16.860
+you can compare them to
+a known database of checks
+
+459
+00:23:16.890 --> 00:23:19.200
+that way you could figure
+out which, which style of
+
+460
+00:23:19.200 --> 00:23:23.490
+check is being used. Ah,
+interesting. So my kind of
+
+461
+00:23:23.490 --> 00:23:26.970
+my simple mind was thinking
+things in terms of, you
+
+462
+00:23:26.970 --> 00:23:30.810
+know, the, the check number
+would be proportional to this
+
+463
+00:23:30.810 --> 00:23:34.650
+edge, but you're saying more,
+the content looks like this,
+
+464
+00:23:34.650 --> 00:23:36.900
+regardless of where it is
+on the check, it is
+
+465
+00:23:36.900 --> 00:23:39.060
+always in this format. And
+that would make a much
+
+466
+00:23:39.060 --> 00:23:43.620
+more flexible, more flexible algorithm
+and easily you work on
+
+467
+00:23:43.620 --> 00:23:46.340
+a number of different kinds
+of computer apps. And one
+
+468
+00:23:46.340 --> 00:23:47.930
+of them, which kind of
+brings us to this is
+
+469
+00:23:48.230 --> 00:23:51.650
+this notion of content based
+image retrieval. What is that?
+
+470
+00:23:51.970 --> 00:23:55.450
+Content-based image retrieval is a
+very fancy academic way of
+
+471
+00:23:55.450 --> 00:23:58.630
+saying an image search engine.
+So we're all familiar with
+
+472
+00:23:58.630 --> 00:24:01.240
+going to Google and typing
+in some text for whatever
+
+473
+00:24:01.240 --> 00:24:03.190
+it is that we're looking
+for, and then getting our
+
+474
+00:24:03.190 --> 00:24:05.830
+results set back. But it's
+a little different with images.
+
+475
+00:24:06.370 --> 00:24:09.760
+We can't manually tag and
+label every single image on
+
+476
+00:24:09.760 --> 00:24:12.880
+the internet, but whatever the
+contents of the images, the
+
+477
+00:24:12.880 --> 00:24:16.780
+images are, instead, we needed
+a way to make these
+
+478
+00:24:16.780 --> 00:24:20.380
+images searchable and rely strictly
+on the contents, the RGB
+
+479
+00:24:20.380 --> 00:24:24.520
+values, or some sort of
+abstract representation of these images.
+
+480
+00:24:24.880 --> 00:24:27.760
+And that's where image search
+engines come into play. They
+
+481
+00:24:27.820 --> 00:24:30.490
+are actually looking at the
+contents of the image and
+
+482
+00:24:30.490 --> 00:24:33.700
+constructing again, this feature vector,
+this list of numbers that
+
+483
+00:24:33.730 --> 00:24:38.740
+abstractly represents and quantifies the
+image. So a great example
+
+484
+00:24:38.740 --> 00:24:41.380
+of this as is 10
+I tonight as a reverse
+
+485
+00:24:41.500 --> 00:24:44.560
+image search engine, and you
+go to 10 and you
+
+486
+00:24:44.560 --> 00:24:46.950
+say, I have this image.
+I want to know all
+
+487
+00:24:46.970 --> 00:24:49.660
+the other web pages that
+this image appeared on and
+
+488
+00:24:49.660 --> 00:24:51.740
+you upload it to 10
+I and 10, I analyze
+
+489
+00:24:51.760 --> 00:24:54.550
+that image. And then it
+gives you the results back.
+
+490
+00:24:55.510 --> 00:24:59.530
+So CBI our content Petit
+Stamets retrieval way, search engine,
+
+491
+00:24:59.560 --> 00:25:02.080
+whatever you want to call
+it. It's all about extracting
+
+492
+00:25:02.080 --> 00:25:05.230
+features from images and making
+them searchable, searchable based on
+
+493
+00:25:05.230 --> 00:25:09.370
+their contents without manual annotations.
+In the old days, when
+
+494
+00:25:09.370 --> 00:25:11.560
+I typed cat and got
+a picture of a cat,
+
+495
+00:25:11.860 --> 00:25:14.110
+was it not because the
+word cat appeared in the
+
+496
+00:25:14.110 --> 00:25:17.080
+JPEG or the word cat
+appeared near the picture where
+
+497
+00:25:17.080 --> 00:25:19.420
+they're guessing that it was
+a cat, it seemed like
+
+498
+00:25:19.420 --> 00:25:21.310
+that got a lot better
+in the last five to
+
+499
+00:25:21.310 --> 00:25:23.380
+10 years. Like I remember
+I used to type stuff
+
+500
+00:25:23.380 --> 00:25:26.830
+like that and find completely
+random, clearly not a picture
+
+501
+00:25:26.830 --> 00:25:31.450
+of a cat pictures because
+the text based system was
+
+502
+00:25:31.450 --> 00:25:33.430
+determining that there might be
+a cat in this general
+
+503
+00:25:33.430 --> 00:25:36.940
+area. Are you saying that
+Google images really knows that's
+
+504
+00:25:36.940 --> 00:25:40.000
+a cat? Yeah. Google at
+this point really knows that
+
+505
+00:25:40.000 --> 00:25:42.100
+that that's a cat. And
+it's funny that you bring
+
+506
+00:25:42.100 --> 00:25:46.090
+up the cat example because
+Google used millions of CPS
+
+507
+00:25:46.300 --> 00:25:51.520
+on YouTube clips of cats
+to train them network to
+
+508
+00:25:51.520 --> 00:25:56.350
+recognize. Okay. So you're saying
+that that more power has
+
+509
+00:25:56.350 --> 00:25:57.910
+been spent on the internet
+trying to figure out if
+
+510
+00:25:57.910 --> 00:26:00.550
+that's a cat than any
+other animal. Yeah, that is
+
+511
+00:26:00.550 --> 00:26:06.260
+true. That is insane. So
+you've got a really popular
+
+512
+00:26:06.510 --> 00:26:14.040
+blog and resource guide@pyimagesearch.com is
+this, is this like the,
+
+513
+00:26:14.040 --> 00:26:16.270
+the, the, the Bible that
+I should read for getting
+
+514
+00:26:16.270 --> 00:26:19.180
+involved in computer vision. I
+wouldn't call it the Bible,
+
+515
+00:26:19.180 --> 00:26:22.360
+but if, if you want
+to really get into computer
+
+516
+00:26:22.360 --> 00:26:25.090
+vision and build some apps
+really quickly and learn a
+
+517
+00:26:25.090 --> 00:26:28.930
+lot along the way, then
+definitely go on over and
+
+518
+00:26:28.930 --> 00:26:31.570
+check it, check out the
+blog, take a free crash
+
+519
+00:26:31.600 --> 00:26:34.750
+course and poke around. How
+long have you been doing
+
+520
+00:26:34.750 --> 00:26:37.570
+this? How long have you
+been into computer vision? My
+
+521
+00:26:37.570 --> 00:26:40.270
+entire, my entire adult life.
+So I guess about eight
+
+522
+00:26:40.270 --> 00:26:43.870
+years I've been studying, studying
+computer vision and PhD is
+
+523
+00:26:44.280 --> 00:26:47.510
+In computer vision. Yep. Focus
+in computer vision and machine
+
+524
+00:26:47.510 --> 00:26:49.640
+learning. What was your thesis?
+And if you don't mind
+
+525
+00:26:49.640 --> 00:26:53.010
+my asking, It was basically
+how to build a, a
+
+526
+00:26:53.450 --> 00:26:57.230
+w or how to rapidly
+construct a large scale classification
+
+527
+00:26:57.230 --> 00:27:00.650
+systems. And the example I
+used was the Boston bombing
+
+528
+00:27:00.650 --> 00:27:03.980
+marathon. We have, we had
+these images that were coming
+
+529
+00:27:03.980 --> 00:27:08.480
+in so quickly from security
+feeds from pedestrians, with their
+
+530
+00:27:08.480 --> 00:27:12.230
+cell phones, from, you know,
+red light cameras. And everybody
+
+531
+00:27:12.230 --> 00:27:15.110
+wanted to know, is there
+a suspect in this image
+
+532
+00:27:15.380 --> 00:27:19.490
+and trying to have people
+manually sift through all those
+
+533
+00:27:19.490 --> 00:27:21.770
+frames in a video that
+takes a lot of manpower
+
+534
+00:27:21.770 --> 00:27:25.040
+it's expensive, it's time consuming.
+And I thought to myself,
+
+535
+00:27:25.250 --> 00:27:26.510
+is there a way that
+we can kind of do
+
+536
+00:27:26.510 --> 00:27:28.790
+this type of stuff with
+computer vision? Is there a
+
+537
+00:27:28.790 --> 00:27:30.980
+way that we could build
+these types of classifiers to
+
+538
+00:27:30.980 --> 00:27:33.680
+say whether or not there's
+a suspect in the image?
+
+539
+00:27:34.370 --> 00:27:37.430
+And a, and that's basically
+what I, what my dissertation
+
+540
+00:27:37.430 --> 00:27:40.370
+focused on was this is
+how you can build these,
+
+541
+00:27:40.790 --> 00:27:44.330
+these classifiers is how you
+can do it better than
+
+542
+00:27:44.330 --> 00:27:46.850
+the state of the art
+methods, which take experts that
+
+543
+00:27:46.850 --> 00:27:48.800
+tune the knobs and the,
+and the dials and get
+
+544
+00:27:48.800 --> 00:27:51.800
+everything to work properly, and
+really get a, get a
+
+545
+00:27:51.800 --> 00:27:54.620
+system out there very quickly.
+Have you ever seen a
+
+546
+00:27:54.620 --> 00:27:57.050
+person of interest the TV
+show? No. I have it
+
+547
+00:27:57.680 --> 00:28:00.350
+in the show person of
+interest. They've basically made a
+
+548
+00:28:00.350 --> 00:28:04.670
+giant, super smart computer that
+has access to every surveillance
+
+549
+00:28:04.670 --> 00:28:08.900
+feed in North America. And
+then they'll say, Oh, we're
+
+550
+00:28:08.900 --> 00:28:11.930
+looking for, you know, we're
+looking for Adrian. And then
+
+551
+00:28:11.930 --> 00:28:14.150
+it chooses to choose. And
+there's all these amazing frames
+
+552
+00:28:14.150 --> 00:28:16.580
+that shoot by with squares
+around people's faces. And then
+
+553
+00:28:16.580 --> 00:28:18.800
+we go, he just got
+on the subway and then
+
+554
+00:28:18.800 --> 00:28:22.010
+they all rush after him.
+It seems to me like,
+
+555
+00:28:22.160 --> 00:28:26.870
+like that's totally possible given,
+you know, an infinite amount
+
+556
+00:28:26.870 --> 00:28:29.420
+of computing power and an
+infinite amount of surveillance cameras.
+
+557
+00:28:29.450 --> 00:28:32.240
+You could go and find
+someone by their face. Oh,
+
+558
+00:28:32.240 --> 00:28:36.080
+for sure. About if you
+hold a picture of your
+
+559
+00:28:36.080 --> 00:28:38.870
+face, like up to a
+camera and I'm trying to,
+
+560
+00:28:38.960 --> 00:28:41.630
+I'm going to lie and
+pretend that I'm you and
+
+561
+00:28:41.630 --> 00:28:45.170
+sneak into somewhere that's using
+vision processing to secure a
+
+562
+00:28:45.170 --> 00:28:50.750
+door. So technically that's, that's
+possible. The, there are, that
+
+563
+00:28:50.750 --> 00:28:52.460
+is a way to fit
+the full some of these
+
+564
+00:28:52.460 --> 00:28:55.700
+systems. However, more advanced security
+systems are starting to use
+
+565
+00:28:55.700 --> 00:28:58.310
+three D modeling. So it'll
+be able to detect, that's
+
+566
+00:28:58.310 --> 00:29:01.490
+a 2d picture that you're
+at. You're holding up. It's
+
+567
+00:29:01.490 --> 00:29:03.950
+not an actual 3d face
+in front of me right
+
+568
+00:29:03.950 --> 00:29:06.080
+now. Okay. So we would
+actually be able to detect
+
+569
+00:29:06.080 --> 00:29:07.970
+that that may be Adrian,
+but it's actually a picture
+
+570
+00:29:07.970 --> 00:29:11.120
+of him. And does it
+do that based on like
+
+571
+00:29:11.150 --> 00:29:14.120
+connect where I can see
+depth as well as color,
+
+572
+00:29:14.120 --> 00:29:16.490
+or does it do that
+based on he hasn't moved
+
+573
+00:29:16.490 --> 00:29:19.760
+and people usually move and
+Twitch, you know, It's, it's
+
+574
+00:29:19.760 --> 00:29:23.120
+either a stereo camera, like,
+like an Xbox connect work
+
+575
+00:29:23.120 --> 00:29:26.180
+and estimate depth, or it's
+actually within the algorithm. It's
+
+576
+00:29:26.180 --> 00:29:28.640
+trying to estimate depth based
+off of a two D
+
+577
+00:29:28.640 --> 00:29:33.280
+image. That is Very cool.
+So this resource guide is,
+
+578
+00:29:33.280 --> 00:29:35.390
+is you've got an 11
+page resource guide that's totally
+
+579
+00:29:35.390 --> 00:29:40.010
+free up@pyimagesearch.com and where can
+people get your book? They
+
+580
+00:29:40.010 --> 00:29:43.030
+can, they can go over
+<inaudible> dot com as well.
+
+581
+00:29:43.510 --> 00:29:47.740
+W we'll create a 20%
+discount for, for Hanselman and
+
+582
+00:29:47.740 --> 00:29:52.330
+listeners. So you can go
+to the PI image, search.com/hanselman
+
+583
+00:29:52.330 --> 00:29:55.240
+it's. So it'll be a
+20% discount for the, for
+
+584
+00:29:55.240 --> 00:29:57.070
+the next two weeks. So
+if you wanna learn the
+
+585
+00:29:57.070 --> 00:30:00.400
+basics of computer vision and
+image processing, detect faces and
+
+586
+00:30:00.400 --> 00:30:03.400
+video recognize handwriting, or, you
+know, build a system that
+
+587
+00:30:03.400 --> 00:30:05.950
+can recognize the covers of
+books and go off and
+
+588
+00:30:05.950 --> 00:30:08.830
+compete with Amazon this book
+and can help you out.
+
+589
+00:30:09.760 --> 00:30:12.460
+And even though you're a
+it's pie eman church, and
+
+590
+00:30:12.460 --> 00:30:15.220
+you're into Python and you
+use Python, you can use
+
+591
+00:30:15.220 --> 00:30:18.490
+open CV and languages like.net
+C sharp, visual basic can't
+
+592
+00:30:18.490 --> 00:30:21.310
+you? Yup. There is a
+library called I E M
+
+593
+00:30:21.580 --> 00:30:25.150
+G U C V. And
+that's essentially your, your doubt,
+
+594
+00:30:25.270 --> 00:30:29.860
+your.net wrappers around, around open
+CV. You can also use
+
+595
+00:30:29.860 --> 00:30:34.690
+iron Python, which is a
+tightly integrated open source implementation
+
+596
+00:30:34.720 --> 00:30:38.230
+that integrates.net and Python together.
+Very cool. Well, this is
+
+597
+00:30:38.230 --> 00:30:40.990
+great. I I'm excited. I'm
+going to learn computer vision
+
+598
+00:30:40.990 --> 00:30:43.900
+in a weekend now, or
+if you, if you set
+
+599
+00:30:43.900 --> 00:30:46.360
+your heart to it, you
+can thank you so much,
+
+600
+00:30:46.390 --> 00:30:49.210
+Adrian. Rosebrook for talking to
+me today. Oh, thank you
+
+601
+00:30:49.210 --> 00:30:51.970
+for having me on. It's
+been great. This has been
+
+602
+00:30:51.970 --> 00:30:54.550
+another episode of Hanselminutes and
+we'll see you again next
+
+603
+00:30:54.550 --> 00:30:54.760
+week.
+

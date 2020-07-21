@@ -1,0 +1,2721 @@
+WEBVTT FILE
+
+1
+00:00:12.140 --> 00:00:17.870
+From hanselminutes.com. It's Hansel minutes,
+but weekly discussion with web
+
+2
+00:00:17.870 --> 00:00:22.790
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+3
+00:00:22.790 --> 00:00:28.610
+number two 30 recorded live
+Thursday, August 26th, 2010. Support for Hanselman.
+
+4
+00:00:28.610 --> 00:00:32.420
+This is provided by Tellerik
+rad controls, the most comprehensive
+
+5
+00:00:32.420 --> 00:00:36.320
+suite of components for windows
+forms and asp.net web applications
+
+6
+00:00:36.740 --> 00:00:45.230
+online@wwwdottelerik.com. In this episode, Scott
+talks with John Torres doll about
+
+7
+00:00:45.320 --> 00:00:51.590
+continuous web deployments. This is
+Scott Hanselman. This is another
+
+8
+00:00:51.590 --> 00:00:54.710
+episode of Hansel minutes this
+week on handsome minutes. We're
+
+9
+00:00:54.710 --> 00:00:59.240
+talking to John tota stone
+and I pronounced that incorrectly
+
+10
+00:00:59.240 --> 00:01:00.890
+cause I'm not Norwegian, but
+you can tell me how
+
+11
+00:01:00.890 --> 00:01:04.160
+to pronounce your name, John.
+Yeah, sure. It's John tower
+
+12
+00:01:04.160 --> 00:01:07.700
+stall or tell the stall
+in a region and thanks
+
+13
+00:01:07.700 --> 00:01:09.230
+for having me. I'm thrilled
+to have you on it.
+
+14
+00:01:09.230 --> 00:01:11.240
+So it's good to see
+you again, if only virtually
+
+15
+00:01:12.260 --> 00:01:16.910
+what we're talking about today
+is no click web deployment.
+
+16
+00:01:17.240 --> 00:01:19.190
+You've got the series on
+your blog that you've been
+
+17
+00:01:19.190 --> 00:01:23.210
+talking about, about doing kind
+of continuous deployment. We hear
+
+18
+00:01:23.210 --> 00:01:27.470
+about continuous integration a lot.
+We, everyone, everyone who's got
+
+19
+00:01:27.470 --> 00:01:30.860
+any, any project of a
+reasonable size has a build
+
+20
+00:01:30.860 --> 00:01:34.790
+server. And you've taken that
+of course to a little
+
+21
+00:01:34.790 --> 00:01:38.240
+bit more sophisticated level, and
+you're doing ongoing continuous deployment.
+
+22
+00:01:38.810 --> 00:01:42.230
+How, how often are you
+deploying and where are you
+
+23
+00:01:42.230 --> 00:01:45.440
+deploying to what environments are
+you deploying to? Well, I
+
+24
+00:01:45.440 --> 00:01:48.200
+mean, for, we are the
+other place. We have kind
+
+25
+00:01:48.200 --> 00:01:51.980
+of three environments where we
+deploy to the first one
+
+26
+00:01:51.980 --> 00:01:56.810
+being the development environment, the
+second one being a test
+
+27
+00:01:56.810 --> 00:02:01.460
+or, or a staging and
+a third one being production.
+
+28
+00:02:01.940 --> 00:02:07.910
+So for development, we're basically
+deploying out we'll or we
+
+29
+00:02:07.910 --> 00:02:11.480
+can even if he wants
+to deploy on every, every
+
+30
+00:02:11.480 --> 00:02:15.290
+check-in, but that will probably
+be a bit too much
+
+31
+00:02:15.290 --> 00:02:18.470
+work for, for a build
+server, but it's technically possible
+
+32
+00:02:18.470 --> 00:02:23.210
+to do for testing, staging.
+We, the play, whenever our
+
+33
+00:02:23.210 --> 00:02:27.380
+testers need to test what
+we've done in dev and
+
+34
+00:02:27.380 --> 00:02:31.730
+test and production, like we're
+running it now and doing
+
+35
+00:02:31.730 --> 00:02:36.140
+scrum with like two weeks
+into iterations that's every second
+
+36
+00:02:36.140 --> 00:02:40.460
+week. So it sounds like
+you have removed any constraints
+
+37
+00:02:40.460 --> 00:02:43.250
+to deployment. Like I have
+a talk that I do
+
+38
+00:02:43.250 --> 00:02:46.280
+about if you're using X
+copy, you're doing it wrong.
+
+39
+00:02:46.950 --> 00:02:49.490
+And when, you know, when
+you're on stage, you say
+
+40
+00:02:49.490 --> 00:02:52.340
+funny things sometimes, because they're
+funny. And one of the
+
+41
+00:02:52.340 --> 00:02:55.520
+things that I say is
+if you're using windows Explorer
+
+42
+00:02:56.000 --> 00:03:00.250
+to deploy your website, then
+you're probably in trouble. Did
+
+43
+00:03:00.250 --> 00:03:03.820
+you always have a continuous
+deployment situation or how were
+
+44
+00:03:03.820 --> 00:03:05.950
+you doing it the wrong
+way first? And then did
+
+45
+00:03:05.950 --> 00:03:09.210
+someone decide finally that this
+has to stop? Yeah, I
+
+46
+00:03:09.210 --> 00:03:14.850
+mean, we, we did what
+basically most people do. I
+
+47
+00:03:14.850 --> 00:03:20.670
+guess we have like a,
+a company that, that, that
+
+48
+00:03:20.670 --> 00:03:25.950
+are running our web servers.
+So we handed the, the
+
+49
+00:03:26.010 --> 00:03:29.850
+deployment packages sorta, well, basically
+we just ex ex copied
+
+50
+00:03:30.270 --> 00:03:34.290
+the websites over the dam
+and they that's a certain
+
+51
+00:03:34.290 --> 00:03:36.570
+time when they were, when
+they had some time to
+
+52
+00:03:36.570 --> 00:03:39.840
+do it, they deployed it
+on a server that was
+
+53
+00:03:39.840 --> 00:03:43.320
+for test and production and
+for development, we, we manage
+
+54
+00:03:43.350 --> 00:03:46.710
+the, that ourselves. So it
+was a manual process for
+
+55
+00:03:46.710 --> 00:03:53.400
+doing a lot of that,
+doing IAS changes, doing yeah.
+
+56
+00:03:53.460 --> 00:03:57.660
+All changes, except from like
+just the files. You can't
+
+57
+00:03:57.660 --> 00:04:02.250
+need to manage yourself. And
+that had a cost associated
+
+58
+00:04:02.550 --> 00:04:08.550
+with it, like having people
+need to do. And sometimes
+
+59
+00:04:08.550 --> 00:04:12.540
+it has errors related to
+it as well, because even
+
+60
+00:04:12.540 --> 00:04:14.280
+though we had like, you
+need to do this and
+
+61
+00:04:14.280 --> 00:04:19.800
+that, and people sometimes mr.
+Step or, or did something
+
+62
+00:04:19.830 --> 00:04:23.940
+wrong and the deployment didn't
+work. So you give them
+
+63
+00:04:23.940 --> 00:04:26.310
+a package you said, but
+then you kind of backtracked.
+
+64
+00:04:26.370 --> 00:04:28.650
+You gave them, you basically
+either zipped up the files
+
+65
+00:04:28.650 --> 00:04:30.390
+or you ex copied them
+over there. Did you then
+
+66
+00:04:30.390 --> 00:04:33.780
+give them like a word
+document that said, and here's
+
+67
+00:04:33.780 --> 00:04:36.000
+what you need to do
+to AIS with like screenshots
+
+68
+00:04:36.000 --> 00:04:39.870
+of IIS. Well, that's, that's
+what they did in the
+
+69
+00:04:39.870 --> 00:04:43.710
+beginning. So like the first
+time when, when we set
+
+70
+00:04:43.710 --> 00:04:46.650
+it up, they needed to,
+to have the settings. But
+
+71
+00:04:47.370 --> 00:04:51.360
+from that, Ana was basically
+almost to copy files, except
+
+72
+00:04:51.540 --> 00:04:54.210
+whenever we added a new
+app to a website or
+
+73
+00:04:54.210 --> 00:04:58.830
+something like that. And then
+we manually manually described how
+
+74
+00:04:58.830 --> 00:05:03.090
+to do that. And later
+on, we just created a
+
+75
+00:05:03.090 --> 00:05:08.550
+batch file that did that
+instead using the, the command
+
+76
+00:05:08.550 --> 00:05:13.650
+line integration to, to, to
+AIS. And so the data
+
+77
+00:05:13.650 --> 00:05:16.890
+helps a lot and, but
+we were thinking, well, we
+
+78
+00:05:16.890 --> 00:05:21.210
+can take this much further.
+And actually interestingly enough, the,
+
+79
+00:05:21.660 --> 00:05:25.080
+the kind of main thing
+that, that triggered me to
+
+80
+00:05:25.110 --> 00:05:29.130
+kind of duty do this
+all the way was because
+
+81
+00:05:29.130 --> 00:05:32.640
+we, we saw that we're
+doing scrum with two weeks
+
+82
+00:05:32.640 --> 00:05:36.600
+of durations. And I was
+thinking, well, do we need
+
+83
+00:05:36.630 --> 00:05:42.870
+these iterations? Because it felt
+like we were have this
+
+84
+00:05:43.500 --> 00:05:48.540
+pause between iterations that was
+unnecessary. We felt kind of
+
+85
+00:05:49.500 --> 00:05:54.300
+artificial pause. And of course
+we were looking into Kanban
+
+86
+00:05:54.300 --> 00:05:57.710
+and lean and how those
+things works. And I figured,
+
+87
+00:05:57.710 --> 00:06:00.680
+well, if we're going to
+do the Kanban way, it's
+
+88
+00:06:00.680 --> 00:06:03.050
+kind of hard to, to,
+to do that if we
+
+89
+00:06:03.050 --> 00:06:07.850
+can't deploy at will or
+yeah. So that was basically
+
+90
+00:06:07.850 --> 00:06:11.990
+what triggered us to, to,
+to automate the whole thing.
+
+91
+00:06:12.140 --> 00:06:15.310
+Was the pause that you
+found between iterations purely one
+
+92
+00:06:15.310 --> 00:06:20.500
+around deployment, or was it
+an artificial pause? Well, it's
+
+93
+00:06:20.500 --> 00:06:23.140
+more like you kind of
+have the stories that you
+
+94
+00:06:23.140 --> 00:06:26.920
+need to, to finish within
+those two weeks and some
+
+95
+00:06:26.920 --> 00:06:31.450
+stories finish before others and
+people start to pick up
+
+96
+00:06:31.480 --> 00:06:34.750
+like smaller tasks towards the
+end of the sprint, because
+
+97
+00:06:34.750 --> 00:06:38.740
+that's the only time thing
+you have time for. And
+
+98
+00:06:39.130 --> 00:06:41.980
+yeah, it just felt weird.
+So I was thinking, well,
+
+99
+00:06:41.980 --> 00:06:45.190
+what if we can just
+start a story, finish it
+
+100
+00:06:45.370 --> 00:06:48.430
+and deploy it well, test
+and deploy it, of course.
+
+101
+00:06:49.240 --> 00:06:53.590
+And just keep that going.
+Instead of having these fixed
+
+102
+00:06:53.620 --> 00:06:58.600
+length work periods that we
+need to relate to. So
+
+103
+00:06:58.600 --> 00:07:01.150
+deployment for most people like
+you described at the beginning
+
+104
+00:07:01.150 --> 00:07:04.360
+is just copying stuff. But
+if you have multiple web
+
+105
+00:07:04.360 --> 00:07:07.120
+servers that you also have
+to, you know, maybe take
+
+106
+00:07:07.120 --> 00:07:09.610
+nodes online or offline, you
+have to ask yourself if
+
+107
+00:07:09.610 --> 00:07:12.400
+I'm going to be putting
+something out into production, am
+
+108
+00:07:12.400 --> 00:07:16.030
+I I'm shutting production down?
+Am I going to put
+
+109
+00:07:16.030 --> 00:07:19.180
+up a, you know, we're
+down for five minutes, kind
+
+110
+00:07:19.180 --> 00:07:23.140
+of a warning upgrades can
+be a little bit more
+
+111
+00:07:23.140 --> 00:07:26.200
+subtle, a little more complicated
+than putting out all new,
+
+112
+00:07:26.200 --> 00:07:33.070
+fresh code and, and also
+just manual tasks. Where did
+
+113
+00:07:33.070 --> 00:07:35.950
+you start from copying files?
+I mean, I can visualize
+
+114
+00:07:35.950 --> 00:07:39.190
+that you have deployed dot
+bat that probably went off
+
+115
+00:07:39.190 --> 00:07:42.460
+an X COVID things. Did
+you start using web deploy
+
+116
+00:07:42.490 --> 00:07:45.670
+at that point or what
+we call ms. Deploy? Yeah,
+
+117
+00:07:45.670 --> 00:07:48.710
+I mean, that was kind
+of the next step. So
+
+118
+00:07:48.730 --> 00:07:53.890
+as I started to look
+at that and while looking
+
+119
+00:07:53.890 --> 00:07:56.290
+at Emma's deployment and I
+was looking then at the
+
+120
+00:07:56.290 --> 00:08:02.020
+command line version of a
+missed deployment later looked at
+
+121
+00:08:02.350 --> 00:08:06.010
+the integration. We know how,
+when in vicious studio 2010.
+
+122
+00:08:06.820 --> 00:08:08.770
+So I kind of try
+to figure out how to
+
+123
+00:08:08.770 --> 00:08:11.350
+do is on a command
+line and not for one
+
+124
+00:08:11.350 --> 00:08:15.130
+app, but for a complete
+website, but with all its
+
+125
+00:08:15.130 --> 00:08:20.530
+app apps. So I kind
+of, that's also what my
+
+126
+00:08:20.530 --> 00:08:24.910
+blog post is describing how
+to do this per website.
+
+127
+00:08:26.560 --> 00:08:30.700
+And later on, I've seen
+that we could probably have
+
+128
+00:08:30.700 --> 00:08:33.520
+done this with visual studio
+and stat and created a
+
+129
+00:08:33.790 --> 00:08:37.210
+web deployment package with, with
+web deploy or EMIS deploy
+
+130
+00:08:38.080 --> 00:08:41.950
+for each app and then
+deployed them individually. What we're
+
+131
+00:08:41.950 --> 00:08:47.770
+doing today is that we
+deploy each website to yeah.
+
+132
+00:08:47.800 --> 00:08:51.550
+To the destination. So you're
+saying that you build, you
+
+133
+00:08:51.550 --> 00:08:54.850
+have multiple web, you have
+multiple projects that build into
+
+134
+00:08:54.870 --> 00:09:00.210
+multiple websites That all make
+up one larger, larger application.
+
+135
+00:09:01.110 --> 00:09:04.770
+You build those all into
+some central location. Yeah, actually
+
+136
+00:09:05.610 --> 00:09:08.550
+the, the solution, how it
+is today is that it's
+
+137
+00:09:08.580 --> 00:09:11.400
+integrated with the build server.
+So to build server after
+
+138
+00:09:11.400 --> 00:09:16.320
+it's build all the files
+just copies while we have
+
+139
+00:09:16.320 --> 00:09:21.660
+a custom task, that's copies,
+fold the application files in,
+
+140
+00:09:21.930 --> 00:09:25.530
+in the file structure that
+we using on a web
+
+141
+00:09:25.530 --> 00:09:30.090
+servers. So typically the, a
+folder for the website name
+
+142
+00:09:30.090 --> 00:09:32.580
+and then the, for all
+the folders for the virtual
+
+143
+00:09:32.580 --> 00:09:36.990
+directories and applications under there.
+And yeah, that hierarchy just
+
+144
+00:09:36.990 --> 00:09:40.380
+drop them in there. And
+I'll have ms. Deploy just
+
+145
+00:09:40.380 --> 00:09:42.930
+point to that directory and
+ask it to package it
+
+146
+00:09:42.930 --> 00:09:46.950
+down, but that's just a
+file part. And then of
+
+147
+00:09:46.950 --> 00:09:53.390
+course you have the IAS
+setting certificates. Well, yeah, that's
+
+148
+00:09:53.400 --> 00:09:57.480
+basically the, the most important
+part, I guess, and, and
+
+149
+00:09:57.480 --> 00:10:04.080
+those, those packages are then
+automatically deployed to the two
+
+150
+00:10:04.080 --> 00:10:07.710
+first environments we have. So
+to develop development and tests,
+
+151
+00:10:08.610 --> 00:10:13.260
+and we do a manual
+trigger to do it for
+
+152
+00:10:13.260 --> 00:10:19.410
+production. And, and you mentioned
+having servers. I mean, if
+
+153
+00:10:19.410 --> 00:10:22.920
+we have multiple servers and
+things like that, what we
+
+154
+00:10:22.920 --> 00:10:25.950
+do have is a load
+balancer so that we can
+
+155
+00:10:25.980 --> 00:10:30.750
+pull a server out of
+the load balancing cluster without
+
+156
+00:10:30.780 --> 00:10:37.170
+effecting users. And we usually
+also have a server available
+
+157
+00:10:37.230 --> 00:10:39.900
+and not being in the
+cluster. So we usually starts
+
+158
+00:10:39.900 --> 00:10:43.680
+by deploying to that server.
+But we did then was
+
+159
+00:10:43.680 --> 00:10:50.610
+that we wrote some par
+PowerShell script, basically working on
+
+160
+00:10:50.610 --> 00:10:54.630
+the load balancer to, to
+take a node offline automatically
+
+161
+00:10:54.990 --> 00:10:58.170
+and bring it online again.
+When, when the deployment was
+
+162
+00:10:58.170 --> 00:11:06.030
+finished, we were using the
+I application request routing module
+
+163
+00:11:06.030 --> 00:11:09.930
+for IAS today, right. A
+R R right. And we
+
+164
+00:11:09.930 --> 00:11:13.230
+used to use the windows
+load balancer to default one.
+
+165
+00:11:13.230 --> 00:11:17.490
+And, and when those server,
+but we had some, some
+
+166
+00:11:17.490 --> 00:11:24.300
+problems, cause that was built
+on like something called sticky
+
+167
+00:11:24.300 --> 00:11:29.010
+sessions on IPS or client
+affinity. And we had a
+
+168
+00:11:29.010 --> 00:11:32.820
+lot of users coming from
+the same IP, so we
+
+169
+00:11:32.820 --> 00:11:36.630
+weren't able to load balance
+them. So we went to
+
+170
+00:11:36.630 --> 00:11:43.110
+ARR because that has sticky
+sessions using cookies. So we
+
+171
+00:11:43.110 --> 00:11:49.110
+can differentiate every user behind
+the same IP, making us
+
+172
+00:11:49.110 --> 00:11:54.910
+able to load balance. So,
+yeah, and, and having a
+
+173
+00:11:54.910 --> 00:11:59.470
+load balancer is something I
+really recommend for, for any
+
+174
+00:11:59.470 --> 00:12:05.200
+website, even if you don't
+need it because of a
+
+175
+00:12:05.200 --> 00:12:09.160
+upscaling, just have it there
+so that you can bring
+
+176
+00:12:09.670 --> 00:12:13.290
+a website or web server
+down without taking a website
+
+177
+00:12:13.300 --> 00:12:16.440
+or, Yeah, it's surprising how
+many problems will start up
+
+178
+00:12:16.470 --> 00:12:19.380
+when someone starts using a
+w when someone adds a
+
+179
+00:12:19.380 --> 00:12:24.420
+second machine into a farm,
+all sorts of coding problems,
+
+180
+00:12:24.420 --> 00:12:27.120
+application problems, state problems that
+they never really thought about.
+
+181
+00:12:27.120 --> 00:12:30.210
+But if you are always
+have tests include two machines,
+
+182
+00:12:31.080 --> 00:12:34.530
+regardless of what your original
+scale needs are, you're going
+
+183
+00:12:34.530 --> 00:12:36.330
+to catch those things much
+earlier. And then, like you
+
+184
+00:12:36.330 --> 00:12:39.600
+said, you get to practice
+taking load balancers down, taking
+
+185
+00:12:39.600 --> 00:12:43.680
+notes down and being able
+to seamlessly upgrade the servers
+
+186
+00:12:43.680 --> 00:12:46.560
+without any, you know, virtually
+any downtime at all. But
+
+187
+00:12:46.560 --> 00:12:48.090
+there were a couple of
+things that were interesting there,
+
+188
+00:12:48.090 --> 00:12:52.230
+I thought, and I want
+to have, I want to
+
+189
+00:12:52.230 --> 00:12:54.810
+break it down. So the
+listeners understand kind of where
+
+190
+00:12:54.810 --> 00:12:58.920
+one tool stops and where
+another begins at the beginning.
+
+191
+00:12:58.950 --> 00:13:01.950
+You talked about you have,
+you have ms. Build and
+
+192
+00:13:01.950 --> 00:13:04.950
+you had some custom tasks.
+So you took the time
+
+193
+00:13:04.950 --> 00:13:07.680
+to actually write a couple
+of custom tasks. It sounds
+
+194
+00:13:07.680 --> 00:13:11.670
+like NMS build, but then
+you use PowerShell to make
+
+195
+00:13:11.670 --> 00:13:15.900
+changes to IIS when, and
+then you have web deploy
+
+196
+00:13:15.930 --> 00:13:18.870
+in there as well. When
+should someone know when to
+
+197
+00:13:18.870 --> 00:13:22.440
+use PowerShell, which seems like
+a very blunt instrument, very
+
+198
+00:13:22.440 --> 00:13:25.200
+powerful tool that can do
+anything versus one of the
+
+199
+00:13:25.200 --> 00:13:29.910
+more specialized tools like ms.
+Build or web deploy. Well,
+
+200
+00:13:29.910 --> 00:13:34.320
+that's a good question. Cause
+I created this whole solution
+
+201
+00:13:34.320 --> 00:13:40.020
+with just PowerShell in the
+beginning. And then I, I
+
+202
+00:13:40.020 --> 00:13:44.280
+had looked at them as
+deploy earlier, but I, miss
+
+203
+00:13:44.280 --> 00:13:49.230
+deployed is kind of hard
+to just look at, get
+
+204
+00:13:49.230 --> 00:13:53.640
+it and do it. That
+that's hard, at least their
+
+205
+00:13:53.640 --> 00:13:55.980
+command line version. I mean,
+if you're using it inside
+
+206
+00:13:55.980 --> 00:13:59.850
+visual studio, it's simpler. I
+mean, it's simple, but the
+
+207
+00:13:59.850 --> 00:14:02.580
+command line version, you, you
+need to study it. You
+
+208
+00:14:02.580 --> 00:14:06.000
+need to figure out all
+the inner working. So what's
+
+209
+00:14:06.000 --> 00:14:08.400
+going on in order to
+get the complete picture of
+
+210
+00:14:08.400 --> 00:14:13.110
+what it's capable of doing.
+So I happened to briefly
+
+211
+00:14:13.110 --> 00:14:16.860
+look at it and I
+tweeted a message saying, well,
+
+212
+00:14:16.860 --> 00:14:20.070
+I feel this is really
+hard to learn. Am I
+
+213
+00:14:20.070 --> 00:14:24.120
+the only one? And the
+web deploy team came back
+
+214
+00:14:24.120 --> 00:14:27.900
+to me on Twitter. I
+think a guy called Islam
+
+215
+00:14:28.620 --> 00:14:32.550
+found a way to deploy
+team saying, well, what what's,
+
+216
+00:14:32.910 --> 00:14:35.010
+what, what can we do
+for you? What what's, what's
+
+217
+00:14:35.010 --> 00:14:37.740
+your problem? So I sent
+them a long email describing
+
+218
+00:14:38.550 --> 00:14:42.810
+the pain points I had
+at that time, basically a
+
+219
+00:14:42.810 --> 00:14:47.100
+user looking at the tool
+for the first time. And
+
+220
+00:14:47.700 --> 00:14:51.560
+we had some emails back
+and forth and I think
+
+221
+00:14:51.560 --> 00:14:54.380
+they agreed with me and
+it looks like they're gonna
+
+222
+00:14:54.470 --> 00:14:58.370
+look at how to, to,
+to improve the user experience
+
+223
+00:14:58.370 --> 00:15:02.870
+at least for a kind
+of first time user. So
+
+224
+00:15:04.550 --> 00:15:08.840
+what a, when I started
+to use that tool, then
+
+225
+00:15:10.250 --> 00:15:13.940
+I quickly realized how much
+that tool can do for
+
+226
+00:15:13.940 --> 00:15:17.390
+me. So that placed a
+lot of the power sales
+
+227
+00:15:17.390 --> 00:15:20.630
+scripts that I had, the
+majority of them, actually, the
+
+228
+00:15:20.630 --> 00:15:23.840
+only PowerShell script I have
+left is the one that's
+
+229
+00:15:24.890 --> 00:15:31.790
+that is taking the load
+balancer node often online. So,
+
+230
+00:15:31.790 --> 00:15:34.370
+so that was good. And
+that was really helpful for
+
+231
+00:15:34.370 --> 00:15:36.920
+my team as well, because
+it's really important for my
+
+232
+00:15:36.920 --> 00:15:40.910
+team to understand this process.
+So that, I mean, I
+
+233
+00:15:40.910 --> 00:15:44.150
+might not work for this
+company forever. So whenever I
+
+234
+00:15:44.150 --> 00:15:48.560
+leave, that's good that somebody
+can keep maintaining this process.
+
+235
+00:15:49.460 --> 00:15:57.230
+So that was important. But
+after probably something like 16,
+
+236
+00:15:57.230 --> 00:16:02.720
+20 hours of using and
+trying out ms. Deploy, I
+
+237
+00:16:02.720 --> 00:16:09.620
+came up with this pretty
+long command line, which solved
+
+238
+00:16:09.710 --> 00:16:14.180
+every problem we had as
+for packaging, all the things
+
+239
+00:16:14.180 --> 00:16:19.610
+we needed and deployed on
+the server. So it was
+
+240
+00:16:19.640 --> 00:16:22.730
+hard to kind of figure
+out that command, but when
+
+241
+00:16:22.730 --> 00:16:27.230
+you have it, it's, it's,
+it's lovely. And that's basically
+
+242
+00:16:27.230 --> 00:16:31.460
+my second blog post is
+that command. Of course, it's,
+
+243
+00:16:31.520 --> 00:16:37.430
+it's specific to kind of
+how we do things. Like
+
+244
+00:16:37.430 --> 00:16:42.050
+I said, we deploy a
+website and you, you might
+
+245
+00:16:42.110 --> 00:16:46.330
+be able to simplify it.
+But yeah, This is the
+
+246
+00:16:46.330 --> 00:16:49.000
+part of the show where
+I mock you while actually
+
+247
+00:16:49.300 --> 00:16:53.350
+Tellerik mock says your applications,
+that you're testing dependent on
+
+248
+00:16:53.350 --> 00:16:56.500
+external systems over which you
+have no control. Maybe you're
+
+249
+00:16:56.500 --> 00:16:59.860
+being slowed down by those
+systems, their lack of availability,
+
+250
+00:16:59.860 --> 00:17:03.010
+responsiveness. You want to do
+TDD, right? Our friends at
+
+251
+00:17:03.010 --> 00:17:05.350
+Tellerik help you solve some
+of those problems with their
+
+252
+00:17:05.350 --> 00:17:09.340
+newest mocking tool. Just mock
+it'll let you do fast,
+
+253
+00:17:09.340 --> 00:17:13.540
+simple controlled unit tests, independent
+of external resources like databases,
+
+254
+00:17:13.540 --> 00:17:18.160
+web services, proprietary code, unlike
+some mocking tools, just mock
+
+255
+00:17:18.190 --> 00:17:22.990
+works with non-virtual methods, seal
+classes, static methods, giving you
+
+256
+00:17:22.990 --> 00:17:26.110
+complete control of your code.
+You can get more details.
+
+257
+00:17:26.110 --> 00:17:31.150
+You can download just mock
+at telerik.com/just mock. And don't
+
+258
+00:17:31.150 --> 00:17:33.430
+forget to thank Tellerik for
+supporting Hanselman it's on their
+
+259
+00:17:33.430 --> 00:17:40.720
+Facebook fan page, facebook.com/tellerik. Thanks
+a lot. Yeah, it must
+
+260
+00:17:40.720 --> 00:17:44.410
+deploy, which is the underlying
+kind of command line executable
+
+261
+00:17:44.410 --> 00:17:48.070
+that, that makes the web
+deploy thing. Work is interesting
+
+262
+00:17:48.070 --> 00:17:51.990
+because from the web from
+visual studio, it's easy to
+
+263
+00:17:52.020 --> 00:17:54.990
+deploy, but if you're going
+to work on anything of
+
+264
+00:17:54.990 --> 00:17:57.330
+any size, you really don't
+want to deploy from visual
+
+265
+00:17:57.330 --> 00:17:59.910
+studio. You want to think
+about giving your build server
+
+266
+00:17:59.910 --> 00:18:04.080
+to do that. The UI
+is really simple and you
+
+267
+00:18:04.080 --> 00:18:08.040
+know, I deploy nerd dinner.com
+from visual studio. It's a
+
+268
+00:18:08.130 --> 00:18:10.470
+one it's a tiny little
+app and it's not a
+
+269
+00:18:10.470 --> 00:18:13.140
+big deal doing it from
+the command line though. Emma's
+
+270
+00:18:13.140 --> 00:18:17.850
+deploy has this kind of
+weird verb noun thing that
+
+271
+00:18:17.850 --> 00:18:20.850
+is limited by the command
+line. So you find yourself
+
+272
+00:18:20.850 --> 00:18:24.180
+going, you know, hyphen verb
+this and hyphen this, that,
+
+273
+00:18:24.390 --> 00:18:27.090
+and it goes on for
+hundreds and hundreds and hundreds
+
+274
+00:18:27.090 --> 00:18:32.610
+of characters and it's insanely
+powerful, but I'm writing stuff
+
+275
+00:18:32.610 --> 00:18:35.450
+at the command line is
+a huge hassle. Yeah. And
+
+276
+00:18:35.450 --> 00:18:38.960
+it's, it's really generic, which
+makes it powerful. And it's
+
+277
+00:18:38.960 --> 00:18:43.850
+created to not only do
+deployments, but to solve other
+
+278
+00:18:43.850 --> 00:18:46.910
+things as well. So people
+are using it to migrate
+
+279
+00:18:46.910 --> 00:18:50.390
+stuff from one server to
+the other. And it's, I
+
+280
+00:18:50.390 --> 00:18:54.530
+think it's, it's targeting boats.
+It people and developers like
+
+281
+00:18:54.530 --> 00:19:00.620
+myself. So it covers a
+lot of ground. Yeah. I
+
+282
+00:19:00.620 --> 00:19:03.350
+think that the, the idea
+that you can package something
+
+283
+00:19:03.350 --> 00:19:06.260
+up is what's significant about
+it, that, that you can
+
+284
+00:19:06.260 --> 00:19:10.280
+describe all the settings that
+your application needs around app
+
+285
+00:19:10.280 --> 00:19:14.270
+pools or certificates or bindings,
+put it all in this
+
+286
+00:19:14.270 --> 00:19:18.170
+manifest and then install it.
+And then if you want,
+
+287
+00:19:18.530 --> 00:19:20.750
+what's nice about it from
+a web farm perspective is
+
+288
+00:19:20.750 --> 00:19:23.780
+you can say this package
+is perfect. Just change these
+
+289
+00:19:23.780 --> 00:19:26.090
+three parameters, like the name
+and the password will be
+
+290
+00:19:26.090 --> 00:19:28.610
+different on this machine instead
+of that machine. So you
+
+291
+00:19:28.610 --> 00:19:32.240
+kind of override what's already
+inside of the manifest. Hmm.
+
+292
+00:19:33.370 --> 00:19:36.830
+And what's basically hard about
+it is how to figure
+
+293
+00:19:36.830 --> 00:19:39.890
+out how to like query
+the thing you want to
+
+294
+00:19:39.890 --> 00:19:44.330
+change and how to actually
+replace it. And I must
+
+295
+00:19:44.330 --> 00:19:49.520
+deploy has this concept of,
+of doing replace replacements, but
+
+296
+00:19:49.520 --> 00:19:54.920
+also creating parameters. So Y
+what I ended up with,
+
+297
+00:19:54.980 --> 00:19:58.400
+but basically I wanted to
+create parameters for every changes
+
+298
+00:19:58.820 --> 00:20:00.590
+I wanted to do to
+the package. So I could
+
+299
+00:20:00.590 --> 00:20:06.440
+just have like one package
+for, for all three or
+
+300
+00:20:06.530 --> 00:20:12.110
+per environment. And then just
+during deployment, I'll just send
+
+301
+00:20:12.110 --> 00:20:15.380
+in the parameters I needed,
+which were specific for that
+
+302
+00:20:15.380 --> 00:20:24.260
+server or for that environment.
+However, replace and parameter works
+
+303
+00:20:24.260 --> 00:20:30.170
+a bit different. So parameter
+actually replaces the whole attributes
+
+304
+00:20:30.170 --> 00:20:35.270
+you're targeting while replace can
+replace part parts of that
+
+305
+00:20:35.270 --> 00:20:39.980
+attribute value. And that got
+a bit problematic. So what
+
+306
+00:20:39.980 --> 00:20:43.910
+I ended up was doing
+a pit of replaced and
+
+307
+00:20:43.910 --> 00:20:48.880
+a bit of parameters that's
+I explained this and that
+
+308
+00:20:48.880 --> 00:20:51.820
+blog posts. So it's, it's
+probably easier to get an
+
+309
+00:20:51.820 --> 00:20:54.190
+overview there, but I think
+that was the trick in
+
+310
+00:20:54.190 --> 00:20:59.670
+order to, to get this
+as painful As possible. Right.
+
+311
+00:20:59.670 --> 00:21:01.980
+And we'll include links to
+both of those blurred blog
+
+312
+00:21:02.010 --> 00:21:04.650
+posts in the, in the
+show notes. And you have
+
+313
+00:21:04.650 --> 00:21:08.250
+a very nice, organized build,
+deploy process. That explains actually
+
+314
+00:21:08.250 --> 00:21:11.490
+step by step by step
+in text, what you're doing.
+
+315
+00:21:12.720 --> 00:21:14.340
+One of the things I
+also wanted to kind of
+
+316
+00:21:14.340 --> 00:21:15.990
+dig a little bit more
+into was this idea of
+
+317
+00:21:15.990 --> 00:21:19.740
+taking the load balancer nodes
+offline and online. I'm not
+
+318
+00:21:19.740 --> 00:21:23.640
+sure if everyone who listens
+has multiple web servers, but
+
+319
+00:21:23.640 --> 00:21:26.640
+if you do, you typically
+have a load balancer that
+
+320
+00:21:26.640 --> 00:21:28.590
+makes the decision about whether
+or not you're going to
+
+321
+00:21:28.590 --> 00:21:30.600
+go to this machine or
+that machine. So if you
+
+322
+00:21:30.600 --> 00:21:38.070
+have www.hanselman.com, there might be
+a www one and www
+
+323
+00:21:38.070 --> 00:21:40.800
+two in the background that
+it's getting routed back and
+
+324
+00:21:40.800 --> 00:21:45.630
+forth. And when you upgrade,
+typically you do rolling upgrades
+
+325
+00:21:45.630 --> 00:21:48.660
+where you'll remove a server
+from the farm, you'll upgrade
+
+326
+00:21:48.660 --> 00:21:49.950
+it and you'll test it
+and you make sure it's
+
+327
+00:21:49.950 --> 00:21:51.750
+good. And then you'll roll
+it back into the farm.
+
+328
+00:21:52.470 --> 00:21:55.650
+And it sounds like you
+were using PowerShell and PowerShell
+
+329
+00:21:55.650 --> 00:21:59.340
+remoting before. And this is
+what I did. Actually. I
+
+330
+00:21:59.340 --> 00:22:03.000
+did this before PowerShell remoting
+existed. I actually, we wrote
+
+331
+00:22:03.000 --> 00:22:06.570
+a service, a windows, little
+windows service that actually hosted
+
+332
+00:22:06.570 --> 00:22:11.790
+PowerShell 1.04 PowerShell supported remoting.
+And then we would remote
+
+333
+00:22:11.790 --> 00:22:14.520
+in kind of like, like,
+like the way people use
+
+334
+00:22:14.520 --> 00:22:18.450
+shush use SSH. Now we
+remote in, we take the
+
+335
+00:22:18.450 --> 00:22:20.910
+server down, we do things
+to IAS and then we
+
+336
+00:22:20.910 --> 00:22:24.150
+deploy. But now there's this
+thing called a web farm
+
+337
+00:22:24.150 --> 00:22:26.940
+framework. Can you talk about
+what you do in PowerShell
+
+338
+00:22:26.940 --> 00:22:31.020
+versus what the web farm
+framework can do? So, as
+
+339
+00:22:31.020 --> 00:22:34.290
+I said, I, at first
+I created everything in PowerShell
+
+340
+00:22:34.610 --> 00:22:37.380
+and then I looked at
+them as deploy. And then
+
+341
+00:22:37.380 --> 00:22:41.520
+I briefly also looked at
+the webform framework. The first
+
+342
+00:22:41.520 --> 00:22:43.950
+thing I noticed was that
+the web framework is currently
+
+343
+00:22:43.950 --> 00:22:47.490
+in beta, I guess. So
+I wasn't too sure if
+
+344
+00:22:47.490 --> 00:22:51.960
+I want to go and
+use that. But I mean,
+
+345
+00:22:51.960 --> 00:22:56.250
+that basically replaces the last
+power sales script. I have
+
+346
+00:22:56.250 --> 00:22:58.800
+left if I, if I,
+I use that as far
+
+347
+00:22:58.800 --> 00:23:04.980
+as I can understand. So
+the only reason for me
+
+348
+00:23:04.980 --> 00:23:08.790
+not implementing that yet is
+basically because of time, I
+
+349
+00:23:08.790 --> 00:23:16.410
+guess, but there was also
+some issues. If I remember
+
+350
+00:23:16.410 --> 00:23:19.980
+correctly, I was trying to
+look at how to use
+
+351
+00:23:19.980 --> 00:23:26.250
+it, but think they are
+solved. Now, I was just
+
+352
+00:23:26.250 --> 00:23:32.210
+looking through this, this mailing
+list. And so, yeah, from,
+
+353
+00:23:32.250 --> 00:23:34.860
+from what I, I I've
+read, it will solve my
+
+354
+00:23:34.860 --> 00:23:40.740
+problems. So, and as you
+said, that basically integrates with
+
+355
+00:23:40.770 --> 00:23:44.760
+a load balancer. I think
+it only know integrates with
+
+356
+00:23:45.110 --> 00:23:48.950
+ARR, but I, it looks
+like they have plans for
+
+357
+00:23:48.950 --> 00:23:52.250
+integrating with, with the other,
+other load balancers in the
+
+358
+00:23:52.250 --> 00:23:57.050
+future. But that, that tool
+does of course do a
+
+359
+00:23:57.050 --> 00:24:00.590
+lot more than just, just
+working with the load balancer
+
+360
+00:24:00.650 --> 00:24:06.860
+and basically the provisioning so
+that you just define a
+
+361
+00:24:06.860 --> 00:24:13.280
+master server for yeah. One
+last master server and you
+
+362
+00:24:13.280 --> 00:24:17.330
+deployed to that. And that
+web framework just makes sure
+
+363
+00:24:17.330 --> 00:24:23.410
+that the provisions everything over
+to the other servers in,
+
+364
+00:24:23.410 --> 00:24:29.120
+in that same cluster. And
+of course that makes, makes
+
+365
+00:24:29.120 --> 00:24:31.370
+it really easy because you
+don't have to think about
+
+366
+00:24:31.370 --> 00:24:34.550
+all the servers that are
+actually in your cluster, because
+
+367
+00:24:34.550 --> 00:24:38.090
+it would provision all the
+changes over. And if I'm
+
+368
+00:24:38.090 --> 00:24:41.180
+not mistaken, it Phil of
+course take ha ha handle
+
+369
+00:24:41.180 --> 00:24:47.450
+all the, I mean, taking
+servers on and offline so
+
+370
+00:24:47.450 --> 00:24:52.730
+that the users of the
+website, the 0.1 notice, notice
+
+371
+00:24:52.730 --> 00:24:55.990
+downtime or anything like that.
+Yeah, it's, it's really interesting
+
+372
+00:24:55.990 --> 00:24:57.910
+because it seems like it's
+something that should have been
+
+373
+00:24:57.910 --> 00:25:01.750
+included right out of the
+box and the way that
+
+374
+00:25:01.750 --> 00:25:04.180
+it integrates makes it feel
+like it was there all
+
+375
+00:25:04.180 --> 00:25:07.660
+the time. Like if you
+go into iOS seven, now
+
+376
+00:25:08.020 --> 00:25:10.870
+you have app pools and
+sites. And we all know
+
+377
+00:25:10.870 --> 00:25:12.970
+about the little, you know,
+the little sites tree that
+
+378
+00:25:12.970 --> 00:25:15.970
+opens up. This adds a
+new one that says server
+
+379
+00:25:15.970 --> 00:25:19.750
+farms. And then you can
+have the servers within your
+
+380
+00:25:19.750 --> 00:25:21.910
+server farm and you can
+go in and say, well,
+
+381
+00:25:21.910 --> 00:25:24.130
+here are the applications that
+I have that I want
+
+382
+00:25:24.130 --> 00:25:27.470
+on those servers. And here
+are the, the, the, the
+
+383
+00:25:27.700 --> 00:25:31.600
+quote unquote products that I
+want, like buy products. This
+
+384
+00:25:31.600 --> 00:25:36.250
+is like going into, had
+removed features and saying, well,
+
+385
+00:25:36.250 --> 00:25:38.740
+I need asp.net and I
+need static content and I
+
+386
+00:25:38.740 --> 00:25:43.640
+need HTP compression. And then
+you just hit, okay. And
+
+387
+00:25:43.640 --> 00:25:46.750
+it, it pushes those out
+too to make sure that
+
+388
+00:25:46.750 --> 00:25:48.610
+everything is provisioned. And like
+you said, you don't have
+
+389
+00:25:48.610 --> 00:25:52.390
+to think about anything and,
+and once it's installed, it
+
+390
+00:25:52.390 --> 00:25:55.360
+does feel like it's been
+there all the while. And
+
+391
+00:25:55.390 --> 00:25:58.150
+I particularly liked the PowerShell
+stuff because you can literally
+
+392
+00:25:58.150 --> 00:26:03.040
+say remove server and ad
+server from the start server
+
+393
+00:26:03.040 --> 00:26:05.740
+stops or removed server new
+server from the command line,
+
+394
+00:26:06.280 --> 00:26:08.830
+which of course the irony
+of all these kinds of
+
+395
+00:26:08.830 --> 00:26:10.450
+things. And one of the
+good things and the bad
+
+396
+00:26:10.450 --> 00:26:14.920
+things about Microsoft is that
+we've all as developers written
+
+397
+00:26:14.920 --> 00:26:17.710
+this stuff before, you know,
+I mean, I totally wrote
+
+398
+00:26:17.800 --> 00:26:22.000
+get web farm and totally
+wrote removed server in PowerShell,
+
+399
+00:26:22.120 --> 00:26:24.460
+you know, five years ago,
+but now it's out. So
+
+400
+00:26:24.460 --> 00:26:29.920
+I can do refactoring via
+subtraction. You know, I can
+
+401
+00:26:29.920 --> 00:26:31.930
+remove the code I wrote.
+I mean, it's interesting, you're
+
+402
+00:26:31.930 --> 00:26:34.450
+describing all the custom stuff
+that you did and how
+
+403
+00:26:34.450 --> 00:26:37.840
+you're slowly, you're slowly moving
+over to the, kind of
+
+404
+00:26:37.840 --> 00:26:42.280
+the standard, the standard solution.
+I guess there's a, I
+
+405
+00:26:42.280 --> 00:26:46.950
+guess there's maybe one reason
+why we still might not
+
+406
+00:26:47.490 --> 00:26:53.430
+go for the web form
+framework. And that is when
+
+407
+00:26:53.430 --> 00:26:58.800
+we, when we deploy to
+production, I said, well, actually
+
+408
+00:26:58.860 --> 00:27:02.070
+let me just work really
+quickly through the build process
+
+409
+00:27:02.070 --> 00:27:05.250
+and a package thing. So
+we build, build everything on
+
+410
+00:27:05.250 --> 00:27:08.970
+a server. We created packages
+for the dev environment and
+
+411
+00:27:10.170 --> 00:27:14.100
+the test environment and a
+production environment. And we'd take
+
+412
+00:27:14.580 --> 00:27:17.880
+like for a Devin test,
+everything is automated, but for
+
+413
+00:27:17.880 --> 00:27:24.240
+production, we manually initiate the
+deployment process. And one of
+
+414
+00:27:24.270 --> 00:27:28.140
+those things that we do
+then is that you need
+
+415
+00:27:28.140 --> 00:27:31.200
+to log on using the
+power sales script. So as
+
+416
+00:27:31.200 --> 00:27:34.200
+you provide a username and
+password, which then will be
+
+417
+00:27:34.200 --> 00:27:37.830
+used to get access to
+the deployment server that you're
+
+418
+00:27:37.830 --> 00:27:42.030
+going to deploy to, and
+you also being prompted for
+
+419
+00:27:42.030 --> 00:27:45.360
+a couple of other passwords
+for, for instance, like password
+
+420
+00:27:45.360 --> 00:27:49.380
+for, for getting access to
+certificates and stuff like that.
+
+421
+00:27:50.250 --> 00:27:54.990
+This just a step in
+order to secure that not
+
+422
+00:27:54.990 --> 00:28:00.000
+any dev or anybody in
+the office can suddenly accidentally
+
+423
+00:28:00.000 --> 00:28:04.320
+deploy to production. I did
+also a security, the thing
+
+424
+00:28:04.610 --> 00:28:09.000
+where there are certain passwords
+we have stored, which not
+
+425
+00:28:09.510 --> 00:28:15.030
+that many people should know
+about, four systems were integrated
+
+426
+00:28:15.060 --> 00:28:19.920
+with like web services and
+stuff like that. And then
+
+427
+00:28:19.920 --> 00:28:24.120
+we can deploy to one
+server. So it automatically takes
+
+428
+00:28:24.120 --> 00:28:27.390
+that server offline deploys to
+it. And what we usually
+
+429
+00:28:27.390 --> 00:28:30.660
+do then is that we
+like point our hosts file
+
+430
+00:28:31.050 --> 00:28:35.340
+to that server so that
+we can test the webs,
+
+431
+00:28:35.940 --> 00:28:39.960
+the web applications running on
+that server. So we're the
+
+432
+00:28:39.960 --> 00:28:42.270
+only one that get access
+to that. So if you
+
+433
+00:28:42.270 --> 00:28:45.180
+go, come in from the
+outside, he will hit the
+
+434
+00:28:45.180 --> 00:28:48.090
+others. We test that and
+make sure that everything went
+
+435
+00:28:48.090 --> 00:28:50.910
+okay, and then we'd go,
+just go to the next
+
+436
+00:28:50.910 --> 00:28:54.060
+step and say, well, everything's
+fine deploy to the others.
+
+437
+00:28:54.360 --> 00:28:58.860
+So we'll bring that first
+server into the cluster and
+
+438
+00:28:58.890 --> 00:29:01.670
+take the other ones out
+and then upgrade them and
+
+439
+00:29:01.680 --> 00:29:07.220
+bring them back online. You
+had a couple of tips
+
+440
+00:29:07.250 --> 00:29:09.830
+within this process. That's up
+on your blog that will
+
+441
+00:29:09.830 --> 00:29:12.590
+link to that. I thought
+were significant tricks because they,
+
+442
+00:29:13.100 --> 00:29:16.220
+they are things that the
+listener can, can use that,
+
+443
+00:29:16.520 --> 00:29:19.550
+that you've discovered kind of
+while you're in the trenches.
+
+444
+00:29:19.970 --> 00:29:21.410
+One of them I thought
+was really interesting was you
+
+445
+00:29:21.410 --> 00:29:25.640
+said clear all of the
+ISDN settings and completely re
+
+446
+00:29:25.670 --> 00:29:32.120
+re recreate the I S
+schema, Right? That's, that's definitely
+
+447
+00:29:32.120 --> 00:29:36.530
+what I did in a
+PowerShell scripts. Then I literally
+
+448
+00:29:36.560 --> 00:29:39.770
+just cleaned the whole AIS
+and well, I actually, I
+
+449
+00:29:39.770 --> 00:29:44.620
+did a backup of just
+cleared every, every content within
+
+450
+00:29:44.620 --> 00:29:50.440
+IAS. And then I started
+my script, basically adding sites
+
+451
+00:29:50.440 --> 00:29:54.250
+and applications and certificates and
+stuff like that. So my,
+
+452
+00:29:54.300 --> 00:29:57.850
+my argument for doing that
+is, is to avoid the,
+
+453
+00:29:58.200 --> 00:30:03.820
+the manual process getting in
+the way of, of, or
+
+454
+00:30:03.820 --> 00:30:09.410
+making errors, because if somebody
+does a manual step and
+
+455
+00:30:09.910 --> 00:30:13.540
+next time you deploy that
+manual step would be over
+
+456
+00:30:13.540 --> 00:30:16.060
+it. And if it's not
+included in the script or
+
+457
+00:30:16.460 --> 00:30:20.350
+whatever you're using. So it's
+just a way to force
+
+458
+00:30:21.580 --> 00:30:26.740
+force it's to, to use,
+to scripts and, and avoid
+
+459
+00:30:26.740 --> 00:30:30.000
+manual errors. Well, that is
+just, so that is so
+
+460
+00:30:30.000 --> 00:30:32.160
+important. I mean, if, if
+there's one thing that people
+
+461
+00:30:32.160 --> 00:30:34.020
+should get out of the,
+the, the whole concept of
+
+462
+00:30:34.020 --> 00:30:37.800
+continuous integration and then expanding
+that into continuous deployment is
+
+463
+00:30:38.340 --> 00:30:42.300
+anything that you do manually
+will be screwed up at
+
+464
+00:30:42.300 --> 00:30:46.380
+some point by somebody. Yeah.
+And, and all these things
+
+465
+00:30:46.380 --> 00:30:50.040
+you do manually. I mean,
+in this whole process are
+
+466
+00:30:50.040 --> 00:30:55.110
+screaming for automation because basically
+everything you do manually has
+
+467
+00:30:55.140 --> 00:30:58.200
+some kind of tool or
+a script or something associated
+
+468
+00:30:58.200 --> 00:31:01.920
+with it. So you can
+always just trigger that. And
+
+469
+00:31:01.950 --> 00:31:06.960
+that's also why I often
+prefer doing it using the
+
+470
+00:31:06.960 --> 00:31:11.220
+server core version of the
+2008. Cause you have The
+
+471
+00:31:11.230 --> 00:31:13.720
+report, doesn't include a user
+interface, so you're forced to
+
+472
+00:31:13.740 --> 00:31:17.850
+scripted, Right? Yeah, of course
+you can get a remote
+
+473
+00:31:17.850 --> 00:31:20.500
+connection to the IAS and
+handle it from somewhat a
+
+474
+00:31:20.500 --> 00:31:25.020
+computer. But I know ways
+of like getting a user
+
+475
+00:31:25.020 --> 00:31:29.730
+interface locally and, and work
+on it remote. But I
+
+476
+00:31:29.730 --> 00:31:32.910
+just think that since you
+get a tiny bit of
+
+477
+00:31:32.910 --> 00:31:36.750
+extra per for, I guess,
+using server core and, and,
+
+478
+00:31:37.200 --> 00:31:39.960
+and the scripting part as
+well, then yeah. That's what
+
+479
+00:31:39.960 --> 00:31:42.570
+I prefer. Well, the other
+two things that you recommend
+
+480
+00:31:42.570 --> 00:31:46.710
+are kind of two sides
+of the same coin first
+
+481
+00:31:47.550 --> 00:31:50.940
+pre compile the websites take,
+take advantage of the fact
+
+482
+00:31:50.940 --> 00:31:53.100
+that you are in the
+middle of a build process
+
+483
+00:31:53.460 --> 00:31:56.010
+and not just do your
+standard compilation, but pre compile
+
+484
+00:31:56.020 --> 00:31:59.070
+the entire site, the DASP
+X pages and all of
+
+485
+00:31:59.070 --> 00:32:01.140
+that stuff. And then on
+the other side of the
+
+486
+00:32:01.140 --> 00:32:06.570
+coin, actually take advantage of
+the EIS warmup module, literally
+
+487
+00:32:06.570 --> 00:32:09.930
+warm your applications up, don't
+throw a cold app out
+
+488
+00:32:09.930 --> 00:32:11.790
+into a server farm and
+hope that he's going to
+
+489
+00:32:11.790 --> 00:32:17.340
+be okay. Yeah. Because I
+mean, the, if you like,
+
+490
+00:32:17.370 --> 00:32:21.780
+we do, we can deploy
+during work hours. Right. It
+
+491
+00:32:21.780 --> 00:32:26.310
+doesn't matter. But if you
+deploy a called app during
+
+492
+00:32:26.310 --> 00:32:28.950
+work hours there, the poor
+guy that, that hits or
+
+493
+00:32:28.950 --> 00:32:31.290
+the poor guys that hit
+that server the first time
+
+494
+00:32:31.290 --> 00:32:36.120
+after it's being upgraded, we'll
+get that hit. So yeah.
+
+495
+00:32:36.570 --> 00:32:40.550
+Pre compile or, or warmup
+it's, it's, it's a must,
+
+496
+00:32:40.550 --> 00:32:43.640
+if you're at least going
+to deploy at will at
+
+497
+00:32:43.640 --> 00:32:47.080
+any time And not to
+mention the, the application itself,
+
+498
+00:32:47.740 --> 00:32:49.990
+that poor application, not just
+the poor user, but the
+
+499
+00:32:49.990 --> 00:32:52.600
+poor application is going to
+have to do their best
+
+500
+00:32:52.630 --> 00:32:56.740
+to, to get up. It's
+almost like having someone run
+
+501
+00:32:56.740 --> 00:32:58.300
+a race and you're adding
+a new person to the
+
+502
+00:32:58.300 --> 00:33:00.910
+race, except you're going to
+have them jump out of
+
+503
+00:33:00.910 --> 00:33:04.150
+a car that's moving and
+then start running right away.
+
+504
+00:33:04.180 --> 00:33:06.890
+That's asking an awful lot
+of an application to, to
+
+505
+00:33:06.930 --> 00:33:08.380
+do all of the things
+it needs to do to
+
+506
+00:33:08.380 --> 00:33:12.070
+cash and get ready and
+warmed up while everyone else
+
+507
+00:33:12.070 --> 00:33:16.420
+is running full speed. Yeah,
+definitely. And what we've done
+
+508
+00:33:16.840 --> 00:33:20.920
+in, in Devon and test
+is that whenever you use,
+
+509
+00:33:20.950 --> 00:33:24.220
+let's say you manually starting
+a new build for tests.
+
+510
+00:33:24.230 --> 00:33:28.840
+For instance, if you need
+to get that, it's, it's
+
+511
+00:33:28.840 --> 00:33:31.960
+really important for you to
+get that deployment out right
+
+512
+00:33:31.960 --> 00:33:35.590
+now, you might just opt
+out on the pre compile
+
+513
+00:33:35.590 --> 00:33:40.090
+step. And in our case,
+it saves you like 15
+
+514
+00:33:40.090 --> 00:33:43.000
+minutes because you just want
+to get it out there
+
+515
+00:33:43.000 --> 00:33:45.610
+and test it. But of
+course you need to wait
+
+516
+00:33:46.150 --> 00:33:48.610
+maybe a minute or something
+for, for the app to
+
+517
+00:33:48.610 --> 00:33:52.450
+warm up, but for production,
+it's a pre compilation. It's
+
+518
+00:33:52.460 --> 00:33:55.960
+always on. That's just, yeah,
+we have to do that.
+
+519
+00:33:56.470 --> 00:33:59.230
+Very cool. So I'm going
+to put links to all
+
+520
+00:33:59.230 --> 00:34:01.750
+of this up on the
+web. Are you, are you
+
+521
+00:34:01.750 --> 00:34:03.350
+going to continue this process?
+Are you going to, there's
+
+522
+00:34:03.350 --> 00:34:06.250
+gonna be a part three
+and a part four. Yeah.
+
+523
+00:34:06.250 --> 00:34:10.720
+I have a published part
+too, I guess a week
+
+524
+00:34:10.720 --> 00:34:13.630
+or so ago. Maybe more.
+I was hoping to get
+
+525
+00:34:13.630 --> 00:34:19.330
+the other two others out
+by now, but time issues
+
+526
+00:34:19.330 --> 00:34:23.080
+and stuff like that. I'll,
+I'm always almost finished with
+
+527
+00:34:23.080 --> 00:34:27.610
+part three, which, which will
+cover the load balancing part.
+
+528
+00:34:28.090 --> 00:34:30.580
+I'll just drop the PowerShell
+scripts out there. So, so
+
+529
+00:34:30.580 --> 00:34:36.280
+people can use them. And
+part four is I guess,
+
+530
+00:34:36.310 --> 00:34:40.240
+the build process, how you
+can get to every thing,
+
+531
+00:34:40.300 --> 00:34:43.660
+all of these things integrated
+into to build and have
+
+532
+00:34:43.660 --> 00:34:46.930
+everything three ger, three, good
+from that from, from, from
+
+533
+00:34:46.930 --> 00:34:51.160
+there. And as part of
+this whole process, I also
+
+534
+00:34:51.400 --> 00:34:56.260
+started using TFS 2010. So
+I then used the workflow
+
+535
+00:34:56.500 --> 00:35:02.110
+steps and things like that.
+The workflow part of MSF
+
+536
+00:35:02.140 --> 00:35:08.380
+build, which was also interesting.
+And I have some, probably
+
+537
+00:35:08.380 --> 00:35:12.970
+some, some, some annoyances there
+as well, but every, every
+
+538
+00:35:13.210 --> 00:35:15.880
+everything Kathy. Yeah. Well, I
+mean, also it's funny how
+
+539
+00:35:16.150 --> 00:35:22.570
+actual work interferes with blogging.
+Yeah. And then another talk
+
+540
+00:35:22.570 --> 00:35:26.890
+about actually spending time with
+weed. Yes. Not to mention
+
+541
+00:35:26.890 --> 00:35:31.030
+family. Yeah. Well, cool. Well,
+thanks so much for spending
+
+542
+00:35:31.030 --> 00:35:34.330
+the time with me today.
+It's been great. This has
+
+543
+00:35:34.330 --> 00:35:37.710
+been another episode of Hansel
+minutes. See you again next
+
+544
+00:35:37.710 --> 00:35:42.000
+week. <inaudible>.
+

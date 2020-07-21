@@ -1,0 +1,2317 @@
+WEBVTT FILE
+
+1
+00:00:00.120 --> 00:00:03.240
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.240 --> 00:00:06.570
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.570 --> 00:00:10.860
+Tellerik create compelling app experiences
+across any screen with the
+
+4
+00:00:10.860 --> 00:00:15.720
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
+
+5
+00:00:15.720 --> 00:00:19.410
+leading UI tools with cloud
+services to simplify the entire
+
+6
+00:00:19.410 --> 00:00:23.880
+app development cycle Tellerik offers
+everything.net developers need to build
+
+7
+00:00:23.880 --> 00:00:33.300
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform.
+
+8
+00:00:38.570 --> 00:00:51.620
+<inaudible> From hanselminutes.com. It's Hansel
+minutes, a weekly discussion with
+
+9
+00:00:51.620 --> 00:00:56.120
+web developer and technologist Scott
+Hanselman. This is Lawrence Ryan announcing
+
+10
+00:00:56.130 --> 00:00:59.960
+show number four 37. In
+this episode, Scott talks with
+
+11
+00:00:59.990 --> 00:01:07.370
+Michael <inaudible> about the document
+database, Raven DV. Hi, this
+
+12
+00:01:07.370 --> 00:01:09.740
+is Scott Hanselman, and this
+is another episode of Hansel
+
+13
+00:01:09.740 --> 00:01:12.950
+minutes. And we're talking with
+Michael and Gary choke from
+
+14
+00:01:12.980 --> 00:01:16.940
+hibernating rhinos, the company that
+makes Raven DB, which is
+
+15
+00:01:16.940 --> 00:01:20.090
+an open source document database.
+Thanks for chatting with me
+
+16
+00:01:20.090 --> 00:01:24.860
+today. Thank you, Scott. Glad
+to be on the show.
+
+17
+00:01:25.430 --> 00:01:28.190
+No, I'm thrilled to have
+you on. So you have
+
+18
+00:01:28.190 --> 00:01:32.420
+been working with, with Oren
+on Raven DB for a
+
+19
+00:01:32.420 --> 00:01:38.780
+year now About a year,
+more or less. This is
+
+20
+00:01:38.780 --> 00:01:40.910
+an open source project though,
+but you joined the company,
+
+21
+00:01:40.910 --> 00:01:45.440
+is that right? Yes. Yes.
+It's open source project and
+
+22
+00:01:45.470 --> 00:01:50.870
+Oren manage all the work
+like it's done in other
+
+23
+00:01:50.870 --> 00:01:56.630
+open source projects, but he
+has, he has a team
+
+24
+00:01:56.690 --> 00:01:58.700
+I'm not the only one
+on the team that works
+
+25
+00:01:58.700 --> 00:02:02.630
+on. So yeah, Raven DB,
+it's it's open source and
+
+26
+00:02:02.630 --> 00:02:05.030
+you can go up at,
+at, get hub and look
+
+27
+00:02:05.030 --> 00:02:08.300
+at it, but then there's
+also commercial additions that you
+
+28
+00:02:08.300 --> 00:02:10.700
+can use in a, in
+a closed source environment. And
+
+29
+00:02:10.700 --> 00:02:14.990
+it's, it's really very, very
+nicely priced. It's not expensive
+
+30
+00:02:15.380 --> 00:02:18.470
+and we can, people can
+use it in a subscription
+
+31
+00:02:18.470 --> 00:02:22.340
+or a closed source environment.
+And it's pretty, pretty clever
+
+32
+00:02:22.340 --> 00:02:26.000
+way to balance open source
+and, and commercial. And it
+
+33
+00:02:26.000 --> 00:02:28.520
+seems like a lot of
+the document databases are going
+
+34
+00:02:28.520 --> 00:02:33.260
+in that direction. Yeah. And
+I think that's the way
+
+35
+00:02:33.260 --> 00:02:40.760
+to open source projects in
+general, managing your, your business,
+
+36
+00:02:40.790 --> 00:02:43.850
+like an in an open
+source way has much more
+
+37
+00:02:43.850 --> 00:02:51.290
+advantages than disadvantages. So I
+am totally with all this.
+
+38
+00:02:51.860 --> 00:02:55.040
+Yeah. And these, this Raven
+DB is getting used by
+
+39
+00:02:55.040 --> 00:02:56.720
+a lot of really cool
+companies. I see that like
+
+40
+00:02:56.720 --> 00:03:01.630
+msnbc.com using it, and it
+gets getting people excited about
+
+41
+00:03:01.630 --> 00:03:06.310
+no sequel who maybe weren't
+no SQL people. Maybe you
+
+42
+00:03:06.310 --> 00:03:08.080
+can talk a little bit
+about that and the no
+
+43
+00:03:08.080 --> 00:03:11.620
+SQL movement and, and what
+people who are more RD,
+
+44
+00:03:11.800 --> 00:03:17.080
+RDBMS, relational database people, why
+they should maybe switch sides,
+
+45
+00:03:18.990 --> 00:03:24.500
+Really no sequel movement. That's
+the anecdote of this. It
+
+46
+00:03:24.510 --> 00:03:31.170
+started from a hashtag really
+the term, no sequel. And
+
+47
+00:03:31.290 --> 00:03:35.100
+the reason that the whole
+no sickle thing started is
+
+48
+00:03:35.400 --> 00:03:43.950
+simple scalability. That was that.
+That was where, where big
+
+49
+00:03:43.950 --> 00:03:50.520
+companies like Google and Amazon
+started to see that relation
+
+50
+00:03:50.520 --> 00:03:56.910
+databases when just don't fit
+the bill. When it comes
+
+51
+00:03:56.910 --> 00:04:03.810
+to performance wise, then, then
+don't fit the bill. So
+
+52
+00:04:03.810 --> 00:04:05.820
+you're saying it started as
+a hashtag, like someone was
+
+53
+00:04:05.820 --> 00:04:09.180
+on Twitter just saying something,
+something, something hashtag nosy equal.
+
+54
+00:04:10.060 --> 00:04:16.440
+No, this, the story goes
+that the first conference where
+
+55
+00:04:17.760 --> 00:04:21.120
+some companies wanted to present
+what they were have been,
+
+56
+00:04:21.390 --> 00:04:27.240
+have been working, they wanted
+to, to promote, to promote
+
+57
+00:04:27.240 --> 00:04:30.720
+the, the, the conference. And
+I don't remember the name
+
+58
+00:04:30.720 --> 00:04:34.200
+of the guy. He, he,
+he just thought about why
+
+59
+00:04:34.200 --> 00:04:36.990
+not, don't make a hashtag
+to promote it in Twitter.
+
+60
+00:04:37.020 --> 00:04:41.610
+And it was no secret
+that how it started. It's
+
+61
+00:04:41.610 --> 00:04:44.820
+so funny how movements like
+that, like these kind of
+
+62
+00:04:44.820 --> 00:04:48.510
+hashtag movements start up and
+then it's, it's forgotten how
+
+63
+00:04:48.510 --> 00:04:51.090
+they, where they came from.
+I didn't realize that that's
+
+64
+00:04:51.420 --> 00:04:53.190
+where no SQL comes from.
+Sort of makes sense. It's
+
+65
+00:04:53.190 --> 00:04:55.290
+one of those things where
+it gets into the mental
+
+66
+00:04:55.290 --> 00:04:59.280
+consciousness, into the public consciousness,
+It just took off. And,
+
+67
+00:04:59.640 --> 00:05:03.570
+and the funny thing is
+that it's called the movement,
+
+68
+00:05:03.600 --> 00:05:09.060
+but there is nothing that
+not no unifying traits that
+
+69
+00:05:09.060 --> 00:05:14.210
+can define the specific database
+that is no SQL. It's
+
+70
+00:05:14.280 --> 00:05:17.160
+funny that that database, which
+is no secret is defined,
+
+71
+00:05:17.190 --> 00:05:21.030
+but what is not, it's
+not a relational database, But
+
+72
+00:05:21.930 --> 00:05:24.660
+why is this an interesting
+point? It is described, it's
+
+73
+00:05:24.660 --> 00:05:27.360
+almost like a, I was
+going to say a vote
+
+74
+00:05:27.360 --> 00:05:30.240
+of no confidence, but it's
+really just saying, you know,
+
+75
+00:05:30.630 --> 00:05:33.120
+relational databases, aren't doing what
+we need them to do.
+
+76
+00:05:33.120 --> 00:05:36.570
+So this is just, you
+know, not that I bet
+
+77
+00:05:36.570 --> 00:05:40.950
+you have hashtags supported exclamation
+points. They might call it
+
+78
+00:05:41.130 --> 00:05:46.470
+bang SQL instead of no
+SQL. But you said scalability
+
+79
+00:05:46.470 --> 00:05:49.560
+was the, was the main
+priority. Are we saying relational
+
+80
+00:05:49.560 --> 00:05:56.160
+databases? Can't scale. Not exactly.
+You see, if you look
+
+81
+00:05:56.160 --> 00:06:01.340
+on a history of relational
+databases, when, when, when the
+
+82
+00:06:01.340 --> 00:06:06.320
+relational that the database relational
+theory was being written, the
+
+83
+00:06:06.320 --> 00:06:09.530
+situation was different. It was
+designed to solve a different
+
+84
+00:06:09.530 --> 00:06:15.290
+set of problems. Back then
+storage was very, very costly.
+
+85
+00:06:17.210 --> 00:06:20.420
+Hundreds. Hundreds of megabytes could
+cost them about a million
+
+86
+00:06:20.420 --> 00:06:27.110
+dollars in the sixties of
+storage programmers. And it people
+
+87
+00:06:27.110 --> 00:06:31.850
+in general, their, their salaries,
+comparatively to hardware prices was
+
+88
+00:06:32.210 --> 00:06:39.200
+really small. And you needed
+to solve in general units
+
+89
+00:06:39.200 --> 00:06:45.560
+of different set of problems
+and no sequel as the
+
+90
+00:06:45.560 --> 00:06:49.070
+way I see it is
+it's just a reaction of,
+
+91
+00:06:50.060 --> 00:06:53.840
+of our industry to how
+the situation has changed in
+
+92
+00:06:53.840 --> 00:06:58.390
+terms of technology. Well, that's
+interesting if you, I never
+
+93
+00:06:58.390 --> 00:07:01.960
+thought about it in the
+context of space that it
+
+94
+00:07:01.960 --> 00:07:05.470
+was made at a time
+when discs worked a certain
+
+95
+00:07:05.470 --> 00:07:09.970
+way, right? When discs were
+spinning metal. And it worked
+
+96
+00:07:10.180 --> 00:07:13.990
+when memory was always when
+it was at a, And
+
+97
+00:07:14.170 --> 00:07:17.260
+that was, the memory was
+much more expensive. There were
+
+98
+00:07:17.260 --> 00:07:24.490
+much less users. And in
+general applications, the stored information
+
+99
+00:07:24.490 --> 00:07:30.370
+were designed to solve different
+types of problems. So then
+
+100
+00:07:30.370 --> 00:07:36.430
+in this idea of multiple
+different generations of databases and
+
+101
+00:07:36.460 --> 00:07:39.670
+that maybe there's some historical
+baggage with some of these
+
+102
+00:07:39.670 --> 00:07:44.740
+SQL databases when open source
+and document databases are moving
+
+103
+00:07:44.740 --> 00:07:49.120
+forward, they have different kinds
+of storage techniques, right? There's,
+
+104
+00:07:49.150 --> 00:07:52.660
+there's key value storage and
+there's document oriented storage, there's
+
+105
+00:07:52.660 --> 00:07:57.040
+craft databases, there's column oriented,
+and each one of them
+
+106
+00:07:57.040 --> 00:08:04.060
+giving different kinds of scalability
+and performance. Yes, but the
+
+107
+00:08:04.060 --> 00:08:07.540
+thing is, and I sometimes
+like to refer, there is
+
+108
+00:08:07.540 --> 00:08:14.320
+a very funny infographic that
+shows that that describes those
+
+109
+00:08:14.320 --> 00:08:18.400
+types of no SQL databases
+as kind of a evolution
+
+110
+00:08:19.090 --> 00:08:21.970
+and then document and graph
+databases being the top of
+
+111
+00:08:21.970 --> 00:08:28.540
+the evolution chain. But, but
+the way I see it,
+
+112
+00:08:28.840 --> 00:08:32.200
+it's, it's, it's compromises. What
+are you willing to sacrifice
+
+113
+00:08:32.200 --> 00:08:35.260
+for performance and scalability? And
+I'm talking about, there are
+
+114
+00:08:35.530 --> 00:08:42.310
+two types of scalability, horizontal
+and vertical scalability. And what
+
+115
+00:08:42.310 --> 00:08:47.440
+I meant by scalability was
+that the idea that five
+
+116
+00:08:47.470 --> 00:08:51.210
+cheap servers are much less
+expensive than one, then one
+
+117
+00:08:51.310 --> 00:08:56.730
+very powerful one. Ah, okay.
+So it's rather than doing
+
+118
+00:08:57.120 --> 00:08:59.550
+like, I know stack overflow,
+for example, they, their focus
+
+119
+00:08:59.550 --> 00:09:03.570
+is on scale up. They
+use a SQL database and
+
+120
+00:09:03.600 --> 00:09:05.880
+they throw memory at it.
+And I think it last
+
+121
+00:09:06.060 --> 00:09:10.290
+word, it had 384 terabytes
+of memory and basically holds
+
+122
+00:09:10.290 --> 00:09:14.660
+the entire database in Ram.
+Yes. And no sequel databases
+
+123
+00:09:15.590 --> 00:09:18.740
+here. I think it's, it's,
+it's good time to mention
+
+124
+00:09:19.280 --> 00:09:26.990
+what's called <inaudible>. Okay. What's
+that it's, it's more or
+
+125
+00:09:26.990 --> 00:09:33.770
+less describes how the databases
+can be compared what I
+
+126
+00:09:33.770 --> 00:09:39.380
+mean, that database types of
+relational and non-relational databases. It
+
+127
+00:09:39.380 --> 00:09:47.690
+basically means that you have
+three things, availability, partition, tolerance,
+
+128
+00:09:47.720 --> 00:09:51.620
+and consistency, and you can
+only have only two of
+
+129
+00:09:51.620 --> 00:09:56.300
+those. Okay. So you basically
+have these characteristics that you
+
+130
+00:09:56.300 --> 00:09:59.450
+need and you, you know,
+you can pick not all
+
+131
+00:09:59.450 --> 00:10:01.340
+of them. There is no
+perfect database. There's only the
+
+132
+00:10:01.340 --> 00:10:03.530
+database that does what you
+need perfectly. And by the
+
+133
+00:10:03.530 --> 00:10:06.110
+way, I meant, I misspoke.
+Of course I said, terabytes,
+
+134
+00:10:06.110 --> 00:10:09.590
+I meant stack overflow, SQL
+server uses 394 gigabytes of
+
+135
+00:10:09.590 --> 00:10:13.420
+Ram. So yeah. So you're
+saying that a data, a
+
+136
+00:10:13.430 --> 00:10:16.850
+database, our data value data,
+structured storage really just needs
+
+137
+00:10:16.850 --> 00:10:21.530
+to fit your need, your
+specific characteristics of usage. Yes.
+
+138
+00:10:21.560 --> 00:10:28.350
+And, and basically it's, it's
+not absolute. So basically all,
+
+139
+00:10:28.350 --> 00:10:32.240
+all those types, you mentioned
+column databases, graph that have
+
+140
+00:10:32.240 --> 00:10:37.550
+a document that have basis
+give value stores without going
+
+141
+00:10:37.550 --> 00:10:41.570
+to the, the, the specific
+features they provide the essentially
+
+142
+00:10:42.920 --> 00:10:49.280
+uphold to certain extent, two
+of those three ingredients, I
+
+143
+00:10:49.280 --> 00:10:55.970
+would say of database systems
+Amongst all of the different
+
+144
+00:10:55.970 --> 00:10:58.070
+kinds of database systems that
+are out there that people
+
+145
+00:10:58.070 --> 00:11:01.090
+know about. And, you know,
+one could argue that, that,
+
+146
+00:11:01.180 --> 00:11:02.690
+you know, that red is,
+is a kind of a,
+
+147
+00:11:02.730 --> 00:11:05.120
+of a database memcache D
+is a kind of a
+
+148
+00:11:05.120 --> 00:11:07.220
+database. It's a simple one,
+it's a key value cash
+
+149
+00:11:07.220 --> 00:11:09.710
+and red. This is more
+data structures focused. You've got
+
+150
+00:11:09.710 --> 00:11:14.390
+these different kinds of things.
+Where in the Pantheon of
+
+151
+00:11:14.390 --> 00:11:18.230
+databases, does Raven TB fit?
+Is it similar to Mongo
+
+152
+00:11:18.230 --> 00:11:21.380
+and couch? It's a document
+style. It's, it's, it's much
+
+153
+00:11:21.380 --> 00:11:26.270
+more, it's a document storage
+database. It's, it's, it's most
+
+154
+00:11:26.840 --> 00:11:30.740
+closest to our closest ones
+in the couch and Mongo
+
+155
+00:11:30.740 --> 00:11:39.690
+DB, certainly with respect to
+calf CRM. They're both. If,
+
+156
+00:11:39.690 --> 00:11:41.570
+if, if you do it
+as a chart, they are
+
+157
+00:11:41.570 --> 00:11:45.620
+both more or less in
+the same area of availability
+
+158
+00:11:45.620 --> 00:11:51.680
+in the partition partitioning That
+word you just said, did
+
+159
+00:11:51.680 --> 00:11:57.550
+you say sharding? That's part
+of it, partitioning it's it's.
+
+160
+00:11:57.700 --> 00:12:02.410
+How, how well, your database
+scale, not upwards but sideways.
+
+161
+00:12:03.430 --> 00:12:09.190
+Ah, essentially let's be involved
+more than that. But essentially
+
+162
+00:12:09.930 --> 00:12:12.120
+That's interesting though, because I
+think that people who are
+
+163
+00:12:12.120 --> 00:12:15.570
+listening are familiar with, you
+know, basic databases and they
+
+164
+00:12:15.570 --> 00:12:20.940
+know that scaling SQL databases
+up is, is fairly straightforward,
+
+165
+00:12:20.970 --> 00:12:25.170
+throw memory and power and
+a processor at the database.
+
+166
+00:12:25.440 --> 00:12:31.230
+How do you scale a
+Raven DB database out? Usually
+
+167
+00:12:31.260 --> 00:12:35.130
+you add more machines, more
+nodes. There is shoving it
+
+168
+00:12:35.130 --> 00:12:40.740
+support sharding. It's a four
+slot balancing. And in my
+
+169
+00:12:40.740 --> 00:12:45.810
+opinion, it's much easier to
+scale out and to scale
+
+170
+00:12:45.840 --> 00:12:49.470
+up words when you have
+the means and the means
+
+171
+00:12:49.470 --> 00:12:53.400
+in terms of features. And
+I understand that Raven has
+
+172
+00:12:53.400 --> 00:12:56.850
+this built in, it has
+replication and charting support as
+
+173
+00:12:56.850 --> 00:13:00.900
+features that are part of
+the Right. Yeah. That's integral
+
+174
+00:13:00.900 --> 00:13:06.040
+part of the product. And
+they, that that's one of
+
+175
+00:13:06.040 --> 00:13:08.970
+the design principles of revving
+DB that they just work.
+
+176
+00:13:09.690 --> 00:13:12.720
+For example, if you want
+to, with sequel, if you
+
+177
+00:13:12.720 --> 00:13:20.280
+want to arrange replication to
+make it work, it will
+
+178
+00:13:20.310 --> 00:13:24.630
+probably take how long do
+I have to? I've been
+
+179
+00:13:24.630 --> 00:13:28.770
+there, we drive in B,
+I've done some dev. I've
+
+180
+00:13:28.770 --> 00:13:33.150
+done some demos without having
+to be setting up application
+
+181
+00:13:33.180 --> 00:13:39.720
+takes about five minutes. That's
+pretty, that's pretty amazing. The
+
+182
+00:13:39.720 --> 00:13:43.050
+sharding support of course is
+done on the client side,
+
+183
+00:13:43.050 --> 00:13:46.140
+right? It's a decision that's
+made on the client while
+
+184
+00:13:46.140 --> 00:13:49.590
+replication is done on the,
+on the, on the server.
+
+185
+00:13:49.590 --> 00:13:52.380
+And those things can be,
+of course used together. You
+
+186
+00:13:52.380 --> 00:13:55.720
+don't have to pick one
+over the other. Yes. And,
+
+187
+00:13:55.720 --> 00:13:59.910
+and basically you, you have,
+you can mix and match
+
+188
+00:14:00.180 --> 00:14:04.740
+as, as, as, as needed.
+For example, you can set
+
+189
+00:14:04.740 --> 00:14:10.410
+up sharded nodes that are
+replicate to each other and
+
+190
+00:14:10.410 --> 00:14:13.200
+sort of as kind of
+backup. And then you can
+
+191
+00:14:13.200 --> 00:14:16.850
+make revving the beat to
+fail over, to, to, to
+
+192
+00:14:17.060 --> 00:14:20.940
+make fail over and fail
+over also client side decision.
+
+193
+00:14:22.380 --> 00:14:27.330
+And it's totally transparent. And
+it's done under the covers
+
+194
+00:14:27.330 --> 00:14:31.800
+of the, of the API
+of the client API. Right.
+
+195
+00:14:31.800 --> 00:14:34.230
+Okay. So then if I
+have my, my users, I
+
+196
+00:14:34.230 --> 00:14:37.050
+can have one instance with
+a through M and another
+
+197
+00:14:37.050 --> 00:14:40.140
+instance with N through Z
+and that's charted. And then
+
+198
+00:14:40.140 --> 00:14:43.560
+I have a replicated instance,
+Oh, for each of those
+
+199
+00:14:43.560 --> 00:14:46.320
+shots, you can have replicated
+instance that will serve as
+
+200
+00:14:46.320 --> 00:14:50.130
+backup. And then it automatically
+can detect if a notice
+
+201
+00:14:50.130 --> 00:14:53.290
+failing and then switch over
+and then figure it out
+
+202
+00:14:53.380 --> 00:14:59.530
+Without interruption, without need to
+w without, without the need
+
+203
+00:14:59.530 --> 00:15:05.710
+to manually do this, either
+code-wise or operator wise, the
+
+204
+00:15:05.710 --> 00:15:08.620
+client side of MDB will
+handle the, the, the fail
+
+205
+00:15:08.620 --> 00:15:10.960
+over if it's set up
+to do so. Of course,
+
+206
+00:15:11.890 --> 00:15:15.490
+And, and it has, what's
+called, you know, right. Assurance,
+
+207
+00:15:15.490 --> 00:15:18.370
+right. It's making sure that,
+that this is really happening
+
+208
+00:15:18.370 --> 00:15:20.950
+and it, you know, it
+is a transactional database. This
+
+209
+00:15:20.950 --> 00:15:26.890
+is not firing, Eh, yeah.
+About that. And I've in
+
+210
+00:15:26.890 --> 00:15:34.900
+DB assures, transac, transactional consistency.
+It's it's, it's, it's both
+
+211
+00:15:35.260 --> 00:15:39.370
+it's sounds it's it's it
+sounds bit strange to say
+
+212
+00:15:39.400 --> 00:15:43.840
+it's both, it both has
+eventual consistency and it has
+
+213
+00:15:43.840 --> 00:15:53.950
+transactional consistency about promises. So
+eventual consistency. That's one of
+
+214
+00:15:56.020 --> 00:15:58.660
+that, that's one of compromise
+I was talking about when
+
+215
+00:15:58.660 --> 00:16:01.690
+I talked about KFC or
+in that if you need
+
+216
+00:16:01.690 --> 00:16:04.270
+to have, in order to
+get performance, you need to
+
+217
+00:16:04.270 --> 00:16:08.620
+sacrifice something. And that's one
+of the things that it
+
+218
+00:16:08.620 --> 00:16:13.270
+can be sacrificed, eventual consistency.
+So revving DB adopts, eventual
+
+219
+00:16:13.270 --> 00:16:20.140
+consistency, consistency with regards to
+indexes. So query. So with
+
+220
+00:16:20.140 --> 00:16:24.160
+regards to querying revenue promises,
+this query is accurate to
+
+221
+00:16:24.160 --> 00:16:28.610
+certain point of time and
+the documents store itself, it's,
+
+222
+00:16:28.610 --> 00:16:35.620
+it's, it's transactional and acts
+accordingly. So the consistency is
+
+223
+00:16:35.620 --> 00:16:40.510
+enforced in the document store
+and the, the, the indexes
+
+224
+00:16:40.540 --> 00:16:45.850
+over in the B J
+w w they show it's
+
+225
+00:16:45.940 --> 00:16:53.170
+eventual consistency. So when you
+quit 11 DB, the result
+
+226
+00:16:53.530 --> 00:16:56.830
+will be accurate to a
+certain point of time. Okay.
+
+227
+00:16:57.010 --> 00:16:58.870
+So I want to want
+to take a brief moment
+
+228
+00:16:58.870 --> 00:17:01.180
+because, you know, we're getting
+into some interesting advanced stuff,
+
+229
+00:17:01.180 --> 00:17:03.490
+but I want to catch
+up the listeners who may
+
+230
+00:17:03.490 --> 00:17:06.940
+not be following everything that
+we're saying. So what you're
+
+231
+00:17:06.940 --> 00:17:10.300
+saying is that this cap
+theorem, which has been also
+
+232
+00:17:10.300 --> 00:17:14.080
+known as Brewer's theorem after
+the gentlemen, that presented it
+
+233
+00:17:14.470 --> 00:17:20.050
+cap is consistency, availability, and
+partition tolerance. So consistency of
+
+234
+00:17:20.050 --> 00:17:23.110
+course, is that every Raven
+node would see the data
+
+235
+00:17:23.110 --> 00:17:25.690
+at the same time and
+that everything would be consistent.
+
+236
+00:17:26.110 --> 00:17:30.610
+And then availability would be
+that guarantee that you'll get
+
+237
+00:17:30.610 --> 00:17:33.550
+a response and saying whether
+or not something was successful
+
+238
+00:17:33.550 --> 00:17:36.700
+or not. And then partition
+tolerance, the P and cap
+
+239
+00:17:37.420 --> 00:17:40.480
+would indicate that the system
+will still work, even though
+
+240
+00:17:40.480 --> 00:17:42.550
+there's a failure in part
+of the system. And the
+
+241
+00:17:42.550 --> 00:17:47.650
+theory, the cap theory, consistency,
+availability, and partition tolerance, is
+
+242
+00:17:47.650 --> 00:17:50.910
+that it's impossible to do
+all three of those things
+
+243
+00:17:51.480 --> 00:17:53.910
+at the same time. So
+that's, that's that theory holds,
+
+244
+00:17:53.910 --> 00:17:55.770
+right. It is not possible
+to do all of those.
+
+245
+00:17:55.770 --> 00:17:59.420
+You get to pick two.
+Yes. And they're having debate,
+
+246
+00:17:59.450 --> 00:18:03.530
+essentially. It does kind of
+trick because what I talked
+
+247
+00:18:03.530 --> 00:18:07.310
+before, I thought now that
+maybe it wasn't clear enough,
+
+248
+00:18:07.640 --> 00:18:11.570
+it has to essentially it
+has two key value stores.
+
+249
+00:18:12.080 --> 00:18:17.510
+One of them stores documents,
+and it's guaranteed to be
+
+250
+00:18:17.510 --> 00:18:22.760
+transactional. And the other one
+stores indexing information, and the
+
+251
+00:18:22.760 --> 00:18:28.520
+indexing information is more volatile.
+It has eventual consistency because
+
+252
+00:18:29.750 --> 00:18:36.320
+in order to gain more
+performance, Okay. So it's easy.
+
+253
+00:18:36.320 --> 00:18:39.080
+It's fun to say, Hey,
+you only get two of
+
+254
+00:18:39.080 --> 00:18:42.470
+three of these things, but
+it's a misleading way of
+
+255
+00:18:42.470 --> 00:18:44.960
+thinking about things, because it's
+not an absolute, there's a
+
+256
+00:18:44.960 --> 00:18:46.730
+continuum here that you work
+with, and it's not a
+
+257
+00:18:46.730 --> 00:18:50.000
+binary choice. You'll eventually get
+all three of those things.
+
+258
+00:18:50.000 --> 00:18:51.620
+It just takes a book.
+It takes an amount of
+
+259
+00:18:51.620 --> 00:18:56.810
+time And the amount of
+drinks you, you can make
+
+260
+00:18:56.810 --> 00:19:02.260
+with the cold, so to,
+to get better results. And,
+
+261
+00:19:02.260 --> 00:19:04.820
+and, and you guys of
+course believe that Raven DB
+
+262
+00:19:04.970 --> 00:19:07.910
+is a great balance between
+getting you all of those
+
+263
+00:19:07.910 --> 00:19:11.990
+things and getting, you know,
+locking and great scalability all
+
+264
+00:19:11.990 --> 00:19:16.100
+at the same time. Yes.
+And, and, and, and one
+
+265
+00:19:16.100 --> 00:19:21.290
+of the things that, that
+allow that, technically it's not
+
+266
+00:19:21.470 --> 00:19:24.020
+true, that there is absolutely
+no locking in the rival
+
+267
+00:19:24.020 --> 00:19:29.510
+DB. It has minimum locking
+minimum possible looking to still
+
+268
+00:19:29.510 --> 00:19:34.970
+allow concurrency without the, the,
+the issues that follow. If
+
+269
+00:19:34.970 --> 00:19:40.300
+you don't do a proper
+looking, but to do all
+
+270
+00:19:40.310 --> 00:19:45.200
+this, those things, eventually consistency
+allows essentially do querying without
+
+271
+00:19:45.200 --> 00:19:51.320
+locking. Right? Exactly. So when,
+when you're querying something wild
+
+272
+00:19:51.530 --> 00:19:54.680
+rights are happening at the
+same time, what, what state
+
+273
+00:19:54.680 --> 00:19:57.020
+are you going to get
+the state of the data?
+
+274
+00:19:57.020 --> 00:19:59.630
+If you've got like a
+shopping cart, that's being written,
+
+275
+00:19:59.660 --> 00:20:01.550
+you know, many times a
+second. And then I do
+
+276
+00:20:01.550 --> 00:20:05.180
+a query on that. What,
+what state am I going
+
+277
+00:20:05.180 --> 00:20:10.760
+to get it out? It's,
+it's not, you're going to
+
+278
+00:20:10.760 --> 00:20:16.490
+get a state. This, this
+indexing process is as in
+
+279
+00:20:16.490 --> 00:20:22.400
+Kronos, two writes and reads,
+right? And as you do
+
+280
+00:20:22.400 --> 00:20:26.360
+writes and reads indexing, w
+we'll we'll we'll pick up
+
+281
+00:20:26.390 --> 00:20:31.670
+those changes eventually that eventually
+consistency means exactly. And even
+
+282
+00:20:31.670 --> 00:20:36.170
+DB has mechanisms in place
+than undercovers. They do batching
+
+283
+00:20:36.200 --> 00:20:42.620
+and the optimize how fast
+you will get and how
+
+284
+00:20:42.620 --> 00:20:48.500
+up to date results you
+will get, depending on how,
+
+285
+00:20:48.500 --> 00:20:52.630
+how, how, how the, the
+database itself is queries is
+
+286
+00:20:52.630 --> 00:20:57.910
+used. For example, tracking says,
+how much queries per second,
+
+287
+00:20:57.910 --> 00:21:05.860
+how much memory is available?
+How much did this performance
+
+288
+00:21:05.860 --> 00:21:10.330
+stuff like this revving DB,
+monitors, all that, and internally
+
+289
+00:21:10.330 --> 00:21:14.950
+changes how things work to
+optimize as much as possible.
+
+290
+00:21:16.140 --> 00:21:18.930
+Are there different indexing strategies
+that I can ask it
+
+291
+00:21:19.080 --> 00:21:21.810
+to say that I value
+one strategy over another? Or
+
+292
+00:21:21.810 --> 00:21:23.220
+do I, does it fit?
+Is it just something that
+
+293
+00:21:23.220 --> 00:21:28.950
+I don't worry about? It's,
+it's usually, it's, it's usually
+
+294
+00:21:29.460 --> 00:21:34.350
+managed and tracked and being
+optimized in the background. You,
+
+295
+00:21:34.720 --> 00:21:39.000
+you cannot influence which of
+the indexes get, get prioritized.
+
+296
+00:21:39.060 --> 00:21:42.990
+It's get prioritized by which
+of the indexes is, needs
+
+297
+00:21:42.990 --> 00:21:48.420
+the updates. And it's, I
+think it's a good place
+
+298
+00:21:48.420 --> 00:21:51.720
+to mention. The heavy lifting
+of indexing is done by
+
+299
+00:21:51.720 --> 00:21:57.750
+losing.net project. Nice. So you
+get also all sorts of
+
+300
+00:21:57.750 --> 00:22:02.370
+goodies out of the box,
+like full texting Dixon, analyzers,
+
+301
+00:22:02.370 --> 00:22:05.880
+and stuff like that. So
+you're using the, the leucine,
+
+302
+00:22:05.880 --> 00:22:08.040
+which is a very well
+thought of, and very reliable
+
+303
+00:22:08.040 --> 00:22:11.340
+project, which just of course,
+makes your project more reliable
+
+304
+00:22:11.340 --> 00:22:16.320
+as well. It it's, it's
+very good and reliable project.
+
+305
+00:22:16.860 --> 00:22:18.780
+How many different things do
+you do? You all rely
+
+306
+00:22:18.780 --> 00:22:20.550
+on? You have a, quite
+an impressive, I mean, if
+
+307
+00:22:20.550 --> 00:22:23.250
+you look at the get
+hub, it's pretty amazing. You've
+
+308
+00:22:23.250 --> 00:22:27.300
+got a very, very organized
+project, lots and lots of
+
+309
+00:22:27.300 --> 00:22:30.960
+tests you've got when R
+T builds, you've got mano
+
+310
+00:22:30.960 --> 00:22:34.560
+for Android bills. You know,
+how, how broad is this
+
+311
+00:22:34.560 --> 00:22:36.690
+as far as how many
+different places can I use,
+
+312
+00:22:36.690 --> 00:22:39.630
+Raven, and, and what opensource
+projects do you rely on
+
+313
+00:22:39.630 --> 00:22:45.210
+to make that happen? We're
+allowing numerous open source libraries.
+
+314
+00:22:45.750 --> 00:22:48.540
+First of all, what we
+rely on numerous open source
+
+315
+00:22:48.540 --> 00:22:53.250
+libraries. I frankly don't remember
+most of them, but one
+
+316
+00:22:53.250 --> 00:22:57.450
+of the more notable, for
+example, jason.net, it helps it
+
+317
+00:22:57.840 --> 00:23:03.000
+handles all old civilization. We
+use web with this sort
+
+318
+00:23:03.000 --> 00:23:07.500
+of diversion, upcoming version. We
+use a way BPI where
+
+319
+00:23:07.500 --> 00:23:15.810
+we use, we use a
+<inaudible> And you don't, you
+
+320
+00:23:15.810 --> 00:23:23.010
+use N not Cecil, but
+rather Mon and refractory And
+
+321
+00:23:23.010 --> 00:23:29.100
+refractory. Yes. Yes. That's one
+of them we use, there
+
+322
+00:23:29.100 --> 00:23:31.470
+are some parts in code
+that I know, of course
+
+323
+00:23:31.470 --> 00:23:34.590
+you can do to not
+go too deep. Yeah. Yeah.
+
+324
+00:23:35.340 --> 00:23:37.950
+But you've got, you've got
+clients basically everywhere. Is there,
+
+325
+00:23:37.950 --> 00:23:40.020
+I mean, I can use
+this. I can use a,
+
+326
+00:23:40.200 --> 00:23:43.230
+I can talk to a
+Raven DB instance from, from
+
+327
+00:23:43.260 --> 00:23:45.800
+a, from a phone, from
+a windows, from ma from
+
+328
+00:23:45.800 --> 00:23:49.540
+any mano application from when,
+when R T correct? Yes.
+
+329
+00:23:49.570 --> 00:23:52.480
+Also we have a client,
+we have Java client side,
+
+330
+00:23:53.260 --> 00:23:58.060
+a native Java client side
+Java. Yes. We have a
+
+331
+00:23:58.060 --> 00:24:05.410
+team offshore team that handles
+Java client. Nice. And also
+
+332
+00:24:05.530 --> 00:24:10.990
+because in DB, you can
+do anything with driving with,
+
+333
+00:24:11.440 --> 00:24:13.270
+with what you do with
+client API, you can do
+
+334
+00:24:13.300 --> 00:24:18.610
+is trustful. Basically we're having
+to be all client is
+
+335
+00:24:18.850 --> 00:24:23.380
+essentially arrests operations. You can
+use revenue to be from
+
+336
+00:24:23.470 --> 00:24:28.720
+any language that supports HTTP
+requests, basically. Right. So if
+
+337
+00:24:28.720 --> 00:24:31.210
+I, you know, if there
+wasn't a Python, Raven DB
+
+338
+00:24:31.210 --> 00:24:33.700
+client, I just talk straight
+HTTP and I could build
+
+339
+00:24:33.700 --> 00:24:36.820
+one on top of that.
+Yes. And for example, we
+
+340
+00:24:36.820 --> 00:24:40.990
+have one client that built
+a PHP, client DPA for
+
+341
+00:24:40.990 --> 00:24:44.380
+having a baby. Nice. That's
+cool. Now I know that
+
+342
+00:24:44.440 --> 00:24:48.580
+at its heart, it is
+restful. And the HTTP API
+
+343
+00:24:48.610 --> 00:24:51.340
+is, is, you know, is
+very focused on the, you
+
+344
+00:24:51.340 --> 00:24:55.540
+know, the cleanliness of rest.
+And it works just as
+
+345
+00:24:55.540 --> 00:24:57.850
+you would expect, but I
+know that there's some, some
+
+346
+00:24:57.850 --> 00:25:02.740
+other interesting optimizations that are
+like the there's a patching.
+
+347
+00:25:04.750 --> 00:25:09.760
+Yeah. There is one. I
+don't remember the name of
+
+348
+00:25:09.760 --> 00:25:15.130
+it. Exactly. We, we use,
+we allow to do scripted
+
+349
+00:25:15.580 --> 00:25:22.660
+patches with JavaScript. So you
+can basically run a kind
+
+350
+00:25:22.660 --> 00:25:25.090
+of startup procedure. It can
+be salty about it as
+
+351
+00:25:25.090 --> 00:25:31.780
+this is to change your
+documents with JavaScript code. So
+
+352
+00:25:31.780 --> 00:25:35.170
+you can change just parts
+of them. You can change
+
+353
+00:25:35.170 --> 00:25:39.100
+part of them. That's not
+just it they're dispatching API
+
+354
+00:25:40.240 --> 00:25:43.960
+scripted <inaudible> Java script, and
+you can do it with,
+
+355
+00:25:43.980 --> 00:25:50.200
+with the strongly typed.net. API
+API is basically to add
+
+356
+00:25:50.260 --> 00:25:55.360
+or edit parts of documents.
+And it gives you a
+
+357
+00:25:55.360 --> 00:25:57.250
+lot of granularity. I mean,
+it's certainly, this is an
+
+358
+00:25:57.250 --> 00:26:00.330
+advanced and advanced topic, but
+I, I just, I, it,
+
+359
+00:26:00.340 --> 00:26:04.030
+it stood out to me
+as a very nice, clever
+
+360
+00:26:04.030 --> 00:26:07.690
+way to, you know, take
+a note, take a document
+
+361
+00:26:07.720 --> 00:26:11.230
+that is perhaps a large
+document. And rather than retrieving
+
+362
+00:26:11.230 --> 00:26:14.740
+it entirely from the server
+and then sending it all
+
+363
+00:26:14.740 --> 00:26:17.230
+the way back, if I
+need to change just one
+
+364
+00:26:17.230 --> 00:26:19.240
+aspect of it, I can.
+And I thought that was
+
+365
+00:26:19.240 --> 00:26:24.010
+a nice optimization. And in.net,
+it's a very clean API.
+
+366
+00:26:25.210 --> 00:26:30.490
+Yes, I totally think so.
+I think there is a
+
+367
+00:26:30.490 --> 00:26:33.820
+really good job done on,
+on the API design to
+
+368
+00:26:33.820 --> 00:26:40.990
+make it really intuitive. I,
+before I joined hibernating rhinos
+
+369
+00:26:41.560 --> 00:26:44.610
+in my previous job, I
+evaluated the actual evaluate driving
+
+370
+00:26:44.610 --> 00:26:48.450
+the before usage. And about
+15 minutes, I was able
+
+371
+00:26:48.450 --> 00:26:51.570
+to write hello world program
+in 20 minutes, I had
+
+372
+00:26:52.230 --> 00:26:56.180
+proof of concept up working
+Really. It's just that easy.
+
+373
+00:26:56.660 --> 00:27:00.230
+So you download Raven and
+you can just, you basically
+
+374
+00:27:00.230 --> 00:27:02.300
+run it at the command
+line and it opens a
+
+375
+00:27:02.300 --> 00:27:05.510
+port and you bring in
+your client library and just
+
+376
+00:27:05.510 --> 00:27:11.000
+start talking to it. Yeah.
+It's I was amazed how
+
+377
+00:27:11.000 --> 00:27:16.280
+simple it was to just
+start working with it, by
+
+378
+00:27:16.280 --> 00:27:20.870
+the way, I just remembered
+when you talked before about
+
+379
+00:27:20.900 --> 00:27:26.260
+optimization of patching with squaring,
+you have several side transformers,
+
+380
+00:27:26.290 --> 00:27:30.890
+you can make large document
+too. You cannot treat only
+
+381
+00:27:31.190 --> 00:27:34.340
+things you need from large
+document. So are you making
+
+382
+00:27:34.340 --> 00:27:36.950
+a projection? Okay. It's kind
+of, sort of a side
+
+383
+00:27:36.950 --> 00:27:41.930
+projection. For example, we had
+a client that complained that
+
+384
+00:27:41.930 --> 00:27:45.230
+he has had a query
+times response time of said
+
+385
+00:27:45.230 --> 00:27:51.140
+about 700 seconds from, and
+then I looked at his
+
+386
+00:27:51.140 --> 00:27:56.930
+database and he had documents.
+Think about Jason documents. There
+
+387
+00:27:56.930 --> 00:28:00.980
+were several hundred, several megabytes
+in size, each one. Oh,
+
+388
+00:28:00.980 --> 00:28:03.380
+wow. So hundreds of megabytes
+were coming across the wire.
+
+389
+00:28:03.440 --> 00:28:07.400
+Yeah. So here's example of
+where it was 50 megabytes.
+
+390
+00:28:07.640 --> 00:28:12.830
+And really that was really
+hard. It was took a
+
+391
+00:28:12.830 --> 00:28:16.130
+long time to go there
+in the wild. And these
+
+392
+00:28:16.130 --> 00:28:20.210
+kind of things can be,
+can be amended by just
+
+393
+00:28:20.210 --> 00:28:23.030
+using several titles format and
+fetch only the things you
+
+394
+00:28:23.030 --> 00:28:25.820
+need from the server. And
+that's how you worked through
+
+395
+00:28:25.820 --> 00:28:32.720
+that problem. That was basically
+suggestion handle it Is, is
+
+396
+00:28:32.720 --> 00:28:37.820
+there something that a document
+database is not useful for?
+
+397
+00:28:37.820 --> 00:28:40.040
+What would I not want
+to do? What would be
+
+398
+00:28:40.040 --> 00:28:43.130
+a bad if I said,
+I want to pick Raven
+
+399
+00:28:43.130 --> 00:28:46.370
+DB and I'm going to
+put this in it, what
+
+400
+00:28:46.370 --> 00:28:49.400
+would it be a misuse
+of a documentary? But reporting,
+
+401
+00:28:49.400 --> 00:28:55.910
+for example, I've in DB
+is, is I can describe
+
+402
+00:28:55.940 --> 00:28:59.210
+it as online transactional processing.
+That was, is good for
+
+403
+00:29:00.230 --> 00:29:04.520
+and reporting for data aggregation
+and, and doing all sorts
+
+404
+00:29:04.520 --> 00:29:09.860
+of things that the data
+analysis guys do all up
+
+405
+00:29:09.890 --> 00:29:15.980
+cubes, all this stuff, it
+can handle it, but if
+
+406
+00:29:15.980 --> 00:29:19.550
+it was me, I would
+advise against it. So this
+
+407
+00:29:19.550 --> 00:29:21.860
+comes down to when you're
+sitting down and you're looking
+
+408
+00:29:21.860 --> 00:29:25.790
+at a project, you really
+have to understand why you're
+
+409
+00:29:25.790 --> 00:29:28.820
+looking at different databases and
+what characteristics that you need
+
+410
+00:29:28.820 --> 00:29:32.300
+that database to have. Because,
+you know, presumably when you're
+
+411
+00:29:32.300 --> 00:29:35.150
+starting the project that people
+will be Mo you know,
+
+412
+00:29:35.150 --> 00:29:38.810
+mostly reading or mostly writing
+or their behavior will be
+
+413
+00:29:39.020 --> 00:29:41.290
+a certain way. A lot
+of people, I think just
+
+414
+00:29:41.290 --> 00:29:43.000
+pick a database and they
+throw it up there in
+
+415
+00:29:43.000 --> 00:29:46.660
+one instance, and then they
+poke at it as opposed
+
+416
+00:29:46.660 --> 00:29:50.770
+to really thinking about sharding
+ahead of time and how
+
+417
+00:29:50.770 --> 00:29:54.940
+they believe users will behave
+and access that database ahead
+
+418
+00:29:54.940 --> 00:30:00.300
+of time. I think that's
+funny. I've been thinking about
+
+419
+00:30:00.330 --> 00:30:05.190
+this, this same issue for
+some time now. I think
+
+420
+00:30:05.200 --> 00:30:09.750
+it's many, many times. It's
+just more than that. I
+
+421
+00:30:09.750 --> 00:30:15.600
+think many times it's about
+cargo cult, even. So someone
+
+422
+00:30:15.600 --> 00:30:18.630
+comes to, to the company,
+they start and the company
+
+423
+00:30:18.630 --> 00:30:21.180
+starts a new project. And
+he says, well, I work
+
+424
+00:30:21.180 --> 00:30:25.050
+with Oracle and they have
+very good database and it
+
+425
+00:30:25.080 --> 00:30:28.140
+always worked for me. Why
+not? Why wouldn't it work
+
+426
+00:30:29.070 --> 00:30:35.760
+this time? This kind of
+attitude? I think it's understandable
+
+427
+00:30:35.760 --> 00:30:39.450
+because a relational database dominated
+the market for at least
+
+428
+00:30:39.450 --> 00:30:46.740
+20 years, without seriously considering
+what can be done better
+
+429
+00:30:46.740 --> 00:30:49.620
+because it just works. It
+works. Why do you play
+
+430
+00:30:49.620 --> 00:30:54.690
+something that works? Yeah. And
+it works okay. Right. It
+
+431
+00:30:54.690 --> 00:30:58.260
+doesn't, it doesn't work. Make
+it work. It will work.
+
+432
+00:30:58.620 --> 00:31:01.560
+It will even at certain
+point of time return on
+
+433
+00:31:01.560 --> 00:31:06.660
+your investment sooner or later,
+but why not do better?
+
+434
+00:31:07.200 --> 00:31:12.810
+And the way I think
+about it, I like to
+
+435
+00:31:12.810 --> 00:31:16.500
+think about it. Sometimes people
+talk about polyglot programming, but
+
+436
+00:31:16.740 --> 00:31:22.590
+what about polyglot databases? A
+single application can have multiple
+
+437
+00:31:22.590 --> 00:31:26.820
+types of databases that are
+specifically optimized for certain kinds
+
+438
+00:31:26.820 --> 00:31:30.540
+of data. For example, one
+of the things we are
+
+439
+00:31:30.540 --> 00:31:34.010
+working for next version of
+revving DB is a, a
+
+440
+00:31:34.010 --> 00:31:38.190
+specialized storage for it for
+time series data. Oh, wow.
+
+441
+00:31:38.250 --> 00:31:40.110
+That's a good idea. That's
+a hard problem to solve.
+
+442
+00:31:40.950 --> 00:31:45.930
+Yeah. And, and one of
+the things we were working
+
+443
+00:31:45.930 --> 00:31:50.400
+on more or less, it's
+finished these new key value
+
+444
+00:31:50.400 --> 00:31:55.620
+store. And with it, we
+we've got with it. And
+
+445
+00:31:55.620 --> 00:31:59.760
+with, with optimization, we've done,
+we've got really amazing performance
+
+446
+00:31:59.760 --> 00:32:04.830
+I'm talking about, or the
+order of millions of key
+
+447
+00:32:04.840 --> 00:32:09.990
+values, key value pairs per
+second. I don't remember exactly
+
+448
+00:32:10.020 --> 00:32:13.530
+the exact figures, but it
+gets to this kind of
+
+449
+00:32:13.590 --> 00:32:18.270
+performance when you seriously optimize
+a database for certain kinds
+
+450
+00:32:18.270 --> 00:32:22.200
+of data. And I believe
+that I believe that's the
+
+451
+00:32:22.200 --> 00:32:26.250
+future of databases in general,
+that the database has, will
+
+452
+00:32:26.250 --> 00:32:32.820
+get more and more specialized
+because what I see is
+
+453
+00:32:32.820 --> 00:32:36.810
+growing need in, in performance
+more performance, because you get
+
+454
+00:32:36.810 --> 00:32:39.150
+more and more users, more
+and more data, you need
+
+455
+00:32:39.380 --> 00:32:44.710
+analyze that Faster and faster
+to stay in business. Definitely,
+
+456
+00:32:44.720 --> 00:32:50.980
+definitely. Well, folks can check
+out Raven db@ravendb.net, and you
+
+457
+00:32:50.980 --> 00:32:52.690
+can go up there. You
+can check out the downloads.
+
+458
+00:32:52.690 --> 00:32:56.500
+They've got a really great
+series of videos explaining how
+
+459
+00:32:56.500 --> 00:33:00.010
+to use it. There's classes,
+there's events probably nearby in
+
+460
+00:33:00.010 --> 00:33:02.770
+your city. And of course
+the code is all up
+
+461
+00:33:02.800 --> 00:33:05.830
+on GitHub. Thanks so much
+for chatting with me today,
+
+462
+00:33:06.010 --> 00:33:10.930
+Michael. Thank you. This has
+been another episode of Hanselminutes
+
+463
+00:33:11.020 --> 00:33:12.580
+and we'll see you again
+next week.
+

@@ -1,0 +1,2917 @@
+WEBVTT FILE
+
+1
+00:00:12.050 --> 00:00:17.810
+From hanselminutes.com as Hansel minutes,
+a weekly discussion with web
+
+2
+00:00:17.810 --> 00:00:23.030
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+3
+00:00:23.030 --> 00:00:29.390
+number one 86. Recorded live
+Thursday, November 5th, 2009. Support for Hansel
+
+4
+00:00:29.390 --> 00:00:33.770
+minutes is provided by Tellerik
+red controls, The most comprehensive
+
+5
+00:00:33.770 --> 00:00:37.640
+suite of components In those
+forums and asp.net web applications
+
+6
+00:00:38.060 --> 00:00:46.700
+online@wwwdottelerik.com. In this episode, Scott
+talks get bugging with test
+
+7
+00:00:46.700 --> 00:00:51.830
+Fernandez. Hi, this is Scott
+Hanselman and this is another
+
+8
+00:00:51.830 --> 00:00:54.800
+episode of Hansel minutes and
+I'm here in Malmo, Sweden,
+
+9
+00:00:54.800 --> 00:00:57.170
+and I have the opportunity
+to sit down with Tess
+
+10
+00:00:57.190 --> 00:01:00.140
+Fernandez, who is an escalation
+engineer with Microsoft and I
+
+11
+00:01:00.140 --> 00:01:03.560
+well known asp.net debugger. Hi
+Scott. Thanks for taking the
+
+12
+00:01:03.560 --> 00:01:05.900
+time to talk to me.
+Yeah, thank you. So, so
+
+13
+00:01:05.900 --> 00:01:08.840
+you are kind of world
+renown as, as a, as
+
+14
+00:01:08.840 --> 00:01:11.720
+an asp.net D you've got
+a really great blog. I
+
+15
+00:01:11.720 --> 00:01:13.670
+think you said the blog
+is called if broke. It
+
+16
+00:01:13.670 --> 00:01:15.710
+is fix it. You should.
+Yes. That's the name of
+
+17
+00:01:15.710 --> 00:01:18.710
+your blog? It's funny, I
+guess this kind of Yoda
+
+18
+00:01:18.850 --> 00:01:21.440
+statement. I've never seen star
+Wars. You've never seen star
+
+19
+00:01:21.440 --> 00:01:23.330
+Wars. Did you know that
+it was a Yoda, like
+
+20
+00:01:23.330 --> 00:01:28.250
+statement when you said it,
+it sounded something like that
+
+21
+00:01:28.250 --> 00:01:31.730
+character you've never seen before.
+I thought it would be
+
+22
+00:01:31.730 --> 00:01:34.040
+cool to talk about kind
+of debugging one-on-one because to
+
+23
+00:01:34.040 --> 00:01:36.110
+be totally honest with you
+while I really enjoy your
+
+24
+00:01:36.110 --> 00:01:38.600
+blog and it's kind of
+like I'm reading a mystery
+
+25
+00:01:38.600 --> 00:01:42.290
+novel. I don't always understand
+what it is I'm reading.
+
+26
+00:01:43.400 --> 00:01:45.050
+I, you know, I see
+that there's usually, I think
+
+27
+00:01:45.050 --> 00:01:47.930
+you're not alone. Really. I
+think sometimes people read your
+
+28
+00:01:47.930 --> 00:01:51.230
+blog because they want to
+feel smart. Yes. I think
+
+29
+00:01:51.230 --> 00:01:54.320
+that, I mean, I know
+how to hit a five
+
+30
+00:01:54.320 --> 00:01:55.880
+and I know how to
+push F nine and I,
+
+31
+00:01:55.880 --> 00:01:57.710
+you know, that's pretty much
+the extent of my debugging.
+
+32
+00:01:57.710 --> 00:02:00.140
+Okay. Back in the day
+I could use like soft
+
+33
+00:02:00.140 --> 00:02:04.490
+ice and do like low-level
+debugging, but.net has worked so
+
+34
+00:02:04.490 --> 00:02:08.120
+well. I haven't personally needed
+to escalate anything. And I
+
+35
+00:02:08.120 --> 00:02:09.920
+think that's the case for
+a lot of people. That's
+
+36
+00:02:09.980 --> 00:02:12.740
+probably why they read it
+and not use it, or
+
+37
+00:02:12.740 --> 00:02:16.010
+maybe they read it also
+because they are still like
+
+38
+00:02:16.040 --> 00:02:19.040
+tips to be learned about
+how to do things, to
+
+39
+00:02:19.040 --> 00:02:22.640
+not run into issues. Yeah,
+exactly. And I know that
+
+40
+00:02:22.640 --> 00:02:25.010
+every once in a while
+on Vista, like I would
+
+41
+00:02:25.010 --> 00:02:26.990
+get a blue screen and
+I know that the dump
+
+42
+00:02:26.990 --> 00:02:29.990
+file would appear memory dot
+dump, and I would need
+
+43
+00:02:29.990 --> 00:02:32.990
+to send it to someone
+smarter than me. Usually, probably
+
+44
+00:02:32.990 --> 00:02:36.290
+you actually not because that's,
+that would be a Colonel
+
+45
+00:02:36.290 --> 00:02:39.830
+dump. Oh. So that's a
+kind of Cardinal dump is
+
+46
+00:02:39.830 --> 00:02:42.320
+of the whole O S
+and the whole system. Okay.
+
+47
+00:02:42.560 --> 00:02:45.620
+I work mostly would use
+her Mo dumpsite dumps off
+
+48
+00:02:45.980 --> 00:02:48.260
+processes. Okay. So this is
+good. So let's, let's do
+
+49
+00:02:48.260 --> 00:02:52.100
+a little debugging one-on-one here.
+So a Colonel dump you
+
+50
+00:02:52.100 --> 00:02:54.230
+said is, is a dump
+of everything. It's top of
+
+51
+00:02:54.230 --> 00:02:57.980
+the complete memory of the
+system. Okay. Including all the
+
+52
+00:02:57.980 --> 00:03:01.660
+different processes. So Colonel Dom
+contains Everything you're seeing, right.
+
+53
+00:03:02.220 --> 00:03:04.170
+Colonel dumped in. And when
+it blue screens, that's a
+
+54
+00:03:04.170 --> 00:03:08.070
+complete snapshot in time of
+what's happening on the computer
+
+55
+00:03:08.070 --> 00:03:10.830
+at that moment that it
+crashed. Okay. And you work
+
+56
+00:03:10.830 --> 00:03:12.990
+with user mode dumps, which
+means that when a process
+
+57
+00:03:12.990 --> 00:03:15.090
+crashes, you have a snapshot
+in time of that process.
+
+58
+00:03:15.330 --> 00:03:18.720
+So what's contained within that
+dump. It depends a little
+
+59
+00:03:18.720 --> 00:03:21.510
+bit on how you, how
+you create a dome, but
+
+60
+00:03:21.510 --> 00:03:25.020
+if you create a minute
+dump with four full options,
+
+61
+00:03:25.020 --> 00:03:28.440
+which is normally called a
+full dump, then it contains
+
+62
+00:03:28.740 --> 00:03:31.860
+basically all the memory that,
+that you've committed in the
+
+63
+00:03:31.860 --> 00:03:36.360
+process, everything you've allocated. And
+okay. So if I have
+
+64
+00:03:36.360 --> 00:03:40.680
+an asp.net worker process, and
+I've used up 300 megs
+
+65
+00:03:40.680 --> 00:03:43.740
+of Ram, I'm going to
+get a 300 Meg. Yeah.
+
+66
+00:03:43.770 --> 00:03:47.310
+So if you've allocated 300
+allocated and committed 300 mice.
+
+67
+00:03:47.310 --> 00:03:51.420
+Yeah. Okay. What's in Ram
+may not really reflect what
+
+68
+00:03:51.420 --> 00:03:55.460
+you're actually using gutsiest. What
+is paged into Ram right
+
+69
+00:03:55.470 --> 00:03:58.020
+there. Okay. So mean, you're
+saying that it might just
+
+70
+00:03:58.020 --> 00:04:01.110
+been, I I've have committed
+it, but I haven't filled
+
+71
+00:04:01.110 --> 00:04:05.220
+it up. No. So if
+you have multiple processes running
+
+72
+00:04:05.220 --> 00:04:09.090
+on the same system, then
+they're sharing the same Ram
+
+73
+00:04:09.630 --> 00:04:11.790
+and you may not be
+able to fit everything you
+
+74
+00:04:11.790 --> 00:04:15.240
+have and the process inside
+your Ram. So some of
+
+75
+00:04:15.240 --> 00:04:16.680
+it is going to pay
+and be paged out to
+
+76
+00:04:16.680 --> 00:04:18.750
+disk. Okay. And when I
+make the user dump, are
+
+77
+00:04:18.750 --> 00:04:21.420
+those things gonna be lifted
+off the disc and then
+
+78
+00:04:21.570 --> 00:04:23.940
+written out to the practice.
+So it will reflect a
+
+79
+00:04:23.940 --> 00:04:27.690
+true kind of the virtual
+memory that I have. And
+
+80
+00:04:27.690 --> 00:04:30.780
+essence, if you, if you've
+allocated, adopt net object, it
+
+81
+00:04:30.780 --> 00:04:34.410
+will be in the dome.
+Okay. Now I've seen you
+
+82
+00:04:34.440 --> 00:04:37.260
+open up task manager and
+then just right. Click on
+
+83
+00:04:37.260 --> 00:04:40.050
+a, on a process and
+say, create dump. Yes. And
+
+84
+00:04:40.050 --> 00:04:41.600
+that's, is that the most
+common way to make it
+
+85
+00:04:41.600 --> 00:04:44.670
+difference? It depends on how
+you, what you're trying to
+
+86
+00:04:44.670 --> 00:04:47.340
+capture, because if you want
+to capture a snapshot of
+
+87
+00:04:47.340 --> 00:04:50.250
+right now, like for example,
+a hang or, or performance
+
+88
+00:04:50.250 --> 00:04:52.680
+issue and see what it's
+doing right now, or if
+
+89
+00:04:52.680 --> 00:04:54.810
+you want to capture a
+memory down to figure out
+
+90
+00:04:55.050 --> 00:04:59.070
+how much memory you using.
+Yeah. Create who user, if
+
+91
+00:04:59.070 --> 00:05:00.990
+you want to capture a
+Dom, for example, on a,
+
+92
+00:05:01.020 --> 00:05:03.480
+on an acception, you would
+have to use another tool,
+
+93
+00:05:03.960 --> 00:05:08.160
+either a winded, Richie's a
+companion 80 plus you can
+
+94
+00:05:08.160 --> 00:05:11.430
+configure that to grit and
+get memory dumps on exceptions
+
+95
+00:05:11.430 --> 00:05:14.340
+or on crashes. It's called
+a D plus 80 plus
+
+96
+00:05:14.370 --> 00:05:18.450
+auto dump plus, or so
+that is the VBS file.
+
+97
+00:05:18.570 --> 00:05:22.410
+That's automating CDB. Okay. Slow
+down. Cause we had a
+
+98
+00:05:22.410 --> 00:05:24.000
+lot of listeners are hearing
+a lot of acronyms. So
+
+99
+00:05:24.000 --> 00:05:26.250
+if VBS files a visual
+basic script, that's going to
+
+100
+00:05:26.250 --> 00:05:28.760
+go and do an automation
+of it. What A CDB
+
+101
+00:05:28.760 --> 00:05:32.850
+CDB is the command blind
+version of windy bitchy. Okay.
+
+102
+00:05:32.880 --> 00:05:35.220
+So when DBG is the
+windows debugger that you get,
+
+103
+00:05:35.220 --> 00:05:37.920
+when you install the debugging
+tools, It's a free debugger
+
+104
+00:05:37.920 --> 00:05:40.320
+and it's, I'm a native
+only to buggery. It doesn't
+
+105
+00:05:40.320 --> 00:05:44.910
+really understand.net at all. Okay.
+Really? So when DBG doesn't
+
+106
+00:05:44.910 --> 00:05:47.940
+understand mixed what they call
+mixed mode or, or manage
+
+107
+00:05:47.950 --> 00:05:51.390
+code, and then CDB is
+the command line debugger version
+
+108
+00:05:51.390 --> 00:05:54.150
+of Yeah. So when did
+individually doesn't look scary and
+
+109
+00:05:54.480 --> 00:05:56.970
+they're a CDP. Okay. Okay.
+And then CVB is apparently
+
+110
+00:05:57.140 --> 00:06:00.860
+complicated that I would want
+to use a command, a
+
+111
+00:06:00.860 --> 00:06:02.710
+visual basic script to automate
+it, to do it, Not
+
+112
+00:06:02.710 --> 00:06:05.530
+necessarily. That is so complicated
+is that you need to
+
+113
+00:06:05.530 --> 00:06:07.300
+do it so fast that
+if you had to do
+
+114
+00:06:07.300 --> 00:06:13.090
+it yourself, like for example,
+you would, then it would
+
+115
+00:06:13.090 --> 00:06:15.790
+be difficult. So it's easier
+to use a script to
+
+116
+00:06:16.690 --> 00:06:19.630
+go in. For example, if
+you would, if you would
+
+117
+00:06:19.990 --> 00:06:22.090
+capture a dump on a,
+on an exception, you can
+
+118
+00:06:22.090 --> 00:06:24.400
+either choose to set a
+break point on that exception.
+
+119
+00:06:24.490 --> 00:06:26.980
+And when that happens, click
+something and create a dome
+
+120
+00:06:27.460 --> 00:06:31.840
+or use a script that
+catchers captures that. Okay, great.
+
+121
+00:06:32.170 --> 00:06:35.740
+Now why would I, as
+a developer, want to either
+
+122
+00:06:35.740 --> 00:06:37.630
+right. Click and create a
+dump or put in a
+
+123
+00:06:37.630 --> 00:06:41.200
+tool that would capture a
+dump versus going debug, attached
+
+124
+00:06:41.200 --> 00:06:45.490
+to process, Because I don't
+think you'll have visual studio
+
+125
+00:06:45.490 --> 00:06:48.970
+installed on your Espinoza server.
+Sure. What about like remote
+
+126
+00:06:48.970 --> 00:06:54.730
+debugging? So still like, so
+even when, when you're doing
+
+127
+00:06:54.730 --> 00:06:59.500
+remote bugging, when you're attaching,
+you'll stop the process. And
+
+128
+00:06:59.530 --> 00:07:01.870
+if you have a site
+that has to be up,
+
+129
+00:07:02.500 --> 00:07:04.900
+then you can just go
+in and stop the process
+
+130
+00:07:04.900 --> 00:07:08.620
+and accurate Leasher look at
+some values and continue. Okay.
+
+131
+00:07:08.620 --> 00:07:10.390
+So you're saying if in
+production I go and attach
+
+132
+00:07:10.720 --> 00:07:13.030
+a debugger to this process,
+it's really going to have
+
+133
+00:07:13.030 --> 00:07:15.490
+that thing tied up completely.
+Yeah. But you're saying that
+
+134
+00:07:15.490 --> 00:07:18.430
+I can right. Click create
+dump in production and the
+
+135
+00:07:18.430 --> 00:07:20.910
+process will just keep running
+and how long it will
+
+136
+00:07:20.910 --> 00:07:22.840
+be down for as long
+as it took to. Yeah.
+
+137
+00:07:22.870 --> 00:07:25.360
+So that's, I mean, it
+depends a little bit on
+
+138
+00:07:25.710 --> 00:07:28.510
+how big the processes, but
+we're talking somewhere around one,
+
+139
+00:07:28.520 --> 00:07:31.270
+two seconds. Really? Yeah. So
+it sounds like that that's
+
+140
+00:07:31.270 --> 00:07:33.430
+a really great way for
+you as an escalation engineer
+
+141
+00:07:33.430 --> 00:07:35.470
+to capture a moment in
+time and really see what's
+
+142
+00:07:35.470 --> 00:07:37.810
+going on. Okay. Do you
+think that this is a
+
+143
+00:07:37.810 --> 00:07:42.820
+skill that more developers should
+have? I'm not really sure,
+
+144
+00:07:42.820 --> 00:07:45.700
+because at first I did
+think that a lot of
+
+145
+00:07:45.700 --> 00:07:49.540
+people should have these skills,
+but then I'm not sure
+
+146
+00:07:49.540 --> 00:07:51.850
+if you should spend a
+whole lot of time actually
+
+147
+00:07:51.850 --> 00:07:55.600
+learning days. It's like learning
+this to, to a depth
+
+148
+00:07:55.750 --> 00:07:58.930
+where you're debugging like me,
+because this is my job.
+
+149
+00:07:59.440 --> 00:08:02.830
+I think that most people
+should be able to just
+
+150
+00:08:02.830 --> 00:08:07.180
+open a simple dump, run
+three commands and that, yeah.
+
+151
+00:08:07.360 --> 00:08:10.060
+Okay. Is that a real
+number of commands is there's
+
+152
+00:08:10.060 --> 00:08:11.800
+three things that people should
+know. Right. And she used
+
+153
+00:08:11.800 --> 00:08:15.520
+three commands that are good.
+I know that I felt
+
+154
+00:08:15.520 --> 00:08:18.130
+quite proud of myself when
+I had a blue screen.
+
+155
+00:08:18.520 --> 00:08:20.500
+And then I opened that
+was again, a kernel mode
+
+156
+00:08:20.500 --> 00:08:22.840
+dump. And I opened up
+when DB G and I
+
+157
+00:08:22.870 --> 00:08:24.580
+typed in, I think it
+was like, what is it?
+
+158
+00:08:24.580 --> 00:08:28.360
+Bang, analyzed dash V. And
+that's like the standard. I
+
+159
+00:08:28.360 --> 00:08:30.730
+don't know what I'm doing,
+but figure it out best
+
+160
+00:08:30.730 --> 00:08:33.760
+you can. And then when
+a DBG will give you
+
+161
+00:08:33.760 --> 00:08:35.950
+a general sense of what
+it thinks might have happened.
+
+162
+00:08:36.040 --> 00:08:38.350
+And that was the extent
+of my abilities when DPG,
+
+163
+00:08:38.590 --> 00:08:41.800
+But that's good because when
+you run a specifically, if
+
+164
+00:08:41.800 --> 00:08:44.200
+you have a crash occur,
+occurred a mode crash. If
+
+165
+00:08:44.200 --> 00:08:46.600
+you run an analyze slash
+V, what it will do
+
+166
+00:08:46.600 --> 00:08:48.640
+is it will look up
+where you are and then
+
+167
+00:08:48.670 --> 00:08:51.880
+we'll also match up would
+bucket and like dr. Watson
+
+168
+00:08:51.880 --> 00:08:55.090
+bucket to set. Okay. So
+let's, let's dig into that
+
+169
+00:08:55.110 --> 00:08:58.140
+a little bit, because you're
+speaking from a Microsoft person's
+
+170
+00:08:58.140 --> 00:09:02.010
+perspective, dr. Watson, right. Was
+a little tool that I
+
+171
+00:09:02.010 --> 00:09:05.690
+think lived in windows 3.1,
+or to just start, I
+
+172
+00:09:05.690 --> 00:09:08.810
+guess it was exchange would
+error reporting. Yeah. It was
+
+173
+00:09:08.810 --> 00:09:10.910
+a little man with a,
+is a little, like a
+
+174
+00:09:10.910 --> 00:09:14.810
+little iconic icon of this
+little doctor with a stethoscope
+
+175
+00:09:14.810 --> 00:09:18.440
+listening into a process. And
+dr. Watson is the, kind
+
+176
+00:09:18.440 --> 00:09:20.270
+of the, what we say
+when we actually use it
+
+177
+00:09:20.270 --> 00:09:22.910
+as a verb instead of
+Microsoft like, Oh no, my
+
+178
+00:09:22.910 --> 00:09:26.630
+process has Watson. Right? And
+then it goes, and it
+
+179
+00:09:26.630 --> 00:09:30.110
+sends up an error report
+to a service cloud service
+
+180
+00:09:30.110 --> 00:09:33.650
+in the sky. And it,
+how does it decide this
+
+181
+00:09:33.650 --> 00:09:35.960
+bucket ID? I've seen this
+notion of a bucket ID.
+
+182
+00:09:36.920 --> 00:09:39.500
+It looks at a stack
+that crashed, and then it
+
+183
+00:09:39.500 --> 00:09:43.940
+compares it to other crashes
+that have happened. And if
+
+184
+00:09:43.940 --> 00:09:46.730
+it fits the same stack
+will put it in the
+
+185
+00:09:46.730 --> 00:09:50.660
+same bucket. And then for
+example, when let's say 10
+
+186
+00:09:50.660 --> 00:09:55.010
+people or more have sent
+in dumps where the same
+
+187
+00:09:55.010 --> 00:09:59.780
+bucket, then it will be
+investigated. So I'm guessing 10,
+
+188
+00:10:00.420 --> 00:10:02.860
+Some, some, some large number.
+Cause I understand that that
+
+189
+00:10:02.860 --> 00:10:08.240
+dr. Watson and this notion
+of shared buckets of, of
+
+190
+00:10:08.270 --> 00:10:10.700
+identical stacks was a big
+part of what made windows
+
+191
+00:10:10.700 --> 00:10:12.980
+seven, a much better operating
+systems. And they really put
+
+192
+00:10:12.980 --> 00:10:15.890
+some statistical analysis in this.
+And I suppose that, is
+
+193
+00:10:15.890 --> 00:10:20.930
+it true that in your
+job, you're looking@thesekindsofthingsandreportingtotheasp.net. I, I'm
+
+194
+00:10:20.930 --> 00:10:25.340
+not necessarily looking at Watson
+buckets. That's not really what
+
+195
+00:10:25.340 --> 00:10:29.780
+our team does. Our team
+works on people call in
+
+196
+00:10:29.930 --> 00:10:32.780
+and have issues. And then
+we report back for assemble.
+
+197
+00:10:33.230 --> 00:10:35.870
+If they get, if they
+have bugs in ASP net
+
+198
+00:10:35.870 --> 00:10:38.060
+itself, Do you look and
+see if this is a
+
+199
+00:10:38.060 --> 00:10:40.490
+repeated bug? Like if they
+have a bucket and you
+
+200
+00:10:40.490 --> 00:10:42.950
+go, Oh, well, we already
+know about that. None of
+
+201
+00:10:42.950 --> 00:10:45.710
+this is there from dr.
+Watson buckets, but yeah. Marlin
+
+202
+00:10:45.710 --> 00:10:48.440
+box systems. So yeah, I
+know that the team looks
+
+203
+00:10:48.440 --> 00:10:50.480
+at these buckets and says,
+well, look, you know, a
+
+204
+00:10:50.480 --> 00:10:53.060
+thousand people are having this
+particular problem. We should really
+
+205
+00:10:53.060 --> 00:10:55.040
+dig into that. And they
+would go, yeah. And if
+
+206
+00:10:55.040 --> 00:10:57.620
+they do dig into that,
+then the next time you
+
+207
+00:10:57.620 --> 00:11:00.800
+have an issue like that,
+you're going to see, Hey,
+
+208
+00:11:01.010 --> 00:11:04.850
+there's a reported problem. Go
+ahead and download describer. Right.
+
+209
+00:11:05.210 --> 00:11:07.190
+And in windows seven, that's
+what that action center says.
+
+210
+00:11:07.190 --> 00:11:09.110
+It says, Oh, we know
+about this, go click here
+
+211
+00:11:09.110 --> 00:11:11.600
+and we'll fix it. That's
+really kind of cool. So
+
+212
+00:11:11.690 --> 00:11:15.410
+help me understand the difference
+between debug versus release mode.
+
+213
+00:11:15.440 --> 00:11:17.390
+Cause I know a lot
+of people and I don't
+
+214
+00:11:17.390 --> 00:11:19.220
+think they want to admit
+it, but maybe the listeners
+
+215
+00:11:19.220 --> 00:11:22.010
+would maybe admit it to
+themselves who will put a
+
+216
+00:11:22.010 --> 00:11:25.760
+lot of debug code into
+production because the perception is
+
+217
+00:11:25.760 --> 00:11:29.540
+that a.net application that's production
+that's in release mode is
+
+218
+00:11:29.540 --> 00:11:32.000
+hard to debug. So they
+just say, forget it. We'll
+
+219
+00:11:32.000 --> 00:11:34.280
+just put this in debug
+mode. We'll leave it there.
+
+220
+00:11:34.580 --> 00:11:37.100
+Okay. What are the trade
+offs between debug versus release?
+
+221
+00:11:37.130 --> 00:11:43.130
+So would say because, because
+the release mode is optimized
+
+222
+00:11:43.400 --> 00:11:47.660
+and debug mode is not
+in most cases, if you
+
+223
+00:11:47.660 --> 00:11:50.690
+would actually go in with
+a, with a, a dotnet
+
+224
+00:11:50.690 --> 00:11:54.580
+debugger, like visual studio. Yeah.
+It may not pop up
+
+225
+00:11:54.700 --> 00:11:57.760
+the exact right line of
+code. You might be off
+
+226
+00:11:57.760 --> 00:12:00.670
+by a couple of lines
+or two, but are you
+
+227
+00:12:00.670 --> 00:12:04.030
+really gonna do that? Are
+you really going to attach
+
+228
+00:12:04.210 --> 00:12:08.080
+official studio to it? Probably
+not in production. Yeah. And
+
+229
+00:12:08.200 --> 00:12:12.040
+for tools like when did
+bitchy, you're taking memory doms,
+
+230
+00:12:12.580 --> 00:12:15.580
+you don't need that. So
+the only reason I could
+
+231
+00:12:15.580 --> 00:12:19.330
+see for, if you, if
+you're really, really concerned about
+
+232
+00:12:19.330 --> 00:12:23.140
+line numbers and things, is
+if you're yourself reporting a
+
+233
+00:12:23.140 --> 00:12:29.320
+stack and reporting, you know,
+reporting back code lines or
+
+234
+00:12:29.320 --> 00:12:32.800
+whatever. But other than that,
+I don't see much of
+
+235
+00:12:32.800 --> 00:12:36.550
+any reason to have debug
+remote on the server. And
+
+236
+00:12:36.550 --> 00:12:39.580
+for ASP, not it's even
+worse because at debug mode
+
+237
+00:12:39.580 --> 00:12:42.070
+kind of implies that you
+want to let a dotnet
+
+238
+00:12:42.070 --> 00:12:44.410
+the bugger attached to it
+and be able to debug
+
+239
+00:12:44.410 --> 00:12:47.530
+it fine. Right. And because
+of that, timeouts are not
+
+240
+00:12:47.530 --> 00:12:50.800
+honored because after, like, for
+example, if you said to
+
+241
+00:12:50.800 --> 00:12:53.830
+Nate, it's been a timeout,
+default timeout is like one
+
+242
+00:12:53.830 --> 00:12:57.960
+and a half minute for
+any ASP X page. Okay.
+
+243
+00:12:58.020 --> 00:12:59.800
+So if a page takes
+too long, it'll shut it.
+
+244
+00:12:59.820 --> 00:13:02.550
+Yeah. Yeah. You know, you'll
+see like page type out
+
+245
+00:13:02.760 --> 00:13:05.730
+or whatever that does not
+happen. If you have debug
+
+246
+00:13:05.730 --> 00:13:09.810
+mode and reasonable courses, because
+you attach it to bugger,
+
+247
+00:13:10.030 --> 00:13:12.300
+you can't have it shutdown.
+Right. You could be debugging
+
+248
+00:13:12.300 --> 00:13:17.670
+for 20 minutes. So that
+doesn't happen. You don't optimize
+
+249
+00:13:17.670 --> 00:13:21.690
+the code and that may
+or may not be a
+
+250
+00:13:21.690 --> 00:13:25.110
+big performance issue for, you
+know, most sites really don't
+
+251
+00:13:25.110 --> 00:13:32.190
+have that type of performance,
+like neat. Right. But one
+
+252
+00:13:32.190 --> 00:13:34.200
+thing that does make a
+big difference is that if
+
+253
+00:13:34.200 --> 00:13:37.500
+you run in debug mode,
+you'll create one assembly per
+
+254
+00:13:37.500 --> 00:13:42.060
+ACX page. So they'll all
+be Also many assemblies gets
+
+255
+00:13:42.060 --> 00:13:44.580
+created. If you had hundreds
+of pages, you're going to
+
+256
+00:13:44.580 --> 00:13:47.100
+have hundreds of little tiny
+assemblies and release mode. You
+
+257
+00:13:47.110 --> 00:13:51.210
+just get one Or rather
+if he's have debug equals
+
+258
+00:13:51.210 --> 00:13:55.470
+false in config. So there's
+a bit of a difference
+
+259
+00:13:55.530 --> 00:13:59.160
+of, if you say, debug
+release mode versus debug equals
+
+260
+00:13:59.160 --> 00:14:01.590
+true. Nice. Yeah. That's a
+very interesting point. So you're
+
+261
+00:14:01.590 --> 00:14:05.220
+saying that the dropdown list
+in visual studio switching between
+
+262
+00:14:05.220 --> 00:14:08.850
+debug and really That has
+nothing to do with That
+
+263
+00:14:08.850 --> 00:14:11.460
+tells the compiler for your
+code behind pages, what to
+
+264
+00:14:11.460 --> 00:14:14.130
+do, and then saying debug
+equals true or false in
+
+265
+00:14:14.130 --> 00:14:17.790
+the compiler section of the
+web config tells the jet
+
+266
+00:14:19.770 --> 00:14:24.810
+pilot how it should treat
+those pages. Yes. Interesting. Hey
+
+267
+00:14:24.810 --> 00:14:26.970
+everybody, this is Scott coming
+at you from another place
+
+268
+00:14:26.970 --> 00:14:30.120
+in time. No doubt. You'll
+probably bump into testing tasks
+
+269
+00:14:30.120 --> 00:14:32.550
+now, and then, and your
+work and, you know, writing
+
+270
+00:14:32.550 --> 00:14:34.860
+functional tests is probably not
+your favorite thing. It's kind
+
+271
+00:14:34.860 --> 00:14:36.840
+of difficult. It takes time
+and the results can be
+
+272
+00:14:36.840 --> 00:14:40.110
+dubious. Well, get ready to
+start liking tests. Thanks to
+
+273
+00:14:40.110 --> 00:14:44.670
+Tellerik with the new whereby
+testing framework. Building web automation
+
+274
+00:14:44.700 --> 00:14:47.910
+test is a breeze. You've
+got code automation with advanced
+
+275
+00:14:47.910 --> 00:14:50.430
+asp.net Ajax and server light
+applications. So you can write
+
+276
+00:14:50.430 --> 00:14:53.720
+a single test, have it
+executed against multiple browsers at
+
+277
+00:14:53.720 --> 00:14:57.140
+once. You'd benefit from a
+rich API there's link support
+
+278
+00:14:57.170 --> 00:15:00.650
+integration with visual studio unit
+testing, also in unit X
+
+279
+00:15:00.650 --> 00:15:03.920
+unit and MB unit, not
+to mention the free rappers
+
+280
+00:15:03.920 --> 00:15:06.710
+for Telerik rad controls for
+ESPN and Ajax and several
+
+281
+00:15:06.710 --> 00:15:10.580
+light, all shipping with Telerik's
+new testing tool. One of
+
+282
+00:15:10.580 --> 00:15:13.730
+the best features, the whereby
+testing framework, which is developed
+
+283
+00:15:13.730 --> 00:15:17.660
+by art of test is
+it's absolutely free. Freddie got
+
+284
+00:15:17.720 --> 00:15:20.150
+hooked on web by testing
+framework, start using it right
+
+285
+00:15:20.150 --> 00:15:23.630
+away, go to tellerik.com for
+more info. Thanks a lot.
+
+286
+00:15:24.740 --> 00:15:28.130
+So it sounds like putting
+debug mode in a website
+
+287
+00:15:28.130 --> 00:15:30.290
+is just a bad idea
+all together. There's really no
+
+288
+00:15:30.290 --> 00:15:33.950
+good reason to do that.
+But if, if something, if
+
+289
+00:15:33.950 --> 00:15:36.740
+something bad happens really other
+than really good logging and
+
+290
+00:15:36.740 --> 00:15:39.080
+tracing, I'm pretty much limited
+to dumps. Then at that
+
+291
+00:15:39.080 --> 00:15:43.090
+point I might not. Yeah.
+So what are some of
+
+292
+00:15:43.090 --> 00:15:46.000
+the classifications of things that
+could go wrong and asp.net
+
+293
+00:15:46.000 --> 00:15:47.260
+that it would cause me
+to want to take a
+
+294
+00:15:47.260 --> 00:15:50.380
+dump? Let's see. That's funny
+taking, we always say that,
+
+295
+00:15:50.380 --> 00:15:53.350
+take it down, but it
+makes everybody laugh. Yeah. In
+
+296
+00:15:53.350 --> 00:15:57.160
+fact, yesterday I was called
+and it was like, please
+
+297
+00:15:57.160 --> 00:16:03.850
+say, take a memory or
+a great memory. So most
+
+298
+00:16:03.850 --> 00:16:06.760
+of the cases I get
+are either high memory usage,
+
+299
+00:16:07.000 --> 00:16:11.170
+performance issues, or my process
+crashed, or I have this
+
+300
+00:16:11.170 --> 00:16:13.210
+really weird exception that I
+have no clue why it
+
+301
+00:16:13.210 --> 00:16:17.470
+happened. Okay. So memory issues,
+this is like mostly leaks.
+
+302
+00:16:17.500 --> 00:16:19.450
+Like I'm using up too
+much memory. Yeah. Yeah. So
+
+303
+00:16:19.450 --> 00:16:22.600
+in, in really in.net, there
+is like this feeling that
+
+304
+00:16:23.050 --> 00:16:24.700
+I should not be able
+to use up too much
+
+305
+00:16:24.730 --> 00:16:27.100
+because I have the garbage
+collector. Right. Well the garbage
+
+306
+00:16:27.100 --> 00:16:30.550
+collector will only collect garbage,
+but it doesn't collect things
+
+307
+00:16:30.550 --> 00:16:33.250
+that, well, how does it
+know it's garbage? You're not
+
+308
+00:16:33.250 --> 00:16:36.100
+using it anymore. You're not
+referencing it anymore. Right. So
+
+309
+00:16:36.100 --> 00:16:40.300
+most memory issues in.net applications.
+So really you're referencing things
+
+310
+00:16:40.300 --> 00:16:43.600
+that you may not even
+know that you're referencing. Okay.
+
+311
+00:16:43.600 --> 00:16:46.330
+So that means that if
+you took a memory dump
+
+312
+00:16:46.360 --> 00:16:48.430
+and looked at it, you
+would find a lot of
+
+313
+00:16:48.430 --> 00:16:51.100
+objects and of a certain
+type. And then you'd say,
+
+314
+00:16:51.100 --> 00:16:54.430
+why do I have a
+million strings? Yes. And then,
+
+315
+00:16:54.430 --> 00:16:57.520
+and then what do you
+do Then? So first off,
+
+316
+00:16:57.730 --> 00:16:59.980
+like you said, go ahead
+and look at what you're
+
+317
+00:16:59.980 --> 00:17:02.650
+using it for or what,
+what do you, what objects
+
+318
+00:17:02.650 --> 00:17:05.800
+are on the heap and
+everything. And then for each
+
+319
+00:17:05.800 --> 00:17:08.830
+of them you can use
+in wind energy, you can
+
+320
+00:17:08.830 --> 00:17:13.060
+use command. It's like GC
+route. That's a command from
+
+321
+00:17:13.390 --> 00:17:16.300
+the SOS expansion. Okay. So
+SOS is some of it's
+
+322
+00:17:16.300 --> 00:17:19.150
+called a sexy called son
+of strike, which really means
+
+323
+00:17:19.150 --> 00:17:22.870
+nothing. This is the funny
+thing about Microsoft. Does it
+
+324
+00:17:22.900 --> 00:17:26.140
+really tell me, Let me
+just get back to that
+
+325
+00:17:26.140 --> 00:17:29.740
+because I'm just going to
+say that. So you wouldn't,
+
+326
+00:17:29.740 --> 00:17:32.200
+you would run a command
+to figure out why it's
+
+327
+00:17:32.200 --> 00:17:35.560
+still being referenced. So that's
+what you would do. So
+
+328
+00:17:35.570 --> 00:17:37.060
+it'll tell you that. So
+you say I've got these
+
+329
+00:17:37.060 --> 00:17:39.940
+objects. I want to find
+out why, who is still
+
+330
+00:17:39.940 --> 00:17:42.490
+referencing them and it'll actually
+walk it back and tell
+
+331
+00:17:42.490 --> 00:17:45.370
+you who allocated that. And
+when, when I say, who
+
+332
+00:17:45.370 --> 00:17:48.580
+is that an object? Or
+is that a cost? No,
+
+333
+00:17:48.580 --> 00:17:51.480
+it's, it's an Arabic. So
+it's either a static object.
+
+334
+00:17:51.480 --> 00:17:54.150
+It has a reference to
+something that has the reference
+
+335
+00:17:54.150 --> 00:17:56.520
+to something like, for example,
+a static object. It has
+
+336
+00:17:56.520 --> 00:17:59.160
+a reference to the cash
+and your cash. You have
+
+337
+00:17:59.160 --> 00:18:03.180
+session variables, your session verbals
+are holding onto this obvious.
+
+338
+00:18:05.010 --> 00:18:08.060
+So you'll see the ABI
+not to stack. And when
+
+339
+00:18:08.060 --> 00:18:11.360
+I see these things on
+your blog, I see small
+
+340
+00:18:11.360 --> 00:18:14.540
+abbreviation commands, like you said,
+was it GC route to
+
+341
+00:18:14.540 --> 00:18:17.570
+command? That's just, there's other
+dozens of these are hundreds
+
+342
+00:18:17.570 --> 00:18:21.050
+of these things I have
+to write. So I'm trying
+
+343
+00:18:21.050 --> 00:18:24.620
+to From analyzed dash V
+to get somewhere in your
+
+344
+00:18:24.620 --> 00:18:29.300
+direction of, So I would
+say basically there may be
+
+345
+00:18:29.300 --> 00:18:32.340
+five commands that you, you
+really want to know, or
+
+346
+00:18:32.340 --> 00:18:35.240
+a three or five, like
+you want to know what
+
+347
+00:18:35.720 --> 00:18:38.210
+the stacks of the threads
+are. This one command is
+
+348
+00:18:38.210 --> 00:18:41.210
+called CLR stack. Okay. You
+want to know the obvious
+
+349
+00:18:41.210 --> 00:18:45.500
+Sunday that are in memory
+dump stat. And you want
+
+350
+00:18:45.500 --> 00:18:49.610
+to know, for example, looking
+at a specific object dump
+
+351
+00:18:49.610 --> 00:18:52.520
+OBS, and then GC route
+to figure out who's holding
+
+352
+00:18:52.520 --> 00:18:56.240
+onto memory. And that's really
+like with those commanders, if
+
+353
+00:18:56.240 --> 00:18:58.010
+you don't want to go
+into deeper, you'll get a
+
+354
+00:18:58.020 --> 00:19:02.480
+lot, lot of information Really.
+So using those five commands
+
+355
+00:19:02.480 --> 00:19:03.950
+will probably get me a
+lot of what I need.
+
+356
+00:19:03.980 --> 00:19:09.410
+Yeah. Okay. So that's memory.
+And so this is an
+
+357
+00:19:09.410 --> 00:19:13.250
+extension to when DBG. Okay.
+So the name comes from
+
+358
+00:19:14.150 --> 00:19:17.210
+in the very beginning, you
+had the CLR was called
+
+359
+00:19:17.210 --> 00:19:20.390
+lightening, or that was the
+working name for the CLR,
+
+360
+00:19:20.390 --> 00:19:23.600
+for the core piece. Same
+for the core run time.
+
+361
+00:19:23.810 --> 00:19:27.560
+Exactly. So they had this,
+they had is the bugging.
+
+362
+00:19:28.730 --> 00:19:31.610
+Well, the bagging extension called
+a strike as in the
+
+363
+00:19:31.610 --> 00:19:36.110
+strike, the lightning strike. And
+this is kind of an
+
+364
+00:19:36.110 --> 00:19:39.710
+offspring of that. So this
+is son of strife. Okay.
+
+365
+00:19:39.710 --> 00:19:42.680
+And then now we say
+SOS. Yeah. Okay. They're not
+
+366
+00:19:42.680 --> 00:19:44.630
+supposed to call for help.
+I was a long time
+
+367
+00:19:44.630 --> 00:19:47.780
+ago. That's like nine years
+ago. How long have you
+
+368
+00:19:47.780 --> 00:19:52.640
+worked for micros? Oh, a
+long time. Wow. So the
+
+369
+00:19:52.640 --> 00:19:54.590
+memory thing makes sense. That
+idea that I can take
+
+370
+00:19:54.590 --> 00:19:57.140
+a snapshot in time and
+I can wander around the
+
+371
+00:19:57.140 --> 00:19:59.420
+snapshot and I can see
+these objects and figure that
+
+372
+00:19:59.420 --> 00:20:01.390
+out. That that makes sense
+to me. But on a
+
+373
+00:20:01.400 --> 00:20:04.670
+perf using a dump a
+moment in time to identify
+
+374
+00:20:04.670 --> 00:20:08.180
+a perf problem, how do
+I do that? Well, you
+
+375
+00:20:08.180 --> 00:20:11.630
+can either Look and see
+what, so when it comes
+
+376
+00:20:11.630 --> 00:20:14.330
+down to a perfect shoe,
+it's basically, what am I
+
+377
+00:20:14.330 --> 00:20:17.660
+doing? And why is it
+taking so long? That's really
+
+378
+00:20:17.660 --> 00:20:20.030
+what it comes down to.
+So looking at the threads
+
+379
+00:20:20.030 --> 00:20:22.550
+to figuring out, like, to
+figure out what are doing,
+
+380
+00:20:22.550 --> 00:20:27.400
+so what the dotnet call
+stacks are, and preferably if
+
+381
+00:20:27.410 --> 00:20:29.510
+she has to perfect you
+something and taking a long
+
+382
+00:20:29.510 --> 00:20:31.940
+time, then maybe taking a
+couple of diet and a
+
+383
+00:20:31.940 --> 00:20:34.970
+couple of memory dumps during
+that time to figure out
+
+384
+00:20:35.300 --> 00:20:37.490
+if things are moving along
+or an auto thing. So
+
+385
+00:20:37.490 --> 00:20:40.670
+I really, I see now,
+if something is quote unquote,
+
+386
+00:20:40.700 --> 00:20:43.580
+taking a long time, aren't
+there kind of two categories
+
+387
+00:20:43.580 --> 00:20:46.550
+of what could be causing
+that one would be, I'm
+
+388
+00:20:46.550 --> 00:20:49.240
+waiting for something in the
+sense of there's a concurrency
+
+389
+00:20:49.240 --> 00:20:51.900
+issue we're in line. So
+that's basically what do we
+
+390
+00:20:51.900 --> 00:20:54.690
+call it? An idle hang.
+Okay. Idle hang. So a
+
+391
+00:20:54.690 --> 00:20:57.210
+bunch of threads are waiting
+for one thread to let
+
+392
+00:20:57.210 --> 00:21:02.040
+them in Yeah. Or an
+external resource or anything. And
+
+393
+00:21:02.040 --> 00:21:03.900
+then I would think that
+the other one would be,
+
+394
+00:21:04.110 --> 00:21:06.330
+I have an inefficient algorithm
+and I think that would
+
+395
+00:21:06.330 --> 00:21:10.230
+be difficult to, Yeah. So
+that's pretty much where you
+
+396
+00:21:10.230 --> 00:21:14.100
+have to take multiple dumps
+to see maybe how many
+
+397
+00:21:14.100 --> 00:21:18.510
+iterations you're taking, you're doing
+in this particular algorithm or
+
+398
+00:21:19.380 --> 00:21:22.770
+some of the more common
+ones on with busy hangs
+
+399
+00:21:22.770 --> 00:21:26.850
+are high CPU in garbage
+collection. When you allocate a
+
+400
+00:21:26.850 --> 00:21:29.640
+lot of large objects, or
+if you do make a
+
+401
+00:21:29.640 --> 00:21:33.420
+lot of full garbage collections
+that causes high Seaview in
+
+402
+00:21:33.430 --> 00:21:37.740
+garbage collection or something like
+using an efficient regular expressions.
+
+403
+00:21:39.120 --> 00:21:42.240
+So an idle hang is
+waiting in line for someone
+
+404
+00:21:42.240 --> 00:21:44.490
+to let me in. And
+then a busy hang is
+
+405
+00:21:44.490 --> 00:21:46.650
+I'm just doing a lot
+of work that I don't
+
+406
+00:21:46.650 --> 00:21:48.600
+need to be. And I
+could be doing a busy
+
+407
+00:21:48.600 --> 00:21:51.030
+hang. That is my code,
+wait, doing a lot of
+
+408
+00:21:51.030 --> 00:21:53.040
+work or it could be
+indirect in the sense that
+
+409
+00:21:53.040 --> 00:21:55.140
+I'm making a lot of
+work for.net. I would say,
+
+410
+00:21:55.140 --> 00:21:58.830
+if you can reproduce a
+performance issue, then you're better
+
+411
+00:21:58.830 --> 00:22:02.100
+off doing some kind of
+profiling and visual studio, for
+
+412
+00:22:02.100 --> 00:22:05.640
+example. But if you can't
+reproduce it on a test
+
+413
+00:22:05.640 --> 00:22:07.710
+machine, then you would have
+to take, So if it's
+
+414
+00:22:07.710 --> 00:22:09.690
+a busy hang, that only
+happens in production than I
+
+415
+00:22:09.690 --> 00:22:11.850
+would want to do multiple
+thumps. But yeah, you know,
+
+416
+00:22:11.850 --> 00:22:14.580
+it's funny how few people
+use profilers. It really is
+
+417
+00:22:14.580 --> 00:22:18.300
+a shame. Profilers are just
+amazing things, dot net, you
+
+418
+00:22:18.300 --> 00:22:21.480
+instrument so much. And then
+In visual studio, there are,
+
+419
+00:22:21.900 --> 00:22:25.470
+and even in 2008 and
+I, my feeling is that
+
+420
+00:22:25.470 --> 00:22:28.410
+it's gotten even better in
+2010, the way profiling works
+
+421
+00:22:29.040 --> 00:22:31.500
+there is for busy hangs.
+You wouldn't want him to
+
+422
+00:22:31.500 --> 00:22:36.120
+do the CPU profiling and
+for idle hangs, you would
+
+423
+00:22:36.120 --> 00:22:39.570
+want to do the instrumented
+profiling. So the CPU profiling
+
+424
+00:22:39.570 --> 00:22:44.370
+basically goes in and, and
+looks at every now and
+
+425
+00:22:44.370 --> 00:22:45.960
+then it goes in and
+looks at a stack and
+
+426
+00:22:45.960 --> 00:22:48.890
+see where you're spending most
+of your time. Whereas instrumented
+
+427
+00:22:48.900 --> 00:22:51.960
+profiling is more elapsed time.
+So how long it took
+
+428
+00:22:51.960 --> 00:22:55.230
+for, for certain questions to
+Now, I could be spending
+
+429
+00:22:55.230 --> 00:22:57.210
+my time in my own
+code, or I could be
+
+430
+00:22:57.210 --> 00:23:00.360
+spending my time in Microsoft.
+And when I'm looking at
+
+431
+00:23:00.360 --> 00:23:04.530
+a call stack, if I've
+got no correct me, if
+
+432
+00:23:04.530 --> 00:23:06.240
+I'm wrong here, if I've
+got no symbols, I'm just
+
+433
+00:23:06.240 --> 00:23:08.880
+going to see offsets in
+my stack. Yeah, Yeah. For
+
+434
+00:23:08.880 --> 00:23:12.480
+the native, like for the
+stuff that's not your code.
+
+435
+00:23:13.860 --> 00:23:17.190
+Yes. The native for NEMA
+for.net code, you don't need
+
+436
+00:23:17.190 --> 00:23:19.710
+symbols. So this is the
+part I'm confused about. What
+
+437
+00:23:19.710 --> 00:23:21.570
+do I need and what
+is a PD before? Cause
+
+438
+00:23:21.570 --> 00:23:22.980
+I've heard you say this
+before that I don't need
+
+439
+00:23:22.980 --> 00:23:25.200
+symbols, but what are these
+PDB fours? I mean, do
+
+440
+00:23:25.200 --> 00:23:27.780
+I need them or not?
+Yeah. So for a native,
+
+441
+00:23:27.780 --> 00:23:31.920
+so non.net stuff, you do
+need them because there is
+
+442
+00:23:31.920 --> 00:23:35.760
+nothing in that method or
+nothing in that obviated tells
+
+443
+00:23:35.760 --> 00:23:38.730
+you what the function name
+is. So if you don't
+
+444
+00:23:38.730 --> 00:23:41.400
+have symbols, the symbols, it
+basically is a database that
+
+445
+00:23:41.400 --> 00:23:46.010
+says this address means this
+function. Okay. And the debugger
+
+446
+00:23:46.020 --> 00:23:48.470
+goes in and says, okay,
+I I'm at this address.
+
+447
+00:23:48.860 --> 00:23:52.790
+Where would I be? Oh,
+at this function, plus some
+
+448
+00:23:52.790 --> 00:23:58.040
+offset. Okay. For the net
+code, you don't need that
+
+449
+00:23:58.040 --> 00:24:01.850
+because that's all built into
+metadata in the objects themselves.
+
+450
+00:24:02.710 --> 00:24:08.980
+Okay. So do I not
+need PDBs at all? Well,
+
+451
+00:24:09.250 --> 00:24:13.360
+they're, they're not needed for
+debugging, woodwind woodwinds, but for
+
+452
+00:24:13.360 --> 00:24:16.570
+example, for, for the button
+would visual studio you'll need
+
+453
+00:24:16.570 --> 00:24:20.800
+them because they contain information
+about a file names where
+
+454
+00:24:20.950 --> 00:24:25.420
+your code is like line
+numbers where this function is,
+
+455
+00:24:25.570 --> 00:24:29.290
+that kind of stuff. Okay.
+So amateurs Unmanaged code, I
+
+456
+00:24:29.290 --> 00:24:31.840
+need the PDB is not
+only for line numbers and
+
+457
+00:24:31.840 --> 00:24:35.380
+file names, but for offsets
+to method, name, map, And
+
+458
+00:24:35.380 --> 00:24:37.510
+depending on what PDBs you
+have, like if you have
+
+459
+00:24:37.510 --> 00:24:41.260
+private or public ones, they
+may or may not contain
+
+460
+00:24:41.740 --> 00:24:48.490
+type names, parameter names. Okay.
+So I'm there. So I
+
+461
+00:24:48.490 --> 00:24:50.380
+could be in my code
+or I could be in
+
+462
+00:24:50.380 --> 00:24:56.290
+Microsoft's code. It seems like
+now that I can look@themicrosoftsourcecodeforthe.net
+
+463
+00:24:56.290 --> 00:25:01.000
+framework while I've got the
+function names of the, you
+
+464
+00:25:01.000 --> 00:25:02.500
+know, like I could be
+in a regular expression, I
+
+465
+00:25:02.500 --> 00:25:04.090
+could be in system dot
+rejects or something like that.
+
+466
+00:25:05.560 --> 00:25:07.510
+I still would like to
+get the line numbers then.
+
+467
+00:25:07.510 --> 00:25:09.400
+So I would want to
+hook up a symbol server.
+
+468
+00:25:09.910 --> 00:25:13.390
+Is that correct? To bring
+those PDPs? Yeah. But, and
+
+469
+00:25:13.390 --> 00:25:17.590
+the.net symbols are usually not
+up there. So that's mostly
+
+470
+00:25:17.590 --> 00:25:21.160
+for native. Okay. So where
+do I get those symbols?
+
+471
+00:25:21.160 --> 00:25:24.400
+Are those already on my
+system? I'm pretty sure that
+
+472
+00:25:24.400 --> 00:25:27.010
+they are up there. I
+think that there's a Microsoft
+
+473
+00:25:27.010 --> 00:25:30.070
+public symbol. Yeah, no, there
+is one, but I'm wondering,
+
+474
+00:25:30.340 --> 00:25:32.860
+do they have things for
+a for example system web?
+
+475
+00:25:33.130 --> 00:25:35.680
+They do. Okay. I think
+if I go tools, options,
+
+476
+00:25:35.680 --> 00:25:37.750
+and I go into the
+debugger section, there's a series
+
+477
+00:25:37.750 --> 00:25:39.730
+of checkboxes and I can
+go and say use the
+
+478
+00:25:39.730 --> 00:25:42.520
+public symbol service. Yeah. But
+I'm thinking like for, for
+
+479
+00:25:42.520 --> 00:25:46.180
+example, for when did she,
+I don't recall if they
+
+480
+00:25:46.180 --> 00:25:50.110
+show these, they do show
+the name Sure. That they
+
+481
+00:25:50.110 --> 00:25:52.510
+do. Yeah. And I think
+what it does, at least
+
+482
+00:25:52.510 --> 00:25:54.490
+for the mixed, the mixed
+mode stuff is it'll bring
+
+483
+00:25:54.490 --> 00:25:57.520
+down the PDPs for system
+dot web and for all
+
+484
+00:25:57.520 --> 00:25:59.770
+those different things. And then
+you're saying that the symbol
+
+485
+00:25:59.770 --> 00:26:03.460
+server doesn't just contain.net stuff
+it contains And that it
+
+486
+00:26:03.460 --> 00:26:07.000
+contains native. So if I
+get down into NT DLL
+
+487
+00:26:07.000 --> 00:26:09.880
+that DLL or something low
+level current of 32, it'll
+
+488
+00:26:09.880 --> 00:26:12.040
+bring those down too. And
+that gives me the benefit
+
+489
+00:26:12.040 --> 00:26:15.040
+of having a call stack
+that shows me method names
+
+490
+00:26:15.040 --> 00:26:19.000
+all the way up the
+stack, not just Exactly. Yes.
+
+491
+00:26:19.960 --> 00:26:22.780
+And the symbol server is
+basically like, sort of, if
+
+492
+00:26:22.780 --> 00:26:24.910
+you have your own symbols,
+you would maybe put them
+
+493
+00:26:24.910 --> 00:26:28.990
+in directory and set up
+that as part of your
+
+494
+00:26:28.990 --> 00:26:31.030
+symbol. Right. And that was
+my next question. If I
+
+495
+00:26:31.030 --> 00:26:32.770
+run a large enterprise and
+we did this at my
+
+496
+00:26:32.770 --> 00:26:36.010
+last job, I want to
+set up a share such
+
+497
+00:26:36.010 --> 00:26:38.260
+that when I have a
+continuous integration server, that's doing
+
+498
+00:26:38.260 --> 00:26:40.930
+my builds. I want to
+copy all those PDB is
+
+499
+00:26:40.930 --> 00:26:43.000
+over there. Yeah. So there
+is a different, like you
+
+500
+00:26:43.110 --> 00:26:46.470
+either put them in directory
+and then it'll be recognized
+
+501
+00:26:46.470 --> 00:26:52.140
+by name, but for assemble
+server assemble service, basically kind
+
+502
+00:26:52.140 --> 00:26:56.460
+of like a folder structure
+where, where you might have,
+
+503
+00:26:56.820 --> 00:27:00.330
+you know, multiple PDBs for
+Emma score works or for
+
+504
+00:27:00.330 --> 00:27:04.080
+NTD LL depending on operating
+system or depending on framework
+
+505
+00:27:04.080 --> 00:27:06.620
+version number. Right. And there's
+a certain structure that those
+
+506
+00:27:06.620 --> 00:27:09.380
+folders need to be. They
+include a hash of the
+
+507
+00:27:09.380 --> 00:27:11.270
+file so that you could
+have multiple versions side by
+
+508
+00:27:11.270 --> 00:27:15.200
+side And that's so that
+you can debug dumps from
+
+509
+00:27:15.230 --> 00:27:19.080
+everywhere on the same machine
+or devalued processes, wood, wood,
+
+510
+00:27:19.090 --> 00:27:23.390
+different framework, portions versions, and
+stuff like that. And you
+
+511
+00:27:23.390 --> 00:27:27.170
+can set that up for,
+for your own company too.
+
+512
+00:27:27.170 --> 00:27:29.870
+You can set up a
+symbol server that works, like
+
+513
+00:27:29.870 --> 00:27:31.670
+if you have different, So
+you can have multiple paths
+
+514
+00:27:31.670 --> 00:27:33.950
+that you can search inside
+the Microsoft simple server and
+
+515
+00:27:33.950 --> 00:27:36.350
+then your own. Yeah, absolutely.
+Where's a good place for
+
+516
+00:27:36.350 --> 00:27:38.240
+people to get started with
+debugging if they're an I
+
+517
+00:27:38.240 --> 00:27:42.230
+S and asp.net. Yeah. So
+apart from, from when to
+
+518
+00:27:42.230 --> 00:27:45.800
+achieve, there is also this
+tool called debug diag Dubai
+
+519
+00:27:45.820 --> 00:27:48.410
+dye. 1.1 is the one
+that's out now and it's
+
+520
+00:27:48.410 --> 00:27:51.770
+actually just released with a
+64 bit version. Okay, cool.
+
+521
+00:27:52.580 --> 00:27:55.160
+What it does is it
+tells you not only to
+
+522
+00:27:55.260 --> 00:27:57.770
+gather memory dumps in a
+very easy way where you
+
+523
+00:27:57.770 --> 00:28:02.510
+can configure it to take
+dumps on certain exceptions or,
+
+524
+00:28:02.780 --> 00:28:05.870
+or crashes or whatever, but
+it also helps you analyze
+
+525
+00:28:05.870 --> 00:28:08.930
+memory dumps. So you can,
+it has a hangout Alliance
+
+526
+00:28:08.930 --> 00:28:11.780
+where it has a memory
+analyzer. You can write your
+
+527
+00:28:11.780 --> 00:28:14.570
+own scripts. So I wrote
+a script on my blog
+
+528
+00:28:15.140 --> 00:28:19.130
+blogs that I'm standard, calm
+stash tests, where I it's
+
+529
+00:28:19.130 --> 00:28:22.280
+a script for debugging does
+not memory leaks, but shows
+
+530
+00:28:22.280 --> 00:28:27.200
+the most common things and
+basically open your, your dump
+
+531
+00:28:27.200 --> 00:28:31.790
+up wood. That script gives
+you information you need without
+
+532
+00:28:31.790 --> 00:28:34.640
+even opening a window T
+Now I understand that there's
+
+533
+00:28:34.640 --> 00:28:38.420
+some improvements though, with specifically
+around don't files in 2010,
+
+534
+00:28:38.600 --> 00:28:41.090
+that's going to make some
+of these things, maybe not
+
+535
+00:28:41.090 --> 00:28:46.190
+obsolete, but certainly less often
+used. Absolutely. So at not
+
+536
+00:28:46.190 --> 00:28:49.370
+so much in the memory
+space. So you can't currently
+
+537
+00:28:49.370 --> 00:28:52.670
+at least with visual studio,
+2010 beta two, you can
+
+538
+00:28:52.710 --> 00:28:56.420
+look at dotnet obviously on
+a heap, but it's just
+
+539
+00:28:56.420 --> 00:29:00.140
+got a very nice way
+of showing like the stacks
+
+540
+00:29:00.170 --> 00:29:03.680
+moving to source code. And
+we did a recording of
+
+541
+00:29:03.680 --> 00:29:07.430
+that too, For channel nine.
+We'll put up a video
+
+542
+00:29:07.430 --> 00:29:09.740
+of this for channel nine
+to demonstrate that, but in
+
+543
+00:29:09.740 --> 00:29:12.470
+a, in a nutshell, the,
+for pro busy hangs and
+
+544
+00:29:12.470 --> 00:29:15.740
+idle hangs, this gives you
+a beautiful visualization. Just open
+
+545
+00:29:15.740 --> 00:29:18.680
+it up with the visual
+studio. You look at something
+
+546
+00:29:18.680 --> 00:29:22.220
+called parallel stacks that would
+show you all the, all
+
+547
+00:29:22.220 --> 00:29:27.110
+the stacks of all the
+threads. And yeah, it's awesome.
+
+548
+00:29:27.140 --> 00:29:29.210
+I can't even describe it
+in a word. Yeah. I
+
+549
+00:29:29.210 --> 00:29:31.670
+mean, this is, seems like
+a large portion from what
+
+550
+00:29:31.670 --> 00:29:33.110
+you showed me. And again,
+we'll, we'll have a link
+
+551
+00:29:33.110 --> 00:29:34.970
+up on channel nine at
+the Hansel minutes on nine
+
+552
+00:29:34.970 --> 00:29:37.790
+section. This is gonna make
+a, a huge chunk of
+
+553
+00:29:37.790 --> 00:29:42.760
+your job, less text mode
+and graphical. I would say
+
+554
+00:29:42.760 --> 00:29:45.940
+for me, I would probably
+stick with windows G why?
+
+555
+00:29:46.450 --> 00:29:50.740
+Because it's. Yeah, but it's
+the speed of the text
+
+556
+00:29:50.740 --> 00:29:55.030
+mode and it's the speed.
+And it's the fact that
+
+557
+00:29:55.030 --> 00:29:58.030
+sometimes you need to go
+in and look at the
+
+558
+00:29:58.090 --> 00:30:01.590
+native objects that you can't
+really access still. It would
+
+559
+00:30:01.590 --> 00:30:04.560
+be interesting would be to
+figure out if you could,
+
+560
+00:30:05.160 --> 00:30:07.860
+because you can create extensions
+now to visual studio. If
+
+561
+00:30:07.860 --> 00:30:10.260
+you could write something that
+would bring that wind DBG
+
+562
+00:30:10.260 --> 00:30:14.190
+command line in and do
+a split screen. So you
+
+563
+00:30:14.190 --> 00:30:16.500
+can ride a lot of
+the commands. For example, for
+
+564
+00:30:16.500 --> 00:30:19.170
+SOS, you can use them
+in the immediate window and
+
+565
+00:30:19.680 --> 00:30:21.510
+officials too. Really. And is
+there a stuff on your
+
+566
+00:30:21.510 --> 00:30:23.460
+blog about how to use
+SOS in the immediate window?
+
+567
+00:30:24.390 --> 00:30:26.820
+Very cool. I think you
+wrote a post on that
+
+568
+00:30:28.980 --> 00:30:31.440
+maybe a couple of years
+ago. Cool. Yeah. Well, your
+
+569
+00:30:31.440 --> 00:30:32.910
+blog is a great resource
+for this kind of stuff.
+
+570
+00:30:32.910 --> 00:30:37.620
+You've got all sorts of
+stories about adventures in debugging.
+
+571
+00:30:37.620 --> 00:30:40.050
+You've got scripts and resources
+that people can check out
+
+572
+00:30:40.410 --> 00:30:43.530
+And labs, if you want
+to try debugging hangs or
+
+573
+00:30:43.530 --> 00:30:45.780
+memory leaks or things, right.
+I noticed that you did
+
+574
+00:30:45.780 --> 00:30:47.490
+this recently. You put up
+a series of labs where
+
+575
+00:30:47.490 --> 00:30:49.470
+you can actually, we can
+download a dump and we
+
+576
+00:30:49.470 --> 00:30:51.420
+can go through it and
+try to learn Or actually
+
+577
+00:30:51.420 --> 00:30:56.010
+download a website that has
+Yeah. Yeah. Yeah. Very cool.
+
+578
+00:30:56.010 --> 00:30:57.690
+Well, thank you so much
+test for sitting down with
+
+579
+00:30:57.690 --> 00:31:00.390
+me. Cool. We'll be sure
+to check out Tessa's blog
+
+580
+00:31:00.390 --> 00:31:04.620
+at blogs.msdn.com/test. I'll put links
+for all of that, as
+
+581
+00:31:04.620 --> 00:31:06.240
+well as the tools that
+we've talked about up on
+
+582
+00:31:06.240 --> 00:31:09.090
+the show site. This has
+been another episode of Hansel
+
+583
+00:31:09.090 --> 00:31:10.830
+minutes, and I'll see you
+again next week.
+

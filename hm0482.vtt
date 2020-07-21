@@ -1,0 +1,3086 @@
+WEBVTT FILE
+
+1
+00:00:01.980 --> 00:00:05.130
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:05.130 --> 00:00:08.100
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:08.100 --> 00:00:12.270
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:12.270 --> 00:00:16.800
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:17.190 --> 00:00:21.270
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:21.300 --> 00:00:25.380
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:25.470 --> 00:00:36.060
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com.
+One more thing. Let me
+
+8
+00:00:36.060 --> 00:00:39.330
+tell you about a new
+sponsor gun. If you're wanting
+
+9
+00:00:39.330 --> 00:00:42.360
+to detect and diagnose errors
+and crashes in your software,
+
+10
+00:00:42.390 --> 00:00:45.210
+even find problems that you
+didn't know existed to improve
+
+11
+00:00:45.210 --> 00:00:48.510
+your software, then Regan might
+be perfect for you. He
+
+12
+00:00:48.510 --> 00:00:50.580
+had a few lines of
+code your application, and in
+
+13
+00:00:50.580 --> 00:00:53.790
+minutes, you'll get real time
+error reports with all the
+
+14
+00:00:53.790 --> 00:00:56.880
+information that you need to
+fix bugs fast, you can
+
+15
+00:00:56.880 --> 00:00:59.790
+even hook it up to
+your team chat, bug tracking
+
+16
+00:00:59.790 --> 00:01:04.350
+development, workflow tools. Reagan covers
+all major web and mobile
+
+17
+00:01:04.350 --> 00:01:09.060
+programming languages, including.net, the full
+Xamarin stack JavaScript, and many
+
+18
+00:01:09.060 --> 00:01:14.580
+more. Go check out Reagan
+today@reagan.io. I use this myself
+
+19
+00:01:14.580 --> 00:01:18.420
+on my little startup and
+I really, really recommend this
+
+20
+00:01:18.420 --> 00:01:21.150
+product. It is a great,
+great product. Check it out.
+
+21
+00:01:21.570 --> 00:01:42.570
+Ray gun@reagan.io from Hanselman it's
+dot com. It's Hanselman. That's
+
+22
+00:01:42.900 --> 00:01:46.860
+a weekly discussion with web
+developer and technologist Scott Hanselman.
+
+23
+00:01:47.520 --> 00:01:51.630
+This is Lawrence Ryan announcing show
+number four 86. In this
+
+24
+00:01:51.630 --> 00:01:56.310
+episode, Scott talks with dr.
+Adrian Porterfield from Google about
+
+25
+00:01:56.370 --> 00:02:02.850
+designing usable security. Hi, this
+is Scott Hanselman. This is
+
+26
+00:02:02.850 --> 00:02:05.100
+another episode of Hansel minutes.
+And today I'm talking with
+
+27
+00:02:05.100 --> 00:02:08.940
+dr. Adrianne Porterfield from Google.
+She's a security researcher, and
+
+28
+00:02:08.940 --> 00:02:11.490
+she's got a PhD in
+computer science from Berkeley. Thanks
+
+29
+00:02:11.490 --> 00:02:13.730
+for chatting with me today.
+Great. It's nice to be
+
+30
+00:02:13.730 --> 00:02:16.580
+talking to you. So you
+have got some really, really
+
+31
+00:02:16.580 --> 00:02:18.770
+interesting publications that talk about
+some of the things that
+
+32
+00:02:18.770 --> 00:02:22.130
+you work on. You are
+a security researcher, but security
+
+33
+00:02:22.130 --> 00:02:23.870
+is a big word that
+talks about a lot of
+
+34
+00:02:23.870 --> 00:02:27.500
+different areas, right? You're not
+focused on exploits as much
+
+35
+00:02:27.500 --> 00:02:29.540
+as you are about kind
+of how people think about
+
+36
+00:02:29.630 --> 00:02:33.860
+security. Yeah, that's right. So
+I'm on the Chrome usable
+
+37
+00:02:33.860 --> 00:02:37.220
+security team and we try
+to help Chrome users and
+
+38
+00:02:37.220 --> 00:02:41.330
+developers make safe decisions online.
+So although we are engineers
+
+39
+00:02:41.330 --> 00:02:45.140
+and designers, our main focus
+is on building tools that
+
+40
+00:02:45.140 --> 00:02:47.960
+people can use in a
+way that keeps them secure.
+
+41
+00:02:48.380 --> 00:02:51.350
+It seems like we always
+talk about today's internet is
+
+42
+00:02:51.350 --> 00:02:55.340
+not yesterday's internet. I'm always
+getting screenshots from my mom
+
+43
+00:02:55.670 --> 00:02:58.310
+or my nontechnical dad. You
+know, my parents are not
+
+44
+00:02:58.310 --> 00:03:01.690
+technical and there'll be like,
+is this a safe thing
+
+45
+00:03:01.690 --> 00:03:03.940
+to click? And they'll be
+in the middle of an
+
+46
+00:03:03.940 --> 00:03:07.540
+activity, then something will happen
+and they'll take a screenshot
+
+47
+00:03:07.540 --> 00:03:08.590
+of it and they'll mail
+it to me and they'll
+
+48
+00:03:08.590 --> 00:03:12.470
+leave it there for hours
+because of fear that, that
+
+49
+00:03:12.970 --> 00:03:15.430
+clicking this button, it might
+be a fake popup. It
+
+50
+00:03:15.430 --> 00:03:16.720
+might be a screen, you
+know, it might be a,
+
+51
+00:03:16.960 --> 00:03:20.500
+even a screenshot of a
+fake Chrome dialogue. It's getting
+
+52
+00:03:20.500 --> 00:03:22.180
+to the point where they
+just don't know how to
+
+53
+00:03:22.180 --> 00:03:24.490
+do anything on the internet
+without being afraid that someone's
+
+54
+00:03:24.490 --> 00:03:28.330
+going to steal their, their
+credit cards. Like why is
+
+55
+00:03:28.330 --> 00:03:33.060
+this today's internet? Yeah, that's
+really unfortunate. And actually we
+
+56
+00:03:33.060 --> 00:03:37.050
+see a pretty wide range
+of different reactions to the
+
+57
+00:03:37.050 --> 00:03:41.460
+threat of malware and phishing
+and other things online. So
+
+58
+00:03:41.490 --> 00:03:45.630
+from talking to people, we
+find that not experts tend
+
+59
+00:03:45.630 --> 00:03:49.650
+to be somewhere on a
+spectrum between like your parents
+
+60
+00:03:49.680 --> 00:03:56.010
+somewhat paralyzed by fear of
+what's out there online, sometimes
+
+61
+00:03:56.010 --> 00:03:59.640
+justifiably too, on the other
+end, people who feel like
+
+62
+00:03:59.640 --> 00:04:04.080
+they're invincible on the internet.
+So we talked to people
+
+63
+00:04:04.080 --> 00:04:06.960
+and they say things like
+I use Linux, so nothing
+
+64
+00:04:06.960 --> 00:04:09.840
+could hurt me or, Oh,
+I can do whatever I
+
+65
+00:04:09.840 --> 00:04:14.310
+want online because I have
+antivirus installed, not realizing really
+
+66
+00:04:14.310 --> 00:04:16.440
+that, you know, Oh, your
+antivirus might not protect you
+
+67
+00:04:16.440 --> 00:04:21.060
+from fishing. So it is
+difficult to build tools that
+
+68
+00:04:21.060 --> 00:04:25.290
+address this huge, huge range
+of people who have different
+
+69
+00:04:25.290 --> 00:04:29.400
+levels of technical expertise and
+also different levels of risk
+
+70
+00:04:29.400 --> 00:04:34.680
+tolerance and, and fear. Is
+it something that should be
+
+71
+00:04:34.680 --> 00:04:38.610
+automatic is security. Like I'm
+thinking about my own life
+
+72
+00:04:38.610 --> 00:04:42.390
+security, right. I locked my
+front door and I locked
+
+73
+00:04:42.390 --> 00:04:47.130
+my car and I don't
+park in dodgy neighborhoods. And
+
+74
+00:04:47.460 --> 00:04:49.440
+I'm trying to think, what
+else do I do? I
+
+75
+00:04:49.440 --> 00:04:51.060
+dunno, look people in the
+eye when I walked by
+
+76
+00:04:51.060 --> 00:04:54.660
+them. I mean the personal
+security is a pretty much
+
+77
+00:04:54.660 --> 00:04:56.580
+a thing it's like, well,
+just be safe out there
+
+78
+00:04:56.580 --> 00:04:59.460
+and use good sense. But
+that good sense came over
+
+79
+00:04:59.460 --> 00:05:01.740
+20 years of growing up
+in my town and understanding
+
+80
+00:05:01.740 --> 00:05:04.770
+my town. Is that the
+difference? Is it those that
+
+81
+00:05:04.770 --> 00:05:07.320
+are born on the web
+understand security or are they
+
+82
+00:05:07.320 --> 00:05:11.100
+just as clueless as my
+parents? I actually think sometimes
+
+83
+00:05:11.100 --> 00:05:15.990
+that the more experienced someone
+has online, the more blind
+
+84
+00:05:15.990 --> 00:05:18.810
+they become to risks that
+are there. So it very
+
+85
+00:05:18.810 --> 00:05:21.870
+much depends, but I, I
+do agree with you. I
+
+86
+00:05:21.870 --> 00:05:25.050
+think a good end goal
+would be for people to
+
+87
+00:05:25.050 --> 00:05:27.780
+not have to think about
+security in order to remain
+
+88
+00:05:27.780 --> 00:05:31.080
+secure. So when I get
+in my car and I
+
+89
+00:05:31.110 --> 00:05:34.230
+drive to work or to
+the grocery store, I have
+
+90
+00:05:34.230 --> 00:05:36.990
+airbags, right. And I'm sure
+there are steel beams and
+
+91
+00:05:36.990 --> 00:05:39.390
+all these other safety mechanisms
+in my car. And I
+
+92
+00:05:39.390 --> 00:05:41.640
+don't think about them. I
+just try not to hit
+
+93
+00:05:41.640 --> 00:05:45.030
+things. And I would like
+to us to get to
+
+94
+00:05:45.030 --> 00:05:48.450
+a place where using technology
+is the same way where
+
+95
+00:05:48.450 --> 00:05:51.450
+people who are using computers,
+don't have to think about
+
+96
+00:05:51.450 --> 00:05:55.020
+security, unless there's a very
+specific question that we need
+
+97
+00:05:55.020 --> 00:05:59.240
+to ask them, but is
+very difficult because we're right
+
+98
+00:05:59.240 --> 00:06:03.110
+now in a place where
+computers meaning. So for example,
+
+99
+00:06:03.110 --> 00:06:06.080
+I work on Chrome. So
+I'll talk about Chrome. When
+
+100
+00:06:06.080 --> 00:06:09.560
+you hit something like an
+SSL error, Chrome currently can't
+
+101
+00:06:09.560 --> 00:06:12.350
+really tell whether it's actually
+an attack or not an
+
+102
+00:06:12.350 --> 00:06:16.130
+attack. So we're in this
+uncomfortable position where now we
+
+103
+00:06:16.130 --> 00:06:18.950
+need to ask the user
+to make a decision. But
+
+104
+00:06:18.950 --> 00:06:23.750
+unfortunately in most cases, user
+might actually have less knowledge
+
+105
+00:06:23.750 --> 00:06:26.330
+of what's happening in that
+situation than Chrome itself does.
+
+106
+00:06:27.230 --> 00:06:30.380
+So what I want, what
+my me and my team
+
+107
+00:06:30.380 --> 00:06:33.680
+are trying to do is
+make Chrome smarter so that
+
+108
+00:06:33.680 --> 00:06:38.360
+we can provide clear opinions,
+recommendations, and tell people how
+
+109
+00:06:38.360 --> 00:06:41.060
+to fix the problem instead
+of necessarily posing them a
+
+110
+00:06:41.060 --> 00:06:43.610
+question. But this is actually
+a really hard technical challenge.
+
+111
+00:06:44.260 --> 00:06:46.990
+Yeah. There's so many things
+that can be wrong. You
+
+112
+00:06:46.990 --> 00:06:50.890
+know, when a connection gets
+open to another website, mutually,
+
+113
+00:06:50.890 --> 00:06:52.720
+it's fine. But when something
+goes wrong, like, is it
+
+114
+00:06:52.720 --> 00:06:56.290
+actionable? Like for example, there's
+a website that I manage
+
+115
+00:06:56.410 --> 00:06:59.680
+and actually I inherited it.
+And I just learned a
+
+116
+00:06:59.680 --> 00:07:02.590
+couple of weeks ago that
+the SSL certificate has expired.
+
+117
+00:07:03.490 --> 00:07:05.710
+But all of the people
+who use the website are
+
+118
+00:07:05.710 --> 00:07:08.500
+super technical. So on the
+mailing list of like, Hey,
+
+119
+00:07:08.500 --> 00:07:12.010
+you know, search, search, you
+know, not working. So I
+
+120
+00:07:12.010 --> 00:07:14.350
+have to click through the
+error. So I'm looking at
+
+121
+00:07:14.350 --> 00:07:16.390
+it right now. It says
+your connection is not private.
+
+122
+00:07:17.140 --> 00:07:19.960
+Attackers may be trying to
+steal your information from website.
+
+123
+00:07:20.560 --> 00:07:22.690
+And then it has very,
+very small search date and
+
+124
+00:07:22.690 --> 00:07:25.750
+valid. Right. It's completely clear
+to me what's wrong here,
+
+125
+00:07:26.380 --> 00:07:30.070
+but I don't even know,
+like, this just means for
+
+126
+00:07:30.070 --> 00:07:35.830
+parent don't go here, but
+what could could they fix
+
+127
+00:07:35.830 --> 00:07:37.540
+this? There's 15 different things
+that could be wrong. It
+
+128
+00:07:37.540 --> 00:07:40.660
+also mentions their clock, which
+my, my mom asked me
+
+129
+00:07:40.660 --> 00:07:44.920
+a lot about. Yeah. So
+funny enough, we actually originally
+
+130
+00:07:44.920 --> 00:07:49.570
+thought that developer errors were
+the cause of most fix
+
+131
+00:07:49.600 --> 00:07:53.170
+expired certificate errors, but well,
+we actually ended up finding
+
+132
+00:07:53.170 --> 00:07:55.390
+was that a huge number
+of people change the clocks
+
+133
+00:07:55.390 --> 00:07:58.450
+on their phones and on
+their laptops. There are a
+
+134
+00:07:58.450 --> 00:08:01.600
+lot people doing that. So
+I don't know if you
+
+135
+00:08:01.600 --> 00:08:04.870
+play candy crush or any
+of these other teams, but
+
+136
+00:08:04.870 --> 00:08:07.600
+for a lot of them,
+you get certain number of
+
+137
+00:08:07.780 --> 00:08:10.480
+prizes, tokens, however you want
+to put it per day.
+
+138
+00:08:10.780 --> 00:08:13.540
+Okay. So it starts off.
+Oh, Hey, you realize you
+
+139
+00:08:13.540 --> 00:08:17.770
+changed your clock to tomorrow?
+Oh no. Yeah. Then you
+
+140
+00:08:17.770 --> 00:08:19.960
+get more prizes. Okay. So
+for you soon, you're in
+
+141
+00:08:19.960 --> 00:08:23.740
+2019. And all of a
+sudden using the internet, lots
+
+142
+00:08:23.740 --> 00:08:28.330
+of things look like they're
+expired. And this is a
+
+143
+00:08:28.330 --> 00:08:32.650
+real problem. We have my
+mind and it turns out
+
+144
+00:08:32.650 --> 00:08:36.400
+a huge number, like tens
+of millions a month of
+
+145
+00:08:36.400 --> 00:08:38.680
+SSL errors are caused by
+people changing their clocks like
+
+146
+00:08:38.680 --> 00:08:43.330
+that. I thought computers were
+all as NTP synchronized. Now
+
+147
+00:08:43.630 --> 00:08:47.140
+You can turn that off
+and change the date. So
+
+148
+00:08:47.200 --> 00:08:49.450
+this is actually something that
+we see pretty common. Now
+
+149
+00:08:49.960 --> 00:08:54.160
+we've built a new error,
+which will show Chrome has
+
+150
+00:08:54.160 --> 00:08:56.190
+some years heuristics in place
+to try to guess if
+
+151
+00:08:56.190 --> 00:08:58.980
+the computer clock is wrong,
+to try to guess if
+
+152
+00:08:59.190 --> 00:09:01.290
+we're seeing this kind of
+data drift. And instead of
+
+153
+00:09:01.290 --> 00:09:04.800
+showing an SSL SSL error,
+in that instance, we'll actually
+
+154
+00:09:04.800 --> 00:09:07.380
+show something saying, Hey, we
+think your clock is wrong.
+
+155
+00:09:07.410 --> 00:09:10.170
+Please fix your clock. Instead
+of showing the scary, the
+
+156
+00:09:10.170 --> 00:09:13.070
+scary message that you just
+read earlier, That would be
+
+157
+00:09:13.070 --> 00:09:15.800
+great. That would be, that
+would be an extremely useful
+
+158
+00:09:15.800 --> 00:09:18.710
+thing. Like it plain English
+with screenshots, like here's what's
+
+159
+00:09:18.710 --> 00:09:22.010
+going on. Yeah. And we're
+working to look for for
+
+160
+00:09:22.010 --> 00:09:25.730
+more things like that. So
+another example is sometimes if
+
+161
+00:09:25.730 --> 00:09:28.220
+people have antivirus on their
+computer, but don't have it
+
+162
+00:09:28.220 --> 00:09:31.310
+installed correctly, it can lead
+to lots of errors while
+
+163
+00:09:31.310 --> 00:09:34.400
+they're browsing the internet. So
+another thing that we're working
+
+164
+00:09:34.400 --> 00:09:37.340
+on trying to do is
+identify when you've got some
+
+165
+00:09:37.340 --> 00:09:40.640
+antivirus installed that hasn't been
+set up. Right. And tell
+
+166
+00:09:40.640 --> 00:09:43.610
+you, Hey, you can keep
+it enabled, but you need
+
+167
+00:09:43.610 --> 00:09:47.030
+to fix some configuration. Otherwise
+you're going to keep seeing
+
+168
+00:09:47.030 --> 00:09:49.490
+these errors all across the
+internet. I see. So configuration,
+
+169
+00:09:49.490 --> 00:09:52.660
+like having real time turned
+off or things like that,
+
+170
+00:09:52.670 --> 00:09:55.330
+not having the plugin installed
+in the browser. Yeah. All
+
+171
+00:09:55.350 --> 00:09:58.850
+these things can cause errors
+that often people can fix.
+
+172
+00:09:58.880 --> 00:10:00.620
+They just don't know what
+it is they need to
+
+173
+00:10:00.620 --> 00:10:05.570
+fix. See, I feel like
+the security internet is being
+
+174
+00:10:05.570 --> 00:10:08.120
+split up between, you know,
+the no's and the don't
+
+175
+00:10:08.120 --> 00:10:13.010
+knows. And it continues to
+make computers themselves scary and
+
+176
+00:10:13.010 --> 00:10:17.360
+inaccessible to the regular person.
+Like I don't want my
+
+177
+00:10:17.360 --> 00:10:20.930
+family to think it's their
+fault. And it's that internalization
+
+178
+00:10:20.930 --> 00:10:23.450
+where it's like, Oh, they
+stole my credit card. I'm
+
+179
+00:10:23.450 --> 00:10:25.580
+so sorry. It's my fault.
+And it's like, it's not
+
+180
+00:10:25.580 --> 00:10:29.660
+your fault. Like the bad
+guys are really bad, you
+
+181
+00:10:29.660 --> 00:10:33.260
+know, but, but my mom
+took it really personally. So
+
+182
+00:10:33.260 --> 00:10:35.540
+there's a phrase we use
+on our team, which is
+
+183
+00:10:35.570 --> 00:10:39.860
+don't pass along in decision.
+And what this means to
+
+184
+00:10:39.860 --> 00:10:45.020
+us is if we're not
+sure what to do, it's
+
+185
+00:10:45.020 --> 00:10:48.350
+kind of lame to then
+ask the user what to
+
+186
+00:10:48.350 --> 00:10:52.700
+do instead. Now get, we
+should give people control to
+
+187
+00:10:52.700 --> 00:10:55.040
+choose what they want to
+do. But if we're going
+
+188
+00:10:55.040 --> 00:10:58.220
+to really indecisive place, we
+shouldn't ask an equally indecisive
+
+189
+00:10:58.220 --> 00:10:59.930
+user to have to make
+a decision. We should give
+
+190
+00:10:59.930 --> 00:11:02.660
+them a recommendation so that
+if they're confused, they know
+
+191
+00:11:02.660 --> 00:11:06.080
+what to do. So this
+is something we're working on.
+
+192
+00:11:06.110 --> 00:11:09.410
+But one thing that's important
+to point out though, is
+
+193
+00:11:09.410 --> 00:11:13.850
+that we're actually still in
+a place where honestly, people
+
+194
+00:11:13.850 --> 00:11:17.540
+who are otherwise very technical
+still don't always understand what's
+
+195
+00:11:17.540 --> 00:11:21.230
+happening in terms of security.
+That is very true. So
+
+196
+00:11:21.980 --> 00:11:24.380
+for example, I was talking
+to someone the other day,
+
+197
+00:11:24.410 --> 00:11:26.940
+who was complaining to me
+about some changes at chromate
+
+198
+00:11:26.940 --> 00:11:31.910
+made with how we treat
+Shajuan. And they have been
+
+199
+00:11:31.910 --> 00:11:34.400
+to a website recently and
+saw an error and attributed
+
+200
+00:11:34.400 --> 00:11:37.340
+it to this recent, you
+know, very technical policy change.
+
+201
+00:11:38.090 --> 00:11:41.270
+And it turns out they're
+completely unconnected. It was a
+
+202
+00:11:41.270 --> 00:11:44.060
+website that has self, self
+sign certificate. And that's why
+
+203
+00:11:44.060 --> 00:11:47.540
+Chrome was showing an error.
+But this very technical person
+
+204
+00:11:47.540 --> 00:11:52.430
+had conflated this, you know,
+technical news story that they'd
+
+205
+00:11:52.430 --> 00:11:54.670
+read with error that they
+saw in person. And they're
+
+206
+00:11:54.680 --> 00:11:58.090
+actually unrelated. And this person
+was an engineer, right? So
+
+207
+00:11:58.120 --> 00:12:03.190
+even very technical people sometimes
+get these things wrong. And
+
+208
+00:12:03.190 --> 00:12:05.200
+so it's important to realize
+that even with a lot
+
+209
+00:12:05.200 --> 00:12:10.710
+of technical savvy security is
+a niche area and Yeah,
+
+210
+00:12:10.800 --> 00:12:12.990
+I think that's definitely true.
+I know that I've gotten
+
+211
+00:12:12.990 --> 00:12:17.100
+nailed a couple of times
+by fake dialogues where they,
+
+212
+00:12:17.100 --> 00:12:20.760
+they, the, the bad guy
+has drawn a dialog box
+
+213
+00:12:21.120 --> 00:12:23.310
+and then popped up a
+picture of that dialogue box.
+
+214
+00:12:23.340 --> 00:12:27.870
+And my muscle memory clicked.
+Okay. But by then, it's
+
+215
+00:12:27.870 --> 00:12:30.870
+too late, you know what
+I'm saying? Like, it's like,
+
+216
+00:12:30.870 --> 00:12:32.640
+here's a picture of a
+JavaScript pop up and then
+
+217
+00:12:32.640 --> 00:12:35.610
+by clicking it, then I'm
+off and running. And I
+
+218
+00:12:35.610 --> 00:12:37.740
+would be very embarrassed. Well,
+I mean, I'm saying it
+
+219
+00:12:37.740 --> 00:12:40.230
+publicly, but you know, anyone
+would be embarrassed when they
+
+220
+00:12:40.230 --> 00:12:42.510
+feel like they've, it was
+as a direct result of
+
+221
+00:12:42.510 --> 00:12:45.780
+their mistake, but when they're
+actively tricked into doing something,
+
+222
+00:12:45.780 --> 00:12:49.050
+it's extremely frustrating. Yeah. I
+mean, I think it happens
+
+223
+00:12:49.050 --> 00:12:52.320
+to all of us. So
+I am a security researcher
+
+224
+00:12:52.350 --> 00:12:57.780
+and I used to specifically
+study Android permissions. And yeah,
+
+225
+00:12:57.810 --> 00:13:01.230
+when I go and install
+an Android application, I find
+
+226
+00:13:01.230 --> 00:13:06.060
+myself clicking through that dialogue
+without reading it. Yeah. And
+
+227
+00:13:06.060 --> 00:13:08.010
+I, the person who's done
+all this research on why
+
+228
+00:13:08.010 --> 00:13:12.120
+don't people read these dialogues.
+Right. So it happens to
+
+229
+00:13:12.120 --> 00:13:15.150
+all of us. And that's
+actually one of the reasons
+
+230
+00:13:15.150 --> 00:13:18.750
+why I'm really glad that
+Android is moving to runtime
+
+231
+00:13:18.750 --> 00:13:22.530
+permissions in M because I
+think it will help with
+
+232
+00:13:22.530 --> 00:13:25.740
+that problem of people not
+looking at permissions during installation.
+
+233
+00:13:25.860 --> 00:13:28.920
+What does that mean? So
+in the next release of
+
+234
+00:13:28.920 --> 00:13:33.450
+Android, instead of showing the
+permission dialogue as you install,
+
+235
+00:13:33.480 --> 00:13:35.580
+when people are usually a
+patient, right. They're trying to
+
+236
+00:13:35.580 --> 00:13:37.020
+install it as best as
+I can. Yeah. It's in
+
+237
+00:13:37.020 --> 00:13:40.170
+my way. It's standing between
+me and candy crush. Exactly.
+
+238
+00:13:40.170 --> 00:13:42.780
+So what's going to happen
+instead is that after you
+
+239
+00:13:42.780 --> 00:13:46.470
+install an application, the first
+time it needs to actually
+
+240
+00:13:46.470 --> 00:13:49.440
+use a permission, it'll show
+you the prompts then. And
+
+241
+00:13:49.440 --> 00:13:51.720
+ideally it'll be in context.
+So let's say the first
+
+242
+00:13:51.720 --> 00:13:55.170
+time you go to make,
+I don't know, a Skype
+
+243
+00:13:55.170 --> 00:13:57.720
+call or something on your
+phone, as you're about to
+
+244
+00:13:57.720 --> 00:14:02.790
+press, you know, the, the
+call button it'll then ask,
+
+245
+00:14:02.790 --> 00:14:05.700
+how can we use your
+microphone? And that'll make sense,
+
+246
+00:14:05.700 --> 00:14:07.980
+right? You're on your way
+to make a phone call.
+
+247
+00:14:07.980 --> 00:14:10.560
+Of course he needs your
+microphone. He'll click. Yes. As
+
+248
+00:14:10.560 --> 00:14:12.810
+opposed to sort of burying
+this whole list of long
+
+249
+00:14:12.810 --> 00:14:15.810
+things, right. During installation. Yeah.
+And sometimes the list of
+
+250
+00:14:15.810 --> 00:14:19.680
+things are pretty scary. I
+have to admit that nontechnical
+
+251
+00:14:19.680 --> 00:14:23.960
+parents have sent me screenshots
+of that and set, and
+
+252
+00:14:24.000 --> 00:14:26.730
+then they'll literally sit their
+phone down and say, all
+
+253
+00:14:26.730 --> 00:14:28.650
+right, I'm going to put
+this down. Actually, I've had
+
+254
+00:14:28.650 --> 00:14:31.320
+my dad take a picture
+of a phone with his
+
+255
+00:14:31.320 --> 00:14:34.740
+other phone and say, is
+this okay? And send me
+
+256
+00:14:34.740 --> 00:14:36.210
+that. And it's a whole
+list of stuff. Like, I
+
+257
+00:14:36.210 --> 00:14:38.250
+don't know, it wants full
+and complete control of your
+
+258
+00:14:38.250 --> 00:14:42.940
+phone. How badly do you
+want this thing? Yeah. And
+
+259
+00:14:42.960 --> 00:14:45.810
+that is a challenge because
+honestly, a lot of these
+
+260
+00:14:45.870 --> 00:14:52.460
+powers are actually fairly scary
+powers. So for, you know,
+
+261
+00:14:52.460 --> 00:14:57.080
+any, any, anything that needs
+your microphone for the generic
+
+262
+00:14:57.080 --> 00:15:01.400
+reason then has your microphone.
+Right. Which is something that
+
+263
+00:15:01.400 --> 00:15:03.440
+is a scary power in
+and of itself, even though
+
+264
+00:15:03.440 --> 00:15:06.490
+it's clear and understandable In
+context, I don't know. Like
+
+265
+00:15:06.490 --> 00:15:08.350
+when do you want my
+microphone? Are you listening in
+
+266
+00:15:08.350 --> 00:15:11.170
+the background? People are paranoid
+about things like that. Yeah.
+
+267
+00:15:11.170 --> 00:15:14.410
+So I do hope that
+the context driven permission request
+
+268
+00:15:14.410 --> 00:15:18.040
+model, which Android is moving
+to and Chrome already uses,
+
+269
+00:15:18.040 --> 00:15:19.960
+I really do hope that
+that will help clarify some
+
+270
+00:15:19.960 --> 00:15:23.260
+of that confusion. I want
+to pivot a little bit
+
+271
+00:15:23.350 --> 00:15:25.750
+and talk about something that
+I had to deal with
+
+272
+00:15:25.750 --> 00:15:28.420
+in banking. So before I
+worked, where I work now,
+
+273
+00:15:28.720 --> 00:15:32.560
+I worked as a chief
+architect doing retail online banking,
+
+274
+00:15:32.860 --> 00:15:37.270
+right when Evie SSL was
+starting. So I was working
+
+275
+00:15:37.270 --> 00:15:39.070
+with banks, trying to get
+them to go and get
+
+276
+00:15:39.070 --> 00:15:43.210
+the special, enhanced verification SSL
+certificate. And at the time
+
+277
+00:15:43.210 --> 00:15:48.340
+2005, it was going to
+turn the bar green on
+
+278
+00:15:48.340 --> 00:15:50.140
+all the browsers. It was
+supposed to be a really
+
+279
+00:15:50.140 --> 00:15:54.160
+great thing and tell you
+that there was implied trust,
+
+280
+00:15:54.580 --> 00:15:58.300
+not just privacy and this,
+I thought this was going
+
+281
+00:15:58.300 --> 00:16:00.100
+to be amazing. Like, Oh
+yeah. If your bank is
+
+282
+00:16:00.100 --> 00:16:02.380
+green, that's awesome. And if
+it's not, that's a regular
+
+283
+00:16:02.380 --> 00:16:04.900
+SSL cert. So all the
+technical people were talking to
+
+284
+00:16:04.900 --> 00:16:07.660
+each other and thought this
+was awesome. But it turns
+
+285
+00:16:07.660 --> 00:16:10.660
+out that now everyone just
+thinks that the little lock
+
+286
+00:16:10.660 --> 00:16:15.490
+means trust when it really
+just means privacy. Yeah. This
+
+287
+00:16:15.490 --> 00:16:18.310
+is, this is a hard
+problem for a few reasons.
+
+288
+00:16:18.640 --> 00:16:21.280
+I just don't notice Google
+that common stuff actually doesn't
+
+289
+00:16:21.280 --> 00:16:26.710
+have an Evie certificate and
+I'm, I love the dream
+
+290
+00:16:26.710 --> 00:16:29.470
+of Evie. So the dream
+of EBI is what you
+
+291
+00:16:29.470 --> 00:16:34.690
+described that you can verify
+that a website is who
+
+292
+00:16:34.750 --> 00:16:37.720
+they say they are because
+they, third party has checked,
+
+293
+00:16:38.050 --> 00:16:40.780
+right? They've checked that when
+you go to mint.com, it's
+
+294
+00:16:40.780 --> 00:16:42.850
+really mint.com and not someone
+trying to get your password,
+
+295
+00:16:43.210 --> 00:16:45.850
+Right. They went there and
+visited. That's why I always
+
+296
+00:16:45.850 --> 00:16:49.960
+assumed, But there are a
+few problems with this. The
+
+297
+00:16:49.960 --> 00:16:53.200
+first is that often the
+companies that own the websites
+
+298
+00:16:53.200 --> 00:16:55.180
+have a different name for
+the website, you're going to,
+
+299
+00:16:55.210 --> 00:16:57.970
+so a fairly famous example
+is that Intuit owns mint.
+
+300
+00:16:58.300 --> 00:17:00.070
+So you go to mint
+and then in big green
+
+301
+00:17:00.070 --> 00:17:02.050
+letters, it says into it.
+Yep. So that's a little
+
+302
+00:17:02.050 --> 00:17:07.390
+confusing. The second issue is
+that currently the way UV
+
+303
+00:17:07.390 --> 00:17:10.780
+is set up, if you
+can have a company named
+
+304
+00:17:11.650 --> 00:17:16.630
+into it in a municipality
+in Germany and another one
+
+305
+00:17:16.630 --> 00:17:19.570
+in Sweden and another one
+in Japan, and as long
+
+306
+00:17:19.570 --> 00:17:22.540
+as they're all companies that
+are registered there, they can
+
+307
+00:17:22.540 --> 00:17:25.420
+all get an ed certificate
+with that company name on
+
+308
+00:17:25.420 --> 00:17:28.240
+it. So there could be
+500 Googles out there with
+
+309
+00:17:28.270 --> 00:17:31.240
+AB certificates for say, Google,
+as long as they're actually
+
+310
+00:17:31.240 --> 00:17:36.340
+named that and their municipality.
+Oh, wow. So it doesn't
+
+311
+00:17:36.340 --> 00:17:40.690
+become, it's not quite as
+strong indicator of verified identity
+
+312
+00:17:40.750 --> 00:17:43.510
+as I like it to
+be. Right. Right. So that
+
+313
+00:17:43.510 --> 00:17:46.330
+means also that all of
+those certificates have to be,
+
+314
+00:17:46.360 --> 00:17:49.380
+you know, well taken care
+of. And if the Google
+
+315
+00:17:49.380 --> 00:17:54.300
+of Moldova gets compromised, then
+there's an EBV certificate floating
+
+316
+00:17:54.300 --> 00:17:57.770
+around somewhere that says Google.
+Right, right. Yeah. That is
+
+317
+00:17:57.770 --> 00:18:00.950
+a big problem. And you
+are totally right. Also I'm
+
+318
+00:18:00.950 --> 00:18:05.450
+on a second point about
+people conflating the trustworthiness of
+
+319
+00:18:05.450 --> 00:18:09.440
+a website and the security
+of the connection to the
+
+320
+00:18:09.440 --> 00:18:14.090
+website. And this is a
+really difficult thing to convey
+
+321
+00:18:14.090 --> 00:18:17.360
+because most people have no
+concept of how the website
+
+322
+00:18:17.360 --> 00:18:20.240
+is getting to them. Like
+connection security. Isn't a meaningful
+
+323
+00:18:20.240 --> 00:18:23.270
+thing to them, right. They,
+they, they're looking at it
+
+324
+00:18:23.270 --> 00:18:24.920
+on their computer and they
+don't know how it got
+
+325
+00:18:24.920 --> 00:18:27.860
+there. And that's reasonable. Not
+everyone should have to know
+
+326
+00:18:27.860 --> 00:18:31.580
+about surfers, but as a
+result, explaining what our connection
+
+327
+00:18:31.580 --> 00:18:36.140
+security is, is really difficult.
+And it's something that we're
+
+328
+00:18:36.440 --> 00:18:39.290
+still struggling with. I remember
+I had a light bulb
+
+329
+00:18:39.320 --> 00:18:41.420
+go off in my head
+a few months ago when
+
+330
+00:18:41.420 --> 00:18:45.830
+we had the UX researcher
+that we work with, brought
+
+331
+00:18:45.830 --> 00:18:48.650
+some people in and she
+was showing them a connection,
+
+332
+00:18:48.650 --> 00:18:52.550
+security indicators and warnings and
+asking people to talk about
+
+333
+00:18:52.550 --> 00:18:56.750
+them. And at the time,
+one of the warnings said,
+
+334
+00:18:56.780 --> 00:18:59.690
+this is not the site
+you're looking for. And it
+
+335
+00:18:59.690 --> 00:19:03.140
+was supposed to be talking
+about a connection problem. But
+
+336
+00:19:03.140 --> 00:19:05.480
+as people were looking at
+it, they're saying, Oh, this
+
+337
+00:19:05.480 --> 00:19:08.180
+is about phishing. I better
+look at the URL bar
+
+338
+00:19:08.180 --> 00:19:11.420
+to check that it's the
+right URL. And I went,
+
+339
+00:19:11.630 --> 00:19:14.780
+Oh my gosh, they're totally
+right. That does sound like
+
+340
+00:19:14.780 --> 00:19:20.120
+it's about fishing. Oh. So
+we've been trying to address
+
+341
+00:19:20.120 --> 00:19:23.540
+that. But without being able
+to explain really what a
+
+342
+00:19:23.540 --> 00:19:26.540
+connection is or what a
+server is, people still very
+
+343
+00:19:26.540 --> 00:19:30.440
+much conflate the two topics.
+There is so much context
+
+344
+00:19:30.980 --> 00:19:33.890
+that is, that is missing.
+I always try to put
+
+345
+00:19:33.890 --> 00:19:37.790
+it in the context of
+like a phone call yesterday.
+
+346
+00:19:37.790 --> 00:19:40.400
+True story. I got a
+phone call from my local
+
+347
+00:19:40.400 --> 00:19:43.430
+area code and I assumed
+it was someone I knew
+
+348
+00:19:43.430 --> 00:19:45.680
+and the person said, hi,
+I'm calling from the, the
+
+349
+00:19:45.680 --> 00:19:50.990
+compliance office and any, any
+spoke with such an authority
+
+350
+00:19:51.230 --> 00:19:54.050
+that I felt suddenly that
+I was in compliant. And,
+
+351
+00:19:54.350 --> 00:19:56.000
+and he's like, you know,
+I'm calling about your business.
+
+352
+00:19:56.000 --> 00:19:56.900
+I want to make sure
+that we can turn it
+
+353
+00:19:56.900 --> 00:20:00.680
+into like what office. And
+he just kept pushing through
+
+354
+00:20:00.710 --> 00:20:03.230
+everything I would say. And
+I was like, if I
+
+355
+00:20:03.230 --> 00:20:05.990
+put it together, he had
+a burner phone and he
+
+356
+00:20:05.990 --> 00:20:09.020
+eventually just got frustrated with
+me and hung up. And
+
+357
+00:20:09.020 --> 00:20:10.640
+then when I called back,
+the phone was dead. You
+
+358
+00:20:10.640 --> 00:20:13.820
+know what I mean? So
+like, that's the kind of
+
+359
+00:20:13.820 --> 00:20:15.680
+the man in the middle
+attack. Like, what I should
+
+360
+00:20:15.680 --> 00:20:17.180
+have done would be like,
+well, give me the number
+
+361
+00:20:17.180 --> 00:20:18.710
+of the office where you
+are, and I'll call you
+
+362
+00:20:18.710 --> 00:20:21.230
+back and call through the
+receptionist. And, and then we
+
+363
+00:20:21.230 --> 00:20:24.800
+would have a trusting relationship
+here. But the initial level
+
+364
+00:20:24.800 --> 00:20:26.780
+of the trust relationship was
+like looking at an address
+
+365
+00:20:26.780 --> 00:20:29.600
+bar. It's like, ah, it
+seems legit. I remember there
+
+366
+00:20:29.600 --> 00:20:32.210
+was a time a while
+back where someone had registered
+
+367
+00:20:32.210 --> 00:20:39.320
+microsoft.com with a Cyrillic C
+so people could click on
+
+368
+00:20:39.320 --> 00:20:44.660
+it and it totally looked
+legit. So we, yeah, that
+
+369
+00:20:44.660 --> 00:20:49.540
+is a problem. You know,
+this would have been easier
+
+370
+00:20:49.540 --> 00:20:52.150
+to explain. I think when
+I like in the early
+
+371
+00:20:52.150 --> 00:20:55.600
+nineties, when everyone was using
+landlines, because this is a
+
+372
+00:20:55.600 --> 00:21:00.130
+great natural analogy, what a
+designer that I worked with
+
+373
+00:21:00.130 --> 00:21:02.500
+Alex, Ainsley came up with
+this idea of using an
+
+374
+00:21:02.500 --> 00:21:06.070
+analogy of someone picking up
+on the phone line. So,
+
+375
+00:21:06.100 --> 00:21:08.140
+Oh, okay. You're so you're
+talking to google.com on the
+
+376
+00:21:08.140 --> 00:21:11.260
+phone and then maybe, you
+know, you're like kid sister
+
+377
+00:21:11.260 --> 00:21:13.450
+picks up and is listening
+to, right. So your kid's
+
+378
+00:21:13.450 --> 00:21:15.910
+sister here is a man
+in the middle attacker. And
+
+379
+00:21:15.940 --> 00:21:20.050
+the person you're talking to
+is say, Google, and this
+
+380
+00:21:20.050 --> 00:21:22.510
+is nice because there's two
+separate identities here that people
+
+381
+00:21:22.510 --> 00:21:27.580
+can reason about. But the
+problem is, if you're a
+
+382
+00:21:27.580 --> 00:21:30.640
+teenager today, you may have
+never really used a landline.
+
+383
+00:21:30.640 --> 00:21:32.620
+Like the concept of someone
+picking up on a phone
+
+384
+00:21:32.620 --> 00:21:36.580
+call, maybe just as abstract
+to you. There are many
+
+385
+00:21:36.580 --> 00:21:39.670
+countries where, you know, they
+sort of shot straight into
+
+386
+00:21:39.670 --> 00:21:44.710
+the mobile technology without going
+through landlines first because perhaps
+
+387
+00:21:44.710 --> 00:21:48.040
+they're in a remote area,
+whatever. And so that analogy
+
+388
+00:21:48.040 --> 00:21:51.460
+fails for them. So we're
+still trying to figure out
+
+389
+00:21:51.460 --> 00:21:54.850
+what another analogy is. That
+would be as equally recognizable
+
+390
+00:21:54.850 --> 00:21:57.310
+as you know, that one
+would have been in the
+
+391
+00:21:57.310 --> 00:22:00.360
+eighties or nineties with phones.
+That is a tough problem.
+
+392
+00:22:00.360 --> 00:22:02.790
+Like obviously you're thinking about
+it much deep, more deeply
+
+393
+00:22:02.790 --> 00:22:05.490
+than I am, but nothing
+jumps to mind. And I
+
+394
+00:22:05.490 --> 00:22:09.180
+was literally showing an old
+movie to my kids. I
+
+395
+00:22:09.180 --> 00:22:11.520
+think it was like the
+Goonies, you know, and that
+
+396
+00:22:11.820 --> 00:22:15.720
+kind of iconic idea, like
+the phone rings, Hey, pick
+
+397
+00:22:15.720 --> 00:22:17.550
+up the phone kit upstairs
+because the phone came, mom,
+
+398
+00:22:17.560 --> 00:22:20.760
+hang up the phone. That
+was like our lives. And
+
+399
+00:22:20.880 --> 00:22:23.400
+my children have absolutely no
+concept of any of that.
+
+400
+00:22:23.430 --> 00:22:27.780
+Even our landlines of VoIP
+phone. So one of the
+
+401
+00:22:27.780 --> 00:22:31.560
+other things that you've worked
+on is the malware warning.
+
+402
+00:22:31.590 --> 00:22:35.610
+And you're saying that a
+number of users click through
+
+403
+00:22:35.610 --> 00:22:37.290
+that, they basically have gotten
+to the point where they
+
+404
+00:22:37.290 --> 00:22:39.270
+just ignore the malware warning
+and they're like, yeah, this
+
+405
+00:22:39.270 --> 00:22:42.600
+could be unsafe. Yeah. And
+they clicked through, how does
+
+406
+00:22:42.600 --> 00:22:45.270
+that research work? How do
+you find out why people
+
+407
+00:22:45.270 --> 00:22:47.640
+ignore warnings and how do
+you know how many people
+
+408
+00:22:47.640 --> 00:22:50.130
+do in fact click through
+warnings and why? A few
+
+409
+00:22:50.130 --> 00:22:53.610
+years ago, we started looking
+at how often people click
+
+410
+00:22:53.610 --> 00:22:57.000
+through warnings. And I have
+to admit, we originally expected
+
+411
+00:22:57.000 --> 00:23:00.330
+a really bleak picture. The
+common wisdom at the time
+
+412
+00:23:00.330 --> 00:23:03.570
+was everyone clicks through warnings.
+So I went into this
+
+413
+00:23:03.570 --> 00:23:06.540
+thinking, Oh, 90% of people
+are going to be ignoring
+
+414
+00:23:06.540 --> 00:23:09.510
+warnings. That was the prevailing
+wisdom in the community at
+
+415
+00:23:09.510 --> 00:23:12.870
+the time. And it turned
+out that wasn't true. Although
+
+416
+00:23:12.870 --> 00:23:15.840
+more people clicked through warnings
+than we would like it
+
+417
+00:23:15.840 --> 00:23:20.550
+wasn't anywhere near 90%. Actually,
+as of two years ago,
+
+418
+00:23:20.580 --> 00:23:23.190
+it was about 30% of
+the time people would ignore
+
+419
+00:23:23.190 --> 00:23:25.170
+the warning, but 70% of
+the time they would pay
+
+420
+00:23:25.170 --> 00:23:28.620
+attention to it. So most
+of the time people were
+
+421
+00:23:28.620 --> 00:23:32.040
+heating our advice. And since
+then we've been improving the
+
+422
+00:23:32.040 --> 00:23:34.170
+warnings and getting better at
+it. And now the rate
+
+423
+00:23:34.170 --> 00:23:38.070
+is about 10%, maybe a
+little lower or higher, depending
+
+424
+00:23:38.070 --> 00:23:41.550
+on the time period and
+the way we've, we've done.
+
+425
+00:23:41.550 --> 00:23:43.500
+This is there, there are
+a few ways. So first
+
+426
+00:23:43.500 --> 00:23:48.530
+of all, browsers like Chrome
+and Firefox have ways to
+
+427
+00:23:48.710 --> 00:23:52.460
+synonymously tell whether someone has
+clicked through a warning or
+
+428
+00:23:52.460 --> 00:23:55.970
+not. So we can, for
+people who have opted into
+
+429
+00:23:55.970 --> 00:24:00.470
+sharing some basic, we call
+it telemetry data. But what
+
+430
+00:24:00.470 --> 00:24:02.900
+it means is we can
+see bullions like, have you
+
+431
+00:24:02.900 --> 00:24:05.690
+clicked through a warning or
+not? That gets shared with
+
+432
+00:24:05.720 --> 00:24:08.150
+take Google or with Mozilla.
+We can't say that URL
+
+433
+00:24:08.150 --> 00:24:11.750
+of course, but we can
+tell whether people in aggregate
+
+434
+00:24:11.750 --> 00:24:13.790
+are clicking through warnings or
+not. So we can use
+
+435
+00:24:13.790 --> 00:24:16.340
+that information to compute what
+we call the click through
+
+436
+00:24:16.340 --> 00:24:19.970
+rate, which is how often
+people ignore the warning. And
+
+437
+00:24:20.000 --> 00:24:23.600
+we also do things like
+have people come into a
+
+438
+00:24:23.600 --> 00:24:27.230
+lab study and talk to
+a UX researcher and run
+
+439
+00:24:27.230 --> 00:24:30.740
+mechanical Turk studies with controlled
+experiments where you try different
+
+440
+00:24:30.950 --> 00:24:34.040
+types of UI. And we
+also ask people open ended
+
+441
+00:24:34.040 --> 00:24:37.550
+questions. Like, you know, what
+do you think this is
+
+442
+00:24:37.550 --> 00:24:40.070
+learning is saying as is,
+is a really powerful question,
+
+443
+00:24:40.070 --> 00:24:45.170
+even though it's so simple
+and through all these different,
+
+444
+00:24:46.250 --> 00:24:48.290
+all of these different types
+of ways of asking people
+
+445
+00:24:48.290 --> 00:24:51.590
+questions and seeing what their
+behaviors are, we can try
+
+446
+00:24:51.590 --> 00:24:57.470
+to pinpoint factors that will
+influence people to not disregard
+
+447
+00:24:57.470 --> 00:25:00.200
+our advice. Because actually when
+it comes to safe browsing
+
+448
+00:25:00.200 --> 00:25:04.100
+warnings, they're really accurate. It's
+not like SSL warnings. We
+
+449
+00:25:04.100 --> 00:25:07.370
+have a very strong idea
+when there's malware being served
+
+450
+00:25:07.370 --> 00:25:09.890
+on a page. So we're
+very confident that the warnings
+
+451
+00:25:09.890 --> 00:25:12.080
+are right. And we really
+don't want people to click
+
+452
+00:25:12.080 --> 00:25:17.350
+through them. Brainstorming. Why let
+them, like, why not make
+
+453
+00:25:17.350 --> 00:25:19.900
+it like really hard, like
+go to about flags and
+
+454
+00:25:19.900 --> 00:25:22.210
+say, I'm really sure I'm
+needed. Like why not make
+
+455
+00:25:22.210 --> 00:25:24.850
+it? So you just can't
+do it with a simple
+
+456
+00:25:24.850 --> 00:25:28.900
+click. No, this is actually
+a really controversial topic right
+
+457
+00:25:28.900 --> 00:25:37.070
+now there's are many differing
+opinions about, so there's a
+
+458
+00:25:37.090 --> 00:25:41.700
+range of how paternalistic software
+can be. Right. So That's
+
+459
+00:25:41.710 --> 00:25:44.740
+a really interesting word, but
+that's great. Like applying paternal
+
+460
+00:25:44.770 --> 00:25:49.510
+to the, yeah. The, the
+nanny state, right? How daddy,
+
+461
+00:25:49.510 --> 00:25:52.570
+like, should my browser really
+be, be careful, look both
+
+462
+00:25:52.570 --> 00:25:54.820
+ways before you cross the
+road. Yeah. So there's a
+
+463
+00:25:54.820 --> 00:25:58.300
+tension, right? We want to
+keep people safe and we
+
+464
+00:25:58.300 --> 00:26:01.360
+don't want to pass along
+in decision. We don't, we
+
+465
+00:26:01.360 --> 00:26:03.790
+don't want to be asking
+people, lots of questions. We
+
+466
+00:26:03.790 --> 00:26:05.560
+kind of want the browser
+to do the right thing.
+
+467
+00:26:06.190 --> 00:26:08.350
+But on the other hand,
+we want people to remain
+
+468
+00:26:08.350 --> 00:26:12.070
+in control of technology. It's
+a bad feeling. If your
+
+469
+00:26:12.070 --> 00:26:14.830
+computer won't let you do
+something that you want to
+
+470
+00:26:14.830 --> 00:26:18.520
+do, right. That's, that's not
+something that I enjoy when
+
+471
+00:26:18.520 --> 00:26:20.680
+I encounter it. I find
+it frustrating that I can't
+
+472
+00:26:20.680 --> 00:26:22.090
+do this thing I want
+to, I really want to
+
+473
+00:26:22.090 --> 00:26:28.210
+do so. We have a
+delicate trade off between all
+
+474
+00:26:28.210 --> 00:26:31.990
+the, all these different factors
+and where we're currently at
+
+475
+00:26:31.990 --> 00:26:34.870
+from our warnings is we
+try to make it somewhat
+
+476
+00:26:34.870 --> 00:26:37.360
+difficult to click through the
+warning. Like you have to
+
+477
+00:26:37.360 --> 00:26:40.540
+click on details first, and
+then there's a link if
+
+478
+00:26:40.540 --> 00:26:43.350
+you hunt around for it
+in the text. So it's
+
+479
+00:26:43.350 --> 00:26:45.930
+not, you know, there's not
+like a big red button
+
+480
+00:26:45.960 --> 00:26:49.270
+click here to go to
+this page at Miller. We,
+
+481
+00:26:49.270 --> 00:26:51.930
+we definitely discourage it and
+we share an opinion and
+
+482
+00:26:51.930 --> 00:26:53.640
+you have to really want
+to find it to find
+
+483
+00:26:53.640 --> 00:26:55.590
+it, but we still let
+you do it. If you
+
+484
+00:26:55.590 --> 00:26:59.150
+really want to. Interesting. I
+was, as you were saying
+
+485
+00:26:59.150 --> 00:27:02.600
+that I'm thinking, but you're
+making self driving cars, but,
+
+486
+00:27:04.010 --> 00:27:07.250
+but I was watching the
+fifth element and he turns
+
+487
+00:27:07.250 --> 00:27:10.220
+off the self-driving feature to
+consciously crashed the car. And
+
+488
+00:27:10.220 --> 00:27:11.420
+the car was like, you're
+going to crash. He's like,
+
+489
+00:27:11.420 --> 00:27:13.790
+no, I'm really I'm mean
+to crash. It's okay. I
+
+490
+00:27:13.790 --> 00:27:16.700
+know what I'm doing. That
+makes total sense. Yeah. For
+
+491
+00:27:16.700 --> 00:27:18.740
+clarity, I think the self
+driving cars still let the
+
+492
+00:27:18.740 --> 00:27:21.440
+people drive. Well, yeah, you
+can always flip it. I
+
+493
+00:27:21.440 --> 00:27:22.760
+know. I'm just saying you
+can always flip it in.
+
+494
+00:27:22.760 --> 00:27:24.860
+I'm just thinking about all
+the movies. Like the one
+
+495
+00:27:24.860 --> 00:27:26.960
+where Arnold Schwarzenegger goes to
+Mars and he gets into
+
+496
+00:27:26.960 --> 00:27:30.170
+the Johnny cab and the
+Johnny cab is just drives
+
+497
+00:27:30.170 --> 00:27:31.550
+him around and he's not
+allowed to do that at
+
+498
+00:27:31.550 --> 00:27:33.710
+all. And he ended up,
+ends up having to take
+
+499
+00:27:33.710 --> 00:27:36.050
+control of the car because
+it is very much wants
+
+500
+00:27:36.050 --> 00:27:38.120
+to get him where he
+wants to go. Yeah. I
+
+501
+00:27:38.120 --> 00:27:40.190
+mean, I want to be
+healthy, but I also don't
+
+502
+00:27:40.190 --> 00:27:42.350
+want my feet freezer to
+refuse to unlock, to get
+
+503
+00:27:42.350 --> 00:27:44.810
+me to the ice cream.
+Right. So it is a
+
+504
+00:27:44.810 --> 00:27:50.060
+trade off. That is an
+awesome analogy. That's fantastic. Interesting.
+
+505
+00:27:50.090 --> 00:27:54.320
+Okay. So what kinds of
+studies are you running right
+
+506
+00:27:54.320 --> 00:27:55.790
+now? We've talked about some
+of the ones that you've
+
+507
+00:27:55.790 --> 00:27:57.350
+done in the past, and
+you've been doing this for
+
+508
+00:27:57.410 --> 00:28:00.200
+years and years. Yeah. So
+right now, one of our
+
+509
+00:28:00.200 --> 00:28:03.890
+main efforts is called the
+Chrome user experience survey platform.
+
+510
+00:28:04.370 --> 00:28:08.390
+And we've been asking people
+to install an extension and
+
+511
+00:28:08.420 --> 00:28:13.220
+the extension will periodically survey
+you. If you do something,
+
+512
+00:28:13.400 --> 00:28:16.610
+if you encounter a warning
+or if you, you know,
+
+513
+00:28:16.620 --> 00:28:18.830
+interact with URL bar in
+a certain way, or do
+
+514
+00:28:18.830 --> 00:28:20.900
+different sort of things every
+once in a while, it'll
+
+515
+00:28:20.900 --> 00:28:25.160
+show you a little notification
+and ask you to tell
+
+516
+00:28:25.160 --> 00:28:27.170
+us about what just happened
+in your experience with that
+
+517
+00:28:27.170 --> 00:28:30.650
+interaction, with that piece of
+UI. And we we've had
+
+518
+00:28:30.650 --> 00:28:32.810
+some success with this several
+thousand people have installed it
+
+519
+00:28:32.810 --> 00:28:35.000
+this far. And I'm really
+grateful that they have, because
+
+520
+00:28:35.000 --> 00:28:37.870
+the data that we're getting
+back is very insightful where
+
+521
+00:28:37.870 --> 00:28:41.570
+we're seeing in context, what
+people are thinking about these
+
+522
+00:28:41.570 --> 00:28:44.390
+different pieces of UI that
+we're showing them, What is
+
+523
+00:28:44.390 --> 00:28:46.520
+it called? That's I, that
+sounds super interesting. I love
+
+524
+00:28:46.520 --> 00:28:49.370
+stuff like that. Like I
+like there's some features in
+
+525
+00:28:49.370 --> 00:28:51.590
+windows where if you do
+something it's like, you know,
+
+526
+00:28:52.010 --> 00:28:53.570
+you could have used the
+hot key. It's like, I
+
+527
+00:28:53.690 --> 00:28:56.180
+totally forgot. I love stuff
+like that. What is this
+
+528
+00:28:56.180 --> 00:28:59.540
+called? It's the Chrome user
+experience survey. And it's in
+
+529
+00:28:59.540 --> 00:29:03.890
+the, the Chrome web store
+with extensions under the, by
+
+530
+00:29:03.890 --> 00:29:06.980
+Google tab. Okay, cool. Chrome
+user experience service. We'll go
+
+531
+00:29:06.980 --> 00:29:08.570
+ahead. And we'll add that
+to the show notes, to
+
+532
+00:29:08.570 --> 00:29:10.790
+make sure that people can,
+can check that out. And
+
+533
+00:29:10.790 --> 00:29:12.710
+is it it's pretty passive.
+It just kind of watches
+
+534
+00:29:12.710 --> 00:29:15.290
+and says, Oh, that looks
+interesting. What you just did.
+
+535
+00:29:15.290 --> 00:29:18.560
+Take a quick survey. Yeah,
+exactly. And it's capped. So
+
+536
+00:29:18.560 --> 00:29:20.600
+it won't show you lots
+of surveys. It's surveys fairly
+
+537
+00:29:20.600 --> 00:29:23.060
+infrequently. Okay, cool. So it's
+not nagging you all the
+
+538
+00:29:23.060 --> 00:29:26.150
+time. No. Right. That would
+be annoying. Interesting. So you
+
+539
+00:29:26.150 --> 00:29:30.050
+also worked, like you said,
+on, on privacy and security
+
+540
+00:29:30.050 --> 00:29:34.070
+on, on phones. Yeah. So
+my, that was actually, my
+
+541
+00:29:34.070 --> 00:29:37.460
+dissertation work in graduate school
+was looking at permission systems.
+
+542
+00:29:37.490 --> 00:29:42.790
+So for Chrome extensions and
+for Android applications to look
+
+543
+00:29:42.790 --> 00:29:45.100
+at how well the permission
+model works in a permission
+
+544
+00:29:45.100 --> 00:29:47.470
+model is when you see
+an application asking, Hey, can
+
+545
+00:29:47.470 --> 00:29:50.910
+I have access to location?
+That kind of thing. In
+
+546
+00:29:50.910 --> 00:29:53.340
+the, in the title of
+your, one of your papers,
+
+547
+00:29:53.340 --> 00:29:55.980
+you said I've got 99
+problems, but vibration ain't one
+
+548
+00:29:57.150 --> 00:29:59.910
+that I thought that was
+pretty, pretty fantastic title if
+
+549
+00:29:59.910 --> 00:30:02.910
+you're going to do one.
+Yeah. So vibration is actually
+
+550
+00:30:02.910 --> 00:30:06.390
+a funny thing because it
+isn't really a security risk.
+
+551
+00:30:06.690 --> 00:30:09.330
+It's more, just a possible
+annoyance, but yet we see
+
+552
+00:30:09.330 --> 00:30:12.240
+that social engineering sites love
+it. They want to get
+
+553
+00:30:12.240 --> 00:30:14.880
+your attention, right? They want
+you, they want to use
+
+554
+00:30:14.880 --> 00:30:17.190
+this to get your attention,
+to look at their piece
+
+555
+00:30:17.190 --> 00:30:20.340
+of, you know, their fake
+popup or whatever it is
+
+556
+00:30:20.340 --> 00:30:22.380
+that they're trying to sell
+you. They want to get
+
+557
+00:30:22.380 --> 00:30:25.620
+your attention. So they're using
+the vibrant API. So weirdly
+
+558
+00:30:25.620 --> 00:30:30.660
+enough, even though people don't
+find vibrate, a particularly threatening
+
+559
+00:30:30.810 --> 00:30:35.190
+permission to have, we see
+it being fairly widely used
+
+560
+00:30:35.190 --> 00:30:38.670
+annoyingly. So it's kind of
+an odd situation with that
+
+561
+00:30:38.670 --> 00:30:42.620
+specific API. I think though,
+also too. And again, I
+
+562
+00:30:42.630 --> 00:30:46.710
+have only my parents as
+my, my user base, I'm
+
+563
+00:30:46.710 --> 00:30:49.560
+it support for, you know,
+we all, w I'm sure
+
+564
+00:30:49.560 --> 00:30:51.390
+you are as well, right?
+We're all it support for
+
+565
+00:30:51.390 --> 00:30:56.370
+our family. They feel that
+there's some authenticity in the
+
+566
+00:30:56.370 --> 00:31:00.720
+vibrate though. And the phone
+vibrates, it was the phone
+
+567
+00:31:01.110 --> 00:31:04.560
+that vibrated, as opposed to
+the site told the phone,
+
+568
+00:31:04.560 --> 00:31:07.530
+can you vibrate for me?
+So when a vibration occurs,
+
+569
+00:31:07.710 --> 00:31:10.830
+they perceive it as being
+from the core of the
+
+570
+00:31:10.830 --> 00:31:14.280
+phone and it has more,
+more weight. It's more important.
+
+571
+00:31:15.690 --> 00:31:18.870
+Yeah, it's true. I think
+it does do that. And
+
+572
+00:31:18.870 --> 00:31:22.950
+that's why these bad sites
+are trying to make use
+
+573
+00:31:22.950 --> 00:31:26.040
+of the vibration API. But
+I am hearing when you
+
+574
+00:31:26.040 --> 00:31:28.560
+ask people, you know, how
+concerning do you find the
+
+575
+00:31:28.560 --> 00:31:31.620
+vibrant API? Would you always
+say, people said, why are
+
+576
+00:31:31.620 --> 00:31:33.780
+you even asking me it's
+fiber? Just go ahead and
+
+577
+00:31:33.780 --> 00:31:37.440
+give it. It doesn't like
+to them. They don't, I
+
+578
+00:31:37.440 --> 00:31:41.760
+don't think people consciously realize
+the effect that using vibration
+
+579
+00:31:41.760 --> 00:31:44.670
+has on them. I see
+what you're saying. So they
+
+580
+00:31:44.670 --> 00:31:48.240
+approve it and they've forgotten
+about it. And then, you
+
+581
+00:31:48.240 --> 00:31:50.490
+know, weeks later a site
+uses it or an app
+
+582
+00:31:50.490 --> 00:31:53.610
+uses it and they come.
+And another thing actually is
+
+583
+00:31:53.640 --> 00:31:55.950
+how do you take those
+things back with all four
+
+584
+00:31:55.980 --> 00:31:58.440
+phones on all platforms? I've
+always found it difficult to
+
+585
+00:31:58.440 --> 00:32:02.400
+revoke permissions. Like I just
+click accept and it's done,
+
+586
+00:32:02.400 --> 00:32:04.650
+but I have to go
+digging to make you stop
+
+587
+00:32:04.650 --> 00:32:07.560
+using it. Yeah. We're vacation
+is actually something we've been
+
+588
+00:32:07.590 --> 00:32:09.870
+working on a lot and
+you'll see the story getting
+
+589
+00:32:09.870 --> 00:32:14.250
+better. So for Android in
+starting in, em, you'll see
+
+590
+00:32:14.250 --> 00:32:17.280
+that you can now take
+back permissions and settings, which
+
+591
+00:32:17.280 --> 00:32:18.810
+you didn't used to be
+able to do before. So
+
+592
+00:32:18.810 --> 00:32:22.710
+that's a new thing. And
+also on Chrome, if you've
+
+593
+00:32:22.710 --> 00:32:24.690
+given it permission to a
+website, just click on the
+
+594
+00:32:24.690 --> 00:32:26.940
+lock and right there will
+be a list of all
+
+595
+00:32:26.940 --> 00:32:28.800
+the permissions you've given and
+you can easily flip them
+
+596
+00:32:28.800 --> 00:32:31.590
+back. And we've been making
+lots of improvements there because
+
+597
+00:32:31.590 --> 00:32:34.080
+one of the things we
+worry about is a people
+
+598
+00:32:34.080 --> 00:32:36.930
+want to try stuff out,
+right. And they're not going
+
+599
+00:32:36.930 --> 00:32:38.520
+to try it out if
+they're afraid that they can't
+
+600
+00:32:38.520 --> 00:32:40.940
+undo it. So we want
+to make it a lot
+
+601
+00:32:40.940 --> 00:32:43.250
+easier to undo. And there's
+been a lot of work
+
+602
+00:32:43.250 --> 00:32:48.350
+going on around that. And
+also we actually w we
+
+603
+00:32:48.350 --> 00:32:50.240
+don't want to annoy people
+who we sometimes like to
+
+604
+00:32:50.240 --> 00:32:52.670
+be able to guess, Hey,
+yeah. Okay. You're going to
+
+605
+00:32:52.670 --> 00:32:55.460
+say yes to allow this
+website to use vibrate, but
+
+606
+00:32:55.460 --> 00:32:57.260
+then if it starts annoying,
+you, you should still be
+
+607
+00:32:57.260 --> 00:33:00.200
+able to undo it. So
+having a better revocation story,
+
+608
+00:33:00.200 --> 00:33:02.740
+let's just experiment a little
+bit more with what API
+
+609
+00:33:02.740 --> 00:33:05.720
+APIs are available without asking
+user about it first. And
+
+610
+00:33:05.720 --> 00:33:07.910
+of course, we'd never do
+that for anything privacy sensitive,
+
+611
+00:33:08.210 --> 00:33:10.790
+but for ones like vibrate
+that are mostly about obnoxiousness,
+
+612
+00:33:10.790 --> 00:33:14.020
+it gives us some flexibility.
+Very cool. I really appreciate
+
+613
+00:33:14.020 --> 00:33:17.710
+you chatting with me today.
+Thanks. Nice talking, dr. Adrianne
+
+614
+00:33:17.710 --> 00:33:20.860
+Porterfield is a security and
+privacy researcher at Google, and
+
+615
+00:33:20.860 --> 00:33:24.940
+she's currently focused on designing
+and building usable security. This
+
+616
+00:33:24.940 --> 00:33:27.400
+has been another episode of
+Hanselminutes and we'll see you
+
+617
+00:33:27.400 --> 00:33:28.330
+again next week.
+

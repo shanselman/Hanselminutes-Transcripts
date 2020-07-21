@@ -1,0 +1,3111 @@
+WEBVTT FILE
+
+1
+00:00:00.240 --> 00:00:02.910
+This episode is brought to
+you by Datadog a full
+
+2
+00:00:02.910 --> 00:00:06.870
+stack monitoring platform that integrates
+with over 400 technologies like
+
+3
+00:00:06.900 --> 00:00:12.870
+gremlin, PagerDuty, AWS Lambda, Spinnaker,
+and more with rich visualizations
+
+4
+00:00:12.870 --> 00:00:16.230
+and algorithmic alerts. Datadog could
+help you monitor the effects
+
+5
+00:00:16.230 --> 00:00:20.670
+of chaos, experiments, identify weaknesses,
+and improve the reliability of
+
+6
+00:00:20.670 --> 00:00:26.640
+your systems. Visit Datadog hq.com/hansel
+minutes. To get a free
+
+7
+00:00:26.640 --> 00:00:29.880
+14 day trial and receive
+one of data dog's famously
+
+8
+00:00:29.910 --> 00:00:47.120
+cozy. T-shirts Alright, This is
+Scott Hanselman. This Hansel minutes
+
+9
+00:00:47.180 --> 00:00:51.860
+today. I'm talking with Helen,
+<inaudible> the open source director
+
+10
+00:00:51.860 --> 00:00:54.470
+of initiatives at 10 up
+and the lead developer for
+
+11
+00:00:54.470 --> 00:00:56.720
+WordPress. How are you? I
+am great. How are you
+
+12
+00:00:56.720 --> 00:01:00.920
+doing Well? I'm getting there.
+I'm not, not exactly living
+
+13
+00:01:00.920 --> 00:01:03.530
+the dream. Of course, we're
+recording this during the time
+
+14
+00:01:03.530 --> 00:01:06.890
+of coronavirus. So I am
+sequestered in my home in
+
+15
+00:01:06.890 --> 00:01:10.100
+Portland, Oregon. Where are you?
+I am sequestered in my
+
+16
+00:01:10.100 --> 00:01:16.070
+home fully down in San
+Jose, Costa Rica, Costa Rica. That's where
+
+17
+00:01:16.070 --> 00:01:17.510
+I think we all want
+to be right now. That
+
+18
+00:01:17.510 --> 00:01:20.480
+sounds amazing. Have you been
+there a long time? I
+
+19
+00:01:20.480 --> 00:01:24.320
+have been here. It's been
+almost two years. My husband
+
+20
+00:01:24.320 --> 00:01:28.550
+is actually Costa Rican and
+we have two kids. So
+
+21
+00:01:29.000 --> 00:01:31.790
+I kind of overwhelming to
+live in the New York Metro,
+
+22
+00:01:32.990 --> 00:01:35.210
+I guess it's always kind
+of overwhelming to live in
+
+23
+00:01:35.210 --> 00:01:37.820
+the New York Metro, but we
+a couple of years ago
+
+24
+00:01:37.820 --> 00:01:40.010
+just kind of gave up
+on it and moved here
+
+25
+00:01:40.010 --> 00:01:44.330
+to be with family. That
+sounds amazing. I understand the
+
+26
+00:01:44.420 --> 00:01:47.780
+certainly with the, the tightness,
+the tight knit aspect of
+
+27
+00:01:47.780 --> 00:01:49.610
+things in New York, being in
+the New York, subway is not
+
+28
+00:01:49.610 --> 00:01:52.220
+a place to be right
+now. Yeah, no, I am
+
+29
+00:01:52.220 --> 00:01:57.110
+definitely glad to have space
+here and the kids are
+
+30
+00:01:57.110 --> 00:02:01.010
+not going too wild, I
+guess. Cause they're not too
+
+31
+00:02:01.010 --> 00:02:03.980
+cooped up. You know, How
+was your Spanish? I was
+
+32
+00:02:03.980 --> 00:02:07.160
+talking to someone earlier today
+and they had amazing English
+
+33
+00:02:07.190 --> 00:02:09.680
+and after they talked to
+me in English, they were
+
+34
+00:02:09.680 --> 00:02:12.200
+like, Oh, I'm so sorry
+for my poor English. And
+
+35
+00:02:12.200 --> 00:02:15.320
+I'm like, Oh, I can't
+sorry for not speaking another
+
+36
+00:02:15.320 --> 00:02:20.060
+language at all. Yeah, I
+speak Spanish. Okay. I think
+
+37
+00:02:20.090 --> 00:02:23.630
+there's this like perfectionist streak
+at me. So I get
+
+38
+00:02:23.630 --> 00:02:27.830
+really nervous about making mistakes.
+And so I kind of
+
+39
+00:02:27.830 --> 00:02:30.620
+hate doing it. I am,
+I'm the same way about
+
+40
+00:02:30.620 --> 00:02:33.740
+languages in general. And you
+know, they always use that
+
+41
+00:02:33.740 --> 00:02:37.400
+term, idiomatic, whatever. Like, you
+know, I can speak Chipotle
+
+42
+00:02:37.400 --> 00:02:40.190
+they Spanish, but if I
+speak idiomatic Spanish, you know,
+
+43
+00:02:40.190 --> 00:02:41.960
+it doesn't sound right. And
+then of course I always
+
+44
+00:02:41.960 --> 00:02:44.480
+get in trouble cause I
+was in the Dominican Republic and
+
+45
+00:02:44.480 --> 00:02:47.360
+their Spanish is different than
+Mexican Spanish, which is the
+
+46
+00:02:47.360 --> 00:02:49.460
+Spanish that I've learned, which
+is different than, you know,
+
+47
+00:02:49.460 --> 00:02:52.040
+whatever. So then you, you,
+you, you say some term
+
+48
+00:02:52.040 --> 00:02:53.480
+and they're like, Oh my
+goodness. We don't say that
+
+49
+00:02:53.480 --> 00:02:54.880
+here. That's a swear word.
+It was like, is it
+
+50
+00:02:54.940 --> 00:02:58.100
+really a show? Oh yeah,
+yeah, yeah. Lots of jokes
+
+51
+00:02:58.100 --> 00:03:02.310
+about lots of jokes about
+straws, I think is I
+
+52
+00:03:02.310 --> 00:03:05.100
+got in huge trouble with
+a straw. We'll talk about
+
+53
+00:03:05.100 --> 00:03:08.040
+that another time. And we,
+don't not on this show,
+
+54
+00:03:08.430 --> 00:03:11.100
+but yeah, I got an,
+a horrible, horrible straw based
+
+55
+00:03:11.160 --> 00:03:14.220
+Spanish situation. So someone, if
+you see me on the
+
+56
+00:03:14.220 --> 00:03:16.470
+street, friends and listeners of
+the podcast, feel free to
+
+57
+00:03:16.470 --> 00:03:20.220
+ask me about that nightmare
+situation. Cause that was bad.
+
+58
+00:03:20.580 --> 00:03:24.120
+Yeah. And speaking of languages
+and idiomatic languages. So I,
+
+59
+00:03:24.210 --> 00:03:27.990
+I speak C-sharp and you
+are one of the lead
+
+60
+00:03:27.990 --> 00:03:31.110
+developers on WordPress. WordPress is,
+is that still primarily or
+
+61
+00:03:31.110 --> 00:03:34.500
+100% written in PHP on
+the service side. It is
+
+62
+00:03:34.500 --> 00:03:37.740
+primarily, there's a fair amount
+of JavaScript now that runs
+
+63
+00:03:38.130 --> 00:03:41.130
+the new editor and some
+other experiences. So that kind
+
+64
+00:03:41.130 --> 00:03:46.320
+of bridges somewhere between PHP
+and JavaScript on the server
+
+65
+00:03:46.350 --> 00:03:51.720
+side of things. Yeah. Now
+PHP, one time I was
+
+66
+00:03:51.720 --> 00:03:53.850
+a, you know, we always
+tease different languages. You always
+
+67
+00:03:53.850 --> 00:03:55.470
+tease the language that you
+don't speak. And then you
+
+68
+00:03:55.470 --> 00:03:58.320
+talk privately, you know, internally
+with your group about how
+
+69
+00:03:58.320 --> 00:04:00.660
+your language sucks. Like all
+of us internally, we talk
+
+70
+00:04:00.660 --> 00:04:03.240
+about how C sharp sucks,
+but I was teasing once
+
+71
+00:04:03.540 --> 00:04:06.390
+PHP, I think it was
+in a talk and someone
+
+72
+00:04:06.390 --> 00:04:08.670
+said I was language shaming,
+but then I went and
+
+73
+00:04:08.670 --> 00:04:11.460
+looked at the numbers and
+PHP is killing it. Like
+
+74
+00:04:11.460 --> 00:04:13.410
+you can tease PHP all
+they want, but it's like
+
+75
+00:04:13.830 --> 00:04:18.450
+60 million people using the thing.
+Yeah. It's, it's, it's honestly
+
+76
+00:04:18.450 --> 00:04:20.880
+like a big part of
+what got me kind of
+
+77
+00:04:20.880 --> 00:04:23.820
+back into computers after a
+long, long time away from
+
+78
+00:04:23.820 --> 00:04:27.420
+them. Cause it's like instant,
+right? Like you just kinda
+
+79
+00:04:27.750 --> 00:04:30.840
+make this thing go and
+it's forgiving in both good
+
+80
+00:04:30.840 --> 00:04:33.150
+and bad ways. I think
+that's what people really like
+
+81
+00:04:33.150 --> 00:04:35.610
+to make fun of. Right?
+Like you can do these
+
+82
+00:04:35.610 --> 00:04:37.890
+things and in any other
+language, it would be like,
+
+83
+00:04:37.920 --> 00:04:40.410
+that's a dumb thing to
+do, but PHP is like,
+
+84
+00:04:40.470 --> 00:04:43.710
+ah, sure. I'll guess I'll
+take a guess as to
+
+85
+00:04:43.710 --> 00:04:45.990
+what you mean, but that
+was kind of the fun
+
+86
+00:04:45.990 --> 00:04:48.870
+thing about getting into PHP
+was that it was forgiving
+
+87
+00:04:48.870 --> 00:04:51.450
+and it, let me try
+a lot of different things
+
+88
+00:04:51.450 --> 00:04:53.520
+and yeah. And we like
+to have our fights in
+
+89
+00:04:53.520 --> 00:04:56.250
+public. I think that's another
+thing about it. It itself
+
+90
+00:04:56.250 --> 00:05:00.420
+being developed as open source,
+right. Is that all the
+
+91
+00:05:00.420 --> 00:05:04.920
+fights and everything happened in
+the open. So it gets
+
+92
+00:05:04.920 --> 00:05:07.470
+a lot of attention for
+that. Why do you think
+
+93
+00:05:07.470 --> 00:05:10.680
+PHP gets a bad name?
+Why do Pete? Why is
+
+94
+00:05:10.680 --> 00:05:12.900
+it, is it because it's
+so popular that people think
+
+95
+00:05:12.900 --> 00:05:17.400
+they can throw rocks at
+it? I think they're a
+
+96
+00:05:17.400 --> 00:05:20.430
+bunch of different things. I
+mean, there is the, you
+
+97
+00:05:20.430 --> 00:05:22.620
+know, at least in, in
+order versions of PHP, how
+
+98
+00:05:22.650 --> 00:05:26.610
+lax it was about a
+lot of things, just, you
+
+99
+00:05:26.610 --> 00:05:30.990
+know, like typing or yeah,
+mostly typing honestly, and not
+
+100
+00:05:30.990 --> 00:05:36.990
+having like best practices around
+how you structure things that
+
+101
+00:05:36.990 --> 00:05:38.790
+you're writing. Right. Like it
+used to be a lot
+
+102
+00:05:38.790 --> 00:05:43.310
+of procedural code and a
+lot of, you know, I
+
+103
+00:05:43.320 --> 00:05:44.640
+don't know what to call
+it, but just a lot
+
+104
+00:05:44.640 --> 00:05:48.180
+of sort of elitism around,
+Oh, you're not using objects.
+
+105
+00:05:48.210 --> 00:05:51.750
+Not everything can just be
+functional the time. Yeah. I
+
+106
+00:05:51.750 --> 00:05:54.990
+think with, with the type
+of usage, I think WordPress
+
+107
+00:05:54.990 --> 00:05:56.880
+is like this too, right?
+Like with that type of,
+
+108
+00:05:57.380 --> 00:05:59.960
+you have a lot of
+eyes on both of the
+
+109
+00:05:59.960 --> 00:06:01.820
+things that are good and
+the things that are bad.
+
+110
+00:06:02.390 --> 00:06:04.910
+Right. So they just kind
+of get a lot more
+
+111
+00:06:04.910 --> 00:06:08.090
+attention generally. And we like
+to pick on things that
+
+112
+00:06:08.090 --> 00:06:11.440
+are bad, But that, that
+lose that looseness, that, that
+
+113
+00:06:11.440 --> 00:06:14.200
+dynamism, if that's a word
+is why it was so
+
+114
+00:06:14.200 --> 00:06:17.110
+successful. I mean, it's a
+fairly young language. It's only
+
+115
+00:06:17.110 --> 00:06:19.690
+been around for 25 years.
+And I think the thing
+
+116
+00:06:19.690 --> 00:06:22.060
+that's most interesting about PHP
+is that it kind of
+
+117
+00:06:22.420 --> 00:06:27.040
+grew and developed with no
+formal specification until like five
+
+118
+00:06:27.040 --> 00:06:29.530
+years ago or six years
+ago. So the first 20
+
+119
+00:06:29.530 --> 00:06:32.590
+years they were just kinda
+making stuff up. Yeah. I
+
+120
+00:06:32.590 --> 00:06:34.360
+mean, you could see it,
+you know, we have, they're
+
+121
+00:06:34.360 --> 00:06:37.510
+like, there's like a function
+to find the date of
+
+122
+00:06:37.540 --> 00:06:42.130
+Easter in alternate calendars. Like
+it's just kind of, there
+
+123
+00:06:42.130 --> 00:06:45.280
+was a funny language, but
+you know, we, it, again,
+
+124
+00:06:45.340 --> 00:06:48.340
+it works right. Like it
+works, we get stuff done.
+
+125
+00:06:48.430 --> 00:06:51.220
+So Exactly. And that's the
+thing. There's no room for
+
+126
+00:06:51.220 --> 00:06:54.850
+a and when you're getting
+work done. Yep. One of
+
+127
+00:06:54.850 --> 00:06:57.670
+the things that we say
+at Microsoft where I work
+
+128
+00:06:57.670 --> 00:07:00.100
+and my day job is
+we, we refer to a
+
+129
+00:07:00.100 --> 00:07:04.330
+thing about the developers inner
+loop, the experience that the
+
+130
+00:07:04.330 --> 00:07:07.600
+developer goes through to make
+a change and then see
+
+131
+00:07:07.600 --> 00:07:11.080
+the change and how long
+it takes. Now, my language
+
+132
+00:07:11.080 --> 00:07:15.190
+is strongly typed and compiled.
+So you could spend a
+
+133
+00:07:15.190 --> 00:07:17.920
+couple seconds or even many
+seconds where you make a
+
+134
+00:07:17.920 --> 00:07:21.370
+change, compile it, run a
+test, hit refresh. The power
+
+135
+00:07:21.370 --> 00:07:24.400
+of PHP for me has
+always been the, make a
+
+136
+00:07:24.400 --> 00:07:26.560
+change and hit refresh in
+the browser. So the amount
+
+137
+00:07:26.560 --> 00:07:28.960
+of time spent let's just
+like hit save, and then
+
+138
+00:07:29.290 --> 00:07:32.440
+you see immediately what you
+just did. And I think
+
+139
+00:07:32.440 --> 00:07:36.460
+that that's always been the
+success for me. Yes, absolutely.
+
+140
+00:07:36.460 --> 00:07:39.040
+That's that's definitely what drew
+me in as well. Like
+
+141
+00:07:39.040 --> 00:07:42.160
+I mentioned, it just, it
+was exciting to get into
+
+142
+00:07:42.160 --> 00:07:47.560
+something. I was very briefly
+a computer science major, double
+
+143
+00:07:47.560 --> 00:07:52.180
+major. And it was in
+Java at the time, I
+
+144
+00:07:52.180 --> 00:07:56.200
+think was the, the, the
+primary language used for classes.
+
+145
+00:07:56.550 --> 00:07:59.740
+And before that had done
+some C plus plus. So
+
+146
+00:07:59.740 --> 00:08:03.490
+for me, just coming from
+compiled languages where everything was
+
+147
+00:08:03.580 --> 00:08:08.440
+very punitive almost, and, and
+taking forever to, you know,
+
+148
+00:08:08.440 --> 00:08:11.680
+compile things and required certain
+resources and all of that,
+
+149
+00:08:12.410 --> 00:08:14.950
+and to come from that
+and having given up on
+
+150
+00:08:14.950 --> 00:08:16.870
+it, because it was so
+frustrating and I did not
+
+151
+00:08:16.870 --> 00:08:19.660
+have resources available to me
+the way that they sort
+
+152
+00:08:19.660 --> 00:08:23.800
+of expected you to have
+to, to get to something
+
+153
+00:08:23.800 --> 00:08:27.790
+like PHP, where you can
+just refresh and everything is
+
+154
+00:08:28.180 --> 00:08:32.920
+good, was really exciting. And
+it kind of reignited my
+
+155
+00:08:32.920 --> 00:08:37.450
+excitement about computers sort of
+generally. And so now I'm
+
+156
+00:08:37.450 --> 00:08:40.570
+here. I like that because
+they're like right now, I
+
+157
+00:08:40.570 --> 00:08:43.750
+just taught when I went,
+my nephew is in school
+
+158
+00:08:43.750 --> 00:08:46.810
+at Oregon state and he
+Skyped me a couple of
+
+159
+00:08:46.810 --> 00:08:48.490
+days ago because he's like,
+I want to be a
+
+160
+00:08:48.490 --> 00:08:50.830
+computer programmer any, and they're
+making them do C plus
+
+161
+00:08:50.830 --> 00:08:54.430
+plus, and he's just, he's
+hating it. And it's, it's
+
+162
+00:08:54.430 --> 00:08:57.540
+taking his excitement, which was
+from age 13 to age
+
+163
+00:08:57.570 --> 00:09:00.660
+19. And it's just pounding
+him into the ground because
+
+164
+00:09:00.660 --> 00:09:03.390
+he's there like, you know,
+write a connect four game
+
+165
+00:09:03.390 --> 00:09:05.250
+or do a tic TAC
+toe and make sure you
+
+166
+00:09:05.250 --> 00:09:08.520
+use pointers to pointers, to
+pointers, to do a raise
+
+167
+00:09:08.520 --> 00:09:11.400
+of multidimensional, whatever. And he's
+just like, but this isn't
+
+168
+00:09:11.790 --> 00:09:14.190
+like this, isn't what I
+signed up for. And it's
+
+169
+00:09:14.190 --> 00:09:16.680
+like, when my dad told
+me, Hey, we're going to
+
+170
+00:09:16.680 --> 00:09:18.660
+learn, teach you how to
+drive. And I'm like, Oh
+
+171
+00:09:18.690 --> 00:09:20.310
+great. Can I drive this
+car? And he's like, no,
+
+172
+00:09:20.310 --> 00:09:22.740
+no, we're going to learn
+to drive, stick shift first.
+
+173
+00:09:23.310 --> 00:09:25.110
+We're going to make you
+suffer. Right. It's like, Hey,
+
+174
+00:09:25.290 --> 00:09:30.060
+let's all learn computers now.
+Assembly language. Yeah. That's so
+
+175
+00:09:30.060 --> 00:09:32.520
+fun. So you, you got,
+you got the fun beaten
+
+176
+00:09:32.520 --> 00:09:35.660
+out of you and then
+you found PHP. Yeah. Yeah.
+
+177
+00:09:35.660 --> 00:09:37.970
+That's totally what it was.
+You know, we all started
+
+178
+00:09:37.970 --> 00:09:44.780
+with the like geo cities,
+aim profiles, pretty generated each
+
+179
+00:09:44.780 --> 00:09:48.080
+team, a playlist from Winnie
+app onto our all profiles.
+
+180
+00:09:48.080 --> 00:09:52.370
+Right. And we kind of
+went from that and tinkering
+
+181
+00:09:52.370 --> 00:09:55.430
+with HTML. And again, the
+fun of seeing something just
+
+182
+00:09:55.430 --> 00:10:00.080
+happened when you refreshed and
+went from that into compiled
+
+183
+00:10:00.080 --> 00:10:02.150
+languages. And what you said
+about like connect four, I
+
+184
+00:10:02.150 --> 00:10:04.670
+was like, Oh my God,
+I'm back in AP, computer
+
+185
+00:10:04.670 --> 00:10:08.060
+science all over again, being
+shoved into that was very
+
+186
+00:10:08.060 --> 00:10:10.280
+like, this is not exciting
+for me. And this is
+
+187
+00:10:10.280 --> 00:10:14.030
+not something that I relate
+to. Right. Like my, when
+
+188
+00:10:14.030 --> 00:10:16.490
+I thought about, if I
+wanted to do computers for
+
+189
+00:10:16.490 --> 00:10:18.140
+a living, what would I
+want to do? And for
+
+190
+00:10:18.140 --> 00:10:21.020
+me, it was never like,
+I want to write, you
+
+191
+00:10:21.020 --> 00:10:24.920
+know, operating systems. I don't
+want to write games when
+
+192
+00:10:24.920 --> 00:10:28.370
+I'm familiar with is the
+web. I'm familiar with stuff
+
+193
+00:10:28.370 --> 00:10:32.030
+on the internet. Right. That's
+my, my generation, my childhood.
+
+194
+00:10:32.210 --> 00:10:35.120
+And for me, it was
+very much like, okay, this
+
+195
+00:10:35.120 --> 00:10:36.620
+is not what I want
+to do. I don't see
+
+196
+00:10:36.620 --> 00:10:38.000
+how it's relevant at all.
+And I don't want to
+
+197
+00:10:38.000 --> 00:10:39.890
+do it anymore. So I
+stopped doing it for a
+
+198
+00:10:39.890 --> 00:10:44.630
+long time. Cool. Who remember
+like geo cities and, you
+
+199
+00:10:44.630 --> 00:10:47.270
+know, they've, they've gone and
+made similar sites. You can
+
+200
+00:10:47.270 --> 00:10:49.820
+find Neo cities. But like,
+if I talk to someone
+
+201
+00:10:49.820 --> 00:10:51.530
+who's in their twenties and
+they say, Oh man, geo
+
+202
+00:10:51.530 --> 00:10:55.340
+cities and my space and,
+you know, few source, it's
+
+203
+00:10:55.340 --> 00:10:56.900
+always so disappointing. Now, when
+you go and do a
+
+204
+00:10:56.900 --> 00:10:59.180
+view source on a website
+and it's completely unreadable and
+
+205
+00:10:59.180 --> 00:11:01.910
+you go, Oh, that's a
+single div and some JavaScript
+
+206
+00:11:01.910 --> 00:11:05.120
+that's office gated. Do you
+think that WordPress is kind
+
+207
+00:11:05.120 --> 00:11:07.370
+of the new geo cities
+or is there a generation
+
+208
+00:11:07.370 --> 00:11:10.400
+that's WordPress? Is there they're
+geo cities? That's the thing
+
+209
+00:11:10.400 --> 00:11:13.760
+that they're hacking on and
+getting passionate about? I think
+
+210
+00:11:14.360 --> 00:11:19.640
+specifically in the developer and
+the open source community. Yes.
+
+211
+00:11:19.700 --> 00:11:23.780
+There are a significant number
+of people who came up
+
+212
+00:11:23.810 --> 00:11:26.150
+through a project like WordPress
+and for a lot of
+
+213
+00:11:26.150 --> 00:11:29.420
+people that is exactly WordPress,
+right? Like hacking on themes
+
+214
+00:11:29.420 --> 00:11:31.580
+or, you know, trying to
+figure out what the bug
+
+215
+00:11:31.580 --> 00:11:34.460
+is and doing what we
+always tell people not to
+
+216
+00:11:34.460 --> 00:11:38.930
+do like hacking core, like,
+you know, altering core P
+
+217
+00:11:38.940 --> 00:11:41.990
+you know, WordPress files on
+the server. So we do
+
+218
+00:11:41.990 --> 00:11:43.430
+have a lot of people
+who've kind of come up
+
+219
+00:11:43.430 --> 00:11:45.470
+through that. And a lot
+of it again, is thanks
+
+220
+00:11:45.470 --> 00:11:49.490
+to it being just like
+PHP, HTML, and basic CSS
+
+221
+00:11:50.480 --> 00:11:54.370
+for a long time. We
+had no preprocessor and a
+
+222
+00:11:54.370 --> 00:11:57.010
+lot of, a lot of
+opposition to that was that
+
+223
+00:11:57.010 --> 00:12:00.760
+feeling of, you know, as
+such a large project and
+
+224
+00:12:00.760 --> 00:12:04.180
+one that's so established in
+the open source community, you
+
+225
+00:12:04.180 --> 00:12:07.080
+know, do you still have
+the obligation to occupy this
+
+226
+00:12:07.080 --> 00:12:10.150
+sort of like entry level
+space, right. Where we continue
+
+227
+00:12:10.150 --> 00:12:15.970
+as a project to, you
+know, not over prioritize tooling
+
+228
+00:12:16.330 --> 00:12:20.440
+over the experience of not
+just incoming contributors to WordPress,
+
+229
+00:12:20.440 --> 00:12:24.790
+but people who are learning
+about open source and PHP
+
+230
+00:12:24.820 --> 00:12:27.970
+and CMS is, and whatever,
+you know, all for the
+
+231
+00:12:27.970 --> 00:12:30.790
+first time. And so that's
+something that we, I think
+
+232
+00:12:30.790 --> 00:12:33.370
+we struggle with a little
+bit as a project is,
+
+233
+00:12:33.790 --> 00:12:36.310
+you know, how do we
+move forward with something like
+
+234
+00:12:36.370 --> 00:12:41.440
+Gutenberg, which is the JavaScript
+react based editor that we
+
+235
+00:12:41.440 --> 00:12:44.710
+have now, I guess it's
+been a couple of years,
+
+236
+00:12:45.700 --> 00:12:47.830
+but so we have this,
+we have this new editor
+
+237
+00:12:47.830 --> 00:12:50.560
+and it's JavaScript based. And
+so it has, you know,
+
+238
+00:12:50.560 --> 00:12:55.060
+like a build process and,
+you know, processors and typing.
+
+239
+00:12:55.060 --> 00:12:58.240
+And I don't even by
+self necessarily know what's in
+
+240
+00:12:58.240 --> 00:13:01.000
+there as a lead developer,
+cause it's a huge project
+
+241
+00:13:01.000 --> 00:13:03.640
+and it kind of runs
+on its own leadership on
+
+242
+00:13:03.640 --> 00:13:07.030
+the side. And we merge
+parts of it back into
+
+243
+00:13:07.030 --> 00:13:11.110
+the WordPress itself from time
+to time. So, you know,
+
+244
+00:13:11.110 --> 00:13:13.060
+we, we struggle with that
+is, you know, how do
+
+245
+00:13:13.060 --> 00:13:17.530
+you create a process that
+still welcomes people to participate
+
+246
+00:13:18.310 --> 00:13:20.620
+no matter their skill level
+and no matter their skill
+
+247
+00:13:20.620 --> 00:13:23.380
+set. Right. Cause it doesn't
+necessarily have to be code.
+
+248
+00:13:23.380 --> 00:13:27.160
+We want people to be
+able to participate in documentation
+
+249
+00:13:27.190 --> 00:13:29.980
+and you know, community events
+and that sort of thing
+
+250
+00:13:29.980 --> 00:13:34.090
+as well. Right. So how
+do we balance this desire
+
+251
+00:13:34.090 --> 00:13:36.610
+to move forward and to
+be modern and all the
+
+252
+00:13:36.610 --> 00:13:38.860
+things that people like to
+tease WordPress about, right? Like
+
+253
+00:13:38.860 --> 00:13:40.990
+for not, not being on
+the cutting edge all the
+
+254
+00:13:40.990 --> 00:13:44.110
+time, but how do we
+balance that with continuing to
+
+255
+00:13:44.110 --> 00:13:49.540
+want to bring people into
+contributing, to open source broadly,
+
+256
+00:13:49.570 --> 00:13:53.140
+it's not just about WordPress,
+like it's about that stewardship
+
+257
+00:13:53.320 --> 00:13:55.510
+for anything that you use
+and then awareness that what
+
+258
+00:13:55.510 --> 00:13:59.110
+you're using is being built
+by volunteers. And we want
+
+259
+00:13:59.110 --> 00:14:01.660
+everybody to be able to
+participate in that process and
+
+260
+00:14:01.660 --> 00:14:03.930
+be aware of The fact
+that everything is built by
+
+261
+00:14:03.930 --> 00:14:07.380
+volunteers, but there's still, there's
+still on the part of
+
+262
+00:14:07.380 --> 00:14:09.990
+the users such as sense
+of entitlement must be very
+
+263
+00:14:10.260 --> 00:14:12.900
+frustrating. I mean, you must,
+I'm sure you've been either
+
+264
+00:14:12.900 --> 00:14:15.000
+on the phone or on
+the other side of a
+
+265
+00:14:15.000 --> 00:14:19.140
+great deal of anger from
+someone who's personally upset with
+
+266
+00:14:19.140 --> 00:14:23.730
+you because you represent WordPress
+to them and their business
+
+267
+00:14:23.730 --> 00:14:26.490
+is now down because they
+edited a file that they
+
+268
+00:14:26.490 --> 00:14:29.460
+shouldn't have directly on the
+production server, et cetera, et
+
+269
+00:14:29.460 --> 00:14:33.120
+cetera. Why do they think
+that they deserve your pound
+
+270
+00:14:33.120 --> 00:14:36.690
+of flesh, even though you're
+a volunteer It's I think
+
+271
+00:14:36.690 --> 00:14:39.720
+in the WordPress space, it's
+a little more complicated than
+
+272
+00:14:39.720 --> 00:14:41.760
+it can be for some
+other projects. So in the
+
+273
+00:14:41.760 --> 00:14:46.290
+WordPress space, some people are
+sponsored to work on things.
+
+274
+00:14:47.130 --> 00:14:50.400
+Automatic itself sponsors a ton
+of people to work on
+
+275
+00:14:50.670 --> 00:14:54.110
+just the core software product
+itself. Right. So that that's
+
+276
+00:14:54.110 --> 00:14:58.400
+their contribution back to, you
+know, the community that upholds
+
+277
+00:14:58.400 --> 00:15:01.670
+its business. And so my
+position is the same. I
+
+278
+00:15:01.670 --> 00:15:05.930
+am sponsored to work on
+WordPress and WordPress related things
+
+279
+00:15:06.740 --> 00:15:09.560
+for the most part. I
+like I don't work on
+
+280
+00:15:09.560 --> 00:15:12.350
+client stuff. Right. So tenet
+is an agency. We do
+
+281
+00:15:12.350 --> 00:15:17.030
+client services. I very rarely
+touch anything on the client
+
+282
+00:15:17.030 --> 00:15:21.680
+front. So my time is
+a contribution back to the
+
+283
+00:15:21.680 --> 00:15:24.710
+open source community in that
+world. It's a little more
+
+284
+00:15:24.710 --> 00:15:27.950
+complicated. I think like it,
+I can understand somebody feeling
+
+285
+00:15:27.950 --> 00:15:32.180
+like I'm personally responsible for
+something, right. I would prefer
+
+286
+00:15:32.180 --> 00:15:35.810
+that they not, you know,
+like be rude to me
+
+287
+00:15:35.810 --> 00:15:40.700
+or call me names, all
+of which have happened. But
+
+288
+00:15:41.390 --> 00:15:44.030
+that part, I do understand
+a little bit better. And
+
+289
+00:15:44.030 --> 00:15:47.840
+I don't, I don't expect
+people out there who are
+
+290
+00:15:47.840 --> 00:15:52.520
+just running websites to necessarily
+understand that, you know, this
+
+291
+00:15:53.270 --> 00:15:59.450
+thing exists as a publicly
+created public. Good. I think
+
+292
+00:15:59.600 --> 00:16:03.380
+that's in human terms and
+especially in, you know, like
+
+293
+00:16:03.380 --> 00:16:05.960
+the modern world that can
+be sort of like just
+
+294
+00:16:05.960 --> 00:16:08.830
+hard to wrap your head
+around at all, right. It's
+
+295
+00:16:08.830 --> 00:16:11.830
+hard, these free products. I
+mean, Mike, to my parents,
+
+296
+00:16:11.950 --> 00:16:15.730
+to my nontechnical parents, Facebook
+is a product that they
+
+297
+00:16:15.730 --> 00:16:18.490
+feel that they've purchased, but
+they didn't put in a
+
+298
+00:16:18.490 --> 00:16:20.710
+credit card. They just use
+it. Therefore it must be
+
+299
+00:16:20.710 --> 00:16:24.730
+a thing. Therefore someone must
+support them, Right. Somebody somewhere
+
+300
+00:16:24.730 --> 00:16:28.720
+is making money. Therefore somebody
+is getting paid to help
+
+301
+00:16:28.720 --> 00:16:32.610
+me is sort of the
+simplified thought process. Right. So,
+
+302
+00:16:32.610 --> 00:16:34.690
+yeah. So I think WordPress
+there, I think there are
+
+303
+00:16:35.080 --> 00:16:39.940
+fewer and fewer honestly significant
+volunteers in the community, right?
+
+304
+00:16:39.940 --> 00:16:45.280
+So the volunteerism is funded
+in a lot of ways
+
+305
+00:16:45.310 --> 00:16:48.970
+by other companies who have
+built their businesses, you know,
+
+306
+00:16:48.970 --> 00:16:54.310
+building WordPress sites or WordPress
+products. So in, in our
+
+307
+00:16:54.310 --> 00:16:56.830
+space, it's become a lot
+of, you know, funded work.
+
+308
+00:16:56.830 --> 00:17:01.930
+So it's volunteerism in that
+it's voluntary, but it's not
+
+309
+00:17:01.930 --> 00:17:06.670
+volunteerism as an it's devoid
+of any sort of transactional
+
+310
+00:17:07.090 --> 00:17:12.940
+money component. Is that possible?
+Only because of WordPress's dramatic
+
+311
+00:17:12.940 --> 00:17:15.730
+success. I mean, in like
+I'm in the.net space, which
+
+312
+00:17:15.730 --> 00:17:17.980
+is certainly smaller than PHP
+and there's a lot of
+
+313
+00:17:17.980 --> 00:17:21.610
+like super useful, like low
+level stuff that people make.
+
+314
+00:17:21.610 --> 00:17:23.260
+And it may have been
+one or two people working
+
+315
+00:17:23.260 --> 00:17:26.560
+on it and they're all
+doing it entirely volunteerism, but
+
+316
+00:17:26.560 --> 00:17:30.100
+you can't compare a small
+utility library and C-sharp, that
+
+317
+00:17:30.100 --> 00:17:33.550
+is used by 10,000 people
+to something like WordPress, which
+
+318
+00:17:33.550 --> 00:17:36.940
+is used by hundreds of
+millions of people. But how
+
+319
+00:17:36.940 --> 00:17:38.890
+do you get there? How
+do you introduce someone into
+
+320
+00:17:38.890 --> 00:17:40.780
+open source and say, Hey,
+this could also be a
+
+321
+00:17:40.780 --> 00:17:42.970
+career and you could potentially
+get paid for working on
+
+322
+00:17:42.970 --> 00:17:45.610
+this and get sponsored as
+well. I think in the
+
+323
+00:17:45.610 --> 00:17:49.240
+WordPress space, it's very much
+that we continue to focus
+
+324
+00:17:49.260 --> 00:17:54.330
+on non developer experiences. Right?
+And I, and again, I
+
+325
+00:17:54.330 --> 00:17:56.220
+think that that's also opened
+us up to a lot
+
+326
+00:17:56.220 --> 00:18:00.000
+of criticism, you know, good
+and bad over the years
+
+327
+00:18:00.000 --> 00:18:04.350
+in that we don't prioritize
+developers. In some ways we
+
+328
+00:18:04.950 --> 00:18:07.830
+maybe make their lives worse
+because we require certain things
+
+329
+00:18:07.830 --> 00:18:13.260
+around backwards compatibility. And we
+ask that people create experiences
+
+330
+00:18:13.260 --> 00:18:16.890
+within a WordPress admin that
+maybe doesn't provide everything experience-wise.
+
+331
+00:18:16.890 --> 00:18:19.470
+So you kind of have
+to get imaginative about how
+
+332
+00:18:19.470 --> 00:18:21.990
+you integrate with it. So
+that users are not left
+
+333
+00:18:21.990 --> 00:18:27.330
+feeling like they're using 17
+different products within one administrative
+
+334
+00:18:27.330 --> 00:18:32.070
+interface. So like C panel,
+right? Like every, every single
+
+335
+00:18:32.070 --> 00:18:34.740
+thing that you use in
+C panel is like something
+
+336
+00:18:34.740 --> 00:18:37.620
+different entirely. Right? And we
+don't want that in the
+
+337
+00:18:37.620 --> 00:18:40.230
+WordPress space. We want people
+to feel like, you know,
+
+338
+00:18:40.230 --> 00:18:42.630
+when they click on something
+in WordPress to edit some
+
+339
+00:18:42.630 --> 00:18:45.450
+settings or some content or
+whatever it is that it's
+
+340
+00:18:45.450 --> 00:18:47.490
+going to be familiar, that
+you're going to know what
+
+341
+00:18:47.490 --> 00:18:51.390
+to do, sort of intuitively
+hopefully it'll kind of guide
+
+342
+00:18:51.390 --> 00:18:54.510
+you through it and that
+you can save your changes
+
+343
+00:18:54.510 --> 00:18:57.900
+and not have it destroy
+anything. Right. We want to
+
+344
+00:18:57.900 --> 00:19:00.990
+build this. We prioritize user
+trust is what we talk
+
+345
+00:19:00.990 --> 00:19:04.470
+about. So the, the trust
+of the user that they're
+
+346
+00:19:04.470 --> 00:19:07.350
+not going to lose content,
+that they can try out
+
+347
+00:19:07.350 --> 00:19:10.800
+settings and preview them without
+it being destructive or permanent.
+
+348
+00:19:11.700 --> 00:19:14.400
+These are all things that
+are about building user trust.
+
+349
+00:19:14.490 --> 00:19:17.940
+But when we talk about
+users, we're talking about non
+
+350
+00:19:17.970 --> 00:19:21.540
+non developer users. And so
+in that space, we have
+
+351
+00:19:21.540 --> 00:19:25.920
+a much bigger audience, right.
+Of people who can use
+
+352
+00:19:25.920 --> 00:19:31.170
+our products and use our
+work. So you, there are
+
+353
+00:19:31.170 --> 00:19:34.470
+people who develop, you know,
+like utilities in the WordPress
+
+354
+00:19:34.470 --> 00:19:38.580
+space, right? Like theme things
+to like build themes on
+
+355
+00:19:38.580 --> 00:19:41.910
+top of various tooling. Like
+at 10 up, we do
+
+356
+00:19:41.910 --> 00:19:45.600
+these things where we have
+like a Docker image that
+
+357
+00:19:45.750 --> 00:19:51.870
+supports, you know, local WordPress
+development. Or I think we
+
+358
+00:19:51.870 --> 00:19:55.980
+have, like, I don't know
+a jobs system kind of
+
+359
+00:19:55.980 --> 00:19:58.340
+thing that uses WordPress. So
+we have, you know, a
+
+360
+00:19:58.350 --> 00:20:02.760
+bunch of things that are
+more technical developer oriented, but
+
+361
+00:20:02.760 --> 00:20:05.220
+for the most part, especially
+what I work on in
+
+362
+00:20:05.220 --> 00:20:07.860
+the open source end of
+things, these are things that
+
+363
+00:20:07.860 --> 00:20:13.530
+are geared toward nontechnical users.
+Right? And I think that
+
+364
+00:20:13.530 --> 00:20:15.660
+that's, that's been a big
+part of it is just
+
+365
+00:20:15.660 --> 00:20:20.670
+that we are, we're appealing
+toward a much bigger group
+
+366
+00:20:21.000 --> 00:20:24.030
+and a group that, you
+know, in many ways is
+
+367
+00:20:24.030 --> 00:20:27.660
+used to paying for software,
+right. Or at least support
+
+368
+00:20:27.660 --> 00:20:30.450
+for their software. And so
+that's the space that we
+
+369
+00:20:30.880 --> 00:20:38.750
+to operated is the consulting
+space, right? Providing services, No
+
+370
+00:20:38.750 --> 00:20:41.360
+one wants to manage databases
+if they can avoid it.
+
+371
+00:20:41.870 --> 00:20:46.490
+That's why Mongo DB made
+Mongo DB Atlas, a global
+
+372
+00:20:46.490 --> 00:20:51.340
+cloud service that runs on
+AWS, GCP and Azure. You
+
+373
+00:20:51.340 --> 00:20:55.030
+can deploy a fully managed
+Mongo DB database in minutes
+
+374
+00:20:55.270 --> 00:20:57.850
+with just a few clicks
+or a few API calls,
+
+375
+00:20:58.390 --> 00:21:03.370
+Mongo DB, Atlas, automates deployment,
+automates updates, handles scaling, and
+
+376
+00:21:03.370 --> 00:21:06.520
+more so that you can
+focus on your application instead
+
+377
+00:21:06.520 --> 00:21:09.220
+of taking care of your
+database, you can get started
+
+378
+00:21:09.220 --> 00:21:15.550
+free@mongodb.com slash Atlas. Now, if
+you're already managing a Mongo
+
+379
+00:21:15.550 --> 00:21:19.480
+DB deployment, Atlas has a
+live migration service. So you
+
+380
+00:21:19.480 --> 00:21:22.390
+can migrate it easily with
+minimal downtime and then get
+
+381
+00:21:22.390 --> 00:21:25.810
+back to what matters, stop
+managing your database and start
+
+382
+00:21:25.810 --> 00:21:30.640
+using Mongo DB Atlas. So
+these, these core tenants, these
+
+383
+00:21:30.640 --> 00:21:33.520
+kind of this, we believe,
+you know, the 10 commandments
+
+384
+00:21:33.560 --> 00:21:35.530
+of WordPress and what you
+all believe you, there's a
+
+385
+00:21:35.530 --> 00:21:38.290
+core leadership team, right. And
+you've got the WordPress co
+
+386
+00:21:38.290 --> 00:21:41.470
+founder, Matt, and then there's
+five is a correct five
+
+387
+00:21:41.470 --> 00:21:43.990
+lead developers. And then a
+number of core developers. It's
+
+388
+00:21:43.990 --> 00:21:45.790
+kind of, there's kind of
+a hierarchy there. Did that
+
+389
+00:21:45.790 --> 00:21:50.100
+naturally happen? How did you
+become a lead developer? That's
+
+390
+00:21:50.100 --> 00:21:52.740
+a really good question. Sometimes
+I'm not, I'm not 100%
+
+391
+00:21:52.740 --> 00:21:57.900
+sure. I, it's not a
+very clear or clean hierarchy.
+
+392
+00:21:57.900 --> 00:22:02.430
+We have sort of these
+labels and we sometimes function
+
+393
+00:22:02.430 --> 00:22:06.630
+in those roles. I think
+that with, especially with Gutenberg
+
+394
+00:22:06.660 --> 00:22:09.930
+and the way that it's
+changed, like the pace and
+
+395
+00:22:09.930 --> 00:22:14.670
+structure of development of WordPress
+itself, it's somewhat less relevant.
+
+396
+00:22:15.240 --> 00:22:21.780
+What, what that named hierarchy
+means. But yeah, I, I
+
+397
+00:22:21.780 --> 00:22:27.060
+started with wanting to understand
+what opensource meant. Cause I
+
+398
+00:22:27.060 --> 00:22:29.280
+had no idea what it
+meant. I worked at a
+
+399
+00:22:29.280 --> 00:22:32.340
+university as a web developer
+and we were using WordPress
+
+400
+00:22:33.120 --> 00:22:36.090
+for some projects. And I
+thought, you know, I see
+
+401
+00:22:36.090 --> 00:22:39.210
+something in the WordPress admin
+that looks funny to me.
+
+402
+00:22:40.040 --> 00:22:42.840
+And I just wanna like
+understand what, what does open
+
+403
+00:22:42.840 --> 00:22:45.390
+source mean? They keep telling
+me, you can, if you
+
+404
+00:22:45.390 --> 00:22:47.940
+see something wrong, you can
+do something about it. And
+
+405
+00:22:47.940 --> 00:22:50.840
+what does that even mean?
+You know, what subversion, what,
+
+406
+00:22:50.840 --> 00:22:56.190
+what does CSS? I dunno.
+And so I submitted a
+
+407
+00:22:56.190 --> 00:23:00.300
+patch. We use track, people
+hate it. We use track
+
+408
+00:23:00.690 --> 00:23:06.030
+and subversion and patch files
+still. So I, yeah, Sorry.
+
+409
+00:23:06.030 --> 00:23:08.670
+I didn't mean to say
+it like that. It's fine.
+
+410
+00:23:08.850 --> 00:23:11.820
+You can use get hub.
+We have some tools around
+
+411
+00:23:11.820 --> 00:23:14.220
+that, but yeah, for the
+most part for years, it's
+
+412
+00:23:14.220 --> 00:23:17.280
+been version, track and patch
+files. No, I, I did
+
+413
+00:23:17.280 --> 00:23:19.350
+that. I mean, I lived
+that whole thing. That was
+
+414
+00:23:19.350 --> 00:23:22.020
+15 years ago. I still
+love patch files, but whatever.
+
+415
+00:23:22.650 --> 00:23:27.240
+So I submitted a patch
+file for some CSS to
+
+416
+00:23:27.240 --> 00:23:31.890
+fix like a border on
+something and got some feedback
+
+417
+00:23:31.920 --> 00:23:34.200
+very quickly. That was like,
+you also have to make
+
+418
+00:23:34.200 --> 00:23:37.800
+this other change and like
+very quickly iterated on it.
+
+419
+00:23:37.800 --> 00:23:40.560
+And they merged it into
+WordPress. And that was like
+
+420
+00:23:40.980 --> 00:23:45.770
+my first open source contribution,
+I think about years ago.
+
+421
+00:23:46.430 --> 00:23:50.000
+And so I was like,
+Whoa, that's, I mean, just
+
+422
+00:23:50.000 --> 00:23:52.040
+like the quickness of their
+process. And I think that
+
+423
+00:23:52.070 --> 00:23:55.010
+even that, you know, the,
+the team was prioritizing first
+
+424
+00:23:55.010 --> 00:23:58.850
+time contributors to kind of
+give you that satisfaction and
+
+425
+00:23:59.060 --> 00:24:01.160
+let you decide whether or
+not that was something you
+
+426
+00:24:01.160 --> 00:24:04.240
+wanted to keep participating in.
+And so I was, I
+
+427
+00:24:04.240 --> 00:24:06.110
+was hooked on it and
+was like, Oh wow, this
+
+428
+00:24:06.110 --> 00:24:08.480
+is super cool. I want
+to, I want to keep
+
+429
+00:24:08.480 --> 00:24:12.320
+doing this and just kind
+of stuck with it. Some
+
+430
+00:24:12.320 --> 00:24:13.880
+of it was front end
+development, even though at the
+
+431
+00:24:13.880 --> 00:24:15.950
+time I wasn't a friend
+developer at all. I was
+
+432
+00:24:15.950 --> 00:24:22.220
+like a PHP and my
+SQL applications developer and just
+
+433
+00:24:22.220 --> 00:24:24.920
+kinda stuck with it. And
+over the years, I guess,
+
+434
+00:24:24.950 --> 00:24:27.950
+gained, gained a lot of
+trust and went to a
+
+435
+00:24:27.950 --> 00:24:30.800
+lot of community events. So
+we have word camps, right?
+
+436
+00:24:30.800 --> 00:24:35.990
+Like local, local conferences about
+various aspects of WordPress. And
+
+437
+00:24:35.990 --> 00:24:40.430
+so I would go to
+those and eventually landed at
+
+438
+00:24:40.610 --> 00:24:45.230
+up as a first employee,
+actually about eight and a
+
+439
+00:24:45.230 --> 00:24:49.220
+half years ago and landed
+at 10 up and over
+
+440
+00:24:49.220 --> 00:24:52.580
+the years had, you know,
+more and more community time,
+
+441
+00:24:52.640 --> 00:24:56.930
+what we call it given
+to me. And in 2013,
+
+442
+00:24:57.830 --> 00:25:01.490
+after my first maternity leave,
+when I came back to
+
+443
+00:25:01.490 --> 00:25:04.490
+Tennessee after maternity leave, I
+basically just never rolled back
+
+444
+00:25:04.490 --> 00:25:08.120
+on the client projects and
+went full time into open
+
+445
+00:25:08.120 --> 00:25:13.690
+source work. So I'm hearing
+that I'm interested in something
+
+446
+00:25:13.900 --> 00:25:15.370
+I'm going to poke at
+it. I want to understand
+
+447
+00:25:15.370 --> 00:25:19.420
+this and then showing up
+consistently, like if you could,
+
+448
+00:25:19.990 --> 00:25:22.450
+is showing up is how
+you succeed in open source.
+
+449
+00:25:22.450 --> 00:25:25.360
+You are, Hey, it's Helen
+again. Oh, she is helpful.
+
+450
+00:25:25.630 --> 00:25:28.120
+Oh, look at this. And
+then you just keep showing
+
+451
+00:25:28.120 --> 00:25:31.090
+up until they, they, they
+move you up in the
+
+452
+00:25:31.090 --> 00:25:33.700
+process and they go, wow.
+The people who showed up
+
+453
+00:25:33.730 --> 00:25:35.980
+are here and the people
+who stopped showing up, we
+
+454
+00:25:35.980 --> 00:25:39.070
+don't talk to them anymore.
+I mean, when everything is
+
+455
+00:25:39.310 --> 00:25:42.880
+online, right? Like we're, we're
+using now we use Slack
+
+456
+00:25:42.950 --> 00:25:45.850
+in that time. It was
+IRC, but you're, you're just
+
+457
+00:25:45.850 --> 00:25:51.730
+doing text, text based chat.
+Right. And so my handle
+
+458
+00:25:51.730 --> 00:25:55.390
+has always been Helen because
+they're not very many Helens,
+
+459
+00:25:55.450 --> 00:25:58.960
+I guess. So even on
+Freenode I was just Helen.
+
+460
+00:26:00.500 --> 00:26:03.880
+I was, I was Scott
+at AOL. Yep. There you
+
+461
+00:26:03.880 --> 00:26:07.540
+go. Early adopter. Now I'm
+Helen on like GitHub and
+
+462
+00:26:07.600 --> 00:26:10.540
+a whole bunch of things.
+So I'm just not very
+
+463
+00:26:10.540 --> 00:26:13.600
+many of us, I guess.
+And so I always use
+
+464
+00:26:13.600 --> 00:26:16.120
+my real name. So I
+think it was, I think
+
+465
+00:26:16.140 --> 00:26:19.000
+even easier for people to
+recognize that I was continuing
+
+466
+00:26:19.000 --> 00:26:21.070
+to show up. And I
+think another part of it
+
+467
+00:26:21.070 --> 00:26:23.710
+was also being willing to
+say like, Oh, I was
+
+468
+00:26:23.740 --> 00:26:28.570
+definitely wrong about that. Right.
+Rather than letting a mistake,
+
+469
+00:26:28.570 --> 00:26:33.160
+sit and fester and like
+never acknowledge it, you know?
+
+470
+00:26:33.160 --> 00:26:36.130
+And especially in opensource because
+like somebody else will probably
+
+471
+00:26:36.130 --> 00:26:40.120
+see it at some point
+and experience it. And I
+
+472
+00:26:40.120 --> 00:26:42.100
+think there was also a
+lot of value in just
+
+473
+00:26:42.100 --> 00:26:44.970
+being proactive and being like,
+wait, wait, wait, that was
+
+474
+00:26:44.970 --> 00:26:48.560
+not great. Let's try something
+else. Or, you know, I
+
+475
+00:26:48.570 --> 00:26:52.620
+would like to you, you
+know, revert my patch and
+
+476
+00:26:52.770 --> 00:26:56.310
+try to attack, or here's
+a patch that, you know,
+
+477
+00:26:56.310 --> 00:27:00.870
+is maybe a little too
+forward facing right now, but
+
+478
+00:27:00.900 --> 00:27:02.760
+you know, five years from
+now, it might become relevant.
+
+479
+00:27:02.760 --> 00:27:05.730
+So let me just throw
+it up here basically for,
+
+480
+00:27:06.390 --> 00:27:09.870
+you know, to see if
+it means anything later on.
+
+481
+00:27:10.500 --> 00:27:12.960
+So yeah, there's a lot
+of value in showing up
+
+482
+00:27:12.990 --> 00:27:16.200
+and not necessarily like being
+hyper productive, right. Like I
+
+483
+00:27:16.200 --> 00:27:19.860
+think there's too much focus
+on how do you define
+
+484
+00:27:19.860 --> 00:27:24.480
+productivity and how do you
+meet, you know, goals and
+
+485
+00:27:24.480 --> 00:27:28.170
+KPIs or whatever. Right. And
+I think, I think that
+
+486
+00:27:28.170 --> 00:27:30.630
+that in open source at
+least is not nearly as
+
+487
+00:27:30.630 --> 00:27:32.970
+important and it's much more
+important to be consistent and
+
+488
+00:27:32.970 --> 00:27:35.610
+to be honest about what's
+going on. And I think
+
+489
+00:27:35.610 --> 00:27:39.200
+people do notice that I
+think that that's True. Like
+
+490
+00:27:39.200 --> 00:27:41.990
+I think that we, we,
+and I'm, I don't know
+
+491
+00:27:41.990 --> 00:27:44.000
+who the Royal we is
+in this context, but we
+
+492
+00:27:44.000 --> 00:27:48.220
+seem to mythologize the, you
+know, the, the, the, the
+
+493
+00:27:48.230 --> 00:27:51.530
+mean super hyper productive 10
+X developer, and it's all
+
+494
+00:27:51.530 --> 00:27:54.020
+a myth. I would much
+rather have a very nice
+
+495
+00:27:54.020 --> 00:27:57.920
+pleasant. One X developer who
+shows up consistently is easy
+
+496
+00:27:57.920 --> 00:28:01.280
+to work with and has
+both good technical skills and
+
+497
+00:28:01.280 --> 00:28:03.650
+is also pleasant on conference
+calls. You know what I
+
+498
+00:28:03.650 --> 00:28:05.780
+mean? Like, what is the
+name for that developer? Let's
+
+499
+00:28:05.780 --> 00:28:07.970
+have, give me 10 of
+those and we'll have a
+
+500
+00:28:07.970 --> 00:28:10.700
+nice little project Professionals I
+think is what we used
+
+501
+00:28:10.700 --> 00:28:13.750
+to call Nationals. That is
+a very, I love that
+
+502
+00:28:13.800 --> 00:28:19.970
+we should make more professionals.
+So this Gutenberg I'm seeing,
+
+503
+00:28:20.130 --> 00:28:23.810
+there's really interesting articles around
+like, you know, is word,
+
+504
+00:28:23.810 --> 00:28:29.420
+press survive, Gutenberg, you know,
+it's pretty interesting stuff and
+
+505
+00:28:29.420 --> 00:28:31.550
+it's, it's a lovely editor.
+And one of the things
+
+506
+00:28:31.550 --> 00:28:34.070
+that I've noticed about it
+is that to your original
+
+507
+00:28:34.070 --> 00:28:36.770
+point, at the very beginning
+of the podcast, focusing on
+
+508
+00:28:36.770 --> 00:28:42.410
+users, you know, when WordPress
+for me was the blog
+
+509
+00:28:42.440 --> 00:28:45.890
+that allowed people to upload
+eight megabyte JPEGs, and then
+
+510
+00:28:45.890 --> 00:28:48.680
+resize them, ruin the aspect
+ratio and then keep them
+
+511
+00:28:48.680 --> 00:28:52.100
+there. So then I could
+visit their website and you
+
+512
+00:28:52.100 --> 00:28:53.390
+know, like, Oh, look, I
+took a look at my
+
+513
+00:28:53.390 --> 00:28:56.360
+website for my bagel shop.
+That's like a 25 Meg
+
+514
+00:28:56.360 --> 00:28:58.100
+website and I hit F
+12 and I go, Oh
+
+515
+00:28:58.100 --> 00:29:02.150
+my God, you uploaded an
+eight Meg JPEG. But Gutenberg
+
+516
+00:29:02.540 --> 00:29:05.870
+in doing that, it allows
+the customer to fall into
+
+517
+00:29:05.870 --> 00:29:08.960
+what we at Microsoft call
+the pit of success. Like,
+
+518
+00:29:09.020 --> 00:29:11.600
+even if you messed up,
+it's you still succeed. Like
+
+519
+00:29:11.630 --> 00:29:14.570
+your, your images are pretty
+and they have all text
+
+520
+00:29:14.570 --> 00:29:16.670
+and they have title and
+they'd got resized correctly and
+
+521
+00:29:16.670 --> 00:29:18.980
+you can't, you really have
+to work to mess up
+
+522
+00:29:18.980 --> 00:29:21.530
+the aspect ratio. Why would
+anyone have a problem with
+
+523
+00:29:21.530 --> 00:29:25.010
+that? That sounds great. Yeah.
+I, you know, I think
+
+524
+00:29:25.010 --> 00:29:28.280
+there's, Oh, let's see. There,
+there are a lot of
+
+525
+00:29:28.280 --> 00:29:31.730
+things tied up in that
+one. One thing is that
+
+526
+00:29:31.730 --> 00:29:36.020
+separately from the editor itself,
+there have been, there's been
+
+527
+00:29:36.020 --> 00:29:39.980
+a big push to meet
+better web standards. I mean,
+
+528
+00:29:39.980 --> 00:29:43.390
+WordPress itself was about web
+standards. I know that when
+
+529
+00:29:43.390 --> 00:29:45.820
+Matt talks about, you know,
+the origins of WordPress, a
+
+530
+00:29:45.820 --> 00:29:49.030
+lot of it was about
+wanting to have Symantec, HTML
+
+531
+00:29:49.390 --> 00:29:52.810
+and micro formats and ping
+backs and trackbacks and RSS
+
+532
+00:29:52.810 --> 00:29:54.490
+feeds and all of that,
+right. About being a part
+
+533
+00:29:54.490 --> 00:29:57.370
+of the open web and
+being a part of, you
+
+534
+00:29:57.370 --> 00:30:01.030
+know, information sharing. And so
+there is this continue to
+
+535
+00:30:01.180 --> 00:30:04.390
+push for, you know, web
+standards. So one thing that
+
+536
+00:30:04.390 --> 00:30:07.930
+was implemented, I mean, years
+ago, before it was even,
+
+537
+00:30:07.930 --> 00:30:12.940
+I think a formal, formal
+spec was responsive images, right?
+
+538
+00:30:13.000 --> 00:30:16.360
+Where you upload stuff to
+WordPress and it does its
+
+539
+00:30:16.360 --> 00:30:20.140
+best to chop it into
+a bunch of different, you
+
+540
+00:30:20.140 --> 00:30:25.480
+know, sizes and compressions and,
+and make those available so
+
+541
+00:30:25.480 --> 00:30:29.800
+that you're no longer defaulting
+to 25 Meg images. Right.
+
+542
+00:30:30.670 --> 00:30:35.650
+And I think another fairly
+recent change, actually, there were
+
+543
+00:30:35.650 --> 00:30:38.440
+two, two parts, one was
+longer ago, which was that
+
+544
+00:30:38.740 --> 00:30:44.590
+somebody went through and did
+a whole study about the
+
+545
+00:30:44.590 --> 00:30:48.640
+effects that changing the default
+compression would have on JPEGs.
+
+546
+00:30:49.630 --> 00:30:52.600
+So they use like an
+algorithm to detect like the
+
+547
+00:30:52.600 --> 00:30:56.290
+differences and what is your
+threshold of tolerance as like
+
+548
+00:30:56.290 --> 00:30:59.590
+a human viewer and presented
+all of that work. And
+
+549
+00:30:59.590 --> 00:31:02.590
+so we changed the default
+compression and it, I mean,
+
+550
+00:31:02.590 --> 00:31:05.350
+it saved, I don't know,
+the actual statistics are out
+
+551
+00:31:05.350 --> 00:31:07.000
+there somewhere, so I'm not
+just gonna make up numbers,
+
+552
+00:31:07.360 --> 00:31:09.880
+but the amount of bandwidth
+that we were saving, you
+
+553
+00:31:09.880 --> 00:31:13.090
+know, in such a large
+percentage of the web and
+
+554
+00:31:13.120 --> 00:31:15.460
+with more and more people
+uploading images directly from their
+
+555
+00:31:15.460 --> 00:31:18.400
+phones, right. Where we have
+like up until recently, no
+
+556
+00:31:18.400 --> 00:31:22.210
+control over the size of
+those, I think made a
+
+557
+00:31:22.210 --> 00:31:26.500
+big difference. And then you
+get into things like, you
+
+558
+00:31:26.500 --> 00:31:32.290
+know, serving up responsive sizes
+for different devices. And then
+
+559
+00:31:32.290 --> 00:31:35.890
+I think Gutenberg itself as
+the editor, I think gives
+
+560
+00:31:35.890 --> 00:31:38.890
+you a better sense of
+how exactly it's going to
+
+561
+00:31:38.890 --> 00:31:43.360
+look on the front end.
+Right. So instead of figuring,
+
+562
+00:31:43.360 --> 00:31:45.610
+okay, I'll just put the
+biggest size image, cause that's
+
+563
+00:31:45.610 --> 00:31:47.590
+going to be the best
+possible look, no matter what
+
+564
+00:31:47.590 --> 00:31:50.530
+somebody is using, it gives
+you a better shot at
+
+565
+00:31:50.530 --> 00:31:53.170
+understanding, you know, this, this
+image size is going to
+
+566
+00:31:53.170 --> 00:31:56.640
+look great, you know, in
+most situations. Yeah. It makes
+
+567
+00:31:56.640 --> 00:32:01.560
+responsive design like for the
+humans, for normal people. Yeah.
+
+568
+00:32:01.690 --> 00:32:04.740
+I've been watching all of
+the, like the web, like
+
+569
+00:32:04.740 --> 00:32:06.000
+you all, I'm always impressed
+when you go to a
+
+570
+00:32:06.000 --> 00:32:08.220
+website and you scroll down
+and then like they have
+
+571
+00:32:08.220 --> 00:32:10.230
+like the really low res
+version of the image. And
+
+572
+00:32:10.230 --> 00:32:11.970
+then it kind of fades
+in because now it's in
+
+573
+00:32:11.970 --> 00:32:14.460
+the viewport and you're looking
+at it and then, you
+
+574
+00:32:14.460 --> 00:32:16.950
+know, I'll put up like
+a really big animated gift,
+
+575
+00:32:16.950 --> 00:32:18.360
+but I don't want to
+mess up someone on a
+
+576
+00:32:18.360 --> 00:32:21.690
+low data plan overseas. All
+of that should be handled
+
+577
+00:32:21.690 --> 00:32:25.080
+magically for me by some
+image thing in the background.
+
+578
+00:32:25.530 --> 00:32:28.620
+But unfortunately my images are
+just big giant images that
+
+579
+00:32:28.620 --> 00:32:31.050
+sit on an FTP server
+and it's nice. It's 2020,
+
+580
+00:32:31.560 --> 00:32:33.960
+that's horrible. I should do
+better. I should get WordPress.
+
+581
+00:32:34.810 --> 00:32:36.690
+Well, we, you know, we
+would love for you to
+
+582
+00:32:36.690 --> 00:32:39.950
+use WordPress. And if I,
+if I can plug else,
+
+583
+00:32:41.180 --> 00:32:43.490
+one of the things that
+I've been working on recently,
+
+584
+00:32:43.490 --> 00:32:46.550
+like within our own like
+10 up open opensource projects
+
+585
+00:32:46.580 --> 00:32:50.180
+is a plugin a, we
+call it classify. I'm not,
+
+586
+00:32:50.180 --> 00:32:53.060
+I'm not much for like,
+Oh, let's remember names of
+
+587
+00:32:53.060 --> 00:32:57.410
+things, but it's a plugin
+that connects with various, you
+
+588
+00:32:57.410 --> 00:33:02.210
+know, cloud services to sort
+of automatically process and categorize
+
+589
+00:33:02.210 --> 00:33:06.560
+your content. So right now
+we're using as so yay.
+
+590
+00:33:06.950 --> 00:33:11.420
+Shout out to Microsoft, we're
+using that for image processing.
+
+591
+00:33:11.750 --> 00:33:15.020
+Right? So when you upload
+an image, it automatically gets
+
+592
+00:33:15.020 --> 00:33:19.700
+back a caption as your
+all tag and some taxonomy
+
+593
+00:33:19.700 --> 00:33:22.010
+data. Right? So like I
+see, like it sees a
+
+594
+00:33:22.010 --> 00:33:24.320
+building or it sees a
+sandwich or whatever. So now
+
+595
+00:33:24.320 --> 00:33:27.740
+you have all of that
+data in WordPress for you
+
+596
+00:33:27.740 --> 00:33:33.410
+automatically. So not only for
+you as like the administrator
+
+597
+00:33:33.410 --> 00:33:35.840
+or content creator on your
+own site, you're now able
+
+598
+00:33:35.840 --> 00:33:38.660
+to like search for things
+without you manually having to
+
+599
+00:33:38.660 --> 00:33:42.680
+tag everything. And then for
+your readers, for the consumers
+
+600
+00:33:42.680 --> 00:33:46.430
+of your site, they're getting
+all tags on images again,
+
+601
+00:33:46.430 --> 00:33:50.540
+without you having to necessarily
+put effort into it immediately.
+
+602
+00:33:50.660 --> 00:33:53.840
+Right. So instead of all
+of these images that have
+
+603
+00:33:53.840 --> 00:33:57.950
+like, you know, DSC 1980
+as they're all tagged, because
+
+604
+00:33:58.040 --> 00:34:00.140
+we pick that up from
+the file name. Now you're
+
+605
+00:34:00.140 --> 00:34:03.260
+actually getting a description of
+like, you know, a person
+
+606
+00:34:03.280 --> 00:34:07.550
+smiling in sunglasses or whatever.
+And so it's just a
+
+607
+00:34:07.550 --> 00:34:10.790
+better experience all around for
+everybody, right? To be able
+
+608
+00:34:10.790 --> 00:34:14.570
+to provide descriptive text for
+various technologies and users, and
+
+609
+00:34:14.570 --> 00:34:17.630
+then for you as a
+content manager to actually be
+
+610
+00:34:17.630 --> 00:34:20.330
+able to like find your
+content later. It's really nice
+
+611
+00:34:20.330 --> 00:34:22.520
+to have. So if you're
+interested, what does that plugin
+
+612
+00:34:22.520 --> 00:34:26.810
+called again? Classify. So we
+spell it like classify C
+
+613
+00:34:26.810 --> 00:34:37.160
+L a S S I
+F a I classify classify
+
+614
+00:34:37.430 --> 00:34:40.160
+plugin.com. I'll make sure to
+put a link to that
+
+615
+00:34:40.640 --> 00:34:43.670
+in the show notes. Thanks
+so much for chatting with
+
+616
+00:34:43.670 --> 00:34:46.310
+me today. Of course. Thanks
+for having me. We've been
+
+617
+00:34:46.310 --> 00:34:50.180
+talking with Helen host, Sandy.
+She's a lead developer at
+
+618
+00:34:50.390 --> 00:34:53.450
+WordPress and the director of
+open source initiatives for 10
+
+619
+00:34:53.450 --> 00:34:56.360
+up. We'll have links to
+the show notes to Helen
+
+620
+00:34:56.360 --> 00:35:00.980
+on Twitter, as well as
+tenup.com. Thanks so much. This
+
+621
+00:35:00.980 --> 00:35:03.980
+has been another episode of
+Hanselminutes and we'll see you
+
+622
+00:35:03.980 --> 00:35:19.300
+again. Next time. <inaudible>.
+

@@ -1,0 +1,3416 @@
+WEBVTT FILE
+
+1
+00:00:04.380 --> 00:00:16.010
+<inaudible> From Hanselman it's dot
+com. It's Hansel minutes or
+
+2
+00:00:16.010 --> 00:00:20.330
+weekly discussion with web developer
+and technologist Scott Hanselman posted
+
+3
+00:00:20.330 --> 00:00:24.830
+by Carl Franklin. This is Lawrence Ryan
+announcing show number one Oh
+
+4
+00:00:24.830 --> 00:00:31.310
+nine. Recorded live Wednesday, April 16th, 2008.
+Support for Hanselman it's just
+
+5
+00:00:31.310 --> 00:00:35.450
+provided by teller. It already
+controls the most comprehensive suite
+
+6
+00:00:35.450 --> 00:00:43.820
+of components for windows forms
+and asp.net web applications. online@wwwdottelerik.com.
+
+7
+00:00:44.810 --> 00:00:48.890
+Support is also provided by.net
+developers journal the world's leading.net
+
+8
+00:00:48.890 --> 00:00:54.830
+developer magazine online at www
+dot <inaudible> dot com. In
+
+9
+00:00:54.830 --> 00:00:58.850
+this episode, Scott discusses dynamic
+data with Microsoft ASP senior
+
+10
+00:00:58.850 --> 00:01:05.630
+program manager, Scott Hunter. Hi, this
+is Scott Hanselman and this
+
+11
+00:01:05.630 --> 00:01:07.430
+is another episode of Hansel
+minutes. And I'm sitting here
+
+12
+00:01:07.430 --> 00:01:10.370
+at the MVP summit in
+Redmond, Washington with Scott Hunter, a
+
+13
+00:01:10.370 --> 00:01:14.600
+senior program manager on the
+asp.net team. And Scott is
+
+14
+00:01:14.600 --> 00:01:17.060
+working on dynamic data right
+now. We just actually came
+
+15
+00:01:17.060 --> 00:01:19.130
+from his dynamic data talk
+that he gave to all
+
+16
+00:01:19.130 --> 00:01:22.790
+the asp.net MVPs. And I
+had recently done a post
+
+17
+00:01:22.790 --> 00:01:25.370
+on dynamic data and I
+was joking in the post
+
+18
+00:01:25.370 --> 00:01:27.080
+that I thought a small
+percentage of people were going
+
+19
+00:01:27.080 --> 00:01:30.560
+to care about asp.net MVC,
+but a huge percentage of
+
+20
+00:01:30.560 --> 00:01:33.440
+people were going to care
+about dynamic data. Now people
+
+21
+00:01:33.440 --> 00:01:36.350
+are using that percentage. I
+said 5% 95%, but those
+
+22
+00:01:36.350 --> 00:01:38.450
+numbers, I just, I just
+made up, but it seems
+
+23
+00:01:38.450 --> 00:01:39.860
+like a lot of people
+are using the data grid.
+
+24
+00:01:39.980 --> 00:01:41.660
+And there was a, there
+was a gap that data
+
+25
+00:01:41.660 --> 00:01:44.480
+grid didn't do something it
+needed to do. And dynamic
+
+26
+00:01:44.480 --> 00:01:47.300
+data just completely takes that
+concept, fills it up and
+
+27
+00:01:47.390 --> 00:01:50.660
+extends it. Yeah, I think
+the big thing that we
+
+28
+00:01:50.660 --> 00:01:52.220
+do in dynamic data is
+we take some of the
+
+29
+00:01:52.220 --> 00:01:54.830
+controls today that are fairly
+limited. I mean, if you
+
+30
+00:01:54.830 --> 00:01:58.100
+take a grid, a grid
+is a great example. If
+
+31
+00:01:58.100 --> 00:02:00.140
+you want to customize it
+really, it requires a lot
+
+32
+00:02:00.140 --> 00:02:01.910
+of work and that, you
+know, by default you get
+
+33
+00:02:01.910 --> 00:02:05.420
+this great very quick page,
+but as soon as you
+
+34
+00:02:05.420 --> 00:02:07.400
+decide, you want to go
+and change the way something
+
+35
+00:02:07.400 --> 00:02:09.320
+works, or you want to
+add some validation, there is
+
+36
+00:02:09.320 --> 00:02:12.980
+no validation in a grid.
+So I think that's our
+
+37
+00:02:12.980 --> 00:02:14.450
+strongest point is, you know,
+if you want to go
+
+38
+00:02:14.450 --> 00:02:16.580
+modify a field in a
+grid, how do you do
+
+39
+00:02:16.580 --> 00:02:18.410
+that? You gotta go temple
+size each field. You got
+
+40
+00:02:18.410 --> 00:02:20.750
+to put all these validation
+controls in there. And one
+
+41
+00:02:20.750 --> 00:02:21.860
+of the big things that
+we try to do with
+
+42
+00:02:21.860 --> 00:02:25.610
+dynamic data is look at
+your data model and learn
+
+43
+00:02:25.610 --> 00:02:27.230
+from what, what your data
+model says. It's going to
+
+44
+00:02:27.230 --> 00:02:29.420
+tell us, you know, what
+fields are required. It's going
+
+45
+00:02:29.420 --> 00:02:31.760
+to show us foreign keys
+and the tables they associate
+
+46
+00:02:31.760 --> 00:02:34.070
+with. So we can do
+look ups and, and show
+
+47
+00:02:34.090 --> 00:02:36.620
+the nice name, not the
+ID. We can show a
+
+48
+00:02:36.620 --> 00:02:40.310
+drop down list. We can
+do things like look at
+
+49
+00:02:40.310 --> 00:02:42.740
+the string links and make
+sure that the UI matches
+
+50
+00:02:42.740 --> 00:02:45.380
+the string length. If you
+just do those three things
+
+51
+00:02:45.780 --> 00:02:48.050
+across a website today, it
+means you're going to take
+
+52
+00:02:48.050 --> 00:02:50.690
+a grid. You're going to
+turn every column into a
+
+53
+00:02:50.690 --> 00:02:53.850
+template column. You're going to
+drag a text box in
+
+54
+00:02:53.870 --> 00:02:56.840
+a required validator in maybe
+a compare validator. If you're
+
+55
+00:02:56.840 --> 00:02:58.670
+looking for an integer or
+a date or something, you
+
+56
+00:02:58.670 --> 00:03:00.400
+want to make sure somebody
+types the right value in.
+
+57
+00:03:01.300 --> 00:03:03.700
+And so I think one
+of the things we really
+
+58
+00:03:03.700 --> 00:03:05.650
+do is we solve a
+lot of that for you.
+
+59
+00:03:05.710 --> 00:03:08.200
+And we do it without
+doing it with magic. You
+
+60
+00:03:08.200 --> 00:03:09.940
+know, a lot of, a
+lot of, a lot of
+
+61
+00:03:09.940 --> 00:03:13.060
+fixtures you could do for
+this would be okay. We're
+
+62
+00:03:13.060 --> 00:03:16.030
+just going to add all
+this for free. And the
+
+63
+00:03:16.030 --> 00:03:17.440
+problem with that is as
+soon as you want to
+
+64
+00:03:17.440 --> 00:03:19.360
+change it, what do you
+do? Well, one of the
+
+65
+00:03:19.360 --> 00:03:21.550
+things you're gonna notice in
+a dynamic data project is
+
+66
+00:03:21.790 --> 00:03:24.130
+there'll be a folder in
+your application called dynamic data.
+
+67
+00:03:24.490 --> 00:03:25.930
+And if you drill into
+that, there's a, there's a
+
+68
+00:03:25.930 --> 00:03:28.870
+directory called field templates. And
+that's where all the logic
+
+69
+00:03:28.870 --> 00:03:31.030
+that I just talked about
+is going to exist. So
+
+70
+00:03:31.030 --> 00:03:33.580
+if you go into that
+directory, in the case of
+
+71
+00:03:33.580 --> 00:03:37.930
+like editing an editor, there'll
+be an integer editor in
+
+72
+00:03:37.930 --> 00:03:41.680
+integer under edit ASC X
+file in there. And inside
+
+73
+00:03:41.680 --> 00:03:43.630
+that file is going to
+be a text box where
+
+74
+00:03:43.630 --> 00:03:46.210
+somebody's going to type the
+integer. There'll be a required
+
+75
+00:03:46.210 --> 00:03:48.670
+field validator. There'll be a
+compare validator to make sure
+
+76
+00:03:48.670 --> 00:03:50.770
+it's actually an integer. And
+it probably be a re
+
+77
+00:03:50.830 --> 00:03:54.010
+regular expression value during there
+as well. So let's say
+
+78
+00:03:54.010 --> 00:03:56.890
+you want to change that.
+You know, you've got some
+
+79
+00:03:56.890 --> 00:04:03.040
+third party control vendors, rich
+edit control that automatically prevent
+
+80
+00:04:03.050 --> 00:04:05.950
+you from typing anything other
+than digits and, and enforces
+
+81
+00:04:05.950 --> 00:04:08.320
+no decimal points for what
+you do is you go
+
+82
+00:04:08.320 --> 00:04:10.390
+take the integer, edit you,
+drag that stuff in there,
+
+83
+00:04:10.450 --> 00:04:14.410
+you wire together, and that
+change persists across your entire
+
+84
+00:04:14.410 --> 00:04:18.220
+application versus today. You would
+have a, a grid or
+
+85
+00:04:18.220 --> 00:04:21.220
+a details you, and you
+would go in and templatize
+
+86
+00:04:21.220 --> 00:04:22.960
+every column and then go
+fix it across your entire
+
+87
+00:04:22.960 --> 00:04:25.720
+app. So by centralizing this
+into one spot, I think
+
+88
+00:04:25.720 --> 00:04:27.810
+we really helped. Cause now
+you're doing that in a
+
+89
+00:04:27.810 --> 00:04:29.280
+data grid. I've done, you
+know, either a data grid
+
+90
+00:04:29.280 --> 00:04:31.020
+or repeat or anything like
+that. You're doing it on
+
+91
+00:04:31.020 --> 00:04:34.560
+a, on a one instance
+by one instance basis, but
+
+92
+00:04:34.570 --> 00:04:37.740
+you're pushing this all into
+one location. So it's centralized.
+
+93
+00:04:37.740 --> 00:04:40.260
+The entire app can use
+it, but I can say,
+
+94
+00:04:40.590 --> 00:04:44.160
+I want this column, which
+is an integer to use
+
+95
+00:04:44.220 --> 00:04:46.920
+the new custom manager stuff,
+but this other column right
+
+96
+00:04:46.920 --> 00:04:50.490
+next to it not to
+Correct. Yeah. So we have
+
+97
+00:04:50.490 --> 00:04:52.380
+our, our built in field
+templates that exist in this
+
+98
+00:04:52.380 --> 00:04:54.300
+directory. And if you modify
+one of those, it's gonna
+
+99
+00:04:54.310 --> 00:04:56.820
+change your, your entire website.
+But at the same time,
+
+100
+00:04:56.820 --> 00:05:00.240
+you can also add your
+own custom ones. So let's
+
+101
+00:05:00.240 --> 00:05:05.160
+say it's Scott, Hanselman's integer
+edit. Then what you can
+
+102
+00:05:05.160 --> 00:05:07.080
+do is go to your
+data model. And by applying
+
+103
+00:05:07.080 --> 00:05:10.500
+an attribute of your data
+model, you're telling us which
+
+104
+00:05:10.500 --> 00:05:13.290
+table in your database you
+want this to apply to
+
+105
+00:05:13.290 --> 00:05:14.370
+and you go, well, what
+if I don't want to
+
+106
+00:05:14.370 --> 00:05:18.150
+change it for every time
+I showed that table? Well,
+
+107
+00:05:18.150 --> 00:05:21.990
+we also will let you
+specify that anytime you're in
+
+108
+00:05:21.990 --> 00:05:24.390
+an individual page. So for
+example, on a, on a
+
+109
+00:05:24.390 --> 00:05:26.340
+grid, you could go in
+there and say, I want
+
+110
+00:05:26.340 --> 00:05:27.870
+to put a dynamic field
+in. And one of the
+
+111
+00:05:27.870 --> 00:05:30.630
+parameters for dynamic field is
+a UI hint. And in
+
+112
+00:05:30.630 --> 00:05:34.470
+that UI, hint, you can
+actually override the attribute that
+
+113
+00:05:34.470 --> 00:05:36.630
+was on the model or
+not even have an attribute
+
+114
+00:05:36.630 --> 00:05:38.580
+on the model and just
+specify it there. So is
+
+115
+00:05:38.580 --> 00:05:40.680
+a UI hint, like if
+I had a string in
+
+116
+00:05:40.680 --> 00:05:43.170
+the database, but I'm thinking
+that that's really a URL.
+
+117
+00:05:43.740 --> 00:05:45.270
+What I say in the
+UI, hint that this is
+
+118
+00:05:45.270 --> 00:05:47.160
+a URL, or is that
+a differential? We actually have
+
+119
+00:05:47.160 --> 00:05:49.200
+a different attribute for that.
+We have one called datatype.
+
+120
+00:05:49.620 --> 00:05:51.330
+One of the, one of
+the big negatives to me
+
+121
+00:05:51.330 --> 00:05:53.700
+of a, of a database
+today is if you look
+
+122
+00:05:53.700 --> 00:05:55.380
+at it from the CLR
+world, once it comes into
+
+123
+00:05:55.380 --> 00:05:58.160
+the database, we, we just
+go, it's either a date.
+
+124
+00:05:58.610 --> 00:06:03.170
+It's a, a numeric field,
+or it's a string. And,
+
+125
+00:06:03.170 --> 00:06:06.020
+you know, a string could
+be a social security number,
+
+126
+00:06:06.050 --> 00:06:10.760
+government ID. It could be
+a URL and email address,
+
+127
+00:06:11.000 --> 00:06:12.320
+and you probably want to
+deal with all those in
+
+128
+00:06:12.320 --> 00:06:14.390
+a different way. And so
+we actually have an attribute
+
+129
+00:06:14.390 --> 00:06:16.310
+called data type and you
+can put a data type
+
+130
+00:06:16.310 --> 00:06:19.130
+attribute on your data model.
+And that's basically telling us
+
+131
+00:06:19.940 --> 00:06:21.950
+what that should be. And
+some of the ones that
+
+132
+00:06:21.950 --> 00:06:24.080
+we have out of the
+box are things like email
+
+133
+00:06:24.080 --> 00:06:28.430
+address, URL. Those are already
+in there. You can also
+
+134
+00:06:28.430 --> 00:06:29.900
+add your own. So what
+we do is we actually
+
+135
+00:06:29.900 --> 00:06:32.990
+have an enumeration that has
+about 15 or 20 built
+
+136
+00:06:32.990 --> 00:06:36.200
+in values, but the, the
+data, the data type attribute
+
+137
+00:06:36.200 --> 00:06:39.080
+also takes a string. So
+you can do custom ones.
+
+138
+00:06:39.950 --> 00:06:43.460
+If, if you type in
+like a URL, we'll actually
+
+139
+00:06:43.460 --> 00:06:45.200
+go to that field template
+directory and see if we
+
+140
+00:06:45.200 --> 00:06:48.230
+find a control called URL.
+And if we do, we'll
+
+141
+00:06:48.230 --> 00:06:51.050
+automatically display it, if not,
+we'll fall backwards, down to
+
+142
+00:06:51.050 --> 00:06:53.050
+text. All right, well, let's,
+let's just a good idea.
+
+143
+00:06:53.050 --> 00:06:55.120
+This let's do this. Let's,
+let's kind of do a
+
+144
+00:06:55.120 --> 00:06:58.120
+pretend, hello, world application here,
+but I want to, I
+
+145
+00:06:58.120 --> 00:07:01.090
+say file new. And I
+pick the, the dynamic data
+
+146
+00:07:02.200 --> 00:07:05.020
+project type. I can use
+the wizard if I want,
+
+147
+00:07:05.260 --> 00:07:06.370
+and it will build a
+lot of this for me.
+
+148
+00:07:06.370 --> 00:07:07.900
+I can point it to
+a database and pull some
+
+149
+00:07:07.900 --> 00:07:10.570
+information out and it'll give
+me a, you know, we've
+
+150
+00:07:10.570 --> 00:07:12.100
+seen this on the websites
+and people can look at
+
+151
+00:07:12.100 --> 00:07:14.410
+the screencast that I'll put
+links up for and we'll
+
+152
+00:07:14.410 --> 00:07:18.100
+get an administration grid, edit
+all the crud for free.
+
+153
+00:07:18.700 --> 00:07:20.980
+Let's say that one of
+those fields is a string,
+
+154
+00:07:20.980 --> 00:07:22.870
+but I want it to
+be an international phone number.
+
+155
+00:07:23.590 --> 00:07:25.120
+So what do I need
+to do to say that
+
+156
+00:07:25.120 --> 00:07:27.400
+this database that has a
+column that has a string
+
+157
+00:07:27.640 --> 00:07:29.980
+is really an international phone
+number? Yeah. So what I
+
+158
+00:07:29.980 --> 00:07:31.810
+would do in that case
+is the first thing you're
+
+159
+00:07:31.810 --> 00:07:32.830
+gonna do is you're going
+to probably going to go
+
+160
+00:07:32.830 --> 00:07:36.460
+to your app code directory.
+You're going to right click
+
+161
+00:07:36.460 --> 00:07:38.920
+and say, I want to
+add a new class. Yep.
+
+162
+00:07:39.160 --> 00:07:40.930
+We're here at the MVP
+summit. We've got a bunch
+
+163
+00:07:40.930 --> 00:07:43.840
+of people who've just apparently
+successfully compiled an application and
+
+164
+00:07:44.500 --> 00:07:47.170
+decided that that's worth sharing
+about. So we're, we're filming
+
+165
+00:07:47.170 --> 00:07:49.510
+here in the, in the
+conference center wrote their first
+
+166
+00:07:49.510 --> 00:07:53.170
+hello world. Sorry. Anyways. So
+yeah, what you do is
+
+167
+00:07:53.170 --> 00:07:54.550
+you go and you'd add
+a new class to your
+
+168
+00:07:54.550 --> 00:07:59.020
+project. We support link to
+see cool and energy framework,
+
+169
+00:07:59.050 --> 00:08:03.130
+both of these generate partial
+classes for all the tables
+
+170
+00:08:03.130 --> 00:08:05.770
+in your database. And so
+in this case, what table
+
+171
+00:08:05.770 --> 00:08:07.570
+are we talking? Well, let's
+just say that I've got
+
+172
+00:08:07.570 --> 00:08:09.550
+a customer and he has
+a phone number, but let's
+
+173
+00:08:09.550 --> 00:08:11.830
+say that they're international phone
+numbers there. If we've got
+
+174
+00:08:11.830 --> 00:08:13.660
+a customer table. So what
+we do is we'd go
+
+175
+00:08:13.660 --> 00:08:16.900
+in and override the customer
+table, the customer object that's
+
+176
+00:08:16.900 --> 00:08:19.930
+automatically created in the data
+model. And so I would
+
+177
+00:08:19.930 --> 00:08:22.180
+go add a new class,
+call it customer because I,
+
+178
+00:08:22.180 --> 00:08:25.090
+and I make it partial.
+Okay. Okay. So I've got
+
+179
+00:08:25.090 --> 00:08:27.730
+a link to SQL model
+or linked to entities, and
+
+180
+00:08:27.730 --> 00:08:30.640
+it's got an automatically generated
+partial customer. That's correct. I'm
+
+181
+00:08:30.640 --> 00:08:34.120
+making the rest of it,
+the other part. Right. And,
+
+182
+00:08:34.120 --> 00:08:36.490
+and the reason we're recruiting
+our own classes, because you
+
+183
+00:08:36.490 --> 00:08:38.410
+could, you could go right
+into the designer file created
+
+184
+00:08:38.410 --> 00:08:40.780
+by the link to SQL
+editor with a negative would
+
+185
+00:08:40.780 --> 00:08:42.970
+be. Then if you recompile
+your application, you're going to
+
+186
+00:08:42.970 --> 00:08:44.950
+wipe that change out. So
+that's, that's the whole idea
+
+187
+00:08:44.950 --> 00:08:47.200
+of partial and why it
+was added in asp.net to,
+
+188
+00:08:47.200 --> 00:08:50.770
+Oh, Exactly. So we're going
+to keep that little extra
+
+189
+00:08:50.770 --> 00:08:52.810
+bit of metadata off to
+the side and another foot
+
+190
+00:08:52.810 --> 00:08:55.470
+in another file. And that's
+correct. We're going to go
+
+191
+00:08:55.470 --> 00:09:00.420
+over there and, And create
+that class. And one of
+
+192
+00:09:00.420 --> 00:09:02.190
+the negatives of the CLR
+today is there's not a
+
+193
+00:09:02.190 --> 00:09:05.520
+great way to add a
+metadata to an existing member
+
+194
+00:09:05.520 --> 00:09:07.920
+in a, in a partial
+class. Okay. And the way
+
+195
+00:09:07.920 --> 00:09:11.160
+we solve that is we
+actually create a, a metadata
+
+196
+00:09:11.160 --> 00:09:14.850
+class that maps to your
+existing class. What you're going
+
+197
+00:09:14.850 --> 00:09:17.520
+to do is, is after
+you created this customer class,
+
+198
+00:09:17.580 --> 00:09:20.450
+you're going to create a
+customer metadata class. And then
+
+199
+00:09:20.450 --> 00:09:22.200
+you're going to go put
+a, an attribute on your
+
+200
+00:09:22.200 --> 00:09:24.510
+customer class that says, Hey,
+my metadata is on this
+
+201
+00:09:24.510 --> 00:09:28.130
+customer metadata class, Which I
+assume could be anywhere in
+
+202
+00:09:28.130 --> 00:09:31.490
+your assemblies, In your assemblies
+or in your own, all
+
+203
+00:09:31.490 --> 00:09:33.530
+this metadata in one place.
+Exactly. You could go take
+
+204
+00:09:33.530 --> 00:09:35.630
+all this metadata and put
+it in some library somewhere
+
+205
+00:09:35.630 --> 00:09:37.370
+and just go wire it
+up at the, at the
+
+206
+00:09:37.370 --> 00:09:42.020
+end. Okay. And then what
+you would do is take
+
+207
+00:09:42.020 --> 00:09:45.230
+any members from your class
+that you want to add
+
+208
+00:09:45.230 --> 00:09:47.750
+metadata to. You'll just create
+a blank placeholder inside of
+
+209
+00:09:47.750 --> 00:09:51.260
+the, the temporary class or
+metadata class. Okay. So for
+
+210
+00:09:51.260 --> 00:09:54.260
+example, in our case, it
+would be the international phone
+
+211
+00:09:54.260 --> 00:09:57.350
+number, international phone number. So
+I create objects, international phone
+
+212
+00:09:57.350 --> 00:09:59.540
+number, get set. And then
+on top of that, I
+
+213
+00:09:59.540 --> 00:10:02.390
+would actually add the data
+type attribute. Okay. And since
+
+214
+00:10:02.390 --> 00:10:04.370
+international phone numbers, not one
+of the ones that's part
+
+215
+00:10:04.370 --> 00:10:06.980
+of our built in enumeration.
+I would open a string
+
+216
+00:10:06.980 --> 00:10:10.070
+up and say international phone
+number. Okay. So at this
+
+217
+00:10:10.070 --> 00:10:12.500
+point I've taken my data
+model and I've added a
+
+218
+00:10:12.500 --> 00:10:14.900
+little metadata class, and I'm
+starting to annotate it with,
+
+219
+00:10:15.220 --> 00:10:17.780
+with hints that I'm going
+to need, because we're trying
+
+220
+00:10:17.780 --> 00:10:20.390
+to keep things dry or
+trying to not repeat ourselves.
+
+221
+00:10:20.390 --> 00:10:23.270
+We're going to say in
+one place that this column
+
+222
+00:10:23.540 --> 00:10:26.540
+is an international phone number,
+but we haven't really declared
+
+223
+00:10:26.540 --> 00:10:29.690
+what an international phone number
+is. That's correct. We have,
+
+224
+00:10:29.690 --> 00:10:32.180
+we have two choices. Now
+we have a, by default,
+
+225
+00:10:32.210 --> 00:10:34.550
+this thing's going to be
+shown using our text control
+
+226
+00:10:34.550 --> 00:10:37.100
+because technically in the database,
+it's a text field. Okay.
+
+227
+00:10:37.310 --> 00:10:39.320
+So we have two choices.
+We can go modify the
+
+228
+00:10:39.320 --> 00:10:42.200
+existing text template. And if
+I was going to do
+
+229
+00:10:42.200 --> 00:10:44.510
+that, I would load up
+the text dot ASC X
+
+230
+00:10:44.510 --> 00:10:49.520
+dot CS file. And inside
+of there, I can actually
+
+231
+00:10:49.520 --> 00:10:51.770
+write a simple link link
+query to say, I want
+
+232
+00:10:51.770 --> 00:10:55.610
+to look at the attributes
+that are specified on this
+
+233
+00:10:55.610 --> 00:10:59.120
+field and see if there's
+a data type attribute. Ah,
+
+234
+00:10:59.210 --> 00:11:02.120
+I found a data type
+attribute and it's international phone
+
+235
+00:11:02.120 --> 00:11:04.610
+number. Well, because of that,
+I'm gonna change my rendering
+
+236
+00:11:04.610 --> 00:11:07.670
+now, instead of admitting just
+the actual text value, how
+
+237
+00:11:07.670 --> 00:11:11.090
+about I throw a hyperlink
+up and automatically put the
+
+238
+00:11:11.090 --> 00:11:13.130
+rights right stuff in front
+of the hyperlink to try
+
+239
+00:11:13.130 --> 00:11:15.080
+to have it dial a
+phone. I think I see
+
+240
+00:11:15.080 --> 00:11:17.450
+where you're going here. We've
+declared that there's this thing,
+
+241
+00:11:17.450 --> 00:11:20.210
+this new data type called
+international phone number. And we're
+
+242
+00:11:20.210 --> 00:11:21.860
+saying we can do one
+of two things. We can
+
+243
+00:11:21.860 --> 00:11:27.290
+either piggyback it on the
+existing string underscore it would
+
+244
+00:11:27.290 --> 00:11:29.420
+be string or textbooks, Text.
+It would be text under,
+
+245
+00:11:29.480 --> 00:11:32.510
+it would be texts that
+ASC X that's yes. Extend
+
+246
+00:11:32.510 --> 00:11:35.660
+the existing text box, that
+dynamic text box, the ASX,
+
+247
+00:11:36.050 --> 00:11:38.900
+and say, within there, if
+it's a text box, do
+
+248
+00:11:38.900 --> 00:11:41.600
+the old fashioned thing, versus
+if it's an international phone
+
+249
+00:11:41.600 --> 00:11:44.900
+number, it needs this one
+additional piece of work, correct.
+
+250
+00:11:44.930 --> 00:11:47.600
+Maybe a extra label or
+a special validator, or show
+
+251
+00:11:47.600 --> 00:11:49.340
+it as a URL or
+whatever. I'm guessing where you're
+
+252
+00:11:49.340 --> 00:11:52.010
+going with this. Or I
+could make an entirely separate
+
+253
+00:11:52.010 --> 00:11:55.800
+ASC X that's customed international.
+That's correct. The at my
+
+254
+00:11:55.800 --> 00:11:58.110
+other choice would be if,
+if, if this type is
+
+255
+00:11:58.110 --> 00:12:00.780
+so different, I might have
+say, I need a new
+
+256
+00:12:00.780 --> 00:12:03.030
+control. And so I would
+go create a control in
+
+257
+00:12:03.030 --> 00:12:06.150
+the field tempered directory directory
+called international phone number, at
+
+258
+00:12:06.150 --> 00:12:08.550
+which point, not only do
+I, do I create the
+
+259
+00:12:08.550 --> 00:12:10.350
+international phone number control, but
+I can also do an
+
+260
+00:12:10.350 --> 00:12:13.290
+under edit version and an
+under insert version, which allows
+
+261
+00:12:13.290 --> 00:12:16.020
+you to override how it,
+how we display that when
+
+262
+00:12:16.020 --> 00:12:17.870
+you edit and how we
+display that when you enter.
+
+263
+00:12:18.270 --> 00:12:20.400
+Okay. So you brought up
+something interesting and underscored it,
+
+264
+00:12:20.400 --> 00:12:23.700
+the idea that there's this
+convention such that it's datatype
+
+265
+00:12:23.820 --> 00:12:27.930
+underscore and then the action
+That's correct. So, so data
+
+266
+00:12:27.930 --> 00:12:31.560
+type by itself is the
+display. Okay. Underscore, edit is
+
+267
+00:12:31.560 --> 00:12:34.920
+for editing and underscore insert
+is for inserting. Okay. So
+
+268
+00:12:34.920 --> 00:12:36.510
+when the grid is in
+that state or when the
+
+269
+00:12:36.510 --> 00:12:38.760
+field is in that state,
+this is what we'll display.
+
+270
+00:12:38.790 --> 00:12:41.610
+That is correct. Okay. Because
+I might want to have
+
+271
+00:12:41.610 --> 00:12:45.270
+a, like a rich text
+type and have a really
+
+272
+00:12:45.270 --> 00:12:48.390
+rich text box, like free
+text box.com or, you know,
+
+273
+00:12:48.870 --> 00:12:50.910
+like with like Telerik one
+of our sponsors use like
+
+274
+00:12:50.910 --> 00:12:54.360
+a really complicated rich editor,
+but I might want it
+
+275
+00:12:54.360 --> 00:12:56.310
+to be an eye frame
+when it's not being edited
+
+276
+00:12:56.310 --> 00:12:59.430
+or display it in some
+other way. Exactly. We pretty
+
+277
+00:12:59.430 --> 00:13:01.440
+much give you the ability
+to customize as much as
+
+278
+00:13:01.440 --> 00:13:04.200
+you want. I actually want
+to jump off for a
+
+279
+00:13:04.200 --> 00:13:06.180
+second and go down a
+different path. Okay. We've talked
+
+280
+00:13:06.180 --> 00:13:08.400
+a lot about grids and,
+and detailed views. Well, yeah,
+
+281
+00:13:08.400 --> 00:13:09.870
+there's a whole bunch of
+stuff underneath this that we're
+
+282
+00:13:09.870 --> 00:13:12.570
+completely crossing over. Well, I
+also want to talk about
+
+283
+00:13:12.570 --> 00:13:14.520
+the fact that we do
+templates controls as well. So
+
+284
+00:13:14.520 --> 00:13:16.200
+one of the great controls
+that was brought out in,
+
+285
+00:13:16.200 --> 00:13:19.890
+in asp.net three, five was
+the list view control, which
+
+286
+00:13:19.890 --> 00:13:21.810
+for all the people that
+had, you know, a lot
+
+287
+00:13:21.810 --> 00:13:24.180
+of folks have been using
+our controls. They wanted to
+
+288
+00:13:24.180 --> 00:13:26.280
+use a repeater cause it
+really gave them lots of
+
+289
+00:13:26.280 --> 00:13:28.410
+customization. But as soon as
+you start trying to do
+
+290
+00:13:28.410 --> 00:13:31.380
+things like sorting and paging
+and stuff like that, well,
+
+291
+00:13:31.380 --> 00:13:33.480
+you end up writing, you
+know, two or 300 lines
+
+292
+00:13:33.480 --> 00:13:35.460
+of glue code. That's a
+good point. And next thing
+
+293
+00:13:35.460 --> 00:13:39.540
+you know, is, is, you
+know, the repeaters gotten unwieldy.
+
+294
+00:13:39.990 --> 00:13:41.940
+And I think that's where
+literally really helps you because
+
+295
+00:13:41.940 --> 00:13:44.460
+it gives you all the
+power of, of repeater where
+
+296
+00:13:44.460 --> 00:13:48.180
+basically all the markup is
+controlled by you, but you
+
+297
+00:13:48.180 --> 00:13:50.910
+still get all the features
+like sorting and paging and
+
+298
+00:13:50.910 --> 00:13:54.990
+stuff. Part of the control.
+We also support list, view
+
+299
+00:13:54.990 --> 00:13:57.720
+and form view, which are
+the two templates controls that
+
+300
+00:13:57.720 --> 00:14:00.240
+we support, which means you
+don't have to feel like
+
+301
+00:14:00.240 --> 00:14:03.120
+you're limited to just a
+grid or a point bludgeon
+
+302
+00:14:03.120 --> 00:14:06.600
+rates People. When they initially
+saw data grid, myself included
+
+303
+00:14:06.930 --> 00:14:09.720
+thought, Oh, it's auto generating
+a website and it's scaffolding.
+
+304
+00:14:10.170 --> 00:14:11.940
+And that was one way
+of pigeonholing it, but it's
+
+305
+00:14:11.940 --> 00:14:14.970
+bigger than that. And then
+I, I I've indirectly pigeonholed
+
+306
+00:14:14.970 --> 00:14:17.250
+you into the data grid,
+but it's bigger than that.
+
+307
+00:14:17.610 --> 00:14:19.740
+I was talking with Peter
+Blom, Peter bloom, who makes
+
+308
+00:14:19.740 --> 00:14:21.540
+up the validators. And he
+was explaining to me that
+
+309
+00:14:21.750 --> 00:14:25.500
+there's so much underlying support
+for, for metadata, that one
+
+310
+00:14:25.500 --> 00:14:30.300
+could build something entirely new
+from just the underlying control
+
+311
+00:14:30.330 --> 00:14:33.510
+underlying classes you guys have
+within dynamic data. But then
+
+312
+00:14:33.510 --> 00:14:35.790
+let me get too far
+off, off, off the path.
+
+313
+00:14:35.790 --> 00:14:38.340
+So within Alyssa, I have
+control over my own markup.
+
+314
+00:14:38.460 --> 00:14:40.950
+I could make some kind
+of a list of stuff
+
+315
+00:14:40.950 --> 00:14:42.510
+that is not at all
+a data grid. It doesn't
+
+316
+00:14:42.510 --> 00:14:44.970
+look anything like a database.
+Correct. And that's, that's the
+
+317
+00:14:44.970 --> 00:14:45.990
+point I want to make
+sure is I don't want
+
+318
+00:14:45.990 --> 00:14:48.510
+people to pigeon pigeonhole this
+technology and go, Oh, we're
+
+319
+00:14:48.510 --> 00:14:51.350
+just grids. We're just detailed
+views. No, if you want
+
+320
+00:14:51.350 --> 00:14:53.810
+to control the markup, you
+can control all the market
+
+321
+00:14:53.810 --> 00:14:55.910
+performed view allows you to
+place the controls anywhere on
+
+322
+00:14:55.910 --> 00:14:58.580
+the page. You want a
+list view is, is something
+
+323
+00:14:58.580 --> 00:15:00.460
+that repeats over data. So
+yeah, If I've got a
+
+324
+00:15:00.460 --> 00:15:02.050
+list for you and I'm
+doing the markup, maybe with,
+
+325
+00:15:03.310 --> 00:15:05.080
+I want to do it
+all CSS friendly and I'm
+
+326
+00:15:05.080 --> 00:15:08.650
+using unordered list and list
+item, controlling it myself, what
+
+327
+00:15:08.650 --> 00:15:11.740
+do I put in my
+template to get dynamic data
+
+328
+00:15:11.770 --> 00:15:14.740
+features? Right? So what you're
+going to do is earlier
+
+329
+00:15:14.740 --> 00:15:16.360
+when we were talking, we
+were talking about in, in
+
+330
+00:15:16.360 --> 00:15:18.490
+grids and details view, we
+use what's called a dynamic
+
+331
+00:15:18.490 --> 00:15:20.980
+field. And we do that
+because, you know, if the
+
+332
+00:15:20.980 --> 00:15:24.220
+existing controls have a bound
+field or checkbox field, so
+
+333
+00:15:24.220 --> 00:15:26.380
+we were trying to follow
+that pattern. Once you get
+
+334
+00:15:26.380 --> 00:15:29.620
+to the template of the
+controls, we have a dynamic
+
+335
+00:15:29.620 --> 00:15:33.280
+control. Okay. And the dynamic
+control, basically you specify the
+
+336
+00:15:33.940 --> 00:15:36.820
+column that you're interested in
+and you can also specify
+
+337
+00:15:36.820 --> 00:15:39.610
+the mode. And obviously we
+have three modes. We have
+
+338
+00:15:39.610 --> 00:15:43.000
+a read only mode. We
+have a edit mode and
+
+339
+00:15:43.000 --> 00:15:45.250
+an insert mode. And this
+makes a lot of sense
+
+340
+00:15:45.250 --> 00:15:46.630
+in the case of if
+you're building a template for
+
+341
+00:15:46.630 --> 00:15:49.810
+like a list view, it's
+got different templates for each
+
+342
+00:15:49.810 --> 00:15:53.290
+of those modes, Right? Because,
+and because a new is,
+
+343
+00:15:53.330 --> 00:15:56.290
+is different than an, an
+edit that's correct. Hold that
+
+344
+00:15:56.290 --> 00:15:57.940
+thought. I'm just going to
+take a quick second to
+
+345
+00:15:57.940 --> 00:16:01.660
+thank our sponsors and we'll
+be right back. Hi, it's
+
+346
+00:16:01.660 --> 00:16:03.910
+Scott Hanselman here. Hope you're
+enjoying the show so far.
+
+347
+00:16:03.940 --> 00:16:06.250
+I'm coming at you from
+another place in time. Sorry
+
+348
+00:16:06.250 --> 00:16:07.570
+to interrupt the show, but
+I want to let you
+
+349
+00:16:07.570 --> 00:16:09.430
+know that putting together a
+podcast like this every week,
+
+350
+00:16:09.430 --> 00:16:12.040
+isn't free. The folks that
+pay the bandwidth bill is
+
+351
+00:16:12.040 --> 00:16:14.470
+Tellerik they make the show
+possible and they also make
+
+352
+00:16:14.470 --> 00:16:17.620
+some pretty cool products, like
+tell our excite affinity development
+
+353
+00:16:17.620 --> 00:16:20.920
+platform for constructing websites, community
+portals, and Internet's built all
+
+354
+00:16:20.920 --> 00:16:23.950
+on asp.net to, Oh, so
+you're using the various well-known
+
+355
+00:16:23.950 --> 00:16:27.370
+goodies, like master pages and
+membership services, data model provider,
+
+356
+00:16:27.640 --> 00:16:30.070
+things that you already know.
+It's pretty flexible. You've got
+
+357
+00:16:30.070 --> 00:16:32.710
+a very robust core that
+you can customize. You can
+
+358
+00:16:32.710 --> 00:16:35.660
+plug in anything that you
+want from complex applications, for
+
+359
+00:16:35.660 --> 00:16:37.900
+a CRM, or just a
+little widget that displays the
+
+360
+00:16:37.900 --> 00:16:40.330
+weather. If you're not big
+into the code thing, that's
+
+361
+00:16:40.330 --> 00:16:42.430
+cool to get a full
+set of features out of
+
+362
+00:16:42.430 --> 00:16:46.090
+the box, like workflow multi-lingual
+sites, content, versioning that can
+
+363
+00:16:46.090 --> 00:16:48.580
+all be added without code.
+There's also a whole bunch
+
+364
+00:16:48.580 --> 00:16:51.970
+of pluggable modules and components
+for news blogs, forums, polls
+
+365
+00:16:52.360 --> 00:16:54.190
+lists. This is all stuff
+that you can do without
+
+366
+00:16:54.190 --> 00:16:56.650
+code. And it's pretty good
+looking product as well. You've
+
+367
+00:16:56.650 --> 00:16:59.590
+got a nice web 2.0
+administrative interface that lets you
+
+368
+00:16:59.920 --> 00:17:01.780
+as well as your boss.
+Who's not technical and be
+
+369
+00:17:01.780 --> 00:17:05.920
+really productive. So check out
+site finity.com and we'll get
+
+370
+00:17:05.920 --> 00:17:09.940
+you right back to the
+show. Thanks a lot. Cause
+
+371
+00:17:09.940 --> 00:17:11.260
+we were talking about the
+list view when you were
+
+372
+00:17:11.260 --> 00:17:13.090
+heading in a direction. Yeah,
+I was, I was going
+
+373
+00:17:13.090 --> 00:17:15.490
+to talk about dynamic control
+and what it really does
+
+374
+00:17:15.490 --> 00:17:17.230
+for you and cause that's
+the heart of the system,
+
+375
+00:17:17.230 --> 00:17:20.110
+isn't it? Yes. Actually underlying
+everything in dynamic data is
+
+376
+00:17:20.110 --> 00:17:22.060
+a dynamic control. Even though
+I was mentioning earlier, we
+
+377
+00:17:22.060 --> 00:17:24.340
+have this dynamic field. If
+you look at the source
+
+378
+00:17:24.340 --> 00:17:26.230
+code for dynamic field, all
+it really does is takes
+
+379
+00:17:26.230 --> 00:17:28.840
+a dynamic control in itself.
+And it's looking at the
+
+380
+00:17:28.840 --> 00:17:30.880
+grid or the detailed view
+to figure out which mode
+
+381
+00:17:30.880 --> 00:17:32.740
+it's in. Okay. In the
+case of a list, you
+
+382
+00:17:32.740 --> 00:17:35.020
+or a form view, you
+know, you control the mode.
+
+383
+00:17:35.410 --> 00:17:37.810
+So as I was going
+to say is when you
+
+384
+00:17:37.810 --> 00:17:39.820
+have a dynamic control, what
+you're going to specify as
+
+385
+00:17:39.820 --> 00:17:41.890
+the column you want to
+work on and then mode
+
+386
+00:17:41.980 --> 00:17:44.710
+B it read only insert
+edit. And what that really
+
+387
+00:17:44.740 --> 00:17:47.710
+w what we look at
+is we look at, okay,
+
+388
+00:17:47.710 --> 00:17:49.760
+you say that the column
+is we're going to go
+
+389
+00:17:49.760 --> 00:17:51.960
+look at your database and
+see what the model says
+
+390
+00:17:51.960 --> 00:17:54.780
+for, for that Columbo. It's
+an encourager. Okay. So that's
+
+391
+00:17:54.780 --> 00:17:56.430
+going to tell us to
+go look up the integer
+
+392
+00:17:56.430 --> 00:17:58.890
+field template inside of our
+field template directory. Okay. And
+
+393
+00:17:58.890 --> 00:18:00.090
+then based on the mode,
+we're going to pull the
+
+394
+00:18:00.090 --> 00:18:04.050
+rights, the right version of
+integer. And so basically that's
+
+395
+00:18:04.500 --> 00:18:07.650
+specifying it. You're basically telling
+us which field simple to
+
+396
+00:18:07.650 --> 00:18:09.990
+use. So you still get
+all the benefits of being
+
+397
+00:18:09.990 --> 00:18:14.460
+fully template in control of
+your markup, whatnot, and you
+
+398
+00:18:14.460 --> 00:18:17.070
+get the power of dynamic
+data still. So I think
+
+399
+00:18:17.070 --> 00:18:19.860
+that's really the, an area
+that I, I want people
+
+400
+00:18:19.860 --> 00:18:21.690
+to make sure that they
+understand. And I've got one
+
+401
+00:18:21.690 --> 00:18:23.970
+more area that, that I
+think people always, when I
+
+402
+00:18:24.030 --> 00:18:27.120
+see our first demos, most,
+most of the first demos
+
+403
+00:18:27.120 --> 00:18:29.340
+of dynamic data are this
+scaffold. I mean, basically you,
+
+404
+00:18:29.730 --> 00:18:33.480
+you drag a model in
+a register your data model
+
+405
+00:18:33.540 --> 00:18:36.030
+and with like one line
+of code, you've got this
+
+406
+00:18:36.030 --> 00:18:39.360
+full application built up and,
+and the audience we're missing
+
+407
+00:18:39.360 --> 00:18:42.050
+there is what if I
+have existing webpages. Right. Exactly.
+
+408
+00:18:42.050 --> 00:18:43.340
+And that was the question,
+how do I add an
+
+409
+00:18:43.340 --> 00:18:46.370
+emic data to existing sites
+without messing stuff up? How
+
+410
+00:18:46.370 --> 00:18:48.560
+do I put my toe
+in the pool and see
+
+411
+00:18:48.560 --> 00:18:50.750
+if the water is nice
+without the accepting it for
+
+412
+00:18:50.750 --> 00:18:53.210
+all of my data access.
+Right. And I think we,
+
+413
+00:18:53.210 --> 00:18:55.430
+we, we give you that
+benefit. So I don't want
+
+414
+00:18:55.430 --> 00:18:57.530
+to go through all the
+steps of actually what you
+
+415
+00:18:57.530 --> 00:18:59.930
+would do. I mean, the
+overall steps are you drag
+
+416
+00:18:59.930 --> 00:19:02.510
+this dynamic data directory in,
+you make a few changes
+
+417
+00:19:02.510 --> 00:19:04.760
+in web config. Right. What
+I really want to get
+
+418
+00:19:04.760 --> 00:19:07.400
+down to is I've got
+this page in my application.
+
+419
+00:19:07.400 --> 00:19:09.740
+What do I change in
+the page? Exactly. So what
+
+420
+00:19:09.740 --> 00:19:11.750
+we have this new control,
+kind of like a script
+
+421
+00:19:11.750 --> 00:19:15.200
+manager, we now have a
+dynamic data manager and you
+
+422
+00:19:15.200 --> 00:19:17.960
+put this control in your
+page and then any controls
+
+423
+00:19:17.960 --> 00:19:20.480
+that you want to have
+our functionality, you registered with
+
+424
+00:19:20.480 --> 00:19:22.700
+this control. So for example,
+I'm going to add a
+
+425
+00:19:22.700 --> 00:19:24.830
+dynamic data manager to my
+page. Okay. And I've got
+
+426
+00:19:24.830 --> 00:19:26.810
+a grid view, and I've
+got a list for you.
+
+427
+00:19:26.810 --> 00:19:28.850
+And I want both, they
+work already. They already work.
+
+428
+00:19:28.880 --> 00:19:31.250
+Okay. And I want to
+turn on this magic It'll
+
+429
+00:19:31.250 --> 00:19:33.080
+template stuff that we've been
+talking about just for a
+
+430
+00:19:33.080 --> 00:19:35.420
+couple of things. Okay. So
+what I'll do is I'll
+
+431
+00:19:35.420 --> 00:19:38.420
+go and, and let's say,
+I just wanna turn dynamic
+
+432
+00:19:38.420 --> 00:19:41.720
+data on the list view.
+Okay. So in my page,
+
+433
+00:19:41.720 --> 00:19:44.270
+under a knit, in my
+code behind file, I'll say
+
+434
+00:19:44.270 --> 00:19:48.230
+dynamic data manager, one dot
+register control, and I'll specify
+
+435
+00:19:48.230 --> 00:19:52.370
+the name of the list
+view. Okay. And once you've
+
+436
+00:19:52.370 --> 00:19:55.070
+done that, you basically flip
+the switch to turn on
+
+437
+00:19:55.070 --> 00:19:57.770
+dynamic data access for the
+list view. So then I
+
+438
+00:19:57.770 --> 00:20:00.680
+can start using a dynamic
+fields. Yeah. Yes. Dynamic control
+
+439
+00:20:01.150 --> 00:20:03.480
+inside of your, your field
+inside of your templates and
+
+440
+00:20:03.520 --> 00:20:06.230
+your list view. Okay. That's
+all it takes, that's it?
+
+441
+00:20:07.340 --> 00:20:10.310
+So there's a couple of
+other folders that when you
+
+442
+00:20:10.340 --> 00:20:13.220
+see underneath this dynamic data
+folder, I noticed that when
+
+443
+00:20:13.220 --> 00:20:17.420
+I made a scaffolding, I
+had a paging and filtering
+
+444
+00:20:17.420 --> 00:20:20.540
+and all those things happen
+automatically. Yeah. We have a,
+
+445
+00:20:20.540 --> 00:20:21.890
+we have a couple of
+directors. One of the, one
+
+446
+00:20:21.890 --> 00:20:25.130
+of the directories is called
+content content is as we
+
+447
+00:20:25.130 --> 00:20:27.560
+started building dynamic data, we
+rented this problem where we
+
+448
+00:20:27.560 --> 00:20:30.680
+wanted a pager. We wanted
+some other controls and stuff.
+
+449
+00:20:30.680 --> 00:20:34.190
+And so what we did
+is we created a directory
+
+450
+00:20:34.190 --> 00:20:36.380
+called content and gave you
+the source code to those
+
+451
+00:20:36.380 --> 00:20:38.030
+controls as well, because we
+said, you know, not only
+
+452
+00:20:38.030 --> 00:20:40.340
+do we want to give
+you a, a pager, not
+
+453
+00:20:40.340 --> 00:20:41.990
+only do we want to
+give you a control for
+
+454
+00:20:41.990 --> 00:20:45.380
+doing a drop down list
+of, of filters, but we
+
+455
+00:20:45.380 --> 00:20:47.440
+want to make sure one
+of our goals and data
+
+456
+00:20:47.440 --> 00:20:50.170
+is never to make you
+feel like we've, we've built
+
+457
+00:20:50.170 --> 00:20:51.610
+something that you're gonna fall
+off a cliff on where
+
+458
+00:20:51.610 --> 00:20:52.660
+it's like, okay, I'm going
+to use it up to
+
+459
+00:20:52.660 --> 00:20:55.200
+this point and I'm going
+to die. That's the thing
+
+460
+00:20:55.200 --> 00:20:56.820
+as someone who, I mean,
+I guess I've only worked
+
+461
+00:20:56.820 --> 00:20:58.800
+for the company for six
+months, but I always, I
+
+462
+00:20:58.800 --> 00:21:00.630
+gave a talk at dynamic
+data in New York. And I
+
+463
+00:21:00.630 --> 00:21:05.160
+was saying how most Microsoft
+demos involve someone dragging something
+
+464
+00:21:05.160 --> 00:21:07.500
+onto the page. You get
+drag a data grid over
+
+465
+00:21:07.950 --> 00:21:09.840
+hook, some stuff up, and
+then you wave your hands
+
+466
+00:21:09.840 --> 00:21:12.180
+and you push five. And
+like, Hey, look, I did
+
+467
+00:21:12.180 --> 00:21:14.820
+a complete application. And then
+by the time the audience
+
+468
+00:21:14.820 --> 00:21:17.130
+is saying, Hey, but wait,
+I want a customer, Hey,
+
+469
+00:21:17.160 --> 00:21:19.020
+you'd left the stage at
+that point. And it's over.
+
+470
+00:21:19.680 --> 00:21:22.350
+And when I, when I
+think about that, kind of,
+
+471
+00:21:22.390 --> 00:21:26.400
+that kind of canonical old
+style example where, Oh, it's
+
+472
+00:21:26.400 --> 00:21:31.930
+totally customizable until it's completely
+not customizable. And when it's,
+
+473
+00:21:31.930 --> 00:21:33.840
+it's cool that there's more
+and more people. I mean,
+
+474
+00:21:33.870 --> 00:21:35.520
+you haven't been in the
+company all that long either.
+
+475
+00:21:35.520 --> 00:21:37.800
+I guess that more and
+more people are getting to
+
+476
+00:21:37.800 --> 00:21:41.010
+the point that we had
+this pain as people on
+
+477
+00:21:41.010 --> 00:21:43.260
+the outside. So now we're
+coming inside to make sure
+
+478
+00:21:43.260 --> 00:21:45.990
+that that doesn't happen to
+anyone else. True. It's kind
+
+479
+00:21:45.990 --> 00:21:48.330
+of funny because we actually
+had some raised eyebrows when
+
+480
+00:21:48.330 --> 00:21:51.090
+we first started working on
+this, because some of the
+
+481
+00:21:51.090 --> 00:21:53.280
+feedback that I know the
+asp.net team had moving into
+
+482
+00:21:53.280 --> 00:21:57.510
+ASP was let's make a
+blink project, start with the
+
+483
+00:21:57.510 --> 00:22:00.060
+least amount of files as
+possible. And so here you
+
+484
+00:22:00.060 --> 00:22:02.700
+create this dynamic data project
+and we get this directory
+
+485
+00:22:02.700 --> 00:22:04.890
+full of all these files,
+right? And the reason we
+
+486
+00:22:04.890 --> 00:22:06.810
+could stretch your full, all
+these files is instead of
+
+487
+00:22:07.050 --> 00:22:09.780
+hard coding, all of these
+things. Absolutely. And your application.
+
+488
+00:22:09.930 --> 00:22:12.060
+How about we just give
+you the source code to
+
+489
+00:22:12.060 --> 00:22:13.950
+all the pieces you might
+want to touch and tweak.
+
+490
+00:22:14.010 --> 00:22:16.890
+Exactly. So if you don't
+like the way our filters
+
+491
+00:22:16.890 --> 00:22:20.190
+look, yeah. Go in the
+content directory, modify the filter.
+
+492
+00:22:20.190 --> 00:22:21.990
+If you don't like the
+way the pager looks, it's
+
+493
+00:22:21.990 --> 00:22:24.990
+just a user control in
+there and modify the behavior.
+
+494
+00:22:24.990 --> 00:22:26.820
+If you don't like the
+feel template, that's the whole
+
+495
+00:22:26.820 --> 00:22:28.380
+point of the field templates
+was to actually give you
+
+496
+00:22:28.380 --> 00:22:31.470
+the source code, you know,
+right now, a bound field
+
+497
+00:22:31.470 --> 00:22:34.590
+or a checkbox field, or
+an image field. You have
+
+498
+00:22:34.590 --> 00:22:36.320
+no control over those. As
+soon as you exceed their,
+
+499
+00:22:36.320 --> 00:22:40.170
+their capabilities. You're done. Yeah.
+Speaking of images, you showed
+
+500
+00:22:40.170 --> 00:22:41.940
+me a demo that I
+thought was pretty cool, where
+
+501
+00:22:42.210 --> 00:22:44.850
+you were using a database
+where one of the columns
+
+502
+00:22:44.850 --> 00:22:48.930
+had a binary format that
+had some funky picture in
+
+503
+00:22:48.930 --> 00:22:51.150
+it. It was new, not
+an, it was a nonstandard
+
+504
+00:22:51.150 --> 00:22:53.430
+thing. It was like a,
+not a gift, not a
+
+505
+00:22:53.430 --> 00:22:55.410
+PNG was an old style
+thing. So just assume that
+
+506
+00:22:55.410 --> 00:22:58.440
+you have a database with
+many columns and one of
+
+507
+00:22:58.440 --> 00:23:01.560
+the columns has something, something
+funky in, it could be
+
+508
+00:23:01.560 --> 00:23:04.410
+a PDF, could be a
+data format, that's your own.
+
+509
+00:23:04.890 --> 00:23:08.770
+And you want to invent
+a visualization for that. You,
+
+510
+00:23:08.770 --> 00:23:10.680
+you made one called DB
+image. And I thought that
+
+511
+00:23:10.680 --> 00:23:12.780
+the way that you had
+created that was pretty interesting.
+
+512
+00:23:13.380 --> 00:23:15.690
+Yeah. So w w so
+what dynamic data does is,
+
+513
+00:23:15.690 --> 00:23:17.880
+is, you know, as, as
+I mentioned, at the beginning
+
+514
+00:23:17.880 --> 00:23:20.640
+of the, of the talk
+we were talking about, we
+
+515
+00:23:20.640 --> 00:23:22.170
+look at the data model
+and try to figure out
+
+516
+00:23:22.170 --> 00:23:26.220
+what we should show for
+each of the fields. Obviously
+
+517
+00:23:26.220 --> 00:23:28.830
+it's something to binary. We
+have no way to visualize
+
+518
+00:23:28.830 --> 00:23:31.320
+that. And so by default,
+we hide it, but just
+
+519
+00:23:31.320 --> 00:23:32.910
+because we were hiding it
+by default, doesn't mean you
+
+520
+00:23:32.910 --> 00:23:36.180
+can unhide it. And the
+library you're talking about is
+
+521
+00:23:36.180 --> 00:23:39.650
+called DB image. And it
+was basically my attempt at
+
+522
+00:23:40.410 --> 00:23:43.020
+making a nice field template
+control that would display images
+
+523
+00:23:43.020 --> 00:23:45.590
+out of a database. Yeah.
+And so the, that works
+
+524
+00:23:45.590 --> 00:23:48.140
+is you go and put
+your own field template control
+
+525
+00:23:48.140 --> 00:23:51.620
+and, and understands that type.
+And then on your model,
+
+526
+00:23:51.620 --> 00:23:53.000
+you're going to go and
+put one of those UI
+
+527
+00:23:53.000 --> 00:23:55.010
+hints. We talked about earlier
+and say, when this, when
+
+528
+00:23:55.010 --> 00:23:57.440
+this column shows up, I
+want to use DB image
+
+529
+00:23:57.470 --> 00:24:00.500
+for this column. And then
+will, instead of hiding that
+
+530
+00:24:00.500 --> 00:24:02.330
+column, now we're going okay.
+Since you've told us, you
+
+531
+00:24:02.330 --> 00:24:05.660
+know how to display it,
+right. We'll, we'll turn that
+
+532
+00:24:05.660 --> 00:24:07.610
+rule off and we'll go
+find the field templates that
+
+533
+00:24:07.880 --> 00:24:10.330
+supports what you said. Suddenly
+you knew what this thing
+
+534
+00:24:10.330 --> 00:24:12.430
+is exactly. But because it
+was an image, I thought
+
+535
+00:24:12.430 --> 00:24:15.640
+it was interesting because you
+had to do two things.
+
+536
+00:24:15.640 --> 00:24:18.850
+You had to render the
+image tag, the image source
+
+537
+00:24:18.850 --> 00:24:21.790
+equals, but then that source
+equals had to point to
+
+538
+00:24:21.790 --> 00:24:23.710
+somewhere, it had to actually
+go in and get the
+
+539
+00:24:23.710 --> 00:24:26.440
+image. So you ended up
+writing a handler that would
+
+540
+00:24:26.440 --> 00:24:28.570
+go back into the database
+and get that as well.
+
+541
+00:24:28.720 --> 00:24:31.390
+Yes. And I'm actually really
+proud of the handle army.
+
+542
+00:24:31.390 --> 00:24:33.340
+And that's one of the
+things I would recommend somebody,
+
+543
+00:24:33.340 --> 00:24:34.810
+if, if you, if you
+want to see some, some
+
+544
+00:24:34.810 --> 00:24:37.210
+neat code, go look at
+the handler from the what's
+
+545
+00:24:37.210 --> 00:24:39.040
+cool about the handlers we
+started going in this path
+
+546
+00:24:39.040 --> 00:24:41.140
+of, I want to show
+an image from the database.
+
+547
+00:24:41.710 --> 00:24:43.630
+Well, I don't want to
+write SQL, right? Because as
+
+548
+00:24:43.630 --> 00:24:45.460
+soon as I write SQL,
+I'm making assumptions about your
+
+549
+00:24:45.460 --> 00:24:48.130
+database, right. And you know,
+this great feature that came
+
+550
+00:24:48.130 --> 00:24:51.730
+out in.net three, five was
+link. And so suddenly I
+
+551
+00:24:51.730 --> 00:24:54.160
+can build this link query.
+And by building a link
+
+552
+00:24:54.160 --> 00:24:58.510
+query, I'm not locked to
+SQL server. Is it Oracle?
+
+553
+00:24:58.570 --> 00:25:00.640
+Is it my SQL? I
+don't have to worry about
+
+554
+00:25:00.640 --> 00:25:03.340
+that because whatever provider they
+have on the back end
+
+555
+00:25:03.340 --> 00:25:05.920
+is going to automatically convert
+the LINQ query to the
+
+556
+00:25:05.920 --> 00:25:10.810
+correct, you know? Right. It'll
+just work out. So it's
+
+557
+00:25:10.810 --> 00:25:13.120
+a, it's a comfortable layer
+of abstraction. That's, you know,
+
+558
+00:25:13.120 --> 00:25:14.980
+we know about the databases
+we're using linked to SQL
+
+559
+00:25:14.980 --> 00:25:17.290
+or linked entities, but we
+don't know that much. We,
+
+560
+00:25:17.290 --> 00:25:19.590
+don't not too intimate with
+the data. Right? So if
+
+561
+00:25:19.590 --> 00:25:20.710
+you, if you look at
+the source code for the
+
+562
+00:25:20.710 --> 00:25:23.140
+handle there, all we're really
+doing there is specifying the
+
+563
+00:25:23.140 --> 00:25:28.420
+primary key of the, the
+table and the column that
+
+564
+00:25:28.420 --> 00:25:30.670
+contains the image. And then
+if you look at the
+
+565
+00:25:30.670 --> 00:25:33.910
+source code, it's actually dynamically
+building a link query. So
+
+566
+00:25:33.910 --> 00:25:35.350
+most of the time when
+you see people doing link
+
+567
+00:25:35.350 --> 00:25:39.370
+queries, you know, you're spilled
+some texturing, but this is
+
+568
+00:25:39.370 --> 00:25:41.020
+actually a dynamic link query.
+So if you want to
+
+569
+00:25:41.020 --> 00:25:42.580
+see an example of how
+you would actually build an
+
+570
+00:25:42.580 --> 00:25:45.460
+expression tree to, to build
+a query by hand, that's
+
+571
+00:25:45.460 --> 00:25:47.200
+what this does. But as
+I said, the neat thing
+
+572
+00:25:47.200 --> 00:25:49.960
+about that is it means
+that it's not tied to
+
+573
+00:25:50.410 --> 00:25:53.920
+any particular storage format. This
+should work on Oracle. It
+
+574
+00:25:53.920 --> 00:25:57.970
+should work on the framework.
+There is no tie in.
+
+575
+00:25:57.970 --> 00:26:00.010
+So that's something I don't
+think you could have done
+
+576
+00:26:00.520 --> 00:26:04.000
+a pre.net three, five before
+I would have had to
+
+577
+00:26:04.000 --> 00:26:07.240
+have an Oracle version of
+SQL version, a my SQL
+
+578
+00:26:07.240 --> 00:26:09.610
+version, et cetera. And, and
+link has really allowed me
+
+579
+00:26:09.610 --> 00:26:12.130
+to pull that out. So
+all of this stuff that
+
+580
+00:26:12.130 --> 00:26:13.900
+he's been talking about so
+far is going to be
+
+581
+00:26:13.900 --> 00:26:16.660
+available in an upcoming update
+to the, to the framework.
+
+582
+00:26:16.660 --> 00:26:18.490
+So people will get this
+in their hands as soon
+
+583
+00:26:18.490 --> 00:26:20.560
+as possible. What are some
+of the things that you're
+
+584
+00:26:20.560 --> 00:26:21.970
+starting to think about where
+you could take this? Are
+
+585
+00:26:21.970 --> 00:26:24.010
+we gonna be able to
+use this in Silverlight? Am
+
+586
+00:26:24.010 --> 00:26:25.480
+I going to able to
+use this and other, other
+
+587
+00:26:25.480 --> 00:26:29.710
+places? That's one of the
+things that we, we, when
+
+588
+00:26:29.710 --> 00:26:31.540
+we started working with this,
+we actually met with a
+
+589
+00:26:31.540 --> 00:26:33.940
+bunch of other teams at
+Microsoft and started talking about
+
+590
+00:26:34.390 --> 00:26:35.980
+a lot of the concepts
+and stuff we were talking
+
+591
+00:26:35.980 --> 00:26:40.480
+about, make sense way outside
+of asp.net. And so all
+
+592
+00:26:40.500 --> 00:26:42.250
+these attributes that you're going
+to put on your data
+
+593
+00:26:42.250 --> 00:26:45.480
+model to tell dynamic data
+what to do. They don't
+
+594
+00:26:45.480 --> 00:26:48.030
+live in system that web,
+they live in system dot
+
+595
+00:26:48.030 --> 00:26:51.570
+component model, that data annotations,
+and that was done on
+
+596
+00:26:51.570 --> 00:26:54.630
+purpose because we thought other
+teams want to use this.
+
+597
+00:26:55.410 --> 00:26:57.000
+So the already I can
+already tell you that some
+
+598
+00:26:57.000 --> 00:27:00.090
+other teams like the Silverlight
+team are looking at maybe
+
+599
+00:27:00.090 --> 00:27:02.370
+supporting this in the future
+where you would take these
+
+600
+00:27:02.370 --> 00:27:05.160
+same attributes, spread them all
+of your data model. And
+
+601
+00:27:05.160 --> 00:27:08.640
+then when you render your
+data with Silverlight, you would
+
+602
+00:27:08.640 --> 00:27:11.220
+get the same validation and
+all the other behaviors that,
+
+603
+00:27:11.520 --> 00:27:13.910
+that we support. Very cool.
+I'd like to be able
+
+604
+00:27:13.910 --> 00:27:16.010
+to do this over maybe
+an existing data model that
+
+605
+00:27:16.010 --> 00:27:18.380
+I've got, maybe I have
+my own RM framework, or
+
+606
+00:27:18.380 --> 00:27:20.990
+I'm using an hibernator, you
+know, just plain old objects
+
+607
+00:27:20.990 --> 00:27:23.150
+of some kind and somehow
+be able to annotate them
+
+608
+00:27:23.150 --> 00:27:25.160
+and enable it such that
+I could do this kind
+
+609
+00:27:25.160 --> 00:27:28.910
+of dynamicism. Yeah. Well, one
+of the things that we're
+
+610
+00:27:28.910 --> 00:27:32.210
+working on is first off
+our <inaudible> for sure supports
+
+611
+00:27:32.210 --> 00:27:35.720
+entity framework and linked to
+SQL. We are trying to
+
+612
+00:27:35.720 --> 00:27:38.000
+put the right hooks in.
+So if you're subsonic or
+
+613
+00:27:38.000 --> 00:27:41.450
+somebody else, and you have
+your own data model, you
+
+614
+00:27:41.450 --> 00:27:43.280
+would have a way to
+write a provider to plug
+
+615
+00:27:43.280 --> 00:27:46.550
+in, and we would be
+able to figure out what
+
+616
+00:27:47.000 --> 00:27:49.130
+your data looks like to
+give you an example of
+
+617
+00:27:49.130 --> 00:27:51.650
+what that really means is
+obviously part of what our
+
+618
+00:27:51.650 --> 00:27:54.110
+technology does is it looks
+at your data model and
+
+619
+00:27:54.110 --> 00:27:56.660
+crawls over all the tables
+and stuff, and then built
+
+620
+00:27:56.660 --> 00:27:58.970
+an internal abstraction that contains
+just the information that we
+
+621
+00:27:58.970 --> 00:28:01.490
+need. And so that's the
+hook we're trying to provide
+
+622
+00:28:01.490 --> 00:28:05.360
+is you would write that
+call where, okay, walk over
+
+623
+00:28:05.360 --> 00:28:07.160
+your model and fill in
+this data structure we give
+
+624
+00:28:07.160 --> 00:28:09.530
+you. And then based on
+that, you know, it should
+
+625
+00:28:09.530 --> 00:28:11.600
+enable a lot of the
+other functionality, that dynamic data,
+
+626
+00:28:11.690 --> 00:28:14.510
+It's a generic method to
+provide the metadata about your
+
+627
+00:28:14.510 --> 00:28:17.990
+model and saying, tell me
+about yourself. That's correct. Reflection
+
+628
+00:28:17.990 --> 00:28:22.190
+over the database. Right. And
+for version one is probably
+
+629
+00:28:22.190 --> 00:28:25.310
+gonna be some old level
+hooks, but for version two,
+
+630
+00:28:26.330 --> 00:28:27.950
+I think we're going to
+try to do more. So
+
+631
+00:28:27.950 --> 00:28:29.810
+that's a scenario that you're
+gonna definitely try to push
+
+632
+00:28:29.810 --> 00:28:32.570
+for, for too, for the
+average Joe, but maybe we'll
+
+633
+00:28:32.570 --> 00:28:34.490
+figure out some funky, advanced
+way to do it for
+
+634
+00:28:34.490 --> 00:28:36.050
+the first time. Yeah. I
+think for the first release,
+
+635
+00:28:36.050 --> 00:28:38.780
+if you're, if you're a
+subsonic or in irony or
+
+636
+00:28:38.780 --> 00:28:40.670
+whatever, there'll be, you know,
+you would be able to
+
+637
+00:28:40.670 --> 00:28:42.590
+write a provider. I don't
+think the average Joe would
+
+638
+00:28:42.590 --> 00:28:44.180
+be able to write that
+provider. It's going to require
+
+639
+00:28:44.180 --> 00:28:47.600
+some, some hardcore technical knowledge
+to do that. But I
+
+640
+00:28:47.600 --> 00:28:50.960
+think when, when V2 comes
+around, hopefully we can just
+
+641
+00:28:50.960 --> 00:28:54.470
+consume an arbitrary collection of
+objects. Very cool. So at
+
+642
+00:28:54.470 --> 00:28:56.180
+the time that this podcast
+is going to be coming
+
+643
+00:28:56.180 --> 00:28:57.740
+out here at the, at
+the end of the second
+
+644
+00:28:57.740 --> 00:28:59.450
+week of April, folks can
+go and get a preview
+
+645
+00:28:59.450 --> 00:29:01.970
+of dynamic data up at
+COVID gallery. And I'll put
+
+646
+00:29:01.970 --> 00:29:04.310
+links to all of the
+different things, the screencast, your
+
+647
+00:29:04.310 --> 00:29:07.730
+blog, David devil's blog up
+on, on the Hansel minutes
+
+648
+00:29:07.760 --> 00:29:10.550
+show site. And then soon
+we'll, we'll be able to
+
+649
+00:29:10.550 --> 00:29:12.320
+have this built into the
+system. So we won't have
+
+650
+00:29:12.320 --> 00:29:14.870
+to download any previous. That's
+correct. You can grab it
+
+651
+00:29:14.870 --> 00:29:17.840
+on code gallery right now.
+It'll be up there until
+
+652
+00:29:17.840 --> 00:29:20.630
+we actually our TM. Okay.
+And our actual plan is
+
+653
+00:29:20.930 --> 00:29:23.990
+probably to keep updating, even
+past our TMS. So we're
+
+654
+00:29:23.990 --> 00:29:26.360
+going to move right into
+version two, and we're going
+
+655
+00:29:26.360 --> 00:29:30.500
+to continue to use code
+gallery to extend the first
+
+656
+00:29:30.500 --> 00:29:32.720
+version. It's kind of like
+the ASP net Ajax stuff,
+
+657
+00:29:32.720 --> 00:29:34.300
+where it was built in,
+but they're still going and
+
+658
+00:29:34.310 --> 00:29:36.860
+they're making changes and those
+will be web downloadable at
+
+659
+00:29:36.860 --> 00:29:39.440
+some point. That's correct. I,
+I really hope that, you
+
+660
+00:29:39.440 --> 00:29:41.950
+know, as you said, you
+know, new to Microsoft, I'm
+
+661
+00:29:41.950 --> 00:29:43.390
+going To Microsoft. And one
+of the things that I
+
+662
+00:29:43.390 --> 00:29:47.140
+think that Microsoft needs more
+of is none of these,
+
+663
+00:29:47.560 --> 00:29:49.990
+you know, we shipped two
+CTPs a year and then
+
+664
+00:29:49.990 --> 00:29:51.700
+you ship it and don't
+have a lot of feedback
+
+665
+00:29:51.700 --> 00:29:54.010
+cycles. We'd much rather have
+a lot of our new
+
+666
+00:29:54.010 --> 00:29:55.930
+code out there for the
+public to see more often
+
+667
+00:29:55.930 --> 00:29:58.810
+and give us more feedback
+on our code can only
+
+668
+00:29:58.810 --> 00:30:00.910
+be as good as the
+feedback we get. So certainly,
+
+669
+00:30:00.910 --> 00:30:03.010
+and you, and I don't
+know enough to not try
+
+670
+00:30:03.010 --> 00:30:05.280
+to do these things. So
+the fact that you're making,
+
+671
+00:30:05.340 --> 00:30:07.030
+you know, attempting to do
+this and get that, get
+
+672
+00:30:07.030 --> 00:30:09.280
+that loop tightened up is
+pretty cool. And hopefully they
+
+673
+00:30:09.280 --> 00:30:12.220
+won't beat us down. They've
+been pretty accepting this far.
+
+674
+00:30:12.220 --> 00:30:14.410
+So I'm happy with it.
+I think that dynamic data,
+
+675
+00:30:15.840 --> 00:30:17.860
+you know, kind of juxtaposing
+it with the MVC is
+
+676
+00:30:18.250 --> 00:30:20.520
+just another example of some
+of this stuff. Often new
+
+677
+00:30:20.530 --> 00:30:22.450
+guys are trying to really
+make happen inside of Microsoft.
+
+678
+00:30:22.450 --> 00:30:23.920
+So I'm pretty stoked about
+it. And I'm gonna actually
+
+679
+00:30:23.920 --> 00:30:26.380
+try to do a series
+of screencast and videos and
+
+680
+00:30:26.380 --> 00:30:29.380
+stuff and put them up
+on the closer to the
+
+681
+00:30:29.380 --> 00:30:31.930
+release. Great. Thanks a lot.
+Cool. Thanks a lot. This
+
+682
+00:30:31.930 --> 00:30:34.210
+has been another episode of
+Hanselminutes and we'll see you
+
+683
+00:30:34.210 --> 00:30:34.870
+again next week.
+

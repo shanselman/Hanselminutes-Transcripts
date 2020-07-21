@@ -1,0 +1,3002 @@
+WEBVTT FILE
+
+1
+00:00:00.180 --> 00:00:03.360
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.360 --> 00:00:06.330
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:06.330 --> 00:00:10.500
+developer express, become a UI
+superhero with dev express controls
+
+4
+00:00:10.500 --> 00:00:15.030
+and libraries. Deliver elegant.net solutions
+that address customer needs today
+
+5
+00:00:15.420 --> 00:00:19.500
+by leveraging your existing knowledge,
+you can build next generation
+
+6
+00:00:19.500 --> 00:00:23.610
+touch enabled solutions for tomorrow,
+you can download your free
+
+7
+00:00:23.700 --> 00:00:45.200
+30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com
+<inaudible>. Hi, this is Scott
+
+8
+00:00:45.200 --> 00:00:47.570
+Hanselman. This is another episode
+of Hansel minutes. And today
+
+9
+00:00:47.570 --> 00:00:51.320
+I'm talking with David Bryant, the
+vice president of platform engineering
+
+10
+00:00:51.320 --> 00:00:54.560
+at Mozilla is responsible for
+the development and the delivery
+
+11
+00:00:54.560 --> 00:00:58.100
+of that core underlying technology
+platform for Firefox. How are
+
+12
+00:00:58.100 --> 00:01:00.800
+you, sir? I am great
+Scott. Thanks for taking the
+
+13
+00:01:00.800 --> 00:01:02.060
+time to talk to me
+today and have me on
+
+14
+00:01:02.060 --> 00:01:05.210
+the show. Oh, it's my
+pleasure. And you haven't been
+
+15
+00:01:05.480 --> 00:01:08.630
+at Mozilla for too long.
+Have, you know, just a
+
+16
+00:01:08.960 --> 00:01:10.790
+couple of weeks. Over two
+years, I had my two
+
+17
+00:01:10.790 --> 00:01:14.510
+year anniversary on March the
+16th, so still relative newcomer
+
+18
+00:01:14.510 --> 00:01:19.010
+to Mozilla, but I'm an
+old guy. Otherwise I graduated
+
+19
+00:01:19.610 --> 00:01:22.010
+from graduate school in Scott,
+my first job at bell
+
+20
+00:01:22.010 --> 00:01:26.900
+laboratories in 1979. So been
+around for awhile. Yeah. So
+
+21
+00:01:26.900 --> 00:01:29.390
+you were at bell labs
+during kind of those formative
+
+22
+00:01:29.390 --> 00:01:33.360
+years of, of Unix. I
+was, I was a tangent
+
+23
+00:01:33.360 --> 00:01:35.960
+tangentially part of it. I
+was part of the facility
+
+24
+00:01:35.960 --> 00:01:39.230
+in Columbus, Ohio, our largest
+branch labs, and we were
+
+25
+00:01:39.230 --> 00:01:41.510
+taking Unix as it was
+coming out of research in
+
+26
+00:01:41.510 --> 00:01:45.920
+those days and building systems
+to let at and T
+
+27
+00:01:45.920 --> 00:01:48.950
+own and operate, monitor and
+manage the long distance network.
+
+28
+00:01:48.950 --> 00:01:52.910
+So we were building deployed
+commercial, although we didn't sell
+
+29
+00:01:52.910 --> 00:01:58.520
+them a Unix based systems
+on deck hardware, mostly in
+
+30
+00:01:58.580 --> 00:02:00.830
+1979 in the early days
+of Unix. And I was
+
+31
+00:02:00.830 --> 00:02:04.010
+there through a lot of
+that growth of Unix into
+
+32
+00:02:04.130 --> 00:02:07.580
+what we have today. That's
+going to be really exciting
+
+33
+00:02:07.580 --> 00:02:10.610
+because of the historical context
+that you have. And I
+
+34
+00:02:10.610 --> 00:02:13.250
+don't mean to separate us
+generationally, but I think that
+
+35
+00:02:13.250 --> 00:02:16.880
+there's a new generation of
+20 somethings coming up and
+
+36
+00:02:16.880 --> 00:02:19.550
+I'm a 40 something. And
+I'm going to presume that
+
+37
+00:02:19.550 --> 00:02:21.650
+you're on the high end
+of forties. Yeah, that'd be
+
+38
+00:02:21.650 --> 00:02:26.360
+add another 20 and you're
+getting close. Right? So there
+
+39
+00:02:26.360 --> 00:02:27.980
+are the people that I
+interact with, you know, the
+
+40
+00:02:27.980 --> 00:02:30.980
+people making the new web,
+the 20 somethings, the, the
+
+41
+00:02:30.980 --> 00:02:35.750
+people for whom JavaScript is
+the metal and I interact
+
+42
+00:02:35.750 --> 00:02:37.460
+with them. And I'm starting
+to feel like the old
+
+43
+00:02:37.460 --> 00:02:41.690
+person only in the context
+of, I have 25 years
+
+44
+00:02:41.690 --> 00:02:44.870
+of historical context. And now
+you have 40 years of
+
+45
+00:02:44.870 --> 00:02:47.540
+historical context that goes back
+even, you know, even further.
+
+46
+00:02:48.140 --> 00:02:50.300
+What does that, what does
+that feel like when you
+
+47
+00:02:50.300 --> 00:02:53.660
+hear about people talking about
+Oh, containers and virtualization and
+
+48
+00:02:53.660 --> 00:02:56.360
+all these kinds of things
+that were concepts in the
+
+49
+00:02:56.360 --> 00:02:59.920
+seventies and eighties? Well, I,
+I actually, it, I should
+
+50
+00:02:59.920 --> 00:03:02.170
+also mention that I'm an
+electrical engineer, not a computer
+
+51
+00:03:02.170 --> 00:03:06.010
+scientist. So I, what attracted
+me to computing was building
+
+52
+00:03:06.010 --> 00:03:08.020
+computers and getting things to
+work kind of at the
+
+53
+00:03:08.020 --> 00:03:11.620
+metal level. Anyway. So in
+my first many years of
+
+54
+00:03:11.620 --> 00:03:14.890
+working, I was in the
+lab with the metal and
+
+55
+00:03:14.890 --> 00:03:17.700
+programming it. And, and I
+definitely liked that. And, and
+
+56
+00:03:17.710 --> 00:03:20.260
+I've seen a number of
+those many generations come and
+
+57
+00:03:20.260 --> 00:03:23.380
+go in computing to the
+point where I also spend
+
+58
+00:03:23.380 --> 00:03:25.930
+a fair amount amount of
+time these days as a
+
+59
+00:03:25.930 --> 00:03:29.260
+participant in the maker movement.
+And I love the idea
+
+60
+00:03:29.260 --> 00:03:33.250
+that the computers I was
+programming on in 1979 were
+
+61
+00:03:33.250 --> 00:03:37.570
+the size of a refrigerator
+cost $800,000. And I can
+
+62
+00:03:37.570 --> 00:03:40.630
+basically do that same kind
+of programming today on a
+
+63
+00:03:40.630 --> 00:03:44.020
+raspberry PI that costs $10
+and carried in my pocket.
+
+64
+00:03:44.620 --> 00:03:47.260
+So a lot of those
+programming concepts, a lot of
+
+65
+00:03:47.260 --> 00:03:50.650
+getting at the metal, talking
+to people about interrupts and
+
+66
+00:03:50.650 --> 00:03:55.510
+other sorts of electrical engineering,
+things are back again, and
+
+67
+00:03:55.510 --> 00:03:58.060
+an important part of computing
+for a lot more people
+
+68
+00:03:58.060 --> 00:03:59.800
+than we're doing it. And
+when I started many years
+
+69
+00:03:59.800 --> 00:04:02.470
+ago, so for me, this
+is, this is a great
+
+70
+00:04:02.470 --> 00:04:05.350
+sort of rebirth. It does
+feel like I'm a technological
+
+71
+00:04:05.350 --> 00:04:08.580
+perspective, not mine my own,
+but yeah, It does, but
+
+72
+00:04:08.580 --> 00:04:11.010
+it also seems like we're
+standing on the shoulders of
+
+73
+00:04:11.010 --> 00:04:13.320
+giants in not only from
+a layers, you know, from
+
+74
+00:04:13.320 --> 00:04:16.950
+a layers of abstraction perspective.
+I'm looking to my right
+
+75
+00:04:16.950 --> 00:04:20.340
+here, where I have an
+ADA fruit feather, which is
+
+76
+00:04:20.340 --> 00:04:24.510
+a tiny Arduino with a
+three-line OLED screen, plugged into
+
+77
+00:04:24.510 --> 00:04:27.840
+a tiny thing. It's the
+size of my pinky. And
+
+78
+00:04:27.840 --> 00:04:31.830
+right now it's connected via
+wifi and using, you know,
+
+79
+00:04:32.340 --> 00:04:35.520
+the web web technologies to
+serialize and de serialize JavaScript
+
+80
+00:04:35.520 --> 00:04:37.770
+and send it up to
+the web. And that's a
+
+81
+00:04:37.770 --> 00:04:41.850
+refrigerator and it's 45 years
+of computing history all there.
+
+82
+00:04:41.850 --> 00:04:43.920
+And we take it for
+granted and I'm like, Oh,
+
+83
+00:04:43.920 --> 00:04:47.730
+it's taking a minute to
+compile. Ah, so frustrating. Yeah.
+
+84
+00:04:47.730 --> 00:04:51.300
+And you can take that
+technology into an elementary school
+
+85
+00:04:51.990 --> 00:04:54.750
+and, and get those folks,
+the kids at that age
+
+86
+00:04:54.750 --> 00:04:58.320
+started on that cycle, which
+was not something we had
+
+87
+00:04:58.410 --> 00:05:01.260
+any idea we could do
+40 years ago. So Yeah.
+
+88
+00:05:01.590 --> 00:05:03.270
+So one of the things
+I'm excited to talk to
+
+89
+00:05:03.270 --> 00:05:06.510
+you about, because you're you're,
+as you said, you're genetically
+
+90
+00:05:06.510 --> 00:05:09.240
+an electrical engineer in the
+idea That you worked on
+
+91
+00:05:09.240 --> 00:05:13.080
+the metal, Every register mattered
+where every bit and every
+
+92
+00:05:13.080 --> 00:05:17.520
+bite mattered and now JavaScript
+is the new is the
+
+93
+00:05:17.520 --> 00:05:20.100
+new metal. Is that, is
+that a fair statement? Waltz
+
+94
+00:05:20.130 --> 00:05:23.310
+The JavaScript it's a, yeah,
+I think so. I mean,
+
+95
+00:05:23.310 --> 00:05:27.630
+I understand the, the ongoing
+conversation about JavaScript and thinking
+
+96
+00:05:27.630 --> 00:05:30.420
+about adding it as an
+assembler language. And I know
+
+97
+00:05:30.480 --> 00:05:33.060
+we're going to talk about
+that topically today. I think
+
+98
+00:05:33.060 --> 00:05:36.330
+JavaScript is, you know, right
+next to the metal, it's
+
+99
+00:05:36.330 --> 00:05:38.910
+a programming language that lets
+you think, or have the
+
+100
+00:05:38.910 --> 00:05:42.930
+sense that you're programming at
+the metal. And yet in
+
+101
+00:05:42.990 --> 00:05:45.330
+some ways it's not, it's
+a, you know, a very
+
+102
+00:05:45.330 --> 00:05:49.290
+powerful, capable, rich programming language
+far removed from the metal.
+
+103
+00:05:49.290 --> 00:05:51.690
+If you compare it to
+assembler language is that I
+
+104
+00:05:51.690 --> 00:05:54.660
+was programming in early in
+my career. So it's sort
+
+105
+00:05:54.660 --> 00:05:57.060
+of a, you know, the,
+the question is, is JavaScript
+
+106
+00:05:57.140 --> 00:05:59.060
+a similar language in the
+answer's kind of yes and
+
+107
+00:05:59.060 --> 00:06:04.960
+no, at the same time,
+the, the virtual machine That
+
+108
+00:06:04.960 --> 00:06:06.460
+it kind of runs it
+and the other, the metal,
+
+109
+00:06:06.520 --> 00:06:08.590
+the false metal, like the
+web is the metal in
+
+110
+00:06:08.590 --> 00:06:13.510
+that. Right. That's the right.
+The, the virtual computer is
+
+111
+00:06:13.510 --> 00:06:16.240
+the web browser generally. So
+one of the ways we
+
+112
+00:06:16.240 --> 00:06:18.460
+talk about web assembly for
+example, is to say that
+
+113
+00:06:18.460 --> 00:06:22.150
+it puts a virtual CPU
+inside your web browser, inside
+
+114
+00:06:22.270 --> 00:06:26.050
+every web browser. Okay. So
+let's, let's introduce it. Let's
+
+115
+00:06:26.050 --> 00:06:29.590
+introduce this concept of, of
+web WebAssembly. There've been lots
+
+116
+00:06:29.590 --> 00:06:33.880
+of examples of people building
+stuff or transpiling, or trying
+
+117
+00:06:33.880 --> 00:06:36.820
+to get things that you
+wouldn't have imagined possible running
+
+118
+00:06:36.820 --> 00:06:39.460
+in the browser. Like I
+remember seeing a Commodore 64
+
+119
+00:06:39.490 --> 00:06:42.820
+emulator written in JavaScript, but
+it was written an idiot
+
+120
+00:06:43.720 --> 00:06:48.100
+JavaScript. What is it Different
+from that versus the formality
+
+121
+00:06:48.100 --> 00:06:50.920
+that is web based? Yeah.
+Well, and there's a little
+
+122
+00:06:50.920 --> 00:06:53.380
+bit of a story that
+goes along with answering that
+
+123
+00:06:53.380 --> 00:06:57.610
+question. So you're right. It's
+possible to take JavaScript and
+
+124
+00:06:58.150 --> 00:07:00.820
+think and act and use
+it as if you were
+
+125
+00:07:00.820 --> 00:07:03.520
+programming a low level language
+and talking to the metal.
+
+126
+00:07:03.520 --> 00:07:07.060
+And in fact, that concept
+gave rise to something that
+
+127
+00:07:07.060 --> 00:07:11.680
+was a precursor to WebAssembly
+ASM dot JS. And that
+
+128
+00:07:11.680 --> 00:07:14.770
+was in fact, the idea
+let's find a strict subset
+
+129
+00:07:14.770 --> 00:07:19.720
+of JavaScript, statically typed other
+qualities that would allow us
+
+130
+00:07:19.720 --> 00:07:24.280
+to treat it as an
+assembler language and, and not
+
+131
+00:07:24.280 --> 00:07:26.770
+necessarily thinking that humans were
+going to program in it,
+
+132
+00:07:27.160 --> 00:07:30.580
+but it could be a
+very efficient target for compilers
+
+133
+00:07:30.610 --> 00:07:34.390
+such that program's written in
+other programming languages could be
+
+134
+00:07:34.390 --> 00:07:37.450
+compiled down to ASM dot
+JS much as in the
+
+135
+00:07:37.450 --> 00:07:39.940
+old days, you compiled your
+C code down to an
+
+136
+00:07:39.940 --> 00:07:43.990
+assembler and then compiled assembler
+down to executable. And so
+
+137
+00:07:43.990 --> 00:07:46.060
+as M dot JS was
+really the proof that this
+
+138
+00:07:46.060 --> 00:07:49.720
+was a useful idea. And
+at the time, the reason
+
+139
+00:07:49.720 --> 00:07:53.110
+for doing it was performance.
+The idea was that we
+
+140
+00:07:53.110 --> 00:07:57.790
+wanted to try and provide
+programmers, delivering experiences on the
+
+141
+00:07:57.790 --> 00:08:02.500
+web with performance, much closer
+to native. And so as
+
+142
+00:08:02.500 --> 00:08:06.730
+I'm dot JS was this
+precursor that was successful and
+
+143
+00:08:06.730 --> 00:08:10.390
+is in fairly widespread use
+on the web today in
+
+144
+00:08:10.390 --> 00:08:15.490
+places where people need greater
+degrees of computational efficiency and
+
+145
+00:08:15.490 --> 00:08:17.890
+are willing to accept that
+the trade offs that they
+
+146
+00:08:17.890 --> 00:08:20.620
+have to make in terms
+of working in programming with
+
+147
+00:08:20.620 --> 00:08:23.350
+ASM dot JS. So, so
+based on the success of
+
+148
+00:08:23.350 --> 00:08:27.010
+ASM dot JS and the
+benefits from a performance perspective,
+
+149
+00:08:27.490 --> 00:08:30.820
+it really allowed the folks
+involved to move on to
+
+150
+00:08:30.820 --> 00:08:36.340
+web assembler WebAssembly, which is
+taking that one logical step
+
+151
+00:08:36.370 --> 00:08:40.480
+further. And now we're talking
+about delivering essentially a binary
+
+152
+00:08:40.480 --> 00:08:44.770
+machine language that can be
+executed by a virtual machine
+
+153
+00:08:44.770 --> 00:08:49.990
+inside your web browser. So,
+so WebAssembly gives us that
+
+154
+00:08:49.990 --> 00:08:54.100
+ability to use the web
+as a runtime for programs
+
+155
+00:08:54.100 --> 00:08:57.690
+and programming languages beyond what
+people historically think of as
+
+156
+00:08:57.690 --> 00:09:00.500
+being part of the web.
+Okay. So let me see
+
+157
+00:09:00.500 --> 00:09:03.440
+if I can unpack this
+and paraphrase and you can
+
+158
+00:09:03.440 --> 00:09:04.910
+tell me if I got
+it right. Cause I think
+
+159
+00:09:04.910 --> 00:09:08.120
+the audience is doing the
+same thing, right? So, so
+
+160
+00:09:08.120 --> 00:09:13.340
+ASM dot JS, ASM dot
+JS was a, a subset
+
+161
+00:09:13.340 --> 00:09:15.650
+of JavaScript that we know
+out. So it's like, here's
+
+162
+00:09:15.650 --> 00:09:17.870
+a subset of JS. We'll
+only use this little bit
+
+163
+00:09:17.870 --> 00:09:20.240
+of JavaScript and we'll, we
+can optimize the heck out
+
+164
+00:09:20.240 --> 00:09:23.870
+of it. We can, you
+know, have basic types. And
+
+165
+00:09:23.870 --> 00:09:26.540
+then the JavaScript engine will
+execute it as if it's
+
+166
+00:09:26.540 --> 00:09:30.020
+doing anything else, but the
+JavaScript engine could optimize itself
+
+167
+00:09:30.020 --> 00:09:31.790
+and say, Oh, I see
+that we're doing ASM JS.
+
+168
+00:09:31.790 --> 00:09:34.250
+I'll make that even easier.
+And then I could go
+
+169
+00:09:34.250 --> 00:09:37.550
+and compile things to ASM
+JS. I could compile C
+
+170
+00:09:37.550 --> 00:09:40.880
+plus plus to ASM JS,
+which then gets jaded and
+
+171
+00:09:40.880 --> 00:09:43.840
+run through JavaScript as JavaScript
+because it is in fact
+
+172
+00:09:44.540 --> 00:09:46.520
+That's right. That's right. And
+I think, you know, for
+
+173
+00:09:46.520 --> 00:09:49.340
+again, maybe to, to make
+this a little more general,
+
+174
+00:09:50.030 --> 00:09:52.490
+you know, JavaScript is a
+language that's an intended for
+
+175
+00:09:52.490 --> 00:09:55.820
+humans to program, right? So
+it's a very, you know,
+
+176
+00:09:56.660 --> 00:09:59.330
+it's an easy read. It,
+it looks like a programming
+
+177
+00:09:59.330 --> 00:10:01.730
+language. You know, the intent
+is that humans are writing
+
+178
+00:10:01.730 --> 00:10:04.340
+that code. They're going to
+maintain and debug the code.
+
+179
+00:10:04.340 --> 00:10:07.190
+So it's written in text
+like a book or a
+
+180
+00:10:07.190 --> 00:10:11.450
+paragraph, like most traditional programming
+languages. And that's great for
+
+181
+00:10:11.450 --> 00:10:14.660
+humans, but it leaves extra
+work for the browser. The
+
+182
+00:10:14.660 --> 00:10:18.840
+browser has to take that
+narrative prosaic, Java script and,
+
+183
+00:10:18.840 --> 00:10:22.790
+and parse it and turn
+it into a form that's
+
+184
+00:10:22.790 --> 00:10:26.000
+much more amenable to what
+the computer is needing in
+
+185
+00:10:26.000 --> 00:10:29.150
+order to actually execute it.
+And so that process takes
+
+186
+00:10:29.150 --> 00:10:33.170
+time. It takes computer cycles.
+JavaScript is delivered in the
+
+187
+00:10:33.170 --> 00:10:35.900
+web page when the browser
+goes to the page. And
+
+188
+00:10:35.900 --> 00:10:41.030
+so that downloading parsing, preparing
+to execute all of the
+
+189
+00:10:41.300 --> 00:10:45.920
+processing of that programming language
+is work that, that the
+
+190
+00:10:45.920 --> 00:10:49.460
+browser has to do. And
+so we are, we're making
+
+191
+00:10:49.460 --> 00:10:52.190
+it easier for people and
+a little bit harder, a
+
+192
+00:10:52.190 --> 00:10:55.400
+little more work involved for
+the browsers and that that's
+
+193
+00:10:55.430 --> 00:10:58.640
+not a problem really, except
+for it's perceptible to end
+
+194
+00:10:58.640 --> 00:11:01.910
+users. The time it takes
+for a larger, more sophisticated
+
+195
+00:11:01.910 --> 00:11:06.110
+applications with more JavaScript to
+download and then be parsed
+
+196
+00:11:06.110 --> 00:11:09.020
+and made, ready to execute
+is all time that they
+
+197
+00:11:09.020 --> 00:11:11.660
+use are standing there waiting
+for their web page or
+
+198
+00:11:11.660 --> 00:11:15.260
+their web application to come
+up and load. And so
+
+199
+00:11:15.260 --> 00:11:17.720
+as I'm digests was really
+the first step and sort
+
+200
+00:11:17.720 --> 00:11:22.310
+of going beyond that traditional
+and well-intended very successful model
+
+201
+00:11:22.310 --> 00:11:26.570
+for JavaScript as a programming
+language. Okay. All right. So,
+
+202
+00:11:26.570 --> 00:11:28.760
+and then there was a
+time in the last couple
+
+203
+00:11:28.760 --> 00:11:33.110
+of years where different browsers
+treated as in JS differently,
+
+204
+00:11:33.110 --> 00:11:35.960
+Firefox would compile it to
+machine code and cash it.
+
+205
+00:11:35.990 --> 00:11:38.690
+If it saw you loading
+it again, and there were
+
+206
+00:11:38.690 --> 00:11:42.230
+experimental flags and edge to
+do some validation some ahead
+
+207
+00:11:42.230 --> 00:11:44.810
+of time, but other browsers
+chose to do nothing like
+
+208
+00:11:44.810 --> 00:11:46.850
+Safari. He said, Oh, it's
+JavaScript. I won't think about
+
+209
+00:11:46.850 --> 00:11:50.840
+ASM JS any differently. You're
+saying now that WebAssembly, which
+
+210
+00:11:50.840 --> 00:11:54.310
+is the next generation or
+the, the declaration. That it's
+
+211
+00:11:54.310 --> 00:11:56.440
+a good idea. And let's
+do it right this time
+
+212
+00:11:57.070 --> 00:11:59.590
+is that it's a binary
+format, but it's not byte
+
+213
+00:11:59.590 --> 00:12:04.200
+code. Yeah. It's a binary
+format. That is, you know,
+
+214
+00:12:04.380 --> 00:12:07.380
+so one of the great
+things about web assembly is
+
+215
+00:12:07.680 --> 00:12:12.180
+it's designed to be delivered
+as a very efficient, layered
+
+216
+00:12:12.210 --> 00:12:17.550
+bytecode representation or byte representation,
+binary representation. So it saves,
+
+217
+00:12:17.550 --> 00:12:21.600
+yeah. It saves the browser,
+all the effort of parsing
+
+218
+00:12:21.600 --> 00:12:24.780
+the JavaScript. And it also
+saves the user. The time
+
+219
+00:12:24.780 --> 00:12:29.670
+spent downloading a far less
+efficient representation in the text
+
+220
+00:12:29.670 --> 00:12:32.850
+form of JavaScript compared to
+the binary form of WebAssembly.
+
+221
+00:12:33.840 --> 00:12:37.140
+Okay. So from a computer
+science perspective, if I understand
+
+222
+00:12:37.140 --> 00:12:39.480
+this correctly, then you know,
+there's the parsers and the
+
+223
+00:12:39.480 --> 00:12:42.540
+lectures and the compilers, and
+there's that whole process. The
+
+224
+00:12:42.570 --> 00:12:46.230
+WebAssembly, it's a binary encoding
+of that AST, that abstract
+
+225
+00:12:46.230 --> 00:12:48.960
+syntax tree. And the parser
+did that work ahead of
+
+226
+00:12:48.960 --> 00:12:51.270
+time so that my mom
+and dad don't have to
+
+227
+00:12:51.270 --> 00:12:54.360
+worry about it. Yeah. And
+their cycles are not wasted
+
+228
+00:12:54.540 --> 00:12:57.720
+parsing text again. Yeah. All
+the humans that are going
+
+229
+00:12:57.720 --> 00:13:01.230
+to look at your website
+aren't enduring time spent while
+
+230
+00:13:01.230 --> 00:13:05.640
+that happens, it happens beforehand.
+And, and so they don't
+
+231
+00:13:05.640 --> 00:13:07.920
+have to endure it. But
+yeah, so it's a binary
+
+232
+00:13:07.920 --> 00:13:12.600
+representation. That's an interesting, it
+brings up interesting questions around
+
+233
+00:13:12.600 --> 00:13:15.420
+the responsibility of these dumb
+terminals that we have. Like
+
+234
+00:13:15.420 --> 00:13:17.460
+I'm sitting in front of
+a dump terminal right now,
+
+235
+00:13:17.670 --> 00:13:19.860
+which just happens to have
+16 gigs of Ram and
+
+236
+00:13:19.860 --> 00:13:23.580
+I've accelerated video card and
+eight processors. But sometimes I
+
+237
+00:13:23.580 --> 00:13:26.760
+feel like the refrigerators that
+are over at the cloud
+
+238
+00:13:26.760 --> 00:13:30.540
+provider are just shipping strings
+to me. Right. And I'm
+
+239
+00:13:30.540 --> 00:13:32.520
+waiting for those strings. And
+then I have, I have
+
+240
+00:13:32.520 --> 00:13:36.630
+the responsibility of chewing them
+up. We're kind of shifting
+
+241
+00:13:36.630 --> 00:13:39.210
+responsibility back and forth. This
+is a, it seems like
+
+242
+00:13:39.210 --> 00:13:42.660
+web assemblies, a recognition that,
+Hey, you know, that's kind
+
+243
+00:13:42.660 --> 00:13:45.900
+of a powerful pocket supercomputer
+you have there, maybe it
+
+244
+00:13:45.900 --> 00:13:48.210
+should do some work. And
+we'll split the work up
+
+245
+00:13:48.210 --> 00:13:53.010
+between the developer, the cloud
+provider and the, the browser
+
+246
+00:13:53.010 --> 00:13:56.400
+itself, so that everyone's doing
+appropriate. Right. And we'll do
+
+247
+00:13:56.400 --> 00:13:58.830
+it in a way that
+puts a more powerful set
+
+248
+00:13:58.830 --> 00:14:02.760
+of tools in the hands
+of the developers. So depending
+
+249
+00:14:02.760 --> 00:14:04.410
+on what they're trying to
+do and the kind of
+
+250
+00:14:04.410 --> 00:14:07.920
+experience they're trying to deliver,
+we give them more ways
+
+251
+00:14:07.920 --> 00:14:10.860
+to actually make that happen.
+If they've got valuable pieces
+
+252
+00:14:10.860 --> 00:14:14.430
+of application functionality that are
+already exist in a written
+
+253
+00:14:14.430 --> 00:14:18.360
+in C or C plus
+plus shouldn't make them have
+
+254
+00:14:18.360 --> 00:14:20.670
+to rewrite that in JavaScript
+just to get it to
+
+255
+00:14:20.670 --> 00:14:22.500
+be something that can be
+used in a web browser.
+
+256
+00:14:22.500 --> 00:14:26.400
+So that's just one example
+of how web assembly adds
+
+257
+00:14:26.400 --> 00:14:30.210
+to the, the, the tool
+kit that developers have to
+
+258
+00:14:30.210 --> 00:14:35.700
+build ever more impressive web
+applications. It seems like developers
+
+259
+00:14:35.700 --> 00:14:38.100
+who are struggling to make
+impressive web applications over the
+
+260
+00:14:38.100 --> 00:14:41.880
+last 15 years or so.
+We used plugins. We use
+
+261
+00:14:41.880 --> 00:14:44.460
+direct decks and flash and
+server Lite and Java applets.
+
+262
+00:14:44.790 --> 00:14:46.140
+But the day of the
+plug of the day for
+
+263
+00:14:46.140 --> 00:14:49.800
+plugins is over now with
+evergreen browsers and in powerful
+
+264
+00:14:49.800 --> 00:14:52.430
+things like web assembly in,
+I don't need a plugin
+
+265
+00:14:52.430 --> 00:14:54.940
+for any of that stuff,
+do I? That's right. That's
+
+266
+00:14:54.940 --> 00:14:58.060
+right. And in fact, we
+haven't talked about that far
+
+267
+00:14:58.060 --> 00:15:00.070
+back into the history of
+browser, but yes, you know,
+
+268
+00:15:00.070 --> 00:15:03.460
+in the early days when
+developers needed to do something
+
+269
+00:15:03.460 --> 00:15:07.270
+that browser just couldn't do,
+we allowed native plugins to
+
+270
+00:15:07.270 --> 00:15:09.940
+extend the browser and let
+them do that. And that
+
+271
+00:15:09.940 --> 00:15:13.150
+created opportunity, but it also
+created a number of issues,
+
+272
+00:15:13.150 --> 00:15:16.090
+not the least of which
+being security problems and that
+
+273
+00:15:16.090 --> 00:15:19.870
+sort of thing. So we
+have now happily advanced to
+
+274
+00:15:19.870 --> 00:15:22.690
+the point where we have
+enough technology in the web
+
+275
+00:15:22.690 --> 00:15:26.830
+platform, proper that we no
+longer need to support plugins
+
+276
+00:15:26.830 --> 00:15:29.890
+and allow native code to
+be directly executed from within
+
+277
+00:15:29.890 --> 00:15:33.910
+the browser. And in fact,
+when Firefox, we have deprecated
+
+278
+00:15:34.630 --> 00:15:39.640
+the plugin interface, so that
+with one exception, we don't
+
+279
+00:15:39.730 --> 00:15:42.850
+anticipate allowing plugins to be
+run as part of the
+
+280
+00:15:42.850 --> 00:15:45.520
+browsing experience on the web
+and developers who would have
+
+281
+00:15:45.520 --> 00:15:48.610
+needed that functionality, we believe
+can get what they need
+
+282
+00:15:48.610 --> 00:15:53.410
+using, for example, WebAssembly, And
+this means a better experience
+
+283
+00:15:53.530 --> 00:15:57.280
+for everybody. It means a
+better experience for everybody. Yes.
+
+284
+00:15:58.210 --> 00:16:01.150
+Yeah. This also means that
+things that maybe would have
+
+285
+00:16:01.150 --> 00:16:02.860
+been like, I would never
+have thought of, like, I
+
+286
+00:16:02.860 --> 00:16:04.720
+know what portable C plus
+plus is, and I've written
+
+287
+00:16:04.720 --> 00:16:06.160
+portable C plus plus, but
+I don't think of it
+
+288
+00:16:06.160 --> 00:16:09.670
+as really portable, like suddenly
+the web became a target
+
+289
+00:16:10.300 --> 00:16:13.180
+for my C plus plus
+code That's right. And in
+
+290
+00:16:13.180 --> 00:16:15.220
+fact, the web became a
+target for your C plus
+
+291
+00:16:15.250 --> 00:16:16.810
+plus code. And so you
+can think about it from
+
+292
+00:16:16.810 --> 00:16:19.240
+a programming language perspective, the
+web is now a target
+
+293
+00:16:19.240 --> 00:16:22.870
+of many programming languages, and
+that will grow over time,
+
+294
+00:16:23.830 --> 00:16:28.090
+but that also has implications
+for tool chains. So just
+
+295
+00:16:28.090 --> 00:16:29.860
+like the web is now
+a target for your C
+
+296
+00:16:29.860 --> 00:16:32.530
+plus plus code. If you're
+a game developer using unity
+
+297
+00:16:33.580 --> 00:16:36.910
+that for example, then the
+web is a target there
+
+298
+00:16:36.910 --> 00:16:40.990
+too. So tool chains like
+game developer, tool chains for
+
+299
+00:16:40.990 --> 00:16:43.930
+me, unity and Epic games
+can actually target the web
+
+300
+00:16:43.960 --> 00:16:48.040
+as a platform and other
+tool chains in particular, thanks
+
+301
+00:16:48.040 --> 00:16:53.230
+to WebAssembly can target the
+web as well. So it's
+
+302
+00:16:53.230 --> 00:16:56.980
+a, it's a developer and
+a, a tool chain target.
+
+303
+00:16:56.980 --> 00:17:00.340
+Now, One of the buzz
+words that I hear a
+
+304
+00:17:00.340 --> 00:17:05.050
+lot is transpiling versus compiling.
+Do you make the distinction
+
+305
+00:17:05.050 --> 00:17:09.490
+the way some people do
+Me? Well, there I don't.
+
+306
+00:17:10.690 --> 00:17:14.300
+And there are people that
+make the distinction between transpiling
+
+307
+00:17:14.300 --> 00:17:17.230
+and, and compiling in the
+sense that they're talking about
+
+308
+00:17:17.230 --> 00:17:21.070
+mapping from, you know, one
+language domain to another, but
+
+309
+00:17:21.070 --> 00:17:24.430
+from the perspective of web
+assembly, it's, it's a compiling
+
+310
+00:17:24.490 --> 00:17:29.830
+process that gets the, the,
+the ultimately produces the binary
+
+311
+00:17:29.830 --> 00:17:33.970
+representation. That's that's downloaded and
+run in the browser. Okay.
+
+312
+00:17:33.970 --> 00:17:36.970
+So then if I understand
+correctly, then transpiling kind of
+
+313
+00:17:36.970 --> 00:17:40.450
+more generally would be going
+from one source code to
+
+314
+00:17:40.450 --> 00:17:43.390
+another. That has a similar
+level of abstraction. So like
+
+315
+00:17:43.390 --> 00:17:47.950
+from coffee script to JavaScript
+would be a step, but
+
+316
+00:17:48.010 --> 00:17:51.240
+compiling would be going kind
+of downstream. So C plus
+
+317
+00:17:51.240 --> 00:17:55.290
+plus to WebAssembly is not
+from one level of obstruction
+
+318
+00:17:55.290 --> 00:17:58.160
+to another. So it's clearly
+a compilation step Yeah. From
+
+319
+00:17:58.160 --> 00:18:01.910
+higher levels of extraction to
+lower, as opposed to approximately
+
+320
+00:18:01.910 --> 00:18:05.600
+at the same level of
+abstraction. So this almost makes
+
+321
+00:18:05.600 --> 00:18:08.660
+me feel like, well, we've
+had like, you know, iPhones
+
+322
+00:18:08.660 --> 00:18:10.670
+and app stores and you
+know, this, this kind of
+
+323
+00:18:10.670 --> 00:18:12.680
+like the, the, both the
+good thing about app stores
+
+324
+00:18:12.680 --> 00:18:14.660
+and the plague of the
+app store, the web is
+
+325
+00:18:14.660 --> 00:18:17.360
+going to become an app
+store. I can like a
+
+326
+00:18:17.370 --> 00:18:20.690
+play a AAA game theoretically
+in the browser and it
+
+327
+00:18:20.690 --> 00:18:24.200
+should work just well That's
+right. And we're starting to
+
+328
+00:18:24.200 --> 00:18:26.330
+see that. In fact, you
+know, a lot of people
+
+329
+00:18:26.330 --> 00:18:28.670
+play games on the web.
+They do it in their
+
+330
+00:18:28.670 --> 00:18:33.290
+web browser or on Facebook
+and where those games used
+
+331
+00:18:33.290 --> 00:18:37.250
+to have to be built,
+targeting plugins. They can now
+
+332
+00:18:37.250 --> 00:18:39.320
+be built to, to target
+the web. And then we're
+
+333
+00:18:39.320 --> 00:18:41.990
+seeing that directly. And that's
+actually a good thing. So
+
+334
+00:18:41.990 --> 00:18:46.760
+an increasing number of web
+based entertainment experiences can be
+
+335
+00:18:46.760 --> 00:18:50.120
+built directly, entirely in web
+technologies. And we're seeing that
+
+336
+00:18:50.120 --> 00:18:54.290
+happen pretty substantially with the
+web, with HTML five, with
+
+337
+00:18:54.290 --> 00:18:57.020
+ASM dot JS, and as
+we're rolling out web assembly,
+
+338
+00:18:57.020 --> 00:18:58.790
+we'll see more and more
+that over the course of
+
+339
+00:18:58.790 --> 00:19:02.450
+this calendar year as, as
+WebAssembly gets out in volume.
+
+340
+00:19:03.710 --> 00:19:06.530
+So as, as a developer,
+how should I think about
+
+341
+00:19:06.530 --> 00:19:08.480
+it? Is it, is it
+done? Is it rolling out,
+
+342
+00:19:08.480 --> 00:19:10.310
+like you said, as it's
+coming out there and should
+
+343
+00:19:10.310 --> 00:19:12.650
+I tell my nontechnical spouse
+about it? Or should I
+
+344
+00:19:12.650 --> 00:19:16.160
+just tell her to look
+at this cool webpage, Hey,
+
+345
+00:19:16.250 --> 00:19:19.160
+there's several questions pack there
+together. So it is rolling
+
+346
+00:19:19.160 --> 00:19:21.080
+out what we've shipped. We
+tend to think of as
+
+347
+00:19:21.080 --> 00:19:24.170
+sort of the minimum viable
+product from a WebAssembly perspective.
+
+348
+00:19:24.170 --> 00:19:26.690
+So we have all of
+the pieces in place to
+
+349
+00:19:26.690 --> 00:19:30.830
+make it something that browser
+vendors can comfortably deploy that
+
+350
+00:19:30.830 --> 00:19:33.920
+people can developers can use,
+especially developers who may already
+
+351
+00:19:33.920 --> 00:19:37.130
+have been using ASM dot
+JS. And so it's this
+
+352
+00:19:37.130 --> 00:19:39.890
+critical mass is there in
+the browsers and beginning to
+
+353
+00:19:39.890 --> 00:19:42.620
+ship and, you know, sort
+of percolate onto end user
+
+354
+00:19:42.620 --> 00:19:47.000
+machines. As those browsers roll
+out there is more to
+
+355
+00:19:47.000 --> 00:19:49.760
+come. And so we're not
+done by any means. There
+
+356
+00:19:49.760 --> 00:19:52.760
+are a number of things
+coming in terms of enhancements
+
+357
+00:19:52.760 --> 00:19:55.700
+that will make web assembly,
+you know, a more capable
+
+358
+00:19:55.700 --> 00:20:00.830
+environment in which people can
+deploy applications. And then also
+
+359
+00:20:00.830 --> 00:20:04.370
+just to improve web assembly
+itself. So this is just
+
+360
+00:20:04.370 --> 00:20:08.060
+the beginning of an ongoing
+series of enhancements that we'll
+
+361
+00:20:08.060 --> 00:20:11.240
+make over time to increase
+the capabilities that we give
+
+362
+00:20:11.240 --> 00:20:15.140
+developers through. WebAssembly That makes
+sense. So then in the
+
+363
+00:20:15.140 --> 00:20:18.320
+future, then you would see,
+you know, your developer tools
+
+364
+00:20:18.380 --> 00:20:20.630
+kind of be more kind
+of first-class source level, as
+
+365
+00:20:20.630 --> 00:20:23.600
+opposed to like debugging assembly
+in the browser. That's right.
+
+366
+00:20:23.630 --> 00:20:25.970
+And so they sort of
+categorically, there are a number
+
+367
+00:20:25.970 --> 00:20:28.640
+of areas of activities that
+we're seeing happen. Now. One
+
+368
+00:20:28.640 --> 00:20:32.960
+is the turning the attention
+of the teams to debugging
+
+369
+00:20:32.960 --> 00:20:36.290
+and integration with tools, better
+ways of, of doing, you
+
+370
+00:20:36.290 --> 00:20:38.810
+know, the traditional look at
+the source, set a break
+
+371
+00:20:38.810 --> 00:20:41.690
+point step through the code,
+see what's going on. And
+
+372
+00:20:41.690 --> 00:20:45.590
+so improving and enriching the
+debugging experience and integrating it
+
+373
+00:20:45.590 --> 00:20:48.730
+with the developer tools they
+already are using built into
+
+374
+00:20:48.730 --> 00:20:51.700
+the browser or otherwise. And
+so that's definitely an area
+
+375
+00:20:51.700 --> 00:20:56.350
+of activity supporting other programming
+languages is another one. One
+
+376
+00:20:56.350 --> 00:20:59.860
+of the things that WebAssembly
+does not yet do in
+
+377
+00:20:59.860 --> 00:21:03.850
+its current form is handle
+languages that have built in
+
+378
+00:21:03.850 --> 00:21:07.300
+garbage collection like Java. And
+so there's work to be
+
+379
+00:21:07.300 --> 00:21:12.160
+done to add support for
+garbage collection as part of
+
+380
+00:21:12.160 --> 00:21:15.040
+language support in WebAssembly so
+that we can ultimately let
+
+381
+00:21:15.040 --> 00:21:18.790
+people take Java code for
+example, and compile it down
+
+382
+00:21:18.790 --> 00:21:21.730
+to web assembly and run
+it in the browser. And
+
+383
+00:21:21.730 --> 00:21:26.020
+then there, there are a
+number of ways you don't,
+
+384
+00:21:26.050 --> 00:21:28.000
+it's not an all or
+nothing thing. You don't have
+
+385
+00:21:28.000 --> 00:21:32.170
+to abandon JavaScript and build
+everything in your web application
+
+386
+00:21:32.170 --> 00:21:35.950
+and WebAssembly, you can mix
+and match. And so over
+
+387
+00:21:35.950 --> 00:21:39.610
+time, we want to create
+a wider range of capabilities
+
+388
+00:21:39.970 --> 00:21:42.070
+so that there are a
+number of mechanisms for people
+
+389
+00:21:42.070 --> 00:21:45.550
+to build applications that represent
+some combination of WebAssembly and
+
+390
+00:21:45.550 --> 00:21:48.460
+some of JavaScript, maybe a
+lot of web assembly and
+
+391
+00:21:48.460 --> 00:21:51.310
+a little JavaScript, or a
+lot of JavaScript and a
+
+392
+00:21:51.310 --> 00:21:54.880
+little web assembly, and provide
+good interfaces between the two.
+
+393
+00:21:54.880 --> 00:21:58.390
+So the WebAssembly code can
+directly access the Dom, or
+
+394
+00:21:58.390 --> 00:22:01.330
+you can easily call back
+and forth between JavaScript code
+
+395
+00:22:01.330 --> 00:22:04.570
+and WebAssembly code. And so
+supporting a richer collection of
+
+396
+00:22:04.570 --> 00:22:08.860
+application architectures as a combination
+of JavaScript, and WebAssembly is
+
+397
+00:22:08.860 --> 00:22:11.050
+also part of the ongoing
+work in the future roadmap
+
+398
+00:22:12.600 --> 00:22:14.280
+That you bro, you, and
+there was a lot in
+
+399
+00:22:14.280 --> 00:22:17.100
+that answer. And I appreciate
+that unpacking. One of them
+
+400
+00:22:17.100 --> 00:22:19.990
+that I think is significant
+and that helps us all,
+
+401
+00:22:19.990 --> 00:22:21.990
+all of us that are
+listening to your story, get
+
+402
+00:22:21.990 --> 00:22:25.260
+an understanding about how we
+should think about WebAssembly you're
+
+403
+00:22:25.260 --> 00:22:28.410
+separating, there's JavaScript, the JavaScript
+we know in love, there's
+
+404
+00:22:28.410 --> 00:22:31.350
+the Dom. And then there
+is WebAssembly and they are
+
+405
+00:22:31.350 --> 00:22:35.370
+individual actors in this larger
+thing. We shouldn't conflate JavaScript
+
+406
+00:22:35.370 --> 00:22:39.060
+and WebAssembly and moving between
+them. You know, it's a
+
+407
+00:22:39.060 --> 00:22:41.040
+kind of a, the word
+we would use as the
+
+408
+00:22:41.040 --> 00:22:44.130
+bird I've used historically is
+thunking T H U N
+
+409
+00:22:44.130 --> 00:22:46.860
+K, but, you know, moving
+from one layer to another,
+
+410
+00:22:46.860 --> 00:22:49.890
+translating from one layer to
+another calling from managed code
+
+411
+00:22:49.890 --> 00:22:52.710
+into unmanaged code. And then
+you also mentioned the idea
+
+412
+00:22:52.710 --> 00:22:54.960
+of the garbage collector. If
+I were to take C-sharp
+
+413
+00:22:54.960 --> 00:22:59.310
+and compile it to WebAssembly
+C sharp idiomatically makes assumptions
+
+414
+00:22:59.310 --> 00:23:02.160
+about there being a garbage
+collector available. Do I compile
+
+415
+00:23:02.160 --> 00:23:04.290
+that and bring it along,
+or do I have the
+
+416
+00:23:04.290 --> 00:23:07.440
+target language understand that? So
+I'm hearing that you're thinking
+
+417
+00:23:07.440 --> 00:23:09.690
+about all those things to
+make it better for anyone
+
+418
+00:23:09.690 --> 00:23:12.540
+to make weapons That's correct.
+Yeah. I think back to
+
+419
+00:23:12.540 --> 00:23:15.720
+the earlier statement about putting
+more powerful tools in the
+
+420
+00:23:15.720 --> 00:23:20.160
+developer's toolbox that that fits
+that, that philosophy, right? So
+
+421
+00:23:20.160 --> 00:23:22.710
+we want to give them
+what web assembly can do,
+
+422
+00:23:22.710 --> 00:23:25.110
+its advantages and how it
+can integrate with the tool
+
+423
+00:23:25.110 --> 00:23:27.660
+chains and other things, and
+then set that in alongside
+
+424
+00:23:27.660 --> 00:23:30.060
+JavaScript and all of the
+other techniques that they're using
+
+425
+00:23:30.060 --> 00:23:33.150
+today to give them a
+wider range of options to
+
+426
+00:23:33.150 --> 00:23:37.080
+build, you know, more ambitious
+or more expressive, other kinds
+
+427
+00:23:37.080 --> 00:23:39.920
+of experiences and applications on
+the web. So it's not
+
+428
+00:23:39.930 --> 00:23:42.210
+an either or kind of
+thing. It's a, here's another
+
+429
+00:23:42.210 --> 00:23:45.030
+power tool, you know, take
+a look and let us
+
+430
+00:23:45.050 --> 00:23:48.710
+know what you think. Nice.
+And you're working with like
+
+431
+00:23:48.710 --> 00:23:52.760
+partners. I've heard like Autodesk
+and unity and Epic. Is
+
+432
+00:23:52.760 --> 00:23:55.460
+there something big companies and
+big games going on that
+
+433
+00:23:55.460 --> 00:23:56.630
+we're going to see? Are
+we going to be able
+
+434
+00:23:56.630 --> 00:23:59.220
+to go and play a
+first-class game in the browser
+
+435
+00:23:59.220 --> 00:24:02.740
+soon? Yes. Well, you can,
+you can play some pretty
+
+436
+00:24:02.740 --> 00:24:05.410
+impressive games in the browser.
+Now, we, we did a
+
+437
+00:24:05.410 --> 00:24:08.710
+number of demos in collaboration
+with some of those partners.
+
+438
+00:24:08.920 --> 00:24:13.060
+GDC was earlier in the
+year and we showcased a
+
+439
+00:24:13.060 --> 00:24:15.760
+number in there as part
+of our release of support
+
+440
+00:24:15.760 --> 00:24:19.900
+for WebAssembly and Firefox 52,
+we provided a demo built
+
+441
+00:24:19.900 --> 00:24:22.510
+by our forensic play canvas.
+Who'd built some great games
+
+442
+00:24:23.290 --> 00:24:25.300
+that are already available on
+the web to really show
+
+443
+00:24:25.300 --> 00:24:29.140
+you what a game engine
+class, AAA game experience looks
+
+444
+00:24:29.140 --> 00:24:34.660
+like entirely rendered in web
+GL. And obviously that's amenable
+
+445
+00:24:34.660 --> 00:24:38.350
+to use with, with WebAssembly.
+Right. Well, very cool. And
+
+446
+00:24:38.350 --> 00:24:42.460
+I know that people can
+go to webassembly.org/demo and they
+
+447
+00:24:42.460 --> 00:24:44.110
+can see things like a
+tank's demo, which is a
+
+448
+00:24:44.110 --> 00:24:47.290
+tutorial game that they exported
+into WebAssembly where WebAssembly is
+
+449
+00:24:47.290 --> 00:24:50.200
+just the target that's right.
+Yeah. Just to take part
+
+450
+00:24:50.200 --> 00:24:54.610
+of taking existing code and,
+and compiling it down to
+
+451
+00:24:54.610 --> 00:24:57.580
+WebAssembly using the tool chain
+and then packaging it up
+
+452
+00:24:57.580 --> 00:25:00.310
+and deploying it with the
+larger web application in the
+
+453
+00:25:00.310 --> 00:25:04.300
+browser. One of the things
+that really helped me understand
+
+454
+00:25:04.300 --> 00:25:06.430
+WebAssembly and I'll put this
+in the show notes and
+
+455
+00:25:06.430 --> 00:25:08.860
+I would encourage everyone who's
+listening to check it out
+
+456
+00:25:08.860 --> 00:25:13.000
+as well. Is one of
+your team members, Lynn Clark,
+
+457
+00:25:13.420 --> 00:25:15.640
+she's one of the engineers
+working on this, did a
+
+458
+00:25:15.640 --> 00:25:19.510
+series of cartoons explaining kind
+of an intro to web
+
+459
+00:25:19.510 --> 00:25:21.340
+assembly. And I found that
+to be very helpful. All
+
+460
+00:25:21.340 --> 00:25:25.420
+of her, her posts at
+she, she has a website
+
+461
+00:25:25.420 --> 00:25:27.970
+called code cartoons where she
+explains these things just in
+
+462
+00:25:27.970 --> 00:25:31.870
+plain English. But with an
+understanding that engineers are looking
+
+463
+00:25:31.870 --> 00:25:33.880
+at them, she looks at
+the historical context of how
+
+464
+00:25:33.880 --> 00:25:37.420
+jitters came to be and
+how they improve things for,
+
+465
+00:25:37.500 --> 00:25:39.850
+for us and how we
+got to this point. Yeah.
+
+466
+00:25:39.940 --> 00:25:43.180
+That's, I'm glad you found
+that useful. We've been pretty
+
+467
+00:25:43.180 --> 00:25:46.690
+impressed with Lynn's work. We
+posted on our hacks blog
+
+468
+00:25:46.690 --> 00:25:49.120
+at Mozilla and on her
+website and you're right. It's
+
+469
+00:25:49.120 --> 00:25:51.700
+a series of posts that
+are all connected together. So
+
+470
+00:25:51.700 --> 00:25:53.530
+it's easy to sort of
+read them all and traverse
+
+471
+00:25:53.530 --> 00:25:58.030
+them to explain some of
+the motivations behind WebAssembly, how
+
+472
+00:25:58.030 --> 00:26:00.430
+it works, the way it
+does. And then also talk
+
+473
+00:26:00.430 --> 00:26:02.170
+a little bit about what's
+coming in the future. So
+
+474
+00:26:02.170 --> 00:26:05.230
+I really good sort of
+single set of articles to
+
+475
+00:26:05.230 --> 00:26:07.720
+read all in one place
+to give you that full
+
+476
+00:26:07.780 --> 00:26:11.170
+perspective, but yeah, I'm glad
+you like that. And so,
+
+477
+00:26:11.290 --> 00:26:14.020
+as I understood, yeah, that's
+great. I will, I watch
+
+478
+00:26:14.020 --> 00:26:17.350
+you send Lynn kudos on
+a, on Twitter. So as
+
+479
+00:26:17.350 --> 00:26:20.800
+of February, that MVP, that
+minimum viable product is kind
+
+480
+00:26:20.800 --> 00:26:24.370
+of is complete. And the,
+and Mozilla, you're the first
+
+481
+00:26:24.370 --> 00:26:26.740
+prouder at the, as the
+time of this talk to,
+
+482
+00:26:26.740 --> 00:26:28.990
+to come out with a,
+an implementation of that MVP,
+
+483
+00:26:28.990 --> 00:26:32.110
+is that correct? We deployed
+at first, in Firefox 52
+
+484
+00:26:32.110 --> 00:26:36.460
+in early March, Google subsequently
+shipped it in, in Chrome.
+
+485
+00:26:37.300 --> 00:26:40.000
+So yeah, we were the
+first to actually put it
+
+486
+00:26:40.000 --> 00:26:44.070
+in a released product and,
+and Google followed shortly thereafter.
+
+487
+00:26:44.070 --> 00:26:46.230
+And we know from the
+work with our other partners
+
+488
+00:26:46.860 --> 00:26:52.220
+that it's coming in other
+browsers as well, Is, is
+
+489
+00:26:52.220 --> 00:26:55.010
+this new kind of flavor
+of browser Wars? It doesn't
+
+490
+00:26:55.010 --> 00:26:56.870
+feel like browser Wars, like
+it was in the nineties.
+
+491
+00:26:56.870 --> 00:26:59.030
+It actually feels like it
+makes it better for everybody.
+
+492
+00:26:59.090 --> 00:27:00.560
+It doesn't mean like, I
+felt like it was very
+
+493
+00:27:00.560 --> 00:27:02.600
+competitive back in the day,
+but now not so much.
+
+494
+00:27:02.870 --> 00:27:05.150
+Well, it is interesting. It's
+it's still, you know, there
+
+495
+00:27:05.150 --> 00:27:07.910
+are elements of competitiveness, but,
+but I think we've, this
+
+496
+00:27:07.910 --> 00:27:11.660
+is another, in a number
+of technologies where we've seen
+
+497
+00:27:11.660 --> 00:27:17.660
+the browser vendors work together
+to dif to define, build
+
+498
+00:27:17.660 --> 00:27:21.350
+and deploy, and then support
+technologies that just make the
+
+499
+00:27:21.350 --> 00:27:23.930
+web better. So web assembly
+is a good example. Web
+
+500
+00:27:23.930 --> 00:27:25.820
+GL is a good example.
+We see this in a
+
+501
+00:27:25.820 --> 00:27:28.430
+number of places. We did,
+you know, the web game
+
+502
+00:27:28.430 --> 00:27:31.970
+stack work that we've alluded
+to all good examples of
+
+503
+00:27:32.630 --> 00:27:35.690
+where we at Mozilla obviously
+know that this technology is
+
+504
+00:27:35.690 --> 00:27:38.270
+great and we want it
+in our browser, but we
+
+505
+00:27:38.270 --> 00:27:40.430
+know that it's important that
+it be in all of
+
+506
+00:27:40.430 --> 00:27:43.430
+the browser. So everyone have
+it at their fingertips. And
+
+507
+00:27:43.430 --> 00:27:46.280
+the other browser vendors are
+great to work with and
+
+508
+00:27:46.280 --> 00:27:49.670
+making that happen. That's cool
+that that's happening. And it
+
+509
+00:27:49.670 --> 00:27:52.490
+also feels like because everything's
+being done in the open,
+
+510
+00:27:52.880 --> 00:27:55.820
+like more than ever before,
+and people aren't trying to
+
+511
+00:27:55.820 --> 00:28:00.470
+lock each other into close
+technologies, you're seeing tool chain
+
+512
+00:28:00.470 --> 00:28:02.960
+libraries for things like web
+assembly. Like there's one called
+
+513
+00:28:03.020 --> 00:28:07.400
+binary in the word binary
+N that, you know, it's
+
+514
+00:28:07.400 --> 00:28:09.890
+a series, it's a tool
+chain, it's a library for
+
+515
+00:28:09.950 --> 00:28:13.250
+C plus plus that helps
+you make your, your wisdom
+
+516
+00:28:13.760 --> 00:28:16.040
+easier. And it seems like
+that's just the start of
+
+517
+00:28:16.040 --> 00:28:18.170
+a whole series of toolkits.
+And at some point I'll
+
+518
+00:28:18.170 --> 00:28:20.720
+just open up, I don't
+know, visual studio or whatever,
+
+519
+00:28:20.720 --> 00:28:23.420
+and say, Oh, target the
+web and it'll just work.
+
+520
+00:28:23.510 --> 00:28:25.400
+Right, Right. That's right. And
+you know, we've built, so
+
+521
+00:28:25.400 --> 00:28:28.220
+those two chains in script
+and as part of the
+
+522
+00:28:28.220 --> 00:28:32.090
+tool chain for WebAssembly using
+LLVM. So there's a lot
+
+523
+00:28:32.090 --> 00:28:35.450
+of leveraging large bodies of
+work that already exists for,
+
+524
+00:28:35.530 --> 00:28:38.150
+for programming languages and compiling
+in general, to make it
+
+525
+00:28:38.150 --> 00:28:42.800
+easy to bring those languages
+in that technology. Yeah. I'm
+
+526
+00:28:42.800 --> 00:28:45.080
+looking forward to this. I'm
+wonder though how it will
+
+527
+00:28:45.080 --> 00:28:47.240
+make, like how the web
+will become the great app
+
+528
+00:28:47.240 --> 00:28:49.220
+store. I don't know, I
+guess, will I be able
+
+529
+00:28:49.220 --> 00:28:51.290
+to pay people for access
+to these things? I guess
+
+530
+00:28:51.290 --> 00:28:53.090
+I just log in. It's
+just a website, isn't it.
+
+531
+00:28:53.630 --> 00:28:57.290
+And so frictionless discovery and
+easy access is all part
+
+532
+00:28:57.290 --> 00:29:00.350
+of the, what makes the
+web great. There are ways
+
+533
+00:29:00.380 --> 00:29:02.930
+and work happening around things
+like payments on the web.
+
+534
+00:29:02.930 --> 00:29:04.940
+So standards, work, and others
+there. I think you can
+
+535
+00:29:04.940 --> 00:29:07.910
+expect those things to all
+come and get added to
+
+536
+00:29:07.910 --> 00:29:10.970
+the, to the picture later.
+But for now the, the
+
+537
+00:29:10.970 --> 00:29:13.010
+idea is to put all
+these experiences on the web
+
+538
+00:29:13.010 --> 00:29:14.870
+and make them part of
+what you do today to
+
+539
+00:29:14.870 --> 00:29:19.640
+discover and visit and use
+the websites. And even with
+
+540
+00:29:19.640 --> 00:29:22.040
+new things coming like web
+VR, the same model apply.
+
+541
+00:29:23.810 --> 00:29:26.900
+Yeah. And, and those, those,
+those things are all coming
+
+542
+00:29:26.900 --> 00:29:29.360
+together. If you think about
+wallets and mobile payments and
+
+543
+00:29:29.360 --> 00:29:32.540
+web assembly, and then you
+brought up web VR, each
+
+544
+00:29:32.540 --> 00:29:37.190
+of these things is kind
+of converging into the final
+
+545
+00:29:37.190 --> 00:29:38.570
+of the dream of the
+open web to be able
+
+546
+00:29:38.570 --> 00:29:40.970
+to do pretty much anything
+you want. We were now
+
+547
+00:29:40.990 --> 00:29:43.390
+getting to the point where
+people Install their operating system,
+
+548
+00:29:43.390 --> 00:29:45.460
+and then they install their
+browser and they're pretty much
+
+549
+00:29:45.520 --> 00:29:49.240
+done. Yeah, that's right. And
+the intent is to make
+
+550
+00:29:49.240 --> 00:29:51.970
+that satisfying experience for developers
+too. So when they think
+
+551
+00:29:51.970 --> 00:29:55.180
+about building something interesting and
+putting it in the hands
+
+552
+00:29:55.180 --> 00:29:58.360
+of users, they think about
+the web as the foremost
+
+553
+00:29:58.360 --> 00:30:01.780
+platform where they can most
+easily make that happen. So
+
+554
+00:30:01.780 --> 00:30:05.170
+if I go and download
+Firefox 52 or up is
+
+555
+00:30:05.170 --> 00:30:07.600
+WebAssembly only a desktop thing,
+or do you see this
+
+556
+00:30:07.600 --> 00:30:10.120
+on the mobile devices? So
+we see WebAssembly as a,
+
+557
+00:30:10.120 --> 00:30:13.060
+as a mobile feature as
+well. I mean the same
+
+558
+00:30:13.060 --> 00:30:15.520
+capabilities. And in fact, you
+know, the, the hardware that
+
+559
+00:30:15.520 --> 00:30:18.100
+you and I use, many
+people uses their mobile devices.
+
+560
+00:30:18.100 --> 00:30:23.200
+A multi-core very powerful GPU
+accelerated platform. And there's absolutely
+
+561
+00:30:23.200 --> 00:30:25.960
+no reason why you wouldn't
+want the benefits of web
+
+562
+00:30:25.960 --> 00:30:29.050
+assembly in the browser on
+your mobile device. And so
+
+563
+00:30:29.050 --> 00:30:31.270
+that's very much part of
+the work that's happening too.
+
+564
+00:30:32.500 --> 00:30:34.060
+And that kind of brings
+it all the way back
+
+565
+00:30:34.060 --> 00:30:36.730
+around to the beginning where
+we think about how far
+
+566
+00:30:36.730 --> 00:30:39.970
+we've come, that now we
+have these quad processor pocket
+
+567
+00:30:39.970 --> 00:30:43.990
+supercomputers that can not only
+have one operating system, but
+
+568
+00:30:44.170 --> 00:30:46.120
+another one on top of
+it in the form of,
+
+569
+00:30:46.120 --> 00:30:48.190
+of WebAssembly that I could
+target. Yeah. And from the
+
+570
+00:30:48.190 --> 00:30:51.490
+perspective of the web, there
+really is a diminishing amount
+
+571
+00:30:51.490 --> 00:30:54.490
+of difference between the capabilities
+of platforms that we think
+
+572
+00:30:54.490 --> 00:30:58.630
+of as mobile and platforms
+that we think is fixed,
+
+573
+00:30:58.660 --> 00:31:01.300
+not mobile. And we tend
+to worry more these days
+
+574
+00:31:01.300 --> 00:31:03.310
+about whether it's plugged into
+the wall or not from
+
+575
+00:31:03.310 --> 00:31:06.550
+a power consumption perspective or
+what the network performance is
+
+576
+00:31:06.550 --> 00:31:10.450
+like than we do worrying
+about the capabilities of the
+
+577
+00:31:10.450 --> 00:31:14.020
+underlying CPS or, or, you
+know, whether they can display
+
+578
+00:31:14.020 --> 00:31:17.170
+graphics or not. So it's
+a, yeah, which is actually,
+
+579
+00:31:17.170 --> 00:31:19.360
+it's a, it's an extreme
+version of the, the whole
+
+580
+00:31:19.360 --> 00:31:22.510
+browser sniffing versus a feature
+detection. Really. I don't care
+
+581
+00:31:22.510 --> 00:31:23.680
+what I'm on. I just
+want to know how big
+
+582
+00:31:23.680 --> 00:31:25.780
+the screen is and whether
+it's plugged in, right. That's
+
+583
+00:31:25.780 --> 00:31:28.270
+right. And let me get
+at my content or my
+
+584
+00:31:28.270 --> 00:31:31.750
+game or my virtual world
+or whatever, wherever I happen
+
+585
+00:31:31.750 --> 00:31:34.990
+to be fantastic. Well, thank
+you so much, David Brian,
+
+586
+00:31:34.990 --> 00:31:37.780
+for talking to us today
+about WebAssembly and helping me
+
+587
+00:31:37.810 --> 00:31:40.450
+get my brain around how
+I should think about what's
+
+588
+00:31:40.450 --> 00:31:43.450
+here and what's coming in.
+Thanks, Scott, appreciate the opportunity.
+
+589
+00:31:43.450 --> 00:31:47.890
+We like having the, the
+chance to help people understand
+
+590
+00:31:47.890 --> 00:31:51.010
+more comprehensively Lakeland, cartoon, where
+we are and what we're
+
+591
+00:31:51.010 --> 00:31:54.130
+working on. And it's been
+great answering your questions and
+
+592
+00:31:54.130 --> 00:31:56.590
+going through where we are
+today with WebAssembly. Thanks for
+
+593
+00:31:56.590 --> 00:31:59.200
+the time. Very cool. I'm
+going to put all of
+
+594
+00:31:59.200 --> 00:32:02.230
+this in the show notes.
+You can check out hacks.mozilla.org
+
+595
+00:32:02.230 --> 00:32:04.270
+and take a look at
+some of those great blog
+
+596
+00:32:04.300 --> 00:32:07.090
+posts that explain this. You
+can go and download Firefox
+
+597
+00:32:07.810 --> 00:32:12.070
+and experience it for yourself
+as well as visiting webassembly.org
+
+598
+00:32:12.070 --> 00:32:14.920
+and looking at GitHub for
+the details about how the
+
+599
+00:32:14.920 --> 00:32:18.580
+code works. This has been
+another episode of Hanselminutes and
+
+600
+00:32:18.580 --> 00:32:27.390
+we'll see you again next
+week. <inaudible>.
+

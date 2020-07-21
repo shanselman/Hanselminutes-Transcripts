@@ -1,0 +1,2871 @@
+WEBVTT FILE
+
+1
+00:00:12.050 --> 00:00:17.510
+From Hansel minutes.com. It's Hanselman.
+It's a weekly discussion with
+
+2
+00:00:17.510 --> 00:00:23.000
+web developer and technologists. Scott
+Hanselman posted by Carl Franklin. This
+
+3
+00:00:23.000 --> 00:00:26.810
+is Lawrence Ryan announcing show number
+one 48. Recorded live Wednesday,
+
+4
+00:00:26.810 --> 00:00:31.730
+January 28, 2009. Support for
+Hanselman. This just provided by
+
+5
+00:00:31.760 --> 00:00:35.750
+teller Reb controls. The most
+comprehensive suite of components for
+
+6
+00:00:35.750 --> 00:00:42.020
+windows forms and asp.net web
+applications. online@www.tv, L E R
+
+7
+00:00:42.020 --> 00:00:47.330
+I k.com and by.net developers
+journal the world's leading.net developer
+
+8
+00:00:47.330 --> 00:00:53.660
+magazine online at www dot
+<inaudible> dot com. In this
+
+9
+00:00:53.660 --> 00:00:57.650
+episode, Scott talks about meth,
+the managed extensibility framework with
+
+10
+00:00:57.650 --> 00:01:02.510
+Glenn block. Hi, this is
+Scott Hanselman. This is another
+
+11
+00:01:02.510 --> 00:01:05.390
+episode of Hansel minutes, and
+I've got a cold today.
+
+12
+00:01:05.390 --> 00:01:07.280
+Hopefully that won't be too
+distracting, but I'm sitting down
+
+13
+00:01:07.280 --> 00:01:11.630
+here in building 36 with
+Glenn block program manager for
+
+14
+00:01:11.630 --> 00:01:15.680
+meth, fun to work on
+a project called meth. Glen,
+
+15
+00:01:15.680 --> 00:01:17.570
+what does meth, why does
+it have a silly name?
+
+16
+00:01:19.400 --> 00:01:21.170
+Well, you know, we like
+to come up with silly
+
+17
+00:01:21.170 --> 00:01:24.350
+names, which we changed before
+the time we actually ship.
+
+18
+00:01:26.780 --> 00:01:29.990
+What is meth? That's a
+good question. Really? What meth
+
+19
+00:01:29.990 --> 00:01:34.430
+is, is a technology to
+enable customers to build applications
+
+20
+00:01:34.430 --> 00:01:39.530
+that have an open set
+of extensions. Where what I
+
+21
+00:01:39.530 --> 00:01:42.320
+mean by extensions is that,
+you know, after an application
+
+22
+00:01:42.320 --> 00:01:45.800
+has been deployed, someone can
+come along and create some
+
+23
+00:01:45.800 --> 00:01:49.490
+kind of custom addition to
+that application. But the difference
+
+24
+00:01:49.490 --> 00:01:52.880
+being that with meth, you
+don't have to design the
+
+25
+00:01:52.880 --> 00:01:55.460
+application to know what the
+finite set of things will
+
+26
+00:01:55.460 --> 00:01:59.690
+be. It actually does kind
+of a discovery process to
+
+27
+00:01:59.690 --> 00:02:04.550
+find things and what, where
+that really becomes ideal and
+
+28
+00:02:04.550 --> 00:02:08.000
+why we call it. The
+managed extensibility framework is, you
+
+29
+00:02:08.000 --> 00:02:10.160
+know, if I'm developing a
+third party application, like a
+
+30
+00:02:10.160 --> 00:02:13.100
+CRM system, and I want
+to have an ecosystem of
+
+31
+00:02:13.640 --> 00:02:18.080
+different vendors that could be
+creating add-ons to that, then
+
+32
+00:02:18.080 --> 00:02:22.640
+with meth, they pretty much
+just deploy their functionality into
+
+33
+00:02:22.640 --> 00:02:26.720
+the bin folder and the
+app just discovers that it's
+
+34
+00:02:26.720 --> 00:02:31.670
+available. And it shows up
+now in, in all of
+
+35
+00:02:31.670 --> 00:02:34.490
+my, all the Microsoft marketing
+speech right there, I didn't
+
+36
+00:02:34.490 --> 00:02:37.970
+hear plugins. Is it, is
+it safe to paraphrase for
+
+37
+00:02:37.970 --> 00:02:39.200
+me to kind of take
+what you just said in
+
+38
+00:02:39.200 --> 00:02:41.270
+my brain and put it
+back out and say meth
+
+39
+00:02:41.270 --> 00:02:43.520
+makes it really easy to
+write apps that support plugins
+
+40
+00:02:43.670 --> 00:02:45.770
+meth does make it easy
+to write. Yes, it is
+
+41
+00:02:45.770 --> 00:02:49.580
+a plugin architecture. It goes
+a little bit further than
+
+42
+00:02:49.580 --> 00:02:51.800
+that because you know, when
+we talk about how meth
+
+43
+00:02:51.800 --> 00:02:57.530
+does what it does, it's
+actually a compositional engine. So
+
+44
+00:02:57.620 --> 00:03:00.280
+what I like to compare
+that is if I was
+
+45
+00:03:00.280 --> 00:03:02.950
+going to build a traditional
+application where I would add
+
+46
+00:03:02.950 --> 00:03:05.410
+in extensibility, it tends to
+be a model where I
+
+47
+00:03:05.410 --> 00:03:09.250
+have a host and then
+there's some extensions that maybe
+
+48
+00:03:09.250 --> 00:03:11.260
+are in a bin folder
+or somewhere else. I might
+
+49
+00:03:11.260 --> 00:03:15.880
+have a configuration file with
+math because it's a compositional
+
+50
+00:03:15.880 --> 00:03:19.960
+model. Those extensions themselves actually
+can be further extended all
+
+51
+00:03:19.960 --> 00:03:23.860
+the way down the line.
+And because it's also where
+
+52
+00:03:23.860 --> 00:03:26.890
+the composition comes in is
+to provide those extensions, the
+
+53
+00:03:26.890 --> 00:03:31.240
+things they need. And this
+is commonly, you know, there's
+
+54
+00:03:31.240 --> 00:03:36.250
+a principle in software design
+called dependency injection, and we've
+
+55
+00:03:36.250 --> 00:03:38.530
+had a whole bunch of
+conversations with folks that have
+
+56
+00:03:38.890 --> 00:03:43.450
+compared meth to something known,
+particularly in the open source
+
+57
+00:03:43.450 --> 00:03:47.320
+community as a dependency injection
+container. But the idea of
+
+58
+00:03:47.320 --> 00:03:51.040
+dependency injection is that you
+have a component that is
+
+59
+00:03:51.040 --> 00:03:55.390
+not responsible for getting its
+dependencies. Those dependencies are pushed
+
+60
+00:03:55.390 --> 00:04:00.100
+in and primarily folks use
+dependency, injection containers for decoupling
+
+61
+00:04:00.430 --> 00:04:03.970
+their systems and for testability
+in the case of meth
+
+62
+00:04:04.000 --> 00:04:07.180
+where we're using dependency injection
+in terms of the principle
+
+63
+00:04:07.360 --> 00:04:09.910
+is to say that I'm
+an extension that's loading up.
+
+64
+00:04:10.180 --> 00:04:12.820
+That extension is going to
+need some things coming from
+
+65
+00:04:12.820 --> 00:04:16.150
+the host, or even if
+my extension is being extended,
+
+66
+00:04:16.150 --> 00:04:20.500
+so to speak. So we
+use inversion of control and
+
+67
+00:04:20.500 --> 00:04:23.920
+dependency injection these principles, but
+we use them for solving
+
+68
+00:04:23.920 --> 00:04:27.130
+a very specific problem, which
+is how do these third
+
+69
+00:04:27.130 --> 00:04:29.860
+party extensions that are getting
+added to the system, get
+
+70
+00:04:30.250 --> 00:04:33.480
+what they need. Okay. So
+dependency injection is the idea
+
+71
+00:04:33.480 --> 00:04:37.140
+that the object has some
+dependency. It needs it, and
+
+72
+00:04:37.140 --> 00:04:39.570
+it's being injected into the
+object as opposed to the
+
+73
+00:04:39.570 --> 00:04:42.930
+object going off and being
+in control of looking forward
+
+74
+00:04:42.930 --> 00:04:45.660
+itself. That's why we call
+it inversion of control because
+
+75
+00:04:45.660 --> 00:04:49.110
+suddenly the, the car object
+is no longer responsible for
+
+76
+00:04:49.110 --> 00:04:51.810
+finding its wheels. It just
+shows up and wheels are
+
+77
+00:04:51.810 --> 00:04:53.100
+on it, and it doesn't
+know where they came from.
+
+78
+00:04:53.140 --> 00:04:55.710
+Well, and the thing that's
+interesting about inversion of control
+
+79
+00:04:55.710 --> 00:04:57.960
+is it really relates to
+a thing called the Hollywood
+
+80
+00:04:57.960 --> 00:05:01.530
+principle, which is, which means
+don't call us, we'll call
+
+81
+00:05:01.530 --> 00:05:05.130
+you. And the problem and
+Fowler, you know, identified this
+
+82
+00:05:05.130 --> 00:05:09.090
+in patterns of enterprise architecture
+has, is great. Tome was
+
+83
+00:05:09.090 --> 00:05:12.810
+that, you know, almost any
+framework that's out there does
+
+84
+00:05:12.810 --> 00:05:15.630
+inversion of control. It almost
+has no meaning because it's
+
+85
+00:05:15.630 --> 00:05:18.390
+like, think of it like
+this. I create a WinForms
+
+86
+00:05:18.390 --> 00:05:21.240
+application. I drop a user
+control on that WinForms app.
+
+87
+00:05:21.510 --> 00:05:25.710
+Am I responsible for calling
+that control or does the
+
+88
+00:05:25.710 --> 00:05:28.440
+framework do it? So that's
+the idea of inversion of
+
+89
+00:05:28.440 --> 00:05:32.340
+control, but the difference, I
+think, between using things like
+
+90
+00:05:32.400 --> 00:05:36.480
+Dai containers and such to
+achieve in of control, versus
+
+91
+00:05:36.480 --> 00:05:39.990
+when it's like baked into
+the.net framework is you're solving
+
+92
+00:05:39.990 --> 00:05:44.220
+problems that traditionally you would
+solve through imperative coding, like
+
+93
+00:05:44.220 --> 00:05:47.370
+with WinForms. I never had
+to manually create the control
+
+94
+00:05:47.370 --> 00:05:49.890
+and edit. It always did
+it for me, but it's
+
+95
+00:05:49.890 --> 00:05:53.640
+taking these things like these
+inversion of control containers and
+
+96
+00:05:53.640 --> 00:05:57.000
+saying, okay, well now, instead
+of me, imperatively calling all
+
+97
+00:05:57.170 --> 00:06:00.140
+code. I can actually wire
+up something else to do
+
+98
+00:06:00.140 --> 00:06:03.170
+it for me. And by
+doing that, that means that
+
+99
+00:06:03.170 --> 00:06:07.550
+I can replace in a
+test environment, for example, which
+
+100
+00:06:07.580 --> 00:06:10.910
+things it wires up. Because
+anytime I write imperative code
+
+101
+00:06:10.910 --> 00:06:14.150
+that says a equals new
+B, well, unless I happen
+
+102
+00:06:14.150 --> 00:06:16.550
+to be in like a
+dynamic language where I actually
+
+103
+00:06:16.550 --> 00:06:20.150
+can at the language level
+replace that I'm always going
+
+104
+00:06:20.150 --> 00:06:22.010
+to get a B, but
+if I go to an
+
+105
+00:06:22.010 --> 00:06:26.210
+inversion control container and saying,
+resolve B, what I get
+
+106
+00:06:26.210 --> 00:06:28.040
+might not be a B
+at all. I mean, it
+
+107
+00:06:28.040 --> 00:06:31.520
+may implement, I may go
+ask for an I B,
+
+108
+00:06:31.520 --> 00:06:34.340
+which is an interface. And
+then I don't know, or
+
+109
+00:06:34.340 --> 00:06:38.480
+care actually what the concrete
+implementation is because when I'm
+
+110
+00:06:38.480 --> 00:06:42.860
+doing IOC, I'm just working
+through contracts. And that is
+
+111
+00:06:42.860 --> 00:06:45.770
+a parallel like in meth,
+when you work, when you
+
+112
+00:06:45.770 --> 00:06:49.300
+work with these extensions, we
+call them parts. And it's
+
+113
+00:06:49.340 --> 00:06:52.130
+a very simple concept in
+meth that you build up
+
+114
+00:06:52.130 --> 00:06:54.860
+your app, your app consists
+of a set of parts.
+
+115
+00:06:55.130 --> 00:06:58.490
+Those parts have exports, which
+are things they give off
+
+116
+00:06:58.730 --> 00:07:03.520
+and imports things Take in.
+We use this Of contract
+
+117
+00:07:03.790 --> 00:07:07.120
+there as well, because if
+I'm going to import something,
+
+118
+00:07:07.270 --> 00:07:09.760
+how do I know what
+the thing that I'm going
+
+119
+00:07:09.760 --> 00:07:12.640
+to import looks like, or
+what it's called, we call
+
+120
+00:07:12.640 --> 00:07:16.240
+that thing a contract that
+defines what that is. Okay.
+
+121
+00:07:16.240 --> 00:07:20.200
+So is meth an IOC
+container or not? So what
+
+122
+00:07:20.200 --> 00:07:22.690
+I would say to that
+is that when you say
+
+123
+00:07:22.690 --> 00:07:26.200
+that question, it's a very
+overloaded question. When, what I
+
+124
+00:07:26.200 --> 00:07:27.790
+take that to me and
+I used to work in
+
+125
+00:07:27.790 --> 00:07:30.130
+the patterns and practices team,
+where we built a unity
+
+126
+00:07:30.130 --> 00:07:33.550
+that I would say, yes,
+that is an ISU. Maybe
+
+127
+00:07:33.550 --> 00:07:35.440
+familiarize people with unit who
+may not be familiar with
+
+128
+00:07:36.220 --> 00:07:39.160
+unity is an IOC. It
+is an IOC container, and
+
+129
+00:07:39.160 --> 00:07:41.920
+it was built to be
+an IOC container. But again,
+
+130
+00:07:41.950 --> 00:07:44.080
+when you say that, what
+does that mean? What I
+
+131
+00:07:44.080 --> 00:07:46.840
+take that to mean when
+somebody says to me is
+
+132
+00:07:46.840 --> 00:07:50.590
+muffin, IOC container is I
+solve a set of problems
+
+133
+00:07:50.650 --> 00:07:54.280
+using this thing. I call
+an IOC container, can meth
+
+134
+00:07:54.280 --> 00:07:57.460
+solve those problems? And my
+IOC container was built to
+
+135
+00:07:57.460 --> 00:08:00.520
+solve those problems in a
+very specific way. What I
+
+136
+00:08:00.520 --> 00:08:04.270
+would say about Memphis meth
+was really harvested. We didn't
+
+137
+00:08:04.270 --> 00:08:06.820
+look at what other people
+were doing with IOC containers
+
+138
+00:08:06.820 --> 00:08:09.790
+and say, Hey, let's go
+build. One of those. What
+
+139
+00:08:09.790 --> 00:08:11.770
+we did is we had
+a set of problems around
+
+140
+00:08:11.770 --> 00:08:15.580
+this space of getting these
+apps to be extensible. And
+
+141
+00:08:15.580 --> 00:08:18.880
+we basically said, Hey, this
+principle of using inversion of
+
+142
+00:08:18.880 --> 00:08:21.460
+control is a great way
+to solve that. So what
+
+143
+00:08:21.460 --> 00:08:22.870
+I would say is that
+if you look at it
+
+144
+00:08:22.870 --> 00:08:25.990
+on a scenario by scenario
+basis, there are some things
+
+145
+00:08:25.990 --> 00:08:30.010
+we do that overlap with
+what IOC containers do, how
+
+146
+00:08:30.010 --> 00:08:32.740
+we do. It may be
+very different because of, but
+
+147
+00:08:32.740 --> 00:08:35.560
+it's really about the end
+goal of what we built
+
+148
+00:08:35.560 --> 00:08:38.080
+it for. Okay. So if
+someone's out there already and
+
+149
+00:08:38.080 --> 00:08:41.200
+they have tried a number
+of IOC containers, and maybe
+
+150
+00:08:41.200 --> 00:08:43.420
+they're trying Autofac and they've
+looked at unity and they've
+
+151
+00:08:43.420 --> 00:08:46.360
+played with structure map, would
+they want to also put
+
+152
+00:08:46.360 --> 00:08:48.850
+meth in their app and
+why, or wouldn't they just
+
+153
+00:08:48.850 --> 00:08:52.450
+implement meth, like structures in
+their own existing container that
+
+154
+00:08:52.450 --> 00:08:54.790
+makes them happy. So, one
+of the things that's interesting
+
+155
+00:08:55.350 --> 00:08:58.740
+about that Is because meth
+does a very specific set
+
+156
+00:08:58.740 --> 00:09:01.440
+of things. We actually think
+that there's a world where
+
+157
+00:09:01.440 --> 00:09:04.620
+both live together and we've
+been prototyping on that. And
+
+158
+00:09:04.620 --> 00:09:08.280
+what that means is it's
+not a two container solution
+
+159
+00:09:08.880 --> 00:09:13.140
+meth. What meth really has
+is a, an abstract way
+
+160
+00:09:13.140 --> 00:09:17.550
+of defining in general components
+and their dependencies. And so
+
+161
+00:09:17.550 --> 00:09:20.760
+you can imagine taking an
+IOC container and meth enabling
+
+162
+00:09:20.760 --> 00:09:23.520
+it. That means that that
+IFC container still works the
+
+163
+00:09:23.520 --> 00:09:26.970
+way that it works. But
+what it also does is
+
+164
+00:09:26.970 --> 00:09:31.620
+it now understands miffs component
+language so that it can
+
+165
+00:09:31.620 --> 00:09:35.430
+automatically also take in things
+from meth. So the other
+
+166
+00:09:35.430 --> 00:09:39.150
+day, Nick Blumhardt, who's the
+author of Autofac and we've
+
+167
+00:09:39.150 --> 00:09:43.920
+got some really passionate guys
+from the IOC space on
+
+168
+00:09:43.920 --> 00:09:47.850
+the meth team, Nick Blumhardt
+audit or authored Autofac. He
+
+169
+00:09:47.850 --> 00:09:51.180
+and I were with Chris
+Tavarez who wrote unity, who
+
+170
+00:09:51.180 --> 00:09:55.500
+wrote unity. And we were
+doing some spiking around integration
+
+171
+00:09:55.500 --> 00:09:58.920
+between the two, which is
+where I have an IOC
+
+172
+00:09:58.920 --> 00:10:03.450
+container. And I'm using meth
+for that third party extensibility.
+
+173
+00:10:03.750 --> 00:10:07.320
+The way I basically position
+it though, is the difference
+
+174
+00:10:07.320 --> 00:10:10.320
+between the two is that
+IOC containers are really about
+
+175
+00:10:10.320 --> 00:10:14.130
+managing a known set of
+things in different environments, right?
+
+176
+00:10:14.130 --> 00:10:17.940
+Like I want a logger
+in my, in this environment,
+
+177
+00:10:17.940 --> 00:10:21.720
+I want a mock lager
+in my test environment. So
+
+178
+00:10:22.080 --> 00:10:25.620
+meth is really about managing
+an unknown set of things.
+
+179
+00:10:25.770 --> 00:10:29.760
+And what that boils down
+to is that in an
+
+180
+00:10:29.760 --> 00:10:32.820
+IOC container, I tend to
+do either a convention based
+
+181
+00:10:32.820 --> 00:10:38.160
+or a registration, a specific
+registration mechanism to say, here's
+
+182
+00:10:38.160 --> 00:10:40.830
+what lager means. Here's what
+this means. Here's what that
+
+183
+00:10:40.830 --> 00:10:46.140
+means. Meth uses the code
+and a discovery mechanism and
+
+184
+00:10:46.140 --> 00:10:50.700
+annotations on the code, which
+are attributes where whatever shows
+
+185
+00:10:50.700 --> 00:10:55.020
+up in the system that's,
+what's there. So the, so
+
+186
+00:10:55.020 --> 00:10:58.140
+again, taking it to a
+higher level, it's about you
+
+187
+00:10:58.140 --> 00:11:00.650
+use meth to really manage
+it, A set of unknown
+
+188
+00:11:00.650 --> 00:11:04.250
+things, Use IOC containers to
+manage a set of known
+
+189
+00:11:04.250 --> 00:11:08.900
+things. The, that last sentence
+is about the clearest explanation
+
+190
+00:11:08.990 --> 00:11:12.170
+that I've heard so far.
+And I wonder why is
+
+191
+00:11:12.170 --> 00:11:15.230
+it that it's so confusing?
+I mean, it seems, it
+
+192
+00:11:15.230 --> 00:11:17.960
+seems like a lot of
+people are confused. So then
+
+193
+00:11:17.990 --> 00:11:19.790
+I think that the next
+kind of question would come
+
+194
+00:11:19.790 --> 00:11:23.450
+up would be why isn't
+there an IOC container or
+
+195
+00:11:23.450 --> 00:11:25.940
+what I get people call
+a microkernel baked into the
+
+196
+00:11:25.940 --> 00:11:29.120
+dot and framework, and is
+that, you know, holding aspects
+
+197
+00:11:29.120 --> 00:11:32.870
+of designing the framework back?
+Sure. Because the thing I
+
+198
+00:11:32.870 --> 00:11:36.200
+get confused about is that
+people who seem to know
+
+199
+00:11:36.200 --> 00:11:38.840
+what they're talking about always
+say, and here's an IOC
+
+200
+00:11:38.840 --> 00:11:41.510
+container in 14 lines. Why
+doesn't Microsoft just shove that
+
+201
+00:11:41.510 --> 00:11:43.160
+in system dot DLL and
+we'll all go on with
+
+202
+00:11:43.160 --> 00:11:47.300
+our lives. Sure. You know,
+I think sometimes there's too
+
+203
+00:11:47.300 --> 00:11:50.030
+much focus. I personally believe
+in, and I'm a big
+
+204
+00:11:50.060 --> 00:11:53.440
+fan of IOC containers. IOC
+containers are a means an
+
+205
+00:11:53.440 --> 00:11:58.390
+end. The end is really
+about, you know, decoupling decoupling
+
+206
+00:11:58.390 --> 00:12:01.210
+systems is really kind of
+the primary goal of, of
+
+207
+00:12:01.210 --> 00:12:04.930
+using IOC. So, you know,
+I think we do get
+
+208
+00:12:04.930 --> 00:12:08.170
+hung up on the idea
+of, I must have a
+
+209
+00:12:08.200 --> 00:12:11.650
+thing called an IOC container,
+having decoupling in the framework
+
+210
+00:12:11.650 --> 00:12:14.470
+and having mechanisms to do
+that. Memphis, certainly a mech
+
+211
+00:12:14.500 --> 00:12:16.840
+again, it's about, if you
+go at the higher level,
+
+212
+00:12:17.020 --> 00:12:21.340
+Memphis, certainly a mechanism for
+decoupling different components and meth
+
+213
+00:12:21.340 --> 00:12:23.170
+has two aspects to it.
+And I don't want to
+
+214
+00:12:23.170 --> 00:12:25.420
+get into this too much
+cause it will confuse people.
+
+215
+00:12:25.660 --> 00:12:28.270
+There's a layer in meth
+that has to do with
+
+216
+00:12:28.270 --> 00:12:32.800
+exactly how things manifest in
+this attribute and model. And
+
+217
+00:12:32.800 --> 00:12:34.990
+there's a layer of NEF
+that has absolutely nothing to
+
+218
+00:12:34.990 --> 00:12:37.720
+do with that. So when
+you talk about the, microkernel
+
+219
+00:12:38.170 --> 00:12:42.850
+almost like a microkernel that
+functionality is something that we're
+
+220
+00:12:42.850 --> 00:12:44.620
+going to be looking at
+big, deeper and deeper in
+
+221
+00:12:44.620 --> 00:12:47.890
+the framework. So I would
+say that we certainly hope
+
+222
+00:12:48.160 --> 00:12:51.190
+that Memphis, that technology we've
+built it, we've, we've done
+
+223
+00:12:51.190 --> 00:12:53.080
+a lot of work in
+the last year to evolve
+
+224
+00:12:53.080 --> 00:12:56.200
+it, to be that technology
+that could provide that general
+
+225
+00:12:56.200 --> 00:13:01.240
+decoupling in the platform going
+forward. Do we need something
+
+226
+00:13:01.240 --> 00:13:03.580
+else? Well, that remains to
+be seen. I mean, unity
+
+227
+00:13:03.580 --> 00:13:07.240
+certainly is very much like
+an IOC like castle Windsor
+
+228
+00:13:07.240 --> 00:13:10.900
+and these other things, right?
+It is certainly something though
+
+229
+00:13:10.900 --> 00:13:13.180
+that is important to the.net
+framework that we want to
+
+230
+00:13:13.180 --> 00:13:18.190
+support these more decoupled type
+designs, both for applications built
+
+231
+00:13:18.190 --> 00:13:21.190
+on top of the framework
+and even within the framework
+
+232
+00:13:21.190 --> 00:13:25.560
+components itself. Hi, this is
+Scott coming at you from
+
+233
+00:13:25.560 --> 00:13:28.140
+another place in time. Are
+you looking for an object
+
+234
+00:13:28.140 --> 00:13:32.220
+relational mapping tool for mission
+critical projects using lincoln.net? I
+
+235
+00:13:32.220 --> 00:13:35.280
+wanted to share with you
+genome. So specifically designed for
+
+236
+00:13:35.280 --> 00:13:38.910
+developing dot and enterprise applications.
+Genome is a mature link
+
+237
+00:13:38.910 --> 00:13:42.150
+integrated ORM tool. It's been
+employed in numerous large scale
+
+238
+00:13:42.150 --> 00:13:45.000
+projects over the last six
+years, genome was created for
+
+239
+00:13:45.000 --> 00:13:48.030
+the.net platform as opposed to
+being a port from Java.
+
+240
+00:13:48.630 --> 00:13:53.250
+And it's thrived on platform
+innovation since.net. 1.0 genome has
+
+241
+00:13:53.250 --> 00:13:56.610
+supported links since its CTP
+release in may of 2006.
+
+242
+00:13:57.150 --> 00:14:00.120
+It offers several unique features,
+such as encapsulation and reuse
+
+243
+00:14:00.120 --> 00:14:03.420
+of link queries and expressions.
+You can really fully harness
+
+244
+00:14:03.420 --> 00:14:05.910
+the power of link while
+benefiting from your database platforms.
+
+245
+00:14:05.910 --> 00:14:10.140
+Unique features, compose complex link
+queries, decompose the query logic
+
+246
+00:14:10.140 --> 00:14:13.230
+and your domain model link
+supports all the major database
+
+247
+00:14:13.230 --> 00:14:16.650
+platforms you find in enterprise
+environments like SQL server, but
+
+248
+00:14:16.650 --> 00:14:20.250
+also Oracle and IBM DB
+too. And find out more
+
+249
+00:14:20.250 --> 00:14:23.760
+about how genome integrates tightly
+with visual studio and what
+
+250
+00:14:23.760 --> 00:14:29.670
+tools genome offers to reduce
+development time@tinyurl.com slash try genome
+
+251
+00:14:29.760 --> 00:14:33.270
+G N O M E,
+where you can also download
+
+252
+00:14:33.270 --> 00:14:35.790
+a free and fully functional
+trial version. I hope you
+
+253
+00:14:35.790 --> 00:14:40.230
+enjoy it. Now. One of
+there's two interesting things about
+
+254
+00:14:40.230 --> 00:14:41.970
+meth that have struck me
+in a, in a couple
+
+255
+00:14:41.970 --> 00:14:43.380
+of four or five days.
+And I've been hanging out
+
+256
+00:14:43.380 --> 00:14:46.320
+up here on campus. The
+first one is that it
+
+257
+00:14:46.320 --> 00:14:50.070
+keeps coming up in conversations
+and, and I don't mean
+
+258
+00:14:50.070 --> 00:14:52.610
+that in a like comp
+complimentary or flattery Sense. I'm
+
+259
+00:14:52.610 --> 00:14:55.160
+just telling you the truth
+that like I go into
+
+260
+00:14:55.160 --> 00:14:57.320
+a group and I, like,
+I just interviewed the guy
+
+261
+00:14:57.320 --> 00:14:59.150
+that wrote the, one of
+the guys that worked on
+
+262
+00:14:59.150 --> 00:15:01.850
+the WPF editor for dev
+10. He goes, Oh yeah,
+
+263
+00:15:01.850 --> 00:15:03.980
+we use meth under, there
+was just people. Oh yeah,
+
+264
+00:15:03.980 --> 00:15:05.330
+we're using meth for that.
+Oh yeah, you was your
+
+265
+00:15:05.330 --> 00:15:09.020
+man. So, so you've successfully
+sold this thing internally. Well,
+
+266
+00:15:09.130 --> 00:15:13.120
+I mean, honestly the reason
+it evolved was because of
+
+267
+00:15:13.120 --> 00:15:17.020
+that, there were about five
+or six different efforts within
+
+268
+00:15:17.020 --> 00:15:20.770
+the company that were trying
+to solve this problem of,
+
+269
+00:15:20.980 --> 00:15:25.360
+you know, decoupling and also
+the extensibility problem. You know,
+
+270
+00:15:25.360 --> 00:15:28.750
+if you look@itinthe.net framework, we
+haven't really had a good
+
+271
+00:15:28.750 --> 00:15:32.410
+story around general extensibility. We've
+had the managed ad in
+
+272
+00:15:32.410 --> 00:15:35.950
+framework, but that was really
+built more around solving a
+
+273
+00:15:35.950 --> 00:15:40.870
+problem of isolation and security
+and versioning. But you know,
+
+274
+00:15:40.870 --> 00:15:43.840
+it also is hard. It
+was hard. It imposes a
+
+275
+00:15:43.840 --> 00:15:46.120
+lot. I've actually been looking
+at math, math integration now.
+
+276
+00:15:46.120 --> 00:15:50.440
+So I'm dealing with that
+right away right now, but,
+
+277
+00:15:51.070 --> 00:15:54.160
+but it didn't have those
+compositional aspects and yes, and
+
+278
+00:15:54.160 --> 00:15:57.700
+it imposed a lot on
+the types of types and
+
+279
+00:15:57.730 --> 00:15:59.860
+types of types, you know,
+the types that it dealt
+
+280
+00:15:59.860 --> 00:16:02.170
+with, making sure they're more
+shootable or, or you know,
+
+281
+00:16:02.170 --> 00:16:04.060
+that they can pass across
+the wire because it uses
+
+282
+00:16:04.270 --> 00:16:07.660
+remoting app domains. Meth was
+built to be very simple,
+
+283
+00:16:07.900 --> 00:16:12.250
+but we don't have, other
+than the reflection API, you
+
+284
+00:16:12.250 --> 00:16:14.230
+know, a simple way to
+say I've got an app,
+
+285
+00:16:14.320 --> 00:16:16.120
+I want to build a
+set of extensions for it.
+
+286
+00:16:16.120 --> 00:16:18.100
+I want it to work
+in a lot of my
+
+287
+00:16:18.100 --> 00:16:20.380
+talks on meth. I've talked
+about how there are a
+
+288
+00:16:20.380 --> 00:16:22.810
+lot of these very specific
+APIs that work with a
+
+289
+00:16:22.810 --> 00:16:26.680
+very specific technology like asp.net
+has the provider model. Well,
+
+290
+00:16:26.680 --> 00:16:29.350
+that's great, but what if
+I'm not on a web
+
+291
+00:16:29.350 --> 00:16:33.250
+server, right. And office has
+a great set of extensibility
+
+292
+00:16:33.250 --> 00:16:35.530
+API APIs, but what if
+I'm not in office? Do
+
+293
+00:16:35.530 --> 00:16:37.300
+I want to bind my
+clients that they have to
+
+294
+00:16:37.300 --> 00:16:40.600
+develop in office? So it
+was a common need coming
+
+295
+00:16:40.600 --> 00:16:44.050
+from multiple different angles that
+made us say, you know
+
+296
+00:16:44.050 --> 00:16:47.500
+what, we need to solve
+this problem. And we've worked
+
+297
+00:16:47.500 --> 00:16:50.170
+with a lot of internal
+partners to solve it. And
+
+298
+00:16:50.170 --> 00:16:52.300
+so it's like, yeah, this
+is the answer we've been
+
+299
+00:16:52.300 --> 00:16:54.670
+waiting for. So they've jumped
+on the board and it's
+
+300
+00:16:54.670 --> 00:16:58.900
+been groups like the connected
+systems division with the Oslo
+
+301
+00:16:58.900 --> 00:17:02.680
+editor, for example, which is
+actually using Python, which exposes
+
+302
+00:17:02.680 --> 00:17:05.500
+another aspect of meth, which
+is that it's not bound
+
+303
+00:17:05.740 --> 00:17:08.470
+to types. Most IOC containers
+out. All of the ones
+
+304
+00:17:08.470 --> 00:17:11.530
+I know are really very
+heavily bound on, you know,
+
+305
+00:17:11.530 --> 00:17:14.710
+the thing that comes in
+is a type meth actually
+
+306
+00:17:14.710 --> 00:17:17.500
+can work with dynamic languages
+and other kinds of things.
+
+307
+00:17:17.980 --> 00:17:21.580
+I guess the long answer
+to that question is that
+
+308
+00:17:23.080 --> 00:17:26.500
+it's solving a very common
+problem that we haven't had
+
+309
+00:17:26.500 --> 00:17:28.540
+a good answer for in
+the framework. Well, it sounds
+
+310
+00:17:28.540 --> 00:17:31.630
+like at least at Microsoft,
+it solved exactly the right
+
+311
+00:17:31.630 --> 00:17:35.950
+problem because it's an idea
+virus and it's spreading appropriately.
+
+312
+00:17:35.950 --> 00:17:38.230
+So the second thing that
+I think is interesting about,
+
+313
+00:17:38.560 --> 00:17:41.770
+about meth that I've noticed
+internally is that no one
+
+314
+00:17:41.770 --> 00:17:46.630
+seems to care that it's
+open source and you've, and
+
+315
+00:17:46.630 --> 00:17:49.770
+you're developing it in a
+very open way. It's MSPL
+
+316
+00:17:49.770 --> 00:17:53.720
+right. MSPL yes. And It
+was another license at one
+
+317
+00:17:53.720 --> 00:17:56.330
+point, but we're MSBs Yeah,
+well that was, you know,
+
+318
+00:17:56.420 --> 00:17:58.850
+you wouldn't wanna speak about
+that little Schrieffer. I mean,
+
+319
+00:17:59.570 --> 00:18:02.420
+the interesting thing That whole
+thing was like, when I
+
+320
+00:18:02.420 --> 00:18:05.450
+joined them F team, I
+was really hot on, we
+
+321
+00:18:05.450 --> 00:18:06.980
+need to get this out
+there. And there were a
+
+322
+00:18:06.980 --> 00:18:08.900
+bunch of reasons why I
+wanted to get out to
+
+323
+00:18:08.900 --> 00:18:11.240
+code Plex. You know, we've
+been accused as a company
+
+324
+00:18:11.240 --> 00:18:14.090
+of developing things, kind of
+in a cave sometimes. Like
+
+325
+00:18:14.090 --> 00:18:17.390
+there were the only ones.
+And I won't mention examples
+
+326
+00:18:17.630 --> 00:18:20.990
+that, you know, have solved
+this problem. And I knew,
+
+327
+00:18:20.990 --> 00:18:23.150
+especially coming from P and
+P and I've been very
+
+328
+00:18:23.150 --> 00:18:25.700
+involved with like the alt.net
+community and stuff like that,
+
+329
+00:18:25.700 --> 00:18:28.280
+that, you know, this problem
+has been solved before we
+
+330
+00:18:28.280 --> 00:18:31.310
+may be addressing it in
+a different way, but I
+
+331
+00:18:31.310 --> 00:18:34.580
+wanted to make sure that
+the people that were solving
+
+332
+00:18:34.580 --> 00:18:37.190
+the problem knew that, Hey,
+we're not trying to knock
+
+333
+00:18:37.190 --> 00:18:39.440
+you out of the box
+where we're looking to solve
+
+334
+00:18:39.440 --> 00:18:42.650
+a very specific thing, but
+also that we allowed, you
+
+335
+00:18:42.650 --> 00:18:45.230
+know, that Mindshare to pour
+in and say, look, we've
+
+336
+00:18:45.230 --> 00:18:47.720
+been in this space. Why
+don't you do this this
+
+337
+00:18:47.720 --> 00:18:50.630
+way? One great example of
+where that benefited Memphis, the
+
+338
+00:18:50.630 --> 00:18:54.470
+idea of constructor injection, we
+initially were only supporting property
+
+339
+00:18:54.470 --> 00:18:56.900
+injection, which is what most
+of our partners were using.
+
+340
+00:18:57.290 --> 00:19:00.740
+And there was feedback very
+loud and clear on Kristoff
+
+341
+00:19:00.860 --> 00:19:04.100
+Selena's blog. Hey, you guys
+should have constructor injection. We
+
+342
+00:19:04.100 --> 00:19:08.510
+added it only because the
+community said we really want
+
+343
+00:19:08.510 --> 00:19:10.490
+this. So I wanted to
+get it out to code
+
+344
+00:19:10.490 --> 00:19:13.820
+Plex Coming from. And I
+saw a real value in
+
+345
+00:19:13.820 --> 00:19:17.330
+having that visibility out there.
+And in doing it, we
+
+346
+00:19:17.330 --> 00:19:20.900
+had some parts of meth
+that came from other places.
+
+347
+00:19:21.290 --> 00:19:24.860
+And so we had some
+issues around, you know, can
+
+348
+00:19:24.860 --> 00:19:27.020
+we put all the code
+out there? And because of
+
+349
+00:19:27.020 --> 00:19:29.240
+that, we ended up going
+out with a more restrictive
+
+350
+00:19:29.240 --> 00:19:33.290
+license initially, but the goal
+was all good. We wanted
+
+351
+00:19:33.290 --> 00:19:35.840
+to get the code out
+there and be visible. And
+
+352
+00:19:35.840 --> 00:19:39.020
+I got slammed pretty hard
+by that. And I, I
+
+353
+00:19:39.020 --> 00:19:41.670
+respect, you know, it was
+Miguel Causa actually, that, that
+
+354
+00:19:41.990 --> 00:19:44.710
+slammed us because he said,
+yes, You know, the founder
+
+355
+00:19:44.760 --> 00:19:47.000
+of a motto because he
+said, well, now we can't
+
+356
+00:19:47.000 --> 00:19:49.970
+use meth on mono when
+we're not looking to write
+
+357
+00:19:50.150 --> 00:19:52.520
+meth. But of course in
+this particular instance, it was
+
+358
+00:19:52.520 --> 00:19:56.120
+a, an innocent and ignorant
+mistake and you fix it
+
+359
+00:19:56.120 --> 00:19:58.070
+quickly and it's works out.
+So now it's MSP out.
+
+360
+00:19:58.100 --> 00:19:59.780
+That means it's all of
+it. So that means, Well,
+
+361
+00:19:59.780 --> 00:20:02.300
+they're still brooding. Like I
+still see posts that say,
+
+362
+00:20:02.480 --> 00:20:07.160
+ha don't use meth because
+it's poison and it's LPO.
+
+363
+00:20:07.160 --> 00:20:09.320
+And or people say that
+I was trying some kind
+
+364
+00:20:09.320 --> 00:20:12.950
+of marketing thing of watering
+down opensource, Big fan. I
+
+365
+00:20:12.950 --> 00:20:16.040
+think they give you too
+much credit, but it's MSPL.
+
+366
+00:20:16.040 --> 00:20:17.300
+So what does that mean
+to us? I mean, what
+
+367
+00:20:17.300 --> 00:20:19.040
+does that mean to a
+listener who using meth and
+
+368
+00:20:19.040 --> 00:20:20.870
+they're maybe they put it
+into their enterprise. So that
+
+369
+00:20:20.870 --> 00:20:24.050
+means that You're free to
+take the code. You can
+
+370
+00:20:24.050 --> 00:20:27.710
+modify it. It gives the
+mano guys, for example, Miguel
+
+371
+00:20:27.710 --> 00:20:31.070
+already got meth to compile
+on mono in doing that.
+
+372
+00:20:31.070 --> 00:20:33.320
+He had to make a
+slight change because there was
+
+373
+00:20:33.320 --> 00:20:35.840
+a read-write lock. There was
+some kind of lock that
+
+374
+00:20:35.840 --> 00:20:39.230
+we were using internally that
+was not supported on mono
+
+375
+00:20:39.230 --> 00:20:43.250
+2.0 yet. So which they
+were planning to support. But
+
+376
+00:20:43.250 --> 00:20:45.860
+the point was that, and
+he didn't actually do this,
+
+377
+00:20:46.070 --> 00:20:48.490
+but he could make that
+and put that out there
+
+378
+00:20:48.490 --> 00:20:50.770
+and people can use it
+if they want to just
+
+379
+00:20:50.770 --> 00:20:53.530
+like they use other open
+source. Now, when we say
+
+380
+00:20:53.530 --> 00:20:56.080
+it's open source, I mean,
+we're still owning the code.
+
+381
+00:20:56.130 --> 00:20:59.070
+You're not taking commits. We're
+not taking you. It's not
+
+382
+00:20:59.070 --> 00:21:02.940
+open source. It's source opened
+well, but because it's MSPL,
+
+383
+00:21:02.940 --> 00:21:04.710
+if somebody wants, I wanted
+to, they could take the
+
+384
+00:21:04.710 --> 00:21:07.680
+entire method code base and
+copy it into meth contrib,
+
+385
+00:21:08.010 --> 00:21:10.590
+and the community could start
+branching it if they wanted
+
+386
+00:21:10.590 --> 00:21:13.890
+to. We wouldn't pull that
+back though. Things, have you
+
+387
+00:21:13.890 --> 00:21:15.990
+seen people do people as
+they would made any major
+
+388
+00:21:15.990 --> 00:21:18.840
+changes to meth? So the
+biggest one right now, if
+
+389
+00:21:18.840 --> 00:21:21.930
+I call out is a
+guy who has Twitter is
+
+390
+00:21:21.930 --> 00:21:25.860
+the code junkie. His name
+is Andreas forgetting his last
+
+391
+00:21:25.860 --> 00:21:28.470
+name. Now, for some reason,
+he's built a version of
+
+392
+00:21:28.480 --> 00:21:31.410
+a program. So meth has
+these programming models. And on
+
+393
+00:21:31.410 --> 00:21:33.240
+one of them we have
+is the attribute model. I
+
+394
+00:21:33.240 --> 00:21:35.850
+was describing that. And because
+we've decoupled it in the
+
+395
+00:21:35.850 --> 00:21:38.250
+way we have, you can
+write your own entirely new
+
+396
+00:21:38.250 --> 00:21:41.970
+model, like for Python, that
+doesn't support attributes. Well, he's
+
+397
+00:21:41.970 --> 00:21:46.080
+gone and built a model
+that's completely configuration driven because
+
+398
+00:21:46.080 --> 00:21:48.510
+he wants to use meth.
+Meth has a bunch of
+
+399
+00:21:48.510 --> 00:21:52.500
+capabilities beyond just the traditional
+of, I get a type
+
+400
+00:21:52.830 --> 00:21:56.130
+a thing. Like I can
+add metadata. I can lazy
+
+401
+00:21:56.130 --> 00:21:58.950
+instantiate and lazy load. And
+this is all because we
+
+402
+00:21:58.950 --> 00:22:02.250
+were trying to support these
+scenarios like visual studio and
+
+403
+00:22:02.250 --> 00:22:04.920
+such like that. Well, so
+he wants to leverage that
+
+404
+00:22:04.920 --> 00:22:08.070
+within his app, but he
+wants to have control over
+
+405
+00:22:08.070 --> 00:22:11.340
+the set of finite things
+that are getting created. And
+
+406
+00:22:11.340 --> 00:22:14.430
+he doesn't want to have
+to put attributes on there.
+
+407
+00:22:14.430 --> 00:22:16.950
+He wants to be pure
+poco. So he built his
+
+408
+00:22:16.950 --> 00:22:20.070
+own model, meaning plain old
+CLR objects, plain old CLR
+
+409
+00:22:20.070 --> 00:22:22.020
+objects. He built his own
+model, which is about to
+
+410
+00:22:22.020 --> 00:22:25.260
+go live on meth contrib,
+which will allow customers to
+
+411
+00:22:25.260 --> 00:22:28.440
+go and configure meth completely
+through configuration. All right. So
+
+412
+00:22:28.440 --> 00:22:30.000
+I feel it's still a
+little bit like we've been
+
+413
+00:22:30.000 --> 00:22:32.400
+talking in abstracts and we
+may have actually lost people.
+
+414
+00:22:32.400 --> 00:22:34.560
+So if there's anyone who's
+still actually listening at this
+
+415
+00:22:34.560 --> 00:22:37.710
+point, why don't we talk
+about what we did with
+
+416
+00:22:37.710 --> 00:22:40.530
+the baby smash demo? I
+need to get that code
+
+417
+00:22:40.530 --> 00:22:43.500
+out. This was a demo
+that we did at PDC.
+
+418
+00:22:43.920 --> 00:22:47.280
+And if you go and
+Google around for TL 49,
+
+419
+00:22:47.760 --> 00:22:50.640
+you'll see a, my talk
+at PDC and I had
+
+420
+00:22:50.640 --> 00:22:52.140
+a little meth bit in
+the beginning. And do you
+
+421
+00:22:52.140 --> 00:22:55.110
+remember the code for your
+talk at PDC? A TL
+
+422
+00:22:55.110 --> 00:22:57.480
+33, I believe you know,
+33 and then you'll see.
+
+423
+00:22:57.870 --> 00:23:00.030
+Glen's very good talk on
+meth. So one of the
+
+424
+00:23:00.030 --> 00:23:02.490
+things that we did it
+took, I think maybe four
+
+425
+00:23:02.490 --> 00:23:05.160
+hours was I w I
+just made a little quick
+
+426
+00:23:05.160 --> 00:23:08.220
+prototype of baby smash, maybe
+smash this my little toddler
+
+427
+00:23:08.220 --> 00:23:10.590
+game that lets kids slap
+on the keyboard and put
+
+428
+00:23:10.590 --> 00:23:14.310
+shapes on the screen. And
+the idea was that Jason Olson,
+
+429
+00:23:14.460 --> 00:23:17.790
+who's a Microsoft employee and
+MF fan. And I would
+
+430
+00:23:18.000 --> 00:23:22.860
+basically swap out the shapes
+and I had, everything was
+
+431
+00:23:22.860 --> 00:23:25.020
+hard coded. I was Newing
+up the shapes. I had
+
+432
+00:23:25.020 --> 00:23:29.460
+a rudimentary shape factory that
+made random shapes, and he
+
+433
+00:23:29.460 --> 00:23:31.260
+wanted to be able to
+change those to an entirely
+
+434
+00:23:31.260 --> 00:23:34.770
+different shape. So kind of
+walk me through the process
+
+435
+00:23:34.770 --> 00:23:38.850
+here. So, As we mentioned
+before, meth has a concept
+
+436
+00:23:38.850 --> 00:23:42.870
+of parts imports and exports.
+W what you guys did
+
+437
+00:23:42.870 --> 00:23:46.670
+is you created a thing
+called smash packs. So if
+
+438
+00:23:46.670 --> 00:23:48.800
+you'd start off, you'd say,
+okay, I've got an app
+
+439
+00:23:49.070 --> 00:23:51.560
+that app wants to be
+able to get smashed packs.
+
+440
+00:23:51.680 --> 00:23:54.560
+So immediately that's going to,
+from a math perspective, going
+
+441
+00:23:54.560 --> 00:23:57.560
+to say, okay, somebody in
+the app is going to
+
+442
+00:23:57.560 --> 00:24:00.530
+need to be importing smashed
+packs. I think in your
+
+443
+00:24:00.530 --> 00:24:03.100
+case, you did an ice
+smash pack. I think we
+
+444
+00:24:03.100 --> 00:24:05.020
+ended up doing, we ended
+up doing just at the
+
+445
+00:24:05.020 --> 00:24:07.420
+shape level, and then the
+goal is to go, and
+
+446
+00:24:07.450 --> 00:24:11.140
+<inaudible> everything we're going to
+do audio for the demo.
+
+447
+00:24:11.140 --> 00:24:15.760
+We did just these shapes.
+So basically shapes would come
+
+448
+00:24:15.760 --> 00:24:17.770
+from somewhere else. We needed
+shapes. That was I think
+
+449
+00:24:17.770 --> 00:24:20.620
+our import. Yep. Yup. So
+the way math works is
+
+450
+00:24:20.620 --> 00:24:25.330
+really easy. You define a
+contract like an interface, you
+
+451
+00:24:25.330 --> 00:24:28.270
+basically say, okay, I'm going
+to have a collection property,
+
+452
+00:24:28.270 --> 00:24:30.310
+which is a collection of
+providers. And I'm going to
+
+453
+00:24:30.310 --> 00:24:32.950
+put an import attribute on
+that. Then what I'm going
+
+454
+00:24:32.950 --> 00:24:35.230
+to have is a set
+of assemblies that are going
+
+455
+00:24:35.230 --> 00:24:38.770
+to reference that shared contract
+that are going to say,
+
+456
+00:24:38.770 --> 00:24:42.190
+okay, here's my available smashed
+packs, right? Or providers or
+
+457
+00:24:42.190 --> 00:24:44.650
+whatever we come up with.
+Then the thing that brings
+
+458
+00:24:44.650 --> 00:24:47.500
+the glue together is you
+create a thing called a
+
+459
+00:24:47.500 --> 00:24:50.230
+catalog. Right now, remember that
+we created a catalog and
+
+460
+00:24:50.230 --> 00:24:52.690
+it was important to us
+that for the demo that
+
+461
+00:24:52.690 --> 00:24:56.020
+we take a DLL and
+while the app was still
+
+462
+00:24:56.020 --> 00:25:00.070
+running, we drop the DLL
+into the bin folder. So
+
+463
+00:25:00.160 --> 00:25:02.200
+I hate to tell you
+this, but we're actually going
+
+464
+00:25:02.200 --> 00:25:05.080
+to pull that functionality. Oh,
+you're killing me. Well, the
+
+465
+00:25:05.080 --> 00:25:09.220
+reason is it's great demo
+where practically, well, it's dangerous
+
+466
+00:25:09.220 --> 00:25:11.950
+practice. It doesn't work out
+very well. It has lots
+
+467
+00:25:11.950 --> 00:25:15.100
+of problems. And the reason
+is that functionality depends on
+
+468
+00:25:15.100 --> 00:25:18.790
+the underlying file notification watcher.
+You know, the false system
+
+469
+00:25:18.790 --> 00:25:22.000
+watch your API and which,
+what it does is as
+
+470
+00:25:22.000 --> 00:25:24.580
+soon as a file shows
+up, it says, Oh, it's
+
+471
+00:25:24.580 --> 00:25:27.010
+there. I'll grab it. The
+problem with that is let's
+
+472
+00:25:27.010 --> 00:25:29.200
+say that you drop an
+assembly that has a dependency
+
+473
+00:25:29.200 --> 00:25:32.650
+on another assembly. Well, now,
+and almost every time I've
+
+474
+00:25:32.650 --> 00:25:34.780
+demoed this feature, I think
+you've been the only person
+
+475
+00:25:34.780 --> 00:25:38.170
+I've seen. Who's successfully demoed
+it without it failing once.
+
+476
+00:25:38.440 --> 00:25:41.290
+And I saw you did
+the batch file trick, but,
+
+477
+00:25:41.710 --> 00:25:44.530
+but anyway, yeah, you create
+a thing called a directory
+
+478
+00:25:44.530 --> 00:25:47.470
+part catalog, and that directory,
+we we're actually going to
+
+479
+00:25:47.470 --> 00:25:50.020
+call it a directory catalog
+just to simplify it. You
+
+480
+00:25:50.020 --> 00:25:52.960
+pointed out a folder, it
+streams through assemblies. Now, how
+
+481
+00:25:52.960 --> 00:25:56.530
+is it finding those contracts
+that you specified? Well, it's
+
+482
+00:25:56.530 --> 00:25:58.870
+not just looking for the
+type and saying, Oh, you
+
+483
+00:25:58.870 --> 00:26:01.780
+used an eye thing. I'll
+just pick it up. We
+
+484
+00:26:01.780 --> 00:26:05.980
+use a Lang a declarative
+language. This is essentially that
+
+485
+00:26:05.980 --> 00:26:08.980
+if I want something, I
+put an import attribute. And
+
+486
+00:26:08.980 --> 00:26:11.620
+if I have something available,
+I put an export attribute.
+
+487
+00:26:11.830 --> 00:26:14.440
+So when each of those
+assemblies that represent your smash
+
+488
+00:26:14.440 --> 00:26:17.200
+packs, you would have some
+kind of like, you know,
+
+489
+00:26:17.200 --> 00:26:21.460
+my family smashed pack provider,
+right. That implements, I smashed
+
+490
+00:26:21.460 --> 00:26:24.190
+pack provider. And then on
+top of it, it would
+
+491
+00:26:24.190 --> 00:26:27.940
+have an export attribute. And
+that expert attribute says, I
+
+492
+00:26:27.940 --> 00:26:31.390
+smashed pack provider. The beauty
+of Memphis is that let's
+
+493
+00:26:31.390 --> 00:26:34.210
+say I did that. And
+now it works. And suddenly
+
+494
+00:26:34.210 --> 00:26:35.920
+you say, you know what?
+I want to open up
+
+495
+00:26:35.950 --> 00:26:38.440
+my smash pack providers so
+they can get some additional
+
+496
+00:26:38.440 --> 00:26:41.440
+information back from the app.
+It's not just the host
+
+497
+00:26:41.440 --> 00:26:44.340
+loads it, and it does
+its thing. Well, now that
+
+498
+00:26:44.340 --> 00:26:47.550
+smashed back provider can start
+adding its own import attributes
+
+499
+00:26:47.730 --> 00:26:50.790
+to pull back. And when
+it's pulling back, it doesn't
+
+500
+00:26:50.790 --> 00:26:52.860
+know where it's coming from.
+It might be coming from
+
+501
+00:26:52.860 --> 00:26:55.770
+an assembly that's sitting right
+next door that has an
+
+502
+00:26:55.770 --> 00:26:58.470
+extension, or it might be
+coming from the app. It's
+
+503
+00:26:58.470 --> 00:27:00.860
+definitely very, very simple. You
+know, is that a solution
+
+504
+00:27:00.860 --> 00:27:03.980
+to what might ordinarily be
+a circular, circular reference, or
+
+505
+00:27:03.980 --> 00:27:07.820
+maybe a very well kind
+of, I mean, that's not
+
+506
+00:27:07.820 --> 00:27:10.820
+a similar perspective. Well, no,
+because you have a contract
+
+507
+00:27:10.820 --> 00:27:13.580
+you've removed the circular reference
+in the sense that, yeah,
+
+508
+00:27:13.730 --> 00:27:15.860
+I don't have a dependency
+on this guy and he
+
+509
+00:27:15.860 --> 00:27:18.740
+doesn't then have a dependency
+on me, but the idea
+
+510
+00:27:18.740 --> 00:27:22.160
+is with meth, you've really
+broken that whole notion of
+
+511
+00:27:22.160 --> 00:27:25.850
+who the, who the provider
+of the thing is ignorance
+
+512
+00:27:25.850 --> 00:27:27.980
+is bliss. It's complete bliss.
+It's like, I call a
+
+513
+00:27:27.980 --> 00:27:30.620
+web service, right. I just
+call a method. And I
+
+514
+00:27:30.620 --> 00:27:32.150
+know that it's going to
+get more. I don't care.
+
+515
+00:27:32.150 --> 00:27:34.220
+Who's on the other side,
+I just know that they
+
+516
+00:27:34.220 --> 00:27:37.880
+satisfy the contract. It's the
+same idea of meth. That
+
+517
+00:27:37.880 --> 00:27:42.470
+actually means though, that meth
+apps are our work well
+
+518
+00:27:42.680 --> 00:27:44.930
+from a, you know, in
+terms of being designed from
+
+519
+00:27:44.930 --> 00:27:49.490
+a testability aspect, because I
+don't know who I'm asking
+
+520
+00:27:49.490 --> 00:27:53.540
+for. That means if it's
+some mock thing I don't
+
+521
+00:27:53.540 --> 00:27:57.020
+know. Right. So ultimately your
+applications, they care about what
+
+522
+00:27:57.020 --> 00:27:59.720
+they care about. They care
+about what they care about.
+
+523
+00:27:59.780 --> 00:28:01.640
+They don't care about How
+do you get it. They
+
+524
+00:28:01.640 --> 00:28:04.370
+don't care about what it
+actually is Or how, or
+
+525
+00:28:04.370 --> 00:28:07.550
+where they care about what
+exactly you focus on the
+
+526
+00:28:07.550 --> 00:28:10.460
+words, which, which actually gets
+to the solid principles. I
+
+527
+00:28:10.460 --> 00:28:12.020
+hope you saw the show
+with the uncle. Bob, you
+
+528
+00:28:12.020 --> 00:28:15.530
+think about things like single
+responsibilities, dependency and version more
+
+529
+00:28:15.530 --> 00:28:17.420
+and more. I'm looking at
+my objects and I'm saying
+
+530
+00:28:17.780 --> 00:28:20.840
+he knows way too much
+about what's going on. And
+
+531
+00:28:20.840 --> 00:28:22.460
+he knew it a long
+time and he knew it
+
+532
+00:28:22.460 --> 00:28:25.340
+early on. Right. You knew
+what the constructor and just
+
+533
+00:28:25.430 --> 00:28:27.620
+in order to do in
+order for some property to
+
+534
+00:28:27.620 --> 00:28:30.830
+have some tiny little bit
+of knowledge, suddenly just little
+
+535
+00:28:30.830 --> 00:28:34.250
+bits of perversion have sprinkled
+its way into my design.
+
+536
+00:28:34.460 --> 00:28:37.340
+So then something like meth
+would just kind of remove
+
+537
+00:28:37.340 --> 00:28:41.000
+that. Let somebody else be
+the, the one that knows
+
+538
+00:28:41.000 --> 00:28:44.240
+too much. Exactly. But you
+know, but I don't want
+
+539
+00:28:44.240 --> 00:28:46.610
+to make it like you
+should use meth for every
+
+540
+00:28:46.610 --> 00:28:49.850
+single type, every single thing.
+I mean, it's, it's designed
+
+541
+00:28:49.850 --> 00:28:52.520
+to do a very specific
+thing, use it for what
+
+542
+00:28:52.520 --> 00:28:54.500
+it was built for and
+that, and when we've had
+
+543
+00:28:54.500 --> 00:28:58.280
+these conversations about kind of
+integrating with like IOC containers,
+
+544
+00:28:58.280 --> 00:29:01.340
+like unity it's been, or
+Autofac, which Nick was the
+
+545
+00:29:01.340 --> 00:29:03.920
+first one to prototype that
+it's been under the same
+
+546
+00:29:03.920 --> 00:29:06.530
+context, I'm going to use
+meth for what it's good
+
+547
+00:29:06.530 --> 00:29:08.240
+for. I'm going to use
+these other things for what
+
+548
+00:29:08.240 --> 00:29:10.880
+they're good for. So where
+do people get more information
+
+549
+00:29:10.880 --> 00:29:12.800
+on meth and more importantly,
+where can they see actual
+
+550
+00:29:12.800 --> 00:29:15.680
+sample code that's gonna help
+it really gel for them.
+
+551
+00:29:16.550 --> 00:29:19.070
+So if you go to
+our code Plex site code,
+
+552
+00:29:19.070 --> 00:29:24.230
+plex.com/math, math is available with
+full source. We're committed. Although
+
+553
+00:29:24.230 --> 00:29:27.050
+we actually just for customers
+to know, we will be
+
+554
+00:29:27.050 --> 00:29:30.620
+shipping in the.net framework for
+AU, but we're committed to
+
+555
+00:29:30.620 --> 00:29:32.360
+keep the source out there.
+And we're going to keep
+
+556
+00:29:32.360 --> 00:29:35.030
+it out there on three
+five, even though we're planning
+
+557
+00:29:35.030 --> 00:29:38.930
+to take some FORO specific
+dependencies and we're doing that
+
+558
+00:29:38.930 --> 00:29:41.060
+for the community. So they
+have access to the code.
+
+559
+00:29:41.140 --> 00:29:44.620
+Cetera, there are samples, there,
+there is a Wiki. We've
+
+560
+00:29:44.620 --> 00:29:47.350
+not really gone as far
+with the Wiki as we
+
+561
+00:29:47.350 --> 00:29:51.160
+should. You can ping us
+and say, please add additional.
+
+562
+00:29:51.160 --> 00:29:53.260
+And hopefully we'll get off
+our butts and get it
+
+563
+00:29:53.260 --> 00:29:56.650
+done. But we, we, but
+there's enough out there to
+
+564
+00:29:56.650 --> 00:29:58.930
+get the basics. Like what
+is an export? What's an
+
+565
+00:29:58.930 --> 00:30:01.780
+important, you'll find some samples
+here as well. Plus there's
+
+566
+00:30:01.780 --> 00:30:03.820
+a bunch of bloggers that
+have been blogging on that,
+
+567
+00:30:03.820 --> 00:30:07.030
+but we have some links
+to, you know, to some
+
+568
+00:30:07.030 --> 00:30:08.860
+of those different posts that
+are out there. And I
+
+569
+00:30:08.860 --> 00:30:12.780
+suspect there'll be one on
+your blog very soon. I
+
+570
+00:30:12.780 --> 00:30:15.180
+think it's time to get
+the dispatch packs finished up.
+
+571
+00:30:16.020 --> 00:30:18.330
+Cool. Well, thanks so much.
+Glen block was her manager
+
+572
+00:30:18.330 --> 00:30:20.670
+on meth. Her talking to
+me today, this has been
+
+573
+00:30:20.670 --> 00:30:23.160
+another episode of Hansel minutes
+and I'll see you again
+
+574
+00:30:23.160 --> 00:30:23.670
+next week.
+

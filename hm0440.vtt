@@ -1,0 +1,3062 @@
+WEBVTT FILE
+
+1
+00:00:00.810 --> 00:00:03.930
+Hi, this is Scott. I
+really appreciate our sponsors because
+
+2
+00:00:03.930 --> 00:00:07.260
+they make the show possible.
+Today's show is sponsored by
+
+3
+00:00:07.260 --> 00:00:11.520
+Tellerik create compelling app experiences
+across any screen with the
+
+4
+00:00:11.520 --> 00:00:16.380
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
+
+5
+00:00:16.380 --> 00:00:20.070
+leading UI tools with cloud
+services to simplify the entire
+
+6
+00:00:20.070 --> 00:00:24.570
+app development cycle Tellerik offers
+everything.net developers need to build
+
+7
+00:00:24.570 --> 00:00:33.960
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform
+
+8
+00:00:46.950 --> 00:00:52.290
+from hanselminutes.com. It's Hanselman that's
+our weekly discussion with web
+
+9
+00:00:52.290 --> 00:00:56.850
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
+
+10
+00:00:56.850 --> 00:01:01.500
+number four 43. In this
+episode, Scott talks with IIE
+
+11
+00:01:01.860 --> 00:01:08.640
+about the sass CSS preprocessor.
+Hi, this is Scott Hanselman.
+
+12
+00:01:08.640 --> 00:01:10.440
+This is another episode of
+Hansel minutes, and I'm here
+
+13
+00:01:10.440 --> 00:01:14.460
+at Len comp in North Carolina,
+and I'm talking with Claudina
+
+14
+00:01:14.820 --> 00:01:17.850
+<inaudible> and I get that
+right. Thank you so much.
+
+15
+00:01:18.210 --> 00:01:22.320
+And you gave a workshop
+at this conference on SAS
+
+16
+00:01:23.100 --> 00:01:25.820
+for hours. You talked about
+sex Three. You can give
+
+17
+00:01:25.820 --> 00:01:28.450
+me that extra credit. Okay.
+Absolutely. That extra freedom. You
+
+18
+00:01:28.610 --> 00:01:30.680
+could even probably spend a
+week talking about it. I
+
+19
+00:01:30.680 --> 00:01:32.390
+could, yeah, I could. I
+could spend a week. It's
+
+20
+00:01:32.390 --> 00:01:34.790
+been a day, at least
+for the workshop. You definitely
+
+21
+00:01:34.790 --> 00:01:36.800
+need a lot of time.
+It's too much too much
+
+22
+00:01:36.800 --> 00:01:39.740
+to get into. Yeah, it
+seems like there. And I
+
+23
+00:01:39.740 --> 00:01:41.690
+think that people who are
+programmers like to say that
+
+24
+00:01:41.690 --> 00:01:44.000
+there's two kinds of people
+in the world, in whatever
+
+25
+00:01:44.060 --> 00:01:46.820
+situation, I feel like there's
+people who write CSS and
+
+26
+00:01:46.820 --> 00:01:49.460
+there's people who really architected
+that people craft it and
+
+27
+00:01:49.460 --> 00:01:53.450
+who care about it. Why
+is there that dichotomy between
+
+28
+00:01:53.450 --> 00:01:55.310
+the people that you just
+bang out, sip cm, CSS
+
+29
+00:01:55.370 --> 00:02:00.260
+versus people who make well
+modularized, thoughtful, large scale CSS?
+
+30
+00:02:00.560 --> 00:02:03.950
+Well, I think we're actually
+at the time where we
+
+31
+00:02:03.950 --> 00:02:06.830
+can actually architect CSS and
+this is what preprocessor is,
+
+32
+00:02:06.830 --> 00:02:09.260
+have allowed us to do.
+And prior to that, it
+
+33
+00:02:09.260 --> 00:02:14.390
+was difficult. It wasn't impossible.
+And Nicole Sullivan came out with,
+
+34
+00:02:14.420 --> 00:02:17.510
+Oh, CSS as a convention
+for starting to do this
+
+35
+00:02:17.510 --> 00:02:19.970
+with, with what we had,
+which was class names in
+
+36
+00:02:19.980 --> 00:02:25.190
+a CSS file, but CSS
+is a very flat language.
+
+37
+00:02:25.220 --> 00:02:27.250
+So what can you do
+with that? You know, like
+
+38
+00:02:27.740 --> 00:02:30.770
+you need more dynamic tools.
+So these P processors have
+
+39
+00:02:30.770 --> 00:02:33.980
+really opened the door for
+it, but we're dealing with
+
+40
+00:02:33.980 --> 00:02:38.300
+this sort of baggage of
+development where we weren't really
+
+41
+00:02:38.300 --> 00:02:41.900
+thinking like architects or weren't
+really designing our systems. So
+
+42
+00:02:41.900 --> 00:02:44.060
+that's the new hurdle to
+get around on top of
+
+43
+00:02:44.060 --> 00:02:47.030
+now having to learn this
+new language. So those are
+
+44
+00:02:47.030 --> 00:02:49.700
+the challenges When I've created
+CSS and I'm not a
+
+45
+00:02:49.700 --> 00:02:51.260
+designer, but I can, you
+know, I can hack my
+
+46
+00:02:51.260 --> 00:02:53.980
+way around a decent site
+and I've done CSS on
+
+47
+00:02:53.990 --> 00:02:57.770
+all of my, my sites.
+They I've either done it.
+
+48
+00:02:57.770 --> 00:03:00.580
+Two ways started from a
+page or like a reset
+
+49
+00:03:00.610 --> 00:03:03.490
+CSS and then gone from
+there and done my best
+
+50
+00:03:03.490 --> 00:03:04.990
+to build something. And then
+I got it to a
+
+51
+00:03:04.990 --> 00:03:07.450
+point where it was nice
+and then a week or
+
+52
+00:03:07.450 --> 00:03:09.340
+two goes by and I
+need to make a change.
+
+53
+00:03:09.760 --> 00:03:11.620
+And inevitably that changed and
+sticking out the bottom. And
+
+54
+00:03:11.620 --> 00:03:14.920
+then it's a line at
+the bottom. So fast forward
+
+55
+00:03:14.920 --> 00:03:20.080
+four years, I think there's
+more at the bottom than
+
+56
+00:03:20.080 --> 00:03:22.960
+there ever was before, but
+I'm afraid to touch it
+
+57
+00:03:23.860 --> 00:03:26.470
+the bottom of your, you
+know, like the entire file.
+
+58
+00:03:26.890 --> 00:03:29.500
+I'm just like, it works
+right. It cascades. And, you
+
+59
+00:03:29.500 --> 00:03:31.420
+know, I could rearrange the
+thing and it might just
+
+60
+00:03:31.420 --> 00:03:34.660
+stop working because something might
+override something else and you're
+
+61
+00:03:34.660 --> 00:03:36.280
+just going to leave it
+be, and it's all in
+
+62
+00:03:36.280 --> 00:03:40.210
+like, you know, site dot
+CSS, save me. What did
+
+63
+00:03:40.210 --> 00:03:45.030
+I do? Where did I
+go wrong? Well, I read
+
+64
+00:03:46.260 --> 00:03:47.910
+What I'm saying is that,
+do I start with like
+
+65
+00:03:47.910 --> 00:03:49.770
+a master dot CSS? And
+then just get to a
+
+66
+00:03:49.770 --> 00:03:51.300
+point where I like, I
+need to start breaking this
+
+67
+00:03:51.300 --> 00:03:55.110
+up into pieces, The process
+for sort of coming into
+
+68
+00:03:55.200 --> 00:03:58.650
+antecessor rearchitect rearchitecting a file.
+Yeah. I think like if
+
+69
+00:03:58.650 --> 00:04:01.050
+I'm starting in a Greenfield
+development or I'm writing it
+
+70
+00:04:01.050 --> 00:04:03.630
+from scratch, right? Cause most
+CSS people have, I have
+
+71
+00:04:03.630 --> 00:04:05.730
+talked to say that if
+it gets into a rat's
+
+72
+00:04:05.730 --> 00:04:08.400
+nest, just really don't try
+to rearchitect it, know how
+
+73
+00:04:08.400 --> 00:04:10.800
+to refactor it. Just think,
+think of it as a
+
+74
+00:04:10.800 --> 00:04:13.680
+reference, get rid of it
+and start from scratch and
+
+75
+00:04:13.680 --> 00:04:15.600
+then write it and you'll
+find it it'll be smaller.
+
+76
+00:04:15.600 --> 00:04:18.360
+It's almost like if you
+lose a term paper, you
+
+77
+00:04:18.360 --> 00:04:20.430
+can mourn the paper. You
+can try to recover the
+
+78
+00:04:20.430 --> 00:04:22.200
+paper. But frankly, if you
+just write it again, the
+
+79
+00:04:22.200 --> 00:04:24.420
+second time it's going to
+be better. Yeah. You know,
+
+80
+00:04:24.420 --> 00:04:26.250
+I actually have had a
+lot of discussions with sort
+
+81
+00:04:26.250 --> 00:04:29.010
+of this idea of refactoring
+with the Gina Bolton and
+
+82
+00:04:29.010 --> 00:04:31.740
+Elise holiday. And, and the
+truth is that not everyone
+
+83
+00:04:31.740 --> 00:04:36.210
+can throw away their giant
+crazy sites dot CSS files.
+
+84
+00:04:36.540 --> 00:04:39.450
+We had a woman yesterday
+in the workshop who was
+
+85
+00:04:39.450 --> 00:04:40.920
+like, this is great. You
+know, we have this giant
+
+86
+00:04:40.920 --> 00:04:43.920
+file and I have to
+figure out how to like
+
+87
+00:04:44.010 --> 00:04:46.920
+port our CSS to SAS.
+And so one of the
+
+88
+00:04:46.920 --> 00:04:48.630
+things I started out with,
+which I think is really
+
+89
+00:04:48.630 --> 00:04:50.670
+important and this sort of,
+one of the areas where
+
+90
+00:04:50.670 --> 00:04:54.120
+we can get the most
+gain is how you organize
+
+91
+00:04:54.120 --> 00:04:56.850
+your file directory with SAS,
+because it is new. We
+
+92
+00:04:56.850 --> 00:05:00.150
+no longer have this monolithic
+site dot CSS or screen
+
+93
+00:05:00.150 --> 00:05:02.910
+or Maine. We now have
+these tiny little partials where
+
+94
+00:05:02.910 --> 00:05:05.400
+we can put things into,
+but again, what do you
+
+95
+00:05:05.400 --> 00:05:08.550
+put into it and what
+goes in there? So I
+
+96
+00:05:08.550 --> 00:05:12.120
+spent some time definitely talking
+about that. And I think,
+
+97
+00:05:12.180 --> 00:05:14.820
+I mean, my approach when
+you're dealing with refactoring would
+
+98
+00:05:14.820 --> 00:05:20.790
+be follow this sort of
+organization, which I modified from
+
+99
+00:05:20.820 --> 00:05:23.790
+Dale, Sandy, who's done a
+really good job thinking about
+
+100
+00:05:23.790 --> 00:05:26.520
+ways to what he calls,
+avoid your SAS junk drawer.
+
+101
+00:05:27.120 --> 00:05:29.820
+And then through my work
+at odd bird and our
+
+102
+00:05:29.820 --> 00:05:34.140
+little experiments, we've modified this
+and Is this something we
+
+103
+00:05:34.140 --> 00:05:36.780
+can get to? Is this
+on get hub? Yeah, it's
+
+104
+00:05:36.780 --> 00:05:41.730
+in my, do you have
+links to it? Awesome. Awesome.
+
+105
+00:05:41.730 --> 00:05:43.530
+I will give you a
+link, a link to it,
+
+106
+00:05:43.560 --> 00:05:48.810
+but yeah, I would start
+out by really like the
+
+107
+00:05:48.810 --> 00:05:51.150
+thing about SAS is you
+have this, this directory, which
+
+108
+00:05:51.150 --> 00:05:53.670
+is like your base, which
+is finally sort of setting
+
+109
+00:05:53.670 --> 00:05:56.400
+up your variables and the
+things that you need, like
+
+110
+00:05:56.400 --> 00:05:58.280
+setting up your tools that
+you need to build all
+
+111
+00:05:58.280 --> 00:06:04.460
+your other components. And so
+a refactoring adventure for me
+
+112
+00:06:04.460 --> 00:06:07.400
+might be looking at that
+monolithic CSS thing and being
+
+113
+00:06:07.400 --> 00:06:11.690
+like, okay, these are sort
+of grouped together. And these
+
+114
+00:06:11.690 --> 00:06:15.680
+form, like my author section,
+and then I would yank
+
+115
+00:06:15.680 --> 00:06:19.340
+that out into its own
+partial and keep doing that
+
+116
+00:06:19.340 --> 00:06:21.500
+until I've got sort of
+an idea of what the
+
+117
+00:06:21.500 --> 00:06:24.890
+separate components are. And then
+from there you can continue
+
+118
+00:06:24.890 --> 00:06:27.320
+down your refactoring adventure to
+make it more and more
+
+119
+00:06:27.470 --> 00:06:30.520
+sassy. So, okay. So then
+I could take, like, these
+
+120
+00:06:30.520 --> 00:06:32.920
+are all colors that are
+associated with this brand and
+
+121
+00:06:32.920 --> 00:06:35.230
+then those would be like
+a colors. Yup. And then
+
+122
+00:06:35.230 --> 00:06:38.740
+I would move that into
+like colors dot config file.
+
+123
+00:06:38.740 --> 00:06:40.510
+And I would say these
+are all my colors and
+
+124
+00:06:40.510 --> 00:06:43.210
+they're here and these are
+all my font stuff in
+
+125
+00:06:43.210 --> 00:06:46.870
+there here. And we have,
+we do some stuff with
+
+126
+00:06:46.870 --> 00:06:49.360
+sizing to try to keep
+those pretty consistent so that
+
+127
+00:06:49.360 --> 00:06:51.910
+you're not Okay. So that's
+interesting. So you're saying like
+
+128
+00:06:51.940 --> 00:06:53.440
+the size of like a
+button and you want it
+
+129
+00:06:53.440 --> 00:06:56.560
+to be the same everywhere.
+Yeah. We actually have little
+
+130
+00:06:56.560 --> 00:06:59.140
+helpers for sizing that we
+use for like even margin
+
+131
+00:06:59.140 --> 00:07:01.870
+or padding. And they're very
+simple. We have three names.
+
+132
+00:07:01.900 --> 00:07:04.060
+Shim is the tiniest and
+then we have gutter and
+
+133
+00:07:04.060 --> 00:07:06.610
+column and it's just, you
+start to think that way
+
+134
+00:07:06.610 --> 00:07:08.620
+you're like, then this space
+I want small and in
+
+135
+00:07:08.620 --> 00:07:10.870
+this one I want a
+little larger. Okay. So you're
+
+136
+00:07:10.870 --> 00:07:14.260
+saying to keep, I can
+understand like the obvious stuff,
+
+137
+00:07:14.290 --> 00:07:17.740
+like, okay. You know, consolidate
+my colors, but consolidating my,
+
+138
+00:07:17.850 --> 00:07:23.050
+my white space almost into
+its own a partial <inaudible>
+
+139
+00:07:23.080 --> 00:07:27.610
+okay. Sizing tool. Yeah. Sizing
+tool. Let's let me back
+
+140
+00:07:27.610 --> 00:07:28.750
+up a little bit for
+some of the people who
+
+141
+00:07:28.750 --> 00:07:32.230
+are more kind of SAS
+one-on-one type people. It's a
+
+142
+00:07:32.230 --> 00:07:36.010
+it's, it's a preprocessor. So
+it effectively elevate CSS to
+
+143
+00:07:36.010 --> 00:07:39.940
+a, kind of a full
+programming language that compiles into
+
+144
+00:07:39.940 --> 00:07:43.720
+a target, which where that
+target is CSS and as
+
+145
+00:07:43.720 --> 00:07:46.570
+such, I can plug different
+things into it. Yeah. It
+
+146
+00:07:46.570 --> 00:07:49.270
+actually, I think one of
+the coolest things that's happened
+
+147
+00:07:49.270 --> 00:07:52.090
+with the recent advance in
+SaaS is we have SAS
+
+148
+00:07:52.090 --> 00:07:55.720
+maps and maps are a
+hash or array, very common
+
+149
+00:07:55.720 --> 00:07:58.690
+to any other programming language.
+Some brilliant people in SaaS
+
+150
+00:07:58.690 --> 00:08:01.330
+have written extensions that allow
+you to actually take your
+
+151
+00:08:01.330 --> 00:08:04.810
+sass map and convert it
+to Jason, which is crazy,
+
+152
+00:08:04.840 --> 00:08:08.110
+which now means that you
+can convert CSS to Jason,
+
+153
+00:08:08.260 --> 00:08:11.890
+which is an interchangeable data
+format that allows you to
+
+154
+00:08:11.890 --> 00:08:14.590
+now communicate with any language.
+And I'm not sure how
+
+155
+00:08:14.590 --> 00:08:17.590
+I'm supposed to feel about
+that. That's pretty, mind-bending, It's
+
+156
+00:08:17.680 --> 00:08:20.860
+pretty awesome. It's really great
+for style guides, actually, this
+
+157
+00:08:21.040 --> 00:08:24.940
+for making maintainable style guides
+in the sense that one
+
+158
+00:08:24.940 --> 00:08:26.950
+of the things that front
+end people bemoan is like,
+
+159
+00:08:26.980 --> 00:08:28.540
+Oh, I've added a new
+color. And now I have
+
+160
+00:08:28.540 --> 00:08:30.460
+to go to my style
+guide and like copy and
+
+161
+00:08:30.460 --> 00:08:33.670
+paste this thing. And I'm
+like, Nope, I just add
+
+162
+00:08:33.670 --> 00:08:36.190
+a new color to my
+map. It exports to Jason.
+
+163
+00:08:36.190 --> 00:08:38.080
+And then in my template,
+I loop through my Jace
+
+164
+00:08:38.080 --> 00:08:42.070
+on file. I see. Okay.
+So all of the, all
+
+165
+00:08:42.070 --> 00:08:44.650
+of the sizes and the
+colors become data, they're just
+
+166
+00:08:44.650 --> 00:08:48.850
+data trapped in SAS. You
+compile that to Jason and
+
+167
+00:08:48.850 --> 00:08:52.090
+then just like any other
+template you bought it. I
+
+168
+00:08:52.090 --> 00:08:54.280
+use a lot of that.
+Mostly for like style guides
+
+169
+00:08:54.280 --> 00:08:57.740
+stuff. That's really the only
+Thing like documentation effect. Yeah.
+
+170
+00:08:57.800 --> 00:08:59.990
+Yeah. But I think to
+me, that's one of the
+
+171
+00:08:59.990 --> 00:09:03.920
+most powerful things when you're
+like, wow, this gets to
+
+172
+00:09:04.520 --> 00:09:06.800
+talk to any language. Now,
+when did we have that
+
+173
+00:09:06.800 --> 00:09:09.920
+with CSS? We never had
+that. So that's a whole
+
+174
+00:09:09.920 --> 00:09:11.630
+new Well, and it makes
+you us as kind of
+
+175
+00:09:11.660 --> 00:09:14.180
+addressable, like, you know, HTML
+is addressable. I can access
+
+176
+00:09:14.180 --> 00:09:16.280
+the Dom. JavaScript is the
+thing that we address it
+
+177
+00:09:16.280 --> 00:09:18.500
+with. And then CSS was
+kind of like bolted onto
+
+178
+00:09:18.500 --> 00:09:20.060
+the side. It was just
+this thing that was along
+
+179
+00:09:20.060 --> 00:09:22.160
+for the ride. And we
+couldn't. But the thing that
+
+180
+00:09:22.160 --> 00:09:24.560
+makes beauty on the web,
+it's like a very important
+
+181
+00:09:24.560 --> 00:09:26.840
+language. It's the reason that
+things look nice and that
+
+182
+00:09:26.840 --> 00:09:29.120
+we can actually use things.
+I mean, it's not just,
+
+183
+00:09:29.870 --> 00:09:32.420
+and it's terrible and flat
+on its own, but not
+
+184
+00:09:32.420 --> 00:09:35.900
+anymore. And when I talked
+to one of the people
+
+185
+00:09:35.900 --> 00:09:38.150
+who worked on SAS kind
+of early on, what was
+
+186
+00:09:38.150 --> 00:09:41.270
+the gentleman's name? Hampton, Hampton,
+he was saying that he
+
+187
+00:09:41.270 --> 00:09:43.490
+didn't understand why it wasn't
+such an obvious thing for
+
+188
+00:09:43.490 --> 00:09:46.490
+the CSS people to just
+do like, just add some
+
+189
+00:09:46.490 --> 00:09:49.790
+hierarchy and that's a good
+start. Like why did we
+
+190
+00:09:49.790 --> 00:09:52.550
+not do that? Why was
+CSS so flat? And the
+
+191
+00:09:52.550 --> 00:09:56.090
+problem that, that caused, I
+don't know enough about the
+
+192
+00:09:56.090 --> 00:09:59.300
+history of CSS too. I
+guess it's more of a,
+
+193
+00:10:00.170 --> 00:10:02.720
+it SAS happened because there
+was an idea of vacuum.
+
+194
+00:10:02.720 --> 00:10:04.550
+There was something that was
+like, there was a pain.
+
+195
+00:10:04.880 --> 00:10:06.680
+Yeah. But it actually took
+a really long time for
+
+196
+00:10:06.680 --> 00:10:09.560
+it to get adopted. It
+took like seven years before
+
+197
+00:10:09.560 --> 00:10:12.020
+this thing is now really?
+Yeah. It was just floating
+
+198
+00:10:12.020 --> 00:10:14.210
+out there that many years
+ago. It took a while.
+
+199
+00:10:14.240 --> 00:10:17.540
+It really took a while
+before people were into it.
+
+200
+00:10:17.540 --> 00:10:21.740
+And there's actually, I mean,
+so called the, like, like
+
+201
+00:10:21.740 --> 00:10:23.540
+some of the bigger names
+in front end for a
+
+202
+00:10:23.540 --> 00:10:25.340
+while were just like, I
+don't know why you would
+
+203
+00:10:25.340 --> 00:10:27.770
+even want to use this
+thing called a preprocessor and
+
+204
+00:10:27.770 --> 00:10:29.720
+this is bad and it's,
+and you can't do it.
+
+205
+00:10:29.720 --> 00:10:32.650
+And it's just like, well,
+what actually I think forced
+
+206
+00:10:32.650 --> 00:10:36.080
+people around it was this
+whole, these device constraints. And
+
+207
+00:10:36.080 --> 00:10:39.620
+it became impossible to deal
+with so many devices with
+
+208
+00:10:39.620 --> 00:10:44.750
+a flat language. There's just,
+I mean, we were designers,
+
+209
+00:10:44.750 --> 00:10:47.420
+which at our heart means
+that we're architects and we're
+
+210
+00:10:47.420 --> 00:10:49.460
+looking for patterns and we're
+pulling these things together and
+
+211
+00:10:49.460 --> 00:10:53.550
+trying to figure out how
+these systems work. And we,
+
+212
+00:10:53.550 --> 00:10:56.630
+we need languages that let
+us do that. And so
+
+213
+00:10:56.630 --> 00:11:00.200
+I think people finally realized
+and came to, Seems like
+
+214
+00:11:00.260 --> 00:11:03.080
+there was a sense of
+not wanting to repeat ourselves,
+
+215
+00:11:03.080 --> 00:11:06.110
+right. This idea of being
+dry. And it reached a
+
+216
+00:11:06.110 --> 00:11:08.750
+pain where it's like, okay,
+fine. This is just ridiculous.
+
+217
+00:11:08.750 --> 00:11:11.690
+I have repeated myself with
+this color or these margins.
+
+218
+00:11:11.840 --> 00:11:15.200
+So many times now we
+need variables. Where is that
+
+219
+00:11:15.200 --> 00:11:17.990
+tool? <inaudible> yeah. The variables
+are definitely sort of the
+
+220
+00:11:17.990 --> 00:11:20.030
+first thing that would sell
+everyone. He'd be like, look,
+
+221
+00:11:20.030 --> 00:11:22.100
+he no longer have to
+write this color over and
+
+222
+00:11:22.100 --> 00:11:25.520
+over and over again. I'm
+just the gateway drug though.
+
+223
+00:11:26.120 --> 00:11:30.320
+Absolutely. Absolutely. Ooh. Red, look
+at it, go one variable.
+
+224
+00:11:30.590 --> 00:11:34.070
+Well, what are, what are
+mixings Makes sense are ways
+
+225
+00:11:34.100 --> 00:11:38.270
+of sharing like blocks of
+code, but the difference is
+
+226
+00:11:38.270 --> 00:11:42.170
+that they take arguments. So
+you can manipulate like the
+
+227
+00:11:42.170 --> 00:11:46.820
+data. So you can create
+this reusable property block. But
+
+228
+00:11:47.150 --> 00:11:50.420
+let's say for example, yesterday,
+my workshop, I use the
+
+229
+00:11:50.420 --> 00:11:54.520
+notifications as an example where
+you have the general structure
+
+230
+00:11:54.550 --> 00:11:56.800
+of a notification that can
+be shared, but then you
+
+231
+00:11:56.800 --> 00:11:58.990
+might have three different types
+of a notification. You might
+
+232
+00:11:58.990 --> 00:12:01.630
+have like a pop up,
+like an alert, a warning,
+
+233
+00:12:01.630 --> 00:12:05.230
+and you might different colors.
+So we can create a
+
+234
+00:12:05.230 --> 00:12:09.130
+mixing to share sort of
+the color styles and manipulations.
+
+235
+00:12:09.190 --> 00:12:12.550
+And we pass in one
+argument which would be color,
+
+236
+00:12:12.580 --> 00:12:15.280
+and then it can generate
+all the rest of the,
+
+237
+00:12:16.410 --> 00:12:17.970
+See that just clicked in
+my head. That is a
+
+238
+00:12:17.970 --> 00:12:21.300
+really great analogy because you're
+going to want the buttons
+
+239
+00:12:21.300 --> 00:12:22.410
+to be the same. You're
+going to want the thing
+
+240
+00:12:22.410 --> 00:12:24.000
+to lay out the same.
+Maybe you'll have a box
+
+241
+00:12:24.000 --> 00:12:26.070
+shadow. It's going to be
+spaced. It's going to be
+
+242
+00:12:26.340 --> 00:12:30.390
+90% the same for these
+different classes of, of error
+
+243
+00:12:30.390 --> 00:12:33.960
+messages, but you want the
+flexibility to change something fundamentally.
+
+244
+00:12:34.710 --> 00:12:36.600
+So this one is pretty
+neat in the sense that
+
+245
+00:12:36.600 --> 00:12:39.030
+you pass one color, which
+is the background color. And
+
+246
+00:12:39.030 --> 00:12:42.240
+then because SaaS has crazy
+color functions, I can use
+
+247
+00:12:42.240 --> 00:12:44.670
+SAS color functions to take
+a one color and then
+
+248
+00:12:44.670 --> 00:12:49.560
+derive a text color, and
+a border color and a
+
+249
+00:12:49.560 --> 00:12:52.080
+nice drop shadow color. And
+I can even be smart
+
+250
+00:12:52.080 --> 00:12:56.280
+enough to say, okay, SAS,
+if my background is dark,
+
+251
+00:12:56.580 --> 00:12:59.400
+I want you to manipulate
+this color. So we make
+
+252
+00:12:59.400 --> 00:13:02.280
+a lighter text color. If
+I have a light background
+
+253
+00:13:02.280 --> 00:13:04.350
+color, I know I need
+to do a different manipulation
+
+254
+00:13:04.350 --> 00:13:06.210
+because my text color needs
+to be dark. Like he
+
+255
+00:13:06.210 --> 00:13:08.850
+could not do that with
+you. Interesting. Okay. So let's,
+
+256
+00:13:08.850 --> 00:13:10.860
+let's dig into that for
+a little bit. So in
+
+257
+00:13:10.900 --> 00:13:13.650
+the past, it's mostly go
+to Photoshop, use the little
+
+258
+00:13:15.750 --> 00:13:17.520
+I call it the legend
+of Zelda sword, because it
+
+259
+00:13:17.520 --> 00:13:19.170
+looks like the eye drop
+pick that looks like a
+
+260
+00:13:19.170 --> 00:13:21.180
+little Mister you're going into,
+and then you basically just
+
+261
+00:13:21.180 --> 00:13:25.140
+start memorizing the hex hoppy
+pasting it, right. So much.
+
+262
+00:13:25.740 --> 00:13:27.390
+I actually have an open
+Photoshop in such a long
+
+263
+00:13:27.390 --> 00:13:30.630
+time. My life is better.
+That's good. So you're saying
+
+264
+00:13:30.660 --> 00:13:33.420
+that I can just say
+my base is sky blue
+
+265
+00:13:34.170 --> 00:13:37.050
+and then say, you know,
+two Hughes steps down or
+
+266
+00:13:37.200 --> 00:13:39.690
+two saturations in this direction.
+Yeah. You can actually work
+
+267
+00:13:39.690 --> 00:13:43.170
+with HSL, which is really
+great. So as a designer,
+
+268
+00:13:43.200 --> 00:13:45.450
+it's it thinks the way
+a designer thinks cause you,
+
+269
+00:13:45.450 --> 00:13:48.560
+I assume you guys think
+in terms of, you said
+
+270
+00:13:48.590 --> 00:13:53.660
+HSL, can you explain what
+he does? Saturation lightness, just
+
+271
+00:13:53.680 --> 00:13:56.310
+preface that I'm not a
+designer, but HSL makes sense
+
+272
+00:13:56.310 --> 00:13:59.400
+to me in my brain
+because it's easier to work
+
+273
+00:13:59.400 --> 00:14:02.550
+with. So the idea is
+that Hugh is a zero
+
+274
+00:14:02.550 --> 00:14:04.950
+to three 60, so color
+exists on a color wheel.
+
+275
+00:14:05.280 --> 00:14:07.350
+So red is zero and
+three 60, and then you're
+
+276
+00:14:07.350 --> 00:14:10.980
+moving around from there. Purple
+I think is maybe like
+
+277
+00:14:10.980 --> 00:14:13.230
+200 ish. So you start
+to memorize where things go,
+
+278
+00:14:13.560 --> 00:14:16.650
+saturation is how much gray,
+you're adding to something more
+
+279
+00:14:16.650 --> 00:14:18.750
+or less gray. And then
+lightness is how light or
+
+280
+00:14:18.750 --> 00:14:21.870
+dark that color is. So
+you can really easily create
+
+281
+00:14:21.870 --> 00:14:26.150
+these manipulations. And for someone
+like for me, especially, I'm
+
+282
+00:14:26.160 --> 00:14:27.960
+like, well, this makes, this
+makes sense. I can critique
+
+283
+00:14:27.960 --> 00:14:30.630
+one color and do some
+light little modifications and create
+
+284
+00:14:30.630 --> 00:14:34.500
+an actually like pretty decent
+looking design. Well, and it's
+
+285
+00:14:34.500 --> 00:14:36.180
+a much more, it seems
+to me that he's a
+
+286
+00:14:36.180 --> 00:14:39.420
+much more disciplined and much
+more focused way to solve
+
+287
+00:14:39.420 --> 00:14:41.640
+a problem in the sense
+of I as a non
+
+288
+00:14:41.640 --> 00:14:44.550
+designer. And in, in this
+interaction, I'm going to call
+
+289
+00:14:44.550 --> 00:14:47.010
+you, even though you're not
+a designer, you're a hell
+
+290
+00:14:47.010 --> 00:14:48.210
+of a lot more of
+a designer than I am.
+
+291
+00:14:48.810 --> 00:14:50.370
+I'm gonna look at a
+blue and I'm going to
+
+292
+00:14:51.170 --> 00:14:53.240
+that blue next to it
+kind of looks okay and
+
+293
+00:14:53.240 --> 00:14:55.460
+I'm going to eyeball it.
+But someone else is going
+
+294
+00:14:55.460 --> 00:14:58.070
+to say, this is our
+base blue. This is our
+
+295
+00:14:58.070 --> 00:15:02.240
+base green. I want 20%
+more saturation. Yep. It doesn't
+
+296
+00:15:02.240 --> 00:15:04.250
+really, I don't really care
+what the resulting hex value
+
+297
+00:15:04.250 --> 00:15:06.230
+is. I just know that
+I want to be very
+
+298
+00:15:06.230 --> 00:15:09.560
+focused about it and add
+that to my style guide.
+
+299
+00:15:09.590 --> 00:15:11.240
+And then I'm going to
+get consistent. And I assume
+
+300
+00:15:11.240 --> 00:15:13.820
+I could get my site.
+Could I get my sass
+
+301
+00:15:13.820 --> 00:15:16.580
+down to like a very
+small number of base colors
+
+302
+00:15:16.580 --> 00:15:21.190
+and calculate everything else I
+actually try to strive for
+
+303
+00:15:21.190 --> 00:15:25.540
+that is really just reducing
+sort of the number of
+
+304
+00:15:25.540 --> 00:15:28.540
+variables that you have and
+then using these functions for
+
+305
+00:15:28.550 --> 00:15:31.030
+manipulation to create the other
+things that you need. So
+
+306
+00:15:31.030 --> 00:15:34.840
+you're not creating like before
+I think people would do
+
+307
+00:15:34.840 --> 00:15:37.300
+like a background color, then
+a text color and a
+
+308
+00:15:37.870 --> 00:15:41.080
+dropdown text, shadow color, and
+a border color. And that's
+
+309
+00:15:41.080 --> 00:15:45.730
+fine, but that's still very,
+I mean, that's also not
+
+310
+00:15:45.730 --> 00:15:49.210
+very dry. So even though
+I think it's one of
+
+311
+00:15:49.210 --> 00:15:51.130
+the things I also stress
+when I'm teaching is like
+
+312
+00:15:51.520 --> 00:15:55.870
+SAS still compiles down to
+CSS. So we do need
+
+313
+00:15:55.870 --> 00:15:57.520
+to be aware of that.
+And then there are ways
+
+314
+00:15:57.520 --> 00:16:00.160
+within our SAS code when
+we're architecting it, that we
+
+315
+00:16:00.160 --> 00:16:04.210
+can also be dry, more
+dry and less wet. And
+
+316
+00:16:04.210 --> 00:16:06.820
+so I think colors is
+a great example where you
+
+317
+00:16:06.820 --> 00:16:09.820
+can try to derive the
+rest of it from one
+
+318
+00:16:09.820 --> 00:16:13.060
+that's much better than setting
+like a giant colors variable
+
+319
+00:16:13.060 --> 00:16:16.930
+file. Could I write my
+SAS poorly that I might
+
+320
+00:16:16.930 --> 00:16:20.060
+end up with CSS? That
+is way more complicated than
+
+321
+00:16:20.530 --> 00:16:21.920
+like, do I, is it
+one of those things? I
+
+322
+00:16:21.930 --> 00:16:24.370
+just ignore that there's this
+generated file and pretend it
+
+323
+00:16:24.370 --> 00:16:27.430
+doesn't exist. You should always
+be looking at your, at
+
+324
+00:16:27.430 --> 00:16:31.780
+your generated file, always, especially
+when you're learning. Cause it's,
+
+325
+00:16:31.780 --> 00:16:33.670
+it's also important to see
+that's how you begin to
+
+326
+00:16:33.670 --> 00:16:36.160
+understand like exactly what it's
+doing. Cause most people are
+
+327
+00:16:36.160 --> 00:16:39.460
+like, it's magic. It's like,
+no, it's still compiles down
+
+328
+00:16:39.460 --> 00:16:41.890
+to something that browser understands.
+So you need to make
+
+329
+00:16:41.890 --> 00:16:45.790
+sure that that's okay. So
+I think it's the best
+
+330
+00:16:45.790 --> 00:16:48.880
+way to always keep them
+safe. So if something's wrong,
+
+331
+00:16:48.910 --> 00:16:50.740
+do I, is it to
+me that I'm doing SAS
+
+332
+00:16:50.740 --> 00:16:52.930
+wrong or do I need
+to give it hints? Or
+
+333
+00:16:52.930 --> 00:16:55.060
+there are ways to say
+sort of in what sense,
+
+334
+00:16:55.060 --> 00:16:56.620
+like, I don't know, let's
+say that I do something
+
+335
+00:16:56.620 --> 00:16:58.300
+in the end, it kind
+of explodes into this kind
+
+336
+00:16:58.300 --> 00:17:01.450
+of Cartesian product of colors.
+And it's like, wow, this
+
+337
+00:17:01.450 --> 00:17:05.200
+is way more information than
+that, that selector needed. Like
+
+338
+00:17:05.230 --> 00:17:09.430
+this, this property block is
+more expressive because I had
+
+339
+00:17:09.430 --> 00:17:10.870
+a mixed in with a
+mix center, whatever. And it
+
+340
+00:17:10.870 --> 00:17:15.010
+just kind of like, you
+know what I mean? Can
+
+341
+00:17:15.010 --> 00:17:17.980
+I do anything with the
+generated file or is it
+
+342
+00:17:17.980 --> 00:17:19.840
+all has to flow from
+SAS to system? It has
+
+343
+00:17:19.840 --> 00:17:22.540
+to flow from South to
+CSS. Yeah. The generated file
+
+344
+00:17:22.540 --> 00:17:25.480
+is more like, Oh, Whoa,
+whoops. I might be nesting
+
+345
+00:17:25.480 --> 00:17:28.540
+this thing and correctly, or
+I may have extended a
+
+346
+00:17:28.540 --> 00:17:33.340
+property without realizing that it's
+within another. And it just
+
+347
+00:17:33.340 --> 00:17:36.940
+created a nightmare. I understand
+that. Is it true that
+
+348
+00:17:36.940 --> 00:17:41.260
+I can write some JavaScript
+and evaluate JavaScript evaluations within
+
+349
+00:17:41.260 --> 00:17:43.690
+SAS and then that can
+expand out. I can basically
+
+350
+00:17:43.690 --> 00:17:47.350
+have JavaScript expressions like gifts
+and stuff Like the control
+
+351
+00:17:47.350 --> 00:17:50.700
+directions, like if each in
+mice. So what would I
+
+352
+00:17:50.710 --> 00:17:55.280
+use that for Control directives?
+Well, for example, when I,
+
+353
+00:17:55.400 --> 00:17:57.170
+when we were talking about
+color and being able to
+
+354
+00:17:57.170 --> 00:17:59.360
+test, you're going to use,
+that's a control directive right
+
+355
+00:17:59.360 --> 00:18:02.990
+there. So yeah, if you're
+basically saying, if the lightness
+
+356
+00:18:02.990 --> 00:18:07.130
+of this color is greater
+than 50%, then perform this
+
+357
+00:18:07.130 --> 00:18:10.430
+action, I'll do something else.
+So you, you can use
+
+358
+00:18:10.550 --> 00:18:14.030
+if an L statements are
+really, really powerful. I see.
+
+359
+00:18:14.210 --> 00:18:16.250
+So if, if a color
+got to light, I could,
+
+360
+00:18:16.610 --> 00:18:18.500
+you know, I could block
+it from getting any lighter
+
+361
+00:18:18.500 --> 00:18:21.290
+or I could, Or you
+can even tell, like it's
+
+362
+00:18:21.290 --> 00:18:23.480
+a great way for designing
+mix sense for being like,
+
+363
+00:18:23.480 --> 00:18:26.060
+well, if I've defined this
+argument or have set this,
+
+364
+00:18:26.060 --> 00:18:27.980
+then I need you to
+print out these other CSS
+
+365
+00:18:27.980 --> 00:18:33.320
+properties. Otherwise don't, we don't
+actually need them. So it's
+
+366
+00:18:33.320 --> 00:18:37.880
+very, they're really, really, really
+powerful. And each is the
+
+367
+00:18:37.880 --> 00:18:40.580
+other one that I think
+is really well, like used
+
+368
+00:18:40.580 --> 00:18:43.880
+a lot. And especially with
+maps and especially used to
+
+369
+00:18:43.880 --> 00:18:47.540
+generate like actually generate CSS
+for you, which is incredible.
+
+370
+00:18:48.080 --> 00:18:50.090
+One of the things that
+I think is worth pointing
+
+371
+00:18:50.090 --> 00:18:52.760
+out and I think the
+listeners will agree is that
+
+372
+00:18:52.880 --> 00:18:56.060
+for a lot of us
+who work on large systems
+
+373
+00:18:56.060 --> 00:18:58.520
+inside of enterprises and we
+haven't built kind of a
+
+374
+00:18:58.520 --> 00:19:01.430
+modern, I'm saying that in
+air quotes, a modern app,
+
+375
+00:19:02.050 --> 00:19:05.240
+a modular app with a
+client side build process in
+
+376
+00:19:05.240 --> 00:19:07.820
+a while we have some
+JavaScript, we put in a
+
+377
+00:19:07.820 --> 00:19:09.830
+file and then we ship
+that JavaScript. We have some
+
+378
+00:19:09.830 --> 00:19:11.360
+CSS, we put in a
+file on the ship that,
+
+379
+00:19:11.780 --> 00:19:14.120
+but the new way of
+doing things is not just
+
+380
+00:19:14.120 --> 00:19:16.760
+a service side build for
+applications that compile on the
+
+381
+00:19:16.760 --> 00:19:22.050
+server, but also a client
+side build process. This, you,
+
+382
+00:19:22.220 --> 00:19:27.200
+it sounds like you could
+have really sophisticated, complex CSS
+
+383
+00:19:27.200 --> 00:19:30.170
+that is truly architected. That
+can be managed by many,
+
+384
+00:19:30.170 --> 00:19:32.120
+many people. And they're going
+to, you're going to have
+
+385
+00:19:32.120 --> 00:19:35.030
+not just one designer working
+on one file, but a
+
+386
+00:19:35.030 --> 00:19:39.610
+whole team sharing these different
+visual languages, sharing these mix
+
+387
+00:19:39.620 --> 00:19:43.520
+ENS, and that's all part
+of a build process. And
+
+388
+00:19:43.580 --> 00:19:45.740
+is that the kind of
+the, do you find yourself
+
+389
+00:19:45.740 --> 00:19:48.410
+working on those projects or
+these are the CSS is
+
+390
+00:19:48.440 --> 00:19:51.350
+that you can, that one
+person can understand. Cause I
+
+391
+00:19:51.350 --> 00:19:53.420
+feel like it's getting complicated
+enough that I'm going to
+
+392
+00:19:53.420 --> 00:19:55.070
+not be able to fit
+it all in my, in
+
+393
+00:19:55.070 --> 00:19:59.300
+my head on one project,
+Do I find myself working
+
+394
+00:19:59.300 --> 00:20:02.930
+on teams Where I wasn't,
+I'm trying to say that
+
+395
+00:20:03.320 --> 00:20:05.780
+suddenly I went from being
+one file to being a
+
+396
+00:20:05.780 --> 00:20:08.630
+whole series of functions that
+I've got colors and it
+
+397
+00:20:08.630 --> 00:20:11.390
+got mixed since I've got
+libraries and I just didn't
+
+398
+00:20:11.390 --> 00:20:15.380
+expect CSS to go in
+that direction. And is this
+
+399
+00:20:15.380 --> 00:20:17.090
+something that works better when
+I have teams? Like if
+
+400
+00:20:17.090 --> 00:20:19.310
+you have, if you're working
+with three other people who
+
+401
+00:20:19.310 --> 00:20:23.420
+are managing your front end
+CSS work, do you each
+
+402
+00:20:23.450 --> 00:20:25.250
+work in the same file?
+Do you use, do you
+
+403
+00:20:25.250 --> 00:20:27.260
+break it up so that
+you can be working in
+
+404
+00:20:27.260 --> 00:20:29.930
+separate parts of the SAS?
+And can you get into
+
+405
+00:20:29.930 --> 00:20:32.300
+situations where someone makes a
+change and then it breaks
+
+406
+00:20:32.630 --> 00:20:35.540
+the entire style sheet because
+they made one variable change.
+
+407
+00:20:35.840 --> 00:20:39.950
+It's so dry now cascades
+more than ever. The good
+
+408
+00:20:39.950 --> 00:20:41.810
+thing is that if it's
+a change that the compiler
+
+409
+00:20:41.810 --> 00:20:45.050
+doesn't like, it won't actually
+let it happen, which is
+
+410
+00:20:45.050 --> 00:20:49.710
+nice. You can't like compile
+things because, Because it's basically
+
+411
+00:20:49.710 --> 00:20:51.960
+linting it, you know, it
+is compiled. And if it's
+
+412
+00:20:51.960 --> 00:20:54.240
+not The valid, yeah, it
+has to be valid for
+
+413
+00:20:54.240 --> 00:20:59.880
+CSS in terms of working
+with teams, I work with,
+
+414
+00:21:00.090 --> 00:21:02.280
+there's only one other front
+end developer on my team.
+
+415
+00:21:02.280 --> 00:21:05.670
+So it makes it a
+lot easier. And we have
+
+416
+00:21:05.670 --> 00:21:09.000
+a very, very big focus
+about building tools. And so
+
+417
+00:21:09.000 --> 00:21:11.490
+we're very, very aware of
+like, Oh, okay, we are
+
+418
+00:21:11.490 --> 00:21:14.670
+reusing this snippet of code
+or this idea a lot.
+
+419
+00:21:14.670 --> 00:21:17.190
+How can we make something
+better? So we have a
+
+420
+00:21:17.220 --> 00:21:22.470
+big focus on making better
+tools internally. I definitely think
+
+421
+00:21:24.150 --> 00:21:26.250
+of course, there's going to
+be more complexity when you're
+
+422
+00:21:26.310 --> 00:21:30.480
+dealing with multiple people on
+a team and the added
+
+423
+00:21:30.480 --> 00:21:33.480
+complexities of just am I
+putting my code in the
+
+424
+00:21:33.480 --> 00:21:36.420
+right partial, which partial should
+this go into? Where should
+
+425
+00:21:36.420 --> 00:21:38.430
+it go? You know, like
+what's going to happen. And
+
+426
+00:21:38.430 --> 00:21:41.280
+I think all of that,
+again comes down to the
+
+427
+00:21:41.280 --> 00:21:45.120
+beginning and the setup and
+like, how are you designing
+
+428
+00:21:45.120 --> 00:21:48.450
+and architecting your project? And
+we don't, I just feel
+
+429
+00:21:48.450 --> 00:21:51.690
+that we like, at least
+in front end, we don't
+
+430
+00:21:51.690 --> 00:21:54.240
+really, we don't have the
+mindset. We haven't wrapped our
+
+431
+00:21:54.240 --> 00:21:58.560
+head around this completely. Like
+we are architects, this is
+
+432
+00:21:58.560 --> 00:22:01.440
+not okay. The designers now
+given us the PSD and
+
+433
+00:22:01.440 --> 00:22:03.630
+we should just like, go
+start, like taking it apart.
+
+434
+00:22:03.630 --> 00:22:05.100
+You need to sit down
+and look at it and
+
+435
+00:22:05.100 --> 00:22:07.530
+be like, okay, what are
+these actual components? What things
+
+436
+00:22:07.530 --> 00:22:10.260
+do we have here? And
+if you really sort of
+
+437
+00:22:10.260 --> 00:22:13.710
+forward thinking, you're going to
+start to build your own
+
+438
+00:22:13.740 --> 00:22:16.410
+little framework and sort of
+pattern library so that you
+
+439
+00:22:16.410 --> 00:22:20.280
+can get through things faster
+and help you out and
+
+440
+00:22:20.280 --> 00:22:23.610
+conventions that work for you
+and your team. And so
+
+441
+00:22:23.610 --> 00:22:25.200
+I think that can be
+the hard thing, especially cause
+
+442
+00:22:25.200 --> 00:22:27.270
+it's so new now that
+everyone's like, well, what's the
+
+443
+00:22:27.270 --> 00:22:29.190
+best way. What's the best
+thing. And it's like, you
+
+444
+00:22:29.190 --> 00:22:30.690
+know what? The best way
+for me is not the
+
+445
+00:22:30.690 --> 00:22:33.360
+best way for you because
+my team and my requirements
+
+446
+00:22:33.360 --> 00:22:36.390
+are different and you need
+to analyze it from what
+
+447
+00:22:36.390 --> 00:22:39.450
+are your goals and your
+objectives and what do you
+
+448
+00:22:39.450 --> 00:22:42.690
+have at your disposal. So
+You're expressed that so much
+
+449
+00:22:42.720 --> 00:22:45.830
+better. I apologize for my
+muddled question. I think what
+
+450
+00:22:46.290 --> 00:22:48.090
+you, you express it so
+much better than I did.
+
+451
+00:22:48.090 --> 00:22:49.560
+I think what I was
+trying to get my head
+
+452
+00:22:49.560 --> 00:22:53.520
+around was this idea that
+the intentionality of it suddenly
+
+453
+00:22:53.520 --> 00:22:56.040
+changed. And like you just
+expressed it so well. And
+
+454
+00:22:56.040 --> 00:22:58.170
+you said that your team,
+your team member, and you
+
+455
+00:22:58.950 --> 00:23:02.490
+are making a set of
+tools and those tools are
+
+456
+00:23:02.490 --> 00:23:04.590
+these property blocks. And these
+makes sense. And these colors
+
+457
+00:23:04.590 --> 00:23:07.890
+and these colors and these
+color functions, where, what is
+
+458
+00:23:07.890 --> 00:23:10.620
+it exactly we're trying to
+accomplish? How are we going
+
+459
+00:23:10.620 --> 00:23:13.950
+to architect that solution to
+solve this problem for the
+
+460
+00:23:13.950 --> 00:23:16.590
+business? And we're going to
+build a reusable set of
+
+461
+00:23:16.590 --> 00:23:19.620
+tools and we, you and
+that other designer, or if
+
+462
+00:23:19.620 --> 00:23:21.750
+you had more designers are
+all on the same team.
+
+463
+00:23:22.050 --> 00:23:24.450
+And these are the things
+we value. It's that intentionality.
+
+464
+00:23:25.980 --> 00:23:29.130
+Yeah. The communication and talking
+and all these. I mean,
+
+465
+00:23:29.400 --> 00:23:32.040
+those, those things are hard
+already on their own. And
+
+466
+00:23:32.040 --> 00:23:34.950
+then when you add this
+new language that can create
+
+467
+00:23:34.950 --> 00:23:36.870
+more complexities where you're like,
+well, I stuck it in
+
+468
+00:23:36.870 --> 00:23:39.180
+that partial and I put
+it there and I imported
+
+469
+00:23:39.180 --> 00:23:41.160
+it there. And it's like,
+ah, you know, you gotta
+
+470
+00:23:41.170 --> 00:23:44.640
+have some sort of rules
+around it. And I think
+
+471
+00:23:44.640 --> 00:23:47.450
+that at least if you're
+on a team, if you're
+
+472
+00:23:47.450 --> 00:23:49.580
+just like, what's going on
+with my CSS, why is
+
+473
+00:23:49.580 --> 00:23:51.410
+this a disorder? And then
+maybe you should look at
+
+474
+00:23:51.410 --> 00:23:55.180
+like, how are we interacting
+as a team? And, and
+
+475
+00:23:55.190 --> 00:23:58.660
+that, that speaks to the,
+if it, to call back
+
+476
+00:23:58.660 --> 00:24:00.640
+to the beginning of the
+conversation, if they just like,
+
+477
+00:24:00.700 --> 00:24:04.270
+stick it at the bottom,
+exactly. You're going to smack
+
+478
+00:24:04.270 --> 00:24:05.620
+them down and you're going
+to be like, okay, come
+
+479
+00:24:05.620 --> 00:24:07.720
+on. I can still easily
+happen. Someone will just be
+
+480
+00:24:07.720 --> 00:24:09.340
+like, Oh yeah, I put
+it in a partial. Then
+
+481
+00:24:09.340 --> 00:24:11.320
+I imported the partial at
+the bottom and it's just
+
+482
+00:24:11.320 --> 00:24:12.970
+like, no, no, no, no,
+no, no, no, no. Even
+
+483
+00:24:12.970 --> 00:24:16.270
+the import file has an
+order to it. Read it.
+
+484
+00:24:16.640 --> 00:24:19.810
+And this isn't just being
+like uptight. Like some people
+
+485
+00:24:19.810 --> 00:24:21.640
+might be listening and going,
+Oh, you know, they're just
+
+486
+00:24:21.730 --> 00:24:24.730
+rearranging deck chairs on the
+Titanic. It's all going to
+
+487
+00:24:24.730 --> 00:24:29.920
+be chaos anyway. But a
+really well architected SAS system
+
+488
+00:24:29.950 --> 00:24:33.850
+is a thing of beauty.
+Oh yeah. It's, it's amazing.
+
+489
+00:24:33.850 --> 00:24:36.100
+Right. It's just, it's like
+a great building. It's like
+
+490
+00:24:36.100 --> 00:24:38.530
+when you walk in and
+you're like, everything is, is
+
+491
+00:24:38.530 --> 00:24:42.130
+right. You know, this it's
+all in this place when
+
+492
+00:24:42.130 --> 00:24:45.370
+I was in school. I
+mean, I always thought I
+
+493
+00:24:45.370 --> 00:24:47.620
+wanted to study architecture and
+I never did. I ended
+
+494
+00:24:47.620 --> 00:24:49.540
+up dropping out of school,
+taking a year off. And
+
+495
+00:24:49.540 --> 00:24:51.130
+then I was like, Oh,
+this web thing is really
+
+496
+00:24:51.130 --> 00:24:53.200
+fun. I should move to
+Portland, Oregon. When I took
+
+497
+00:24:53.260 --> 00:24:56.520
+a year off, that's where
+I went. That's where I
+
+498
+00:24:56.520 --> 00:25:00.880
+got started. And so it's
+my, I had this theory
+
+499
+00:25:00.880 --> 00:25:03.670
+in scores like, well, you
+can take poetry, which is
+
+500
+00:25:03.670 --> 00:25:05.920
+a, like a system in
+of itself and you can
+
+501
+00:25:05.950 --> 00:25:07.690
+design for it. So then
+when you go somewhere, you
+
+502
+00:25:07.690 --> 00:25:09.610
+can elicit a certain type
+of design. So I think
+
+503
+00:25:09.610 --> 00:25:13.050
+that's the beauty of a
+well architected file is that
+
+504
+00:25:13.120 --> 00:25:17.530
+like, you've, you're showing your
+ability to like think through
+
+505
+00:25:17.530 --> 00:25:20.080
+these requirements and not only
+have you translated it into
+
+506
+00:25:20.080 --> 00:25:23.740
+like the final website, which
+like for users to interact,
+
+507
+00:25:23.740 --> 00:25:26.260
+like we as developers, we
+interact with our files and
+
+508
+00:25:26.260 --> 00:25:28.870
+we should take care of
+them too. So It's a
+
+509
+00:25:28.870 --> 00:25:30.850
+garden that needs to be
+tended. And if a weed
+
+510
+00:25:30.850 --> 00:25:33.700
+pops up at the bottom
+of the file and got
+
+511
+00:25:33.700 --> 00:25:35.860
+pulled that week Yeah. Cause
+too many weeds. And you're
+
+512
+00:25:35.860 --> 00:25:38.140
+like, I don't care about
+this garden. Anyhow. You know,
+
+513
+00:25:38.140 --> 00:25:40.900
+you just want that away.
+So at the beginning you
+
+514
+00:25:41.080 --> 00:25:43.690
+mentioned that you did a,
+a three hour workshop, but
+
+515
+00:25:43.690 --> 00:25:46.720
+it could have been a
+week long. You're actually, you're
+
+516
+00:25:46.720 --> 00:25:48.880
+actually at a conference organizer,
+you have a conference. What
+
+517
+00:25:48.880 --> 00:25:55.180
+is your conference? SAS <inaudible>
+so Tire conference about SAS,
+
+518
+00:25:56.290 --> 00:25:58.600
+which, which I think the
+point of reason I'm saying
+
+519
+00:25:58.600 --> 00:26:01.300
+it like that with that
+kind of gravitas is that
+
+520
+00:26:02.440 --> 00:26:05.800
+it's so powerful and it's
+so significant. And the idea
+
+521
+00:26:05.800 --> 00:26:08.650
+of a large system that
+is architected well, that is
+
+522
+00:26:08.650 --> 00:26:12.160
+then agile enough to respond,
+to changes in the design
+
+523
+00:26:12.820 --> 00:26:15.460
+needs, books and conferences and
+tools like this. So tell
+
+524
+00:26:15.460 --> 00:26:17.260
+me about your conference. How
+long is it? What kinds
+
+525
+00:26:17.260 --> 00:26:20.980
+of people should go to,
+to Saskatoon? Well, if you're
+
+526
+00:26:20.980 --> 00:26:25.120
+a thought SAS enthusiast definitely,
+definitely come, but we don't
+
+527
+00:26:26.200 --> 00:26:28.030
+come to, I mean, we
+bill it as a conference
+
+528
+00:26:28.030 --> 00:26:30.640
+for people that want to
+make a better web and
+
+529
+00:26:30.640 --> 00:26:33.130
+not only for users, but
+like for ourselves as developers.
+
+530
+00:26:33.130 --> 00:26:37.090
+So also caring about that
+developer experience and SAS comp
+
+531
+00:26:37.090 --> 00:26:39.190
+this year is going to
+be October 2nd through fourth in
+
+532
+00:26:39.190 --> 00:26:41.950
+New York city again, and this
+year it's three days. So
+
+533
+00:26:41.950 --> 00:26:44.400
+we have a full single
+track conference day to have
+
+534
+00:26:44.400 --> 00:26:47.370
+Atkins as our keynote, which
+I'm super excited about. And
+
+535
+00:26:47.370 --> 00:26:51.200
+then we have tab Atkins
+is the spec hacker over
+
+536
+00:26:51.450 --> 00:26:54.180
+at Google. So he, he
+does a lot with the
+
+537
+00:26:54.180 --> 00:26:58.620
+CSS spec, which is really
+neat. And when you think
+
+538
+00:26:58.620 --> 00:27:00.870
+about, I think the other
+power of sass is how
+
+539
+00:27:00.870 --> 00:27:04.650
+it's influencing decisions that are
+coming out and CSS. And,
+
+540
+00:27:06.000 --> 00:27:08.700
+but again, this sort of
+idea of I'm like, well,
+
+541
+00:27:08.700 --> 00:27:12.630
+if Sasin converted Jaison then
+who knows, maybe the browser
+
+542
+00:27:12.630 --> 00:27:16.670
+one day will just decide
+to understand something else. It
+
+543
+00:27:16.670 --> 00:27:19.970
+does make one wonder that
+we see things like coffee
+
+544
+00:27:19.970 --> 00:27:23.870
+script or TypeScript influencing the
+future of JavaScript. Is there
+
+545
+00:27:23.870 --> 00:27:26.120
+a convergence coming where it's
+going to be here are
+
+546
+00:27:26.120 --> 00:27:28.880
+the angle brackets and here
+are the curly braces. And
+
+547
+00:27:28.880 --> 00:27:32.210
+the curly braces are both
+CSS and JavaScript chat, you
+
+548
+00:27:32.210 --> 00:27:35.600
+know, CSS with inline JavaScript
+or JavaScript within ICSs, who
+
+549
+00:27:35.600 --> 00:27:38.360
+knows we'll find out its
+task conference. We will find
+
+550
+00:27:38.360 --> 00:27:40.970
+out what, what tab has
+to say. And then our
+
+551
+00:27:40.970 --> 00:27:43.490
+second day is workshops. You
+can pick between two, four
+
+552
+00:27:43.490 --> 00:27:46.280
+hour workshops. And our third
+day, this year is our
+
+553
+00:27:46.280 --> 00:27:50.270
+community unconference day, which I'm
+super, super excited about. And
+
+554
+00:27:50.270 --> 00:27:53.060
+last year was just like
+last year was the first
+
+555
+00:27:53.060 --> 00:27:56.450
+time that everyone in this
+community came together. And it
+
+556
+00:27:56.450 --> 00:27:59.120
+was, I mean, it was
+powerful to see Chris and
+
+557
+00:27:59.120 --> 00:28:03.350
+Hampton and Natalie and people
+who have been organizing for
+
+558
+00:28:03.350 --> 00:28:05.720
+years. And for the first
+time they'd seen you, they
+
+559
+00:28:05.720 --> 00:28:07.850
+hadn't seen each other for
+years. And here we all
+
+560
+00:28:07.850 --> 00:28:11.510
+were like, yeah. And here
+we were like together coming
+
+561
+00:28:11.510 --> 00:28:13.760
+together for the first time,
+seeing like how we really
+
+562
+00:28:13.760 --> 00:28:15.530
+love this thing. And we
+want to hang out as
+
+563
+00:28:15.530 --> 00:28:17.270
+a community and we want
+to make it better. And,
+
+564
+00:28:18.080 --> 00:28:20.840
+and a lot's happened since
+then within the SAS community.
+
+565
+00:28:20.840 --> 00:28:23.450
+And it's just, I mean,
+it's a, it's a wonderful
+
+566
+00:28:23.450 --> 00:28:26.450
+place. I'm so, so happy
+to be there Speaking just
+
+567
+00:28:26.450 --> 00:28:29.360
+a little bit about kind
+of quote unquote, the competition.
+
+568
+00:28:29.750 --> 00:28:33.590
+There are, there are other
+preprocessing process, right? There was,
+
+569
+00:28:33.620 --> 00:28:36.530
+there was less kind of
+for awhile that this fallen
+
+570
+00:28:36.530 --> 00:28:38.900
+out of favor. Is that
+fair to say? I mean,
+
+571
+00:28:38.900 --> 00:28:43.040
+unless it's still there, unless
+Twitter bootstrap hadn't started with
+
+572
+00:28:43.040 --> 00:28:47.660
+Las, I don't think it
+would be as prominent. And
+
+573
+00:28:47.720 --> 00:28:49.910
+I actually worked with less.
+I started with SAS, then
+
+574
+00:28:49.910 --> 00:28:51.950
+I worked with less and
+then I went back to
+
+575
+00:28:51.950 --> 00:28:55.190
+SaaS and I think the
+biggest difference around it is
+
+576
+00:28:55.190 --> 00:28:59.930
+like, where's the community around
+less a and B there's
+
+577
+00:28:59.930 --> 00:29:04.040
+no way to contribute to
+less. I think one of
+
+578
+00:29:04.040 --> 00:29:07.100
+the things that's, and you
+can actually see this with
+
+579
+00:29:07.310 --> 00:29:10.700
+the influence of jQuery to
+JavaScript. If you remember, before
+
+580
+00:29:10.700 --> 00:29:13.370
+jQuery came out, JavaScript was
+just kind of, this was
+
+581
+00:29:13.370 --> 00:29:19.340
+like, Oh gosh, Java script,
+right? Yep. And then Before,
+
+582
+00:29:19.370 --> 00:29:23.150
+yes. Oh gosh, Josh got
+like a JavaScript. Yes. That's
+
+583
+00:29:23.150 --> 00:29:26.030
+exactly what Now it's like
+JavaScript, you know, what's crazy.
+
+584
+00:29:26.030 --> 00:29:29.840
+It's like the hottest thing
+ever. But what jQuery did
+
+585
+00:29:30.140 --> 00:29:34.220
+was that it created a
+way for people to contribute
+
+586
+00:29:34.430 --> 00:29:38.390
+back. And if you look
+at the initial blog posts,
+
+587
+00:29:38.420 --> 00:29:40.760
+like the first day, John's
+like, Oh, I released it.
+
+588
+00:29:40.820 --> 00:29:43.300
+And second day he was
+like, I've created this way
+
+589
+00:29:43.300 --> 00:29:45.940
+for people to submit plugins
+and someone already submitted a
+
+590
+00:29:45.940 --> 00:29:49.540
+plugin and that took off.
+And that's what SAS did.
+
+591
+00:29:49.960 --> 00:29:54.100
+SAS created this way for
+people to share their work,
+
+592
+00:29:54.460 --> 00:29:58.240
+which is really new in
+CSS. You can't share your
+
+593
+00:29:58.240 --> 00:30:01.600
+giant site dot CSS file.
+And show me that you're
+
+594
+00:30:01.600 --> 00:30:02.950
+like, I'm like, what am
+I going to learn from
+
+595
+00:30:02.950 --> 00:30:05.950
+this? You don't want to
+see it exactly. Right. So
+
+596
+00:30:05.950 --> 00:30:07.660
+now we have ways to
+create tools that we can
+
+597
+00:30:07.660 --> 00:30:10.330
+share and people can contribute.
+And that's, and I think
+
+598
+00:30:10.330 --> 00:30:14.860
+that is why SAS has
+really shot ahead of all
+
+599
+00:30:14.860 --> 00:30:17.530
+the other ones. It's also
+just much more powerful, much
+
+600
+00:30:17.530 --> 00:30:20.730
+more powerful than us. So,
+Very cool. So I'm going
+
+601
+00:30:20.730 --> 00:30:22.110
+to add all of the
+links that we talked about
+
+602
+00:30:22.110 --> 00:30:23.910
+in the show notes. People
+can go to SAS cough
+
+603
+00:30:23.910 --> 00:30:28.770
+this October, 2014, they can go
+to the conference day. There
+
+604
+00:30:28.770 --> 00:30:30.330
+is the workshops. And then
+the last day is like
+
+605
+00:30:30.330 --> 00:30:34.440
+an open space. As a
+community day, IBM is running
+
+606
+00:30:34.500 --> 00:30:38.250
+a hackathon. There's a round,
+a large panel discussion between
+
+607
+00:30:38.610 --> 00:30:42.180
+like Zerbe and thought bot.
+And, but otherwise it's come
+
+608
+00:30:42.180 --> 00:30:44.100
+share what you want to
+share or hack on whatever
+
+609
+00:30:44.100 --> 00:30:46.500
+you want to hack. Right.
+Well, thanks so much for
+
+610
+00:30:46.500 --> 00:30:48.540
+chatting with me. Thank you
+so much for having me.
+
+611
+00:30:48.540 --> 00:30:51.540
+This is great. This has
+been another episode of Hanselminutes
+
+612
+00:30:51.540 --> 00:30:52.980
+and we'll see you again
+next week.
+
