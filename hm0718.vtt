@@ -1,3451 +1,2806 @@
 WEBVTT FILE
 
 1
-00:00:00.360 --> 00:00:02.430
-Hey friends. I want to
-introduce a new sponsor to
+00:00:00.240 --> 00:00:03.000
+Hey database experts and app
+developers. Do you want to
 
 2
-00:00:02.430 --> 00:00:05.520
-you. H M a VPN.
-It's a VPN you can
+00:00:03.000 --> 00:00:07.050
+build faster and run bigger
+workloads? We've got you covered
 
 3
-00:00:05.520 --> 00:00:06.990
-count on. As you know,
-I do a lot of
+00:00:07.050 --> 00:00:12.210
+with an exclusive free download
+of DataStax enterprise DataStax enterprise
 
 4
-00:00:06.990 --> 00:00:09.330
-travel and I tend to
-connect to a lot of
+00:00:12.210 --> 00:00:15.510
+works with all the latest
+tools like Kafka and Docker
 
 5
-00:00:09.330 --> 00:00:12.600
-untrusted wireless networks. And I
-probably shouldn't, but I can
+00:00:15.780 --> 00:00:20.280
+with incredible throughput and the
+best security download data stacks
 
 6
-00:00:12.600 --> 00:00:16.800
-use HMA as the world's
-largest VPN service offers. The
+00:00:20.460 --> 00:00:24.930
+enterprise for free today by
+visiting DataStax that's DAA, T
 
 7
-00:00:16.800 --> 00:00:21.960
-most server locations worldwide covers
-190 countries. There's always a
+00:00:24.930 --> 00:00:30.990
+a S T a x.com/download
+D S E that's the
 
 8
-00:00:21.960 --> 00:00:25.290
-server nearby it. Doesn't log
-your IP address and allows
+00:00:30.990 --> 00:00:52.490
+DataStax enterprise for free visit
+datastax.com/download D S E Scott
 
 9
-00:00:25.290 --> 00:00:29.340
-me to connect five devices
-simultaneously works on basically all
+00:00:52.490 --> 00:00:54.860
+Hanselman. And this is another
+episode of Hansel minutes today.
 
 10
-00:00:29.340 --> 00:00:34.350
-platforms, Android, iOS, Mac, Linux,
-windows routers, wherever it's actually
+00:00:54.860 --> 00:00:57.710
+I'm talking with Mark Russinovich.
+Welcome back to the show
 
 11
-00:00:34.350 --> 00:00:37.770
-been completely redesigned recently to
-make it even simpler and
+00:00:57.980 --> 00:01:01.400
+CTO of Azure at Microsoft
+and a general reckoned and
 
 12
-00:00:37.770 --> 00:00:40.440
-more fun to use. And
-there's even a smart kill
+00:01:01.400 --> 00:01:04.760
+tour. Thanks Scott, Scott to
+be back. I know it's
 
 13
-00:00:40.440 --> 00:00:43.770
-switch. That'll turn the VPN
-automatically on when you launch
+00:01:04.760 --> 00:01:07.280
+been a few years since
+I was on the show.
 
 14
-00:00:43.800 --> 00:00:47.130
-sensitive apps, here's your call
-to action. My friends try
+00:01:07.280 --> 00:01:10.100
+Last. Yeah, last time I
+was talking to you, you
 
 15
-00:00:47.130 --> 00:00:52.170
-HMA VPN risk-free with a
-30 day money back guarantee.
+00:01:10.100 --> 00:01:12.440
+had written a book and
+now it's a series. I
 
 16
-00:00:52.470 --> 00:00:59.010
-This deal is for Hanselman
-its listeners. That's HMA, vpn.com/offer
+00:01:12.440 --> 00:01:16.820
+was at a trilogy. Yep.
+It's trilogy the last edition
 
 17
-00:00:59.310 --> 00:01:20.480
-hyphen Hansel minutes. That's HMA
-vpn.com/offer-hansel minutes. Scott Hanselman. This
+00:01:16.850 --> 00:01:19.940
+of the trilogy I released
+in 2014. So it's been
 
 18
-00:01:20.480 --> 00:01:25.730
-is That's minutes today. I'm
-talking with Ben eater, eater.net.
+00:01:19.940 --> 00:01:22.880
+a while since, even that,
+when are you going to
 
 19
-00:01:25.730 --> 00:01:28.580
-That's a T E r.net.
-You can see all of
+00:01:22.880 --> 00:01:25.070
+turn it into a trilogy
+of trilogies, like star Wars
 
 20
-00:01:28.580 --> 00:01:31.250
-the great content and projects
-that he's working on. The
+00:01:25.070 --> 00:01:29.210
+and do nine, right. Great
+idea. So what I wanted
 
 21
-00:01:31.250 --> 00:01:33.560
-one that he is known
-for and his people are
+00:01:29.210 --> 00:01:32.060
+to talk to you about
+today is this thing called
 
 22
-00:01:33.560 --> 00:01:36.770
-excited about this year is
-building a 65 Oh two
+00:01:32.060 --> 00:01:36.110
+dapper da P our distributed
+application. Runtime folks can check
 
 23
-00:01:36.830 --> 00:01:39.110
-computer building on some of
-the work that he had
+00:01:36.110 --> 00:01:38.990
+it out at D a
+P R dot I O
 
 24
-00:01:39.110 --> 00:01:42.620
-done. Building a computer from
-basic basic parts. How are
+00:01:38.990 --> 00:01:41.240
+and I'll make sure to
+include show notes to anything
 
 25
-00:01:42.620 --> 00:01:45.970
-you, sir? Good. How are
-you, Scott? I am a
+00:01:41.240 --> 00:01:44.030
+that we talk about or
+mentioned during the show here.
 
 26
-00:01:46.010 --> 00:01:49.970
-little bit overwhelmed. I've got
-the psychic weight of this
+00:01:44.390 --> 00:01:49.160
+It says an event driven,
+portable runtime for building microservices
 
 27
-00:01:49.970 --> 00:01:53.900
-computer. That's half built on
-my kitchen counter. I've been
+00:01:49.250 --> 00:01:52.580
+on cloud N edge. That's
+a very small number of
 
 28
-00:01:53.900 --> 00:01:56.480
-told by my spouse to
-move it into the dining
+00:01:52.580 --> 00:01:54.650
+words, but it tries to
+say a lot right there
 
 29
-00:01:56.480 --> 00:02:00.120
-room. Yes, you've gone fully
-down the rabbit hole. I
+00:01:54.650 --> 00:01:58.130
+in one short sentence. Yup.
+I think there's even more
 
 30
-00:02:00.320 --> 00:02:03.170
-surely have. I almost think,
-I feel like I need
+00:01:58.130 --> 00:01:59.930
+you can say on top
+of it. So we had
 
 31
-00:02:03.170 --> 00:02:05.360
-a room to build this
-in because at first I
+00:01:59.930 --> 00:02:02.750
+to be very careful about
+which words to pick, to
 
 32
-00:02:05.360 --> 00:02:07.160
-over, I was a desk
-and then a counter. And
+00:02:02.750 --> 00:02:08.300
+emphasize the, the core value.
+Why is that? Because it's
 
 33
-00:02:07.160 --> 00:02:10.520
-now it's the entire dining
-room table. Yeah. Sorry to
+00:02:08.300 --> 00:02:10.340
+lots of different things and
+you can use it in
 
 34
-00:02:10.520 --> 00:02:14.960
-have taken over your life
-there. How did you decide
+00:02:10.340 --> 00:02:12.530
+lots of different ways. I
+think that's why we kind
 
 35
-00:02:14.960 --> 00:02:16.460
-that this was a thing
-you wanted to do? And
+00:02:12.530 --> 00:02:15.500
+of let really a programming
+runtime platform rather than a
 
 36
-00:02:16.460 --> 00:02:18.860
-like, I'm trying to understand
-your, I would like to
+00:02:15.500 --> 00:02:20.000
+programming runtime, really, because you
+can choose to adopt it
 
 37
-00:02:18.860 --> 00:02:21.170
-actually hear back up a
-little bit. Your background. Are
+00:02:20.030 --> 00:02:24.050
+piecemeal. You can choose to
+integrate it into an existing
 
 38
-00:02:21.170 --> 00:02:23.630
-you an electrical engineer? Is
-that what you took in
+00:02:24.740 --> 00:02:27.860
+what people would consider a
+legacy app or a monolithic
 
 39
-00:02:23.630 --> 00:02:29.090
-college? No. So I guess
-I started in college studying
+00:02:27.860 --> 00:02:32.030
+app. You can choose to
+go full bore and take
 
 40
-00:02:29.090 --> 00:02:32.960
-computer science and never ended
-up finishing that degree. This
+00:02:32.030 --> 00:02:35.330
+advantage of the pure cloud
+native serverless aspects of it
 
 41
-00:02:32.960 --> 00:02:35.840
-was sort of the mid
-nineties and it turned out
+00:02:35.420 --> 00:02:40.010
+and create a massively distributed,
+very fine grain microservice based
 
 42
-00:02:35.840 --> 00:02:38.120
-to, for a variety of
-reasons to make more sense,
+00:02:40.010 --> 00:02:44.660
+application. So when I hear
+the word runtime at its
 
 43
-00:02:38.120 --> 00:02:42.980
-to just dive into industry.
-And from there got heavily
+00:02:44.720 --> 00:02:48.110
+at its base, I think
+about management, I think about
 
 44
-00:02:42.980 --> 00:02:46.040
-involved in computer networking. And
-so I spent maybe 15
+00:02:48.110 --> 00:02:53.210
+like a womb or a
+cradle that holds my application
 
 45
-00:02:46.040 --> 00:02:50.990
-years doing sort of systems
-engineering with computer networks. And,
+00:02:53.210 --> 00:02:56.390
+and does stuff for me.
+So at the most simplistic,
 
 46
-00:02:52.040 --> 00:02:54.380
-and then from that kind
-of move back towards software
+00:02:56.780 --> 00:02:59.410
+you know, whether it be
+node or java.net, the runtime
 
 47
-00:02:54.380 --> 00:02:58.700
-engineering and spent the last
-seven or eight years doing
+00:02:59.500 --> 00:03:03.490
+handles Stuff that I'm not
+interested in handling like the
 
 48
-00:02:58.700 --> 00:03:01.930
-software at Khan Academy. And
-so it was really a
+00:03:03.490 --> 00:03:06.010
+basic example, be garbage collection.
+I don't want to do
 
 49
-00:03:01.930 --> 00:03:04.300
-Khan Academy that I got
-interested in making my own
+00:03:06.010 --> 00:03:08.350
+that anymore. So you do
+that thing and I'll focus
 
 50
-00:03:04.300 --> 00:03:07.900
-content and started making YouTube
-videos on hardware, which had
+00:03:08.350 --> 00:03:11.530
+on these other things. Is
+this a runtime that does
 
 51
-00:03:07.900 --> 00:03:10.360
-always been an interest and
-a passion. And, you know,
+00:03:11.530 --> 00:03:13.480
+stuff? So I don't have
+to think about those things.
 
 52
-00:03:10.360 --> 00:03:14.770
-I've, I've always been tinkering
-with various hardware projects and,
+00:03:13.510 --> 00:03:17.340
+Absolutely. In fact, that's kind
+of where the logo that
 
 53
-00:03:15.100 --> 00:03:19.120
-and computer related projects. As
-I started making videos of
+00:03:17.340 --> 00:03:19.290
+came along with dapper, where
+you've got the top hat
 
 54
-00:03:19.120 --> 00:03:23.380
-this eight bit CPU from
-scratch as just kind of
+00:03:19.290 --> 00:03:23.340
+and the tie dapper dresser,
+but also kind of a
 
 55
-00:03:23.380 --> 00:03:26.250
-a, you know, a thing
-that I was interested in,
+00:03:23.340 --> 00:03:26.550
+dapper style Butler that handles
+things for you that you'd
 
 56
-00:03:26.250 --> 00:03:32.790
-in sharing. There's a lot
-of diversity of, of knowledge
+00:03:26.550 --> 00:03:28.860
+rather not spend your time
+on, so you can focus
 
 57
-00:03:32.790 --> 00:03:35.370
-and background in the computer
-science industry. Like we all
+00:03:28.860 --> 00:03:34.680
+on your app. Hmm. So
+it's your application concierge. Okay.
 
 58
-00:03:35.370 --> 00:03:38.940
-call ourselves software engineers and
-there's lots of people saying,
+00:03:35.040 --> 00:03:39.630
+So this is primarily in
+the context of microservices. Is
 
 59
-00:03:38.970 --> 00:03:40.860
-Oh, I'm a front end
-engineer. And I do, I
+00:03:39.630 --> 00:03:42.060
+it, is it only a
+Kubernetes thing or is it
 
 60
-00:03:40.860 --> 00:03:43.290
-do, you know, jQuery and
-I do angular and I
+00:03:42.060 --> 00:03:46.290
+an anywhere thing? There's no
+direct connection to Kubernetes other
 
 61
-00:03:43.290 --> 00:03:46.800
-do that, but we're also
-offering engineers. But at the
+00:03:46.290 --> 00:03:49.110
+than we've got built in
+support for deploying it onto
 
 62
-00:03:46.800 --> 00:03:50.580
-same time though, someone may
-have gone to MIT and
+00:03:49.110 --> 00:03:52.320
+Kubernetes, it, you can install
+it anywhere. So it runs
 
 63
-00:03:50.580 --> 00:03:53.640
-come out of that with
-a master's degree in these
+00:03:52.320 --> 00:03:56.010
+in a self hosted mode.
+So you can put it
 
 64
-00:03:53.640 --> 00:03:56.610
-things and built an AP,
-a CPU from scratch. Now
+00:03:56.010 --> 00:03:58.290
+on your own dev box.
+You can put it on
 
 65
-00:03:56.610 --> 00:03:58.050
-you're telling me, and I'm
-just learning this for the
+00:03:58.320 --> 00:04:02.180
+a server, a virtual machine,
+or you can deploy to
 
 66
-00:03:58.050 --> 00:04:00.600
-first time that you never
-even finished your degree. And
+00:04:02.190 --> 00:04:05.340
+Kubernetes cluster and or to
+any other kind of orchestrator
 
 67
-00:04:00.600 --> 00:04:03.390
-you're doing this, I'm feeling
-like as I'm learning and
+00:04:05.340 --> 00:04:06.960
+you want. We just have
+to have, like I said,
 
 68
-00:04:03.390 --> 00:04:06.300
-going through this process myself,
-that I've clearly either missed
+00:04:06.960 --> 00:04:12.450
+built in support for deploying
+it into Kubernetes When, when
 
 69
-00:04:06.300 --> 00:04:09.930
-a class or forgotten to
-take something. How did you
+00:04:12.450 --> 00:04:15.810
+I'm making an application, I
+think that we sometimes blur
 
 70
-00:04:10.080 --> 00:04:12.900
-pick this stuff up? Is
-this just literally reading and
+00:04:16.200 --> 00:04:18.930
+the, the things that we
+need to solve to solve
 
 71
-00:04:12.900 --> 00:04:15.840
-absorbing and reading and absorbing
-because not every front end
+00:04:18.930 --> 00:04:20.910
+the business problem. And then
+all of the kind of
 
 72
-00:04:15.840 --> 00:04:19.980
-JavaScript engineer knows what an
-end gate is. Sure. Yeah.
+00:04:20.910 --> 00:04:23.130
+cross cutting concerns. So it's
+like, Hey, we're going to
 
 73
-00:04:19.980 --> 00:04:23.520
-I think it's just been
-something I've always been around
+00:04:23.130 --> 00:04:28.350
+make a website, session management,
+authentication, authorization, and on and
 
 74
-00:04:23.520 --> 00:04:26.590
-to some degree. So, you
-know, as far back as,
+00:04:28.350 --> 00:04:31.230
+on, you know, realization, you
+know, there's a whole list
 
 75
-00:04:26.590 --> 00:04:29.070
-as high school and even
-middle school, I was interested
+00:04:31.230 --> 00:04:34.260
+of stuff that has nothing
+to do with what we
 
 76
-00:04:29.070 --> 00:04:31.860
-in programming and interested in,
-in, in computer hardware and
+00:04:34.260 --> 00:04:37.560
+do here at Acme insurance.
+And sometimes we blur the
 
 77
-00:04:31.860 --> 00:04:34.590
-that sort of thing. And,
-you know, back then, you
+00:04:37.560 --> 00:04:40.710
+line and we end up
+writing all of these other
 
 78
-00:04:34.590 --> 00:04:36.780
-know, we didn't have Arduinos,
-but you could plug things
+00:04:40.710 --> 00:04:44.070
+things just because they don't
+either exist or the ones
 
 79
-00:04:36.780 --> 00:04:39.150
-into like the printer port
-on your computer. And that
+00:04:44.070 --> 00:04:46.650
+that exist. Don't do what
+we want them to do
 
 80
-00:04:39.150 --> 00:04:41.400
-gave you eight bits of
-digital IO that you could
+00:04:47.430 --> 00:04:51.240
+is, is the stuff in
+dapper trying to be completely
 
 81
-00:04:41.610 --> 00:04:43.500
-do things with kind of
-like what people do with
+00:04:51.540 --> 00:04:54.870
+supportive. It always plays a
+supporting role for me to
 
 82
-00:04:43.500 --> 00:04:46.410
-Arduinos today. And so, you
-know, I would do that.
+00:04:55.560 --> 00:04:57.750
+not have to write something.
+And then I do the
 
 83
-00:04:46.410 --> 00:04:49.140
-And then the next level
-beyond that is, you know,
+00:04:57.750 --> 00:05:01.140
+business logic separately and entirely
+separate from those cross cutting
 
 84
-00:04:49.140 --> 00:04:51.180
-you could, you can build
-a card that plugs into
+00:05:01.140 --> 00:05:04.590
+concerns, That's us goal. And
+in fact, it was basically
 
 85
-00:04:51.180 --> 00:04:53.220
-the bus and your computer
-and the old ISA bus,
+00:05:04.590 --> 00:05:08.070
+inspired by what we saw
+happening in cloud native programming
 
 86
-00:04:54.420 --> 00:04:57.230
-and that gives you more
-IO possibilities. And so I
+00:05:08.070 --> 00:05:11.880
+models like functions as a
+service and actor models. And
 
 87
-00:04:57.230 --> 00:05:01.050
-I'd done things like that,
-you know, just tinkering around
+00:05:11.880 --> 00:05:16.740
+really the primary goal of
+dapper was to make, to
 
 88
-00:05:01.050 --> 00:05:04.800
-in high school and then
-know, like I said, a
+00:05:16.770 --> 00:05:22.170
+bring cloud native distributed microservice
+application development to enterprise Debs.
 
 89
-00:05:04.800 --> 00:05:06.060
-lot of that kind of
-went on the shelf for
+00:05:22.770 --> 00:05:27.030
+Many enterprise devs are familiar
+and skilled with, and everyday
 
 90
-00:05:06.060 --> 00:05:09.210
-awhile. As I got into
-my career, focused more on
+00:05:27.030 --> 00:05:32.640
+writing traditional multi tier web
+plus database apps and learning
 
 91
-00:05:09.210 --> 00:05:13.080
-higher level of networking stuff
-and then software, you know,
+00:05:32.640 --> 00:05:34.800
+all the things you need
+to learn to build the
 
 92
-00:05:13.380 --> 00:05:16.950
-front end software engineering. And,
-and then that was something
+00:05:34.800 --> 00:05:39.150
+distributed microservice-based app is a
+lot of complexity and a
 
 93
-00:05:16.950 --> 00:05:18.360
-I just wanted to kind
-of get back into as
+00:05:39.150 --> 00:05:42.990
+lot of different SDKs and
+a lot of concepts that
 
 94
-00:05:18.360 --> 00:05:21.600
-a hobby. When you put
-something like this together, though,
+00:05:43.260 --> 00:05:46.590
+distract from, like you said,
+focusing on the Acme problem
 
 95
-00:05:21.600 --> 00:05:27.780
-you speak with a patient
-and a quiet authority where
+00:05:46.590 --> 00:05:50.790
+that they are paid to
+go solve. And so just
 
 96
-00:05:27.840 --> 00:05:30.240
-I, as the viewer am
-going well, Ben really knows
+00:05:50.850 --> 00:05:55.500
+like functions as a service
+takes and performs a lot
 
 97
-00:05:30.240 --> 00:05:32.310
-what he's talking about, you
-know? And certainly there's always
+00:05:55.500 --> 00:05:57.530
+of things on the developers'
+behalf. So they don't have
 
 98
-00:05:32.310 --> 00:05:33.900
-people on the internet saying,
-Oh, well you did that
+00:05:57.530 --> 00:06:01.100
+to worry about it. A
+dapper takes that idea and
 
 99
-00:05:33.900 --> 00:05:35.790
-wrong. Or we are wired
-the circuit that way or
+00:06:01.130 --> 00:06:05.720
+takes it forward. So in
+the, in the doctrine and
 
 100
-00:05:35.790 --> 00:05:39.870
-whatever, but how do you
-feel qualified to build something
+00:06:05.740 --> 00:06:09.730
+the read me, it says
+dapper codifies, the best practices
 
 101
-00:05:39.870 --> 00:05:42.120
-like this? And did it
-take any amount of like,
+00:06:09.760 --> 00:06:12.970
+for building microservice applications. But
+then you said that it
 
 102
-00:05:42.180 --> 00:05:44.010
-okay, I can do this.
-Like I could build an
+00:06:13.120 --> 00:06:17.830
+explicitly doesn't target Kubernetes or
+prescribes. So it sounds like
 
 103
-00:05:44.010 --> 00:05:47.100
-eight bit CPU from scratch
-and I, and I can
+00:06:17.830 --> 00:06:21.220
+you're kind of walking the
+Razor's edge between being prescriptive,
 
 104
-00:05:47.100 --> 00:05:48.720
-say this and put it
-down on the internet and
+00:06:21.250 --> 00:06:24.940
+but also being flexible. Is
+that difficult to, to not
 
 105
-00:05:48.720 --> 00:05:53.520
-people will enjoy it. Yeah.
-That's a good question. I
+00:06:25.330 --> 00:06:27.280
+like, hold it down and
+say, this is exactly how
 
 106
-00:05:53.520 --> 00:05:56.160
-mean, that's a, I think
-a good question for anyone.
+00:06:27.280 --> 00:06:31.660
+you should do everything versus
+the cafeteria plan. Not really.
 
 107
-00:05:56.160 --> 00:05:59.230
-Like when, when are you
-an authority? It's like, are
+00:06:31.660 --> 00:06:34.660
+Cause I think one of
+the benefits, first of dabbers,
 
 108
-00:05:59.230 --> 00:06:00.730
-you learning or are you
-like the teacher that we've
+00:06:34.660 --> 00:06:38.860
+it's extremely extensible. So when
+we say codified best practices,
 
 109
-00:06:00.730 --> 00:06:05.290
-all had? Who's just one
-chapter ahead. I hope I'm
+00:06:39.220 --> 00:06:42.160
+the best practice best practice
+can depend on who the
 
 110
-00:06:05.290 --> 00:06:08.200
-more than one chapter ahead.
-I know that I'm several
+00:06:42.160 --> 00:06:45.370
+customer is, what the target
+workload is, their requirements around
 
 111
-00:06:08.200 --> 00:06:12.880
-chapters behind I'm enjoying I'm
-enjoying that very much. Yeah.
+00:06:45.370 --> 00:06:50.710
+the application, but you can
+cautify best practices for classes.
 
 112
-00:06:12.910 --> 00:06:15.670
-Yeah, no, I mean, these
-are, like I said, these
+00:06:51.040 --> 00:06:55.750
+And if the codifications that
+are built into dapper and
 
 113
-00:06:15.670 --> 00:06:17.530
-are, these are projects and
-things that I've, I've always
+00:06:55.750 --> 00:06:58.150
+the ones that come with
+it, don't meet your needs.
 
 114
-00:06:17.530 --> 00:06:20.950
-had an interest in. And
-so it's been something that
+00:06:58.180 --> 00:07:02.440
+You can codify your own.
+So take, for example, backoff
 
 115
-00:06:20.950 --> 00:06:23.620
-I've been absorbing over, you
-know, I think a long
+00:07:02.440 --> 00:07:05.710
+and retry, when it comes
+to interacting with another service,
 
 116
-00:06:23.620 --> 00:06:26.050
-period of time. And so
-I've had a lot of
+00:07:06.520 --> 00:07:10.690
+a there's best practices for
+how you do back off
 
 117
-00:06:26.050 --> 00:06:28.000
-time to sort of think
-about it and think about,
+00:07:10.690 --> 00:07:14.020
+and retries that as a
+developer, you don't want to
 
 118
-00:06:28.720 --> 00:06:32.620
-you know, how do I
-make sense of this? And
+00:07:14.020 --> 00:07:17.200
+spend your time implementing that
+in your code. And so
 
 119
-00:06:32.650 --> 00:06:35.590
-I think to some degree,
-that is what people find
+00:07:17.380 --> 00:07:21.370
+that codification of those best
+practices can be in dapper
 
 120
-00:06:37.330 --> 00:06:39.910
-interesting or fresh about, about
-the content I'm making is
+00:07:21.370 --> 00:07:23.710
+itself so that when you
+call into dapper and say,
 
 121
-00:06:39.910 --> 00:06:41.830
-I'm coming at it from,
-you know, this is how
+00:07:23.710 --> 00:07:26.830
+I want to talk to
+this remote service. Dapper is
 
 122
-00:06:41.830 --> 00:06:44.650
-my brain has processed this
-stuff over a number of
+00:07:26.830 --> 00:07:35.200
+taking care of that complexity.
+It's 2020, and why hasn't
 
 123
-00:06:44.650 --> 00:06:49.090
-years. This isn't, this isn't
-a regurgitation of how it
+00:07:35.200 --> 00:07:38.320
+this stuff happened before? Like
+I was joking, I was
 
 124
-00:06:49.090 --> 00:06:51.880
-was structured in a textbook.
-When I first learned It
+00:07:38.320 --> 00:07:40.180
+giving a talk recently and
+I joked about how long
 
 125
-00:06:51.880 --> 00:06:55.720
-is a combination informally Experience.
-Yeah. Yeah. And I think,
+00:07:40.180 --> 00:07:42.010
+my resume was. I said,
+I got a three page
 
 126
-00:06:55.780 --> 00:06:57.550
-I mean, I think the
-traditional way that you, you
+00:07:42.010 --> 00:07:44.710
+resume to page two is
+just learning to scale a
 
 127
-00:06:57.550 --> 00:07:00.310
-might, a professor might teach
-a class along these lines
+00:07:44.710 --> 00:07:47.740
+web farm. And then, you
+know, at some point page
 
 128
-00:07:00.310 --> 00:07:03.070
-would be, you know, there
-was some curriculum that was
+00:07:47.770 --> 00:07:49.960
+two of my resume got
+ripped out because scaling a
 
 129
-00:07:03.070 --> 00:07:05.470
-set out and then that
-professor, you know, learn that
+00:07:49.960 --> 00:07:51.970
+web form is pretty much
+just a slider bar. Now,
 
 130
-00:07:05.470 --> 00:07:08.230
-curriculum and has always had
-that framework for understanding it.
+00:07:52.090 --> 00:07:55.600
+you know, like scaling out
+is pretty much understood. It
 
 131
-00:07:08.230 --> 00:07:11.260
-And then that the gaps
-have been filled in over
+00:07:55.600 --> 00:07:58.030
+seems a little bit late
+for us to be like
 
 132
-00:07:11.260 --> 00:07:14.410
-many years of experience of
-course. But I think there's
+00:07:58.390 --> 00:08:00.220
+saying, okay, can we all
+just agree on how we
 
 133
-00:07:14.410 --> 00:07:17.980
-still that same fundamental framework
-underneath that. Whereas I think
+00:08:00.220 --> 00:08:01.810
+manage secrets? Can we all
+just agree on how we
 
 134
-00:07:17.980 --> 00:07:20.680
-to the extent that I'm
-doing something new here, it's,
+00:08:01.810 --> 00:08:04.600
+manage state? Is this just
+a matter of like one
 
 135
-00:07:21.250 --> 00:07:23.200
-you know, because I didn't
-start with a framework and
+00:08:05.050 --> 00:08:09.460
+additional standard? Well, I think
+the various parts, So this
 
 136
-00:07:23.200 --> 00:07:25.690
-I just kind of piece
-this stuff together on my
+00:08:09.460 --> 00:08:14.500
+have emerged in different runtimes
+and program models already. I
 
 137
-00:07:25.690 --> 00:07:28.330
-own, over a period of,
-you know, at this point
+00:08:14.500 --> 00:08:17.050
+think what dapper brings to
+the table is this sidecar
 
 138
-00:07:28.330 --> 00:07:32.530
-a couple of decades. Yeah.
-I, I maybe have just
+00:08:17.050 --> 00:08:21.460
+pattern, the end with the
+sidecar pattern and the focus
 
 139
-00:07:32.530 --> 00:07:34.630
-a little bit different perspective
-on it, which is, which
+00:08:21.460 --> 00:08:26.830
+on solving these distributed systems,
+problems that come as part
 
 140
-00:07:34.630 --> 00:07:36.700
-is what I think people
-think, Right. And that perspective
+00:08:26.830 --> 00:08:28.660
+of the territory, when it
+comes to cloud native development,
 
 141
-00:07:36.700 --> 00:07:39.220
-offers that, that freshness. And
-it's had a number of
+00:08:29.350 --> 00:08:35.140
+it really is opening up
+the door for a very
 
 142
-00:07:39.220 --> 00:07:41.110
-times where I've been doing
-stuff. Of course, I'm not
+00:08:35.350 --> 00:08:39.880
+flexible extensible runtime that hasn't
+existed to this date. And
 
 143
-00:07:41.110 --> 00:07:42.790
-doing the AP at CPU
-from scratch. I'm doing the
+00:08:39.880 --> 00:08:41.830
+once you start to look
+at dapper, it seems like
 
 144
-00:07:42.790 --> 00:07:46.570
-65 Oh two, which still
-feels pretty low level to
+00:08:42.730 --> 00:08:45.910
+the obvious kind of stuff.
+It's just that I think
 
 145
-00:07:46.570 --> 00:07:49.600
-me. And I've been doing
-this for almost 30 years
+00:08:46.900 --> 00:08:49.480
+that when we looked at
+the problems that we wanted
 
 146
-00:07:49.660 --> 00:07:51.640
-and I have had at
-least a half dozen times,
+00:08:49.480 --> 00:08:54.280
+to solve, that dapper emerged
+as the solution to be
 
 147
-00:07:51.670 --> 00:07:55.210
-including once were literal jaw
-drop. And I, and I
+00:08:54.280 --> 00:08:57.570
+able to solve them. And
+that Sidecar concept, that sidecar
 
 148
-00:07:55.210 --> 00:07:57.220
-was like, you know, I
-don't talk to myself. Some
+00:08:57.570 --> 00:08:59.820
+architecture is really fundamental. This
+isn't a thing like I
 
 149
-00:07:57.220 --> 00:07:59.710
-people sit quietly in their
-room and they have full
+00:08:59.820 --> 00:09:02.580
+had used the example of
+a, of a, a cradle
 
 150
-00:07:59.710 --> 00:08:03.070
-on conversations with themselves, but
-I literally was doing this.
+00:09:02.580 --> 00:09:05.340
+or a thing that is
+a runtime that is holding
 
 151
-00:08:03.310 --> 00:08:05.560
-I think I was somewhere
-in like hour 11 or
+00:09:05.340 --> 00:09:08.220
+your code. But your application
+code is, is the motorcycle
 
 152
-00:08:05.560 --> 00:08:07.150
-12. And I was just,
-and I literally was like,
+00:09:08.220 --> 00:09:10.830
+in this context and dapper
+is the sidecar. It is
 
 153
-00:08:08.200 --> 00:08:11.170
-Oh, and like, you know,
-30 years of like, I
+00:09:11.160 --> 00:09:13.980
+lateral to your application. And
+in doing that, it gives
 
 154
-00:08:11.170 --> 00:08:13.180
-thought it worked this way
-and it worked that way
+00:09:13.980 --> 00:09:18.060
+you full flexibility. It's not
+prescribing it so much that
 
 155
-00:08:13.180 --> 00:08:16.440
-kind of happened. I'm really
-curious what that moment was
+00:09:18.060 --> 00:09:22.970
+it Smothers it with recommendations.
+Yeah, exactly. And that's what
 
 156
-00:08:16.630 --> 00:08:18.760
-When I actually wrote a
-little bit about it. But
+00:09:22.970 --> 00:09:25.850
+really makes it so that
+you can incrementally adopted or
 
 157
-00:08:18.760 --> 00:08:21.370
-it was one of those
-things where it was a
+00:09:25.850 --> 00:09:28.550
+fully adopted depending on what
+your needs are and what
 
 158
-00:08:21.370 --> 00:08:25.100
-combination of understanding the rising
-edge versus the, the, the,
+00:09:28.550 --> 00:09:31.460
+you want it to do
+for you. So just one
 
 159
-00:08:25.270 --> 00:08:28.660
-the trailing as like when
-things occur, the, you know,
+00:09:31.460 --> 00:09:36.050
+example on one side of
+that spectrum, you can say,
 
 160
-00:08:28.690 --> 00:08:31.630
-polling versus interrupts and how
-data was flowing from the
+00:09:36.050 --> 00:09:38.890
+you know what I like
+dappers actor model. And so
 
 161
-00:08:31.630 --> 00:08:35.820
-prom into the computer. And
-then out into the, the,
+00:09:38.890 --> 00:09:41.870
+I'm gonna use doc dapper
+actor model SDK, which provides
 
 162
-00:08:35.820 --> 00:08:41.680
-the latched chip. And I
-had swapped two wires. So
+00:09:41.870 --> 00:09:46.370
+me language integration, convenience with
+the dapper sidecar, where the
 
 163
-00:08:41.680 --> 00:08:45.310
-I had eight, I had
-my eight bits wires of
+00:09:46.700 --> 00:09:51.710
+actor interfaces are actually implemented.
+And now I'm taking advantage
 
 164
-00:08:45.340 --> 00:08:49.690
-four and five were swapped.
-And I was frustrated because
+00:09:51.710 --> 00:09:58.070
+of dapper for service discovery,
+invocation messaging, state store, basically
 
 165
-00:08:49.690 --> 00:08:52.780
-this thing would keep, keep
-getting like, you know what,
+00:09:58.610 --> 00:10:02.480
+most of the underlying building
+blocks or services that Tapper
 
 166
-00:08:52.800 --> 00:08:54.430
-let me look at, I
-actually, I wrote this up,
+00:10:02.570 --> 00:10:05.540
+provides. On the other hand,
+you could say, you know,
 
 167
-00:08:54.790 --> 00:09:00.690
-I getting a, B two
-and I wanted AA and
+00:10:05.540 --> 00:10:07.970
+what all I want to
+do is use dapper to
 
 168
-00:09:00.690 --> 00:09:03.270
-I was just getting angry.
-And I wasn't thinking I
+00:10:08.000 --> 00:10:11.480
+talk to a CAFCA service
+because I don't want to
 
 169
-00:09:03.270 --> 00:09:06.990
-was just getting angry and
-I kept thinking, I know
+00:10:11.480 --> 00:10:13.730
+worry about all the complexities
+and integrating with the CAFCA
 
 170
-00:09:06.990 --> 00:09:08.040
-what I want to come
-getting. And I was like,
+00:10:13.730 --> 00:10:15.620
+STK. So I'm going to,
+I'm going to do is
 
 171
-00:09:08.080 --> 00:09:10.260
-you know, I've done something
-wrong. And I took the
+00:10:16.070 --> 00:10:21.590
+talk HTTP to the CAFCA
+sidecar and the CAFCA binding
 
 172
-00:09:10.260 --> 00:09:11.520
-whole thing apart and rewired
-took the whole thing and
+00:10:21.650 --> 00:10:24.740
+that it supports. And now
+I'm taking advantage of the
 
 173
-00:09:11.670 --> 00:09:14.910
-rewired it. And I was
-thinking about things in terms
+00:10:24.740 --> 00:10:28.520
+best practices that are built
+into CAFCA finding, I don't
 
 174
-00:09:14.910 --> 00:09:17.370
-of hex. And I, I
-think about hex in terms
+00:10:28.520 --> 00:10:33.680
+need to include the CAFCA
+SDK or the client libraries
 
 175
-00:09:17.370 --> 00:09:19.590
-of colors, because I've been
-spending as much time on
+00:10:33.680 --> 00:10:37.160
+or code or get the
+right SDK for my language,
 
 176
-00:09:19.590 --> 00:09:22.260
-the web. So, so AA,
-I can tell you what
+00:10:37.550 --> 00:10:39.710
+into my code. I can
+just leverage it directly. And
 
 177
-00:09:22.260 --> 00:09:25.890
-color it is, but I
-can't see the binary. So
+00:10:40.100 --> 00:10:43.010
+so if CAFCA only supports
+it, doesn't have a rust
 
 178
-00:09:25.890 --> 00:09:28.560
-I stopped and thought, and
-I said, hang on. What
+00:10:43.010 --> 00:10:45.710
+SDK, for example, but I
+want to write my component
 
 179
-00:09:28.560 --> 00:09:31.050
-the heck am I actually
-doing here? And that moment
+00:10:45.710 --> 00:10:49.100
+and rust. I can call
+into the CAFCA sidecar, which
 
 180
-00:09:31.560 --> 00:09:35.430
-took me from simply following
-your videos and moving my
+00:10:49.430 --> 00:10:52.250
+talks to CAFCA for my
+arrest codes In, in bringing
 
 181
-00:09:35.430 --> 00:09:37.680
-hands the way you were
-moving your hands so that
+00:10:52.250 --> 00:10:55.250
+the actor model into it.
+Doesn't that kind of like
 
 182
-00:09:37.680 --> 00:09:41.100
-I might copy you to
-a moment where I went,
+00:10:56.150 --> 00:10:58.460
+that's a little bit more
+main course than the other
 
 183
-00:09:41.130 --> 00:09:45.450
-Oh, B two is one
-zero, one, one zero. Like
+00:10:58.460 --> 00:11:02.120
+core concepts that are included.
+Like something like, Oh, here's
 
 184
-00:09:45.450 --> 00:09:46.890
-it's like, I was trying
-to go at one zero
+00:11:02.120 --> 00:11:04.010
+how we do secrets. And
+here's how we manage service
 
 185
-00:09:46.890 --> 00:09:49.530
-one zero one zero one.
-And I said, Oh, and
+00:11:04.010 --> 00:11:07.040
+invocation seems of a certain
+size. And then it's like
 
 186
-00:09:49.530 --> 00:09:53.070
-I just, my brain drew
-a direct line between, there's
+00:11:07.070 --> 00:11:12.140
+actors that seems more, Well,
+it is a little bit
 
 187
-00:09:53.070 --> 00:09:56.460
-a, there's five volts on
-that. I have literally flipped
+00:11:12.140 --> 00:11:18.020
+more prescriptive, but even there
+dapper is flexible in its
 
 188
-00:09:56.580 --> 00:10:00.120
-these two wires and I
-just flipped them. And then
+00:11:18.140 --> 00:11:20.510
+in what it provides from
+an actor model perspective. But
 
 189
-00:10:00.120 --> 00:10:01.800
-the thing worked and it
-was like, it went, it
+00:11:20.510 --> 00:11:23.600
+really where we started from,
+it was saying serverless, what
 
 190
-00:10:01.800 --> 00:10:07.050
-went from totally completely, utterly
-useless does not work to
+00:11:23.600 --> 00:11:26.210
+is serverless, what or what
+it would make it easy
 
 191
-00:10:07.380 --> 00:10:09.870
-work exactly. As Ben said,
-it would because of these
+00:11:26.210 --> 00:11:28.700
+for what makes it easy
+for enterprise developers to write
 
 192
-00:10:09.870 --> 00:10:13.590
-two wires. And it was
-just a moment where software
+00:11:28.700 --> 00:11:31.280
+a cloud native distributed application.
+And that's where we took
 
 193
-00:10:13.590 --> 00:10:18.420
-and hardware and electrons came
-together into this Venn diagram.
+00:11:31.670 --> 00:11:33.560
+a look at what was
+out there and from our
 
 194
-00:10:18.420 --> 00:10:20.880
-And I just went, Oh,
-and then I, of course,
+00:11:33.560 --> 00:11:36.860
+learnings, without your functions and
+service, Robert reliable actors and
 
 195
-00:10:20.880 --> 00:10:25.140
-I'm finding myself on my,
-you know, quad processor, Intel,
+00:11:36.860 --> 00:11:38.810
+talking to customers and seeing
+what they were doing with
 
 196
-00:10:25.140 --> 00:10:27.060
-whatever going, how does this
-thing even working at all?
+00:11:38.810 --> 00:11:42.230
+it, recognizing that, like I
+said, enterprise devs want to
 
 197
-00:10:27.060 --> 00:10:29.610
-Like, it's a miracle that
-the house of cards that
+00:11:42.230 --> 00:11:45.200
+focus on their app, not
+on all this, this complexities
 
 198
-00:10:29.940 --> 00:10:33.590
-has me building here is
-a thing. It is. I
+00:11:45.200 --> 00:11:48.770
+of distributed application and state
+management, service discovery and invocation
 
 199
-00:10:33.590 --> 00:10:37.340
-mean, yeah, it is amazing.
-But, but no. Yeah, I
+00:11:48.770 --> 00:11:52.640
+and triggers and back offs
+and retries. We said, Hey,
 
 200
-00:10:37.340 --> 00:10:39.830
-think, I think that is
-an interesting insight. You know,
+00:11:53.590 --> 00:11:55.960
+if we go with the
+sidecar model, we can actually
 
 201
-00:10:39.830 --> 00:10:43.010
-that as, as a software
-engineer, as you, just the
+00:11:56.290 --> 00:12:00.280
+support a serverless of functions
+as a service type programming
 
 202
-00:10:43.010 --> 00:10:45.080
-way you think about problems,
-you don't generally have to
+00:12:00.280 --> 00:12:02.920
+model. If a developer wants
+to use that, we can
 
 203
-00:10:45.080 --> 00:10:47.780
-think about, you know, maybe
-two bits on my bus
+00:12:02.920 --> 00:12:05.980
+actually support with a little
+bit of extra code, like
 
 204
-00:10:47.780 --> 00:10:51.050
-or swapped And maybe the
-operating center, maybe they are
+00:12:06.850 --> 00:12:10.630
+keeping track of actor invocations
+and doing the virtual actor,
 
 205
-00:10:51.050 --> 00:10:53.030
-swapped. And the operating system
-is cleaning up for me
+00:12:11.200 --> 00:12:14.590
+state hydration and dehydration that
+we can build an actor
 
 206
-00:10:53.030 --> 00:10:55.910
-when I was starting out.
-I think we're probably somewhat
+00:12:14.590 --> 00:12:16.360
+model on top of it.
+And really then at that
 
 207
-00:10:55.910 --> 00:10:59.000
-contemporaries in age, we were
-thinking about big Indian and
+00:12:16.360 --> 00:12:21.190
+point with functions, the basic
+function support, and basic actor
 
 208
-00:10:59.000 --> 00:11:02.120
-little Indian on the network
-and who, who was doing
+00:12:21.190 --> 00:12:25.270
+support with degrees of flexibility
+for both of them, depending
 
 209
-00:11:02.120 --> 00:11:05.570
-that and who was paying
-the computational price for the
+00:12:25.270 --> 00:12:29.660
+on what the developer wants.
+Now we've got basically a
 
 210
-00:11:05.570 --> 00:11:08.840
-Indian swap as you move
-off the network and under
+00:12:29.680 --> 00:12:35.830
+holistic programming model platform that
+supports stateless scale-out microservices, as
 
 211
-00:11:08.840 --> 00:11:13.280
-the process. And now that's
-just long forgotten. Yeah. But
+00:12:35.830 --> 00:12:39.900
+well as stateful microservices. What
+does it mean though, in
 
 212
-00:11:13.280 --> 00:11:14.240
-they're still hard to know
-What are you going to
+00:12:39.900 --> 00:12:42.390
+the context of all the
+other actor frameworks, whether it
 
 213
-00:11:14.240 --> 00:11:16.880
-do it, which actually lets
-me one thing I wanted
+00:12:42.390 --> 00:12:44.940
+be Orleans or ACA and
+et cetera, et cetera, like
 
 214
-00:11:16.880 --> 00:11:18.260
-to ask you. And I've
-mentioned this before in other
+00:12:44.940 --> 00:12:50.310
+there's, there's coopertition and, and
+certainly competition in these different
 
 215
-00:11:18.260 --> 00:11:21.080
-shows, is that, what do
-you think the value is
+00:12:50.310 --> 00:12:53.730
+things is this as prescriptive
+as those other actor frame,
 
 216
-00:11:21.080 --> 00:11:24.560
-about learning about the metal?
-Because a young person on
+00:12:55.320 --> 00:12:57.930
+It's not as prescriptive as
+those other ones. For one
 
 217
-00:11:24.560 --> 00:11:28.220
-my team said that they
-don't learn from the metal
+00:12:57.930 --> 00:13:06.390
+thing, it separates the underlying
+cluster or management from dapper
 
 218
-00:11:28.250 --> 00:11:31.100
-up as I did. And
-it's, it sounds like you
+00:13:06.390 --> 00:13:09.300
+dapper, doesn't provide that. What
+it does is just keeps
 
 219
-00:11:31.100 --> 00:11:34.550
-did. They learned from the
-screen back. So for them,
+00:13:09.300 --> 00:13:11.970
+track of where actors are.
+So it's got an actor
 
 220
-00:11:34.550 --> 00:11:36.980
-the metal is F 12
-tools and then they tunnel
+00:13:12.510 --> 00:13:16.470
+service management service, but the
+reason that it's less prescriptive
 
 221
-00:11:36.980 --> 00:11:39.650
-into the computer from there
-until they decide that they've
+00:13:16.500 --> 00:13:21.270
+is that for one, it
+is language agnostic. And if
 
 222
-00:11:39.650 --> 00:11:42.920
-reached a layer of obstruction
-that they're comfortable with. I'm
+00:13:21.270 --> 00:13:23.460
+you take a look at
+the active models program models
 
 223
-00:11:42.920 --> 00:11:46.850
-enjoying learning from lower down
-than I've ever been. And
+00:13:23.460 --> 00:13:27.180
+that are out there, they
+typically are Java and C
 
 224
-00:11:46.850 --> 00:11:52.970
-then tunneling back up. I
-don't, I don't know that
+00:13:27.180 --> 00:13:30.540
+sharp. And that's it that
+you could write an actor
 
 225
-00:11:52.990 --> 00:11:56.680
-there's necessarily a, I don't
-know. I go back and
+00:13:30.540 --> 00:13:34.740
+for dapper just using the
+HTTP or GRPC interfaces in
 
 226
-00:11:56.680 --> 00:11:59.740
-forth on whether there's some,
-you know, strong pedagogical stance
+00:13:34.740 --> 00:13:38.520
+whatever language you want, including
+like I mentioned, rust. And
 
 227
-00:11:59.740 --> 00:12:01.660
-I could take about why
-one is better than the
+00:13:38.820 --> 00:13:42.090
+so it's less prescriptive in
+that way. Like I said,
 
 228
-00:12:01.660 --> 00:12:04.300
-other. And I, I just,
-I don't know if I
+00:13:42.090 --> 00:13:45.150
+you can have language SDKs
+that make it easy for
 
 229
-00:12:04.300 --> 00:12:07.090
-can, but, but the one
-thing I can say is
+00:13:45.150 --> 00:13:47.430
+you to inherit from some
+base class. So you don't
 
 230
-00:12:07.090 --> 00:12:09.670
-that there is always a
-sense of mystery that you
+00:13:47.430 --> 00:13:51.360
+have to implement that yourself
+if you want to, but
 
 231
-00:12:09.670 --> 00:12:12.700
-have when you look at
-a computer, unless you start
+00:13:51.360 --> 00:13:53.790
+you don't have to. And
+the second way it's less
 
 232
-00:12:12.820 --> 00:12:16.900
-from those first principles. Although
-I guess you still have
+00:13:53.790 --> 00:13:57.630
+prescriptive is that we've got
+built into it ways that
 
 233
-00:12:16.900 --> 00:12:18.280
-to, you still have to
-draw a line of like,
+00:13:57.630 --> 00:13:59.940
+you can control the concurrency
+model on it. So if
 
 234
-00:12:18.280 --> 00:12:20.350
-where are those first principles?
-Because even if you start
+00:13:59.940 --> 00:14:02.970
+you say, well, if you
+take a look at this,
 
 235
-00:12:20.440 --> 00:12:23.980
-at the, at the, at
-the beginning with, with electrons,
+00:14:03.060 --> 00:14:05.580
+the reliable actors like service
+rabbit collab, lacquers it had
 
 236
-00:12:24.640 --> 00:12:27.220
-you could still be going
-and asking questions about physics.
+00:14:05.580 --> 00:14:09.630
+a strong concurrency model, which
+most developers want, which is
 
 237
-00:12:27.220 --> 00:12:30.030
-And we don't know the
-answer to those, but I,
+00:14:09.630 --> 00:14:14.010
+when you invoke my actor
+on a method, that method
 
 238
-00:12:30.030 --> 00:12:31.660
-but I think if you're
-willing to accept some basics
+00:14:14.010 --> 00:14:17.610
+should be serialized with respect
+to invocations of that same
 
 239
-00:12:31.660 --> 00:12:34.690
-about physics and work up
-from there, then I think
+00:14:17.610 --> 00:14:20.070
+method or any others that
+are part of this actor
 
 240
-00:12:34.690 --> 00:12:37.570
-you can develop the sense
-that, okay, computers are not
+00:14:20.070 --> 00:14:23.970
+class with dapper. You can
+relax that and say, you
 
 241
-00:12:37.690 --> 00:12:43.180
-magical. They're just really complex.
-And it's, you know, it's
+00:14:23.970 --> 00:14:26.250
+know what, I want really
+high performance. So I'm going
 
 242
-00:12:43.180 --> 00:12:46.180
-miraculous that, you know, a
-modern computer does what it,
+00:14:26.250 --> 00:14:30.660
+to take care of synchronization
+myself. I'm going to put
 
 243
-00:12:46.330 --> 00:12:49.000
-what it does, but it's,
-it's miraculous just in the
+00:14:30.660 --> 00:14:34.740
+locks into my code so
+that I can create these
 
 244
-00:12:49.000 --> 00:12:50.890
-sense of like, wow, it's
-really amazing what humans can
+00:14:35.700 --> 00:14:40.110
+critical sections that are only
+necessary. That just to protect
 
 245
-00:12:50.890 --> 00:12:53.730
-do. And the idea that
-we've miniaturized it. And even
+00:14:40.110 --> 00:14:43.860
+the state transitions that I've
+got, but otherwise let things
 
 246
-00:12:53.730 --> 00:12:56.970
-now looking at your giant
-eight bit CPU from scratch,
+00:14:43.860 --> 00:14:47.250
+run in parallel. And so
+it also is more flexible
 
 247
-00:12:56.970 --> 00:12:59.940
-I still am not a
-hundred percent clear on inside
+00:14:47.250 --> 00:14:50.040
+from that perspective. Hey friends,
+you know how I love
 
 248
-00:12:59.970 --> 00:13:04.020
-the 7,400 series chips and,
-and gate, like, how is
+00:14:50.040 --> 00:14:52.250
+great podcasts, and I want
+you to check out The
 
 249
-00:13:04.020 --> 00:13:08.400
-it right. Doing the end?
-Yeah. I do have videos
+00:14:52.250 --> 00:14:56.030
+code newbie podcast. It's all
+about stories from folks on
 
 250
-00:13:08.400 --> 00:13:12.360
-on that. So I haven't.
-Okay. Yeah. I've got, I've
+00:14:56.030 --> 00:15:00.230
+their coding journey. They talked
+to new developers, experienced developers
 
 251
-00:13:12.360 --> 00:13:15.450
-got videos where I talk
-about the chemistry of semiconductors
+00:15:00.230 --> 00:15:02.510
+and everyone in between about
+how they got started learning
 
 252
-00:13:15.450 --> 00:13:17.190
-and how a transistor works
-and then how you can
+00:15:02.510 --> 00:15:06.260
+to code how they navigate
+their technical careers. And they
 
 253
-00:13:17.190 --> 00:13:20.700
-build an Gates from transistors
-and then from that kind
+00:15:06.260 --> 00:15:09.350
+also do deep dives into
+technical topics in a newbie
 
 254
-00:13:20.700 --> 00:13:23.100
-of launch into, okay, let's
-build a computer Gates. Okay.
+00:15:09.350 --> 00:15:14.240
+friendly way, check out their
+podcast at www dot COVID,
 
 255
-00:13:23.130 --> 00:13:25.350
-So that is my missing
-piece then. Yeah. And I'm
+00:15:14.300 --> 00:15:23.030
+newbie that's any w B
+I e.org/podcast. That's code newbie.org/podcast.
 
 256
-00:13:25.350 --> 00:13:29.970
-looking here on your YouTube
-at YouTube slash eater BC,
+00:15:23.360 --> 00:15:28.760
+So you've pulled aside a
+lot of implementation details like
 
 257
-00:13:29.970 --> 00:13:34.230
-you've got all the way
-down to the lowest, lowest
+00:15:28.790 --> 00:15:32.300
+input, output bindings. You can
+pick Kafka or AWS or
 
 258
-00:13:34.230 --> 00:13:37.800
-levels and you have, and
-they're really Willy well paced,
+00:15:32.360 --> 00:15:35.840
+GCP or whatever your state
+store has been pulled aside.
 
 259
-00:13:38.940 --> 00:13:41.100
-but I still find myself
-pausing for a second cause
+00:15:35.840 --> 00:15:40.070
+It's again, it's nondenominational in
+its religious choices and your
 
 260
-00:13:41.100 --> 00:13:42.840
-I need to absorb, you
-know what I mean? You
+00:15:40.070 --> 00:15:44.510
+nondenominational in your publish and
+subscribe. Can you maintain perf
 
 261
-00:13:42.840 --> 00:13:47.280
-don't. Yeah, Yeah. I am.
-I mean, my goal is
+00:15:44.600 --> 00:15:48.440
+when you are so plugable
+with some of the basic
 
 262
-00:13:47.400 --> 00:13:49.770
-to not leave anything out.
-So I don't, I don't
+00:15:48.440 --> 00:15:52.030
+stuff? Yeah. Good question. So
+I think this goes with
 
 263
-00:13:49.770 --> 00:13:53.100
-want this sort of hand
-wavy, like, okay, this is
+00:15:52.040 --> 00:15:56.360
+it, the flexibility of dapper.
+So with the standard bindings
 
 264
-00:13:53.100 --> 00:13:55.740
-roughly how it works. And
-then like fast forward, a
+00:15:56.360 --> 00:16:00.170
+that we got, for example,
+for CAFCA, if you decide
 
 265
-00:13:55.740 --> 00:13:57.750
-little bit near here at
-works and lead out some
+00:16:00.170 --> 00:16:03.800
+that that binding doesn't provide
+you sufficient perf you can
 
 266
-00:13:57.750 --> 00:14:00.120
-detail. You know, I always,
-I always want you to
+00:16:03.800 --> 00:16:06.050
+write a different binding, nothing
+stops you from running your
 
 267
-00:14:00.120 --> 00:14:01.680
-be able to say, well,
-wait a minute. Why is
+00:16:06.050 --> 00:16:09.680
+own custom binding for that
+service or any other service,
 
 268
-00:14:01.680 --> 00:14:05.100
-that? And have that answer
-in there somewhere. But at
+00:16:10.550 --> 00:16:13.760
+but at the same time,
+nothing stops you from directly
 
 269
-00:14:05.100 --> 00:14:07.650
-the same time, I don't
-want the videos to drag
+00:16:13.760 --> 00:16:17.270
+using an SDK for a
+service in your code. So
 
 270
-00:14:07.650 --> 00:14:10.620
-on and on and on
-and on covering every little,
+00:16:17.270 --> 00:16:19.460
+if you don't want to
+use dapper to talk to
 
 271
-00:14:11.400 --> 00:14:14.790
-you know, detailing in detail.
-So it's a, it's a
+00:16:19.460 --> 00:16:21.890
+CAFCA, you can talk to
+it directly, nothing gets in
 
 272
-00:14:14.790 --> 00:14:17.580
-balancing act. And I think,
-you know, what you're recognizing
+00:16:21.890 --> 00:16:26.330
+your way. It's just there
+as the convenience layer. And
 
 273
-00:14:17.580 --> 00:14:20.040
-is, is, you know, hopefully
-what I'm aiming for, which
+00:16:26.360 --> 00:16:28.400
+one of the benefits of
+it is once you have
 
 274
-00:14:20.040 --> 00:14:22.050
-is that you can sit
-back and watch the whole
+00:16:28.940 --> 00:16:33.800
+these bindings, the ecosystems contributing
+to them, if you've want
 
 275
-00:14:22.050 --> 00:14:24.210
-thing. And I think kind
-of soak it in and
+00:16:33.800 --> 00:16:36.050
+to improve them, you improve
+them. And everybody takes advantage
 
 276
-00:14:24.210 --> 00:14:27.360
-get a sense of like,
-okay, this all makes sense.
+00:16:36.050 --> 00:16:39.470
+of them. And not only
+that, but the binding that
 
 277
-00:14:28.260 --> 00:14:29.850
-But then if you really
-want to understand it, you
+00:16:39.470 --> 00:16:43.220
+you write for CAFCA applies
+to somebody writing a function
 
 278
-00:14:29.850 --> 00:14:32.610
-do need to go slower
-and really process everything that's
+00:16:43.220 --> 00:16:45.260
+on top of dapper or
+somebody running an actor on
 
 279
-00:14:32.610 --> 00:14:36.490
-there because hopefully there is
-some information density Back. If
+00:16:45.260 --> 00:16:48.050
+top of the dapper or
+somebody that just wants to
 
 280
-00:14:36.510 --> 00:14:38.790
-one goes to your videos
-on YouTube and goes back
+00:16:48.050 --> 00:16:52.520
+talk to CAFCA directly from
+their existing web app through
 
 281
-00:14:38.790 --> 00:14:41.340
-to 60 years ago, there
-is a, there is a,
+00:16:52.520 --> 00:16:55.250
+using dapper. So it it's
+this one place where you
 
 282
-00:14:41.780 --> 00:14:45.270
-a Khan Academy ask style.
-It appears that you're here
+00:16:55.250 --> 00:17:02.450
+can concentrate and magnify people
+doing innovation or PR providing
 
 283
-00:14:45.360 --> 00:14:48.210
-using the same software and
-the same kind of style.
+00:17:02.450 --> 00:17:06.260
+improvements in performance or security.
+So let me up-level and
 
 284
-00:14:48.570 --> 00:14:50.910
-And then somewhere as you
-get into the latches and
+00:17:06.260 --> 00:17:09.260
+backup in time a little
+bit, there was a time
 
 285
-00:14:51.110 --> 00:14:53.600
-flops and the other stuff
-you've developed your own style,
+00:17:09.380 --> 00:17:13.550
+when we would talk about
+chatty interfaces and chunky interfaces,
 
 286
-00:14:53.600 --> 00:14:56.210
-which is, you know, a
-black background and your hands
+00:17:13.550 --> 00:17:16.460
+and we would talk about
+in-process calls and out of
 
 287
-00:14:56.210 --> 00:14:59.690
-and your peaceful voice and
-a pen. And most recently
+00:17:16.460 --> 00:17:19.700
+process calls. And then we
+would ask ourselves, when does
 
 288
-00:14:59.690 --> 00:15:03.530
-you've even been taking pieces
-of paper with cutouts of
+00:17:19.700 --> 00:17:22.010
+this thing hit the network?
+So in process, out of
 
 289
-00:15:03.530 --> 00:15:05.660
-other pieces of paper and
-doing this kind of cool
+00:17:22.010 --> 00:17:26.180
+process, out of, you know,
+out of machine, and then
 
 290
-00:15:05.870 --> 00:15:10.400
-replacement. Did you, were you
-initially copying Khan because it
+00:17:26.180 --> 00:17:28.550
+now we're thinking about things
+in terms of, have I
 
 291
-00:15:10.400 --> 00:15:12.140
-was what you were doing
-at the word at work
+00:17:29.360 --> 00:17:32.510
+swapped over to another pot?
+If I swapped into another
 
 292
-00:15:12.170 --> 00:15:16.640
-and then how did you
-develop your own style? Yeah,
+00:17:32.870 --> 00:17:36.050
+rack, am I suddenly now
+talking to another data center?
 
 293
-00:15:16.640 --> 00:15:18.410
-it just happened naturally. I
-mean, I think just like
+00:17:37.040 --> 00:17:40.070
+How often does does the
+business logic person that we
 
 294
-00:15:18.410 --> 00:15:21.050
-you said, I was working
-at Khan Academy and so,
+00:17:40.070 --> 00:17:42.410
+were trying to target here,
+have to think about those
 
 295
-00:15:21.050 --> 00:15:22.820
-you know, I look, look
-at Sal and I see
+00:17:42.410 --> 00:17:44.600
+things and like, Oh, I've
+just hit the network. And
 
 296
-00:15:22.820 --> 00:15:24.110
-what he's doing. And I'm
-like, Oh, that's working. Let
+00:17:44.600 --> 00:17:49.040
+now perf is gone all
+the heck. So nothing can
 
 297
-00:15:24.110 --> 00:15:26.360
-me get a pen tablet
-and do that. And I
+00:17:50.190 --> 00:17:53.970
+Take away the, the fact
+that for many scenarios, you're
 
 298
-00:15:26.360 --> 00:15:30.110
-started doing that. And, and
-then I think as I,
+00:17:53.970 --> 00:17:57.540
+going to be concerned and
+have to worry about locality.
 
 299
-00:15:30.320 --> 00:15:33.830
-as I transitioned to the
-physical world and that sort
+00:17:57.900 --> 00:17:59.910
+Like you've just talked about
+in the crossing of network
 
 300
-00:15:33.830 --> 00:15:36.800
-of forced me to change
-style a little bit because
+00:17:59.910 --> 00:18:03.900
+interfaces, how many hops you're
+taking again, the idea is
 
 301
-00:15:36.800 --> 00:15:39.890
-the, with the pen tablet,
-of course, you've got, you
+00:18:03.900 --> 00:18:06.570
+dapper, doesn't get in the
+way of you doing those
 
 302
-00:15:39.890 --> 00:15:42.650
-know, the pen tablets, all,
-it's all digital, even though
+00:18:06.570 --> 00:18:13.290
+optimizations. So when you place
+your microservices, that is so
 
 303
-00:15:42.650 --> 00:15:46.580
-you're writing, you know, but
-when I started pulling out,
+00:18:13.620 --> 00:18:15.390
+dapper will take care of
+it through the actor model.
 
 304
-00:15:46.580 --> 00:15:48.950
-okay, here's a breadboard, here's
-a transistor, you know, started
+00:18:15.420 --> 00:18:19.470
+But, but other than that,
+you've got control of it.
 
 305
-00:15:48.950 --> 00:15:50.780
-building something. It's like, okay,
-now I need a camera
+00:18:19.530 --> 00:18:22.440
+So where your microservices get
+placed. And so, you know,
 
 306
-00:15:50.780 --> 00:15:54.800
-pointed at what I'm doing.
-And I, there are maybe
+00:18:22.470 --> 00:18:24.300
+you can control how many
+hops it's going in from
 
 307
-00:15:54.800 --> 00:15:56.660
-some really old videos where
-I kind of toggled back
+00:18:24.300 --> 00:18:29.850
+where to where that is
+a operational decision. And I
 
 308
-00:15:56.660 --> 00:15:58.850
-and forth between the pen
-tablet and the camera and,
+00:18:29.850 --> 00:18:32.490
+think it's important to separate
+that from the code that
 
 309
-00:15:59.780 --> 00:16:03.020
-and that got a little
-bit cumbersome. And so, yeah,
+00:18:32.490 --> 00:18:35.610
+the developer writes. And one
+of the, one of the
 
 310
-00:16:03.020 --> 00:16:05.270
-I just started drawing on
-paper and then just over
+00:18:35.610 --> 00:18:38.760
+reasons you see us talk
+about dapper that runtime for
 
 311
-00:16:05.270 --> 00:16:09.320
-time, the style developed to
-what it is. So, you
+00:18:38.760 --> 00:18:42.270
+the cloud and the edge
+is we see a world
 
 312
-00:16:09.320 --> 00:16:11.330
-know, I very much was
-like, okay, let me imitate
+00:18:42.270 --> 00:18:45.630
+emerging where you're going to
+have apps that span the
 
 313
-00:16:11.330 --> 00:16:13.940
-this thing that I, that
-I see that works. But
+00:18:45.630 --> 00:18:49.320
+cloud and the edge. And
+one of the benefits that
 
 314
-00:16:13.940 --> 00:16:18.440
-then as, as time progresses,
-it became my own, Hey
+00:18:49.320 --> 00:18:52.230
+the sidecar pattern gives you
+what this local HTTP endpoint
 
 315
-00:16:18.440 --> 00:16:20.870
-friends, you know how I
-love great podcasts. And I
+00:18:52.260 --> 00:18:55.830
+is that you can talk
+to services and you don't
 
 316
-00:16:20.870 --> 00:16:23.750
-want you to check out
-the code newbie podcasts, all
+00:18:55.950 --> 00:18:58.620
+from a developer in the
+code that they write perspective.
 
 317
-00:16:23.750 --> 00:16:27.830
-about stories from folks on
-their coding journey. They talked
+00:18:58.770 --> 00:19:00.960
+Don't have to worry about
+where that service is. It
 
 318
-00:16:27.830 --> 00:16:31.010
-to new developers, experienced developers
-and everyone in between about
+00:19:00.960 --> 00:19:04.140
+could be sitting there if
+I've got the microservice executing,
 
 319
-00:16:31.010 --> 00:16:34.040
-how they got started learning
-to code how they navigate
+00:19:04.140 --> 00:19:07.020
+hosted on the edge, and
+it talks to the dapper
 
 320
-00:16:34.040 --> 00:16:37.250
-their technical careers. And they
-also do deep dives into
+00:19:07.020 --> 00:19:09.540
+sidecar and says, I want
+to talk to this other
 
 321
-00:16:37.250 --> 00:16:41.090
-technical topics in a newbie
-friendly way, check out their
+00:19:09.540 --> 00:19:14.460
+microservice, dapper takes care of
+the routing, and that could
 
 322
-00:16:41.090 --> 00:16:46.100
-podcast at www dot COVID,
-newbie that's any w B
+00:19:14.460 --> 00:19:16.470
+be sitting there on the
+same server. It could be
 
 323
-00:16:46.100 --> 00:16:54.050
-I e.org/podcast. That's code newbie.org/podcast.
-I love also that a
+00:19:16.470 --> 00:19:18.210
+sitting on another server out
+on the edge, or it
 
 324
-00:16:54.050 --> 00:16:57.020
-community has built around your
-videos to augment and to
+00:19:18.210 --> 00:19:21.030
+could be up running in
+the cloud and the code
 
 325
-00:16:57.020 --> 00:17:00.410
-fill in things that you
-might find easier, intuitive, that
+00:19:21.030 --> 00:19:22.500
+is going to work the
+same. And so I can
 
 326
-00:17:00.410 --> 00:17:03.590
-they might find less. So,
-so for example, your videos,
+00:19:22.500 --> 00:19:26.340
+move these microservices around to
+suit the latency and bandwidth
 
 327
-00:17:03.860 --> 00:17:05.780
-the ones that I'm doing
-through are the four main
+00:19:26.340 --> 00:19:31.200
+and reliability requirements of my
+application scenario. But that code
 
 328
-00:17:05.780 --> 00:17:09.800
-videos on the 65 Oh
-two and they're are between
+00:19:31.200 --> 00:19:34.880
+doesn't have to change and
+Forgive my ignorance, but it's
 
 329
-00:17:09.800 --> 00:17:12.140
-a half an hour and
-an hour long. And the
+00:19:34.880 --> 00:19:37.400
+worth pointing out to myself
+and to the audience as
 
 330
-00:17:12.140 --> 00:17:14.720
-last one I just did
-was 15 minutes long, and
+00:19:37.400 --> 00:19:40.640
+well. That like, so the
+dapper runtime is definitely multi-instance,
 
 331
-00:17:14.720 --> 00:17:16.340
-it took me about five
-to six hours to get
+00:19:40.640 --> 00:19:44.270
+it's not like it's a
+central sidecar. There's these side
 
 332
-00:17:16.340 --> 00:17:17.960
-through it because there's moments
-where you'll say, I'm going
+00:19:44.270 --> 00:19:46.070
+cars can go all over
+the place. They can live
 
 333
-00:17:17.960 --> 00:17:20.240
-to wire this, and then
-you fast forward time. And
+00:19:46.130 --> 00:19:51.440
+their multi-instance throughout your application.
+That's right. So then you
 
 334
-00:17:20.240 --> 00:17:22.700
-I pause it. And there's
-a great community on Reddit,
+00:19:51.440 --> 00:19:54.440
+could have the dapper runtime
+on the edge and maybe
 
 335
-00:17:23.660 --> 00:17:27.140
-under your Reddit on your
-name, where people actually made
+00:19:54.440 --> 00:19:57.170
+take a moment and explain
+because everyone hears that term
 
 336
-00:17:27.140 --> 00:17:31.010
-PDFs of chip diagrams that
-I can then paste to
+00:19:57.170 --> 00:20:00.050
+edge a lot, and it's
+very overloaded, but explain what
 
 337
-00:17:31.010 --> 00:17:32.840
-the top of my chips.
-They have the pin outs,
+00:20:00.050 --> 00:20:03.540
+that means to have your
+application exist and live on,
 
 338
-00:17:33.350 --> 00:17:35.720
-and I discovered that five
-hours into it. And it
+00:20:03.540 --> 00:20:06.800
+on the edge. Yep. So
+the edge, when you talk
 
 339
-00:17:35.720 --> 00:17:37.640
-really sped me up and
-helped me out a lot.
+00:20:06.800 --> 00:20:09.530
+about the edge, you're talking
+about relative to something in
 
 340
-00:17:39.470 --> 00:17:42.220
-Yeah. The community is really
-amazing. And yeah, I don't,
+00:20:09.530 --> 00:20:11.810
+this case, we're talking about
+the cloud public cloud. And
 
 341
-00:17:43.250 --> 00:17:45.260
-didn't expect that when I
-started making these videos, for
+00:20:11.810 --> 00:20:15.620
+so everybody I'm sure is
+familiar with posting applications in
 
 342
-00:17:45.260 --> 00:17:47.450
-sure. They're very kind and
-very helpful. And they've also,
+00:20:15.620 --> 00:20:18.440
+the public cloud like Azure.
+When you talking about the
 
 343
-00:17:47.480 --> 00:17:49.710
-they kind of acted as
-your tech support, you know?
+00:20:18.440 --> 00:20:21.770
+edge of the public cloud,
+that means devices that are
 
 344
-00:17:51.510 --> 00:17:55.530
-Yes. Which I definitely appreciate
-since I obviously don't have
+00:20:21.770 --> 00:20:25.040
+outside of the main Azure
+data centers in this case.
 
 345
-00:17:55.770 --> 00:17:58.550
-the time to answer every
-possible. Have you made this,
+00:20:25.040 --> 00:20:28.130
+And so that could be
+a Kubernetes cluster that's sitting
 
 346
-00:17:58.550 --> 00:18:00.350
-your full time thing? Is
-this what you're doing now?
+00:20:28.130 --> 00:20:30.560
+in your own data center.
+It could be in that
 
 347
-00:18:02.030 --> 00:18:04.600
-It is. Yeah. What does
-that mean? Is that, do
+00:20:30.560 --> 00:20:33.830
+case, it'd be hybrid rather
+than technically edge. It could
 
 348
-00:18:04.600 --> 00:18:06.800
-you like just wake up
-and wait for the spirit
+00:20:33.830 --> 00:20:38.210
+be a Kubernetes cluster sitting
+in a building. That's a
 
 349
-00:18:06.800 --> 00:18:08.240
-to move you? Or do
-you like God to make
+00:20:38.210 --> 00:20:41.660
+smart building where it's controlling
+HVAC or lighting or conference
 
 350
-00:18:08.240 --> 00:18:13.370
-the videos It's somewhere in
-between, you know, some days,
+00:20:41.660 --> 00:20:45.890
+centers, conference rooms. It could
+be a server or a
 
 351
-00:18:14.840 --> 00:18:16.580
-some days I feel a
-little more inspired than others,
+00:20:45.890 --> 00:20:50.500
+raspberry PI sitting in a
+retail store. That would be
 
 352
-00:18:16.580 --> 00:18:22.100
-but you know, the, the,
-the downside, I guess, of
+00:20:50.500 --> 00:20:55.120
+all examples of edge computing.
+And the, the reason that
 
 353
-00:18:22.100 --> 00:18:24.500
-having that community is I
-do feel like I owe
+00:20:55.120 --> 00:20:58.510
+their edge is that they're
+communicating with the cloud, they're
 
 354
-00:18:24.530 --> 00:18:26.990
-something to these people and,
-you know, I've made a
+00:20:58.510 --> 00:21:02.620
+getting typically control and deployed
+and software deployed from the
 
 355
-00:18:26.990 --> 00:18:30.140
-commitment to getting this series
-of videos out. And at
+00:21:02.620 --> 00:21:07.840
+public cloud. There's different variations
+on the typologies for how
 
 356
-00:18:30.140 --> 00:18:32.090
-the same time I'm thinking
-about, okay, what's the next
+00:21:07.840 --> 00:21:10.390
+a device gets connected up
+in the public cloud. There's
 
 357
-00:18:32.090 --> 00:18:36.680
-project I'm going to do.
-And, but yeah, it's, it's
+00:21:10.390 --> 00:21:16.510
+also different kind of configurations
+for how they're connected, whether
 
 358
-00:18:36.680 --> 00:18:39.830
-certainly different than previously. When
-I was at Khan Academy,
+00:21:16.510 --> 00:21:22.570
+they're directly connected, constantly connected,
+occasionally collected or disconnected with
 
 359
-00:18:40.370 --> 00:18:42.320
-working on a software engineering
-team, A lot of people
+00:21:22.570 --> 00:21:27.460
+some kind of air gap
+play wave to get the
 
 360
-00:18:42.320 --> 00:18:44.540
-since I've been building the
-65 Oh two and I
+00:21:27.460 --> 00:21:31.270
+code and the telemetry and
+data back and forth between
 
 361
-00:18:44.540 --> 00:18:46.220
-get to be clear to
-the audience, what I did
+00:21:31.270 --> 00:21:33.980
+the cloud and the edge.
+Yeah. I really liked the,
 
 362
-00:18:46.220 --> 00:18:49.040
-is I, I, I discovered
-Ben site, I watched the
+00:21:33.980 --> 00:21:37.020
+the, the example of a,
+like a grocery store. Like
 
 363
-00:18:49.040 --> 00:18:50.330
-videos. I was like, Oh
-my goodness, I'm going to
+00:21:37.020 --> 00:21:39.780
+if I managed a big
+grocery outlet and I'd have
 
 364
-00:18:50.330 --> 00:18:52.940
-build that. I thought about
-buying the parts. And then
+00:21:39.780 --> 00:21:43.500
+our central cloud, that was
+maybe partially in our own
 
 365
-00:18:52.940 --> 00:18:54.560
-I went and saw that
-you had done all that
+00:21:43.500 --> 00:21:46.710
+data center, but largely in
+a cloud like Azure. And
 
 366
-00:18:54.560 --> 00:18:56.030
-work for us and bag
-them and put them in
+00:21:46.710 --> 00:21:49.710
+then, you know, we don't
+want to count on anything.
 
 367
-00:18:56.030 --> 00:18:59.120
-a box. So you can
-buy a kit to do
+00:21:49.710 --> 00:21:51.930
+We don't want to assume
+anything. So we'll have our
 
 368
-00:18:59.120 --> 00:19:02.750
-the projects that Ben does
-yourself. I bought the kit
+00:21:51.930 --> 00:21:56.880
+own Kubernetes cluster running in
+the actual, you know, local
 
 369
-00:19:02.960 --> 00:19:05.690
-and then I also got
-the clock module and that
+00:21:56.880 --> 00:21:59.160
+grocery store. So that, that
+of course the store could
 
 370
-00:19:05.690 --> 00:19:08.990
-included an apron programmer. And
-then I bought an inexpensive,
+00:21:59.160 --> 00:22:02.190
+be offline for days even,
+and still people would be
 
 371
-00:19:09.410 --> 00:19:13.610
-tiny little as telescope. Each
-time I felt I was
+00:22:02.190 --> 00:22:04.140
+able to buy a food,
+batch, everything up, and then
 
 372
-00:19:13.610 --> 00:19:16.550
-in over my head and
-people are asking me, well,
+00:22:04.140 --> 00:22:06.750
+it would be sent off.
+When we got back our
 
 373
-00:19:16.580 --> 00:19:19.820
-what, what level should I
-be? How do you answer
+00:22:06.750 --> 00:22:10.710
+connectivity to the, to the,
+to the central location, it
 
 374
-00:19:19.820 --> 00:19:22.100
-a question like that? How
-do you say what, where
+00:22:10.710 --> 00:22:13.050
+could phone home, like you
+said, so occasionally connected or
 
 375
-00:19:22.100 --> 00:19:24.560
-should people be to be
-able to do this project?
+00:22:13.050 --> 00:22:16.980
+at least resiliently connected. And
+then if you inject dapper
 
 376
-00:19:26.450 --> 00:19:28.160
-I don't really know how
-to answer that question. I
+00:22:16.980 --> 00:22:21.180
+into that, that sidecar would
+run in any, and all
 
 377
-00:19:28.160 --> 00:19:30.920
-mean, my, the best answer
-I can give is watch
+00:22:21.180 --> 00:22:23.910
+of those locations providing all
+the different services and core
 
 378
-00:19:30.920 --> 00:19:33.320
-all the videos, you know,
-just, just sit down and
+00:22:23.910 --> 00:22:27.570
+concepts that dapper offers, whether
+it be in the self
 
 379
-00:19:33.320 --> 00:19:36.350
-finish the series and draw
-your own conclusion. I mean,
+00:22:27.570 --> 00:22:30.210
+hosted cloud in the actual
+public cloud or running on
 
 380
-00:19:36.380 --> 00:19:39.680
-you know, the videos don't
-hide anything. I don't think
+00:22:30.210 --> 00:22:32.730
+the edge, or even like
+you said, in tiny devices
 
 381
-00:19:39.740 --> 00:19:43.340
-that's not my intent anyway.
-So, you know, the question
+00:22:32.730 --> 00:22:36.870
+themselves. And because if I
+understand correctly, dapper just makes
 
 382
-00:19:43.340 --> 00:19:45.710
-is, can you do what,
-what you see me doing
+00:22:36.870 --> 00:22:38.880
+the assumption that as long
+as your code can speak
 
 383
-00:19:45.710 --> 00:19:48.230
-and do the things that
-I'm saying in those videos
+00:22:38.910 --> 00:22:42.300
+HTTP or HTP two, it
+can do protocol buffer and
 
 384
-00:19:48.230 --> 00:19:50.660
-make sense to you? Can
-you follow along? Do you
+00:22:42.300 --> 00:22:46.620
+coding because it's all HTTP
+and GRPC, really anything could
 
 385
-00:19:50.660 --> 00:19:53.300
-feel like, Oh, I'm getting
-left behind and I, and
+00:22:46.620 --> 00:22:50.220
+talk to them. Exactly. I
+mean, that's, I think what's
 
 386
-00:19:53.300 --> 00:19:56.810
-I, I'm not really sure
-what's going on here, but
+00:22:50.220 --> 00:22:54.090
+so powerful about this is
+exactly that, that it's like
 
 387
-00:19:56.930 --> 00:19:58.640
-I think if, yeah, if
-you, if you watch through
+00:22:54.210 --> 00:22:57.210
+when we've been talking about
+really summarized, as dapper provides
 
 388
-00:19:58.640 --> 00:20:00.440
-a series that you're there
-thinking to see if you're
+00:22:57.210 --> 00:23:00.540
+all of these building blocks,
+you can compute compose all
 
 389
-00:20:00.470 --> 00:20:02.270
-interested in the 65 Oh
-two series, you know, watch
+00:23:00.540 --> 00:23:03.030
+a cart, or you can
+compose them in big chunks
 
 390
-00:20:02.270 --> 00:20:05.720
-through those four videos and
-just kinda judge for yourself,
+00:23:03.030 --> 00:23:05.760
+to get things like the
+functions as a service model
 
 391
-00:20:05.720 --> 00:20:08.720
-like, did that make sense?
-Did the parts that were
+00:23:05.760 --> 00:23:08.730
+or that actor model. You
+can consume them from any
 
 392
-00:20:08.720 --> 00:20:10.370
-a little hand wavy to
-me, do, what do I
+00:23:08.730 --> 00:23:12.870
+language, from any app, from
+any existing code, because it's
 
 393
-00:20:10.400 --> 00:20:12.740
-do? I think I can
-dig in and really understand
+00:23:12.990 --> 00:23:15.810
+anything that knows how to
+talk HTTP or GRPC can
 
 394
-00:20:12.740 --> 00:20:15.710
-that. Or were there just
-concepts that just, you know,
+00:23:15.810 --> 00:23:19.650
+immediately take advantage of some
+or all of it. Do
 
 395
-00:20:15.710 --> 00:20:17.360
-I just feel like I
-have no idea where to
+00:23:19.650 --> 00:23:23.920
+you think that in some
+theoretical future, you know, a
 
 396
-00:20:17.360 --> 00:20:21.560
-even get a toehold. That
-that would be my advice
+00:23:23.920 --> 00:23:27.480
+year or two years down
+the road, that if just
 
 397
-00:20:21.560 --> 00:20:24.380
-is, is just, just watch
-the videos they're free and
+00:23:27.480 --> 00:23:31.770
+like Apache and then followed
+by engine X and then
 
 398
-00:20:25.280 --> 00:20:27.260
-yeah. Come, come to your
-own conclusion about whether it
+00:23:31.770 --> 00:23:35.610
+perhaps something else becomes so
+ubiquitous that it becomes the
 
 399
-00:20:27.260 --> 00:20:28.790
-makes sense to you. And
-I, and I think if
+00:23:35.610 --> 00:23:38.220
+fabric of the internet itself.
+Like there was a day
 
 400
-00:20:28.790 --> 00:20:30.560
-it does make sense to
-you, I think you've got
+00:23:38.220 --> 00:23:40.260
+where Apache wasn't around and
+poof and everything was running
 
 401
-00:20:30.560 --> 00:20:32.420
-a pretty good shot at
-being able to do it
+00:23:40.260 --> 00:23:43.200
+on Apache. And then within
+a few years and X
 
 402
-00:20:32.420 --> 00:20:35.210
-yourself. Now you will find
-as you do it yourself,
+00:23:43.200 --> 00:23:46.070
+just took over and then
+within a few Kubernetes is
 
 403
-00:20:35.210 --> 00:20:38.270
-that there are lots of
-things you, you probably didn't
+00:23:46.070 --> 00:23:49.160
+taking over. If we start
+to Uplevel like that, would
 
 404
-00:20:38.270 --> 00:20:39.890
-pick up on in the
-videos when you watch them
+00:23:49.160 --> 00:23:52.400
+you see a programming language
+or programming language to start
 
 405
-00:20:39.890 --> 00:20:43.280
-the first time. So it's
-not necessarily gonna be an
+00:23:52.400 --> 00:23:56.180
+to optimize for the sidecar
+pattern to optimize the way
 
 406
-00:20:43.280 --> 00:20:48.010
-easy project, but that's to
-some degree point, I mean,
+00:23:56.180 --> 00:24:00.830
+that we express our, our
+code and our intent for
 
 407
-00:20:48.010 --> 00:20:52.360
-I think it's, I think
-it's a unique aspect of
+00:24:01.190 --> 00:24:05.870
+HDP, for GRPC, and then
+for something like dapper itself,
 
 408
-00:20:52.360 --> 00:20:54.310
-this is that is that
-it's not kind of a
+00:24:05.900 --> 00:24:08.030
+because if you're going to
+roll your own, you're still
 
 409
-00:20:54.310 --> 00:20:57.160
-paint by number kit where
-you just, you know, pull
+00:24:08.030 --> 00:24:12.170
+going to be basically making
+these, these, these HTTP calls
 
 410
-00:20:57.160 --> 00:20:59.310
-the things out, like a,
-like a Lego set and
+00:24:12.170 --> 00:24:14.360
+yourself. And a lot of,
+some of the languages are
 
 411
-00:20:59.320 --> 00:21:01.000
-just snap it together. And
-it works. That is a
+00:24:14.360 --> 00:24:16.190
+a little bit more chatty
+than maybe they need to
 
 412
-00:21:01.000 --> 00:21:04.270
-really good thing to point
-out because I didn't think
+00:24:16.190 --> 00:24:19.580
+be. Could we hide a
+lot of that and write
 
 413
-00:21:04.270 --> 00:21:06.610
-it was, but also, I
-didn't know. I didn't really
+00:24:19.640 --> 00:24:24.110
+a language itself that could
+speak to a cloud native
 
 414
-00:21:06.610 --> 00:21:09.070
-realize that. I didn't know
-a bunch of things like
+00:24:24.380 --> 00:24:28.210
+actor runtime? Yeah. I definitely
+think that you're going to
 
 415
-00:21:09.070 --> 00:21:11.350
-you do, you do some
-cool stuff to move the
+00:24:28.210 --> 00:24:34.150
+see language optimizations for talking
+HTTP or GRPC. I think
 
 416
-00:21:11.350 --> 00:21:14.380
-process forward. You've got pre-stripped
-wires. They also have to
+00:24:34.840 --> 00:24:37.960
+though that, and this is
+one of the recognitions that
 
 417
-00:21:14.380 --> 00:21:17.620
-be pre bent. So I'll
-pause something and you'll go,
+00:24:37.960 --> 00:24:41.200
+we had looking at functions
+as a service or actor
 
 418
-00:21:17.980 --> 00:21:20.890
-yeah, here's, you know, 16
-pins here and then you've
+00:24:41.200 --> 00:24:43.240
+models, where they only support
+a subset of languages. And
 
 419
-00:21:20.890 --> 00:21:22.450
-gone and you've hooked up
-the Arduino and you're going
+00:24:43.240 --> 00:24:47.830
+the fact is that language
+is proliferating like crazy is
 
 420
-00:21:22.450 --> 00:21:24.460
-to do, you know, 32
-pins. And then that's like
+00:24:47.830 --> 00:24:50.350
+that there's not going to
+be one language. That's going
 
 421
-00:21:24.460 --> 00:21:27.910
-a half an hour and
-I had to, and then
+00:24:50.350 --> 00:24:51.850
+to be the one to
+rule them all, or even
 
 422
-00:21:27.910 --> 00:21:29.620
-you also undo it and
-do it again and undo
+00:24:51.850 --> 00:24:54.340
+three or four. And with
+the number that we have
 
 423
-00:21:29.620 --> 00:21:31.060
-do it and do it
-again. And I was just
+00:24:54.340 --> 00:24:57.070
+to support an Azure interesti
+case continues to grow as
 
 424
-00:21:31.060 --> 00:21:34.360
-like, this is take some
-time. And then I go
+00:24:57.430 --> 00:25:01.450
+new ones become popular. And
+so, yeah, you're going to
 
 425
-00:21:34.360 --> 00:21:36.790
-and I learn other techniques.
-I get a wire stripper,
+00:25:01.450 --> 00:25:04.120
+see those optimizations, but I
+think there's not going to
 
 426
-00:21:36.820 --> 00:21:38.860
-or I, you know, I,
-I go, well, this isn't
+00:25:04.120 --> 00:25:07.270
+be a, Oh, this is
+the programming language for distributed
 
 427
-00:21:38.860 --> 00:21:40.660
-the right tool for the
-job. I'll use this tool.
+00:25:08.050 --> 00:25:10.870
+application development. It's, it's going
+to be, everyone is going
 
 428
-00:21:42.280 --> 00:21:44.410
-There is the assumption that
-there's a certain amount of
+00:25:10.870 --> 00:25:15.100
+to end up with optimizations
+and support for it. So
 
 429
-00:21:44.410 --> 00:21:47.560
-familiarity with these, these portable
-breadboards, with the ability to
+00:25:15.280 --> 00:25:18.370
+The, the, the essence of
+dapper is really nondenominational. The,
 
 430
-00:21:47.560 --> 00:21:50.560
-use a multimedia, even where
-I thought I knew how
+00:25:18.370 --> 00:25:22.750
+the SDKs now have go
+Java, javascript.net Python. The developers
 
 431
-00:21:50.560 --> 00:21:54.460
-to use a multimeter, but
-I really didn't until I
+00:25:22.750 --> 00:25:26.590
+never really have to deal
+with GRPC and HTTP. So
 
 432
-00:21:54.610 --> 00:21:59.020
-was forced to. Yeah, it's
-interesting. Cause I think I'm
+00:25:26.590 --> 00:25:29.620
+the SDK largely handles a
+lot of those abstractions. So
 
 433
-00:21:59.020 --> 00:22:01.870
-learning as well, like where
-the gaps are with people.
+00:25:29.620 --> 00:25:33.340
+while there might be some
+potential future language that is
 
 434
-00:22:01.870 --> 00:22:04.210
-Cause I there's certain assumptions
-I make, you know, they're
+00:25:33.370 --> 00:25:36.010
+optimized for something like dapper,
+there's really no need to
 
 435
-00:22:04.210 --> 00:22:07.030
-obviously baked into the videos
-because I made them and
+00:25:36.010 --> 00:25:41.530
+do That's right. And I
+think that the fact is
 
 436
-00:22:07.030 --> 00:22:08.680
-then I'm realizing, Oh wait
-a minute. Okay. Maybe some
+00:25:41.530 --> 00:25:44.650
+like, we've just said that
+there's some language convenience, STKs
 
 437
-00:22:08.680 --> 00:22:10.900
-of these things are, are
-not obvious to people or,
+00:25:44.650 --> 00:25:48.820
+for dapper, but a new
+language comes out the Scott
 
 438
-00:22:11.080 --> 00:22:12.970
-or the things that I
-thought might be challenging, but
+00:25:48.820 --> 00:25:53.080
+Hanselman language that you develop.
+That's, that's great and optimized
 
 439
-00:22:12.970 --> 00:22:14.950
-that's where, you know, it's
-really encouraging to me to
+00:25:53.080 --> 00:25:57.490
+for web development, that, that
+you can immediately start integrate
 
 440
-00:22:14.950 --> 00:22:17.110
-see the community stepping up
-and filling in some of
+00:25:57.490 --> 00:26:00.130
+that with dapper because you
+don't need on SDK for
 
 441
-00:22:17.110 --> 00:22:19.300
-those gaps. And I keep
-asking myself though, because I
+00:26:00.130 --> 00:26:02.800
+it, for dapper to integrate
+your language with it. One
 
 442
-00:22:19.300 --> 00:22:22.960
-have taken II classes, I'll
-be it 30 years ago,
+00:26:02.800 --> 00:26:05.290
+of the things that I've
+been finding, the larger my
 
 443
-00:22:23.680 --> 00:22:26.200
-you'll say something casually like,
-Oh, and this is happening
+00:26:05.290 --> 00:26:07.210
+systems get, and the larger
+that the systems that I
 
 444
-00:22:26.200 --> 00:22:27.880
-on the rising edge or,
-well, this is a pull
+00:26:07.210 --> 00:26:10.150
+consult on get is, you
+know, it's still just text
 
 445
-00:22:27.880 --> 00:22:29.770
-up resistor or pull down
-resistor. And then it's like,
+00:26:10.150 --> 00:26:12.400
+files, except now there's a
+thousand of them. And I
 
 446
-00:22:29.800 --> 00:22:32.110
-Oh my goodness. And then
-I'm off watching someone else's
+00:26:12.400 --> 00:26:14.500
+have to bring all of
+those together. You know, I
 
 447
-00:22:32.110 --> 00:22:36.720
-video. I want to pull
-up resistors. And I, and
+00:26:14.500 --> 00:26:16.390
+kind of felt like I'd
+have a jet pack right
 
 448
-00:22:36.720 --> 00:22:40.360
-I go to myself, like,
-how far are you going
+00:26:16.390 --> 00:26:18.730
+now, a self driving car.
+And I wouldn't be rejecting
 
 449
-00:22:40.360 --> 00:22:43.210
-to become the Khan Academy
-for all things? A electron.
+00:26:18.730 --> 00:26:23.110
+through tra through text files,
+but the distributed tracing is
 
 450
-00:22:45.640 --> 00:22:47.920
-Yeah. I don't, I don't
-know. Like, yeah, it doesn't
+00:26:23.110 --> 00:26:25.930
+a big part of dapper
+and it integrates with open
 
 451
-00:22:47.920 --> 00:22:49.750
-make sense for me to
-make a video on pull
+00:26:25.930 --> 00:26:27.520
+telemetry. And maybe you could
+speak about that for a
 
 452
-00:22:49.750 --> 00:22:53.260
-up resistors. I don't, I
-don't know. Does the question
+00:26:27.520 --> 00:26:30.640
+second. Yeah. So I think
+because dapper sitting there at
 
 453
-00:22:53.260 --> 00:22:54.820
-is though when I hear
-a word I don't know,
+00:26:30.640 --> 00:26:34.360
+a sidecar and it's, once
+you start integrating with it,
 
 454
-00:22:54.820 --> 00:22:56.590
-or a phrase and I
-like, Oh, this is a
+00:26:34.360 --> 00:26:38.830
+your application traffic is going
+through dapper copper has this
 
 455
-00:22:56.590 --> 00:22:59.860
-concept that people who do
-this should know, and then
+00:26:38.830 --> 00:26:42.850
+great position to be able
+to log activity for you
 
 456
-00:22:59.860 --> 00:23:01.780
-I go off and I
-learn about that thing. That
+00:26:42.850 --> 00:26:44.850
+and you to get a
+distributed view of the way
 
 457
-00:23:01.780 --> 00:23:03.880
-is definitely a self starter
-project. I like that. You
+00:26:44.850 --> 00:26:48.090
+your application works. Some people
+that are listening probably are
 
 458
-00:23:03.880 --> 00:23:07.770
-said it's not paint by
-numbers. Yeah, yeah, no, I
+00:26:48.090 --> 00:26:51.060
+familiar with service meshes and
+service meshes are the same
 
 459
-00:23:07.780 --> 00:23:11.860
-think for sure. But I
-think if you are sufficiently
+00:26:51.060 --> 00:26:54.630
+thing, but at the infrastructure
+layer, what dapper you can
 
 460
-00:23:11.860 --> 00:23:14.980
-motivated, it's, you know, hopefully
-I've been having a blast.
+00:26:54.630 --> 00:26:58.110
+think of as an application
+layer service mesh, and just
 
 461
-00:23:14.980 --> 00:23:16.540
-Like I said, I'm about
-11, 12 hours into it.
+00:26:58.110 --> 00:27:01.800
+like infrastructure service message that
+can log network traffic and
 
 462
-00:23:16.540 --> 00:23:20.290
-I've made it through two
-videos taken over that one
+00:27:01.800 --> 00:27:05.700
+impose policy dapper provides that
+same kind of control point
 
 463
-00:23:20.290 --> 00:23:22.870
-part of the house. One
-of the things that's interesting
+00:27:05.700 --> 00:27:11.910
+for application level inner serve,
+microservice communication. And one of
 
 464
-00:23:22.870 --> 00:23:24.700
-also about these videos from
-a very much a self
+00:27:11.910 --> 00:27:15.240
+the ones that components that
+we built off the bat
 
 465
-00:23:24.700 --> 00:23:28.180
-learning perspective is do I
-stop when I got it
+00:27:15.240 --> 00:27:18.600
+to take advantage of that
+is the distributed tracing building
 
 466
-00:23:28.180 --> 00:23:30.430
-to work or do I
-stop when I understand how
+00:27:18.600 --> 00:27:22.410
+block. And once you opt
+into that, that it's collecting
 
 467
-00:23:30.430 --> 00:23:35.590
-I got it to work?
-Right. I would, I would
+00:27:22.410 --> 00:27:29.130
+and admitting that dapper traces
+of a microservice interactions and
 
 468
-00:23:35.650 --> 00:23:37.270
-encourage you to stop. I
-get it. Like I got
+00:27:29.130 --> 00:27:31.950
+the open telemetry format. And
+we've got, I think, seven,
 
 469
-00:23:37.270 --> 00:23:40.090
-the clock to work and
-I moved on to a
+00:27:32.040 --> 00:27:36.090
+there might even be more
+than that different tracing systems
 
 470
-00:23:40.120 --> 00:23:42.280
-hello world. And then I
-said, I got to back
+00:27:36.090 --> 00:27:40.560
+that now are plugged into
+dapper. So Azure monitor is
 
 471
-00:23:42.280 --> 00:23:45.470
-up and remind myself how
-the clock works. Get a
+00:27:40.560 --> 00:27:43.500
+one example or application insights.
+And so now you can
 
 472
-00:23:45.470 --> 00:23:48.680
-few sleeps in to put
-that memory into the medium
+00:27:43.950 --> 00:27:47.280
+just by flipping a switch,
+have this data admitted and
 
 473
-00:23:48.680 --> 00:23:51.710
-storage. So I don't lose
-that short term memory. Right.
+00:27:47.280 --> 00:27:52.290
+then viewed in an application
+insights and see the execution
 
 474
-00:23:51.740 --> 00:23:55.850
-And then right now I'm
-on part two moving into
+00:27:52.290 --> 00:27:55.350
+of your microservices, how they're
+talking to each other, where
 
 475
-00:23:55.850 --> 00:23:59.390
-part three and I've got
-it working, but I'm having
+00:27:55.350 --> 00:27:59.190
+there's latency, where there's failures,
+all of that basically comes
 
 476
-00:23:59.390 --> 00:24:02.390
-some, I don't know, I'll
-just call them quantum effects
+00:27:59.190 --> 00:28:03.980
+for free just by using
+dapper. Yeah. There's a there's
 
 477
-00:24:02.390 --> 00:24:04.550
-or, you know, some Heisenberg
-uncertainty principle where if I
+00:28:03.980 --> 00:28:07.130
+Azure monitor. There's Datadog who
+has been a sponsor of
 
 478
-00:24:04.550 --> 00:24:08.390
-look at it, it changes
-it. And I don't know
+00:28:07.130 --> 00:28:10.160
+the show before and Jaeger
+and signal if I'm going
 
 479
-00:24:08.420 --> 00:24:09.890
-well, but there's a reason
-though, and this is the
+00:28:10.160 --> 00:28:12.890
+on and on and on.
+So basically all comers. And
 
 480
-00:24:09.890 --> 00:24:13.220
-part because you've, you've baked
-me in with multiple hours
+00:28:12.890 --> 00:28:16.130
+again, if there's not one,
+as you've said before, you
 
 481
-00:24:13.220 --> 00:24:16.250
-of like, well, this is
-deterministic. If something's not working,
+00:28:16.130 --> 00:28:18.590
+can, you can plug it.
+Yeah. And I, you know,
 
 482
-00:24:16.250 --> 00:24:18.980
-it's, there's a reason it's
-kind of cool. There's no
+00:28:18.590 --> 00:28:23.060
+when I think about, okay,
+so what would stop dapper
 
 483
-00:24:19.280 --> 00:24:22.310
-one to blame, but, but
-God himself and your, and
+00:28:23.060 --> 00:28:26.270
+from somebody from wanting to
+use dapper? I really am
 
 484
-00:24:22.310 --> 00:24:26.120
-yourself, I can't blame you.
-It works in your video.
+00:28:26.270 --> 00:28:29.330
+struggle with a reason because
+all the kinds of excuses
 
 485
-00:24:26.120 --> 00:24:29.900
-It must be me or
-the corks that are preventing
+00:28:29.330 --> 00:28:33.470
+that we've seen for, why
+can't you adopt functions as
 
 486
-00:24:29.900 --> 00:24:32.000
-this from happening. Right. You
-know? And that's the mystery.
+00:28:33.470 --> 00:28:37.850
+a service? Why can't you
+adopt at the actor model?
 
 487
-00:24:32.860 --> 00:24:39.160
-Yeah, yeah. Yeah. What do
-you do about that? Like,
+00:28:37.880 --> 00:28:42.710
+Why can't you adopt some
+special purpose runtime, that's providing
 
 488
-00:24:39.160 --> 00:24:41.110
-I've known that you follow
-you. I don't see that
+00:28:42.710 --> 00:28:45.860
+something, all of those reasons
+why you might not be
 
 489
-00:24:41.110 --> 00:24:43.570
-you're super active on Reddit,
-but people are super active
+00:28:45.860 --> 00:28:48.680
+able to adopt something are
+gone and the benefits of
 
 490
-00:24:43.570 --> 00:24:46.300
-on your Reddit having conversations
-about like, I don't know
+00:28:48.680 --> 00:28:52.910
+taking advantage of this open
+ecosystem flexibility, and the portability
 
 491
-00:24:46.300 --> 00:24:48.520
-how Ben ever got this
-to work and then other
+00:28:53.480 --> 00:28:56.150
+are all there as part
+of the value proposition. So
 
 492
-00:24:48.520 --> 00:24:50.640
-people are like, Oh, but
-this is amazing. It worked
+00:28:56.150 --> 00:28:58.250
+it seems like a no
+brainer to me. I mean,
 
 493
-00:24:50.650 --> 00:24:53.230
-on the first try these
-a, is it just a
+00:28:58.370 --> 00:29:01.880
+I struggle with the why
+wouldn't I use dapper? Well,
 
 494
-00:24:53.230 --> 00:24:56.290
-matter of wires swapping or
-is it quality of components?
+00:29:01.880 --> 00:29:04.010
+what if you did, what,
+if you are starting to
 
 495
-00:24:56.560 --> 00:24:59.110
-Some of the things about
-maybe the power supply doesn't
+00:29:04.010 --> 00:29:07.130
+feel like things are getting
+so broken apart, that it's
 
 496
-00:24:59.110 --> 00:25:02.200
-have enough voltage if you've
-seen some of those comments
+00:29:07.130 --> 00:29:09.020
+time to go back to
+the big ball, but you
 
 497
-00:25:02.200 --> 00:25:05.350
-and I'm curious your experience
-with how many people have
+00:29:09.020 --> 00:29:11.150
+know, a big ball of
+mud, a monolith, like, are
 
 498
-00:25:05.350 --> 00:25:08.680
-had those issues when putting
-the kids together. Yeah, I
+00:29:11.150 --> 00:29:14.900
+there any challenges in this
+ecosystem of all these open
 
 499
-00:25:08.680 --> 00:25:10.270
-do. I do generally try
-to follow the Reddit. I
+00:29:14.900 --> 00:29:17.450
+source projects and everything's moving
+so fast and everything's being
 
 500
-00:25:10.270 --> 00:25:12.490
-know I'm not super active.
-A lot of that though
+00:29:17.480 --> 00:29:19.760
+versioned so fast, have you
+had any challenges? Has your
 
 501
-00:25:12.490 --> 00:25:14.170
-comes down to the fact
-that there are other people
+00:29:19.760 --> 00:29:22.520
+team had any challenges in
+putting this together where you
 
 502
-00:25:14.170 --> 00:25:17.260
-that jump in with the
-right answer sooner than I
+00:29:22.520 --> 00:29:25.730
+found something was not as
+robust as it should have
 
 503
-00:25:17.440 --> 00:25:20.560
-get around to it. But
-no, I am generally aware
+00:29:25.730 --> 00:29:28.580
+been, or maybe you bet
+too much on this or
 
 504
-00:25:20.560 --> 00:25:22.480
-of some of those. I
-think one of the biggest
+00:29:28.580 --> 00:29:32.510
+that, or GRPC is not
+able to keep perfectly to
 
 505
-00:25:22.480 --> 00:25:25.390
-things, as far as I
-can tell is quality of
+00:29:32.510 --> 00:29:33.690
+the point that you want
+it to be? What are
 
 506
-00:25:25.390 --> 00:25:28.990
-breadboards. Really? This is something
-that I, yeah, this is
+00:29:33.710 --> 00:29:36.530
+some things that aren't a
+slam dunk in all of
 
 507
-00:25:28.990 --> 00:25:31.750
-something that I learned as,
-as a part of this
+00:29:36.530 --> 00:29:44.560
+this microservices architecture? I think
+that, so for one building
 
 508
-00:25:31.750 --> 00:25:35.110
-project that I, that I
-would not have suspected beforehand,
+00:29:44.560 --> 00:29:49.480
+on industry standards, I think
+means that we can ride
 
 509
-00:25:35.110 --> 00:25:37.930
-which is that there is
-a huge difference in the
+00:29:49.480 --> 00:29:55.150
+the industry, the ecosystems innovations
+around things like GRPC or
 
 510
-00:25:37.930 --> 00:25:43.060
-build quality of different breadboards.
-And, and that's reflected generally
+00:29:55.150 --> 00:30:00.100
+HTTP for that matter and
+HTTP servers. So for as
 
 511
-00:25:43.060 --> 00:25:45.280
-in the price. I mean,
-I guess, you know, an
+00:30:00.100 --> 00:30:02.680
+far as reasons, you might
+not be able to want
 
 512
-00:25:45.280 --> 00:25:48.730
-imperfect proxy, but the difference
-between a $2 breadboard and
+00:30:02.680 --> 00:30:04.510
+to use Dopper. We talked
+about, touched on them a
 
 513
-00:25:48.730 --> 00:25:52.090
-a $10 breadboard is just
-night and day. And if
+00:30:04.510 --> 00:30:09.940
+little bit earlier when we
+talked about performance, where I
 
 514
-00:25:52.090 --> 00:25:54.070
-you pull them apart and
-at some point I want
+00:30:09.940 --> 00:30:13.210
+want some, I want performance,
+for example, I want to
 
 515
-00:25:54.070 --> 00:25:56.950
-to do a video or
-at least a blog post
+00:30:13.210 --> 00:30:18.190
+pack microservices, many of them
+into the same process and
 
 516
-00:25:56.950 --> 00:25:59.710
-or something, because I got
-some really cool pictures under
+00:30:18.190 --> 00:30:23.170
+the opera doesn't support that
+today. Or I want no
 
 517
-00:25:59.720 --> 00:26:02.440
-microscope of the parts and
-stuff. When you pull apart
+00:30:23.350 --> 00:30:27.040
+hop across an HTTP or
+GRPC interface to get out
 
 518
-00:26:02.440 --> 00:26:06.250
-a breadboard and just the,
-the different, even just the
+00:30:27.040 --> 00:30:31.150
+to the network. I want
+to access it directly. That
 
 519
-00:26:06.250 --> 00:26:08.650
-different alloys of metal that
-they use in there, some
+00:30:31.150 --> 00:30:35.950
+might be another reason. So
+there are potentially some cases
 
 520
-00:26:08.650 --> 00:26:11.870
-are more springy than others.
-Wow. Yeah. Yeah. So the,
+00:30:35.950 --> 00:30:37.810
+where you might not want
+to, but even in those
 
 521
-00:26:11.870 --> 00:26:14.110
-the really good quality ones,
-they use some alloy that's
+00:30:38.290 --> 00:30:40.360
+scenarios where you got an
+application that needs to have
 
 522
-00:26:14.110 --> 00:26:16.330
-very springy. And so when
-you stick a wire in
+00:30:40.360 --> 00:30:42.880
+some optimized path through it,
+it's most likely that there's
 
 523
-00:26:16.330 --> 00:26:19.330
-and out, a bunch of
-times, it always snapped back
+00:30:43.090 --> 00:30:48.400
+many other paths, many other
+services that it using dapper
 
 524
-00:26:19.330 --> 00:26:22.210
-and has the same, you
-know, grippiness on that wire,
+00:30:48.400 --> 00:30:54.070
+is just fine. So again,
+this ability to take advantage
 
 525
-00:26:22.480 --> 00:26:25.960
-whereas the cheap ones will
-deform. And once you've shoved
+00:30:54.070 --> 00:30:56.230
+of it in part or
+in whole or whatever pieces
 
 526
-00:26:25.960 --> 00:26:28.360
-a wire in and out,
-you know, enough times, it
+00:30:56.230 --> 00:31:00.580
+of it you want actually
+makes it, so that saying
 
 527
-00:26:28.360 --> 00:26:32.320
-just doesn't have the same
-grip anymore. And then you
+00:31:01.030 --> 00:31:04.570
+dapper is not good enough.
+Again, I don't think as
 
 528
-00:26:32.320 --> 00:26:34.900
-end up with these really
-sort of flaky connections And
+00:31:04.570 --> 00:31:07.720
+a blanket statement that I'd
+ever can imagine somebody saying,
 
 529
-00:26:34.900 --> 00:26:37.990
-F and flakies are the
-problem. That's the thing. And
+00:31:07.750 --> 00:31:10.000
+because it might not be
+good enough for this one
 
 530
-00:26:37.990 --> 00:26:40.330
-that's Oh yeah. Yeah. Well,
-as you, as you mentioned,
+00:31:10.000 --> 00:31:13.600
+particular aspect of my app,
+but there's many others that
 
 531
-00:26:40.330 --> 00:26:42.340
-like you get two bits
-swapped and you have a
+00:31:13.750 --> 00:31:17.610
+I'm sure it would be.
+Well, it seems like that,
 
 532
-00:26:42.340 --> 00:26:48.000
-computer that is a computer.
-So, so one, one wire
+00:31:17.760 --> 00:31:21.840
+you know, HTTP and GRPC
+and their concept of restful
 
 533
-00:26:48.000 --> 00:26:50.450
-can, It's so funny though,
-because it really like the
+00:31:21.840 --> 00:31:25.170
+API is I know microservices
+and Kubernetes and all the
 
 534
-00:26:50.450 --> 00:26:52.730
-lower level. You, it sounds,
-it's so obvious, but again,
+00:31:25.170 --> 00:31:29.040
+different supporting things that would
+be required to make something
 
 535
-00:26:52.730 --> 00:26:55.670
-I can't express enough what
-a, an eyeopening experiences is.
+00:31:29.040 --> 00:31:34.680
+like dapper and, and you,
+the listeners application successful, you
 
 536
-00:26:55.670 --> 00:26:57.890
-Like, these may be silly
-and stupid questions that I'm
+00:31:34.680 --> 00:31:37.050
+know, the time has come
+in in the right. It
 
 537
-00:26:57.890 --> 00:27:00.050
-asking, but it's like, yeah.
-You know, that's the million
+00:31:37.050 --> 00:31:39.600
+is the right amount of
+maturity and that people should
 
 538
-00:27:00.050 --> 00:27:03.020
-dollar semi-colon or whatever. It's
-like, yeah, like that one
+00:31:39.600 --> 00:31:42.480
+really explore these architecture. Right?
+I think that this is
 
 539
-00:27:03.020 --> 00:27:05.510
-bit that is now a
-brick. It was a computer
+00:31:42.480 --> 00:31:45.030
+kind of the next step
+on the evolution of cloud
 
 540
-00:27:05.510 --> 00:27:07.610
-a minute ago, and now
-it is no longer a
+00:31:45.030 --> 00:31:48.030
+native building on all of
+the fundamental work that has
 
 541
-00:27:07.610 --> 00:27:12.290
-computer. Right. And there's, There's
-nothing. So like another thing
+00:31:48.030 --> 00:31:51.990
+been developed over the last
+five to 10 years. And
 
 542
-00:27:12.290 --> 00:27:13.700
-that I've had, I've now
-that I've, now that I've
+00:31:52.140 --> 00:31:53.740
+we're going to see more
+on, on top of that.
 
 543
-00:27:13.700 --> 00:27:16.280
-gotten farther into the project,
-I've got four breadboards all
+00:31:53.770 --> 00:31:55.590
+I'm sure Napa is not
+the end of the story,
 
 544
-00:27:16.280 --> 00:27:18.860
-working together. I need to
-make sure that voltage is
+00:31:55.590 --> 00:31:59.010
+but it's, I think a
+fantastic new level that it's
 
 545
-00:27:18.860 --> 00:27:22.220
-going smoothly across all four.
-Cause I've, I've lined all
+00:31:59.010 --> 00:32:00.960
+going to a productivity that
+developers are going to get
 
 546
-00:27:22.220 --> 00:27:25.580
-my rails up. Some people
-have suggested running power down
+00:32:00.960 --> 00:32:06.960
+to with it. Well, folks
+can check out dapper@dapr.io. You
 
 547
-00:27:25.580 --> 00:27:30.170
-multiple rails from multiple locations.
-Yep. Yeah. That does. Is
+00:32:06.960 --> 00:32:09.810
+can install the CLI on
+windows, Mac, or Linux, check
 
 548
-00:27:30.170 --> 00:27:31.700
-that, is that, is that
-a thing like, is that
+00:32:09.810 --> 00:32:13.530
+it all out. There's extensive
+documentation. There is a burgeoning
 
 549
-00:27:31.700 --> 00:27:33.410
-say like, I can do
-that. I can get other
+00:32:13.530 --> 00:32:15.960
+and excited community and a
+ton of things that you
 
 550
-00:27:33.710 --> 00:27:39.170
-throw five volts altogether and
-down each. Yeah, yeah, yeah.
+00:32:15.960 --> 00:32:18.450
+can plug into it. And
+again, it's a cafeteria plan,
 
 551
-00:27:39.590 --> 00:27:42.890
-In parallel. Sure. Yeah. Yeah.
-There's a video as part
+00:32:18.450 --> 00:32:20.550
+so certainly you don't need
+to do it all. You
 
 552
-00:27:42.890 --> 00:27:46.790
-of the, the eight-bit CPU,
-which is 14 breadboards also
+00:32:20.550 --> 00:32:22.770
+can just take the pieces
+that you want. Follow it
 
 553
-00:27:46.850 --> 00:27:50.090
-connected together where I talk
-about power distribution and that's,
+00:32:22.770 --> 00:32:25.920
+on Twitter. I'll put links
+to the Gitter community chat
 
 554
-00:27:50.150 --> 00:27:51.980
-and that's one of the
-things I recommended in that
+00:32:26.310 --> 00:32:29.910
+and it's actively being developed.
+So poll requests are welcome.
 
 555
-00:27:51.980 --> 00:27:55.760
-video. And that's one of
-the things that is, is
+00:32:30.450 --> 00:32:33.300
+Thank you, Mark Russinovich for
+chatting with me today. Hope
 
 556
-00:27:55.880 --> 00:27:58.700
-interesting about this is that
-I'm doing it on breadboards,
+00:32:33.300 --> 00:32:36.510
+I made you a diaper
+form. I will go and
 
 557
-00:27:58.700 --> 00:28:02.750
-which I think most professional
-electrical engineers would look at
+00:32:36.510 --> 00:32:38.370
+check it out immediately and
+try to build it out
 
 558
-00:28:02.750 --> 00:28:04.040
-that and say, why in
-the world would you do
+00:32:38.370 --> 00:32:40.640
+in my own machine and
+see what the kind of
 
 559
-00:28:04.040 --> 00:28:06.260
-that? Like, just get, just
-make a printed circuit board.
+00:32:40.640 --> 00:32:43.610
+solutions that I can build
+with dapper. This has been
 
 560
-00:28:07.220 --> 00:28:09.710
-They're they're cheap and easy
-and you can get them
+00:32:43.610 --> 00:32:46.400
+another episode of Hansel minutes,
+and we'll see you again.
 
 561
-00:28:09.710 --> 00:28:12.140
-turned around from China and
-in a week, or even
-
-562
-00:28:12.140 --> 00:28:14.690
-less, and get a custom
-printed circuit board, solder everything
-
-563
-00:28:14.690 --> 00:28:17.960
-on, you know, all the
-connections are there. You, you
-
-564
-00:28:18.040 --> 00:28:20.450
-know, you design the printed
-circuit board in a EDA
-
-565
-00:28:20.450 --> 00:28:23.600
-tool that, that does have
-a linter effectively, you know,
-
-566
-00:28:23.630 --> 00:28:26.720
-design rule, checking, electrical, checking,
-you know, thing that checks
-
-567
-00:28:26.720 --> 00:28:30.680
-that why not do that?
-And I think the value
-
-568
-00:28:30.680 --> 00:28:34.730
-of the breadboard is that
-you, it forces you to
-
-569
-00:28:34.730 --> 00:28:39.710
-think about every connection in
-a way that I think
-
-570
-00:28:39.710 --> 00:28:41.330
-if, if you were to
-lay out the, the, the
-
-571
-00:28:41.330 --> 00:28:43.970
-printed circuit board yourself and
-order your own, that might,
-
-572
-00:28:44.030 --> 00:28:47.900
-that might have some, some
-value, but this is something
-
-573
-00:28:47.900 --> 00:28:50.270
-I've always been frustrated as,
-as a kid, I'd buy
-
-574
-00:28:50.270 --> 00:28:52.820
-these like educational, electronic kits
-and you get a bunch
-
-575
-00:28:52.820 --> 00:28:54.590
-of components and you get
-a printed circuit board and
-
-576
-00:28:54.590 --> 00:28:56.210
-you'd it, the components under
-the board, and it would
-
-577
-00:28:56.210 --> 00:29:02.270
-just work and you wouldn't
-learn anything. So that's, that's
-
-578
-00:29:02.330 --> 00:29:04.130
-like the, I guess that's
-sort of the, the reason
-
-579
-00:29:04.130 --> 00:29:06.380
-that I really like the,
-you know, build a computer
-
-580
-00:29:06.380 --> 00:29:09.290
-on a breadboard idea of,
-of, you know, this forces
-
-581
-00:29:09.290 --> 00:29:11.360
-you to get every connection.
-Right. And think about every
-
-582
-00:29:11.360 --> 00:29:13.850
-connection and run into those
-problems where you have two
-
-583
-00:29:13.850 --> 00:29:17.240
-bits swapped and you aren't
-getting the right result and
-
-584
-00:29:17.630 --> 00:29:19.190
-you pull your hair out
-for a couple hours trying
-
-585
-00:29:19.190 --> 00:29:20.990
-to figure out why, and
-then realize, Oh, I just
-
-586
-00:29:20.990 --> 00:29:23.630
-had these two pins swapped
-or whatever it is. I
-
-587
-00:29:23.630 --> 00:29:27.260
-think there's value in that.
-But it definitely comes with
-
-588
-00:29:27.260 --> 00:29:29.540
-this downside of all. Now
-there's just a whole bunch
-
-589
-00:29:29.540 --> 00:29:31.670
-of connections that could potentially
-be. Yeah. Yeah. There is
-
-590
-00:29:31.670 --> 00:29:35.090
-a bit of psychic weight
-that, what other things have
-
-591
-00:29:35.090 --> 00:29:37.760
-I not found yet? And
-I'll get another few hours
-
-592
-00:29:37.760 --> 00:29:39.650
-in the next video and
-discover that, well, you know,
-
-593
-00:29:39.950 --> 00:29:43.330
-this, you know, whatever the
-ReadWrite is SWAT or something,
-
-594
-00:29:43.420 --> 00:29:45.670
-something silly like that. But
-at the same time, I'm
-
-595
-00:29:45.670 --> 00:29:49.960
-also noticing that there's a
-certain temperament of a programmer
-
-596
-00:29:50.230 --> 00:29:52.690
-where I have been frustrated,
-but I haven't been, you
-
-597
-00:29:52.690 --> 00:29:55.510
-know, slammed my hand on
-the table, frustrated. It's been
-
-598
-00:29:55.510 --> 00:29:58.210
-more of a contemplative wander
-around the neighborhood, talking to
-
-599
-00:29:58.210 --> 00:30:03.240
-myself, you know, Well, you
-have to have that If
-
-600
-00:30:03.240 --> 00:30:06.360
-you're a programmer and I
-have very much enjoyed the,
-
-601
-00:30:06.360 --> 00:30:09.900
-like, I don't think I
-can do this right outside
-
-602
-00:30:09.900 --> 00:30:13.530
-my comfort zone. I'm fully
-over my head on this
-
-603
-00:30:13.530 --> 00:30:20.100
-project, but still I rise.
-Right. No, yeah, that's perfect.
-
-604
-00:30:20.910 --> 00:30:22.590
-I appreciate that. One of
-the other things that you
-
-605
-00:30:22.590 --> 00:30:24.780
-did that I thought was
-really cool was the use
-
-606
-00:30:24.780 --> 00:30:28.500
-of an Arduino versus a
-very expensive piece of machinery
-
-607
-00:30:28.500 --> 00:30:30.570
-that I could potentially buy.
-Maybe you could speak about
-
-608
-00:30:30.810 --> 00:30:32.790
-why we throw an Arduino
-in here, what that allows
-
-609
-00:30:32.790 --> 00:30:37.440
-me to visualize. Yeah. So
-if you're designing a digital
-
-610
-00:30:37.440 --> 00:30:40.080
-logic circuit, and one of
-the fundamental tools you would
-
-611
-00:30:40.080 --> 00:30:42.810
-have in your, in your
-toolbox is a logic analyzer,
-
-612
-00:30:42.840 --> 00:30:46.560
-which is this thing that
-has, you know, dozens of
-
-613
-00:30:46.560 --> 00:30:48.990
-different probes that you can
-put on different signals. And
-
-614
-00:30:48.990 --> 00:30:52.980
-then it will essentially sample
-the voltage levels on all
-
-615
-00:30:52.980 --> 00:30:54.750
-of those signals and present
-it to you on a,
-
-616
-00:30:55.200 --> 00:30:57.060
-in some way that you
-can sort of see what's
-
-617
-00:30:57.060 --> 00:31:00.390
-going on. So, you know,
-in, in a computer, like
-
-618
-00:31:00.570 --> 00:31:03.060
-what we're building with the
-65 Oh two project, you've
-
-619
-00:31:03.060 --> 00:31:05.310
-got a 16 bit address
-bus, you've got an eight
-
-620
-00:31:05.310 --> 00:31:08.070
-bit data bus. And as
-the computer is running, it's
-
-621
-00:31:08.130 --> 00:31:10.500
-putting different addresses on the
-address bus and it's reading
-
-622
-00:31:10.500 --> 00:31:13.830
-or writing different data values
-on the data bus. And
-
-623
-00:31:13.830 --> 00:31:16.350
-so if you were building
-this, or if you're engineering
-
-624
-00:31:16.350 --> 00:31:18.000
-this thing, you might, you
-might have a logic analyzer
-
-625
-00:31:18.000 --> 00:31:21.930
-hooked up to all those
-different signals and being able
-
-626
-00:31:21.930 --> 00:31:25.170
-to monitor them over time.
-And then the logic analyzer
-
-627
-00:31:25.170 --> 00:31:26.940
-will give you features about
-being able to, you know,
-
-628
-00:31:26.950 --> 00:31:30.780
-take those signals and view
-them in, in hexadecimal or
-
-629
-00:31:30.810 --> 00:31:36.150
-whatever format you want. And
-I think you need something
-
-630
-00:31:36.150 --> 00:31:38.670
-like that to really understand
-what's going on with a
-
-631
-00:31:38.670 --> 00:31:41.430
-computer or, or to debug.
-I mean, the situation you
-
-632
-00:31:41.430 --> 00:31:43.680
-had where you had a
-bit swapped, if you had
-
-633
-00:31:44.040 --> 00:31:48.240
-continued down the path and
-built IO and hooked a
-
-634
-00:31:48.270 --> 00:31:51.450
-little LCD screen or something
-up to it, and then
-
-635
-00:31:51.450 --> 00:31:53.700
-it, and you still had
-that, those pin swapped, you
-
-636
-00:31:53.700 --> 00:31:55.590
-would, I don't know how
-you would find that, that
-
-637
-00:31:55.590 --> 00:32:00.420
-error without some type of
-logic analyzer, but for someone
-
-638
-00:32:00.420 --> 00:32:02.340
-to be able to do
-this project, you know, I
-
-639
-00:32:02.340 --> 00:32:04.380
-think it's a tall order
-to say, Oh, buy a
-
-640
-00:32:04.440 --> 00:32:09.060
-$300 logic analyzer thousand dollar
-logic analyzer or something. So
-
-641
-00:32:09.870 --> 00:32:13.140
-because the computers running so
-slow, you can actually use
-
-642
-00:32:13.210 --> 00:32:15.960
-an Arduino that has the
-same number of data pins
-
-643
-00:32:15.960 --> 00:32:19.950
-as a effectively as a
-logic analyzer and just feed
-
-644
-00:32:19.950 --> 00:32:21.720
-in all of those, all
-of those bits. You want
-
-645
-00:32:21.720 --> 00:32:24.720
-to monitor into digital inputs
-on the Arduino and then
-
-646
-00:32:24.720 --> 00:32:26.550
-have the Arduino just tell
-you what's on each of
-
-647
-00:32:26.550 --> 00:32:29.220
-those pins. And, you know,
-the Arduino is not going
-
-648
-00:32:29.220 --> 00:32:31.590
-to be able to read
-as quickly as a logic
-
-649
-00:32:31.590 --> 00:32:33.630
-analyzer could, but that's fine.
-Cause we can just slow
-
-650
-00:32:33.630 --> 00:32:36.240
-down the computer. Right, Right.
-And I've got a potential
-
-651
-00:32:36.240 --> 00:32:38.640
-amateur on the clock module
-and I've turned it down
-
-652
-00:32:38.640 --> 00:32:42.560
-to a, you know, heartbeat
-tempo, and I've effectively got
-
-653
-00:32:42.560 --> 00:32:46.100
-a real time logging system.
-And what's nice about it
-
-654
-00:32:46.100 --> 00:32:49.610
-is that, you know, Arduinos
-are, you know, extensively, low
-
-655
-00:32:49.610 --> 00:32:51.350
-level, but really quite high
-level. And you can write
-
-656
-00:32:51.350 --> 00:32:53.150
-some very high level code
-to say, all right, I'm
-
-657
-00:32:53.150 --> 00:32:54.500
-going to do this on
-the rising edge. And I'm
-
-658
-00:32:54.500 --> 00:32:55.910
-going to check for high
-on that and low on
-
-659
-00:32:55.910 --> 00:32:59.900
-that. And in about 13,
-14 lines of code, I'm
-
-660
-00:32:59.900 --> 00:33:03.170
-literally looking at that voltage.
-And when I was seeing
-
-661
-00:33:03.170 --> 00:33:07.970
-that benign versus that AA
-and without that Arduino, there's
-
-662
-00:33:07.970 --> 00:33:09.910
-no way I would have
-been, I don't even know
-
-663
-00:33:09.920 --> 00:33:11.390
-you're right. I have no
-idea how I would have
-
-664
-00:33:11.390 --> 00:33:13.610
-figured that out. So let
-me ask this kind of
-
-665
-00:33:13.610 --> 00:33:16.910
-ignorant question because I've ordered
-a better, a silver scope.
-
-666
-00:33:17.030 --> 00:33:20.180
-So I can go and
-look at one bit with
-
-667
-00:33:20.210 --> 00:33:23.180
-a multi meter and I
-can look at one bit
-
-668
-00:33:23.240 --> 00:33:26.420
-over time as a voltage
-with a silver scope and
-
-669
-00:33:26.420 --> 00:33:29.030
-an L a logic analyzer
-is kind of like both
-
-670
-00:33:29.030 --> 00:33:32.780
-of those devices and times
-over time with all of
-
-671
-00:33:32.780 --> 00:33:36.620
-their potential inputs. Yeah. Something
-like that. I was thinking,
-
-672
-00:33:36.620 --> 00:33:38.390
-all right, I'm going to
-run down and end up
-
-673
-00:33:38.390 --> 00:33:40.460
-becoming an electrical engineer when
-I'm done with all of
-
-674
-00:33:40.460 --> 00:33:45.050
-this stuff. Oh, it's been
-absolutely fascinating to do this.
-
-675
-00:33:45.140 --> 00:33:47.720
-And I have only in
-just a few minutes, I've
-
-676
-00:33:47.720 --> 00:33:50.120
-been able to talk to
-you, scratch the surface. The
-
-677
-00:33:50.120 --> 00:33:52.640
-material that you've got up
-on your YouTube is absolutely
-
-678
-00:33:52.640 --> 00:33:55.340
-extraordinary. And I love that
-you make it available for
-
-679
-00:33:55.340 --> 00:34:00.380
-free folks can check out
-your stuff@eater.net, the video tutorials,
-
-680
-00:34:00.380 --> 00:34:03.890
-whether it be building AP
-CPU from scratch the 65
-
-681
-00:34:03.890 --> 00:34:05.660
-Oh two project that I'm
-doing as well as some
-
-682
-00:34:05.660 --> 00:34:07.340
-really amazing videos, we didn't
-even get a chance to
-
-683
-00:34:07.340 --> 00:34:09.830
-talk about like learning how
-the internet works or you're
-
-684
-00:34:09.830 --> 00:34:12.680
-assumed to be legendary. Let's
-build a video card from
-
-685
-00:34:12.680 --> 00:34:16.340
-scratch, which is really hot
-on Reddit. People cannot believe
-
-686
-00:34:16.340 --> 00:34:18.440
-that you're that you did
-that. And that's absolutely an
-
-687
-00:34:18.440 --> 00:34:21.350
-extraordinary video series as well.
-I really appreciate you chatting
-
-688
-00:34:21.350 --> 00:34:23.720
-with me today. We've been
-talking with Ben eater. This
-
-689
-00:34:23.720 --> 00:34:26.920
-is another episode of Hanselman
-And we'll see you again
-
-690
-00:34:26.950 --> 00:34:38.980
-next week. <inaudible>.
+00:32:47.200 --> 00:32:58.300
+<inaudible>.
 

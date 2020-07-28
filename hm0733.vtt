@@ -1,2527 +1,3232 @@
 WEBVTT FILE
 
 1
-00:00:00.210 --> 00:00:02.850
-This episode is brought to
-you by Datadog a full
+00:00:00.030 --> 00:00:04.080
+I'd like to welcome our
+new sponsor. Couchbase Couchbase is
 
 2
-00:00:02.850 --> 00:00:06.810
-stack monitoring platform that integrates
-with over 400 technologies like
+00:00:04.080 --> 00:00:07.080
+an open source, no SQL
+document and key value store
 
 3
-00:00:06.870 --> 00:00:12.810
-gremlin, PagerDuty, AWS Lambda, Spinnaker,
-and more with rich visualizations
+00:00:07.080 --> 00:00:11.940
+database requires no external cash
+support CQL and analytical queries
 
 4
-00:00:12.810 --> 00:00:16.200
-and algorithmic alerts. Datadog can
-help you monitor the effects
+00:00:11.940 --> 00:00:17.820
+for Jason data Couchbase supports
+technologies like Kubernetes, java.net, Java
 
 5
-00:00:16.200 --> 00:00:20.640
-of chaos, experiments, identify weaknesses,
-and improve the reliability of
+00:00:17.820 --> 00:00:21.210
+script, go and Python. Download
+it, give it a try
 
 6
-00:00:20.640 --> 00:00:26.580
-your systems. Visit Datadog hq.com/hansel
-minutes to get a free
+00:00:21.270 --> 00:00:29.730
+at couchbase.com/hansel minutes. That's couchbase.com/hansel
+minutes. And I'll remind you
 
 7
-00:00:26.580 --> 00:00:30.300
-14 day trial and receive
-one of Datadog's famously cozy.
+00:00:29.730 --> 00:00:32.640
+that when you support our
+sponsors, you support this show.
 
 8
-00:00:30.330 --> 00:00:46.680
-T-shirts. Hi, this is Scott
-Hanselman. This is another episode
+00:00:46.160 --> 00:00:48.200
+Hi, this is Scott Hanselman.
+This is another episode of
 
 9
-00:00:46.680 --> 00:00:49.170
-of Hansel minutes today. I'm
-talking with Simon for co
+00:00:48.200 --> 00:00:51.710
+Hansel minutes. Today. I'm talking
+with Edward Thompson, product manager, GitHub
 
 10
-00:00:49.440 --> 00:00:51.900
-he's, a senior software engineer
-at Docker. How are you,
+00:00:51.740 --> 00:00:55.070
+calling in from the UK.
+How are you, sir? Well,
 
 11
-00:00:51.900 --> 00:00:55.200
-sir? I'm really fine. I
-am very happy to be
+00:00:55.190 --> 00:00:57.890
+I'm doing as well as
+can be expected, Scott. Indeed.
 
 12
-00:00:55.200 --> 00:00:57.660
-talking to you. I'm a
-big fan. I like to
+00:00:58.130 --> 00:00:59.780
+This is one of those
+questions. When you say, how
 
 13
-00:00:57.660 --> 00:00:59.970
-follow you on Twitter and
-see all of your you're
+00:00:59.780 --> 00:01:04.010
+are you? And you're like,
+okay. I mean, some people
 
 14
-00:00:59.970 --> 00:01:02.640
-so helpful. You're very kind
-because everyone's always asking you
+00:01:04.010 --> 00:01:07.520
+say that it's nice to
+discover that your lifestyle was
 
 15
-00:01:02.640 --> 00:01:05.550
-Docker questions and you're always
-there to help, but I
+00:01:07.520 --> 00:01:10.760
+actually called quarantine. We didn't
+know that that was how
 
 16
-00:01:05.550 --> 00:01:07.560
-know it's not your, it's
-not your job to be
+00:01:10.760 --> 00:01:13.520
+we live. Apparently for some
+people, nothing changed. They just
 
 17
-00:01:07.560 --> 00:01:10.170
-helpful on, on Twitter, but
-you, you just love the
+00:01:13.520 --> 00:01:15.710
+never went out and now
+they don't go out anyway.
 
 18
-00:01:10.170 --> 00:01:13.950
-product, right? Yeah, actually, it's,
-it's really interesting for me
+00:01:16.040 --> 00:01:18.230
+Yeah. As an introvert, I
+just go to the grocery
 
 19
-00:01:13.950 --> 00:01:17.390
-to stay in touch with
-our users. And I agree,
+00:01:18.230 --> 00:01:22.010
+store less frequently. Yeah. But
+for, for us, my wife
 
 20
-00:01:17.400 --> 00:01:20.640
-this is really easy for
-me to be empathetic with
+00:01:22.010 --> 00:01:24.740
+is a nurse and she's
+going to the hospital and
 
 21
-00:01:21.000 --> 00:01:26.240
-our users because our target
-is actually developers. And, and
+00:01:24.740 --> 00:01:26.540
+my brothers are firefighters. So
+I'm getting all of the,
 
 22
-00:01:26.520 --> 00:01:29.720
-when, when some of the
-rigorous program we've looked at
+00:01:26.540 --> 00:01:30.890
+like the war stories. It's
+definitely not fun. Hopefully when
 
 23
-00:01:29.720 --> 00:01:31.830
-the stuff, I really really
-feel, it feels a pain.
+00:01:31.250 --> 00:01:34.670
+all of this is over,
+we will all be safe
 
 24
-00:01:32.490 --> 00:01:34.650
-It's nice to be able
-to, to talk to 'em
+00:01:34.700 --> 00:01:38.420
+and, and warm. And we'll
+maybe, maybe the year will
 
 25
-00:01:35.190 --> 00:01:38.880
-to, to them on Twitter
-or YouTube, et cetera. I
+00:01:38.420 --> 00:01:40.580
+give us back our summer.
+That would be nice to
 
 26
-00:01:38.880 --> 00:01:41.790
-think that's really cool. Sometimes.
-You know, companies like Microsoft,
+00:01:40.580 --> 00:01:43.640
+get a group Cron or
+something. Yeah. Well, I am
 
 27
-00:01:41.790 --> 00:01:44.280
-I think does this a
-lot. They separate the developer
+00:01:43.640 --> 00:01:45.560
+spending a lot of time
+on my computer because I
 
 28
-00:01:44.280 --> 00:01:47.400
-and the program manager, like
-the PM is supposed to
+00:01:45.560 --> 00:01:49.280
+am at home here and
+in the process, I'm tidying
 
 29
-00:01:47.400 --> 00:01:50.550
-talk to the customers and
-they hide the developer in
+00:01:49.280 --> 00:01:51.860
+up all my repositories and
+setting up all of my
 
 30
-00:01:50.550 --> 00:01:53.850
-the closet somewhere. But at
-Docker it seems like the
+00:01:52.190 --> 00:01:55.820
+CIC D and I understand
+that you work on a,
 
 31
-00:01:53.850 --> 00:01:58.220
-developers like to be visible.
-It might be because of
+00:01:55.880 --> 00:01:58.580
+get hub and work on,
+get hub actions. I do.
 
 32
-00:01:58.230 --> 00:02:02.580
-our open source background and
-the fact that we always
+00:01:59.240 --> 00:02:02.120
+So when get up actions
+came out, I first saw
 
 33
-00:02:02.610 --> 00:02:05.430
-have out a culture of
-developing things in the open,
+00:02:02.120 --> 00:02:04.640
+it and I thought to
+myself, this is like, if
 
 34
-00:02:05.490 --> 00:02:09.120
-even if DACA itself is
-not open source, we are
+00:02:04.640 --> 00:02:07.370
+this, then that, like, you
+know, the or Zapier or
 
 35
-00:02:09.120 --> 00:02:12.450
-still in, I'm in this
-kind of mindset where we
+00:02:07.400 --> 00:02:11.270
+flow, it's like a workflow
+engine. And I see some
 
 36
-00:02:12.450 --> 00:02:16.170
-do open source projects and
-we are, we share a
+00:02:11.270 --> 00:02:13.550
+people, people refer to it
+differently. Like when you talk
 
 37
-00:02:16.170 --> 00:02:20.100
-lot with the community. We
-leverage our community to, to
+00:02:13.550 --> 00:02:14.900
+to people in the public,
+they're like, Oh yeah, it's
 
 38
-00:02:20.100 --> 00:02:22.710
-build stuff that's really cool.
-And that actually brings up
+00:02:14.900 --> 00:02:16.430
+like a workflow. And that'd
+be like, no, it's a
 
 39
-00:02:22.710 --> 00:02:25.110
-a good point. So you
-say that Docker desktop I'm
+00:02:16.440 --> 00:02:19.460
+CACD. And it's like, when
+two people argue about, you
 
 40
-00:02:25.110 --> 00:02:27.570
-on a windows machine, Docker,
-desktop is not open source.
+00:02:19.460 --> 00:02:22.040
+know, I like my peanut
+butter and I like my
 
 41
-00:02:27.570 --> 00:02:31.530
-Maybe you could explain the
-stack because people use the
+00:02:22.040 --> 00:02:23.810
+chocolate. I was like, well,
+no, you can have both.
 
 42
-00:02:31.530 --> 00:02:34.500
-word Docker kind of like
-in America, the way we
+00:02:24.200 --> 00:02:26.960
+That's exactly what is, what
+is the thing? It is,
 
 43
-00:02:34.500 --> 00:02:37.200
-use the word Kleenex, right?
-Like the Kleenex is a
+00:02:26.960 --> 00:02:29.420
+it is both of those
+things. So if I look
 
 44
-00:02:37.200 --> 00:02:41.160
-tissue, right. But if you
-say hand me a Kleenex,
+00:02:29.420 --> 00:02:31.700
+back at good have actions,
+if you, if you rewind,
 
 45
-00:02:42.030 --> 00:02:45.480
-it could be any brand,
-you know, or in America
+00:02:31.910 --> 00:02:35.540
+we announced it in November, 2018.
+And when we did, we
 
 46
-00:02:45.480 --> 00:02:47.700
-you can say, give me
-a Coke. And then they
+00:02:35.540 --> 00:02:37.910
+really thought of it as
+a way to extend the
 
 47
-00:02:47.700 --> 00:02:50.490
-say, what kind of Coke?
-Well, Sprite or Pepsi. Like,
+00:02:37.910 --> 00:02:40.040
+ghetto platform or way that
+you could extend get hub.
 
 48
-00:02:50.520 --> 00:02:54.300
-you know, it's becoming a
-word that means containers. But
+00:02:40.460 --> 00:02:44.570
+And so it was a
+very workflow engineer idea way
 
 49
-00:02:54.300 --> 00:02:56.880
-when I install Docker, desktop,
-what am I getting? And
+00:02:44.570 --> 00:02:47.540
+back, you know, as, as
+long as I can remember
 
 50
-00:02:56.880 --> 00:02:59.620
-what is the stack and
-what, what does each do?
+00:02:47.540 --> 00:02:49.250
+using get hub, we've had
+web hooks and we've had
 
 51
-00:02:59.950 --> 00:03:03.520
-Yeah. So look at it.
-Some basically it's a, it's
+00:02:49.250 --> 00:02:52.790
+a rest API, have actions
+was a way to take
 
 52
-00:03:03.520 --> 00:03:07.870
-a distribution of, of all
-our tools. The first thing
+00:02:52.790 --> 00:02:56.600
+those two things and use,
+get hubs, compute, get hubs
 
 53
-00:03:07.870 --> 00:03:12.310
-that is ships is, is
-a Docker demon. And on
+00:02:56.600 --> 00:03:01.360
+infrastructure to actually automate tasks.
+So Let's say when somebody
 
 54
-00:03:12.310 --> 00:03:15.850
-windows, we ship factory to
-the, we ship the windows,
+00:03:01.360 --> 00:03:03.880
+opens an issue in your
+repository, you can run a
 
 55
-00:03:15.850 --> 00:03:19.840
-containers, emails, but runs natively
-on windows. And we also
+00:03:03.880 --> 00:03:06.730
+workflow and it can, I
+don't know, add a label
 
 56
-00:03:19.840 --> 00:03:25.390
-ship so Linux demon. So
-Booker D VAT friends, either
+00:03:06.730 --> 00:03:10.510
+to that issue, things like
+that. And so we launched
 
 57
-00:03:25.420 --> 00:03:30.130
-inside of an IPO, hyper
-V VM, or if you
+00:03:10.510 --> 00:03:13.390
+that as a beta again,
+and I think it was
 
 58
-00:03:30.400 --> 00:03:34.060
-are running WSL to, it
-can also run within WSL
+00:03:13.390 --> 00:03:16.990
+November, 2018 at get hub universe.
+And people looked at that
 
 59
-00:03:34.060 --> 00:03:38.320
-to itself. As high vis
-was demons. We also shape
+00:03:17.200 --> 00:03:20.200
+and the first thing that
+they wanted to do, and
 
 60
-00:03:39.070 --> 00:03:45.010
-or necessarily client, client site
-tunings likes Docker, CLI, and
+00:03:20.200 --> 00:03:22.540
+this should have been really
+obvious to us, but they
 
 61
-00:03:45.010 --> 00:03:49.210
-also Docker compose. We should
-pause on Atari. We should,
+00:03:22.540 --> 00:03:27.760
+wanted to build their repositories.
+And you could for like
 
 62
-00:03:49.240 --> 00:03:57.130
-we should. <inaudible> the Kubernetes
-CLI and something that we
+00:03:27.760 --> 00:03:30.340
+a limited value of build,
+you know, if you had,
 
 63
-00:03:57.160 --> 00:04:01.420
-also ship. And that is
-not necessarily a well known
+00:03:30.370 --> 00:03:33.340
+you know, a TypeScript project
+and you wanted to compile
 
 64
-00:04:01.420 --> 00:04:05.750
-is, but we, we distribute
-Coobernetti's as well. So with
+00:03:33.340 --> 00:03:36.400
+it to JavaScript, give them
+actions could do that. But
 
 65
-00:04:05.770 --> 00:04:10.360
-<inaudible> you can just enable
-the community CPI just by
+00:03:36.940 --> 00:03:39.640
+if you had a, I
+dunno, a Swift application and
 
 66
-00:04:10.390 --> 00:04:13.650
-clicking a button into UI.
-So it's, it's a toolkit,
+00:03:39.640 --> 00:03:42.400
+you wanted to build an
+iOS app, not so much
 
 67
-00:04:13.650 --> 00:04:15.990
-it's a complete toolkit for
-all those things. And I
+00:03:42.430 --> 00:03:45.550
+like the architecture just wasn't
+geared up for that. So
 
 68
-00:04:15.990 --> 00:04:18.240
-remember just a few years
-ago, we would have to
+00:03:45.580 --> 00:03:49.630
+we actually hit pause on
+the beta and we kind
 
 69
-00:04:18.240 --> 00:04:21.420
-install each of these things
-kind of separately. I remember
+00:03:49.630 --> 00:03:52.150
+of revisited what get hub
+actions meant, and we added
 
 70
-00:04:21.420 --> 00:04:23.490
-installing Docker and then setting
-that up and then getting
+00:03:52.150 --> 00:03:55.720
+CICB capabilities. So now you
+can, you can do that
 
 71
-00:04:23.490 --> 00:04:26.340
-Docker compose. And then Kubernetes
-was a whole other thing
+00:03:55.720 --> 00:03:59.500
+build whether it's macro S
+or Linux or, or windows,
 
 72
-00:04:27.000 --> 00:04:30.600
-after that. Yeah. Yeah. So
-the ID, the MBI and
+00:03:59.500 --> 00:04:02.710
+we've got those machines for
+you in our cloud. And
 
 73
-00:04:30.600 --> 00:04:33.870
-I'm looking at a stuff
-is to get the seamless
+00:04:02.710 --> 00:04:05.650
+so now we have CICB
+capabilities as well. So it's
 
 74
-00:04:33.900 --> 00:04:38.940
-Docker development experience on Mac
-and windows. So what we,
+00:04:05.650 --> 00:04:08.940
+really both When I, when
+I think of get hub,
 
 75
-00:04:38.970 --> 00:04:42.840
-what we do is we
-try to similar to seamlessly
+00:04:09.210 --> 00:04:11.820
+I think of like massive
+amounts of storage, I think
 
 76
-00:04:43.260 --> 00:04:48.720
-when both things together and
-make them feel like you
+00:04:11.820 --> 00:04:14.490
+about like all the world's
+source code in this just
 
 77
-00:04:48.720 --> 00:04:52.440
-are running on, on your
-production server. So something that,
+00:04:15.060 --> 00:04:18.390
+massive, massive get repository. I
+know it's like billions of
 
 78
-00:04:52.980 --> 00:04:57.150
-for example, that we under
-for you is bind mounting
+00:04:18.390 --> 00:04:20.790
+given positories, but I just
+imagine one giant one. So
 
 79
-00:04:57.150 --> 00:05:03.030
-files from the windows environment,
-into your Linux container environment.
+00:04:20.790 --> 00:04:23.160
+I think storage, I don't
+think compute. So when I
 
 80
-00:05:03.600 --> 00:05:09.000
-And this particular example is,
-is very tricky. And this
+00:04:23.160 --> 00:04:25.230
+think of the problems that
+I would, I would guess
 
 81
-00:05:09.000 --> 00:05:12.570
-is part of the sort
-of shine, but we are
+00:04:25.230 --> 00:04:27.900
+as a lay person, what
+get hub would deal with
 
 82
-00:05:13.110 --> 00:05:16.980
-the police that we make,
-we make with Docker desktop.
+00:04:27.900 --> 00:04:29.640
+would be, well, they have
+a lot of storage problems,
 
 83
-00:05:17.010 --> 00:05:20.370
-It's not something that you
-could do yourself and that
+00:04:29.970 --> 00:04:32.550
+but now you've decided not
+only did have storage problems,
 
 84
-00:05:20.370 --> 00:05:23.070
-we are really happy to,
-to bring, Well, some people
+00:04:32.550 --> 00:04:37.920
+but also compute problems that
+in themselves have combinatorics because
 
 85
-00:05:23.070 --> 00:05:26.250
-who have used windows before,
-who are not windows people
+00:04:37.920 --> 00:04:40.680
+you build your, your main
+branch and your pillagers sub
 
 86
-00:05:26.580 --> 00:05:30.780
-complain because they say that
-installing Docker on windows is,
+00:04:40.680 --> 00:04:42.840
+branches and all your PRS
+need to be built suddenly
 
 87
-00:05:31.080 --> 00:05:34.050
-is too hard, or it's
-a hack. And they say,
+00:04:42.840 --> 00:04:45.540
+by getting into the CIC
+D business, you have two
 
 88
-00:05:34.080 --> 00:05:37.740
-Oh, on Linux, it's super
-easy because you know, Docker
+00:04:45.540 --> 00:04:50.790
+problems or times probably compute
+time storage problems. Yeah. That's,
 
 89
-00:05:37.740 --> 00:05:41.340
-and the idea of containers
-is kind of baked into
+00:04:50.790 --> 00:04:52.770
+that's, that's exactly right. And
+it's funny, you mentioned that
 
 90
-00:05:41.340 --> 00:05:45.450
-Linux, but it's not exactly
-baked into windows. Is that
+00:04:52.770 --> 00:04:55.980
+because I actually started out
+at GitHub on the team
 
 91
-00:05:45.450 --> 00:05:48.720
-right? Yeah, that's right. And
-I trade, it does change
+00:04:55.980 --> 00:05:00.330
+that stores your get repositories.
+So yeah. And so then
 
 92
-00:05:48.720 --> 00:05:53.330
-a little bit with, since
-windows eight, I think wherever
+00:05:00.330 --> 00:05:04.440
+I pivoted to this problem
+instead, and that, but what
 
 93
-00:05:53.940 --> 00:05:57.030
-is this notion yeah. Painters
-on windows. It's a, it's
+00:05:04.440 --> 00:05:06.720
+you say is exactly right.
+You know, we, we have
 
 94
-00:05:57.050 --> 00:05:59.900
-a different kind of Container
-of what we do with
+00:05:06.720 --> 00:05:10.440
+to maintain this, this fleet
+of servers to do your
 
 95
-00:05:59.930 --> 00:06:04.700
-Docker, but it shares some
-seminar aspects like on windows,
+00:05:10.440 --> 00:05:13.920
+bills. And, you know, macro
+S is particularly challenging. Cause
 
 96
-00:06:06.260 --> 00:06:09.740
-some books, the apps don't
-share the same registry don't
+00:05:13.920 --> 00:05:15.750
+it ends up being that
+we have to, you know,
 
 97
-00:06:09.740 --> 00:06:13.760
-have access to the real
-file system, but they go
+00:05:15.750 --> 00:05:20.130
+take trash cans and fit
+them into racks, somehow Trash
 
 98
-00:06:13.760 --> 00:06:16.580
-through a broker or something
-like that. So there are
+00:05:20.130 --> 00:05:23.100
+cans, referring to the lovely
+shape of the Mac pros.
 
 99
-00:06:16.580 --> 00:06:23.120
-some, some, some common things
-between windows, sandbox apps and
+00:05:23.160 --> 00:05:25.410
+Oh, it's delightful. Isn't it?
+It fits really well in
 
 100
-00:06:23.120 --> 00:06:27.800
-Docker containers, but to come
-back to the question and
+00:05:25.410 --> 00:05:28.520
+a 19 Interac. Yeah. They
+stack so well. Yeah, But
 
 101
-00:06:28.100 --> 00:06:32.030
-why it's out to install
-Docker on windows, I think
+00:05:28.520 --> 00:05:30.150
+you can't just run a
+Mac in a container. Like
 
 102
-00:06:32.030 --> 00:06:36.080
-it's mostly because what we
-do for making the experience
+00:05:30.150 --> 00:05:32.460
+you would think that they're
+so into containers and Linux
 
 103
-00:06:36.080 --> 00:06:39.620
-seamless is actually quite complicated.
-We have to deal with
+00:05:32.460 --> 00:05:34.020
+that they would you're on
+a Mac. I mean, why,
 
 104
-00:06:40.310 --> 00:06:44.330
-transition. We have to deal
-with bringing network. You're trying
+00:05:34.350 --> 00:05:35.940
+why can't I just run
+a Mac in a container
 
 105
-00:06:44.330 --> 00:06:48.230
-to network interfaces. We have
-to deal with so many
+00:05:35.940 --> 00:05:38.940
+and do my build there?
+Wouldn't it be nice. You,
 
 106
-00:06:48.230 --> 00:06:54.890
-different kind of windows configuration
-and conflicting software. Like if
+00:05:39.540 --> 00:05:43.230
+you run into licensing requirements.
+If you want to run
 
 107
-00:06:54.890 --> 00:06:59.360
-you run VMware, for example,
-and as the credit stuff
+00:05:43.230 --> 00:05:44.700
+a build on a Mac,
+you have to have physical
 
 108
-00:06:59.630 --> 00:07:04.310
-depends on, on APRV on
-the, on windows found basically
+00:05:44.700 --> 00:05:47.640
+hardware and you can virtualize
+it a little bit like
 
 109
-00:07:04.310 --> 00:07:08.330
-nothing that we can do.
-So yeah, there are kind
+00:05:47.640 --> 00:05:49.950
+that. Apple let you do
+that, but you do need
 
 110
-00:07:08.330 --> 00:07:11.990
-of a, kind of a
-long list of prerequisites. And
+00:05:49.950 --> 00:05:56.250
+a physical Apple device. Wow.
+That is unfortunate. But you
 
 111
-00:07:11.990 --> 00:07:15.860
-we try to make this
-list a lot shorter by
+00:05:56.250 --> 00:05:58.880
+do have runners for Lennox,
+for Mac, for windows, even
 
 112
-00:07:15.860 --> 00:07:20.990
-leveraging on things like WSL
-too, but it will always
+00:05:58.880 --> 00:06:02.260
+arm, Even arm. Yeah. We
+don't actually offer arm in
 
 113
-00:07:20.990 --> 00:07:24.140
-be something complicated because at
-the end of the day,
+00:06:02.260 --> 00:06:05.410
+our cloud, but you can,
+if you want to, you
 
 114
-00:07:24.140 --> 00:07:27.020
-we need to run Linux
-and we, we need to
+00:06:05.410 --> 00:06:07.930
+know, bring a raspberry PI,
+you can plug it in,
 
 115
-00:07:27.020 --> 00:07:32.080
-run Linux executive builds on
-your windows machine And early
+00:06:08.050 --> 00:06:09.580
+you can put our runner
+on it and then you
 
 116
-00:07:32.080 --> 00:07:35.410
-versions of Docker, desktop. I'm
-thinking maybe a year or
+00:06:09.580 --> 00:06:12.820
+can run your workloads right
+there. And that's something that
 
 117
-00:07:35.410 --> 00:07:39.340
-two ago, I remember installing
-it. And I knew that
+00:06:12.820 --> 00:06:14.680
+I actually do from time
+to time just to make
 
 118
-00:07:39.340 --> 00:07:41.710
-it would use hyper V
-and it would fire up
+00:06:14.680 --> 00:06:17.170
+sure that arm works. Okay.
+Hang on a second. So
 
 119
-00:07:41.770 --> 00:07:43.960
-a virtual machine. And I
-would go into the hyper
+00:06:17.170 --> 00:06:19.780
+you can do a, you
+can do a local, like
 
 120
-00:07:43.960 --> 00:07:46.630
-V manager and I would
-see a virtual machine and
+00:06:19.780 --> 00:06:22.240
+you can add yourself to
+the ghetto cloud effectively for
 
 121
-00:07:46.630 --> 00:07:53.080
-its name was Moby. What
-is Moby? Yeah. Maybe that's,
+00:06:22.240 --> 00:06:25.000
+your own use. And then
+the actions run in the
 
 122
-00:07:53.140 --> 00:07:56.780
-that's kind of fun because
-it's the name of this
+00:06:25.000 --> 00:06:27.100
+cloud until they run down
+on who your runner and
 
 123
-00:07:57.030 --> 00:08:01.930
-VM predates as a launch
-of the Moby project, but
+00:06:27.100 --> 00:06:29.200
+then run on your raspberry
+PI and then run back
 
 124
-00:08:01.930 --> 00:08:05.440
-we did a few years
-ago and it was just
+00:06:29.200 --> 00:06:31.840
+up. Yeah. That's, that's exactly
+right. You, you basically get
 
 125
-00:08:05.440 --> 00:08:09.160
-kind of a very cool
-name to use side as
+00:06:31.840 --> 00:06:34.900
+to specify what platform you
+run on. And, and again,
 
 126
-00:08:09.160 --> 00:08:13.450
-I don't care. Like maybe
-it's the name of the
+00:06:34.900 --> 00:06:36.580
+it could be windows, it
+could be Linux, it could
 
 127
-00:08:13.450 --> 00:08:16.930
-way to, by the way.
-So this Moby VM was
+00:06:36.580 --> 00:06:38.320
+be macro S and those
+are things that we have,
 
 128
-00:08:16.930 --> 00:08:22.210
-like, Trudy's a way, but,
-but mostly around containers and
+00:06:38.530 --> 00:06:39.910
+but it could be your
+own hardware in your own
 
 129
-00:08:22.510 --> 00:08:25.600
-yeah, it was kind of
-fun to use that name.
+00:06:39.910 --> 00:06:43.900
+data center. Or, you know,
+when I say data center,
 
 130
-00:08:26.380 --> 00:08:29.830
-So Moby Dick is the
-whale in the, in the,
+00:06:43.900 --> 00:06:47.110
+you know, I'm looking around
+under the desk, there's a
 
 131
-00:08:29.830 --> 00:08:32.290
-in the book of the
-same name and the, the
+00:06:47.110 --> 00:06:51.220
+raspberry PI sitting there and
+yeah, that'll that'll work. That
 
 132
-00:08:32.290 --> 00:08:35.530
-Docker logo is a whale
-with containers, like a container
+00:06:51.220 --> 00:06:54.520
+is pretty cool. Okay. So
+one of the things that
 
 133
-00:08:35.530 --> 00:08:39.430
-ship on top. And this
-is because everything's not a
+00:06:54.520 --> 00:06:57.430
+is the most powerful about
+it is the marketplace and
 
 134
-00:08:39.430 --> 00:08:43.630
-coal right. Kubernetes uses nautical
-names. Everything's about The ocean.
+00:06:57.430 --> 00:06:59.350
+the number of actions, because,
+you know, you kick off
 
 135
-00:08:44.230 --> 00:08:49.480
-Yes, exactly. We always have
-used this analogy with shipping
+00:06:59.350 --> 00:07:01.060
+a thing like this, and
+you don't know if anyone's
 
 136
-00:08:49.480 --> 00:08:54.130
-containers and we've, I would
-say the big boats, but
+00:07:01.060 --> 00:07:03.550
+going to care, but if
+you go to the GitHub
 
 137
-00:08:55.230 --> 00:09:00.000
-container ships. Yes. Container ships
-actually. Yeah. In communities as,
+00:07:03.550 --> 00:07:09.040
+marketplace, there's over 3000 actions,
+which is just a stupid
 
 138
-00:09:00.900 --> 00:09:04.320
-as they can, this analogy
-of a bit further than
+00:07:09.040 --> 00:07:12.100
+amount of, of stuff, literally,
+anything you can think of,
 
 139
-00:09:04.320 --> 00:09:08.310
-that. But if we, if
-we come like a few
+00:07:12.940 --> 00:07:15.100
+how did you know that
+you would get 3000 or
 
 140
-00:09:08.310 --> 00:09:12.090
-years ago, we, we don't
-Moby project that you might
+00:07:15.100 --> 00:07:21.340
+more like thousands of actions,
+someone, It just worked out.
 
 141
-00:09:12.090 --> 00:09:15.240
-be aware of. And I
-treat, it was a way
+00:07:21.760 --> 00:07:25.180
+I'm glad it did. Oh,
+there must be. It must
 
 142
-00:09:15.240 --> 00:09:20.550
-for us to separate Docker
-as a project, to our
+00:07:25.180 --> 00:07:27.130
+be easy to make them
+otherwise. They wouldn't be 3000.
 
 143
-00:09:20.550 --> 00:09:25.860
-open source project, which, which
-we rely on for building
+00:07:27.460 --> 00:07:29.230
+It is easy to make.
+And it's, it's actually a
 
 144
-00:09:25.860 --> 00:09:29.990
-this local demon. Okay. So
-when I would install this,
+00:07:29.230 --> 00:07:34.090
+really powerful way to, to
+extend workflows. So, so get
 
 145
-00:09:29.990 --> 00:09:32.030
-I would, and this is
-a couple of years ago,
+00:07:34.090 --> 00:07:37.690
+home actions is, is the
+platform that runs, runs your
 
 146
-00:09:32.300 --> 00:09:34.820
-I would see this little
-virtual machine kind of get
+00:07:37.690 --> 00:07:39.940
+workflows. And then you can
+actually use, what's called an
 
 147
-00:09:34.820 --> 00:09:39.260
-created. So you were basically
-automating hyper V making a
+00:07:39.970 --> 00:07:42.640
+action. And I, I regret
+the name a little bit,
 
 148
-00:09:39.260 --> 00:09:41.810
-virtual machine in the background.
-And I had other virtual
+00:07:43.030 --> 00:07:46.450
+but an action itself is
+a reusable component that you
 
 149
-00:09:41.810 --> 00:09:44.270
-machines, like I had a
-no boon to virtual machine
+00:07:46.450 --> 00:07:49.270
+can use in your workflows.
+And they are exactly right.
 
 150
-00:09:44.540 --> 00:09:47.120
-that I would run in
-hyper V. It seemed to
+00:07:49.420 --> 00:07:51.880
+Super easy to build. So
+you can either build them
 
 151
-00:09:47.120 --> 00:09:50.120
-work pretty well, but I
-felt that the startup time
+00:07:51.880 --> 00:07:54.490
+in a, you know, as
+a JavaScript app or a
 
 152
-00:09:50.120 --> 00:09:52.970
-was really long. Like I
-would wait for quite a
+00:07:54.490 --> 00:07:57.970
+TypeScript app, or you can
+bring a Docker container. And
 
 153
-00:09:52.970 --> 00:09:56.600
-while. And it was pretty
-clear that there was windows.
+00:07:58.060 --> 00:08:01.210
+what it'll do is just,
+you know, take some code,
 
 154
-00:09:57.110 --> 00:09:59.720
-And then there was Docker
-talking to hyper V with
+00:08:02.140 --> 00:08:04.330
+run it, and then spit
+something out the other side.
 
 155
-00:09:59.720 --> 00:10:02.540
-this, you know, couple of
-megs of memory, a couple
+00:08:04.480 --> 00:08:06.010
+Let me give you an
+example. I have one that
 
 156
-00:10:02.540 --> 00:10:06.380
-of gigs of memory rather.
-And you were basically sitting
+00:08:06.010 --> 00:08:10.420
+will send a tweet so
+I can write a get
 
 157
-00:10:06.380 --> 00:10:10.880
-on top of hyper V,
-but then most recently that
+00:08:10.420 --> 00:08:13.750
+hub workflow that will run
+any time. I add an
 
 158
-00:10:10.880 --> 00:10:13.790
-went away and things just
-got faster and better and
+00:08:13.750 --> 00:08:19.030
+issue to my repository, and
+then I can use my
 
 159
-00:10:13.790 --> 00:10:17.600
-more integrated. And now I
-don't feel like Docker is
+00:08:19.030 --> 00:08:22.120
+action to send that issue
+as a tweet. And so
 
 160
-00:10:17.600 --> 00:10:19.490
-sitting on top of a
-hack. I feel like it's
+00:08:22.660 --> 00:08:24.460
+one of the things that
+I'm looking at doing is
 
 161
-00:10:19.490 --> 00:10:22.820
-very native and very fast
-inside of windows. Can you
+00:08:24.460 --> 00:08:28.630
+actually automating the Twitter account
+for one of my open
 
 162
-00:10:22.820 --> 00:10:25.760
-help me understand what changed
-and what the, what the
+00:08:28.630 --> 00:08:33.070
+source projects, so that any
+maintainer can just create an
 
 163
-00:10:25.760 --> 00:10:32.450
-architecture differences? Yeah. So Originally
-we, we created our own
+00:08:33.070 --> 00:08:36.160
+issue that has an announcement,
+you know, Hey, we just
 
 164
-00:10:32.780 --> 00:10:36.320
-VM and as you said,
-we, we actually automated IPV
+00:08:36.160 --> 00:08:38.710
+released 1.0, isn't that great.
+Go here to download it.
 
 165
-00:10:36.710 --> 00:10:41.090
-in a way to run
-our VM, wait for services
+00:08:39.670 --> 00:08:42.580
+And then we can actually
+send that tweet out. That
 
 166
-00:10:41.120 --> 00:10:46.370
-to start there and set
-up interconnection with this up
+00:08:42.790 --> 00:08:45.100
+means that nobody has to
+worry about credentials. Nobody has
 
 167
-00:10:46.370 --> 00:10:49.430
-front end, et cetera. And
-yeah. And starting a VM
+00:08:45.100 --> 00:08:48.220
+to think about, you know,
+logging into twitter.com. We can
 
 168
-00:10:49.430 --> 00:10:53.150
-it's it takes, it takes
-some time. It takes some
+00:08:48.220 --> 00:08:50.740
+just manage our Twitter account
+from the same place that
 
 169
-00:10:53.150 --> 00:10:57.920
-time, except if you are
-actually Microsoft and you have
+00:08:50.740 --> 00:08:54.310
+we manage the rest of
+our open source project. Okay.
 
 170
-00:10:57.950 --> 00:11:02.290
-total control on both the
-IVR values or the us,
+00:08:54.310 --> 00:08:56.370
+So let's, let's dig into
+that for a second. So
 
 171
-00:11:02.290 --> 00:11:07.460
-the OAS and the Linux
-environment itself. And that's what
+00:08:56.370 --> 00:08:59.940
+you said you have an
+action, a singular and get
 
 172
-00:11:07.460 --> 00:11:11.780
-Microsoft did with, with WSL
-too. So what we are
+00:08:59.940 --> 00:09:02.580
+hub actions is, is not
+just a collection of actions,
 
 173
-00:11:11.780 --> 00:11:14.870
-relying on now, now that
-they've just so two is,
+00:09:02.580 --> 00:09:05.430
+but it's the entire product
+name. I am looking now
 
 174
-00:11:15.110 --> 00:11:19.910
-is shipping is as the
-fact that Microsoft provides a
+00:09:05.430 --> 00:09:11.340
+at github.com/e Thompson sent tweet
+action. Your action. It looks
 
 175
-00:11:19.910 --> 00:11:24.680
-real Linux Darnell running in
-no UTVs, but boots under
+00:09:11.340 --> 00:09:13.470
+like it's just to get
+hub repository and inside there's
 
 176
-00:11:24.710 --> 00:11:29.510
-two seconds, I think. And
-so we liberate this on
+00:09:13.470 --> 00:09:17.520
+an action dot Yammel file.
+So an action is itself
 
 177
-00:11:29.570 --> 00:11:34.520
-a Linux environment to run
-our, our, our services. And
+00:09:17.910 --> 00:09:22.460
+a repositor That's right. It's
+just a repository. It's got
 
 178
-00:11:34.520 --> 00:11:37.490
-often the factors that we
-run the, exactly the same
+00:09:22.460 --> 00:09:26.060
+some code in, it Runs
+using node. 12 can get
 
 179
-00:11:37.760 --> 00:11:40.520
-payload as what we run
-in our own new TTVM
+00:09:26.060 --> 00:09:27.860
+how actions run on anything
+or what could do, are
 
 180
-00:11:40.520 --> 00:11:44.570
-with IPLV. But it says
-that instead of putting a
+00:09:27.860 --> 00:09:31.700
+they all node? So, yeah,
+so you've got, you've got
 
 181
-00:11:44.570 --> 00:11:50.770
-fully full fledged VM, we
-actually run the lookout is
+00:09:31.700 --> 00:09:34.850
+your choice. When you're building
+an action, you can either
 
 182
-00:11:50.780 --> 00:11:54.880
-a backend in a container
-within WSL, too, as a
+00:09:35.510 --> 00:09:38.540
+build it as a no
+JS app and either TypeScript
 
 183
-00:11:54.880 --> 00:11:57.790
-tricky part is to create
-this container, or we would
+00:09:38.540 --> 00:09:41.810
+or JavaScript, or you can
+bring a Docker container. And
 
 184
-00:11:58.000 --> 00:12:01.540
-without having Docker in the
-first place. So we, we
+00:09:41.810 --> 00:09:43.340
+so if you bring a
+Docker container, you can write
 
 185
-00:12:01.540 --> 00:12:05.650
-dealt directly with, with Linux,
-John API is to, to
+00:09:43.340 --> 00:09:47.960
+your action in, you know,
+really anything at all. I
 
 186
-00:12:05.650 --> 00:12:09.910
-set up our isolated environment
-within the, your TTVM and,
+00:09:47.960 --> 00:09:51.230
+could write a.net action, a
+little.net, core, little, little, tiny,
 
 187
-00:12:10.560 --> 00:12:13.770
-and spin up things from
-there. So it was announced
+00:09:51.740 --> 00:09:54.500
+little kind of container That's
+right. You can, you can
 
 188
-00:12:13.770 --> 00:12:16.800
-this week at build that
-the version of windows, I
+00:09:54.500 --> 00:09:57.410
+bring that, you know, the.net
+core base image, build your
 
 189
-00:12:16.800 --> 00:12:22.860
-think it's 2004 or 2004,
-which means 2020 April, or,
+00:09:57.410 --> 00:09:58.850
+app on top of it,
+package it up as a
 
 190
-00:12:22.860 --> 00:12:26.520
-you know, spring is the
-one that has WSL two,
+00:09:58.850 --> 00:10:02.330
+container, put that in a
+get hub repository. So we'll,
 
 191
-00:12:26.970 --> 00:12:30.000
-which is our favorite version
-of the windows subsystem for
+00:10:02.330 --> 00:10:05.150
+we'll take that Docker file.
+We'll build that, that re
 
 192
-00:12:30.000 --> 00:12:32.910
-Linux. This is the one
-that is the best choice.
+00:10:05.180 --> 00:10:07.340
+repo for you into a,
+into a container. And then
 
 193
-00:12:32.940 --> 00:12:35.640
-So if you're doing Docker
-on windows, you really are
+00:10:07.340 --> 00:10:10.040
+we'll run that. And is
+it kind of like, you
 
 194
-00:12:35.640 --> 00:12:37.110
-going to have a great
-experience. If you stand at
+00:10:10.040 --> 00:10:12.410
+know, how you, when, when,
+when are we learning Unix?
 
 195
-00:12:37.110 --> 00:12:39.570
-WSL two, you would not
-recommend doing it any other
+00:10:12.410 --> 00:10:15.500
+People always say that the
+power of Unix is small,
 
 196
-00:12:39.570 --> 00:12:44.370
-way. Yeah, it's really, it's
-a, it's, it's, it's much,
+00:10:15.710 --> 00:10:18.980
+you know, single responsibility executable
+that are chained together with
 
 197
-00:12:44.370 --> 00:12:47.700
-much better with WSL too,
-in term of difference. In
+00:10:19.010 --> 00:10:21.380
+pipes and redirects and things
+like that. It seems like
 
 198
-00:12:47.700 --> 00:12:50.820
-term of, of startup, we
-start in under 10 seconds
+00:10:21.380 --> 00:10:24.710
+actions does a similar thing.
+What context do you flow
 
 199
-00:12:50.850 --> 00:12:53.760
-on the moderate muddle machine,
-which is really awesome compared
+00:10:24.710 --> 00:10:27.110
+into your action and what
+context flows out of it?
 
 200
-00:12:53.760 --> 00:12:57.780
-to what we had with
-IP before and after that,
+00:10:27.500 --> 00:10:31.400
+Right. So I think that
+that's a really astute observation.
 
 201
-00:12:57.810 --> 00:13:02.100
-it also integrates really well
-with your own WSL to
+00:10:31.430 --> 00:10:35.690
+That's definitely the way we
+thought about GitHub actions, you
 
 202
-00:13:02.100 --> 00:13:06.870
-these tools so that you
-can have native IO performance
+00:10:35.690 --> 00:10:38.270
+know, in the first place,
+you know, as a workflow
 
 203
-00:13:06.870 --> 00:13:10.290
-when you buy in months
-things from, from your destroyer
+00:10:38.270 --> 00:10:40.550
+engine, that's how we, that's
+really how we thought about
 
 204
-00:13:10.320 --> 00:13:15.800
-to a Docker container and
-yeah. And things like the
+00:10:40.550 --> 00:10:44.870
+it. The CIC D aspects,
+a lot of people just
 
 205
-00:13:15.840 --> 00:13:21.300
-WSL to VM runs with
-dynamic crystal set location. So
+00:10:44.870 --> 00:10:46.940
+want to run a script
+that that is their build
 
 206
-00:13:21.480 --> 00:13:25.380
-we can consume as liter,
-as little resources as we
+00:10:46.940 --> 00:10:51.290
+script, but sure. But the
+repository automation actions, yeah. It's
 
 207
-00:13:25.380 --> 00:13:28.860
-need and scale to as
-much as we need in
+00:10:51.290 --> 00:10:55.250
+basically designed. So you have
+inputs, your action, your action
 
 208
-00:13:28.860 --> 00:13:32.460
-term of CPU and memory
-to run your better payloads.
+00:10:55.250 --> 00:10:57.020
+takes, and it will do
+some work and then we'll
 
 209
-00:13:32.460 --> 00:13:36.960
-So yeah, overall the performance
-are merged merger, bitter river,
+00:10:57.020 --> 00:10:59.390
+set outputs. So you can
+just chain these things together,
 
 210
-00:13:36.990 --> 00:13:40.770
-we've Ogilvy a van with
-a w two and a
+00:10:59.420 --> 00:11:01.970
+taking the output from one
+and feeding it into the
 
 211
-00:13:40.770 --> 00:13:44.040
-on a, on an APV.
-And so, yeah, I would
+00:11:01.970 --> 00:11:04.940
+input of another. Interesting, okay.
+But if I'm doing, let's
 
 212
-00:13:44.100 --> 00:13:49.110
-really recommend that to upgrade
-to 20 or four. And
+00:11:04.940 --> 00:11:06.920
+say I have a, my
+little.net, one that I wrote
 
 213
-00:13:50.160 --> 00:13:54.360
-an interesting fact is that
-w two is also running
+00:11:06.920 --> 00:11:09.350
+in as a Docker container,
+and I wrote my action
 
 214
-00:13:54.360 --> 00:13:59.670
-on windows and previously, as
-we leveraged APRV we, we
+00:11:09.350 --> 00:11:13.820
+dot Yammel and then I
+mind flows context forward into
 
 215
-00:13:59.670 --> 00:14:03.270
-could only run on windows
-10 pro and we'll just
+00:11:13.820 --> 00:11:17.330
+send tweet. Is that context
+adjacent bundle? Is it a
 
 216
-00:14:03.270 --> 00:14:06.090
-have to, now you can
-sell Docker, desktop on windows
+00:11:18.710 --> 00:11:21.500
+dictionary of some kind, what
+would name value pairs are
 
 217
-00:14:06.540 --> 00:14:10.180
-and develop bleeding containers from,
-from when you were windows.
+00:11:21.500 --> 00:11:24.170
+being passed around? Basically just
+a, yeah. A key value
 
 218
-00:14:10.980 --> 00:14:13.590
-That's really huge. I know
-I it's a little confusing.
+00:11:24.200 --> 00:11:28.070
+list, a dictionary of strings.
+You can put files on
 
 219
-00:14:13.590 --> 00:14:17.760
-Cause if you go to
-windows features, there's hyper V
+00:11:28.070 --> 00:11:29.750
+disk if you want it
+to and communicate that way,
 
 220
-00:14:18.030 --> 00:14:21.510
-and then there's virtual. What
-is it? Virtual something platform.
+00:11:29.750 --> 00:11:33.890
+but at its simplest form
+strings. Okay. So what's interesting
 
 221
-00:14:21.780 --> 00:14:27.180
-Yes. Windows virtualization platform. I
-think, yeah, that's, that's quite
+00:11:33.890 --> 00:11:36.260
+is that when I showed
+up at this IE Thompson
 
 222
-00:14:27.180 --> 00:14:31.830
-funny because it's truly just
-two ways and two ways
+00:11:36.260 --> 00:11:38.450
+slash send tweet action and
+I'll have links to everything
 
 223
-00:14:31.830 --> 00:14:35.370
-to install the same iPad.
-So when, when you install
+00:11:38.450 --> 00:11:41.090
+in the show notes, I'm
+I note that, you know,
 
 224
-00:14:35.400 --> 00:14:38.520
-the fully fledged, Adobe, you
-don't really need this new
+00:11:41.090 --> 00:11:42.350
+you show up and you
+go, look, it's just a
 
 225
-00:14:38.520 --> 00:14:42.690
-feature, a windows virtualization platform
-for WC two to work.
+00:11:42.740 --> 00:11:45.470
+get hub repository, but at
+the top, it literally just
 
 226
-00:14:43.430 --> 00:14:46.380
-It just needed. If, if
-you are running on a
+00:11:45.470 --> 00:11:48.500
+says, use this, get hub
+action with your project. So
 
 227
-00:14:46.380 --> 00:14:50.100
-home or if you don't
-want to install APRV or
+00:11:48.860 --> 00:11:51.380
+you have identified that it
+is an action. I can
 
 228
-00:14:50.100 --> 00:14:52.460
-the Walla and set of
-IPV services on your mission.
+00:11:51.380 --> 00:11:54.460
+click view on marketplace, and
+then I get a different
 
 229
-00:14:52.750 --> 00:14:57.550
-So this unlocks the ability
-to use Docker on anyone
+00:11:54.460 --> 00:11:58.270
+view. So instead of seeing
+send tweet action, the pile
 
 230
-00:14:57.550 --> 00:15:00.970
-out there who has home.
-So that means students, anyone
+00:11:58.270 --> 00:12:02.200
+of files and get hub,
+I see your, that your
 
 231
-00:15:00.970 --> 00:15:03.130
-who doesn't want to pay
-the extra money for pro,
+00:12:02.200 --> 00:12:04.870
+CIC CD for your send
+tweet action is in fact
 
 232
-00:15:03.130 --> 00:15:06.580
-because pro includes a whole
-bunch of other stuff. And
+00:12:04.870 --> 00:12:07.360
+passing. I see the contributor,
+I can star it. It's
 
 233
-00:15:07.030 --> 00:15:09.280
-that's a huge thing to
-make that available. So you
+00:12:07.360 --> 00:12:11.470
+now a marketplace. It's instantly
+turned your, a read me
 
 234
-00:15:09.280 --> 00:15:12.580
-can't, if you have home,
-you turn on the virtualization
+00:12:11.470 --> 00:12:16.170
+and your repository into a
+marketplace item. That's right. And
 
 235
-00:15:12.580 --> 00:15:15.010
-platform, you can use Docker,
-your doctor, desktop, Kubernetes, all
+00:12:16.170 --> 00:12:18.180
+in fact, you can, you
+can see all this from
 
 236
-00:15:15.010 --> 00:15:18.940
-this stuff, you just can't
-use the hyper V virtual
+00:12:18.180 --> 00:12:21.870
+the get hub actions, workflow
+editor. So if you're on
 
 237
-00:15:18.940 --> 00:15:22.480
-machine stuff where you're actually
-opening up like a boon
+00:12:21.870 --> 00:12:24.480
+get hub and in your
+repository and you want to
 
 238
-00:15:22.480 --> 00:15:26.200
-to full square, like a
-full virtual machine on, on
+00:12:24.480 --> 00:12:26.610
+use this, the easiest way
+to do that is actually
 
 239
-00:15:26.200 --> 00:15:29.070
-Lennox, right? Yes. And there
-is a fun fact it's
+00:12:26.610 --> 00:12:30.600
+to click the actions tab,
+and then you can create
 
 240
-00:15:29.080 --> 00:15:34.180
-that you can choose a
-IPV backend, but you can't
+00:12:30.600 --> 00:12:33.420
+a new workflow. And that
+will basically bring you into
 
 241
-00:15:34.240 --> 00:15:38.710
-use windows containers back in
-either because windows containers is
+00:12:33.420 --> 00:12:36.660
+our Yammel editor. And I
+don't know how you feel
 
 242
-00:15:38.710 --> 00:15:42.580
-a windows 10 pro feature.
-So that's really funny because
+00:12:36.660 --> 00:12:41.280
+about Yammer. I feel generally
+medium about camel, but I
 
 243
-00:15:42.580 --> 00:15:47.380
-you can develop Phoenix containers,
-run capabilities, et cetera. But
+00:12:41.280 --> 00:12:43.350
+feel some kind of way.
+I feel, yeah, I feel
 
 244
-00:15:47.890 --> 00:15:52.600
-the windows container support is,
-is not very long. Well,
+00:12:43.350 --> 00:12:47.070
+feelings about Yammel, but like
+our editor actually has syntax
 
 245
-00:15:52.600 --> 00:15:54.820
-what's really nice though, is
-that you can use WSL,
+00:12:47.070 --> 00:12:51.420
+highlighting and tab completion, which
+really helps the AML experience.
 
 246
-00:15:54.820 --> 00:15:57.520
-you can use visual studio
-code and you can get
+00:12:51.440 --> 00:12:53.430
+I got to tell you,
+but the other thing it
 
 247
-00:15:57.520 --> 00:16:01.630
-a really lovely experience for
-developing. Yeah, no, just the
+00:12:53.430 --> 00:12:56.490
+has over on the right
+hand side is a tab
 
 248
-00:16:01.630 --> 00:16:04.630
-Island. I really like to,
-I like the experience with,
+00:12:56.490 --> 00:12:59.190
+that will let you browse
+the marketplace. So you can
 
 249
-00:16:05.650 --> 00:16:10.750
-yes. COVID remote to the
-WSL feature, which allows you
+00:12:59.610 --> 00:13:03.180
+add actions from the marketplace
+right there from within the
 
 250
-00:16:10.750 --> 00:16:15.400
-to run. Yes. COVID backend
-within WSL itself within your,
+00:13:03.180 --> 00:13:06.780
+editor. Hmm. I just went
+as an experiment to one
 
 251
-00:16:15.400 --> 00:16:20.320
-your distro. And so it
-fits really, really well with,
+00:13:06.780 --> 00:13:09.480
+of my very old repositories
+that I did with Kent
 
 252
-00:16:20.710 --> 00:16:24.220
-we look at stuff and
-the WSL backend. So this
+00:13:09.480 --> 00:13:13.800
+Dodds called first timers only.
+And it's, I see issues,
 
 253
-00:16:24.220 --> 00:16:29.920
-way you can actually target
-early next production environment using
+00:13:13.800 --> 00:13:16.650
+poll requests, actions. I click
+on actions and then it
 
 254
-00:16:29.950 --> 00:16:34.870
-Linux builds crates and things
-like that, and get your
+00:13:16.650 --> 00:13:20.100
+says, build and test your
+CSS repository. So it actually
 
 255
-00:16:34.870 --> 00:16:39.490
-nice idea experience on windows.
-And yeah, that's, that's really,
+00:13:20.100 --> 00:13:22.050
+figured out what kind of
+stuff I have in this
 
 256
-00:16:39.490 --> 00:16:43.900
-really awesome. And that's actually
-is a way I developed
+00:13:22.050 --> 00:13:24.630
+folder. And it took a
+guess, it says, Oh, this
 
 257
-00:16:43.900 --> 00:16:46.300
-to day to day on
-the, on the desktop. When
+00:13:24.630 --> 00:13:27.630
+looks like it's got some
+CSS there. And then at
 
 258
-00:16:46.300 --> 00:16:49.150
-I, when I have to
-deal with, with, with the
+00:13:27.630 --> 00:13:31.740
+the bottom it says already
+a popular workflows. It knows
 
 259
-00:16:49.190 --> 00:16:52.810
-WSL backend, I've used WSL
-to develop the WSL backend.
+00:13:31.740 --> 00:13:34.020
+about Azure. It knows about
+Amazon. It knows about Google.
 
 260
-00:16:52.870 --> 00:16:58.330
-That's really good. No one
-wants to manage databases if
+00:13:35.280 --> 00:13:38.490
+I can probably get this
+running in an hour. Maybe
 
 261
-00:16:58.330 --> 00:17:01.570
-they can avoid it. And
-that's why Mongo DB made
+00:13:38.490 --> 00:13:41.100
+less, maybe minutes. I hope
+so. Yeah. That's, that's the
 
 262
-00:17:01.570 --> 00:17:05.860
-Mongo DB Atlas, a global
-cloud database service that runs
+00:13:41.100 --> 00:13:43.740
+goal. So we, we look
+at, we use what's called
 
 263
-00:17:05.860 --> 00:17:10.270
-on AWS, GCP and Azure.
-You can deploy a fully
+00:13:43.740 --> 00:13:46.230
+linguist. It's a, it's a
+package, it's an opensource project
 
 264
-00:17:10.270 --> 00:17:13.840
-managed Mongo DB database in
-minutes with just a few
+00:13:46.230 --> 00:13:48.930
+that get hub created. And
+what linguists does is it
 
 265
-00:17:13.840 --> 00:17:18.010
-clicks or a few API
-calls, Mongo DB, Atlas, automates
+00:13:48.930 --> 00:13:52.500
+looks at your repository and
+tries to figure out what's
 
 266
-00:17:18.010 --> 00:17:21.970
-deployment, automates updates, handles scaling,
-and more so that you
+00:13:52.500 --> 00:13:56.520
+in it, whether there's C
+or C sharp or rust,
 
 267
-00:17:21.970 --> 00:17:24.880
-can focus on your application
-instead of taking care of
+00:13:57.240 --> 00:13:59.550
+and it will basically analyze
+each file and give you
 
 268
-00:17:24.880 --> 00:17:31.900
-your database, you can get
-started free@mongodb.com slash Atlas. Now,
+00:13:59.550 --> 00:14:01.680
+a percentage. And so we
+look at the percentage, the
 
 269
-00:17:31.900 --> 00:17:34.930
-if you're already managing a
-Mongo DB deployment, Atlas has
+00:14:01.680 --> 00:14:04.710
+biggest percentage, we, we are
+going to suggest those workloads
 
 270
-00:17:34.930 --> 00:17:38.590
-a live migration service, so
-you can migrate it easily
+00:14:04.710 --> 00:14:07.050
+for you. So if you
+have a Russ project and
 
 271
-00:17:38.620 --> 00:17:41.320
-with minimal downtime and then
-get back to what matters.
+00:14:07.050 --> 00:14:09.900
+go to that page, you'll
+see started workloads for rust.
 
 272
-00:17:41.500 --> 00:17:45.790
-Stop managing your database and
-start using Mongo DB Atlas.
+00:14:10.620 --> 00:14:13.500
+Hmm. When you need to
+focus on building, do you
 
 273
-00:17:46.480 --> 00:17:49.950
-Now there's, there's being able
-to go into WSL type
+00:14:13.500 --> 00:14:16.260
+want to get bogged down
+by your database? Mongo DB
 
 274
-00:17:49.950 --> 00:17:53.910
-code, and then you're in
-windows using vs code, and
+00:14:16.260 --> 00:14:19.140
+is an intuitive, flexible document
+database that lets you get
 
 275
-00:17:53.910 --> 00:17:56.400
-you're doing your compilations in
-Linux. But then there is
+00:14:19.140 --> 00:14:22.770
+to building Mongo. DBS document
+model is a natural way
 
 276
-00:17:56.400 --> 00:18:00.270
-what are called dev containers,
-where you have a.dev container
+00:14:22.770 --> 00:14:25.170
+to represent data so you
+can focus on what matters.
 
 277
-00:18:00.270 --> 00:18:04.020
-file. And that works amazingly
-with Docker desktop. So you
+00:14:25.740 --> 00:14:28.440
+Mongo DB Atlas is the
+best way to use Mongo
 
 278
-00:18:04.020 --> 00:18:06.990
-can go and have a
-folder, put some stuff in
+00:14:28.440 --> 00:14:31.590
+DB. It's a global cloud
+database service that gives you
 
 279
-00:18:06.990 --> 00:18:09.270
-it that is some source
-code, but you don't have,
+00:14:31.590 --> 00:14:34.710
+all of the developer productivity
+of Mongo DB. Plus the
 
 280
-00:18:09.270 --> 00:18:12.720
-for example, go or rust
-or Python. And then visual
+00:14:34.710 --> 00:14:38.370
+added simplicity of a fully
+managed database service. You can
 
 281
-00:18:12.720 --> 00:18:15.270
-studio code fires up and
-says, Oh, this is a
+00:14:38.370 --> 00:14:46.380
+get started free with Mongo
+DB atlas@mongodb.com slash Atlas. So
 
 282
-00:18:15.270 --> 00:18:18.510
-development container because it sees
-a little text file that
+00:14:46.470 --> 00:14:48.270
+I'm going to ask a
+question though, that is kind
 
 283
-00:18:18.510 --> 00:18:23.430
-says.container.dev container. Then it opens
-again and does all the
+00:14:48.270 --> 00:14:51.140
+of the elephant in the
+room. I, I have some
 
 284
-00:18:23.430 --> 00:18:25.950
-Docker work. It installs everything
-you need so that your
+00:14:51.140 --> 00:14:53.600
+familiarity with the animal, but
+I, my familiarity is with
 
 285
-00:18:25.950 --> 00:18:30.870
-entire stack of development exists
-only in Docker and with
+00:14:53.630 --> 00:14:56.870
+Azure dev ops. So I've
+got a lot of different
 
 286
-00:18:30.870 --> 00:18:33.210
-Docker desktop on windows. It
-just, it just works. It's
+00:14:56.870 --> 00:15:00.920
+repositories with small sites. And
+I recently set up two
 
 287
-00:18:33.210 --> 00:18:37.610
-like impossible. Yeah. So I
-really like this approach of
+00:15:00.920 --> 00:15:02.450
+or three of them in
+dev ops, which I ended
 
 288
-00:18:37.610 --> 00:18:41.600
-working and some to, to
-go a little further than
+00:15:02.450 --> 00:15:05.300
+up using the animal for
+as well. And they're not
 
 289
-00:18:41.600 --> 00:18:47.870
-that. It's also allowed us
-to work on longterm supported
+00:15:05.300 --> 00:15:07.610
+complicated. They just, they build
+the thing and they deploy
 
 290
-00:18:47.870 --> 00:18:53.360
-software and don't have to
-deal with issues whenever you
+00:15:07.640 --> 00:15:10.340
+the thing. I did it
+because it was free and
 
 291
-00:18:53.360 --> 00:18:57.020
-need to upgrade and as
-DKA or something like that
+00:15:10.340 --> 00:15:12.560
+it's easy. It looks like
+get hub actions is free
 
 292
-00:18:57.410 --> 00:19:01.010
-for building your software over
-time, you don't have to
+00:15:12.560 --> 00:15:15.590
+and easy. When would I
+pick one versus the other?
 
 293
-00:19:01.280 --> 00:19:04.430
-think about, Oh, by the
-way, I have a version
+00:15:15.590 --> 00:15:18.200
+And should I, should I
+move from one to the
 
 294
-00:19:04.550 --> 00:19:06.860
-that dates from one year
-ago, but I still need
+00:15:18.200 --> 00:15:20.710
+other If you're happy with
+what you have? No, I
 
 295
-00:19:06.860 --> 00:19:10.340
-to support for three years,
-we did work with the
+00:15:20.710 --> 00:15:23.500
+don't. I don't think you
+should move, but you know,
 
 296
-00:19:10.340 --> 00:19:13.970
-new version of the tools,
-et cetera. One thing that
+00:15:23.500 --> 00:15:27.130
+when I look at sort
+of a Greenfield CICT system,
 
 297
-00:19:14.150 --> 00:19:18.350
-the development containers feature allows
-you to do is to
+00:15:27.220 --> 00:15:29.710
+if I don't have any
+CIC on my project and
 
 298
-00:19:18.380 --> 00:19:23.840
-actually Vashon your tool set
-alongside your source code. And
+00:15:29.710 --> 00:15:32.650
+I want to decide which
+one to use, the first
 
 299
-00:19:24.020 --> 00:19:27.560
-that's really, really cool. So
-that at any given time
+00:15:32.650 --> 00:15:35.320
+question is, is it on
+ghetto? If the answer is,
 
 300
-00:19:27.660 --> 00:19:30.830
-given point of time, I
-can go back to a
+00:15:35.320 --> 00:15:38.530
+yes, I'm probably going to
+start looking at GitHub actions
 
 301
-00:19:30.840 --> 00:19:35.240
-version of tuning that I
-use to build my product
+00:15:38.530 --> 00:15:42.190
+cause it's really tightly integrated.
+I really like that. My
 
 302
-00:19:35.240 --> 00:19:38.750
-advertising. That's really, really cool.
-And I wish we could
+00:15:42.460 --> 00:15:45.910
+builds are in the same
+place as my source code.
 
 303
-00:19:38.750 --> 00:19:40.910
-use that. We've, we've looked
-at a list of Beethoven.
+00:15:46.210 --> 00:15:48.670
+I think that makes it
+really easy. If the answer
 
 304
-00:19:42.080 --> 00:19:45.590
-Oh yeah. That would be
-amazing. I'm looking at my
+00:15:48.670 --> 00:15:51.940
+is no good have actions
+isn't going to work as
 
 305
-00:19:45.590 --> 00:19:50.120
-WSL. So I typed WSL
-dash dash list and it
+00:15:51.940 --> 00:15:54.430
+well for you. It's not
+like we have some easy
 
 306
-00:19:50.120 --> 00:19:52.820
-lists out like I have
-wound two and I have
+00:15:54.430 --> 00:15:57.460
+way to pull from, you
+know, get lab or Bitbucket
 
 307
-00:19:52.820 --> 00:19:54.740
-w Linux and I, you
-know, I have the different
+00:15:57.460 --> 00:16:00.820
+or, or, you know, a
+server under your desk. And
 
 308
-00:19:54.740 --> 00:19:56.930
-loan and then I have
-one that's called Docker desktop.
+00:16:00.820 --> 00:16:03.100
+so Azure pipelines can do
+that. The other thing that
 
 309
-00:19:57.260 --> 00:20:02.000
-That's your WSL distribution. You're
-effectively, rather than making a
+00:16:03.100 --> 00:16:05.710
+Azure pipelines can do that
+get, have actions can't do
 
 310
-00:20:02.060 --> 00:20:05.750
-big, heavy VM and hyper
-V you're making a tiny,
+00:16:06.790 --> 00:16:10.960
+is TFTC and subversion and
+you know, different types of
 
 311
-00:20:05.900 --> 00:20:10.970
-lightweight WSL distribution. And when
-I run a container, it
+00:16:10.960 --> 00:16:13.900
+repositories, you know, get home
+actions is very focused on
 
 312
-00:20:10.970 --> 00:20:14.190
-runs inside of that distribution.
-Is that correct? Yeah. So
+00:16:13.930 --> 00:16:17.980
+building a get repository that's
+in get hub. Azure pipelines
 
 313
-00:20:14.190 --> 00:20:18.710
-w we actually run two
-distributions, one that has absolutely
+00:16:18.280 --> 00:16:22.090
+is much more generic about
+where the code comes from.
 
 314
-00:20:18.710 --> 00:20:22.640
-no executive, which is just
-therefore backing your container of
+00:16:22.930 --> 00:16:24.610
+The only thing that agile
+pipelines is really good at
 
 315
-00:20:22.700 --> 00:20:27.260
-configuration volumes and things like
-that. We use, we use
+00:16:24.610 --> 00:16:28.660
+is like Azure workflows. You
+know, you mentioned that GitHub
 
 316
-00:20:27.260 --> 00:20:30.770
-it basically as a, as
-an additional VHD, but we
+00:16:28.660 --> 00:16:32.710
+actions, you saw the starter
+workflows and you saw Azure,
 
 317
-00:20:30.770 --> 00:20:35.390
-attach to our, to our
-main district and various local,
+00:16:32.710 --> 00:16:36.640
+AWS and Google Azure pipelines
+on the other hand is,
 
 318
-00:20:35.390 --> 00:20:39.380
-the sub distro. And what
-it does is it's a
+00:16:36.820 --> 00:16:40.150
+is a lot more focused
+on building your code and
 
 319
-00:20:39.380 --> 00:20:44.600
-very small destroyer which contains
-occurred that creates the actual
+00:16:40.150 --> 00:16:44.020
+getting it into Azure as
+a deployment platform. And so,
 
 320
-00:20:44.600 --> 00:20:51.280
-container that France our backend,
-our set of backend services.
+00:16:45.040 --> 00:16:47.260
+you know, that's, that's certainly
+one difference to bear in
 
 321
-00:20:52.360 --> 00:20:57.040
-So it contains a single
-WSL bootstrap executable. If you,
+00:16:47.260 --> 00:16:50.830
+mind as well. Interesting. That's
+actually the best explanation that
 
 322
-00:20:57.040 --> 00:21:01.330
-if you enter it using
-WSL, the, and where you
+00:16:50.830 --> 00:16:53.530
+I've heard so far from
+anyone inside or outside of
 
 323
-00:21:01.330 --> 00:21:04.750
-look at this top is
-running and you, you run
+00:16:53.530 --> 00:16:57.190
+GitHub or Microsoft that I
+actually feel like I finally
 
 324
-00:21:04.790 --> 00:21:10.540
-<inaudible>, you'll see that various
-WSL bootstrap that creates a
+00:16:57.190 --> 00:17:02.500
+get it because I've got
+some very ashery things and
 
 325
-00:21:10.540 --> 00:21:13.450
-new container. And you can
-see as a unit process
+00:17:02.500 --> 00:17:07.060
+some very complex tied into
+Azure stuff. They're very sophisticated
 
 326
-00:21:13.720 --> 00:21:16.470
-within this container, I've actually
-just did that. I said,
+00:17:07.240 --> 00:17:11.890
+builds and very sophisticated specifically
+deployments. And it makes sense
 
 327
-00:21:16.470 --> 00:21:20.310
-WSL dash D Docker, desktop,
-WSL bootstrap. And it says
+00:17:11.890 --> 00:17:14.800
+because they're so generic to
+use Azure dev ops, they
 
 328
-00:21:20.370 --> 00:21:24.810
-program files, Docker, Docker for
-WSO dot ISO. You mounted
+00:17:14.800 --> 00:17:17.230
+run in Azure, they do
+Azure stuff, but at the
 
 329
-00:21:24.810 --> 00:21:30.120
-an ISO. Yeah, yeah, yeah.
-That's actually, we, we use
+00:17:17.230 --> 00:17:19.990
+same time, I've got a
+lot of stuff in GitHub
 
 330
-00:21:30.120 --> 00:21:34.140
-the same, the same tooling
-that what we use for
+00:17:20.470 --> 00:17:24.160
+that where Azure, the Azure
+would be an implementation detail.
 
 331
-00:21:34.140 --> 00:21:37.590
-building the APL VVM. So
-the APL VVM is actually
+00:17:24.190 --> 00:17:27.040
+Like I could deploy it
+anywhere. So I could see
 
 332
-00:21:37.590 --> 00:21:40.200
-based on two ways over
-at, we kind of merged
+00:17:27.040 --> 00:17:30.790
+myself using actions for, you
+know, 60, 70% of my
 
 333
-00:21:40.200 --> 00:21:45.180
-together one that contains the
-base of the, a Linux
+00:17:30.790 --> 00:17:33.700
+things. And then for the
+very Azure focused stuff that
 
 334
-00:21:45.180 --> 00:21:50.910
-distro and one that contains
-the Docker, the version and
+00:17:33.700 --> 00:17:37.000
+is on the, on the
+niche, on the edge, I
 
 335
-00:21:50.910 --> 00:21:55.680
-things like that. Veta roses
-to easily swap the Booker
+00:17:37.000 --> 00:17:40.060
+would go and use a
+DevOps that, that actually makes
 
 336
-00:21:55.740 --> 00:21:59.880
-demon version from <inaudible> and
-the same, the same for
+00:17:40.060 --> 00:17:42.100
+sense. I can, I literally
+out in front of me
 
 337
-00:21:59.880 --> 00:22:02.430
-communities and things like that.
-So we stitched Vista way
+00:17:42.100 --> 00:17:45.910
+now can think about a
+future for my repositories and
 
 338
-00:22:02.490 --> 00:22:07.680
-tweezers together, and we attached
-a VAT. And what we
+00:17:45.910 --> 00:17:48.010
+not feel bad about using
+either one of those things.
 
 339
-00:22:07.680 --> 00:22:10.440
-do with WSL too, is
-that we basically does the
+00:17:48.340 --> 00:17:51.180
+I don't think you should
+bad now. And To the,
 
 340
-00:22:10.440 --> 00:22:14.520
-same thing. We have the
-same was saying two ways
+00:17:51.180 --> 00:17:54.300
+to the Azure teams credit,
+they're also building get hub
 
 341
-00:22:14.520 --> 00:22:19.050
-or five, those one, but
-is a little bit different
+00:17:54.300 --> 00:17:57.210
+actions so that they're making
+it easier to deploy to
 
 342
-00:22:19.050 --> 00:22:22.740
-than the IPO. I probably
-say, but it's mostly the
+00:17:57.210 --> 00:18:01.200
+Azure with good actions. But,
+but yeah, I don't think
 
 343
-00:22:22.740 --> 00:22:26.520
-same code, but packaged in
-a slightly different way. And
+00:18:01.200 --> 00:18:03.830
+you should feel bad about
+either of your choices. Okay.
 
 344
-00:22:26.520 --> 00:22:31.200
-we, and we bind mounts,
-a directory that lives in
+00:18:03.860 --> 00:18:06.770
+That makes a lot of
+sense. So why would get
 
 345
-00:22:31.200 --> 00:22:38.550
-the local data destroy inside
-what we call our Linux
+00:18:06.770 --> 00:18:09.470
+hub get into the dev
+ops space? Like, is this
 
 346
-00:22:38.550 --> 00:22:44.310
-get environment so that we,
-we have the same feature
+00:18:09.470 --> 00:18:11.660
+an entering a marketplace kind
+of a thing because they
 
 347
-00:22:44.310 --> 00:22:47.340
-as a VHD, but implemented
-as a bine monk from
+00:18:11.660 --> 00:18:14.000
+could, they could have just
+done nothing and just held
 
 348
-00:22:47.370 --> 00:22:50.400
-the COVID data to look
-at this stuff district, One
+00:18:14.000 --> 00:18:18.480
+the source code and let
+it go. Sure. But I
 
 349
-00:22:50.400 --> 00:22:53.250
-of the things that's most
-amazing as I have kind
+00:18:18.590 --> 00:18:21.170
+really think that there's a
+lot of value in tying
 
 350
-00:22:53.250 --> 00:22:56.370
-of now I'm in the
-WSL two environment compared to
+00:18:21.170 --> 00:18:25.520
+these experiences together. Like I
+said, I, I really like
 
 351
-00:22:56.370 --> 00:22:58.950
-when it used to work
-was, I always felt like
+00:18:25.820 --> 00:18:28.970
+that my code and my
+CICT are in the same
 
 352
-00:22:59.250 --> 00:23:03.600
-Docker was kind of layered
-on top of windows. But
+00:18:28.970 --> 00:18:31.820
+place. I don't have to
+tab back and forth to
 
 353
-00:23:03.600 --> 00:23:06.000
-now when I say Docker
-images right now, I'm looking
+00:18:31.820 --> 00:18:34.100
+different experiences. I don't have
+to log in a couple
 
 354
-00:23:06.000 --> 00:23:08.880
-in my PowerShell, I see
-Docker images. And I see
+00:18:34.100 --> 00:18:36.900
+of different times and we're
+able to give you, you
 
 355
-00:23:08.880 --> 00:23:11.580
-my images. I go over
-to my Boone two on
+00:18:36.920 --> 00:18:41.090
+know, better integrations into get
+hub itself if you're using
 
 356
-00:23:11.580 --> 00:23:14.550
-the same machine. And I
-say, Docker images, I see
+00:18:41.090 --> 00:18:44.810
+actions. So that's, that's one
+aspect of it. The other
 
 357
-00:23:14.550 --> 00:23:18.630
-the exact same images. Like
-it's, it is one Docker
+00:18:44.810 --> 00:18:48.530
+place that we're extending out
+is into get hub packages.
 
 358
-00:23:18.630 --> 00:23:21.060
-on the machine rather than
-what I used to see,
+00:18:48.860 --> 00:18:52.340
+And I think that these
+are like a natural combination,
 
 359
-00:23:21.450 --> 00:23:23.940
-which was different contexts. But
-when I go and say
+00:18:52.670 --> 00:18:55.220
+so I can take my
+code. I can build my
 
 360
-00:23:23.940 --> 00:23:30.150
-Docker context LS inside of
-Ubuntu, it says, Docker, end
+00:18:55.220 --> 00:18:57.590
+code and I can deploy
+my code. And if it's
 
 361
-00:23:30.150 --> 00:23:34.890
-point VAR run. And I
-go over into the, the
+00:18:57.590 --> 00:19:02.150
+so happens that what deploying
+my code means is creating
 
 362
-00:23:34.890 --> 00:23:38.160
-windows world. And I see
-a different thing, which one,
+00:19:02.150 --> 00:19:06.200
+a new get package or
+an NPM package. Then I
 
 363
-00:23:38.190 --> 00:23:40.950
-which one is real we're
-we're piping somehow. I don't
+00:19:06.200 --> 00:19:11.000
+need somewhere to put that.
+And, you know, from one
 
 364
-00:23:40.950 --> 00:23:44.700
-understand this idea of context.
-Can you explain that? Yeah,
+00:19:11.000 --> 00:19:14.690
+of my opensource projects, that
+place ultimately is new get.org
 
 365
-00:23:44.730 --> 00:23:49.440
-obviously of context is It's
-nothing really to do with
+00:19:14.720 --> 00:19:17.930
+because I want people to
+use that package. I want
 
 366
-00:23:49.610 --> 00:23:51.980
-the Dakota stuff. It's something
-that we added to the
+00:19:17.930 --> 00:19:20.540
+people to discover that package,
+you know, and so it's
 
 367
-00:23:51.980 --> 00:23:57.110
-CLI, but it allows you
-to a store, the credit.
+00:19:20.540 --> 00:19:24.770
+gotta go on to new,
+get.org, but while I'm doing
 
 368
-00:23:57.110 --> 00:23:59.630
-It was a credit on
-shows and configuration to talk
+00:19:24.770 --> 00:19:27.740
+development, I need a way
+to install that package and
 
 369
-00:23:59.630 --> 00:24:04.010
-to various Docker endpoints with
-the same CLA and switched
+00:19:27.740 --> 00:19:30.950
+test it locally. And so
+I probably don't want it
 
 370
-00:24:04.010 --> 00:24:06.950
-from one to the other,
-just by using a Docker
+00:19:30.950 --> 00:19:33.470
+to go to new, get.org
+as I'm doing testing, but
 
 371
-00:24:06.950 --> 00:24:12.250
-context, use a common. And
-that's, that's pretty cool for,
+00:19:33.860 --> 00:19:36.230
+it might make sense to
+push it to some other
 
 372
-00:24:12.640 --> 00:24:16.970
-for ups. People must be,
-I'd have to deal with
+00:19:36.230 --> 00:19:38.360
+package registry so that I
+can still install it easily.
 
 373
-00:24:16.970 --> 00:24:22.940
-many different production and staging
-environments and deploy things on
+00:19:39.290 --> 00:19:42.740
+And so that's a really
+good use for a private
 
 374
-00:24:23.140 --> 00:24:27.500
-endpoints. Hmm. Actually, if you,
-if you don't get those
+00:19:42.740 --> 00:19:46.310
+package registry or a, you
+know, a package registry that
 
 375
-00:24:27.510 --> 00:24:34.640
-different several address on, on
-two and on, on the
+00:19:46.310 --> 00:19:49.790
+isn't open to the public.
+Like, Hey, look at these,
 
 376
-00:24:34.640 --> 00:24:38.060
-windows side, actually, they are
-both right. And that's because
+00:19:49.940 --> 00:19:53.540
+this is a released product
+sort of version and get
 
 377
-00:24:38.090 --> 00:24:41.870
-they don't talk directly to
-the, to the demon. We
+00:19:53.540 --> 00:19:57.170
+hub packages really shines there.
+So they are peas and
 
 378
-00:24:41.870 --> 00:24:45.590
-actually run a little proxy
-on the windows side and
+00:19:57.170 --> 00:20:00.230
+carrots. They're always together get
+hub actions can have packages.
 
 379
-00:24:45.590 --> 00:24:52.820
-on each distro where you
-have activity integration. And this
+00:20:00.230 --> 00:20:02.540
+If you do anything sophisticated,
+you'll find yourself using them
 
 380
-00:24:52.820 --> 00:24:55.970
-little proxy allows us to
-do a couple of things.
+00:20:02.540 --> 00:20:07.880
+together. Think so. You know,
+I, I don't want to
 
 381
-00:24:56.510 --> 00:25:00.340
-And the most important thing
-is to actually rewrite all
+00:20:07.880 --> 00:20:10.970
+say always, always, always because
+some of your deployments might
 
 382
-00:25:00.360 --> 00:25:04.220
-the bind months that you,
-but you do, like if
+00:20:10.970 --> 00:20:13.610
+not be something that gets
+packaged, you know, you might
 
 383
-00:25:04.220 --> 00:25:09.140
-I'm on, on windows and
-I want to share my
+00:20:13.610 --> 00:20:15.710
+actually just build any ECC
+and push it up to
 
 384
-00:25:09.170 --> 00:25:15.590
-C drive inside the container,
-we need actually to instruct
+00:20:15.710 --> 00:20:19.430
+a certain simple. Yeah. Yeah.
+But ultimately, you know, I
 
 385
-00:25:15.710 --> 00:25:22.400
-to change the path that
-you say, your input. So
+00:20:19.430 --> 00:20:21.890
+see a lot of people
+building Docker containers and I
 
 386
-00:25:22.430 --> 00:25:24.740
-in your criminal line, you,
-you say, I want to
+00:20:21.890 --> 00:20:24.050
+think packages makes a lot
+of sense as a place
 
 387
-00:25:24.740 --> 00:25:30.830
-move C colon, something into
-a slash Val data, for
+00:20:24.050 --> 00:20:27.410
+to store those, even if
+just as an intermediate storage
 
 388
-00:25:30.830 --> 00:25:34.940
-example, and to do that,
-we, we actually need to
+00:20:27.410 --> 00:20:31.670
+location before it ends up
+landing on your servers For,
 
 389
-00:25:34.940 --> 00:25:40.010
-map this secret thing into
-a bus that corresponds to
+00:20:31.670 --> 00:20:34.070
+for anything that is a
+team that is building an
 
 390
-00:25:40.960 --> 00:25:47.240
-<inaudible> within our own Linux
-environment, and actually about the
+00:20:34.070 --> 00:20:36.530
+intermediate step on the way
+to something else, or anytime
 
 391
-00:25:47.240 --> 00:25:50.060
-same thing. When you are
-on Ubuntu and you want
+00:20:36.530 --> 00:20:40.790
+you have someone building an
+internal package for use downstream,
 
 392
-00:25:50.060 --> 00:25:54.830
-to bind munch your own
-drive inside a entitle container,
+00:20:41.540 --> 00:20:46.610
+I just love having a
+separate private package registry. Like
 
 393
-00:25:55.280 --> 00:25:59.780
-as we are running Docker
-in, you know, different namespace,
+00:20:46.640 --> 00:20:49.180
+when went years ago, when
+new gate was very first
 
 394
-00:26:00.620 --> 00:26:05.600
-we need to actually convert
-as a past vet. You,
+00:20:49.180 --> 00:20:51.490
+coming out and I'm a.net
+person. So when I say
 
 395
-00:26:05.630 --> 00:26:09.770
-you give us some input
-into something that the colors
+00:20:51.490 --> 00:20:55.210
+new, get the audience can
+certainly replace that with Ruby
 
 396
-00:26:09.980 --> 00:26:16.270
-can actually see and various,
-various tricky part. And the,
+00:20:55.210 --> 00:20:58.360
+jams or Maven or Docker
+NPM. But it was, it
 
 397
-00:26:16.280 --> 00:26:20.390
-the biggest complexity in, in
-the WRC and integration is
+00:20:58.360 --> 00:21:01.300
+was the height of sophistication
+at our company that, that
 
 398
-00:26:20.390 --> 00:26:25.700
-actually there. It's making sure
-that we, we get very,
+00:21:01.300 --> 00:21:04.180
+my organization would create a
+new get package, a library,
 
 399
-00:26:25.700 --> 00:26:29.720
-very good. Are your performance
-really negative or your performance
+00:21:04.480 --> 00:21:06.550
+put it into a private
+registry and then anyone else
 
 400
-00:26:31.670 --> 00:26:34.360
-when you buy in mom's
-thing and that we, and
+00:21:06.550 --> 00:21:09.520
+in the company could pull
+from there. And that package
 
 401
-00:26:34.400 --> 00:26:37.610
-at the same time, we
-need to translate paths correctly
+00:21:09.520 --> 00:21:12.070
+had no business being on
+the public new, get.org. Cause
 
 402
-00:26:37.640 --> 00:26:42.830
-and share, share data between
-one, these two and our
+00:21:12.070 --> 00:21:14.890
+it was a private thing,
+but we allowed our package
 
 403
-00:26:42.900 --> 00:26:45.710
-own local rest of the
-store. For the most part,
+00:21:14.890 --> 00:21:19.330
+registry to represent the org
+chart. Right. Ordinarily you don't
 
 404
-00:26:45.800 --> 00:26:48.260
-everything just works. Like you're
-saying, well, this is a
+00:21:19.330 --> 00:21:21.130
+want to ship the org
+chart, but having a private
 
 405
-00:26:48.260 --> 00:26:50.360
-little tricky, and this is
-a little tricky, but you're
+00:21:21.130 --> 00:21:24.370
+package registry really opens up
+how one organization inside a
 
 406
-00:26:50.360 --> 00:26:54.560
-doing the work. So the
-result is I'm able to
+00:21:24.370 --> 00:21:28.480
+company can interact with others
+within the company. It formalizes
 
 407
-00:26:54.560 --> 00:26:58.580
-go and do my development
-very, very naturally without having
+00:21:28.480 --> 00:21:33.210
+it from everything from versioning
+two releases. Yeah. I think
 
 408
-00:26:58.580 --> 00:27:01.730
-to worry about anything. Like
-it feels native. And it
+00:21:33.210 --> 00:21:36.120
+that it's really healthy to
+go that route. Cause otherwise
 
 409
-00:27:01.730 --> 00:27:05.180
-is incredibly fast. I, in
-fact, I'm doing all my.net
+00:21:36.120 --> 00:21:39.030
+you're just like sticking packages
+on a file share somewhere.
 
 410
-00:27:05.210 --> 00:27:08.780
-core builds and using Docker
-on a local machine now.
+00:21:39.030 --> 00:21:43.020
+And that's, you know, that
+feels very, I don't know,
 
 411
-00:27:09.170 --> 00:27:12.860
-And because I'm using WSL
-too, it feels like I'm
+00:21:43.080 --> 00:21:46.560
+1997 to me. Well, you
+know, someone is listening to
 
 412
-00:27:12.860 --> 00:27:15.680
-on the metal. Yeah. And,
-and we are really, really
+00:21:46.560 --> 00:21:50.220
+this, this podcast and they're
+saying, I resemble that. Oh
 
 413
-00:27:15.680 --> 00:27:20.210
-up here. We've had actually
-it's and sometimes, you know,
+00:21:50.310 --> 00:21:54.660
+yeah, you're right. I, I
+think that it, you know,
 
 414
-00:27:20.510 --> 00:27:23.690
-we, we, we have some
-bugs with this kind of
+00:21:54.750 --> 00:21:57.480
+instead of taking offense, maybe
+you should look at that
 
 415
-00:27:23.690 --> 00:27:28.160
-system and, and as it
-feels so easy to use,
+00:21:57.480 --> 00:22:01.320
+as an opportunity to adopt
+some more better practices within
 
 416
-00:27:28.280 --> 00:27:32.600
-most of, of our users
-think it's it's what do
+00:22:01.320 --> 00:22:04.770
+your organization. Take a good
+hard look at yourself, dr.
 
 417
-00:27:32.600 --> 00:27:35.570
-you see in Belinda's they
-would, and actually it's not.
+00:22:04.770 --> 00:22:06.870
+Lecter. Yeah. See, this is
+where I put my foot
 
 418
-00:27:36.650 --> 00:27:41.900
-And sometimes our users complain
-about, yeah, you know, Biden,
+00:22:06.870 --> 00:22:09.320
+in my mouth again. No,
+because it's true though. And
 
 419
-00:27:41.900 --> 00:27:46.310
-monsters don't work correctly on
-the windows side. Performance is
+00:22:09.320 --> 00:22:11.730
+here's the thing when I,
+we're not trying to shame
 
 420
-00:27:46.310 --> 00:27:49.490
-not as good as if
-I buy in one from
+00:22:11.730 --> 00:22:13.470
+anybody, but I have to,
+it, we all have, we
 
 421
-00:27:49.490 --> 00:27:53.840
-WSL itself or something like
-that. And actually, yes, it's
+00:22:13.470 --> 00:22:15.240
+all have been there. Right.
+I'm sure that you have
 
 422
-00:27:53.840 --> 00:27:58.430
-true. It's, it's tricky and
-very, a lot of work
+00:22:15.240 --> 00:22:19.200
+projects right now in GitHub.
+You even product manager at
 
 423
-00:27:58.430 --> 00:28:01.940
-behind, beyond those kind of
-features. And, and for a
+00:22:19.200 --> 00:22:21.990
+GitHub have projects that haven't
+got an action yet because
 
 424
-00:28:01.940 --> 00:28:06.080
-long time, we, we had,
-we had problems with Bain
+00:22:21.990 --> 00:22:23.400
+you just haven't got around
+to it. You've got like,
 
 425
-00:28:06.080 --> 00:28:13.070
-months, with April and Vera
-award category of issues that,
+00:22:23.430 --> 00:22:25.500
+Oh, this hobbyist thing or
+this kid, I had this
 
 426
-00:28:13.590 --> 00:28:19.730
-that we add to, to
-walk around with sharing, sharing
+00:22:25.500 --> 00:22:27.540
+thing I did with my
+kid. It's I, you know,
 
 427
-00:28:19.730 --> 00:28:22.490
-your Sid rave into a
-container of our friends in
+00:22:27.540 --> 00:22:29.730
+I should probably make a
+CIC D we're at a
 
 428
-00:28:22.610 --> 00:28:30.620
-Naperville things like the sambar
-pro server on, on the
+00:22:29.730 --> 00:22:31.830
+time now I think in
+2020, where it's fair to
 
 429
-00:28:30.620 --> 00:28:35.090
-windows side can be disabled
-by your GPO. Or it's
+00:22:31.830 --> 00:22:34.410
+say that if, if you
+can build it, then you
 
 430
-00:28:35.090 --> 00:28:38.900
-not reachable from a foreign,
-from a foreign computer. If
+00:22:34.410 --> 00:22:36.840
+should automate that build and
+you should have a formal
 
 431
-00:28:38.900 --> 00:28:41.990
-you are on the world
-in Asia, active directory or
+00:22:36.840 --> 00:22:39.660
+CIC to you. Shouldn't have
+it building under, you know,
 
 432
-00:28:41.990 --> 00:28:45.290
-things like that, there are
-so many, many cases where
+00:22:39.720 --> 00:22:42.570
+on a computer under Anna's
+desk. That's not how you
 
 433
-00:28:45.470 --> 00:28:48.730
-we just can't do anything.
-And it's not really, really
+00:22:42.570 --> 00:22:46.530
+release software today. And it's
+so easy. There's no excuse.
 
 434
-00:28:48.950 --> 00:28:51.830
-able, and we are not
-happy with that, but yeah.
+00:22:46.530 --> 00:22:47.880
+So I would encourage people
+who are listening to the
 
 435
-00:28:51.860 --> 00:28:58.160
-And this, this tension between
-user feedback saying vis doesn't
+00:22:47.880 --> 00:22:50.910
+show to not take offense,
+but rather to take a
 
 436
-00:28:58.160 --> 00:29:03.380
-work and saying, yes, we
-know, and it's already so
+00:22:50.910 --> 00:22:53.880
+sense of empowerment. And when
+you're done with this show,
 
 437
-00:29:03.380 --> 00:29:06.710
-difficult to, to make it
-work the way it Fox
+00:22:53.970 --> 00:22:56.850
+go out and take that
+thing that you've never made
 
 438
-00:29:06.710 --> 00:29:11.780
-today. And yeah. Okay. So,
-but if people have windows
+00:22:56.850 --> 00:23:00.600
+build a, in a CIC
+environment and make it happen.
 
 439
-00:29:11.960 --> 00:29:15.470
-2000 or 2004, so windows
-10, the version that is
+00:23:01.320 --> 00:23:03.480
+I think that's exactly right.
+You know, my friend Damian
 
 440
-00:29:15.470 --> 00:29:21.440
-in the first quarter of
-2020, and they get the
+00:23:03.810 --> 00:23:06.750
+says that friends don't let
+friends right. Click deploy. And
 
 441
-00:29:21.440 --> 00:29:26.150
-Docker desktop latest stuff, they
-go into resources, WSL integration.
+00:23:07.410 --> 00:23:11.310
+there's a certain amount of
+truth to that. I, Yeah,
 
 442
-00:29:26.480 --> 00:29:28.880
-They just have to click
-enable integration with my default
+00:23:11.340 --> 00:23:14.520
+Damien's great. Damon Brady I've
+actually said, if you happen
 
 443
-00:29:28.880 --> 00:29:33.950
-distro. You handle everything. They
-don't install Docker in WSL
+00:23:14.520 --> 00:23:17.490
+to have to open up
+two finder windows to deploy,
 
 444
-00:29:33.980 --> 00:29:36.620
-to get started. Yeah, no,
-they don't need to. We
+00:23:17.670 --> 00:23:21.240
+you're probably doing it wrong.
+Wait, I shouldn't just drag
 
 445
-00:29:36.620 --> 00:29:44.410
-actually ships a Linux as
-CLI with, with <inaudible> and
+00:23:21.240 --> 00:23:25.590
+and drop. Yeah. So, so
+how are the updates since
 
 446
-00:29:44.470 --> 00:29:50.350
-we actually create SIM links
-to, to the binaries that
+00:23:25.590 --> 00:23:28.260
+launch? We talked about how
+there are thousands of items
 
 447
-00:29:50.410 --> 00:29:56.800
-live within <inaudible> from your
-environment. So everything is in
+00:23:28.260 --> 00:23:30.810
+in the marketplace are people
+are using it. Are you
 
 448
-00:29:56.800 --> 00:29:59.420
-your past your type, you,
-when you were unable to,
+00:23:30.810 --> 00:23:33.600
+running out of compute? How's
+that going? People are using
 
 449
-00:30:00.260 --> 00:30:04.920
-as integration, you can type
-Docker or occipital, and it
+00:23:33.600 --> 00:23:36.240
+it, thankfully we're, we're not
+yet running out of compute.
 
 450
-00:30:05.020 --> 00:30:10.810
-just gets, gets resolved. Those
-are only one keys where
+00:23:36.240 --> 00:23:39.240
+We're keeping up with demand.
+It does require us to,
 
 451
-00:30:10.810 --> 00:30:14.590
-it's a little bit trickier
-is for just tools that
+00:23:39.390 --> 00:23:42.600
+you know, to, to provision
+new machines once in awhile.
 
 452
-00:30:14.590 --> 00:30:20.020
-doesn't come with a, with
-a GDC, this was like
+00:23:42.810 --> 00:23:47.030
+But yeah, I I'm really
+overwhelmed by, by how people
 
 453
-00:30:20.050 --> 00:30:22.900
-Alpine on or things like
-that, where we, you need
+00:23:47.030 --> 00:23:49.910
+are using it. I'm really
+thrilled. It's it seems like
 
 454
-00:30:22.900 --> 00:30:28.450
-to, to install a gypsy
-combat layer so that our,
+00:23:49.910 --> 00:23:53.600
+people are using it mostly
+happy. Obviously, you know, there's
 
 455
-00:30:28.570 --> 00:30:32.260
-our executable scan can run
-on the, on your environment.
+00:23:53.600 --> 00:23:55.940
+some rough edges here and
+there and we get feedback
 
 456
-00:30:32.880 --> 00:30:35.100
-So the easiest way to
-get started is to make
+00:23:55.940 --> 00:23:59.060
+and we're working on, on
+taking those rough edges down.
 
 457
-00:30:35.100 --> 00:30:38.940
-sure you've got the latest
-windows you have enabled WSL,
+00:23:59.360 --> 00:24:03.380
+You know, since, since launch,
+we've added, you know, dependency
 
 458
-00:30:38.940 --> 00:30:41.250
-and now at build, they
-announced they're going to make
+00:24:03.380 --> 00:24:06.500
+and artifact caching, we've added
+the self hosted runner feature
 
 459
-00:30:41.250 --> 00:30:44.610
-it even easier to just
-say, WSL dash dash install,
+00:24:06.500 --> 00:24:10.520
+that I think maybe that
+happened. Like we announced that
 
 460
-00:30:44.940 --> 00:30:47.310
-install, Docker, desktop, and then
-you're ready to go. And
+00:24:10.520 --> 00:24:14.420
+the day of GA or
+if not shortly after we
 
 461
-00:30:47.310 --> 00:30:49.230
-you can just, even, like
-you said, check a box
+00:24:14.420 --> 00:24:16.580
+just added an API so
+that you can interact with
 
 462
-00:30:49.230 --> 00:30:52.350
-and get Kubernetes, and then
-all it gets better with
+00:24:16.580 --> 00:24:19.990
+it more programmatically. One of
+the things that we get
 
 463
-00:30:52.350 --> 00:30:56.090
-visual studio code. Of course.
-Yeah, sure. Yeah. That's a,
+00:24:19.990 --> 00:24:21.790
+to me, like super geeked,
+like if I have to
 
 464
-00:30:56.090 --> 00:30:59.940
-that's exactly that then. Yeah.
-I really wish that we
+00:24:21.790 --> 00:24:25.570
+convince someone, Hey, you should
+probably take that build and
 
 465
-00:30:59.940 --> 00:31:06.930
-could brought this level of
-experience and performance to more
+00:24:25.570 --> 00:24:28.510
+automate it. That's not exciting,
+right? Like if I see
 
 466
-00:31:06.930 --> 00:31:12.180
-users like people running when
-current investment in windows 10
+00:24:28.510 --> 00:24:30.910
+a friend like, Hey, have
+you, have you got your
 
 467
-00:31:12.690 --> 00:31:16.050
-or 1909 or something like
-that. I really, I really
+00:24:30.910 --> 00:24:34.180
+CIC running at anything? But
+then I show them the
 
 468
-00:31:16.050 --> 00:31:18.930
-have that we can, at
-some point reach them with,
+00:24:34.240 --> 00:24:38.470
+pull requests for my sites.
+So I run this podcast.
 
 469
-00:31:19.140 --> 00:31:23.220
-with visit WSL to backend
-as well, but that doesn't
+00:24:38.500 --> 00:24:41.440
+And for example, this podcast
+is on, on get hub.
 
 470
-00:31:23.220 --> 00:31:27.360
-depend on us and yeah,
-maybe, maybe Microsoft will want
+00:24:41.860 --> 00:24:45.490
+I'm one person, but I
+have a global CDN. I
 
 471
-00:31:27.360 --> 00:31:31.770
-to Blackboard WSL two or
-something like that. That's really
+00:24:45.490 --> 00:24:47.590
+have Azure. I have the
+power of the cloud, right?
 
 472
-00:31:31.770 --> 00:31:34.320
-cool that people could do
-this kind of good stuff
+00:24:47.590 --> 00:24:50.680
+It looks like a million
+bucks because the cloud allows
 
 473
-00:31:34.350 --> 00:31:36.510
-and not, cause not everyone
-can upgrade to the absolute
+00:24:50.680 --> 00:24:51.970
+me to look like a
+million bucks, but I'm still
 
 474
-00:31:36.510 --> 00:31:41.070
-latest, latest windows. Yes. Yes.
-And yeah, that's, that's always
+00:24:51.970 --> 00:24:54.970
+only one development team, but
+I show people my poll
 
 475
-00:31:41.070 --> 00:31:44.490
-a problem with new APIs.
-And in the, in the
+00:24:54.970 --> 00:24:57.850
+request right now, I'm looking
+at my Hansel minutes, pull
 
 476
-00:31:44.490 --> 00:31:48.960
-past, we, we have struggled
-with doing the choice of
+00:24:57.850 --> 00:25:00.730
+requests. And this is my
+most favorite thing. Maybe you
 
 477
-00:31:49.200 --> 00:31:53.190
-leverage, leveraging a very recent
-API. And it's mostly because
+00:25:00.730 --> 00:25:03.460
+can help me understand how
+this works. I have 11
 
 478
-00:31:53.640 --> 00:31:55.560
-on our side of the
-curve, we need to support
+00:25:03.460 --> 00:25:06.100
+poll requests, but it's a
+private repository. And I'm one
 
 479
-00:31:55.930 --> 00:32:03.270
-people with very broad runs
-of veterans. And yeah, and
+00:25:06.100 --> 00:25:09.460
+person who are these coming
+from. I just clicked on
 
 480
-00:32:03.270 --> 00:32:04.980
-for that, we just had
-to, it was a view
+00:25:09.460 --> 00:25:14.830
+one and dependable. It has
+seen that a nougat package
 
 481
-00:32:04.980 --> 00:32:06.960
-of vet. It was a
-very good fit and we
+00:25:14.860 --> 00:25:19.270
+got an update, sucked out
+the release notes from the
 
 482
-00:32:06.960 --> 00:32:12.660
-wanted to leverage that. But
-for, for many cases before
+00:25:19.750 --> 00:25:22.150
+previous update up to like
+they did a diff of
 
 483
-00:32:12.660 --> 00:32:17.630
-we were just went back
-and say, Oh, it's, it's
+00:25:22.150 --> 00:25:23.650
+the release notes. They didn't
+just dump them, but they
 
 484
-00:32:17.630 --> 00:32:22.440
-likely adds so much complexity
-to the take windows versions
+00:25:23.650 --> 00:25:27.280
+like have a bulleted list
+of what's changed. The commits
 
 485
-00:32:22.440 --> 00:32:26.820
-detectives. The API is where
-I've fallen back solutions and
+00:25:27.280 --> 00:25:30.160
+have been rolled up a
+change log and it went
 
 486
-00:32:26.820 --> 00:32:30.440
-things like that. So for
-now, from now on, we
+00:25:30.160 --> 00:25:31.990
+and built a thing and
+is telling me I can
 
 487
-00:32:30.450 --> 00:32:33.990
-consider for example, that the
-wall IPLV back in is
+00:25:31.990 --> 00:25:35.860
+merge the pull request. It's
+like having a vendor that
 
 488
-00:32:34.050 --> 00:32:36.930
-our fallback mechanism for when
-the resell two is not
+00:25:35.860 --> 00:25:39.180
+works for you, but it's
+not a human It's dependable.
 
 489
-00:32:37.650 --> 00:32:43.550
-available. D it gives you
-some kind of a view
+00:25:39.190 --> 00:25:42.640
+Wonderful. Yeah. It's like having
+your own security team. It's
 
 490
-00:32:43.590 --> 00:32:47.030
-about the choice that we,
-that we have to do
+00:25:42.640 --> 00:25:44.680
+crazy. And you can talk
+to it. The part that
 
 491
-00:32:47.390 --> 00:32:52.880
-between leveraging a new API
-and having to maintain multiple
+00:25:44.680 --> 00:25:46.480
+blew me away, and this
+is where I get everyone
 
 492
-00:32:53.110 --> 00:32:56.880
-paths for, for doing the
-same thing. And I think
+00:25:46.480 --> 00:25:49.510
+converted is you can then
+tell it stuff you can
 
 493
-00:32:56.910 --> 00:32:59.180
-the research too is, is
-just a very bright example
+00:25:49.510 --> 00:25:52.750
+say, Oh, well, okay, well
+use this milestone and squash
 
 494
-00:32:59.180 --> 00:33:02.600
-for, for that. Like, if
-you, if you don't have
+00:25:52.750 --> 00:25:56.110
+that and it will do
+it. Like it's a person,
 
 495
-00:33:02.630 --> 00:33:05.480
-WSL two, we need to
-do something and make it
+00:25:56.110 --> 00:25:57.340
+but you don't have to
+pay them cause it's a
 
 496
-00:33:05.510 --> 00:33:10.460
-work anyway. And yeah. Advertise
-via the previous VR back
+00:25:57.340 --> 00:26:01.120
+bond. Right. So yeah. So
+the idea behind dependent bot
 
 497
-00:33:10.460 --> 00:33:13.450
-in. Yeah. I think that
-WSL two is definitely the
+00:26:01.120 --> 00:26:04.850
+is that it has this
+database of every it's it's
 
 498
-00:33:13.450 --> 00:33:15.780
-future and it's just going
-to get better. And there's
+00:26:04.930 --> 00:26:08.050
+called a CVE. I think
+CVE stands for common vulnerability
 
 499
-00:33:15.780 --> 00:33:18.160
-stuff that we learned at
-build this week. I'll make
+00:26:08.050 --> 00:26:11.560
+and exposure, right? So every
+security bug on every package
 
 500
-00:33:18.160 --> 00:33:20.710
-sure I put links in
-the show notes. I'll also
+00:26:11.800 --> 00:26:13.780
+that's ever been released and
+it can look at your
 
 501
-00:33:20.710 --> 00:33:23.140
-put links to both of
-you on Twitter as well
+00:26:13.780 --> 00:26:16.120
+project and see what new
+get packages you're using and
 
 502
-00:33:23.140 --> 00:33:26.140
-as to go and download
-Docker desktop that folks can
+00:26:16.420 --> 00:26:18.760
+figure out if there's a
+security vulnerability. And if there
 
 503
-00:33:26.140 --> 00:33:28.720
-do right now. Thank you
-so much for chatting with
+00:26:18.760 --> 00:26:22.660
+is, it knows what package
+version doesn't have that security
 
 504
-00:33:28.720 --> 00:33:31.900
-me today. This has been
-another episode of Hanselminutes and
+00:26:22.660 --> 00:26:25.570
+vulnerability, and it can update
+you. And so it'll open
 
 505
-00:33:31.900 --> 00:33:45.340
-we'll see you again next
-week. <inaudible>.
+00:26:25.570 --> 00:26:29.050
+that pull request automatically. And
+I think that is really,
+
+506
+00:26:29.050 --> 00:26:34.720
+really cool, but here's another
+example of why I think
+
+507
+00:26:34.720 --> 00:26:38.950
+having your source code and
+your dependent bot integrated with
+
+508
+00:26:38.980 --> 00:26:42.850
+actions is a great thing
+because now you're going to
+
+509
+00:26:42.850 --> 00:26:46.950
+run build every time your
+you're depending on opens a
+
+510
+00:26:46.960 --> 00:26:50.700
+pull request, right? And that
+build will hopefully pass if
+
+511
+00:26:50.700 --> 00:26:54.510
+dependent bot did a good
+job. And I usually see
+
+512
+00:26:54.510 --> 00:26:57.030
+that it does right every
+time, but depending on opens
+
+513
+00:26:57.030 --> 00:26:59.340
+up, pull requests for me,
+I get a green build,
+
+514
+00:26:59.430 --> 00:27:02.130
+all my tests pass. And
+so I actually actually have
+
+515
+00:27:02.130 --> 00:27:04.830
+a pretty high degree of
+confidence that things are going
+
+516
+00:27:04.830 --> 00:27:08.730
+to work. What if GitHub
+actions could then just merge
+
+517
+00:27:08.730 --> 00:27:11.940
+that flow request? It knows
+that who opened the full
+
+518
+00:27:11.940 --> 00:27:14.610
+request. It trusts, depended bot.
+It knows that the test
+
+519
+00:27:14.610 --> 00:27:17.310
+is passed. So I actually
+have a workflow set up
+
+520
+00:27:17.640 --> 00:27:20.280
+to go ahead and auto
+merge. Anything that depends about
+
+521
+00:27:20.790 --> 00:27:25.590
+who spends, if I I'm
+pretty comfortable with my test
+
+522
+00:27:25.590 --> 00:27:29.280
+suite. Oh my goodness. You
+have to be pretty uncomfortable.
+
+523
+00:27:29.810 --> 00:27:32.330
+That's the thing, right? That's
+what that's so interesting because
+
+524
+00:27:32.750 --> 00:27:35.150
+I'm like, Oh, I don't
+know. But at the same
+
+525
+00:27:35.150 --> 00:27:37.220
+time you do. I mean,
+and you can try it
+
+526
+00:27:37.220 --> 00:27:39.260
+and if it doesn't work
+for you, you can, you
+
+527
+00:27:39.260 --> 00:27:42.020
+can not do it. But
+that would be to have
+
+528
+00:27:42.020 --> 00:27:43.850
+that level of test coverage
+to have that sense of
+
+529
+00:27:43.850 --> 00:27:46.340
+confidence. If you think about
+how people who are listening
+
+530
+00:27:46.340 --> 00:27:48.650
+might feel about their code,
+we've all had that code
+
+531
+00:27:48.650 --> 00:27:52.220
+base that we are afraid
+of. Like, I don't want
+
+532
+00:27:52.220 --> 00:27:54.290
+to piss it off. I
+don't want to anger the
+
+533
+00:27:54.290 --> 00:27:57.860
+code. Right. Just like it
+works. Don't anger it. Right.
+
+534
+00:27:58.130 --> 00:28:00.800
+And you're saying that you
+literally have this bot putting
+
+535
+00:28:00.800 --> 00:28:03.590
+things into production because you
+trust it. I'll pack the
+
+536
+00:28:03.590 --> 00:28:07.130
+staging, opening the staging. Okay.
+I'll give you that pretty,
+
+537
+00:28:07.130 --> 00:28:10.550
+that's pretty close. That's pretty
+good. I'm just going to
+
+538
+00:28:10.550 --> 00:28:12.740
+start merging these things in
+just Willy nilly right now,
+
+539
+00:28:12.740 --> 00:28:15.830
+because why not? What could
+go wrong? You go, well,
+
+540
+00:28:15.830 --> 00:28:20.900
+yeah, the w the podcast
+would stop abruptly. Mmm. Pretty
+
+541
+00:28:20.910 --> 00:28:23.990
+I get about 71%, 72%
+code coverage. So I don't
+
+542
+00:28:24.000 --> 00:28:27.260
+okay. But I love that.
+So the, you said there's
+
+543
+00:28:27.260 --> 00:28:30.080
+the security aspect of things,
+but then there's also whether
+
+544
+00:28:30.080 --> 00:28:32.510
+or not dependent on just
+notices that a, a minor
+
+545
+00:28:32.510 --> 00:28:35.450
+release has happened. You can
+tell it like, Oh, this
+
+546
+00:28:35.450 --> 00:28:37.880
+thing, this thing, wasn't a
+security update. It was just
+
+547
+00:28:37.880 --> 00:28:41.090
+a change. Right. It, it
+manages all dependencies, not just
+
+548
+00:28:41.090 --> 00:28:44.600
+security. That's true. I, yeah.
+I mostly think about it
+
+549
+00:28:44.600 --> 00:28:47.330
+from a dependence, from a
+security point of view, but
+
+550
+00:28:47.330 --> 00:28:49.940
+you're absolutely right. It can
+tell you anytime something changes.
+
+551
+00:28:50.750 --> 00:28:53.750
+So that's Example of a
+bot, what other bots could
+
+552
+00:28:53.750 --> 00:28:55.790
+I have creeping amount? My
+code that make me look
+
+553
+00:28:55.790 --> 00:28:59.780
+like more than one person.
+So one bot that I've
+
+554
+00:28:59.780 --> 00:29:03.500
+seen used periodically is something
+like a CLA bot where
+
+555
+00:29:03.500 --> 00:29:06.650
+an open source project might
+have a CLA or contributor
+
+556
+00:29:06.650 --> 00:29:09.980
+license agreement. And so somebody
+who opens a poll request
+
+557
+00:29:09.980 --> 00:29:14.210
+might need to actually, you
+know, sign some piece of,
+
+558
+00:29:14.390 --> 00:29:17.090
+you know, legal Lees sort
+of paperwork saying that they
+
+559
+00:29:17.300 --> 00:29:19.940
+assign their rights for example,
+or that they accept all
+
+560
+00:29:19.940 --> 00:29:24.470
+the terms that an open
+source project has. And you
+
+561
+00:29:24.470 --> 00:29:26.600
+don't want to deal with
+that as an open source
+
+562
+00:29:26.600 --> 00:29:29.480
+maintainer. I certainly don't like
+I've got enough on my
+
+563
+00:29:29.480 --> 00:29:32.960
+plate. When it comes to
+dealing with the project, I
+
+564
+00:29:32.960 --> 00:29:35.150
+try to write code. I
+try to get releases out
+
+565
+00:29:35.150 --> 00:29:36.980
+the door, those sorts of
+things. I don't want to
+
+566
+00:29:36.980 --> 00:29:39.620
+have to be like a
+lawyer in my spare time
+
+567
+00:29:39.620 --> 00:29:42.220
+as well. So like, you
+can have a bot set
+
+568
+00:29:42.220 --> 00:29:45.910
+up that will see anytime
+somebody opens a poll request.
+
+569
+00:29:46.090 --> 00:29:48.190
+If they're a new contributor,
+if they've never signed a
+
+570
+00:29:48.190 --> 00:29:51.010
+CLA the CLA bot can
+actually pop in and say,
+
+571
+00:29:51.010 --> 00:29:53.950
+Hey, go to this. You
+know, I don't know, DocuSign
+
+572
+00:29:53.950 --> 00:29:58.420
+URL, maybe a, some other
+link, you know, however you
+
+573
+00:29:58.420 --> 00:30:01.270
+have it set up for
+your, for your project and
+
+574
+00:30:01.270 --> 00:30:05.440
+its governance. It can enforce
+that. I think the.net foundation,
+
+575
+00:30:05.470 --> 00:30:08.080
+this is where I've seen
+that the most is they've
+
+576
+00:30:08.080 --> 00:30:10.240
+got one called like.net bot
+that does this. And I
+
+577
+00:30:10.240 --> 00:30:12.520
+think other things too, and
+it's, you should see its
+
+578
+00:30:12.520 --> 00:30:16.930
+contribution graph. You know, it's
+that GitHub block, that calendar
+
+579
+00:30:16.930 --> 00:30:19.690
+it's just green all across.
+That is a, that is
+
+580
+00:30:19.690 --> 00:30:23.820
+a glorious contribution graph at
+that point. There's something to
+
+581
+00:30:23.820 --> 00:30:27.510
+be said for just really
+well run. Well, well, bonded,
+
+582
+00:30:27.540 --> 00:30:30.930
+I guess, was that the
+word open source projects, one
+
+583
+00:30:30.930 --> 00:30:33.030
+of the, my favorite open
+source project, you should check
+
+584
+00:30:33.030 --> 00:30:36.540
+out just because they have
+a, it's called an OctoPrint,
+
+585
+00:30:37.230 --> 00:30:39.960
+it's a web interface for
+your three D printed printer.
+
+586
+00:30:40.680 --> 00:30:45.210
+And it is the most
+organized, most thoughtful, most well-run
+
+587
+00:30:45.210 --> 00:30:47.850
+project that I have seen
+in a long time, it's
+
+588
+00:30:47.850 --> 00:30:50.280
+run by, and I'm not
+sure how to pronounce her
+
+589
+00:30:50.280 --> 00:30:52.620
+name. It's chairman. She's been
+on the podcast, Gina Hausa.
+
+590
+00:30:53.610 --> 00:30:58.530
+And basically she's got bots
+and issue managers and all
+
+591
+00:30:58.530 --> 00:31:01.770
+kinds of tagging. And when
+you go to her issues,
+
+592
+00:31:02.160 --> 00:31:04.110
+there's, you know, if, if
+you, if you, if you're
+
+593
+00:31:04.110 --> 00:31:06.120
+just a person who just
+rolls in with a complaint,
+
+594
+00:31:06.570 --> 00:31:09.090
+like, it'll go and say,
+sorry, there's not enough information
+
+595
+00:31:09.090 --> 00:31:11.310
+here. Like it could be
+a bug, but she'll Mark
+
+596
+00:31:11.310 --> 00:31:14.490
+it as status, awaiting information,
+potential bug. But if you
+
+597
+00:31:14.490 --> 00:31:16.770
+don't fill out the form,
+right, it's basically like the
+
+598
+00:31:16.770 --> 00:31:19.620
+soup Nazi. And I mean
+that in the nicest possible
+
+599
+00:31:19.620 --> 00:31:23.310
+way, like welcome, add a
+new issue, Oh, you didn't
+
+600
+00:31:23.310 --> 00:31:25.560
+fill out the information. We
+will wait for you to
+
+601
+00:31:25.560 --> 00:31:27.270
+fill out the information and
+then we will close the
+
+602
+00:31:27.270 --> 00:31:30.720
+thing when, when you are,
+you know, unless you give
+
+603
+00:31:30.720 --> 00:31:33.570
+us what you need to
+get, you can organize an
+
+604
+00:31:33.630 --> 00:31:36.900
+and, and automate things. So
+that it's a garden. It's
+
+605
+00:31:36.900 --> 00:31:39.930
+almost like animal crossing. You
+make your space, your space
+
+606
+00:31:40.440 --> 00:31:43.950
+and get hub then becomes
+your nesting ground for all
+
+607
+00:31:43.950 --> 00:31:46.230
+of the things you can
+make a healthy community with
+
+608
+00:31:46.230 --> 00:31:49.380
+a series of actions and
+bots and, and management. It's
+
+609
+00:31:49.380 --> 00:31:52.770
+just wonderful. I think that's
+great. I think that for
+
+610
+00:31:52.770 --> 00:31:56.010
+new contributors coming in and
+actually having an expectation and
+
+611
+00:31:56.010 --> 00:31:59.100
+understanding what the process is,
+is really, really valuable. That's
+
+612
+00:31:59.100 --> 00:32:01.410
+actually probably a place where
+I fall down as a
+
+613
+00:32:01.410 --> 00:32:04.830
+maintainer is not, you know,
+maybe living up to that
+
+614
+00:32:04.830 --> 00:32:08.910
+standard. Hmm. So as we
+get towards the end here,
+
+615
+00:32:08.910 --> 00:32:12.690
+what is coming next for
+actions on get hub? So
+
+616
+00:32:12.810 --> 00:32:15.180
+the big thing that the
+team is working on now
+
+617
+00:32:15.210 --> 00:32:19.320
+that we're really excited about
+is bringing actions to get
+
+618
+00:32:19.320 --> 00:32:23.520
+hub enterprise server. So when
+we launched actions, we jaded
+
+619
+00:32:23.880 --> 00:32:27.780
+last November and it was
+available in github.com and in,
+
+620
+00:32:28.410 --> 00:32:31.590
+you know, the GitHub enterprise
+in our cloud hosted version,
+
+621
+00:32:31.680 --> 00:32:36.090
+but not everybody wants a
+cloud hosted, you know, place
+
+622
+00:32:36.090 --> 00:32:39.620
+for, for their code. Even
+in 2020, lot of people
+
+623
+00:32:39.620 --> 00:32:44.000
+still want to have their,
+their source code, their issues,
+
+624
+00:32:44.000 --> 00:32:48.020
+everything within their data center
+and, you know, behind their
+
+625
+00:32:48.020 --> 00:32:51.290
+firewall. And so GitHub enterprise
+server is that product it's
+
+626
+00:32:51.290 --> 00:32:55.580
+get hub behind your firewall.
+And so we're bringing actions
+
+627
+00:32:55.580 --> 00:32:57.770
+into that. So you'll be
+able to spin up compute
+
+628
+00:32:57.770 --> 00:33:00.620
+within your data center and
+talk to your, you know,
+
+629
+00:33:00.650 --> 00:33:05.140
+private get hub enterprise server
+instance. And so that's, that's
+
+630
+00:33:05.150 --> 00:33:08.090
+really the, the thing that
+we're really focused on right
+
+631
+00:33:08.090 --> 00:33:11.000
+now. So get up actions
+and get unpackages packages as
+
+632
+00:33:11.000 --> 00:33:15.530
+well. We're going to be
+moving into, into GHGs. The
+
+633
+00:33:15.530 --> 00:33:17.660
+other thing that we're looking
+at is some, some more
+
+634
+00:33:17.660 --> 00:33:21.470
+organization level workflows. So right
+now you build actions in
+
+635
+00:33:21.470 --> 00:33:25.730
+a repository. What if you
+wanted actions, especially like the
+
+636
+00:33:25.730 --> 00:33:29.540
+automation type of actions for
+an organization instead of just
+
+637
+00:33:29.540 --> 00:33:32.840
+a single repository. So that's,
+that's another thing that we're
+
+638
+00:33:32.840 --> 00:33:35.060
+taking a look at right
+now. Very cool. And people
+
+639
+00:33:35.060 --> 00:33:37.790
+can go into course Google
+out there for Google, with
+
+640
+00:33:37.790 --> 00:33:41.240
+being, as I like to
+say, forget hub actions, get
+
+641
+00:33:41.240 --> 00:33:44.540
+hub packages and wander around
+the get hub marketplace. And
+
+642
+00:33:44.540 --> 00:33:46.910
+you can get into dev
+ops in a, probably in
+
+643
+00:33:46.910 --> 00:33:49.070
+your lunch hour and show
+your boss. You can get
+
+644
+00:33:49.070 --> 00:33:53.390
+stuff building very, very quickly.
+Yeah, absolutely. Fantastic. I've been
+
+645
+00:33:53.390 --> 00:33:57.290
+talking with Edward Thompson from GitHub.
+This has been another episode
+
+646
+00:33:57.290 --> 00:34:11.320
+of Hanselminutes and we'll see
+you again next week. <inaudible>.
 

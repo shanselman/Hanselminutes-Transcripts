@@ -1,2806 +1,3122 @@
 WEBVTT FILE
 
 1
-00:00:00.240 --> 00:00:03.000
+00:00:00.060 --> 00:00:02.850
 Hey database experts and app
 developers. Do you want to
 
 2
-00:00:03.000 --> 00:00:07.050
+00:00:02.850 --> 00:00:06.900
 build faster and run bigger
 workloads? We've got you covered
 
 3
-00:00:07.050 --> 00:00:12.210
+00:00:06.900 --> 00:00:11.490
 with an exclusive free download
-of DataStax enterprise DataStax enterprise
+of data stacks. Enterprise DataStax
 
 4
-00:00:12.210 --> 00:00:15.510
-works with all the latest
-tools like Kafka and Docker
+00:00:11.490 --> 00:00:14.850
+enterprise works with all the
+latest tools like Kafka and
 
 5
-00:00:15.780 --> 00:00:20.280
-with incredible throughput and the
-best security download data stacks
+00:00:14.850 --> 00:00:19.410
+Docker with incredible throughput and
+the best security download data
 
 6
-00:00:20.460 --> 00:00:24.930
-enterprise for free today by
-visiting DataStax that's DAA, T
+00:00:19.410 --> 00:00:24.470
+stacks enterprise for free today
+by visiting DataStax that's DAA,
 
 7
-00:00:24.930 --> 00:00:30.990
-a S T a x.com/download
-D S E that's the
+00:00:24.470 --> 00:00:30.720
+T a S T a
+x.com/download D S E that's
 
 8
-00:00:30.990 --> 00:00:52.490
-DataStax enterprise for free visit
-datastax.com/download D S E Scott
+00:00:30.720 --> 00:00:38.070
+the DataStax enterprise for free
+visit datastax.com/download D S E.
 
 9
-00:00:52.490 --> 00:00:54.860
-Hanselman. And this is another
-episode of Hansel minutes today.
+00:00:51.680 --> 00:00:54.350
+Hi, Scott Hanselman. This is
+another episode of Hansel minutes
 
 10
-00:00:54.860 --> 00:00:57.710
-I'm talking with Mark Russinovich.
-Welcome back to the show
+00:00:54.350 --> 00:00:57.740
+today. I'm talking with Joe Duffy,
+founder and CEO of Poloma
 
 11
-00:00:57.980 --> 00:01:01.400
-CTO of Azure at Microsoft
-and a general reckoned and
+00:00:57.740 --> 00:01:01.970
+CorePower user. I'm excellent. Glad
+to be here, Scott. I
 
 12
-00:01:01.400 --> 00:01:04.760
-tour. Thanks Scott, Scott to
-be back. I know it's
+00:01:01.970 --> 00:01:07.490
+noticed I was over on
+the.net blog at Microsoft and,
 
 13
-00:01:04.760 --> 00:01:07.280
-been a few years since
-I was on the show.
+00:01:08.060 --> 00:01:10.130
+you know, they don't let
+everybody guest post, but there
 
 14
-00:01:07.280 --> 00:01:10.100
-Last. Yeah, last time I
-was talking to you, you
+00:01:10.130 --> 00:01:14.390
+was an actual guest post
+from the Poloma team about
 
 15
-00:01:10.100 --> 00:01:12.440
-had written a book and
-now it's a series. I
+00:01:14.390 --> 00:01:17.390
+the <inaudible> project. And I
+thought that was pretty cool.
 
 16
-00:01:12.440 --> 00:01:16.820
-was at a trilogy. Yep.
-It's trilogy the last edition
+00:01:17.390 --> 00:01:18.470
+And so I was like,
+I'm going to start digging
 
 17
-00:01:16.850 --> 00:01:19.940
-of the trilogy I released
-in 2014. So it's been
+00:01:18.470 --> 00:01:20.300
+into this and learning about
+what's going on here. And
 
 18
-00:01:19.940 --> 00:01:22.880
-a while since, even that,
-when are you going to
+00:01:20.300 --> 00:01:25.700
+it says infrastructure as code.
+What does infrastructure as code?
 
 19
-00:01:22.880 --> 00:01:25.070
-turn it into a trilogy
-of trilogies, like star Wars
+00:01:26.930 --> 00:01:29.630
+Yeah, it's, it's not a
+term that many of us
 
 20
-00:01:25.070 --> 00:01:29.210
-and do nine, right. Great
-idea. So what I wanted
+00:01:29.630 --> 00:01:33.260
+developers are familiar with. Certainly
+even before starting salumi, I
 
 21
-00:01:29.210 --> 00:01:32.060
-to talk to you about
-today is this thing called
+00:01:33.260 --> 00:01:37.940
+wasn't very deeply engaged in
+doing infrastructure as code. What
 
 22
-00:01:32.060 --> 00:01:36.110
-dapper da P our distributed
-application. Runtime folks can check
+00:01:37.940 --> 00:01:40.340
+infrastructure is code is, is,
+is essentially when you want
 
 23
-00:01:36.110 --> 00:01:38.990
-it out at D a
-P R dot I O
+00:01:40.340 --> 00:01:44.240
+to build a cloud application,
+maybe it uses containers, maybe
 
 24
-00:01:38.990 --> 00:01:41.240
-and I'll make sure to
-include show notes to anything
+00:01:44.240 --> 00:01:48.590
+is a serverless. You need
+to deal with infrastructure. Infrastructure
 
 25
-00:01:41.240 --> 00:01:44.030
-that we talk about or
-mentioned during the show here.
+00:01:48.590 --> 00:01:51.110
+is the stuff that powers
+or cloud applications, the virtual
 
 26
-00:01:44.390 --> 00:01:49.160
-It says an event driven,
-portable runtime for building microservices
+00:01:51.110 --> 00:01:55.520
+machines it's the clusters, the
+containers themselves infrastructure is code
 
 27
-00:01:49.250 --> 00:01:52.580
-on cloud N edge. That's
-a very small number of
+00:01:55.520 --> 00:01:57.950
+as a way of managing
+that infrastructure actually just using
 
 28
-00:01:52.580 --> 00:01:54.650
-words, but it tries to
-say a lot right there
+00:01:57.950 --> 00:02:02.030
+code. So instead of completely
+stepping outside of your programming
 
 29
-00:01:54.650 --> 00:01:58.130
-in one short sentence. Yup.
-I think there's even more
+00:02:02.030 --> 00:02:04.910
+language, your editor to go
+deal with infrastructure, you can
 
 30
-00:01:58.130 --> 00:01:59.930
-you can say on top
-of it. So we had
+00:02:04.910 --> 00:02:09.020
+actually just program it from
+within your, your code. And
 
 31
-00:01:59.930 --> 00:02:02.750
-to be very careful about
-which words to pick, to
+00:02:09.020 --> 00:02:11.990
+by doing that, you get
+automation. It's, it's basically just
 
 32
-00:02:02.750 --> 00:02:08.300
-emphasize the, the core value.
-Why is that? Because it's
+00:02:11.990 --> 00:02:15.140
+like all the benefits of
+writing code it's it's automatic
 
 33
-00:02:08.300 --> 00:02:10.340
-lots of different things and
-you can use it in
+00:02:15.140 --> 00:02:17.750
+rate. You can automate things,
+you can version it like
 
 34
-00:02:10.340 --> 00:02:12.530
-lots of different ways. I
-think that's why we kind
+00:02:17.750 --> 00:02:20.450
+code, you can collaborate on
+it like code, it works
 
 35
-00:02:12.530 --> 00:02:15.500
-of let really a programming
-runtime platform rather than a
+00:02:20.450 --> 00:02:23.150
+in your editor. You can
+share and reuse things with
 
 36
-00:02:15.500 --> 00:02:20.000
-programming runtime, really, because you
-can choose to adopt it
+00:02:23.570 --> 00:02:25.910
+package managers, all this stuff
+we know about code now
 
 37
-00:02:20.030 --> 00:02:24.050
-piecemeal. You can choose to
-integrate it into an existing
+00:02:26.060 --> 00:02:29.960
+applies to infrastructure, as you're
+saying. Okay. So I just
 
 38
-00:02:24.740 --> 00:02:27.860
-what people would consider a
-legacy app or a monolithic
+00:02:30.140 --> 00:02:33.740
+Googled something real quick because
+many, many, many years ago,
 
 39
-00:02:27.860 --> 00:02:32.030
-app. You can choose to
-go full bore and take
+00:02:33.920 --> 00:02:38.300
+if you go and search
+for PowerShell, large scale Hanselman,
 
 40
-00:02:32.030 --> 00:02:35.330
-advantage of the pure cloud
-native serverless aspects of it
+00:02:38.300 --> 00:02:42.170
+it looks like July of
+2007. So 12 years ago,
 
 41
-00:02:35.420 --> 00:02:40.010
-and create a massively distributed,
-very fine grain microservice based
+00:02:42.800 --> 00:02:45.860
+a PowerShell 1.0 was out.
+And this is very long
 
 42
-00:02:40.010 --> 00:02:44.660
-application. So when I hear
-the word runtime at its
+00:02:45.860 --> 00:02:49.190
+time ago. I wrote a
+white paper called managing large
 
 43
-00:02:44.720 --> 00:02:48.110
-at its base, I think
-about management, I think about
+00:02:49.190 --> 00:02:52.040
+scale system deployment with windows
+PowerShell. This was like before
 
 44
-00:02:48.110 --> 00:02:53.210
-like a womb or a
-cradle that holds my application
+00:02:52.040 --> 00:02:55.400
+we knew what the cloud
+was. So a large scale
 
 45
-00:02:53.210 --> 00:02:56.390
-and does stuff for me.
-So at the most simplistic,
+00:02:55.400 --> 00:02:58.040
+was not quite a thing.
+This is even before I
 
 46
-00:02:56.780 --> 00:02:59.410
-you know, whether it be
-node or java.net, the runtime
+00:02:58.040 --> 00:03:02.800
+think the idea of, of
+a DSC desired state configuration.
 
 47
-00:02:59.500 --> 00:03:03.490
-handles Stuff that I'm not
-interested in handling like the
+00:03:03.220 --> 00:03:07.840
+And we went and built
+out data centers with PowerShell.
 
 48
-00:03:03.490 --> 00:03:06.010
-basic example, be garbage collection.
-I don't want to do
+00:03:07.840 --> 00:03:10.150
+And one of the things
+that we struggled with was
 
 49
-00:03:06.010 --> 00:03:08.350
-that anymore. So you do
-that thing and I'll focus
+00:03:10.150 --> 00:03:14.770
+this idea of declarative versus
+programmatic. You know, do you
 
 50
-00:03:08.350 --> 00:03:11.530
-on these other things. Is
-this a runtime that does
+00:03:14.770 --> 00:03:18.220
+make an engine versus do
+you describe what you want?
 
 51
-00:03:11.530 --> 00:03:13.480
-stuff? So I don't have
-to think about those things.
+00:03:18.220 --> 00:03:19.630
+And then if you do
+describe what you want, how
 
 52
-00:03:13.510 --> 00:03:17.340
-Absolutely. In fact, that's kind
-of where the logo that
+00:03:19.630 --> 00:03:22.030
+do you get into that
+state and how do you
 
 53
-00:03:17.340 --> 00:03:19.290
-came along with dapper, where
-you've got the top hat
+00:03:22.120 --> 00:03:25.270
+avoid invalid States? And again,
+12 years ago, but it
 
 54
-00:03:19.290 --> 00:03:23.340
-and the tie dapper dresser,
-but also kind of a
+00:03:25.270 --> 00:03:28.090
+was basically an XML file
+that described a pod that
 
 55
-00:03:23.340 --> 00:03:26.550
-dapper style Butler that handles
-things for you that you'd
+00:03:28.090 --> 00:03:30.940
+described an environment and the
+different roles of stuff. And
 
 56
-00:03:26.550 --> 00:03:28.860
-rather not spend your time
-on, so you can focus
+00:03:30.940 --> 00:03:32.800
+then we had an engine
+that was built in PowerShell
 
 57
-00:03:28.860 --> 00:03:34.680
-on your app. Hmm. So
-it's your application concierge. Okay.
+00:03:32.800 --> 00:03:35.800
+that basically did whatever it
+could to get the system
 
 58
-00:03:35.040 --> 00:03:39.630
-So this is primarily in
-the context of microservices. Is
+00:03:36.280 --> 00:03:40.870
+where we wanted, but this
+is XML and WMI and
 
 59
-00:03:39.630 --> 00:03:42.060
-it, is it only a
-Kubernetes thing or is it
+00:03:40.870 --> 00:03:43.810
+calm and D and it
+was cool, but not really
 
 60
-00:03:42.060 --> 00:03:46.290
-an anywhere thing? There's no
-direct connection to Kubernetes other
+00:03:43.810 --> 00:03:48.940
+very reliable where we reaching
+for some Nirvana that we're
 
 61
-00:03:46.290 --> 00:03:49.110
-than we've got built in
-support for deploying it onto
+00:03:48.940 --> 00:03:52.710
+starting to actually hit with
+products like presuming I think
 
 62
-00:03:49.110 --> 00:03:52.320
-Kubernetes, it, you can install
-it anywhere. So it runs
+00:03:52.710 --> 00:03:56.790
+so I, in the last,
+you know, 10, 12 years,
 
 63
-00:03:52.320 --> 00:03:56.010
-in a self hosted mode.
-So you can put it
+00:03:56.820 --> 00:03:58.890
+let's say, you know, the
+term dev ops has, has
 
 64
-00:03:56.010 --> 00:03:58.290
-on your own dev box.
-You can put it on
+00:03:58.890 --> 00:04:02.730
+come to come into being,
+we've seen tools like, you
 
 65
-00:03:58.320 --> 00:04:02.180
-a server, a virtual machine,
-or you can deploy to
+00:04:02.730 --> 00:04:06.120
+know, frankly, PowerShell, but also
+things like chef and puppet
 
 66
-00:04:02.190 --> 00:04:05.340
-Kubernetes cluster and or to
-any other kind of orchestrator
+00:04:06.510 --> 00:04:09.840
+Ansible SaltStack a lot of
+these technologies have become popular
 
 67
-00:04:05.340 --> 00:04:06.960
-you want. We just have
-to have, like I said,
+00:04:09.840 --> 00:04:14.820
+and commonplace. And the modern
+cloud is far more programmable
 
 68
-00:04:06.960 --> 00:04:12.450
-built in support for deploying
-it into Kubernetes When, when
+00:04:15.030 --> 00:04:17.400
+in it's by its very
+nature. You know, the Azure
 
 69
-00:04:12.450 --> 00:04:15.810
-I'm making an application, I
-think that we sometimes blur
+00:04:17.400 --> 00:04:22.080
+platform, it exposes APIs for
+literally everything that it does.
 
 70
-00:04:16.200 --> 00:04:18.930
-the, the things that we
-need to solve to solve
+00:04:22.350 --> 00:04:24.090
+And so it used to
+be the case. There's a
 
 71
-00:04:18.930 --> 00:04:20.910
-the business problem. And then
-all of the kind of
+00:04:24.090 --> 00:04:27.810
+very human driven activity to
+do anything with it. Anything
 
 72
-00:04:20.910 --> 00:04:23.130
-cross cutting concerns. So it's
-like, Hey, we're going to
+00:04:27.810 --> 00:04:30.630
+with management, you'd have consoles
+that you point and click
 
 73
-00:04:23.130 --> 00:04:28.350
-make a website, session management,
-authentication, authorization, and on and
+00:04:30.630 --> 00:04:34.900
+around now, everything has an
+API. And so that, that
 
 74
-00:04:28.350 --> 00:04:31.230
-on, you know, realization, you
-know, there's a whole list
+00:04:35.010 --> 00:04:37.860
+enables you to now build
+programming models on top of
 
 75
-00:04:31.230 --> 00:04:34.260
-of stuff that has nothing
-to do with what we
+00:04:37.860 --> 00:04:42.360
+those APIs. And that's ultimately
+why Poloma is possible. Now
 
 76
-00:04:34.260 --> 00:04:37.560
-do here at Acme insurance.
-And sometimes we blur the
+00:04:42.390 --> 00:04:45.720
+still a lot of infrastructure's
+code tools. These days still
 
 77
-00:04:37.560 --> 00:04:40.710
-line and we end up
-writing all of these other
+00:04:45.720 --> 00:04:49.650
+use, you know, Jason or
+Yammel not, not XML anymore,
 
 78
-00:04:40.710 --> 00:04:44.070
-things just because they don't
-either exist or the ones
+00:04:49.650 --> 00:04:54.060
+but similar concept where you're
+basically expressing a desired state
 
 79
-00:04:44.070 --> 00:04:46.650
-that exist. Don't do what
-we want them to do
+00:04:54.060 --> 00:04:58.230
+using a markup language. And
+the problem with that is
 
 80
-00:04:47.430 --> 00:04:51.240
-is, is the stuff in
-dapper trying to be completely
+00:04:58.410 --> 00:05:00.720
+monitoring cloud architectures. It tends
+to be a lot of
 
 81
-00:04:51.540 --> 00:04:54.870
-supportive. It always plays a
-supporting role for me to
+00:05:00.720 --> 00:05:04.170
+moving pieces. There's a lot
+of complexity. And so actually
 
 82
-00:04:55.560 --> 00:04:57.750
-not have to write something.
-And then I do the
+00:05:04.170 --> 00:05:07.470
+using a programming language to
+declare your desired state. And
 
 83
-00:04:57.750 --> 00:05:01.140
-business logic separately and entirely
-separate from those cross cutting
+00:05:07.470 --> 00:05:11.670
+that's a key important differentiation
+that Fluney is still desired
 
 84
-00:05:01.140 --> 00:05:04.590
-concerns, That's us goal. And
-in fact, it was basically
+00:05:11.670 --> 00:05:14.730
+state based, even though you're
+writing code in a full
 
 85
-00:05:04.590 --> 00:05:08.070
-inspired by what we saw
-happening in cloud native programming
+00:05:14.730 --> 00:05:17.880
+blown programming language, but you
+don't have to repeat, you
 
 86
-00:05:08.070 --> 00:05:11.880
-models like functions as a
-service and actor models. And
+00:05:17.880 --> 00:05:20.820
+know, recreate the wheel all
+the time. You can use
 
 87
-00:05:11.880 --> 00:05:16.740
-really the primary goal of
-dapper was to make, to
+00:05:20.820 --> 00:05:22.920
+everything we know and love
+about languages and apply it
 
 88
-00:05:16.770 --> 00:05:22.170
-bring cloud native distributed microservice
-application development to enterprise Debs.
+00:05:22.920 --> 00:05:26.010
+to desired state. So if
+you have patterns that recur
 
 89
-00:05:22.770 --> 00:05:27.030
-Many enterprise devs are familiar
-and skilled with, and everyday
+00:05:26.010 --> 00:05:28.950
+from time to time, you
+can express those, but absolutely
 
 90
-00:05:27.030 --> 00:05:32.640
-writing traditional multi tier web
-plus database apps and learning
+00:05:28.950 --> 00:05:32.670
+that the modern progress in
+modern clouds is really what
 
 91
-00:05:32.640 --> 00:05:34.800
-all the things you need
-to learn to build the
+00:05:32.670 --> 00:05:35.160
+enables these sorts of tools
+to exist. So it's that
 
 92
-00:05:34.800 --> 00:05:39.150
-distributed microservice-based app is a
-lot of complexity and a
+00:05:35.160 --> 00:05:40.320
+programmatic programmatic ability programmability. I
+was presenting recently in trying
 
 93
-00:05:39.150 --> 00:05:42.990
-lot of different SDKs and
-a lot of concepts that
+00:05:40.330 --> 00:05:41.910
+and someone said, well, what's
+the cloud, the cloud is
 
 94
-00:05:43.260 --> 00:05:46.590
-distract from, like you said,
-focusing on the Acme problem
+00:05:41.910 --> 00:05:44.070
+just other people's computers. And
+I was like, yeah, I
 
 95
-00:05:46.590 --> 00:05:50.790
-that they are paid to
-go solve. And so just
+00:05:44.070 --> 00:05:46.050
+mean, that's, that's part of
+it. Right. But it's being
 
 96
-00:05:50.850 --> 00:05:55.500
-like functions as a service
-takes and performs a lot
+00:05:46.050 --> 00:05:48.510
+able to programmatically talk to
+it and say, I want
 
 97
-00:05:55.500 --> 00:05:57.530
-of things on the developers'
-behalf. So they don't have
+00:05:48.510 --> 00:05:51.210
+something. And you do the
+racking of the machine. You
 
 98
-00:05:57.530 --> 00:06:01.100
-to worry about it. A
-dapper takes that idea and
+00:05:51.510 --> 00:05:53.700
+add more memory. Like we,
+we, you and I were
 
 99
-00:06:01.130 --> 00:06:05.720
-takes it forward. So in
-the, in the doctrine and
+00:05:53.700 --> 00:05:55.620
+the cloud back in the
+day like, Hey, I want,
 
 100
-00:06:05.740 --> 00:06:09.730
-the read me, it says
-dapper codifies, the best practices
+00:05:55.770 --> 00:05:57.620
+I want to scale out,
+all right, I'll buy a
 
 101
-00:06:09.760 --> 00:06:12.970
-for building microservice applications. But
-then you said that it
+00:05:57.620 --> 00:06:00.620
+machine and I'll rack it.
+And now the what, what
 
 102
-00:06:13.120 --> 00:06:17.830
-explicitly doesn't target Kubernetes or
-prescribes. So it sounds like
+00:06:00.620 --> 00:06:03.260
+the cloud is, is it's
+elastic newness, right? That's the
 
 103
-00:06:17.830 --> 00:06:21.220
-you're kind of walking the
-Razor's edge between being prescriptive,
+00:06:03.260 --> 00:06:06.220
+magic of the cloud. It
+is it's, it's the magic
 
 104
-00:06:21.250 --> 00:06:24.940
-but also being flexible. Is
-that difficult to, to not
+00:06:06.220 --> 00:06:11.890
+of the elasticity, the reliability,
+the global availability. You know,
 
 105
-00:06:25.330 --> 00:06:27.280
-like, hold it down and
-say, this is exactly how
+00:06:11.920 --> 00:06:14.500
+we work with a lot
+of big companies that still
 
 106
-00:06:27.280 --> 00:06:31.660
-you should do everything versus
-the cafeteria plan. Not really.
+00:06:14.500 --> 00:06:16.870
+have to manage data centers
+across the world and that's,
 
 107
-00:06:31.660 --> 00:06:34.660
-Cause I think one of
-the benefits, first of dabbers,
+00:06:17.200 --> 00:06:20.500
+that's expensive business. And, and
+frankly, you're probably not going
 
 108
-00:06:34.660 --> 00:06:38.860
-it's extremely extensible. So when
-we say codified best practices,
+00:06:20.500 --> 00:06:24.400
+to be as good at
+it as say, Microsoft Microsoft's
 
 109
-00:06:39.220 --> 00:06:42.160
-the best practice best practice
-can depend on who the
+00:06:24.460 --> 00:06:27.610
+operations team who can make
+sure that Azure continues to
 
 110
-00:06:42.160 --> 00:06:45.370
-customer is, what the target
-workload is, their requirements around
+00:06:27.610 --> 00:06:31.090
+run reliably. And, you know,
+Microsoft's got a lot of
 
 111
-00:06:45.370 --> 00:06:50.710
-the application, but you can
-cautify best practices for classes.
+00:06:31.090 --> 00:06:33.610
+really smart engineers building these
+cloud services and making sure
 
 112
-00:06:51.040 --> 00:06:55.750
-And if the codifications that
-are built into dapper and
+00:06:33.610 --> 00:06:37.600
+that they're reliable and, and,
+and fail safe and, and
 
 113
-00:06:55.750 --> 00:06:58.150
-the ones that come with
-it, don't meet your needs.
+00:06:37.600 --> 00:06:40.660
+built in a performance and
+scalable way. And you can
 
 114
-00:06:58.180 --> 00:07:02.440
-You can codify your own.
-So take, for example, backoff
+00:06:40.660 --> 00:06:43.270
+leverage all of that expertise
+by using the cloud instead
 
 115
-00:07:02.440 --> 00:07:05.710
-and retry, when it comes
-to interacting with another service,
+00:06:43.270 --> 00:06:45.820
+of having to develop it
+on your own. So, so
 
 116
-00:07:06.520 --> 00:07:10.690
-a there's best practices for
-how you do back off
+00:06:45.820 --> 00:06:47.350
+back in the day when
+I was kind of like
 
 117
-00:07:10.690 --> 00:07:14.020
-and retries that as a
-developer, you don't want to
+00:06:47.650 --> 00:06:50.860
+probing this space 10 plus
+years ago, it was trying
 
 118
-00:07:14.020 --> 00:07:17.200
-spend your time implementing that
-in your code. And so
+00:06:50.860 --> 00:06:52.990
+to be a declaration, right?
+We're all trying to create
 
 119
-00:07:17.380 --> 00:07:21.370
-that codification of those best
-practices can be in dapper
+00:06:52.990 --> 00:06:57.430
+a Dom effectively that describes
+the state of our data
 
 120
-00:07:21.370 --> 00:07:23.710
-itself so that when you
-call into dapper and say,
+00:06:57.430 --> 00:07:01.060
+center. Right. And, and me
+lets you do that, that,
 
 121
-00:07:23.710 --> 00:07:26.830
-I want to talk to
-this remote service. Dapper is
+00:07:01.060 --> 00:07:03.910
+that Dom, that description, that
+object model, but in whatever
 
 122
-00:07:26.830 --> 00:07:35.200
-taking care of that complexity.
-It's 2020, and why hasn't
+00:07:03.910 --> 00:07:08.890
+language makes you happy Effectively.
+Yes. So polygamy is multilanguage,
 
 123
-00:07:35.200 --> 00:07:38.320
-this stuff happened before? Like
-I was joking, I was
+00:07:08.920 --> 00:07:10.930
+it's a, it's a runtime.
+So at, at the core,
 
 124
-00:07:38.320 --> 00:07:40.180
-giving a talk recently and
-I joked about how long
+00:07:10.930 --> 00:07:13.210
+at the heart of it
+is exactly this sort of
 
 125
-00:07:40.180 --> 00:07:42.010
-my resume was. I said,
-I got a three page
+00:07:13.210 --> 00:07:16.870
+Dom, it's like a cloud
+object model that represents all
 
 126
-00:07:42.010 --> 00:07:44.710
-resume to page two is
-just learning to scale a
+00:07:16.870 --> 00:07:20.630
+of the different cloud capabilities.
+And, and although we work
 
 127
-00:07:44.710 --> 00:07:47.740
-web farm. And then, you
-know, at some point page
+00:07:20.630 --> 00:07:23.110
+great on Azure, we also
+support, you know, AWS, Google
 
 128
-00:07:47.770 --> 00:07:49.960
-two of my resume got
-ripped out because scaling a
+00:07:23.110 --> 00:07:26.380
+cloud Kubernetes, which is, you
+know, really important to us.
 
 129
-00:07:49.960 --> 00:07:51.970
-web form is pretty much
-just a slider bar. Now,
+00:07:27.460 --> 00:07:30.580
+We have actually three dozen
+different providers and each one
 
 130
-00:07:52.090 --> 00:07:55.600
-you know, like scaling out
-is pretty much understood. It
+00:07:30.580 --> 00:07:32.950
+of those is essentially a
+dozen. And then we project.
 
 131
-00:07:55.600 --> 00:07:58.030
-seems a little bit late
-for us to be like
+00:07:33.400 --> 00:07:38.440
+Wow. Yes. Yeah. So DigitalOcean
+new Relic Datadog get hub
 
 132
-00:07:58.390 --> 00:08:00.220
-saying, okay, can we all
-just agree on how we
+00:07:38.770 --> 00:07:42.220
+lab. Cause it, it turns
+out, you know, modern cloud.
 
 133
-00:08:00.220 --> 00:08:01.810
-manage secrets? Can we all
-just agree on how we
+00:07:42.220 --> 00:07:45.010
+Isn't just about the cloud.
+It's also about SAS, right?
 
 134
-00:08:01.810 --> 00:08:04.600
-manage state? Is this just
-a matter of like one
+00:07:45.670 --> 00:07:49.180
+Oftentimes you're using, you know,
+maybe MailChimp to send email
 
 135
-00:08:05.050 --> 00:08:09.460
-additional standard? Well, I think
-the various parts, So this
+00:07:49.180 --> 00:07:52.710
+from your application. Maybe you're
+using new Relic to, to
 
 136
-00:08:09.460 --> 00:08:14.500
-have emerged in different runtimes
-and program models already. I
+00:07:52.710 --> 00:07:56.530
+do performance monitoring. And all
+of that is infrastructure that
 
 137
-00:08:14.500 --> 00:08:17.050
-think what dapper brings to
-the table is this sidecar
+00:07:56.530 --> 00:07:59.770
+you need to manage and
+provision. So we support that.
 
 138
-00:08:17.050 --> 00:08:21.460
-pattern, the end with the
-sidecar pattern and the focus
+00:07:59.770 --> 00:08:02.530
+And then we, we basically
+project that Dom into all
 
 139
-00:08:21.460 --> 00:08:26.830
-on solving these distributed systems,
-problems that come as part
+00:08:02.530 --> 00:08:05.650
+different languages we support. So
+the reason why you saw
 
 140
-00:08:26.830 --> 00:08:28.660
-of the territory, when it
-comes to cloud native development,
+00:08:05.650 --> 00:08:08.890
+the.net post is we just
+added.net core support. So you
 
 141
-00:08:29.350 --> 00:08:35.140
-it really is opening up
-the door for a very
+00:08:08.890 --> 00:08:11.680
+can actually write your infrastructure's
+code using C sharp F
 
 142
-00:08:35.350 --> 00:08:39.880
-flexible extensible runtime that hasn't
-existed to this date. And
+00:08:11.680 --> 00:08:16.450
+sharp, visual basic. We haven't
+yet dusted off the Fortran
 
 143
-00:08:39.880 --> 00:08:41.830
-once you start to look
-at dapper, it seems like
+00:08:16.870 --> 00:08:20.170
+or cobalt versions, but you
+know, that's, that's coming and
 
 144
-00:08:42.730 --> 00:08:45.910
-the obvious kind of stuff.
-It's just that I think
+00:08:20.170 --> 00:08:23.350
+also PowerShell. And so it's
+super powerful. You can use
 
 145
-00:08:46.900 --> 00:08:49.480
-that when we looked at
-the problems that we wanted
+00:08:23.350 --> 00:08:26.350
+TypeScript, Python, you know, whatever
+suits you. So by doing
 
 146
-00:08:49.480 --> 00:08:54.280
-to solve, that dapper emerged
-as the solution to be
+00:08:26.350 --> 00:08:29.440
+that, you're getting familiar language.
+But more than that, you
 
 147
-00:08:54.280 --> 00:08:57.570
-able to solve them. And
-that Sidecar concept, that sidecar
+00:08:29.440 --> 00:08:33.100
+can benefit from the ecosystems
+of tooling that has been
 
 148
-00:08:57.570 --> 00:08:59.820
-architecture is really fundamental. This
-isn't a thing like I
+00:08:33.100 --> 00:08:36.820
+built around these different languages
+When, but who are the
 
 149
-00:08:59.820 --> 00:09:02.580
-had used the example of
-a, of a, a cradle
+00:08:36.880 --> 00:08:39.550
+who's the competition. Like I
+just said that I'm, you
 
 150
-00:09:02.580 --> 00:09:05.340
-or a thing that is
-a runtime that is holding
+00:08:39.550 --> 00:08:41.860
+know, I was messing around
+and I only say it
 
 151
-00:09:05.340 --> 00:09:08.220
-your code. But your application
-code is, is the motorcycle
+00:08:41.860 --> 00:08:44.170
+in the lightest of ways,
+you know, 12 years ago.
 
 152
-00:09:08.220 --> 00:09:10.830
-in this context and dapper
-is the sidecar. It is
+00:08:44.170 --> 00:08:46.750
+Cause everyone's been trying to
+do this forever. Aren't there
 
 153
-00:09:11.160 --> 00:09:13.980
-lateral to your application. And
-in doing that, it gives
+00:08:46.750 --> 00:08:52.810
+other declarative programming languages or
+declarative formats for, for cloud.
 
 154
-00:09:13.980 --> 00:09:18.060
-you full flexibility. It's not
-prescribing it so much that
+00:08:52.810 --> 00:08:55.680
+How does, how does gloomy
+rate relate to those? Yeah,
 
 155
-00:09:18.060 --> 00:09:22.970
-it Smothers it with recommendations.
-Yeah, exactly. And that's what
+00:08:55.680 --> 00:08:58.620
+it's interesting, You know, along
+this journey of dev ops
 
 156
-00:09:22.970 --> 00:09:25.850
-really makes it so that
-you can incrementally adopted or
+00:08:58.620 --> 00:09:01.170
+and infrastructure as code, you
+know, that the term infrastructure
 
 157
-00:09:25.850 --> 00:09:28.550
-fully adopted depending on what
-your needs are and what
+00:09:01.170 --> 00:09:03.810
+is code is probably eight,
+10 years old. You know,
 
 158
-00:09:28.550 --> 00:09:31.460
-you want it to do
-for you. So just one
+00:09:03.810 --> 00:09:05.940
+if you look on Wikipedia,
+there's a lot of examples.
 
 159
-00:09:31.460 --> 00:09:36.050
-example on one side of
-that spectrum, you can say,
+00:09:05.940 --> 00:09:09.360
+I mentioned, you know, chef
+puppet and those tools were
 
 160
-00:09:36.050 --> 00:09:38.890
-you know what I like
-dappers actor model. And so
+00:09:09.360 --> 00:09:13.020
+more around virtual machine configuration
+and people still use those
 
 161
-00:09:38.890 --> 00:09:41.870
-I'm gonna use doc dapper
-actor model SDK, which provides
+00:09:13.020 --> 00:09:15.660
+tools. But now as we're
+moving more towards container and
 
 162
-00:09:41.870 --> 00:09:46.370
-me language integration, convenience with
-the dapper sidecar, where the
+00:09:15.660 --> 00:09:19.740
+serverless architectures, they're used less
+and less frequently and in
 
 163
-00:09:46.700 --> 00:09:51.710
-actor interfaces are actually implemented.
-And now I'm taking advantage
+00:09:19.740 --> 00:09:24.030
+its place because of this
+desired state model, we sort
 
 164
-00:09:51.710 --> 00:09:58.070
-of dapper for service discovery,
-invocation messaging, state store, basically
+00:09:24.030 --> 00:09:29.070
+of reverted to writing everything
+in Yammel Jason and scientific
 
 165
-00:09:58.610 --> 00:10:02.480
-most of the underlying building
-blocks or services that Tapper
+00:09:29.070 --> 00:09:33.480
+languages, which then hits the
+wall at some point. So
 
 166
-00:10:02.570 --> 00:10:05.540
-provides. On the other hand,
-you could say, you know,
+00:09:33.480 --> 00:09:35.310
+a lot of times, you
+know, we'll see, Hey, we
 
 167
-00:10:05.540 --> 00:10:07.970
-what all I want to
-do is use dapper to
+00:09:35.310 --> 00:09:37.860
+copied and pasted the same
+Yammel, you know, over and
 
 168
-00:10:08.000 --> 00:10:11.480
-talk to a CAFCA service
-because I don't want to
+00:09:37.860 --> 00:09:41.220
+over again, we needed 10
+instances of this certain resource
 
 169
-00:10:11.480 --> 00:10:13.730
-worry about all the complexities
-and integrating with the CAFCA
+00:09:41.220 --> 00:09:43.800
+configured, basically the same. And
+because Yammel, doesn't have four
 
 170
-00:10:13.730 --> 00:10:15.620
-STK. So I'm going to,
-I'm going to do is
+00:09:43.800 --> 00:09:46.410
+loops, we basically copy and
+pasted it. So instead of
 
 171
-00:10:16.070 --> 00:10:21.590
-talk HTTP to the CAFCA
-sidecar and the CAFCA binding
+00:09:46.410 --> 00:09:48.240
+having 10 lines of Jamar,
+we have, you know, a
 
 172
-00:10:21.650 --> 00:10:24.740
-that it supports. And now
-I'm taking advantage of the
+00:09:48.240 --> 00:09:51.780
+hundred lines BMO and it
+starts to get unwieldy because,
 
 173
-00:10:24.740 --> 00:10:28.520
-best practices that are built
-into CAFCA finding, I don't
+00:09:52.530 --> 00:09:55.950
+you know, imagine you fix
+a security problem and now
 
 174
-00:10:28.520 --> 00:10:33.680
-need to include the CAFCA
-SDK or the client libraries
+00:09:55.950 --> 00:09:57.720
+you have to go track
+down everywhere else. You copy
 
 175
-00:10:33.680 --> 00:10:37.160
-or code or get the
-right SDK for my language,
+00:09:57.720 --> 00:10:00.480
+and pasted that same problem.
+And for some of our
 
 176
-00:10:37.550 --> 00:10:39.710
-into my code. I can
-just leverage it directly. And
+00:10:00.480 --> 00:10:03.630
+customers, you know, maybe their
+consultants they're dealing with, you
 
 177
-00:10:40.100 --> 00:10:43.010
-so if CAFCA only supports
-it, doesn't have a rust
+00:10:03.630 --> 00:10:06.570
+know, dozens of, of client
+accounts. And now they have
 
 178
-00:10:43.010 --> 00:10:45.710
-SDK, for example, but I
-want to write my component
+00:10:06.570 --> 00:10:08.190
+to go back to their
+customers and say, Hey, you
 
 179
-00:10:45.710 --> 00:10:49.100
-and rust. I can call
-into the CAFCA sidecar, which
+00:10:08.190 --> 00:10:10.290
+know that Yamhill, I gave
+you last week, we need
 
 180
-00:10:49.430 --> 00:10:52.250
-talks to CAFCA for my
-arrest codes In, in bringing
+00:10:10.290 --> 00:10:15.300
+to go fix it. And
+so, especially with the current
 
 181
-00:10:52.250 --> 00:10:55.250
-the actor model into it.
-Doesn't that kind of like
+00:10:15.300 --> 00:10:17.490
+cloud, you know, modern cloud
+is very fine grain. There's
 
 182
-00:10:56.150 --> 00:10:58.460
-that's a little bit more
-main course than the other
+00:10:17.490 --> 00:10:22.020
+lots of resources to manage
+from AI ML services, databases,
 
 183
-00:10:58.460 --> 00:11:02.120
-core concepts that are included.
-Like something like, Oh, here's
+00:10:22.020 --> 00:10:26.190
+object stores, you know, serverless
+functions, you know, at that
 
 184
-00:11:02.120 --> 00:11:04.010
-how we do secrets. And
-here's how we manage service
+00:10:26.190 --> 00:10:29.910
+scale, that level of complexity,
+we're seeing just the approach
 
 185
-00:11:04.010 --> 00:11:07.040
-invocation seems of a certain
-size. And then it's like
+00:10:29.910 --> 00:10:33.030
+of using Gamelin domain specific
+languages is just breaking down
 
 186
-00:11:07.070 --> 00:11:12.140
-actors that seems more, Well,
-it is a little bit
+00:10:33.030 --> 00:10:35.630
+for most people that we
+work with. How, how much
 
 187
-00:11:12.140 --> 00:11:18.020
-more prescriptive, but even there
-dapper is flexible in its
+00:10:35.630 --> 00:10:37.970
+of this is declarative? Like
+I like what you said
 
 188
-00:11:18.140 --> 00:11:20.510
-in what it provides from
-an actor model perspective. But
+00:10:37.970 --> 00:10:41.210
+about a cloud object model
+and how much of it
 
 189
-00:11:20.510 --> 00:11:23.600
-really where we started from,
-it was saying serverless, what
+00:10:41.210 --> 00:10:43.220
+is programmatic. Like you made
+a comment about a four
 
 190
-00:11:23.600 --> 00:11:26.210
-is serverless, what or what
-it would make it easy
+00:10:43.220 --> 00:10:45.710
+loop. You know, we had
+similar problems when we were
 
 191
-00:11:26.210 --> 00:11:28.700
-for what makes it easy
-for enterprise developers to write
+00:10:45.710 --> 00:10:47.720
+trying to express these things
+in XML where we were
 
 192
-00:11:28.700 --> 00:11:31.280
-a cloud native distributed application.
-And that's where we took
+00:10:47.720 --> 00:10:50.720
+trying to decide, are we
+going to be fully like,
 
 193
-00:11:31.670 --> 00:11:33.560
-a look at what was
-out there and from our
+00:10:50.750 --> 00:10:52.640
+this is a picture of
+what it should look like,
 
 194
-00:11:33.560 --> 00:11:36.860
-learnings, without your functions and
-service, Robert reliable actors and
+00:10:52.700 --> 00:10:54.680
+figure it out, or are
+we going to try to
 
 195
-00:11:36.860 --> 00:11:38.810
-talking to customers and seeing
-what they were doing with
+00:10:54.680 --> 00:10:59.780
+put in functional, you know,
+programmatic constructs and try to
 
 196
-00:11:38.810 --> 00:11:42.230
-it, recognizing that, like I
-said, enterprise devs want to
+00:10:59.840 --> 00:11:01.790
+program our way out of
+this problem? Yeah. So I,
 
 197
-00:11:42.230 --> 00:11:45.200
-focus on their app, not
-on all this, this complexities
+00:11:02.390 --> 00:11:08.600
+sometimes I joke that that
+prelim is actually implemented. Sure.
 
 198
-00:11:45.200 --> 00:11:48.770
-of distributed application and state
-management, service discovery and invocation
+00:11:09.260 --> 00:11:11.570
+I shouldn't have even said
+that. It's basically, you know,
 
 199
-00:11:48.770 --> 00:11:52.640
-and triggers and back offs
-and retries. We said, Hey,
+00:11:11.600 --> 00:11:15.050
+you're, you're the, the Dom
+itself is declarative, but you're
 
 200
-00:11:53.590 --> 00:11:55.960
-if we go with the
-sidecar model, we can actually
+00:11:15.050 --> 00:11:18.650
+using an imperative language or
+functional, you know, frankly, if
 
 201
-00:11:56.290 --> 00:12:00.280
-support a serverless of functions
-as a service type programming
+00:11:18.650 --> 00:11:22.520
+you pick up sharp. So
+we've basically decoupled the notion
 
 202
-00:12:00.280 --> 00:12:02.920
-model. If a developer wants
-to use that, we can
+00:11:22.520 --> 00:11:26.240
+of how you express your
+intent, which has done in
 
 203
-00:12:02.920 --> 00:12:05.980
-actually support with a little
-bit of extra code, like
+00:11:26.240 --> 00:11:30.260
+a language with the desired
+state. And the key is
 
 204
-00:12:06.850 --> 00:12:10.630
-keeping track of actor invocations
-and doing the virtual actor,
+00:11:30.290 --> 00:11:34.760
+that that Dom is something
+you can analyze. We actually
 
 205
-00:12:11.200 --> 00:12:14.590
-state hydration and dehydration that
-we can build an actor
+00:11:34.760 --> 00:11:36.830
+give you the Dom. We
+actually say, before we do
 
 206
-00:12:14.590 --> 00:12:16.360
-model on top of it.
-And really then at that
+00:11:36.830 --> 00:11:39.500
+a deployment, we say, Hey,
+here's the Dom, here's the
 
 207
-00:12:16.360 --> 00:12:21.190
-point with functions, the basic
-function support, and basic actor
+00:11:39.500 --> 00:11:42.620
+desired state that we think
+you want? Is this correct?
 
 208
-00:12:21.190 --> 00:12:25.270
-support with degrees of flexibility
-for both of them, depending
+00:11:42.650 --> 00:11:44.900
+No. Okay. Well, we'll show
+you, you know, in your
 
 209
-00:12:25.270 --> 00:12:29.660
-on what the developer wants.
-Now we've got basically a
+00:11:44.900 --> 00:11:46.820
+program where you created this
+object and you go fix
 
 210
-00:12:29.680 --> 00:12:35.830
-holistic programming model platform that
-supports stateless scale-out microservices, as
+00:11:46.820 --> 00:11:49.190
+that and then say, Hey,
+let's, let's give it another,
 
 211
-00:12:35.830 --> 00:12:39.900
-well as stateful microservices. What
-does it mean though, in
+00:11:49.190 --> 00:11:51.920
+you know, dry. And then
+because we have that Dom,
 
 212
-00:12:39.900 --> 00:12:42.390
-the context of all the
-other actor frameworks, whether it
+00:11:51.920 --> 00:11:53.950
+we can always diff you
+know, so we know, Hey,
 
 213
-00:12:42.390 --> 00:12:44.940
-be Orleans or ACA and
-et cetera, et cetera, like
+00:11:53.950 --> 00:11:56.350
+you're changing this one property.
+Or you're, you're creating a
 
 214
-00:12:44.940 --> 00:12:50.310
-there's, there's coopertition and, and
-certainly competition in these different
+00:11:56.350 --> 00:11:58.810
+new instance of this. And
+in all of that integrates
 
 215
-00:12:50.310 --> 00:12:53.730
-things is this as prescriptive
-as those other actor frame,
+00:11:58.810 --> 00:12:01.210
+for us with, you know,
+a lot, a lot of
 
 216
-00:12:55.320 --> 00:12:57.930
-It's not as prescriptive as
-those other ones. For one
+00:12:01.210 --> 00:12:04.120
+people do get based workflows
+where they're actually pushing code
 
 217
-00:12:57.930 --> 00:13:06.390
-thing, it separates the underlying
-cluster or management from dapper
+00:12:04.120 --> 00:12:06.580
+between environments. And so we
+can integrate with GitHub pull
 
 218
-00:13:06.390 --> 00:13:09.300
-dapper, doesn't provide that. What
-it does is just keeps
+00:12:06.580 --> 00:12:08.980
+requests to show you the
+Dom. And so it's really
 
 219
-00:13:09.300 --> 00:13:11.970
-track of where actors are.
-So it's got an actor
+00:12:08.980 --> 00:12:11.800
+the, the marriage of the,
+of the real, you know,
 
 220
-00:13:12.510 --> 00:13:16.470
-service management service, but the
-reason that it's less prescriptive
+00:12:11.830 --> 00:12:16.210
+general purpose languages with this
+Dom concept that makes <inaudible>
 
 221
-00:13:16.500 --> 00:13:21.270
-is that for one, it
-is language agnostic. And if
+00:12:16.210 --> 00:12:19.980
+unique. Is that right? Is
+the abstract syntax tree of
 
 222
-00:13:21.270 --> 00:13:23.460
-you take a look at
-the active models program models
+00:12:19.980 --> 00:12:23.070
+it all? Is it, is
+it idiomatically the language that
 
 223
-00:13:23.460 --> 00:13:27.180
-that are out there, they
-typically are Java and C
+00:12:23.070 --> 00:12:26.370
+you use or is it
+some intermediate language that's halfway
 
 224
-00:13:27.180 --> 00:13:30.540
-sharp. And that's it that
-you could write an actor
+00:12:26.370 --> 00:12:30.720
+to where your engine can?
+Yeah, it's actually one analogy
 
 225
-00:13:30.540 --> 00:13:34.740
-for dapper just using the
-HTTP or GRPC interfaces in
+00:12:30.720 --> 00:12:33.330
+I kind of draw based
+on my background sometimes is
 
 226
-00:13:34.740 --> 00:13:38.520
-whatever language you want, including
-like I mentioned, rust. And
+00:12:33.330 --> 00:12:37.500
+it's almost like think of
+how calm worked, right? Where,
 
 227
-00:13:38.820 --> 00:13:42.090
-so it's less prescriptive in
-that way. Like I said,
+00:12:37.500 --> 00:12:41.160
+you know, calm, you had
+projections in different languages. Ultimately
 
 228
-00:13:42.090 --> 00:13:45.150
-you can have language SDKs
-that make it easy for
+00:12:41.160 --> 00:12:43.890
+there was the calm object
+model and there was an
 
 229
-00:13:45.150 --> 00:13:47.430
-you to inherit from some
-base class. So you don't
+00:12:43.890 --> 00:12:47.340
+IDL that kind of described
+what that core object model
 
 230
-00:13:47.430 --> 00:13:51.360
-have to implement that yourself
-if you want to, but
+00:12:47.340 --> 00:12:50.670
+was. And then there was
+an ed Matic as possible
 
 231
-00:13:51.360 --> 00:13:53.790
-you don't have to. And
-the second way it's less
+00:12:50.940 --> 00:12:53.970
+projection into each of the
+languages. So like visual basic,
 
 232
-00:13:53.790 --> 00:13:57.630
-prescriptive is that we've got
-built into it ways that
+00:12:54.210 --> 00:12:56.070
+you didn't have to think
+about ref counting because in
 
 233
-00:13:57.630 --> 00:13:59.940
-you can control the concurrency
-model on it. So if
+00:12:56.070 --> 00:12:57.810
+visual basic, we didn't want
+that. But then in C
 
 234
-00:13:59.940 --> 00:14:02.970
-you say, well, if you
-take a look at this,
+00:12:57.810 --> 00:13:00.600
+plus, plus all the ref
+counting was at your fingertips
 
 235
-00:14:03.060 --> 00:14:05.580
-the reliable actors like service
-rabbit collab, lacquers it had
+00:13:00.600 --> 00:13:03.150
+and all the goods and
+everything were there. And so
 
 236
-00:14:05.580 --> 00:14:09.630
-a strong concurrency model, which
-most developers want, which is
+00:13:03.150 --> 00:13:05.100
+it's kind of a similar
+thing with <inaudible>, you know,
 
 237
-00:14:09.630 --> 00:14:14.010
-when you invoke my actor
-on a method, that method
+00:13:05.100 --> 00:13:08.550
+for example, our go SDK,
+we built that to be
 
 238
-00:14:14.010 --> 00:14:17.610
-should be serialized with respect
-to invocations of that same
+00:13:08.550 --> 00:13:11.550
+embeddable inside of other products.
+And so we actually have
 
 239
-00:14:17.610 --> 00:14:20.070
-method or any others that
-are part of this actor
+00:13:11.550 --> 00:13:13.380
+a lot of people that
+are building larger systems that
 
 240
-00:14:20.070 --> 00:14:23.970
-class with dapper. You can
-relax that and say, you
+00:13:13.380 --> 00:13:14.910
+embed that in there. So
+it gives you a little
 
 241
-00:14:23.970 --> 00:14:26.250
-know what, I want really
-high performance. So I'm going
+00:13:14.910 --> 00:13:17.430
+bit more information about the
+Dom that you can control.
 
 242
-00:14:26.250 --> 00:14:30.660
-to take care of synchronization
-myself. I'm going to put
+00:13:17.850 --> 00:13:21.750
+Whereas, you know, our TypeScript
+language support is really targeting
 
 243
-00:14:30.660 --> 00:14:34.740
-locks into my code so
-that I can create these
+00:13:21.750 --> 00:13:24.540
+sort of the node JS
+developer who really wants to
 
 244
-00:14:35.700 --> 00:14:40.110
-critical sections that are only
-necessary. That just to protect
+00:13:24.540 --> 00:13:28.320
+just create these objects and
+stitch them together and use
 
 245
-00:14:40.110 --> 00:14:43.860
-the state transitions that I've
-got, but otherwise let things
+00:13:28.320 --> 00:13:30.900
+the, the, the node ecosystem
+to do that. And so
 
 246
-00:14:43.860 --> 00:14:47.250
-run in parallel. And so
-it also is more flexible
+00:13:30.900 --> 00:13:34.410
+it's, it's definitely projected idiomatic
+and teach language, but there's
 
 247
-00:14:47.250 --> 00:14:50.040
-from that perspective. Hey friends,
-you know how I love
+00:13:34.410 --> 00:13:38.190
+this common core to it,
+which is really important, especially
 
 248
-00:14:50.040 --> 00:14:52.250
-great podcasts, and I want
-you to check out The
+00:13:38.190 --> 00:13:42.600
+when you're doing, you know,
+policy enforcement and security. And,
 
 249
-00:14:52.250 --> 00:14:56.030
-code newbie podcast. It's all
-about stories from folks on
+00:13:42.600 --> 00:13:44.850
+you know, you know, if
+you, if you want visibility
 
 250
-00:14:56.030 --> 00:15:00.230
-their coding journey. They talked
-to new developers, experienced developers
+00:13:44.850 --> 00:13:48.660
+across your organization, knowing that
+there's this common object model
 
 251
-00:15:00.230 --> 00:15:02.510
-and everyone in between about
-how they got started learning
+00:13:48.660 --> 00:13:52.290
+that you can analyze and
+understand over time is really,
 
 252
-00:15:02.510 --> 00:15:06.260
-to code how they navigate
-their technical careers. And they
+00:13:52.320 --> 00:13:56.130
+really important. And just to
+expand a couple of acronyms
 
 253
-00:15:06.260 --> 00:15:09.350
-also do deep dives into
-technical topics in a newbie
+00:13:56.130 --> 00:13:59.100
+for folks that aren't of
+a certain age, when you
 
 254
-00:15:09.350 --> 00:15:14.240
-friendly way, check out their
-podcast at www dot COVID,
+00:13:59.100 --> 00:14:01.470
+said calm and, you know,
+the component object model of,
 
 255
-00:15:14.300 --> 00:15:23.030
-newbie that's any w B
-I e.org/podcast. That's code newbie.org/podcast.
+00:14:01.500 --> 00:14:05.370
+you know, pre.net world to,
+you know, late nineties and
 
 256
-00:15:23.360 --> 00:15:28.760
-So you've pulled aside a
-lot of implementation details like
+00:14:05.370 --> 00:14:07.950
+then the IDL, the interface
+definition language, which was like
 
 257
-00:15:28.790 --> 00:15:32.300
-input, output bindings. You can
-pick Kafka or AWS or
+00:14:07.980 --> 00:14:10.410
+wisdom for in process objects.
+And then later out of
 
 258
-00:15:32.360 --> 00:15:35.840
-GCP or whatever your state
-store has been pulled aside.
+00:14:10.410 --> 00:14:13.620
+process objects, it was an
+interface definition. So there's this
 
 259
-00:15:35.840 --> 00:15:40.070
-It's again, it's nondenominational in
-its religious choices and your
+00:14:13.650 --> 00:14:16.530
+interface you think of the
+cloud as an interface, and
 
 260
-00:15:40.070 --> 00:15:44.510
-nondenominational in your publish and
-subscribe. Can you maintain perf
+00:14:16.530 --> 00:14:20.370
+you then have a projection
+of that in idiomatic, whatever
 
 261
-00:15:44.600 --> 00:15:48.440
-when you are so plugable
-with some of the basic
+00:14:20.370 --> 00:14:22.330
+language makes you happy and
+how many languages do you.
 
 262
-00:15:48.440 --> 00:15:52.030
-stuff? Yeah. Good question. So
-I think this goes with
+00:14:23.290 --> 00:14:28.710
+Yes. So we support TypeScript,
+JavaScript, Python go, and then
 
 263
-00:15:52.040 --> 00:15:56.360
-it, the flexibility of dapper.
-So with the standard bindings
+00:14:28.710 --> 00:14:31.740
+any dotnet core language. So
+C sharp F sharp and
 
 264
-00:15:56.360 --> 00:16:00.170
-that we got, for example,
-for CAFCA, if you decide
+00:14:31.740 --> 00:14:34.950
+VB, Hey friends, I want
+to introduce a new sponsor
 
 265
-00:16:00.170 --> 00:16:03.800
-that that binding doesn't provide
-you sufficient perf you can
+00:14:34.950 --> 00:14:38.070
+to you. H M a
+VPN. It's a VPN you
 
 266
-00:16:03.800 --> 00:16:06.050
-write a different binding, nothing
-stops you from running your
+00:14:38.070 --> 00:14:39.630
+can count on. As you
+know, I do a lot
 
 267
-00:16:06.050 --> 00:16:09.680
-own custom binding for that
-service or any other service,
+00:14:39.630 --> 00:14:41.970
+of travel and I tend
+to connect to a lot
 
 268
-00:16:10.550 --> 00:16:13.760
-but at the same time,
-nothing stops you from directly
+00:14:41.970 --> 00:14:45.120
+of untrusted wireless networks. And
+I probably shouldn't, but I
 
 269
-00:16:13.760 --> 00:16:17.270
-using an SDK for a
-service in your code. So
+00:14:45.120 --> 00:14:49.410
+can use HMA as the
+world's largest VPN service offers.
 
 270
-00:16:17.270 --> 00:16:19.460
-if you don't want to
-use dapper to talk to
+00:14:49.410 --> 00:14:54.590
+The most server locations covers
+190 countries. I was always
 
 271
-00:16:19.460 --> 00:16:21.890
-CAFCA, you can talk to
-it directly, nothing gets in
+00:14:54.590 --> 00:14:57.710
+a server nearby it doesn't
+log your IP address and
 
 272
-00:16:21.890 --> 00:16:26.330
-your way. It's just there
-as the convenience layer. And
+00:14:57.710 --> 00:15:01.850
+allows me to connect five
+devices simultaneously works on basically
 
 273
-00:16:26.360 --> 00:16:28.400
-one of the benefits of
-it is once you have
+00:15:01.850 --> 00:15:06.710
+all platforms, Android, iOS, Mac,
+Linux, windows routers, wherever it's
 
 274
-00:16:28.940 --> 00:16:33.800
-these bindings, the ecosystems contributing
-to them, if you've want
+00:15:06.710 --> 00:15:10.370
+actually been completely redesigned recently
+to make it even simpler
 
 275
-00:16:33.800 --> 00:16:36.050
-to improve them, you improve
-them. And everybody takes advantage
+00:15:10.370 --> 00:15:12.890
+and more fun to use.
+And there's even a smart
 
 276
-00:16:36.050 --> 00:16:39.470
-of them. And not only
-that, but the binding that
+00:15:12.890 --> 00:15:16.040
+kill switch. That'll turn the
+VPN automatically on when you
 
 277
-00:16:39.470 --> 00:16:43.220
-you write for CAFCA applies
-to somebody writing a function
+00:15:16.040 --> 00:15:19.160
+launch sensitive apps, here's your
+call to action. My friends
 
 278
-00:16:43.220 --> 00:16:45.260
-on top of dapper or
-somebody running an actor on
+00:15:19.400 --> 00:15:24.260
+try HMA VPN risk-free with
+a 30 day money back
 
 279
-00:16:45.260 --> 00:16:48.050
-top of the dapper or
-somebody that just wants to
+00:15:24.260 --> 00:15:28.490
+guarantee. This deal is for
+Hanselman its listeners. That's HMA,
 
 280
-00:16:48.050 --> 00:16:52.520
-talk to CAFCA directly from
-their existing web app through
+00:15:28.700 --> 00:15:39.920
+vpn.com/offer hyphen Hansel minutes. That's
+HMA vpn.com/offer-hansel minutes. And when
 
 281
-00:16:52.520 --> 00:16:55.250
-using dapper. So it it's
-this one place where you
+00:15:39.920 --> 00:15:42.890
+we say idiomatic, right, the
+goal is to make it
 
 282
-00:16:55.250 --> 00:17:02.450
-can concentrate and magnify people
-doing innovation or PR providing
+00:15:42.890 --> 00:15:45.710
+feel not like it's Google
+translate where it's like, well,
 
 283
-00:17:02.450 --> 00:17:06.260
-improvements in performance or security.
-So let me up-level and
+00:15:45.710 --> 00:15:47.540
+I see that you're trying
+to speak Spanish here, but
 
 284
-00:17:06.260 --> 00:17:09.260
-backup in time a little
-bit, there was a time
+00:15:47.540 --> 00:15:50.750
+it's not really, you are
+honestly trying to make C-sharp
 
 285
-00:17:09.380 --> 00:17:13.550
-when we would talk about
-chatty interfaces and chunky interfaces,
+00:15:50.750 --> 00:15:54.050
+people feel comfortable and they're
+doing CCRPI type stuff. Well,
 
 286
-00:17:13.550 --> 00:17:16.460
-and we would talk about
-in-process calls and out of
+00:15:54.230 --> 00:15:56.840
+Python people feel they're comfortable
+when they're using pulling me
 
 287
-00:17:16.460 --> 00:17:19.700
-process calls. And then we
-would ask ourselves, when does
+00:15:56.840 --> 00:16:00.820
+in there. That's exactly right.
+So in C-sharp we use
 
 288
-00:17:19.700 --> 00:17:22.010
-this thing hit the network?
-So in process, out of
+00:16:00.820 --> 00:16:04.420
+tests, you know, task parallelism
+and async methods and TypeScript
 
 289
-00:17:22.010 --> 00:17:26.180
-process, out of, you know,
-out of machine, and then
+00:16:04.420 --> 00:16:08.170
+for using promises and Python
+we're using, you know, and
 
 290
-00:17:26.180 --> 00:17:28.550
-now we're thinking about things
-in terms of, have I
+00:16:08.270 --> 00:16:10.720
+even down to the level
+of, you know, getting the
 
 291
-00:17:29.360 --> 00:17:32.510
-swapped over to another pot?
-If I swapped into another
+00:16:10.720 --> 00:16:14.290
+right casing and the right
+idiomatic, naming constructs, we really
 
 292
-00:17:32.870 --> 00:17:36.050
-rack, am I suddenly now
-talking to another data center?
+00:16:14.290 --> 00:16:16.930
+want you to feel at
+home in your language of
 
 293
-00:17:37.040 --> 00:17:40.070
-How often does does the
-business logic person that we
+00:16:16.930 --> 00:16:20.500
+choice. It's really important to
+us because we actually see,
 
 294
-00:17:40.070 --> 00:17:42.410
-were trying to target here,
-have to think about those
+00:16:21.820 --> 00:16:24.910
+you know, one of the
+founding team members, Luke Hogan
 
 295
-00:17:42.410 --> 00:17:44.600
-things and like, Oh, I've
-just hit the network. And
+00:16:25.180 --> 00:16:27.310
+was at Microsoft previously. He
+actually was part of the
 
 296
-00:17:44.600 --> 00:17:49.040
-now perf is gone all
-the heck. So nothing can
+00:16:27.310 --> 00:16:30.580
+founding team for TypeScript. And
+we often wondered together in
 
 297
-00:17:50.190 --> 00:17:53.970
-Take away the, the fact
-that for many scenarios, you're
+00:16:30.580 --> 00:16:33.160
+the early days, you know,
+as we add new languages
 
 298
-00:17:53.970 --> 00:17:57.540
-going to be concerned and
-have to worry about locality.
+00:16:33.310 --> 00:16:36.640
+is each one additive. Or
+we basically just taking, you
 
 299
-00:17:57.900 --> 00:17:59.910
-Like you've just talked about
-in the crossing of network
+00:16:36.640 --> 00:16:38.680
+know, imagine there's 100 people
+in the world that would
 
 300
-00:17:59.910 --> 00:18:03.900
-interfaces, how many hops you're
-taking again, the idea is
+00:16:38.680 --> 00:16:41.410
+ever use pollute, or we
+just, you know, slicing up
 
 301
-00:18:03.900 --> 00:18:06.570
-dapper, doesn't get in the
-way of you doing those
+00:16:41.410 --> 00:16:44.950
+that 100, you know, and
+dividing and across different language
 
 302
-00:18:06.570 --> 00:18:13.290
-optimizations. So when you place
-your microservices, that is so
+00:16:44.980 --> 00:16:47.980
+ecosystems. What we're actually finding
+is it is additive. When
 
 303
-00:18:13.620 --> 00:18:15.390
-dapper will take care of
-it through the actor model.
+00:16:47.980 --> 00:16:50.050
+we add a dot-net support,
+we connected with a totally
 
 304
-00:18:15.420 --> 00:18:19.470
-But, but other than that,
-you've got control of it.
+00:16:50.050 --> 00:16:54.430
+different audience than when we
+added Python support. And so
 
 305
-00:18:19.530 --> 00:18:22.440
-So where your microservices get
-placed. And so, you know,
+00:16:54.430 --> 00:16:56.770
+there's, this it's really important
+to us that we, that
 
 306
-00:18:22.470 --> 00:18:24.300
-you can control how many
-hops it's going in from
+00:16:56.770 --> 00:16:59.650
+we feel animatic that we're
+at home. You feel like
 
 307
-00:18:24.300 --> 00:18:29.850
-where to where that is
-a operational decision. And I
+00:16:59.650 --> 00:17:02.590
+we're at home for those
+end users, that you can
 
 308
-00:18:29.850 --> 00:18:32.490
-think it's important to separate
-that from the code that
+00:17:02.590 --> 00:17:04.600
+use your favorite tools. Like
+if you have your own
 
 309
-00:18:32.490 --> 00:18:35.610
-the developer writes. And one
-of the, one of the
+00:17:04.750 --> 00:17:07.150
+test framework that you're familiar
+with in C-sharp, we want
 
 310
-00:18:35.610 --> 00:18:38.760
-reasons you see us talk
-about dapper that runtime for
+00:17:07.150 --> 00:17:08.830
+you to be able to
+use that. And so that's
 
 311
-00:18:38.760 --> 00:18:42.270
-the cloud and the edge
-is we see a world
+00:17:08.830 --> 00:17:10.840
+really core to what we
+try to do. And then
 
 312
-00:18:42.270 --> 00:18:45.630
-emerging where you're going to
-have apps that span the
+00:17:10.840 --> 00:17:13.780
+frankly, it's the hardest part
+of, of supporting a new
 
 313
-00:18:45.630 --> 00:18:49.320
-cloud and the edge. And
-one of the benefits that
+00:17:13.780 --> 00:17:18.550
+language for us back to
+that horrible Portmanteau that you
 
 314
-00:18:49.320 --> 00:18:52.230
-the sidecar pattern gives you
-what this local HTTP endpoint
+00:17:18.550 --> 00:17:22.150
+just made there, the imperative
+versus declarative and new clarity
 
 315
-00:18:52.260 --> 00:18:55.830
-is that you can talk
-to services and you don't
+00:17:22.150 --> 00:17:25.390
+of there's places like I'm
+looking at the dotnet specific
 
 316
-00:18:55.950 --> 00:18:58.620
-from a developer in the
-code that they write perspective.
+00:17:25.390 --> 00:17:27.190
+as to I'll make sure
+that we include links to
 
 317
-00:18:58.770 --> 00:19:00.960
-Don't have to worry about
-where that service is. It
+00:17:27.190 --> 00:17:29.410
+all of this in the
+show notes. There's places where
 
 318
-00:19:00.960 --> 00:19:04.140
-could be sitting there if
-I've got the microservice executing,
+00:17:29.410 --> 00:17:34.060
+you'll say it's like, like
+deployment.run async and then you'll
 
 319
-00:19:04.140 --> 00:19:07.020
-hosted on the edge, and
-it talks to the dapper
+00:17:34.060 --> 00:17:36.970
+build kind of with, with
+a quasi fluent interface, an
 
 320
-00:19:07.020 --> 00:19:09.540
-sidecar and says, I want
-to talk to this other
+00:17:36.970 --> 00:17:40.750
+object that like cosmos app
+and cosmos app has these
 
 321
-00:19:09.540 --> 00:19:14.460
-microservice, dapper takes care of
-the routing, and that could
+00:17:40.750 --> 00:17:43.900
+arcs parts of it feel
+like you're building a Dom
 
 322
-00:19:14.460 --> 00:19:16.470
-be sitting there on the
-same server. It could be
+00:17:43.900 --> 00:17:47.110
+and then parts of it
+have very verb action, you
 
 323
-00:19:16.470 --> 00:19:18.210
-sitting on another server out
-on the edge, or it
+00:17:47.110 --> 00:17:50.640
+know, action, verb type stuff
+like Renee, is it really
 
 324
-00:19:18.210 --> 00:19:21.030
-could be up running in
-the cloud and the code
+00:17:50.640 --> 00:17:52.830
+running? Is it really doing
+something at that moment? Or
 
 325
-00:19:21.030 --> 00:19:22.500
-is going to work the
-same. And so I can
+00:17:52.830 --> 00:17:56.960
+is that a lie? Yeah.
+So it's, it's basically declaring
 
 326
-00:19:22.500 --> 00:19:26.340
-move these microservices around to
-suit the latency and bandwidth
+00:17:57.050 --> 00:18:00.110
+the deployment. When you run
+the program using the alumi
 
 327
-00:19:26.340 --> 00:19:31.200
-and reliability requirements of my
-application scenario. But that code
+00:18:00.110 --> 00:18:03.800
+CLI it's gonna first run
+the program and compute what
 
 328
-00:19:31.200 --> 00:19:34.880
-doesn't have to change and
-Forgive my ignorance, but it's
+00:18:03.800 --> 00:18:07.550
+we call a preview, sometimes
+known as a plan. And
 
 329
-00:19:34.880 --> 00:19:37.400
-worth pointing out to myself
-and to the audience as
+00:18:07.550 --> 00:18:09.440
+that's going to show you,
+it's going to say, what
 
 330
-00:19:37.400 --> 00:19:40.640
-well. That like, so the
-dapper runtime is definitely multi-instance,
+00:18:09.440 --> 00:18:12.740
+if the, what if it's
+like a dry run and
 
 331
-00:19:40.640 --> 00:19:44.270
-it's not like it's a
-central sidecar. There's these side
+00:18:12.740 --> 00:18:14.660
+then the CLI will say,
+Hey, is this what you
 
 332
-00:19:44.270 --> 00:19:46.070
-cars can go all over
-the place. They can live
+00:18:14.660 --> 00:18:17.630
+want to do? Yes, no.
+Or show me more details.
 
 333
-00:19:46.130 --> 00:19:51.440
-their multi-instance throughout your application.
-That's right. So then you
+00:18:19.070 --> 00:18:21.190
+If you click, show me
+more details, it shows you
 
 334
-00:19:51.440 --> 00:19:54.440
-could have the dapper runtime
-on the edge and maybe
+00:18:21.440 --> 00:18:24.290
+the full object graph. You
+can inspect it if something
 
 335
-00:19:54.440 --> 00:19:57.170
-take a moment and explain
-because everyone hears that term
+00:18:24.290 --> 00:18:26.930
+wasn't what you expected, if
+you hit yes, then it
 
 336
-00:19:57.170 --> 00:20:00.050
-edge a lot, and it's
-very overloaded, but explain what
+00:18:26.930 --> 00:18:30.020
+actually orchestrates the deployment. And
+it just basically applies the
 
 337
-00:20:00.050 --> 00:20:03.540
-that means to have your
-application exist and live on,
+00:18:30.020 --> 00:18:32.780
+plan that it showed you.
+You can run these independently.
 
 338
-00:20:03.540 --> 00:20:06.800
-on the edge. Yep. So
-the edge, when you talk
+00:18:32.810 --> 00:18:35.720
+Sometimes people, especially, you know,
+the get hub pull request
 
 339
-00:20:06.800 --> 00:20:09.530
-about the edge, you're talking
-about relative to something in
+00:18:35.720 --> 00:18:38.120
+workflow. I mentioned earlier, a
+lot of times people want
 
 340
-00:20:09.530 --> 00:20:11.810
-this case, we're talking about
-the cloud public cloud. And
+00:18:38.120 --> 00:18:40.220
+to see that plan and
+the pull request before they
 
 341
-00:20:11.810 --> 00:20:15.620
-so everybody I'm sure is
-familiar with posting applications in
+00:18:40.220 --> 00:18:42.320
+merge it. So they know
+that, Hey, when I merge
 
 342
-00:20:15.620 --> 00:20:18.440
-the public cloud like Azure.
-When you talking about the
+00:18:42.330 --> 00:18:45.890
+this, this pull request, it's
+going to deploy three functions
 
 343
-00:20:18.440 --> 00:20:21.770
-edge of the public cloud,
-that means devices that are
+00:18:45.890 --> 00:18:48.500
+and delete, you know, a
+container and do all these
 
 344
-00:20:21.770 --> 00:20:25.040
-outside of the main Azure
-data centers in this case.
+00:18:48.500 --> 00:18:52.100
+things. So that's how the
+CLI kind of works in
 
 345
-00:20:25.040 --> 00:20:28.130
-And so that could be
-a Kubernetes cluster that's sitting
+00:18:52.100 --> 00:18:56.360
+tandem with the programming model,
+When you want something big
 
 346
-00:20:28.130 --> 00:20:30.560
-in your own data center.
-It could be in that
+00:18:56.390 --> 00:19:01.250
+made in the cloud and
+something small doesn't work. How
 
 347
-00:20:30.560 --> 00:20:33.830
-case, it'd be hybrid rather
-than technically edge. It could
+00:19:01.250 --> 00:19:04.010
+does an engine, like, Pilou
+me get you into that
 
 348
-00:20:33.830 --> 00:20:38.210
-be a Kubernetes cluster sitting
-in a building. That's a
+00:19:04.010 --> 00:19:05.930
+state? Like if something happened,
+how do you know if
 
 349
-00:20:38.210 --> 00:20:41.660
-smart building where it's controlling
-HVAC or lighting or conference
+00:19:05.930 --> 00:19:09.170
+it was a, a transient
+thing where like, Oh, well,
 
 350
-00:20:41.660 --> 00:20:45.890
-centers, conference rooms. It could
-be a server or a
+00:19:09.170 --> 00:19:12.230
+you know, AWS or Azure,
+couldn't get you a big
 
 351
-00:20:45.890 --> 00:20:50.500
-raspberry PI sitting in a
-retail store. That would be
+00:19:12.560 --> 00:19:16.430
+VM right now, but try
+again, versus, you know, you
 
 352
-00:20:50.500 --> 00:20:55.120
-all examples of edge computing.
-And the, the reason that
+00:19:16.430 --> 00:19:18.620
+ran out of money or
+something that stops you in
 
 353
-00:20:55.120 --> 00:20:58.510
-their edge is that they're
-communicating with the cloud, they're
+00:19:18.620 --> 00:19:21.500
+its tracks. How can you
+get a plan that's close
 
 354
-00:20:58.510 --> 00:21:02.620
-getting typically control and deployed
-and software deployed from the
+00:19:21.500 --> 00:19:25.040
+enough versus a plan that
+either succeeded or failed? Yeah,
 
 355
-00:21:02.620 --> 00:21:07.840
-public cloud. There's different variations
-on the typologies for how
+00:19:25.040 --> 00:19:28.730
+it's a great question. And
+honestly, it's interesting being in
 
 356
-00:21:07.840 --> 00:21:10.390
-a device gets connected up
-in the public cloud. There's
+00:19:28.730 --> 00:19:31.280
+our position because we tend
+to be the interface into
 
 357
-00:21:10.390 --> 00:21:16.510
-also different kind of configurations
-for how they're connected, whether
+00:19:31.280 --> 00:19:34.910
+all these different cloud providers
+for our end users. And
 
 358
-00:21:16.510 --> 00:21:22.570
-they're directly connected, constantly connected,
-occasionally collected or disconnected with
+00:19:34.910 --> 00:19:38.240
+so something fails, you know,
+it's our responsibility to make
 
 359
-00:21:22.570 --> 00:21:27.460
-some kind of air gap
-play wave to get the
+00:19:38.240 --> 00:19:40.670
+sure it's a great experience
+and that's a philosophy we
 
 360
-00:21:27.460 --> 00:21:31.270
-code and the telemetry and
-data back and forth between
+00:19:40.670 --> 00:19:42.710
+have on the team. It
+doesn't matter if, you know,
 
 361
-00:21:31.270 --> 00:21:33.980
-the cloud and the edge.
-Yeah. I really liked the,
+00:19:42.710 --> 00:19:45.560
+Hey, Azure timed out for
+some reason, or, you know,
 
 362
-00:21:33.980 --> 00:21:37.020
-the, the example of a,
-like a grocery store. Like
+00:19:45.650 --> 00:19:47.900
+the, the person didn't have
+enough money in their account.
 
 363
-00:21:37.020 --> 00:21:39.780
-if I managed a big
-grocery outlet and I'd have
+00:19:48.110 --> 00:19:50.900
+Like we, we view that
+as core to our experience.
 
 364
-00:21:39.780 --> 00:21:43.500
-our central cloud, that was
-maybe partially in our own
+00:19:50.900 --> 00:19:53.360
+We want it to be
+a great experience. Now that
 
 365
-00:21:43.500 --> 00:21:46.710
-data center, but largely in
-a cloud like Azure. And
+00:19:53.360 --> 00:19:56.870
+said it's difficult. So what
+we do is when you,
 
 366
-00:21:46.710 --> 00:21:49.710
-then, you know, we don't
-want to count on anything.
+00:19:56.870 --> 00:19:59.870
+when you do that preview
+step, we actually validate as
 
 367
-00:21:49.710 --> 00:21:51.930
-We don't want to assume
-anything. So we'll have our
+00:19:59.870 --> 00:20:02.180
+much as we can. We
+actually go out to the
 
 368
-00:21:51.930 --> 00:21:56.880
-own Kubernetes cluster running in
-the actual, you know, local
+00:20:02.180 --> 00:20:04.520
+cloud provider or we say,
+Hey, here's what we're going
 
 369
-00:21:56.880 --> 00:21:59.160
-grocery store. So that, that
-of course the store could
+00:20:04.520 --> 00:20:07.640
+to do. Does this look
+valid to you? Surface is
 
 370
-00:21:59.160 --> 00:22:02.190
-be offline for days even,
-and still people would be
+00:20:07.940 --> 00:20:11.000
+basically, you know, sort of
+our background in programming languages,
 
 371
-00:22:02.190 --> 00:22:04.140
-able to buy a food,
-batch, everything up, and then
+00:20:11.000 --> 00:20:13.400
+right? You want to find
+as many errors as close
 
 372
-00:22:04.140 --> 00:22:06.750
-it would be sent off.
-When we got back our
+00:20:13.400 --> 00:20:16.580
+to writing the code as
+possible. And so we do
 
 373
-00:22:06.750 --> 00:22:10.710
-connectivity to the, to the,
-to the central location, it
+00:20:16.580 --> 00:20:18.140
+as much as we can
+in the editor, as you're
 
 374
-00:22:10.710 --> 00:22:13.050
-could phone home, like you
-said, so occasionally connected or
+00:20:18.140 --> 00:20:21.350
+typing, you know, red squiggles,
+and then during the preview.
 
 375
-00:22:13.050 --> 00:22:16.980
-at least resiliently connected. And
-then if you inject dapper
+00:20:21.350 --> 00:20:23.270
+And the worst case is
+if it fails during a
 
 376
-00:22:16.980 --> 00:22:21.180
-into that, that sidecar would
-run in any, and all
+00:20:23.270 --> 00:20:26.450
+deployment, but even in that
+case, we, we come back
 
 377
-00:22:21.180 --> 00:22:23.910
-of those locations providing all
-the different services and core
+00:20:26.450 --> 00:20:28.250
+and we tell you exactly
+what line of code it
 
 378
-00:22:23.910 --> 00:22:27.570
-concepts that dapper offers, whether
-it be in the self
+00:20:28.250 --> 00:20:32.270
+was. And another important thing
+is, as you're doing deployments,
 
 379
-00:22:27.570 --> 00:22:30.210
-hosted cloud in the actual
-public cloud or running on
+00:20:32.390 --> 00:20:37.580
+salumi is transactionally checkpointing state.
+So that no matter what
 
 380
-00:22:30.210 --> 00:22:32.730
-the edge, or even like
-you said, in tiny devices
+00:20:37.580 --> 00:20:40.730
+happens, if you fail, you're
+in a known state, you
 
 381
-00:22:32.730 --> 00:22:36.870
-themselves. And because if I
-understand correctly, dapper just makes
+00:20:40.730 --> 00:20:42.980
+can choose to roll back
+if you want, but you're
 
 382
-00:22:36.870 --> 00:22:38.880
-the assumption that as long
-as your code can speak
+00:20:42.980 --> 00:20:46.820
+always in a known well-defined
+state. And so we've made
 
 383
-00:22:38.910 --> 00:22:42.300
-HTTP or HTP two, it
-can do protocol buffer and
+00:20:46.820 --> 00:20:51.130
+sure because things fail right?
+Re entire regions go offline,
 
 384
-00:22:42.300 --> 00:22:46.620
-coding because it's all HTTP
-and GRPC, really anything could
+00:20:51.130 --> 00:20:53.710
+you know, billing as you,
+as you point out, sometimes
 
 385
-00:22:46.620 --> 00:22:50.220
-talk to them. Exactly. I
-mean, that's, I think what's
+00:20:53.710 --> 00:20:55.780
+you might not have permissions
+to do the operation you're
 
 386
-00:22:50.220 --> 00:22:54.090
-so powerful about this is
-exactly that, that it's like
+00:20:55.780 --> 00:20:58.960
+trying to do, because you
+know, you're in an organization
 
 387
-00:22:54.210 --> 00:22:57.210
-when we've been talking about
-really summarized, as dapper provides
+00:20:58.960 --> 00:21:01.990
+that has locked down, you
+know, security permissions. So we've
 
 388
-00:22:57.210 --> 00:23:00.540
-all of these building blocks,
-you can compute compose all
+00:21:01.990 --> 00:21:04.300
+tried to make that a
+great experience. We also protect
 
 389
-00:23:00.540 --> 00:23:03.030
-a cart, or you can
-compose them in big chunks
+00:21:04.300 --> 00:21:07.570
+against common failures. Like, you
+know, we do retries at
 
 390
-00:23:03.030 --> 00:23:05.760
-to get things like the
-functions as a service model
+00:21:07.570 --> 00:21:09.910
+the right time, you know,
+in case there is a
 
 391
-00:23:05.760 --> 00:23:08.730
-or that actor model. You
-can consume them from any
+00:21:09.910 --> 00:21:13.330
+transient network problems. So that
+try to insulate you from
 
 392
-00:23:08.730 --> 00:23:12.870
-language, from any app, from
-any existing code, because it's
+00:21:13.330 --> 00:21:16.920
+as many of those failures
+as possible, Really significant because
 
 393
-00:23:12.990 --> 00:23:15.810
-anything that knows how to
-talk HTTP or GRPC can
+00:21:16.950 --> 00:21:19.500
+there is the, you know,
+going back to my naive
 
 394
-00:23:15.810 --> 00:23:19.650
-immediately take advantage of some
-or all of it. Do
+00:21:19.500 --> 00:21:24.270
+implementation many years ago, when
+we got into a, we
 
 395
-00:23:19.650 --> 00:23:23.920
-you think that in some
-theoretical future, you know, a
+00:21:24.270 --> 00:21:26.430
+don't know what state we're
+in, but you know, some
 
 396
-00:23:23.920 --> 00:23:27.480
-year or two years down
-the road, that if just
+00:21:26.430 --> 00:21:30.150
+stuff got made and good
+luck. It was basically just
 
 397
-00:23:27.480 --> 00:23:31.770
-like Apache and then followed
-by engine X and then
+00:21:30.150 --> 00:21:32.040
+torch it and try again
+was the best we could
 
 398
-00:23:31.770 --> 00:23:35.610
-perhaps something else becomes so
-ubiquitous that it becomes the
+00:21:32.040 --> 00:21:34.560
+do. There wasn't any kind
+of granularity and there was
 
 399
-00:23:35.610 --> 00:23:38.220
-fabric of the internet itself.
-Like there was a day
+00:21:34.560 --> 00:21:38.700
+minimal governance or policy management.
+Yeah. That's one of the
 
 400
-00:23:38.220 --> 00:23:40.260
-where Apache wasn't around and
-poof and everything was running
+00:21:38.700 --> 00:21:43.560
+biggest arguments for using infrastructures
+code tool is, you know,
 
 401
-00:23:40.260 --> 00:23:43.200
-on Apache. And then within
-a few years and X
+00:21:43.620 --> 00:21:46.590
+that sort of infrastructure, maturity
+life cycle that we see
 
 402
-00:23:43.200 --> 00:23:46.070
-just took over and then
-within a few Kubernetes is
+00:21:46.590 --> 00:21:49.080
+is, you know, step one,
+most people go into the
 
 403
-00:23:46.070 --> 00:23:49.160
-taking over. If we start
-to Uplevel like that, would
+00:21:49.080 --> 00:21:51.480
+Azure console or 80 of
+us console point and click
 
 404
-00:23:49.160 --> 00:23:52.400
-you see a programming language
-or programming language to start
+00:21:51.480 --> 00:21:54.660
+to provision some things they're
+just exploring their learning. That's
 
 405
-00:23:52.400 --> 00:23:56.180
-to optimize for the sidecar
-pattern to optimize the way
+00:21:54.840 --> 00:21:58.350
+perfectly fine. Most people learn
+that way. And the problem
 
 406
-00:23:56.180 --> 00:24:00.830
-that we express our, our
-code and our intent for
+00:21:58.350 --> 00:22:00.240
+then comes, you know, Hey,
+maybe you want a second
 
 407
-00:24:01.190 --> 00:24:05.870
-HDP, for GRPC, and then
-for something like dapper itself,
+00:22:00.240 --> 00:22:03.000
+copy of that. Maybe you
+want production and staging. Maybe
 
 408
-00:24:05.900 --> 00:24:08.030
-because if you're going to
-roll your own, you're still
+00:22:03.000 --> 00:22:05.430
+you want to share it
+with a colleague and have
 
 409
-00:24:08.030 --> 00:24:12.170
-going to be basically making
-these, these, these HTTP calls
+00:22:05.430 --> 00:22:07.230
+them stand up their own
+copy, or you need to
 
 410
-00:24:12.170 --> 00:24:14.360
-yourself. And a lot of,
-some of the languages are
+00:22:07.410 --> 00:22:09.810
+scale, you know, to a
+new region at that point,
 
 411
-00:24:14.360 --> 00:24:16.190
-a little bit more chatty
-than maybe they need to
+00:22:09.810 --> 00:22:13.680
+you need automation. And the
+obvious way to do automation
 
 412
-00:24:16.190 --> 00:24:19.580
-be. Could we hide a
-lot of that and write
+00:22:13.680 --> 00:22:16.920
+is to open code, you
+know, provisioning of new resources.
 
 413
-00:24:19.640 --> 00:24:24.110
-a language itself that could
-speak to a cloud native
+00:22:17.100 --> 00:22:19.080
+But the problem is exactly
+what you point out where
 
 414
-00:24:24.380 --> 00:24:28.210
-actor runtime? Yeah. I definitely
-think that you're going to
+00:22:19.350 --> 00:22:22.050
+if it fails. Now, your
+script has to think about
 
 415
-00:24:28.210 --> 00:24:34.150
-see language optimizations for talking
-HTTP or GRPC. I think
+00:22:22.110 --> 00:22:26.460
+every possible permutation of failure
+and every state transition. And
 
 416
-00:24:34.840 --> 00:24:37.960
-though that, and this is
-one of the recognitions that
+00:22:26.460 --> 00:22:30.180
+that's what an infrastructure's code
+tool fundamentally does. It knows
 
 417
-00:24:37.960 --> 00:24:41.200
-we had looking at functions
-as a service or actor
+00:22:30.180 --> 00:22:33.090
+the desired state, and it
+knows how to converge on
 
 418
-00:24:41.200 --> 00:24:43.240
-models, where they only support
-a subset of languages. And
+00:22:33.090 --> 00:22:35.520
+that desired state, no matter
+what state you are currently
 
 419
-00:24:43.240 --> 00:24:47.830
-the fact is that language
-is proliferating like crazy is
+00:22:35.520 --> 00:22:38.670
+in. And that, that removes
+a ton of complexity that
 
 420
-00:24:47.830 --> 00:24:50.350
-that there's not going to
-be one language. That's going
+00:22:38.670 --> 00:22:41.490
+you just don't need to
+think about it anymore. That
 
 421
-00:24:50.350 --> 00:24:51.850
-to be the one to
-rule them all, or even
+00:22:41.490 --> 00:22:43.800
+is, that is the trick
+though. Like all of this
 
 422
-00:24:51.850 --> 00:24:54.340
-three or four. And with
-the number that we have
+00:22:43.800 --> 00:22:47.130
+is trying to hide complexity,
+but also it shouldn't feel
 
 423
-00:24:54.340 --> 00:24:57.070
-to support an Azure interesti
-case continues to grow as
+00:22:47.130 --> 00:22:50.010
+like a black box that
+is hidden so much that
 
 424
-00:24:57.430 --> 00:25:01.450
-new ones become popular. And
-so, yeah, you're going to
+00:22:50.010 --> 00:22:53.310
+you just throw your wishes,
+you know, into the well
 
 425
-00:25:01.450 --> 00:25:04.120
-see those optimizations, but I
-think there's not going to
+00:22:53.310 --> 00:22:55.380
+and hope that things work
+out nicely. So how do
 
 426
-00:25:04.120 --> 00:25:07.270
-be a, Oh, this is
-the programming language for distributed
+00:22:55.380 --> 00:22:57.630
+you find that balance? You
+said that you can give
 
 427
-00:25:08.050 --> 00:25:10.870
-application development. It's, it's going
-to be, everyone is going
+00:22:57.630 --> 00:22:59.880
+them line numbers. You, you
+follow it all the way
 
 428
-00:25:10.870 --> 00:25:15.100
-to end up with optimizations
-and support for it. So
+00:22:59.880 --> 00:23:03.210
+back to the projection and
+say the engine failed here,
 
 429
-00:25:15.280 --> 00:25:18.370
-The, the, the essence of
-dapper is really nondenominational. The,
+00:23:03.210 --> 00:23:07.650
+but in your projection, that's
+line 26. Exactly. We, we
 
 430
-00:25:18.370 --> 00:25:22.750
-the SDKs now have go
-Java, javascript.net Python. The developers
+00:23:07.650 --> 00:23:10.290
+treat this, you know, a
+lot of folks on the
 
 431
-00:25:22.750 --> 00:25:26.590
-never really have to deal
-with GRPC and HTTP. So
+00:23:10.290 --> 00:23:14.670
+team come from visual studio
+and, and.net and, you know,
 
 432
-00:25:26.590 --> 00:25:29.620
-the SDK largely handles a
-lot of those abstractions. So
+00:23:14.680 --> 00:23:18.090
+compilers and languages. And so
+we've, we've treated the whole
 
 433
-00:25:29.620 --> 00:25:33.340
-while there might be some
-potential future language that is
+00:23:18.090 --> 00:23:21.690
+infrastructure as code experience. Like
+we would a programming language
 
 434
-00:25:33.370 --> 00:25:36.010
-optimized for something like dapper,
-there's really no need to
+00:23:21.690 --> 00:23:25.530
+or a compiler, and frankly,
+over time where, you know,
 
 435
-00:25:36.010 --> 00:25:41.530
-do That's right. And I
-think that the fact is
+00:23:25.530 --> 00:23:27.720
+we love vs code and
+we're, we're kind of integrating
 
 436
-00:25:41.530 --> 00:25:44.650
-like, we've just said that
-there's some language convenience, STKs
+00:23:27.720 --> 00:23:30.780
+more deeply into that and
+bringing more things, just closer
 
 437
-00:25:44.650 --> 00:25:48.820
-for dapper, but a new
-language comes out the Scott
+00:23:30.780 --> 00:23:33.330
+to the development experience. And
+so, you know, cause we
 
 438
-00:25:48.820 --> 00:25:53.080
-Hanselman language that you develop.
-That's, that's great and optimized
+00:23:33.330 --> 00:23:35.850
+talk to people a lot
+of times when something fails,
 
 439
-00:25:53.080 --> 00:25:57.490
-for web development, that, that
-you can immediately start integrate
+00:23:36.390 --> 00:23:38.820
+it's, you know, 10, 10
+minutes into a deployment, it's
 
 440
-00:25:57.490 --> 00:26:00.130
-that with dapper because you
-don't need on SDK for
+00:23:38.820 --> 00:23:42.240
+kind of already too late.
+Production is now potentially suffering
 
 441
-00:26:00.130 --> 00:26:02.800
-it, for dapper to integrate
-your language with it. One
+00:23:42.240 --> 00:23:45.890
+an outage. And it's kind
+of like some transient failure.
 
 442
-00:26:02.800 --> 00:26:05.290
-of the things that I've
-been finding, the larger my
+00:23:45.890 --> 00:23:48.290
+You had a pile of
+Yammel and it's not even
 
 443
-00:26:05.290 --> 00:26:07.210
-systems get, and the larger
-that the systems that I
+00:23:48.290 --> 00:23:50.900
+clear where the failure came
+from. And so we're really
 
 444
-00:26:07.210 --> 00:26:10.150
-consult on get is, you
-know, it's still just text
+00:23:50.900 --> 00:23:56.150
+trying to bring a great
+developer experience to infrastructure, which
 
 445
-00:26:10.150 --> 00:26:12.400
-files, except now there's a
-thousand of them. And I
+00:23:56.630 --> 00:24:00.050
+is, is pretty unique. I
+think, cause a lot of,
 
 446
-00:26:12.400 --> 00:26:14.500
-have to bring all of
-those together. You know, I
+00:24:00.110 --> 00:24:02.210
+a lot of the, you
+know, we we've been on
 
 447
-00:26:14.500 --> 00:26:16.390
-kind of felt like I'd
-have a jet pack right
+00:24:02.210 --> 00:24:03.970
+this journey for a long
+time and I think our
 
 448
-00:26:16.390 --> 00:26:18.730
-now, a self driving car.
-And I wouldn't be rejecting
+00:24:04.010 --> 00:24:07.940
+standards for what's acceptable in
+the infrastructure space are actually
 
 449
-00:26:18.730 --> 00:26:23.110
-through tra through text files,
-but the distributed tracing is
+00:24:07.940 --> 00:24:11.420
+much lower than what our
+standards are in the application
 
 450
-00:26:23.110 --> 00:26:25.930
-a big part of dapper
-and it integrates with open
+00:24:11.420 --> 00:24:15.470
+developer space. We're, we're willing
+to tolerate messy, hard to
 
 451
-00:26:25.930 --> 00:26:27.520
-telemetry. And maybe you could
-speak about that for a
+00:24:15.470 --> 00:24:18.350
+diagnose failures for some reason.
+I think it's just historically
 
 452
-00:26:27.520 --> 00:26:30.640
-second. Yeah. So I think
-because dapper sitting there at
+00:24:18.350 --> 00:24:20.360
+how we ended up here.
+And so we're trying to
 
 453
-00:26:30.640 --> 00:26:34.360
-a sidecar and it's, once
-you start integrating with it,
+00:24:20.360 --> 00:24:24.310
+revisit that The, the, the
+larger Poloma kind of cloud
 
 454
-00:26:34.360 --> 00:26:38.830
-your application traffic is going
-through dapper copper has this
+00:24:24.310 --> 00:24:28.210
+development platform, isn't just this
+runtime, right. There's tools, there's
 
 455
-00:26:38.830 --> 00:26:42.850
-great position to be able
-to log activity for you
+00:24:28.210 --> 00:24:31.510
+libraries, there's runtime. The goal
+of which is to give
 
 456
-00:26:42.850 --> 00:26:44.850
-and you to get a
-distributed view of the way
+00:24:31.510 --> 00:24:36.490
+you that consistent development, that
+consistent operational plane for everything.
 
 457
-00:26:44.850 --> 00:26:48.090
-your application works. Some people
-that are listening probably are
+00:24:36.790 --> 00:24:40.480
+How much does it try
+to hide? Like pretend that
 
 458
-00:26:48.090 --> 00:26:51.060
-familiar with service meshes and
-service meshes are the same
+00:24:40.480 --> 00:24:43.090
+we don't even know what
+cloud we're on versus how
 
 459
-00:26:51.060 --> 00:26:54.630
-thing, but at the infrastructure
-layer, what dapper you can
+00:24:43.090 --> 00:24:46.210
+much is it really straightforward
+with you about, about the
 
 460
-00:26:54.630 --> 00:26:58.110
-think of as an application
-layer service mesh, and just
+00:24:46.210 --> 00:24:47.920
+realities of what you're doing?
+Like how much do you
 
 461
-00:26:58.110 --> 00:27:01.800
-like infrastructure service message that
-can log network traffic and
+00:24:47.920 --> 00:24:51.040
+abstract away and how much
+do you decidedly not abstract
 
 462
-00:27:01.800 --> 00:27:05.700
-impose policy dapper provides that
-same kind of control point
+00:24:51.040 --> 00:24:57.280
+away. Yeah. Was a great
+question. We, we intentionally, so
 
 463
-00:27:05.700 --> 00:27:11.910
-for application level inner serve,
-microservice communication. And one of
+00:24:57.280 --> 00:25:00.310
+the system's sort of layered.
+We intentionally don't abstract away
 
 464
-00:27:11.910 --> 00:27:15.240
-the ones that components that
-we built off the bat
+00:25:00.340 --> 00:25:04.900
+at the fundamental building block
+layer. So I think of
 
 465
-00:27:15.240 --> 00:27:18.600
-to take advantage of that
-is the distributed tracing building
+00:25:04.900 --> 00:25:06.670
+it as, you know, it's
+turtles all the way down,
 
 466
-00:27:18.600 --> 00:27:22.410
-block. And once you opt
-into that, that it's collecting
+00:25:06.700 --> 00:25:10.030
+right? It's a programming language.
+So everything's classes and functions
 
 467
-00:27:22.410 --> 00:27:29.130
-and admitting that dapper traces
-of a microservice interactions and
+00:25:10.030 --> 00:25:13.600
+and things compose, but everything
+bottoms out at that. Basically
 
 468
-00:27:29.130 --> 00:27:31.950
-the open telemetry format. And
-we've got, I think, seven,
+00:25:13.600 --> 00:25:16.330
+the Dom that we were
+talking about, where you've got
 
 469
-00:27:32.040 --> 00:27:36.090
-there might even be more
-than that different tracing systems
+00:25:16.330 --> 00:25:19.720
+access to every cloud provider,
+all of the resources and
 
 470
-00:27:36.090 --> 00:27:40.560
-that now are plugged into
-dapper. So Azure monitor is
+00:25:19.720 --> 00:25:22.420
+all the properties on those
+resources in their raw form,
 
 471
-00:27:40.560 --> 00:27:43.500
-one example or application insights.
-And so now you can
+00:25:22.450 --> 00:25:23.920
+we don't get in the
+way we don't want to
 
 472
-00:27:43.950 --> 00:27:47.280
-just by flipping a switch,
-have this data admitted and
+00:25:23.920 --> 00:25:26.500
+abstract over it. If you're
+going to Azure using cosmos
 
 473
-00:27:47.280 --> 00:27:52.290
-then viewed in an application
-insights and see the execution
+00:25:26.500 --> 00:25:28.390
+DB, we want you to
+have the latest and greatest
 
 474
-00:27:52.290 --> 00:27:55.350
-of your microservices, how they're
-talking to each other, where
+00:25:28.390 --> 00:25:32.200
+features and be able to
+use them fully now where
 
 475
-00:27:55.350 --> 00:27:59.190
-there's latency, where there's failures,
-all of that basically comes
+00:25:32.200 --> 00:25:34.960
+it starts to get interesting
+is we can actually give
 
 476
-00:27:59.190 --> 00:28:03.980
-for free just by using
-dapper. Yeah. There's a there's
+00:25:34.960 --> 00:25:38.260
+you help our libraries, but
+still the next layer up
 
 477
-00:28:03.980 --> 00:28:07.130
-Azure monitor. There's Datadog who
-has been a sponsor of
+00:25:38.260 --> 00:25:41.320
+is still cloud specific. So
+you mentioned we were actually
 
 478
-00:28:07.130 --> 00:28:10.160
-the show before and Jaeger
-and signal if I'm going
+00:25:41.320 --> 00:25:44.920
+on the release and Azure
+blog in partnership with the
 
 479
-00:28:10.160 --> 00:28:12.890
-on and on and on.
-So basically all comers. And
+00:25:44.920 --> 00:25:50.560
+cosmos DB team, this distributed
+application concept where oftentimes people,
 
 480
-00:28:12.890 --> 00:28:16.130
-again, if there's not one,
-as you've said before, you
+00:25:50.800 --> 00:25:53.080
+you know, will provision a
+cosmos database, but then their
 
 481
-00:28:16.130 --> 00:28:18.590
-can, you can plug it.
-Yeah. And I, you know,
+00:25:53.080 --> 00:25:56.770
+application isn't globally distributed. So
+it's, it's not taking advantage
 
 482
-00:28:18.590 --> 00:28:23.060
-when I think about, okay,
-so what would stop dapper
+00:25:56.770 --> 00:25:58.930
+of the latency savings of
+the database. And so we
 
 483
-00:28:23.060 --> 00:28:26.270
-from somebody from wanting to
-use dapper? I really am
+00:25:58.930 --> 00:26:02.350
+can give you a cosmos
+application, a component is what
 
 484
-00:28:26.270 --> 00:28:29.330
-struggle with a reason because
-all the kinds of excuses
+00:26:02.350 --> 00:26:04.600
+we call it. And that
+just hides a lot of
 
 485
-00:28:29.330 --> 00:28:33.470
-that we've seen for, why
-can't you adopt functions as
+00:26:04.600 --> 00:26:07.930
+the infrastructure complexity, but you
+still know you're using Azure
 
 486
-00:28:33.470 --> 00:28:37.850
-a service? Why can't you
-adopt at the actor model?
+00:26:07.990 --> 00:26:10.390
+in that case. And so
+that's sort of like this
 
 487
-00:28:37.880 --> 00:28:42.710
-Why can't you adopt some
-special purpose runtime, that's providing
+00:26:10.390 --> 00:26:13.060
+middle layer where we can
+help you with common patterns
 
 488
-00:28:42.710 --> 00:28:45.860
-something, all of those reasons
-why you might not be
+00:26:13.060 --> 00:26:16.300
+so you can frankly build
+your own. And then we
 
 489
-00:28:45.860 --> 00:28:48.680
-able to adopt something are
-gone and the benefits of
+00:26:16.300 --> 00:26:19.300
+do see some people taming
+the complexity of having to
 
 490
-00:28:48.680 --> 00:28:52.910
-taking advantage of this open
-ecosystem flexibility, and the portability
+00:26:19.300 --> 00:26:23.410
+do multiple clouds using abstractions.
+So one of our customers,
 
 491
-00:28:53.480 --> 00:28:56.150
-are all there as part
-of the value proposition. So
+00:26:23.650 --> 00:26:25.690
+they run an Azure, but
+they also have to run
 
 492
-00:28:56.150 --> 00:28:58.250
-it seems like a no
-brainer to me. I mean,
+00:26:25.690 --> 00:26:28.870
+on prem. And so let's
+call them Acme Corp. They
 
 493
-00:28:58.370 --> 00:29:01.880
-I struggle with the why
-wouldn't I use dapper? Well,
+00:26:28.870 --> 00:26:31.360
+were able to create, you
+know, an Acme Corp virtual
 
 494
-00:29:01.880 --> 00:29:04.010
-what if you did, what,
-if you are starting to
+00:26:31.360 --> 00:26:34.960
+machine abstraction that knows how
+to at deployment time, either
 
 495
-00:29:04.010 --> 00:29:07.130
-feel like things are getting
-so broken apart, that it's
+00:26:34.960 --> 00:26:38.410
+go to Azure or go
+to vSphere VMware vSphere on
 
 496
-00:29:07.130 --> 00:29:09.020
-time to go back to
-the big ball, but you
+00:26:38.410 --> 00:26:42.670
+prem, and that's allowed them,
+you know, it's not, it's
 
 497
-00:29:09.020 --> 00:29:11.150
-know, a big ball of
-mud, a monolith, like, are
+00:26:42.670 --> 00:26:46.230
+not hiding the complexity, but
+it helps to encapsulate some
 
 498
-00:29:11.150 --> 00:29:14.900
-there any challenges in this
-ecosystem of all these open
+00:26:46.230 --> 00:26:49.170
+of the complexity and enables
+other people on the team
 
 499
-00:29:14.900 --> 00:29:17.450
-source projects and everything's moving
-so fast and everything's being
+00:26:49.170 --> 00:26:51.270
+to think at a different
+level of abstraction. Right? So
 
 500
-00:29:17.480 --> 00:29:19.760
-versioned so fast, have you
-had any challenges? Has your
+00:26:51.270 --> 00:26:55.440
+now application developers can create
+applications out of composing Acme,
 
 501
-00:29:19.760 --> 00:29:22.520
-team had any challenges in
-putting this together where you
+00:26:55.440 --> 00:27:00.030
+Corp, virtual machines, without having
+to completely replicate their configuration
 
 502
-00:29:22.520 --> 00:29:25.730
-found something was not as
-robust as it should have
+00:27:00.030 --> 00:27:02.220
+for the two different environments.
+And so we see a
 
 503
-00:29:25.730 --> 00:29:28.580
-been, or maybe you bet
-too much on this or
+00:27:02.220 --> 00:27:04.890
+lot, you know, increasingly more
+of that, and we're really
 
 504
-00:29:28.580 --> 00:29:32.510
-that, or GRPC is not
-able to keep perfectly to
+00:27:04.890 --> 00:27:07.770
+excited about the sort of
+blueprints and patterns there, but
 
 505
-00:29:32.510 --> 00:29:33.690
-the point that you want
-it to be? What are
+00:27:07.770 --> 00:27:11.040
+fundamentally you can always Pierce
+through the abstraction and get
 
 506
-00:29:33.710 --> 00:29:36.530
-some things that aren't a
-slam dunk in all of
+00:27:11.040 --> 00:27:14.400
+at the raw underlying cloud.
+And I think that's essential
 
 507
-00:29:36.530 --> 00:29:44.560
-this microservices architecture? I think
-that, so for one building
+00:27:15.030 --> 00:27:18.210
+because you see some platforms
+as a service that have
 
 508
-00:29:44.560 --> 00:29:49.480
-on industry standards, I think
-means that we can ride
+00:27:18.210 --> 00:27:20.160
+come in to where it
+works great for sort of
 
 509
-00:29:49.480 --> 00:29:55.150
-the industry, the ecosystems innovations
-around things like GRPC or
+00:27:20.160 --> 00:27:22.080
+development. But then when you
+go into production, you have
 
 510
-00:29:55.150 --> 00:30:00.100
-HTTP for that matter and
-HTTP servers. So for as
+00:27:22.080 --> 00:27:25.890
+to completely rewrite everything because
+it had too much from
 
 511
-00:30:00.100 --> 00:30:02.680
-far as reasons, you might
-not be able to want
+00:27:25.890 --> 00:27:28.470
+you is they're trying to
+strike a nice balance between
 
 512
-00:30:02.680 --> 00:30:04.510
-to use Dopper. We talked
-about, touched on them a
+00:27:28.470 --> 00:27:32.430
+that abstraction in the level
+of precision and control that
 
 513
-00:30:04.510 --> 00:30:09.940
-little bit earlier when we
-talked about performance, where I
+00:27:32.460 --> 00:27:39.770
+most enterprises need. So given
+the space, which is arguably
 
 514
-00:30:09.940 --> 00:30:13.210
-want some, I want performance,
-for example, I want to
+00:27:39.800 --> 00:27:43.610
+somewhat crowded and has been,
+you know, developing since, you
 
 515
-00:30:13.210 --> 00:30:18.190
-pack microservices, many of them
-into the same process and
+00:27:43.610 --> 00:27:48.050
+know, puppet in 2005, what
+does Poloma do that kind
 
 516
-00:30:18.190 --> 00:30:23.170
-the opera doesn't support that
-today. Or I want no
+00:27:48.050 --> 00:27:51.410
+of uniquely sets it aside
+from the various and sundry,
 
 517
-00:30:23.350 --> 00:30:27.040
-hop across an HTTP or
-GRPC interface to get out
+00:27:52.190 --> 00:27:56.030
+you know, list of a
+dozen similar, if not coming
 
 518
-00:30:27.040 --> 00:30:31.150
-to the network. I want
-to access it directly. That
+00:27:56.030 --> 00:27:58.940
+on, they're not directly similarly
+like one-to-one features, but like
 
 519
-00:30:31.150 --> 00:30:35.950
-might be another reason. So
-there are potentially some cases
+00:27:58.940 --> 00:28:00.800
+where do you say, Oh
+yeah, you should use polygamy
 
 520
-00:30:35.950 --> 00:30:37.810
-where you might not want
-to, but even in those
+00:28:00.800 --> 00:28:04.010
+rather than My answer to
+this now is different than
 
 521
-00:30:38.290 --> 00:30:40.360
-scenarios where you got an
-application that needs to have
+00:28:04.010 --> 00:28:05.900
+it would have been at
+the start. You know, at
 
 522
-00:30:40.360 --> 00:30:42.880
-some optimized path through it,
-it's most likely that there's
+00:28:05.900 --> 00:28:09.880
+the start I thought it
+was. And honestly, it's, it's
 
 523
-00:30:43.090 --> 00:30:48.400
-many other paths, many other
-services that it using dapper
+00:28:09.890 --> 00:28:13.190
+more of a people thing
+than it is a technology
 
 524
-00:30:48.400 --> 00:30:54.070
-is just fine. So again,
-this ability to take advantage
+00:28:13.190 --> 00:28:15.590
+thing. I thought it was
+technology. I thought it was,
 
 525
-00:30:54.070 --> 00:30:56.230
-of it in part or
-in whole or whatever pieces
+00:28:15.590 --> 00:28:18.470
+Hey, general purpose languages. You
+know, it solves a bunch
 
 526
-00:30:56.230 --> 00:31:00.580
-of it you want actually
-makes it, so that saying
+00:28:18.470 --> 00:28:21.800
+of problems, technical problems, right?
+Package management, you get, you
 
 527
-00:31:01.030 --> 00:31:04.570
-dapper is not good enough.
-Again, I don't think as
+00:28:21.800 --> 00:28:26.180
+know, better editor experience sharing
+and reuse. What we're finding
 
 528
-00:31:04.570 --> 00:31:07.720
-a blanket statement that I'd
-ever can imagine somebody saying,
+00:28:26.180 --> 00:28:30.890
+with is actually it's the
+fact that now infrastructure and
 
 529
-00:31:07.750 --> 00:31:10.000
-because it might not be
-good enough for this one
+00:28:30.890 --> 00:28:37.130
+operations teams can actually work
+with development teams together historically
 
 530
-00:31:10.000 --> 00:31:13.600
-particular aspect of my app,
-but there's many others that
+00:28:37.130 --> 00:28:40.220
+they've had completely different stacks,
+right? So the dev team
 
 531
-00:31:13.750 --> 00:31:17.610
-I'm sure it would be.
-Well, it seems like that,
+00:28:40.220 --> 00:28:42.170
+was working on their app
+stack and then the infrastructure
 
 532
-00:31:17.760 --> 00:31:21.840
-you know, HTTP and GRPC
-and their concept of restful
+00:28:42.170 --> 00:28:44.690
+team is working on, you
+know, chef puppet or what
 
 533
-00:31:21.840 --> 00:31:25.170
-API is I know microservices
-and Kubernetes and all the
+00:28:44.690 --> 00:28:48.470
+have you, where, and that
+sort of reinforced some of
 
 534
-00:31:25.170 --> 00:31:29.040
-different supporting things that would
-be required to make something
+00:28:48.470 --> 00:28:52.790
+the silos where, you know,
+if developers need new infrastructure,
 
 535
-00:31:29.040 --> 00:31:34.680
-like dapper and, and you,
-the listeners application successful, you
+00:28:52.790 --> 00:28:54.740
+they file a ticket and
+they wait for the it
 
 536
-00:31:34.680 --> 00:31:37.050
-know, the time has come
-in in the right. It
+00:28:54.740 --> 00:28:56.840
+team to provision it. And
+then they get back, you
 
 537
-00:31:37.050 --> 00:31:39.600
-is the right amount of
-maturity and that people should
+00:28:56.840 --> 00:28:59.810
+know, maybe a month later
+or a quarter later. Whereas
 
 538
-00:31:39.600 --> 00:31:42.480
-really explore these architecture. Right?
-I think that this is
+00:28:59.810 --> 00:29:02.840
+now what we're seeing is,
+especially with the rate of
 
 539
-00:31:42.480 --> 00:31:45.030
-kind of the next step
-on the evolution of cloud
+00:29:02.840 --> 00:29:06.470
+change in modern cloud architectures
+and things workflows that are
 
 540
-00:31:45.030 --> 00:31:48.030
-native building on all of
-the fundamental work that has
+00:29:06.470 --> 00:29:11.480
+unlocked by technologies like serverless
+containers and Kubernetes, we're actually
 
 541
-00:31:48.030 --> 00:31:51.990
-been developed over the last
-five to 10 years. And
+00:29:11.480 --> 00:29:15.440
+seeing that infrastructure teams want
+to empower their developers to
 
 542
-00:31:52.140 --> 00:31:53.740
-we're going to see more
-on, on top of that.
+00:29:15.440 --> 00:29:18.350
+be a lot more self-serve
+if a developer wants a
 
 543
-00:31:53.770 --> 00:31:55.590
-I'm sure Napa is not
-the end of the story,
+00:29:18.350 --> 00:29:22.040
+queue or a pump sub
+topic, or, you know, a
 
 544
-00:31:55.590 --> 00:31:59.010
-but it's, I think a
-fantastic new level that it's
+00:29:22.040 --> 00:29:25.070
+new container or a new
+Azure function or whatever it
 
 545
-00:31:59.010 --> 00:32:00.960
-going to a productivity that
-developers are going to get
+00:29:25.070 --> 00:29:27.350
+is, they want to be
+able to have their teams
 
 546
-00:32:00.960 --> 00:32:06.960
-to with it. Well, folks
-can check out dapper@dapr.io. You
+00:29:27.350 --> 00:29:30.260
+do that. But the infrastructure
+team wants to put in
 
 547
-00:32:06.960 --> 00:32:09.810
-can install the CLI on
-windows, Mac, or Linux, check
+00:29:30.260 --> 00:29:33.020
+place guardrails to make sure
+that developers don't accidentally do
 
 548
-00:32:09.810 --> 00:32:13.530
-it all out. There's extensive
-documentation. There is a burgeoning
+00:29:33.020 --> 00:29:35.930
+the wrong thing. And so
+we see developers really like
 
 549
-00:32:13.530 --> 00:32:15.960
-and excited community and a
-ton of things that you
+00:29:35.930 --> 00:29:37.430
+it because they get to
+use their favorite language. They
 
 550
-00:32:15.960 --> 00:32:18.450
-can plug into it. And
-again, it's a cafeteria plan,
+00:29:37.430 --> 00:29:41.650
+basically supercharge their, their ability
+to build more powerful cloud
 
 551
-00:32:18.450 --> 00:32:20.550
-so certainly you don't need
-to do it all. You
+00:29:41.650 --> 00:29:45.400
+applications. While at the same
+time, the infrastructure team feels
 
 552
-00:32:20.550 --> 00:32:22.770
-can just take the pieces
-that you want. Follow it
+00:29:45.400 --> 00:29:48.580
+comfortable and they can still
+get the, the management and
 
 553
-00:32:22.770 --> 00:32:25.920
-on Twitter. I'll put links
-to the Gitter community chat
+00:29:48.610 --> 00:29:51.250
+policies and oversight that they
+need. And so it's really
 
 554
-00:32:26.310 --> 00:32:29.910
-and it's actively being developed.
-So poll requests are welcome.
+00:29:51.250 --> 00:29:55.360
+that developer appeal that I
+think sets it really apart
 
 555
-00:32:30.450 --> 00:32:33.300
-Thank you, Mark Russinovich for
-chatting with me today. Hope
+00:29:55.360 --> 00:29:58.200
+from, from most of what's
+out there, I noticed that
 
 556
-00:32:33.300 --> 00:32:36.510
-I made you a diaper
-form. I will go and
+00:29:58.200 --> 00:30:01.650
+I can go and install
+the preliminary CLI I can
 
 557
-00:32:36.510 --> 00:32:38.370
-check it out immediately and
-try to build it out
+00:30:01.650 --> 00:30:05.430
+install stuff on my local
+machine, but just while you
 
 558
-00:32:38.370 --> 00:32:40.640
-in my own machine and
-see what the kind of
+00:30:05.430 --> 00:30:07.560
+were talking, I went to
+app dot <inaudible> dot com
 
 559
-00:32:40.640 --> 00:32:43.610
-solutions that I can build
-with dapper. This has been
+00:30:07.560 --> 00:30:09.780
+logged in with GitHub, said,
+I use Azure and C
 
 560
-00:32:43.610 --> 00:32:46.400
-another episode of Hansel minutes,
-and we'll see you again.
+00:30:09.780 --> 00:30:12.630
+sharp click, click, click, and
+now I'm doing it all
 
 561
-00:32:47.200 --> 00:32:58.300
-<inaudible>.
+00:30:12.630 --> 00:30:16.790
+in the cloud. And I
+just, I've given like basically
+
+562
+00:30:16.900 --> 00:30:18.990
+a one liner that I
+run to get the things
+
+563
+00:30:18.990 --> 00:30:22.050
+that I want to get.
+And what is the relationship
+
+564
+00:30:22.050 --> 00:30:25.170
+between the CLI and this
+console on the cloud? Yeah.
+
+565
+00:30:25.170 --> 00:30:29.460
+So I often describe this
+using an analogy. So, you
+
+566
+00:30:29.460 --> 00:30:31.620
+know, the CLI you can
+think of as like get,
+
+567
+00:30:32.070 --> 00:30:35.250
+right, it's an offline tool.
+You can run it fully
+
+568
+00:30:35.250 --> 00:30:38.100
+offline if you want, you
+can use it without our
+
+569
+00:30:38.100 --> 00:30:40.230
+service, but our service is
+kind of like get hub
+
+570
+00:30:40.830 --> 00:30:44.010
+in the sense that get
+plus get hub is a
+
+571
+00:30:44.010 --> 00:30:46.260
+lot easier. It just handles
+a lot of problems for
+
+572
+00:30:46.260 --> 00:30:49.350
+you. If you want to
+use it in your organization,
+
+573
+00:30:49.350 --> 00:30:51.720
+it makes it easier to
+share your projects. And so
+
+574
+00:30:51.720 --> 00:30:54.000
+that's essentially what the preemie
+service is all about. The
+
+575
+00:30:54.000 --> 00:30:57.540
+preemie service is, you know,
+it's the default mode that
+
+576
+00:30:57.540 --> 00:31:01.050
+we recommend people use that
+makes it just really reliable.
+
+577
+00:31:01.080 --> 00:31:04.020
+So everything you're doing is
+when I mentioned the transactional
+
+578
+00:31:04.020 --> 00:31:07.380
+checkpointing, it's using the service
+to do that. It's giving
+
+579
+00:31:07.380 --> 00:31:09.540
+a visibility. So if you
+do deployments, you're going to
+
+580
+00:31:09.540 --> 00:31:11.550
+get full history, similar to
+how get hub gives you
+
+581
+00:31:11.550 --> 00:31:15.030
+commit history with blimey, you'll
+see your full deployment history.
+
+582
+00:31:15.510 --> 00:31:18.000
+And because when you logged
+in you, you did it
+
+583
+00:31:18.000 --> 00:31:22.110
+with get hub. If you're
+actually triggering deployments from get
+
+584
+00:31:22.110 --> 00:31:24.210
+hub itself, watch a show
+you the commit itself. So
+
+585
+00:31:24.210 --> 00:31:27.630
+we'll, we'll show you every
+deployment who performed the deployment,
+
+586
+00:31:27.960 --> 00:31:30.420
+what commit it came from,
+what pull requests that came
+
+587
+00:31:30.420 --> 00:31:32.850
+from them for using the
+pull request workflow. And then
+
+588
+00:31:32.850 --> 00:31:33.990
+if you want to use
+a team, you can sign
+
+589
+00:31:33.990 --> 00:31:35.790
+up a new organization. And
+that gives you all the
+
+590
+00:31:35.790 --> 00:31:38.850
+standard things around an organization
+like, you know, role based
+
+591
+00:31:38.850 --> 00:31:42.570
+access control. You can more
+easily share and work and
+
+592
+00:31:42.570 --> 00:31:47.100
+collaborate on shared projects. You
+can have, you know, continuous
+
+593
+00:31:47.100 --> 00:31:50.490
+integration so that you can
+get, you know, service accounts
+
+594
+00:31:50.490 --> 00:31:55.290
+where you're, you're doing deployments
+automatically rather than manually. And
+
+595
+00:31:55.290 --> 00:31:57.480
+then other other features as
+well around just, you know,
+
+596
+00:31:57.480 --> 00:32:01.230
+security and compliance. And you'll
+notice that it's, it's base
+
+597
+00:32:01.260 --> 00:32:04.500
+basically a SAS model. And
+so that's a model for
+
+598
+00:32:04.500 --> 00:32:07.320
+the company. You know, we,
+we open sourced the whole
+
+599
+00:32:07.320 --> 00:32:10.470
+SDK though. It's there, we
+didn't hold anything back. And
+
+600
+00:32:10.530 --> 00:32:13.650
+the part that we charge
+for is just the size.
+
+601
+00:32:13.680 --> 00:32:15.450
+Now it turns out there's
+a free tier as well
+
+602
+00:32:15.450 --> 00:32:17.370
+for unlimited use. It's really
+just when you want to
+
+603
+00:32:17.370 --> 00:32:21.630
+use similar to how you
+get free, you know, individual
+
+604
+00:32:21.660 --> 00:32:24.510
+repos on GitHub, right? You
+get the same with polygamy,
+
+605
+00:32:24.540 --> 00:32:27.540
+but once you want to
+use organizations, that's, that's when
+
+606
+00:32:27.540 --> 00:32:29.940
+you pay. And even then,
+you know, you get started,
+
+607
+00:32:29.940 --> 00:32:32.340
+it's $50 a month for
+three people. It's, it's pretty,
+
+608
+00:32:32.580 --> 00:32:35.700
+pretty affordable at that point.
+Okay. So would you recommend
+
+609
+00:32:35.700 --> 00:32:38.340
+that people just hit to
+that prelim.com walk through the
+
+610
+00:32:38.340 --> 00:32:40.700
+process? It's like a five
+minute Thing to get a
+
+611
+00:32:40.700 --> 00:32:43.460
+hello world, pulling me out
+running, and then a weekend
+
+612
+00:32:43.460 --> 00:32:45.890
+to take whatever they've already
+got going and set it
+
+613
+00:32:45.890 --> 00:32:50.420
+up for themselves. Yeah, absolutely.
+There is, you know, app.plume.com.
+
+614
+00:32:50.420 --> 00:32:52.700
+There's also, you just go
+to pluming.com. There's these getting
+
+615
+00:32:52.700 --> 00:32:56.000
+started buttons. We call it
+action. Blue, you click any
+
+616
+00:32:56.000 --> 00:32:58.430
+of those buttons will take
+you through walkthroughs. And as
+
+617
+00:32:58.430 --> 00:33:00.350
+you point out, it says,
+Hey, which cloud do you
+
+618
+00:33:00.350 --> 00:33:01.880
+want? Which language do you
+want? And then it just
+
+619
+00:33:01.880 --> 00:33:04.430
+walks you through building a
+simple application. And then we've
+
+620
+00:33:04.430 --> 00:33:07.850
+got over a hundred tutorials
+now for lots of different
+
+621
+00:33:07.940 --> 00:33:11.780
+application architectures. Very cool. Well,
+thank you very much, Joe Duffy
+
+622
+00:33:11.780 --> 00:33:14.420
+for chatting with me today.
+Yeah. Thanks Scott. It was
+
+623
+00:33:14.420 --> 00:33:16.910
+a lot of fun. This
+has been another episode of
+
+624
+00:33:16.910 --> 00:33:19.340
+Hanselminutes and we'll see you
+again next week.
 

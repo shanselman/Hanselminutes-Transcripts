@@ -1,3151 +1,2562 @@
 WEBVTT FILE
 
 1
-00:00:00.600 --> 00:00:03.750
-Hi, this is Scott. I
-really appreciate our sponsors because
+00:00:12.570 --> 00:00:18.300
+From Hansel minutes.com. It's Hansel
+minutes, our weekly discussion with
 
 2
-00:00:03.750 --> 00:00:06.720
-they make the show possible.
-Today's show is sponsored by
+00:00:18.300 --> 00:00:23.460
+web developer and technologist Scott
+Hanselman. This is Lawrence Ryan announcing
 
 3
-00:00:06.720 --> 00:00:10.890
-developer express, become a UI
-superhero with dev express controls
+00:00:23.460 --> 00:00:27.570
+your show number 540. In
+this episode, Scott talks with
 
 4
-00:00:10.890 --> 00:00:15.420
-and libraries. Deliver elegant.net solutions
-that address customer needs today
+00:00:27.660 --> 00:00:37.650
+Stephanie Hurlbert about creating a
+new GPU texture compressor. Hi,
 
 5
-00:00:15.810 --> 00:00:19.890
-by leveraging your existing knowledge,
-you can build next generation
+00:00:37.650 --> 00:00:39.810
+this is Scott Hanselman. This
+is another episode of Hansel
 
 6
-00:00:19.890 --> 00:00:24.000
-touch enabled solutions for tomorrow,
-you can download your free
+00:00:39.810 --> 00:00:43.020
+minutes. And today I'm talking
+with Stephanie Hurlbert, she's the
 
 7
-00:00:24.090 --> 00:00:47.210
-30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com.
-<inaudible> From <inaudible> dot com.
+00:00:43.020 --> 00:00:46.800
+owner of binomial and she's
+creating a new piece of
 
 8
-00:00:47.720 --> 00:00:51.650
-It's Hansel minutes, a weekly
-discussion with web developer and
+00:00:46.800 --> 00:00:51.300
+software, a GPU texture, transcoding,
+a text, a texture compressor.
 
 9
-00:00:51.650 --> 00:00:57.980
-technologist Scott Hanselman. This is
-Lawrence Ryan announcing show number 544.
+00:00:51.300 --> 00:00:54.600
+Is that correct? That is
+correct. Yes. So there's a
 
 10
-00:00:58.520 --> 00:01:03.080
-In this episode, Scott talks
-with Jason Scott about archiving digital
+00:00:54.600 --> 00:00:56.790
+market for this, right? Like
+you were saying that not
 
 11
-00:01:03.080 --> 00:01:11.360
-experiences using emulation. Hi, This
-is Scott Hanselman. This is
+00:00:56.790 --> 00:00:59.400
+only are you making a
+texture compressor, but that you're
 
 12
-00:01:11.360 --> 00:01:14.360
-another episode of Hansel minutes.
-And today we're talking with
+00:00:59.400 --> 00:01:02.990
+going to make the best
+one, right? At least the
 
 13
-00:01:14.360 --> 00:01:18.920
-Jason Scott, he's the creator and
-the owner of text files.com
+00:01:02.990 --> 00:01:05.900
+best one for a lot
+of use cases that I'm
 
 14
-00:01:18.950 --> 00:01:23.030
-a very popular website that
-archives files from historic bulletin
+00:01:05.900 --> 00:01:09.980
+seeing. Yeah. So let's back
+up. What is a GPU
 
 15
-00:01:23.030 --> 00:01:25.310
-board systems. I had a
-BBS and I think I
+00:01:09.980 --> 00:01:13.640
+lossy texture compressor. There's a
+lot of words in there.
 
 16
-00:01:25.310 --> 00:01:29.290
-was actually mentioned in his
-2005 documentary film about PBS
+00:01:14.320 --> 00:01:17.720
+The GPU is your graphics
+processing unit on a computer
 
 17
-00:01:29.300 --> 00:01:32.310
-is called BBS the documentary,
-and he also is a
+00:01:18.650 --> 00:01:23.060
+because graphics are processed in
+such a special way in
 
 18
-00:01:32.870 --> 00:01:35.660
-historian and archivist. Thanks so
-much for chatting with me.
+00:01:23.060 --> 00:01:27.860
+such a common use case
+hardware developers created the GPU,
 
 19
-00:01:36.220 --> 00:01:40.520
-Ain't no problem. I I'm
-been a big fan for
+00:01:27.860 --> 00:01:31.100
+which is structured in such
+a way that it's specialized
 
 20
-00:01:40.520 --> 00:01:43.610
-many, many years because I
-had a BBS early on.
+00:01:31.100 --> 00:01:35.600
+for drawing graphics. Lossy means
+that it's okay to lose
 
 21
-00:01:43.610 --> 00:01:46.820
-I ran a FIDOnet node
-and I really feel like
+00:01:35.600 --> 00:01:37.880
+a little bit of data.
+If we can take a
 
 22
-00:01:46.820 --> 00:01:50.330
-the young people today don't
-appreciate how much amazing software
+00:01:37.880 --> 00:01:42.290
+photo of your cat and
+make it really, really small
 
 23
-00:01:50.330 --> 00:01:54.860
-was created before they were
-born. And it seems like
+00:01:42.290 --> 00:01:44.630
+so that you can store
+lots of photos of your
 
 24
-00:01:54.860 --> 00:01:58.370
-a lot of that software
-is disappearing. Like we won't
+00:01:44.630 --> 00:01:46.940
+cat on your computer, it
+might be worth it. If
 
 25
-00:01:58.370 --> 00:02:00.830
-be able to run these
-things ever again. Yeah. You
+00:01:46.940 --> 00:01:49.880
+it's not perfect image quality,
+it's okay to lose a
 
 26
-00:02:00.830 --> 00:02:04.610
-know, the thing with software
-is that it both functions
+00:01:49.880 --> 00:01:55.370
+little bit. And then texture
+just refers to images, photos,
 
 27
-00:02:04.610 --> 00:02:07.760
-and powers, everything that we
-live with in every single
+00:01:56.270 --> 00:02:00.770
+pieces of 2d artwork, any
+any kind of image or,
 
 28
-00:02:07.760 --> 00:02:11.660
-way, but it's also not
-really been regarded on its
+00:02:02.120 --> 00:02:05.120
+or drawing that you can
+save on your computer. And
 
 29
-00:02:11.660 --> 00:02:15.500
-own as a piece of
-artwork or social artifact that
+00:02:05.120 --> 00:02:07.730
+then the compressor part of
+course, is compressing it, making
 
 30
-00:02:15.770 --> 00:02:18.290
-we would preserve. Like we
-might preserve an old painting
+00:02:07.730 --> 00:02:11.540
+that data smaller. Okay. So
+if I go and open
 
 31
-00:02:18.290 --> 00:02:21.140
-or even an old menu.
-And I think some of
+00:02:11.540 --> 00:02:15.410
+up like Skyrim and I'm
+walking around on a cobblestone
 
 32
-00:02:21.140 --> 00:02:23.630
-the world is coming around
-to that now. But in
+00:02:16.280 --> 00:02:20.390
+floor, is the texture, the
+photographs or the drawings of
 
 33
-00:02:23.630 --> 00:02:27.170
-the meantime we've had, you
-know, honestly over 50 years
+00:02:20.390 --> 00:02:25.130
+the art of that cobblestone?
+Absolutely. So that, that cobblestone
 
 34
-00:02:27.170 --> 00:02:30.020
-of software going on and
-over 30 years of what
+00:02:25.130 --> 00:02:28.820
+floor, it's probably a tiled
+texture, meaning it's a texture
 
 35
-00:02:30.020 --> 00:02:32.340
-we would think of as
-the home computer or the
+00:02:28.820 --> 00:02:32.300
+that repeats itself over and
+over. But if that texture
 
 36
-00:02:32.360 --> 00:02:36.110
-personal computer. And so, yeah,
-there's a lot of history
+00:02:32.300 --> 00:02:35.420
+was too small, you would
+notice the repeating and it
 
 37
-00:02:36.440 --> 00:02:39.260
-down there of something people
-don't think of his history.
+00:02:35.420 --> 00:02:38.570
+would look really bad. So
+it's, it's beneficial for the
 
 38
-00:02:40.700 --> 00:02:44.870
-Yeah. In the past, you
-know, people will use to
+00:02:38.570 --> 00:02:41.180
+artist to make it as
+detailed and as big as
 
 39
-00:02:44.870 --> 00:02:47.420
-respect the URL or the
-URI. We used to have
+00:02:41.180 --> 00:02:44.840
+possible. And that means that
+you probably should compress it
 
 40
-00:02:47.420 --> 00:02:52.430
-the phrase cool URS don't
-change. And then the Wayback
+00:02:44.900 --> 00:02:47.600
+a little bit to make
+it easier to store. So
 
 41
-00:02:52.430 --> 00:02:56.090
-machine came along and people
-take that for granted the
+00:02:47.600 --> 00:02:50.240
+you can have lots of
+different kinds of textures and
 
 42
-00:02:56.090 --> 00:02:58.250
-idea that like, Oh, well,
-if that URL is gone,
+00:02:50.240 --> 00:02:53.420
+not a game would just
+cobblestone floor Florida. And are
 
 43
-00:02:58.640 --> 00:03:01.540
-I'll just to archive.org and
-they'll have a copy or
+00:02:53.420 --> 00:02:57.110
+these things like big, like,
+like three megapixel type photographs
 
 44
-00:03:01.540 --> 00:03:03.970
-I'll go to the Google
-cache and they'll have a
+00:02:57.110 --> 00:02:59.680
+or how what's a typical
+texture size? I assume that
 
 45
-00:03:03.970 --> 00:03:08.560
-copy. But with software, there's
-quite a bit of setup
+00:02:59.680 --> 00:03:02.170
+they have round numbers like
+five 12 by five 12.
 
 46
-00:03:08.740 --> 00:03:12.580
-to even to, to emulate
-a system. And also a
+00:03:02.910 --> 00:03:06.420
+Absolutely. And it really depends
+on games. A lot of
 
 47
-00:03:12.580 --> 00:03:14.380
-lot of thankless work being
-done on the part of
+00:03:06.460 --> 00:03:09.330
+it actually, it goes outside
+of games too, you know,
 
 48
-00:03:14.380 --> 00:03:18.630
-the, by the writers of
-the emulators themselves. Yeah. You
+00:03:09.330 --> 00:03:11.730
+think about Google maps and
+all the textures that are
 
 49
-00:03:18.630 --> 00:03:23.190
-know, when people think of
-software there's stuff that maybe
+00:03:11.730 --> 00:03:15.450
+needed for an application like
+that, for instance, but a
 
 50
-00:03:23.190 --> 00:03:25.560
-they don't think of software
-at all, like the stuff
+00:03:15.450 --> 00:03:18.330
+typical game will have, you
+know, you're right in that
 
 51
-00:03:25.560 --> 00:03:28.530
-that drives their elevators or
-stuff that makes traffic lights
+00:03:18.330 --> 00:03:21.930
+it's five 12 or, you
+know, one K two K
 
 52
-00:03:28.530 --> 00:03:31.530
-go. But then there's like
-the very obvious software, like
+00:03:21.930 --> 00:03:25.410
+textures. Those are, those are
+the common sizes that we
 
 53
-00:03:31.560 --> 00:03:34.320
-a paint program or a
-sound program that you used,
+00:03:25.410 --> 00:03:28.500
+see it starting to become
+more common to have four
 
 54
-00:03:34.320 --> 00:03:36.390
-or an app that you're
-using right now that is
+00:03:28.500 --> 00:03:32.370
+K textures as well because
+your, your screens are increasing
 
 55
-00:03:36.390 --> 00:03:39.570
-some sort of a game
-or, or maybe it just
+00:03:32.370 --> 00:03:36.650
+in resolution and people really
+want to use that to
 
 56
-00:03:39.570 --> 00:03:42.330
-keeps track of something for
-you on your phone. And
+00:03:36.670 --> 00:03:40.320
+full advantage. Hang on now,
+4k by 4k. That's like,
 
 57
-00:03:42.360 --> 00:03:46.140
-all of those items all
-are depending on an environment
+00:03:40.710 --> 00:03:43.800
+like, what is it? Three
+megapixels, four megapixels. That's like
 
 58
-00:03:46.410 --> 00:03:51.540
-that itself is completely shifting
-and is running on hardware
+00:03:43.800 --> 00:03:46.380
+a photograph, right? That's okay.
+Well, it's huge. It's huge.
 
 59
-00:03:51.540 --> 00:03:55.260
-that will be considered obsolete
-and anything from two years
+00:03:46.380 --> 00:03:50.100
+And that is exactly why
+that, and many other reasons
 
 60
-00:03:55.260 --> 00:04:00.780
-ago to 10 years from
-now. And that software is
+00:03:50.100 --> 00:03:52.170
+are why a lot of
+people are looking at our
 
 61
-00:04:00.780 --> 00:04:03.990
-something that as time goes
-on, has to depend on
+00:03:52.170 --> 00:03:55.830
+texture compressor and realizing, wait,
+we really need to focus
 
 62
-00:04:03.990 --> 00:04:10.290
-technologies like emulation to keep
-running and emulation for like
+00:03:55.830 --> 00:03:59.190
+on compression and getting the
+best compressor we can to
 
 63
-00:04:10.290 --> 00:04:12.990
-a lot of things in
-the world doesn't just happen.
+00:03:59.190 --> 00:04:04.350
+give you an example. Basically,
+a lot of GPS have
 
 64
-00:04:13.200 --> 00:04:16.650
-You know, it doesn't just
-make itself work. And so
+00:04:04.380 --> 00:04:09.630
+hardware decoding in them. So
+what that means is memory
 
 65
-00:04:16.650 --> 00:04:20.730
-there are people who going
-back over the past 20
+00:04:09.630 --> 00:04:12.150
+is very precious on a
+GPU. You don't want to
 
 66
-00:04:20.730 --> 00:04:24.030
-years to be honestly, I've
-tried their best to be
+00:04:12.150 --> 00:04:16.230
+store uncompressed textures on your
+graphics processing unit. So what
 
 67
-00:04:24.030 --> 00:04:29.160
-able to recreate older computers
-and computer environments and game
+00:04:16.230 --> 00:04:19.080
+they do is they store
+it in a special GPU
 
 68
-00:04:29.160 --> 00:04:33.660
-environments and electronic environments in
-your computer, your modern computer,
+00:04:19.080 --> 00:04:24.300
+format. We call these they're
+different per GPU manufacturer. One
 
 69
-00:04:33.660 --> 00:04:36.780
-and keep it maintained and
-accurate. And this is a
+00:04:24.300 --> 00:04:27.390
+example is DXT and other
+is PVR TC that you
 
 70
-00:04:37.290 --> 00:04:43.320
-Sisyphean task in every single
-way. Indeed. My first kind
+00:04:27.390 --> 00:04:30.480
+can look up. And basically
+if you store it in
 
 71
-00:04:43.320 --> 00:04:45.960
-of foray was a selfish
-one. And I think that
+00:04:30.480 --> 00:04:34.440
+that special texture format, you
+can decode it using the
 
 72
-00:04:46.080 --> 00:04:49.470
-we'll speak about motivations in
-a minute, but selfishly, I
+00:04:34.440 --> 00:04:37.740
+GPU hardware, which makes it
+really fast. And it's stored
 
 73
-00:04:49.470 --> 00:04:52.470
-wanted to use, you know,
-maim, the multi arcade machine
+00:04:37.740 --> 00:04:40.650
+in a way that the
+GP likes the problem with
 
 74
-00:04:52.470 --> 00:04:55.800
-emulator to play games that
-so I didn't have to
+00:04:40.650 --> 00:04:43.950
+that is that a format
+like JPEG is a fourth
 
 75
-00:04:55.800 --> 00:04:58.620
-go to the arcade. That's
-an extremely selfish thing. I
+00:04:43.950 --> 00:04:48.900
+of the size of those
+special GPU formats. So when
 
 76
-00:04:58.620 --> 00:05:00.990
-wonder what the motivations are
-on the part of the
+00:04:48.900 --> 00:04:52.440
+you think about, you know,
+dealing with 4k or a
 
 77
-00:05:00.990 --> 00:05:03.900
-main people. Are they historians
-and archivists or do they
+00:04:52.440 --> 00:04:54.660
+two K or one K
+texture, if you have a
 
 78
-00:05:03.900 --> 00:05:06.660
-just want to play games
-too? So there's a whole
+00:04:54.660 --> 00:04:57.150
+lot of them, a fourth
+of the size makes a
 
 79
-00:05:06.660 --> 00:05:10.350
-bunch of people who have
-worked on the main project
+00:04:57.150 --> 00:05:00.450
+huge difference. And we don't
+want to unnecessarily store a
 
 80
-00:05:11.070 --> 00:05:14.220
-over the years and they
-seem to have had a
+00:05:00.450 --> 00:05:03.930
+huge texture, even if it
+can be easily decoded by
 
 81
-00:05:14.220 --> 00:05:19.320
-range of things. I've definitely
-seen people who had a
+00:05:03.930 --> 00:05:07.170
+our GPU. And we're talking
+about big things here. If
 
 82
-00:05:19.320 --> 00:05:23.310
-very specific game, maybe they
-even own that game. And
+00:05:07.170 --> 00:05:09.750
+I understand correctly, like I
+just downloaded while we were
 
 83
-00:05:23.310 --> 00:05:26.280
-they've wanted to ensure that
-that game lives on forever.
+00:05:09.750 --> 00:05:13.170
+talking a wallpaper that was
+4k by 4k, it was
 
 84
-00:05:27.060 --> 00:05:30.900
-But the fact is is
-that over time, the system
+00:05:13.230 --> 00:05:17.040
+eight megabytes as a JPEG.
+And I'm sure 50 or
 
 85
-00:05:31.140 --> 00:05:36.630
-could emulate old arcades and
-old computers, you know, relatively
+00:05:17.040 --> 00:05:21.480
+60 as a bitmap, that's
+massive. It's massive. And think
 
 86
-00:05:36.630 --> 00:05:39.570
-well. And so what they
-started to focus on was
+00:05:21.480 --> 00:05:24.120
+about it. It was eight
+cans, a Jacob, a JPEG.
 
 87
-00:05:39.570 --> 00:05:44.070
-finding similarities between all of
-these machines so that they
+00:05:24.120 --> 00:05:26.640
+If we had stored it
+in one of these GPU
 
 88
-00:05:44.070 --> 00:05:47.850
-would only have to emulate
-one aspect of machines once
+00:05:26.640 --> 00:05:29.130
+formats, it would have been
+four times that size. That's
 
 89
-00:05:48.180 --> 00:05:52.770
-and then keep going. And
-as a result, it quickly
+00:05:29.130 --> 00:05:33.420
+crazy. That's not practical. That
+seems like when we move
 
 90
-00:05:52.770 --> 00:05:55.560
-moved away from a developer.
-Who's doing it for kicks
+00:05:33.420 --> 00:05:36.690
+into 4k gaming, we're going
+to hit a problem where
 
 91
-00:05:55.740 --> 00:06:00.530
-and developers that are trying
-focus on a longterm comprehensive
+00:05:36.690 --> 00:05:38.670
+Blu-rays aren't big enough. Like
+we're going to be looking
 
 92
-00:06:01.100 --> 00:06:06.290
-emulation of literally the computer
-human experience. And so it's
+00:05:38.670 --> 00:05:41.490
+at a hundred gigabyte games.
+And as you move around
 
 93
-00:06:06.290 --> 00:06:09.410
-actually been rather inspiring to
-watch them over the course
+00:05:41.490 --> 00:05:44.220
+these worlds, we're going to
+be transferring that information, you
 
 94
-00:06:09.410 --> 00:06:11.390
-of the last five years
-of this project. I've been
+00:05:44.220 --> 00:05:46.920
+know, from the, the, the
+solid state or the drive
 
 95
-00:06:11.390 --> 00:06:16.160
-working on to see how
-they themselves think of machines.
+00:05:46.950 --> 00:05:49.890
+into the computer. And then
+up into the GPU memory
 
 96
-00:06:16.190 --> 00:06:19.430
-And I always stress, you
-know, if you search for
+00:05:49.890 --> 00:05:51.780
+is going to be, there's
+gonna be a lot of
 
 97
-00:06:19.430 --> 00:06:21.200
-my name in the code
-of Maine, you will not
+00:05:51.780 --> 00:05:55.410
+memory being used up in
+your GPU. Exactly. And I
 
 98
-00:06:21.200 --> 00:06:24.110
-find it. I am not
-a developer. I'm just somebody
+00:05:55.410 --> 00:05:59.450
+mean, games, always games always
+want to look as most
 
 99
-00:06:24.110 --> 00:06:28.100
-who works with people towards
-goals. And as we'll I'm
+00:05:59.450 --> 00:06:02.510
+cutting edge as possible. And
+a lot of that involves
 
 100
-00:06:28.100 --> 00:06:32.240
-sure go into my big
-goal was I wanted emulators
+00:06:02.930 --> 00:06:06.080
+taking advantage of high resolutions,
+as well as using a
 
 101
-00:06:32.240 --> 00:06:36.050
-to run inside of a
-browser in a way that
+00:06:06.080 --> 00:06:11.990
+lot of detail. A lot
+of new graphics techniques involve
 
 102
-00:06:36.050 --> 00:06:41.030
-enabled you to one click
-access old software. And to
+00:06:11.990 --> 00:06:16.310
+storing other kinds of detail
+and textures like say light
 
 103
-00:06:41.030 --> 00:06:43.310
-do that, I went with
-the biggest game in town,
+00:06:16.310 --> 00:06:20.060
+maps or normal maps or
+specular maps, which are basically
 
 104
-00:06:43.820 --> 00:06:49.580
-literally, which is Mame because
-their emulator covers thousands and
+00:06:20.060 --> 00:06:24.770
+extra textures that give you
+detail that you may not
 
 105
-00:06:49.610 --> 00:06:53.870
-thousands of arcade games and
-thousands of computer platforms. And
+00:06:24.770 --> 00:06:28.220
+be able to deduce from
+just the photograph. So textures
 
 106
-00:06:53.870 --> 00:06:56.000
-I knew that if we
-got that running in the
+00:06:28.220 --> 00:06:32.450
+are on the rise and
+what are our compressor and
 
 107
-00:06:56.000 --> 00:06:59.210
-browser, all of these other
-machines would come to life.
+00:06:32.450 --> 00:06:37.040
+transcoder does, is it compresses,
+it compresses your image to
 
 108
-00:07:00.590 --> 00:07:03.740
-Yeah. Maine has become almost
-like an emulator of emulators.
+00:06:37.040 --> 00:06:40.100
+about the size of a
+JPEG. So think about that.
 
 109
-00:07:03.740 --> 00:07:06.500
-It's like, there's a driver
-that like it, it has
+00:06:40.100 --> 00:06:43.070
+Now it's a fourth of
+the size and what it
 
 110
-00:07:06.500 --> 00:07:08.870
-the structure around the emulator
-and it allows people to
+00:06:43.070 --> 00:06:45.740
+does is on the CPU
+before it sends it to
 
 111
-00:07:08.870 --> 00:07:11.930
-then add on different CPS
-and different systems. Doesn't it,
+00:06:45.740 --> 00:06:51.080
+the GPU, it quickly really
+quickly transcodes it into a
 
 112
-00:07:11.960 --> 00:07:14.300
-it's not one of the
-things that really fascinates me
+00:06:51.080 --> 00:06:55.430
+format that the GPU can
+actually understand DXT, PBR, TC,
 
 113
-00:07:14.300 --> 00:07:18.560
-about watching a mature project
-like Maine and Maine has
+00:06:55.430 --> 00:06:57.800
+one of these formats. And
+then you get to take
 
 114
-00:07:18.590 --> 00:07:22.580
-basically routes well into the
-nineties and has all these
+00:06:57.800 --> 00:07:02.900
+advantage of that really fast
+decoding. So it basically allows
 
 115
-00:07:22.580 --> 00:07:25.820
-different philosophies that have been
-kind of caked into it
+00:07:02.900 --> 00:07:06.230
+you to store these images
+in a format that's much
 
 116
-00:07:25.820 --> 00:07:29.900
-over the years. And one
-of them is that machines
+00:07:06.230 --> 00:07:10.820
+smaller as well as transform
+it to the format your
 
 117
-00:07:30.110 --> 00:07:36.920
-are basically collections of parts,
-which sounds obvious, but what
+00:07:10.820 --> 00:07:13.400
+GP likes. So it's the
+best of both worlds as
 
 118
-00:07:36.920 --> 00:07:39.740
-they would do is they
-would emulate a chip as
+00:07:13.400 --> 00:07:16.690
+well, what we're trying to
+achieve anyway. Okay. So let's
 
 119
-00:07:39.740 --> 00:07:43.100
-well as they can. And
-they would emulate different kinds
+00:07:16.690 --> 00:07:19.810
+back up a moment. Cause
+we've, we've talked with a
 
 120
-00:07:43.100 --> 00:07:46.490
-of machinery as well as
-they can. And then they
+00:07:19.810 --> 00:07:22.870
+lot of words and a
+lot of assumptions that maybe
 
 121
-00:07:46.490 --> 00:07:50.000
-would say, well, here's a
-machine. What is it? Well,
+00:07:22.870 --> 00:07:25.270
+the audience doesn't understand, and
+maybe I'm a little confused.
 
 122
-00:07:50.000 --> 00:07:52.490
-it's a set of this
-chip and this chip, and
+00:07:25.600 --> 00:07:30.250
+So the creator of the
+texture works in Photoshop and
 
 123
-00:07:52.490 --> 00:07:55.370
-then this small custom part.
-And so they would be
+00:07:30.250 --> 00:07:32.770
+whatever tools that they want
+to make. Right. They, they
 
 124
-00:07:55.370 --> 00:08:00.140
-able to build new machines
-relatively quickly. And so that
+00:07:32.770 --> 00:07:34.960
+may take photographs, they may
+render it, they may do
 
 125
-00:08:00.140 --> 00:08:03.410
-philosophy means that every time
-they would do a new
+00:07:34.960 --> 00:07:38.350
+whatever, but they make a
+source raw image of the
 
 126
-00:08:03.410 --> 00:08:08.120
-version, they might add a
-pile of new hardware because
+00:07:38.350 --> 00:07:43.450
+highest possible quality. Is that
+right? Yeah, exactly. So the
 
 127
-00:08:08.300 --> 00:08:11.510
-that new hardware quote unquote
-is using off the shelf
+00:07:43.540 --> 00:07:48.310
+artists, yeah, they, they make
+their assets. So in your
 
 128
-00:08:11.540 --> 00:08:15.650
-parts and they would pull
-those off the shelf parts
+00:07:48.310 --> 00:07:53.080
+couple of stone example, I
+make a really beautiful cobblestone
 
 129
-00:08:15.800 --> 00:08:18.950
-from within maim already. And
-then just work on the
+00:07:53.110 --> 00:07:56.380
+floor that will later be
+tiled into a game. What
 
 130
-00:08:18.950 --> 00:08:22.070
-small amount. That's different. It's
-been kind of rather inspiring
+00:07:56.380 --> 00:07:59.710
+I do if we used
+our compressor is I would
 
 131
-00:08:22.070 --> 00:08:24.260
-to watch as I'll see
-them emulate a machine that
+00:07:59.710 --> 00:08:04.840
+use the compressor to compress
+it into our special format,
 
 132
-00:08:24.260 --> 00:08:27.440
-I've never heard of in
-a million years and suddenly
+00:08:05.960 --> 00:08:08.770
+the time of game creation
+at the time of the
 
 133
-00:08:27.440 --> 00:08:34.250
-it's working. And they constantly
-consistently prefer to have the
+00:08:08.770 --> 00:08:12.910
+asset creation. So we do
+this beforehand, just like you
 
 134
-00:08:34.250 --> 00:08:38.300
-board, which is also interesting,
-like what I've seen when
+00:08:12.910 --> 00:08:15.130
+would a JPEG, you know,
+you store JPEGs on your
 
 135
-00:08:38.300 --> 00:08:42.500
-somebody says, Hey, we'd like
-to emulate this. They say,
+00:08:15.130 --> 00:08:19.420
+computer. JPEG is a compressed
+format. Okay. So then I
 
 136
-00:08:42.890 --> 00:08:46.880
-show us the board, like,
-please take a large picture
+00:08:19.420 --> 00:08:22.570
+saved that. I saved that
+on my, in my, as
 
 137
-00:08:46.880 --> 00:08:50.510
-of the board of the
-circuit so that we can
+00:08:22.570 --> 00:08:24.610
+I am building my game.
+It's part of the build
 
 138
-00:08:50.510 --> 00:08:53.390
-look at the circuit because
-the circuit is the documentation
+00:08:24.940 --> 00:08:29.320
+process, just like as a
+blogger, I run, you know,
 
 139
-00:08:53.390 --> 00:08:55.980
-of how it was really
-built, as opposed to say
+00:08:29.320 --> 00:08:31.990
+like tiny PNG or P
+and G gauntlet to squish
 
 140
-00:08:55.980 --> 00:08:59.930
-some manual that implies that
-it's built this way, exactly
+00:08:31.990 --> 00:08:35.770
+my images before I upload
+them a game maker goes
 
 141
-00:09:00.390 --> 00:09:04.010
-Board and its existence as
-the expression of its intent
+00:08:35.770 --> 00:08:41.020
+and runs your, your closed
+source encoder, and then encodes
 
 142
-00:09:04.250 --> 00:09:06.770
-and the only documentation it
-is, the fact it works
+00:08:41.020 --> 00:08:44.350
+it in your format. What
+do they do now before
 
 143
-00:09:06.770 --> 00:09:09.290
-like this. Whether someone wrote
-down that they thought it
+00:08:44.800 --> 00:08:48.700
+the binomial system, before, you
+know, Stephanie's machine, you know,
 
 144
-00:09:09.290 --> 00:09:11.060
-might work like this, or
-it was intended to work
+00:08:48.910 --> 00:08:52.990
+before Stephanie's creation, what did
+they do? Ah, they can
 
 145
-00:09:11.060 --> 00:09:14.000
-like this, the fact is
-it's shipped this way and
+00:08:52.990 --> 00:08:56.790
+use a number of methods
+and it's really fascinating to
 
 146
-00:09:14.000 --> 00:09:17.050
-we will emulate it as
-it was shipped. Yeah. So
+00:08:56.790 --> 00:08:59.520
+see the different hacks and
+techniques that people have come
 
 147
-00:09:17.240 --> 00:09:20.030
-that to me has been,
-it's been kind of amazing
+00:08:59.520 --> 00:09:02.970
+up with. So there, there
+are a lot of game
 
 148
-00:09:20.030 --> 00:09:23.840
-to watch them in, in,
-in, in progress and everything
+00:09:02.970 --> 00:09:05.910
+studios that will save it
+to something like a JPEG,
 
 149
-00:09:23.840 --> 00:09:26.900
-else. I mean, every day
-that group of developers is
+00:09:05.940 --> 00:09:09.660
+for instance, because that's really
+small. We love that. And
 
 150
-00:09:26.900 --> 00:09:30.260
-doing anywhere between, I've seen
-as many as a hundred
+00:09:09.690 --> 00:09:13.170
+they still understand the importance
+of storing it in these
 
 151
-00:09:30.260 --> 00:09:34.490
-and as small as 30
-new changes where they've made
+00:09:13.170 --> 00:09:16.890
+special GPU formats on the
+GPU. So what they'll do
 
 152
-00:09:34.490 --> 00:09:38.870
-changes every day for years
-on end to improve things,
+00:09:17.460 --> 00:09:19.530
+is they will save it
+to JPEG and then they
 
 153
-00:09:38.870 --> 00:09:42.110
-to fix bugs, to, to
-make things more flexible. It's
+00:09:19.530 --> 00:09:24.090
+will decompress it entirely on
+the CPU. And then recompress
 
 154
-00:09:42.110 --> 00:09:46.910
-been really, I mean, quite
-inspiring to watch. I have
+00:09:24.090 --> 00:09:26.820
+it to a J to
+one of these GPU formats.
 
 155
-00:09:46.940 --> 00:09:50.240
-a, a main machine behind
-me that I've built like
+00:09:27.090 --> 00:09:30.840
+So that, that not only
+will take them extra time
 
 156
-00:09:50.240 --> 00:09:53.720
-a full sized RK that
-I built from scratch. And
+00:09:30.840 --> 00:09:34.440
+because you have to decompress
+it and recompress it. But
 
 157
-00:09:54.740 --> 00:09:58.430
-what is the relationship though,
-between the Mame kind of
+00:09:34.440 --> 00:09:39.330
+it'll also add double artifacts,
+JPEG introduces different artifacts than
 
 158
-00:09:58.430 --> 00:10:00.980
-CNC plus plus app that
-we've been running for many,
+00:09:39.330 --> 00:09:43.290
+these GPU formats do. And
+so when you decompress it
 
 159
-00:10:00.980 --> 00:10:04.040
-many years. And how did
-that jump into the browser?
+00:09:43.290 --> 00:09:46.260
+and recompress it, you, you
+lose even more detail than
 
 160
-00:10:04.070 --> 00:10:06.200
-Like how did they compile
-it to JavaScript? And then
+00:09:46.260 --> 00:09:50.220
+you should are. What our
+transcoder does in comparison is
 
 161
-00:10:06.230 --> 00:10:10.730
-is that another project? Is
-it downstream of main? Sure.
+00:09:50.970 --> 00:09:56.010
+takes the compressed format. And
+transcodes it, which means there's
 
 162
-00:10:11.150 --> 00:10:14.090
-So what happened is that
-of course, Mame, like I
+00:09:56.010 --> 00:10:00.390
+no decoding and Rayanne coding
+stage. It turns it directly
 
 163
-00:10:14.090 --> 00:10:17.990
-said, was really mature years
-and years ago, they made
+00:10:00.390 --> 00:10:04.320
+into the compressed GPU format,
+which is much better for
 
 164
-00:10:17.990 --> 00:10:21.290
-a very specific set of
-design decisions. It's very flexible.
+00:10:04.320 --> 00:10:08.960
+quality and speed And space,
+right. And you eat the
 
 165
-00:10:21.500 --> 00:10:26.150
-You can always find a
-faster emulator of some platform
+00:10:08.960 --> 00:10:13.250
+same space that you had
+with JPEG. Exactly, exactly. And
 
 166
-00:10:26.180 --> 00:10:29.000
-or set of platforms that's
-being hand maintained by one
+00:10:13.280 --> 00:10:16.400
+the other thing that I've
+seen people do is they'll
 
 167
-00:10:29.000 --> 00:10:33.770
-or two people, but you
-won't have that universal access.
+00:10:16.400 --> 00:10:21.140
+just store it in the
+GPU format from the start
 
 168
-00:10:34.010 --> 00:10:38.060
-So maim sacrifices, a little
-bit of speed, although too,
+00:10:21.140 --> 00:10:26.750
+and say, I guess I
+will either try to compress
 
 169
-00:10:38.420 --> 00:10:42.350
-obviously, most machines today that
-wouldn't matter at all in
+00:10:26.750 --> 00:10:30.260
+that with something like zip,
+like, or just a compressor,
 
 170
-00:10:42.350 --> 00:10:46.880
-the name of accuracy and
-university Allity. So that system
+00:10:30.260 --> 00:10:32.810
+and then decompress it right
+before I get to the
 
 171
-00:10:46.880 --> 00:10:50.360
-has been in place for
-quite some time. And when
+00:10:32.810 --> 00:10:36.080
+GPU and take whatever losses
+that gives me, or I'll
 
 172
-00:10:50.360 --> 00:10:53.510
-we decided we wanted to
-work on the idea of
+00:10:36.080 --> 00:10:39.050
+just, I'll just accept the
+fact that it's four times
 
 173
-00:10:53.540 --> 00:10:58.460
-putting maim into a browser,
-I looked around at what
+00:10:39.050 --> 00:10:42.200
+the size. It should be
+and apologize to my users
 
 174
-00:10:58.700 --> 00:11:01.340
-possibilities there were, and we
-have a number of ways
+00:10:42.230 --> 00:10:45.230
+because at least it's in
+directly in the format that
 
 175
-00:11:01.340 --> 00:11:04.070
-to execute code in a
-browser. You know, things like
+00:10:45.230 --> 00:10:47.990
+GPU will understand. And I
+won't need to worry about
 
 176
-00:11:04.100 --> 00:11:07.550
-Java people would know about
-Java or perhaps some sort
+00:10:47.990 --> 00:10:53.630
+any decompression and recompression Is
+decompression expensive or does it
 
 177
-00:11:07.550 --> 00:11:11.390
-of specialized plugin that goes
-into Chrome or Firefox or
+00:10:53.630 --> 00:10:57.620
+depend on the, on the
+kind of decompression? It definitely,
 
 178
-00:11:11.390 --> 00:11:14.540
-another browser that kind of
-brings up executable code in
+00:10:57.620 --> 00:11:01.490
+of course depends on the
+kind of decompression you're dealing
 
 179
-00:11:14.540 --> 00:11:20.210
-a small encapsulated piece. But
-what I fell on to
+00:11:01.490 --> 00:11:05.600
+with, but for this, for
+this particular case, it is
 
 180
-00:11:20.210 --> 00:11:24.560
-was the fact that quietly,
-without anybody really jumping into
+00:11:06.020 --> 00:11:11.270
+more expensive than transcoding. For
+instance, our transcoder is faster
 
 181
-00:11:24.560 --> 00:11:29.270
-it or anything JavaScript had
-matured to the point that
+00:11:11.270 --> 00:11:14.930
+than decompressing an image and
+re compressing. It Is the
 
 182
-00:11:29.270 --> 00:11:32.510
-it was in pretty much
-every browser had an enormous
+00:11:14.930 --> 00:11:17.420
+distinction there. When you say
+transcoder like, when I think
 
 183
-00:11:32.510 --> 00:11:35.900
-amount of flexibility and an
-inability to do everything from
+00:11:17.450 --> 00:11:20.510
+decompress, like I read the
+bits off the disc and
 
 184
-00:11:35.900 --> 00:11:40.040
-control keyboards and, and run
-video and sound to networking
+00:11:20.510 --> 00:11:22.910
+I explode them in, then
+I put them back on
 
 185
-00:11:40.070 --> 00:11:45.080
-even. And it wasn't under
-control of one person or
+00:11:22.910 --> 00:11:25.190
+the disc and then I
+say, Hey, there's the file
 
 186
-00:11:45.080 --> 00:11:49.160
-one entity, a thing like
-Java, as we saw with
+00:11:25.190 --> 00:11:29.450
+and temp space or whatever.
+Is transcoding just decompressing into
 
 187
-00:11:49.340 --> 00:11:53.000
-something as simple as the
-Google quote son in print
+00:11:29.450 --> 00:11:32.180
+memory? Or is it, is
+it a more different definition?
 
 188
-00:11:53.550 --> 00:11:57.460
-in quotes, a lawsuit was
-that there were still commercial
+00:11:32.630 --> 00:11:35.960
+It's an excellent question. So
+when you, when you decompress
 
 189
-00:11:57.460 --> 00:12:03.850
-entities that thought of the
-Java world as somebody, but
+00:11:35.960 --> 00:11:39.620
+something, you, you basically, you
+explode the bedside as you
 
 190
-00:12:03.850 --> 00:12:09.310
-nobody really owned Java, just
-like nobody really owned HTML.
+00:11:39.620 --> 00:11:41.840
+say, but you also turn
+it into an image that
 
 191
-00:12:10.450 --> 00:12:12.520
-You don't get a cease
-and desist for using an,
+00:11:41.840 --> 00:11:45.830
+you can actually see and
+read on your computer when,
 
 192
-00:12:12.520 --> 00:12:14.680
-a anchor from HTML and
-you don't get a cease
+00:11:46.340 --> 00:11:51.110
+when you transcode, you transcode
+it to another compressed format.
 
 193
-00:12:14.680 --> 00:12:19.300
-and desist by using Java
-script. And so the JavaScript
+00:11:51.110 --> 00:11:54.610
+So imagine taking a JPEG
+and turning it into a
 
 194
-00:12:19.300 --> 00:12:24.040
-language has had a couple
-of advancements over the years.
+00:11:54.610 --> 00:12:01.840
+PNG just directly, like it's,
+it's, it's the process of
 
 195
-00:12:24.700 --> 00:12:27.520
-And one of them was
-that there were a couple
+00:12:02.620 --> 00:12:07.020
+going from one compressed format
+to another. I see, without
 
 196
-00:12:27.520 --> 00:12:31.180
-companies who had written bridging
-applications to go from C
+00:12:07.440 --> 00:12:11.010
+decompressing there, wasn't it didn't,
+it didn't explode. And then
 
 197
-00:12:31.180 --> 00:12:37.180
-plus plus to Java script.
-So you could literally compile
+00:12:11.050 --> 00:12:13.410
+sit in memory is a
+big buffer and then squish,
 
 198
-00:12:37.480 --> 00:12:42.280
-JavaScript as the target of
-a C plus plus file.
+00:12:14.140 --> 00:12:17.370
+It was squished and we
+just rearranged the bits so
 
 199
-00:12:43.000 --> 00:12:45.940
-Now this technology was relatively
-new. There were a couple
+00:12:17.370 --> 00:12:21.630
+that it's squished in a
+different way now. No intermediate.
 
 200
-00:12:45.950 --> 00:12:49.210
-people who were selling a
-compiler, but there was also
+00:12:22.170 --> 00:12:25.140
+Okay. So to put it
+into like techie layman terms,
 
 201
-00:12:49.210 --> 00:12:52.150
-an open source version and
-it was called M scripting.
+00:12:25.140 --> 00:12:29.040
+I could, you know, unzip
+a file. I can unzip
 
 202
-00:12:52.660 --> 00:12:55.750
-And it was being run
-by the Mozilla foundation. And
+00:12:29.040 --> 00:12:32.370
+the zip and then use
+RAR and RAR it up
 
 203
-00:12:55.750 --> 00:12:58.720
-there's a fellow there Alonza
-Kai, he's been the day
+00:12:32.370 --> 00:12:35.670
+again, but I'm gonna need
+all that space in memory
 
 204
-00:12:58.720 --> 00:13:02.650
-to day maintainer of that
-code for years now. And
+00:12:35.730 --> 00:12:37.560
+and all of the churning
+to go and do that
 
 205
-00:13:02.650 --> 00:13:05.680
-when we first set out
-on the project, a number
+00:12:37.560 --> 00:12:40.050
+work. If I could just
+tell the zip, make me
 
 206
-00:13:05.680 --> 00:13:09.310
-of people came forward. I
-asked for volunteers and one
+00:12:40.050 --> 00:12:42.990
+a RAR and it never
+got exploded, that would provide
 
 207
-00:13:09.310 --> 00:13:12.550
-of them was a dope
-fish, Justin, who had been
+00:12:42.990 --> 00:12:44.910
+me all sorts of value
+at churn, less on the
 
 208
-00:13:12.550 --> 00:13:15.700
-working on the main project
-for years. And he was
+00:12:44.910 --> 00:12:49.440
+disk CPU works less. Everybody
+wins. Exactly. That's actually a
 
 209
-00:13:15.700 --> 00:13:19.990
-fascinated by this. And there's,
-there's, vectorial Malano and there's
+00:12:49.440 --> 00:12:53.190
+perfect example. And let's, let's
+imagine a case where RAR
 
 210
-00:13:19.990 --> 00:13:22.330
-James Baton cow. And there's
-a bunch of people who
+00:12:53.190 --> 00:12:56.790
+was so much bigger than
+the zip, but that's what
 
 211
-00:13:22.330 --> 00:13:26.320
-have been kind of, kind
-of drifting into the project
+00:12:56.790 --> 00:12:59.700
+you needed to end up
+with. So our case would
 
 212
-00:13:26.320 --> 00:13:30.760
-and then working endless nights.
-And they were all fascinated
+00:12:59.700 --> 00:13:02.580
+be like taking the zip,
+which is this tiny format,
 
 213
-00:13:30.760 --> 00:13:34.750
-at this project idea because
-the outcome would be theoretically
+00:13:02.580 --> 00:13:05.790
+but not something usable in
+the end and transcoding it
 
 214
-00:13:34.750 --> 00:13:38.800
-miraculous. And so when we
-first started using him script
+00:13:05.790 --> 00:13:08.670
+directly to that radar only
+when it's needed, when it's
 
 215
-00:13:38.800 --> 00:13:41.020
-and give you an idea,
-I mean, you've seen this
+00:13:08.670 --> 00:13:11.790
+about to send to the
+GPU, except not with zip
 
 216
-00:13:41.020 --> 00:13:44.380
-in many projects, I'm sure
-it took us. It took
+00:13:11.790 --> 00:13:18.210
+and RAR. So putting this
+into like a topical terms,
 
 217
-00:13:44.380 --> 00:13:48.790
-us, I think something on
-the order of nine months
+00:13:18.390 --> 00:13:22.590
+did you see the Dropbox
+announcement yesterday? I must've missed
 
 218
-00:13:49.240 --> 00:13:53.380
-to make a collegial vision
-run at 5% speed inside
+00:13:22.590 --> 00:13:24.780
+it. I was out of
+town yesterday. You must entertain
 
 219
-00:13:53.380 --> 00:13:59.050
-of a browser. And then
-within a month we had
+00:13:24.780 --> 00:13:26.850
+me with this announcement. So
+let me see if I
 
 220
-00:13:59.170 --> 00:14:04.180
-10 machines running at 50%.
-And then within two months
+00:13:26.850 --> 00:13:29.550
+understand this because you're the
+expert. They came up with
 
 221
-00:14:04.180 --> 00:14:08.320
-we had 50 machines running
-at anywhere from 50 to
+00:13:29.550 --> 00:13:32.640
+a theme. We just released
+an open source image, compression
 
 222
-00:14:08.320 --> 00:14:11.770
-a hundred percent. Oh my.
-And so it was, it
+00:13:32.640 --> 00:13:36.990
+format called leptons. So Dropbox
+knows that we all have
 
 223
-00:14:11.770 --> 00:14:15.070
-kind of iterated up very
-quickly and people would come
+00:13:36.990 --> 00:13:39.930
+JPEGs in our drop boxes,
+so they will take, and
 
 224
-00:14:15.070 --> 00:14:17.890
-in and we would get
-people who looked at it
+00:13:39.930 --> 00:13:43.770
+they will compress JPEGs and
+they can compress them at
 
 225
-00:14:17.890 --> 00:14:22.030
-and said, you know, you're
-setting this and that's kind
+00:13:43.770 --> 00:13:46.350
+five megabytes a second, and
+they can decode them back
 
 226
-00:14:22.030 --> 00:14:24.610
-of weird. Or we would
-hand it back to the
+00:13:46.350 --> 00:13:48.780
+into the original bits at
+15 megabytes a second. So
 
 227
-00:14:24.610 --> 00:14:29.140
-subscription team or the Firefox
-team. I mean, over time,
+00:13:48.780 --> 00:13:53.760
+basically they've made 22% savings
+reductions for existing JPEGs. They've
 
 228
-00:14:29.860 --> 00:14:32.560
-I mean, to have a
-project is low. I mean
+00:13:53.760 --> 00:13:58.200
+gone through our Dropboxes squished
+everything into their format called
 
 229
-00:14:32.590 --> 00:14:34.540
-the whole point of something
-like an am script and
+00:13:58.200 --> 00:14:02.280
+leptons, but it's lossless. And
+then when we request our
 
 230
-00:14:34.540 --> 00:14:37.960
-was, Oh, you wrote a
-calculator or you wrote a
+00:14:02.280 --> 00:14:07.710
+JPEGs, they stream decode it.
+They transcode it back into
 
 231
-00:14:37.960 --> 00:14:42.130
-database application, or you wrote
-this small program, Hey, now
+00:14:07.710 --> 00:14:10.980
+JPEG and we don't notice
+the difference. Yes, yes. That's
 
 232
-00:14:42.130 --> 00:14:45.910
-it's JavaScript. Isn't that great
-everything's wine and roses. And
+00:14:10.980 --> 00:14:17.100
+so similar. The only differences
+that the compressor that we're
 
 233
-00:14:45.910 --> 00:14:52.670
-here we were throwing this
-decade plus old massive project
+00:14:17.100 --> 00:14:20.220
+making will be lossy, but
+we hope that it will
 
 234
-00:14:52.700 --> 00:14:56.690
-that was meant to do
-this incredibly complicated thing into
+00:14:20.220 --> 00:14:23.160
+be lossy in such a
+way that it doesn't really
 
 235
-00:14:56.690 --> 00:14:59.060
-a browser and through them
-script. And, and so the
+00:14:23.250 --> 00:14:26.460
+affect your quality in a
+way that you'll notice, Right.
 
 236
-00:14:59.060 --> 00:15:03.230
-first time I think we
-did it, it produced 75
+00:14:26.460 --> 00:14:28.620
+The way that modern J
+pegging is like, if you
 
 237
-00:15:03.260 --> 00:15:08.690
-megabytes of JavaScript code and
-it made Firefox crash and
+00:14:28.620 --> 00:14:31.140
+set your JPEG at 90,
+you have to be a
 
 238
-00:15:08.690 --> 00:15:13.610
-Chrome thought it was broken
-and we caused code changes
+00:14:31.140 --> 00:14:35.040
+photographer to notice that the
+sky is, has artifacts. Exactly.
 
 239
-00:15:13.610 --> 00:15:17.690
-to Firefox, to Chrome, to
-IM script in and to
+00:14:35.040 --> 00:14:38.430
+And what we determined is
+that that lossiness is worth
 
 240
-00:15:17.690 --> 00:15:23.750
-maim because everybody had things
-they never expected would be
+00:14:38.430 --> 00:14:40.890
+it for the speed and
+the compression that you get.
 
 241
-00:15:25.490 --> 00:15:30.440
-important. Like there was code
-in Firefox, for example, that
+00:14:40.890 --> 00:14:44.040
+But I think it's amazing
+that leptin is lossy and
 
 242
-00:15:30.440 --> 00:15:33.860
-would do a quick check
-of a JavaScript program to
+00:14:44.340 --> 00:14:48.060
+transcodes and saves you so
+much time and space. That's
 
 243
-00:15:33.860 --> 00:15:37.430
-make sure that it was
-functional. And we had more
+00:14:48.570 --> 00:14:51.920
+really, that's really awesome of
+them. I love seeing compressors
 
 244
-00:15:37.430 --> 00:15:39.890
-than a hundred thousand lines
-of code that was in
+00:14:51.920 --> 00:14:55.390
+in this space. Yeah. It's
+lossless and it's, and they're
 
 245
-00:15:39.890 --> 00:15:43.640
-JavaScript and it would crash
-Firefox. So Firefox added a
+00:14:55.390 --> 00:14:58.000
+doing it of course, to
+save, to save money and
 
 246
-00:15:43.640 --> 00:15:46.370
-thing that said, if it's
-that big, don't just, just
+00:14:58.000 --> 00:15:00.070
+you're doing it to not
+only make it better for
 
 247
-00:15:46.370 --> 00:15:49.910
-let it go. And Chrome
-had a few things where
+00:15:00.070 --> 00:15:02.500
+the gamer, make it better
+for the developer, but in
 
 248
-00:15:49.910 --> 00:15:52.250
-it made calls and it
-turned out it wasn't compatible
+00:15:02.500 --> 00:15:04.420
+such a way that it
+sounds like it's just everybody
 
 249
-00:15:52.250 --> 00:15:54.440
-and they fixed it and
-so on. And then Mame
+00:15:04.420 --> 00:15:07.600
+wins. There's no, it's just
+a superior way. No one
 
 250
-00:15:55.010 --> 00:16:00.200
-itself had a number of
-approaches that needed a special
+00:15:07.600 --> 00:15:10.690
+loses in your scenario. Well,
+and it's really fascinating to
 
 251
-00:16:00.200 --> 00:16:03.470
-kind of sound device to
-work with the web and
+00:15:10.690 --> 00:15:13.600
+me to think about it
+beyond games too. Like I
 
 252
-00:16:03.470 --> 00:16:06.560
-so on. But when it
-was all said and done,
+00:15:13.600 --> 00:15:16.870
+got a call from someone
+in the medical industry the
 
 253
-00:16:07.520 --> 00:16:09.770
-at one point we had
-it that it was down
+00:15:16.870 --> 00:15:19.300
+other day, who was saying
+that this would really change
 
 254
-00:16:09.770 --> 00:16:13.850
-to, I want to say
-about eight or nine megabytes
+00:15:19.300 --> 00:15:23.680
+the healthcare industry in terms
+of sending x-ray scans, CT
 
 255
-00:16:13.910 --> 00:16:17.990
-of JavaScript code to do
-a specific machine emulation. And
+00:15:23.680 --> 00:15:28.270
+scans for prognosis videos, through
+their network, all kinds of
 
 256
-00:16:17.990 --> 00:16:22.160
-then under the way that
-JavaScript works, it actually compresses
+00:15:28.270 --> 00:15:31.480
+things. So, I mean, think
+about the, the amount of
 
 257
-00:16:22.160 --> 00:16:24.920
-down to like less than
-a Mac. So for less
+00:15:31.480 --> 00:15:36.910
+ways that streaming image data
+affects our lives through all
 
 258
-00:16:24.920 --> 00:16:28.250
-than a mag, you would
-have a working Apple to,
+00:15:36.910 --> 00:15:39.880
+industries. It's extremely important to
+try to do it right.
 
 259
-00:16:28.260 --> 00:16:33.830
-or a working asteroids machine.
-So we ended up with
+00:15:39.940 --> 00:15:43.240
+Well, have you thought of
+that? I did that. No,
 
 260
-00:16:33.830 --> 00:16:40.520
-this environment and what ended
-up happening was when I
+00:15:43.240 --> 00:15:47.140
+no. Someone reached out to
+me directly. I was surprised
 
 261
-00:16:40.520 --> 00:16:43.520
-first started it, there was
-great skepticism among the main
+00:15:47.140 --> 00:15:51.400
+and I welcome. I welcome
+input like that. Wow. Okay.
 
 262
-00:16:43.520 --> 00:16:46.070
-team that this was even
-a good idea. There was
+00:15:51.400 --> 00:15:54.190
+So let's dig a little
+bit into how the GPS
 
 263
-00:16:46.070 --> 00:16:48.920
-skepticism in many areas that
-this was a, in any
+00:15:54.190 --> 00:15:56.770
+work I hear about, you
+know, a new GPU comes
 
 264
-00:16:48.920 --> 00:16:51.140
-way, a good use of
-resources or time or a
+00:15:56.770 --> 00:15:59.350
+out every six to nine
+months, and then I read
 
 265
-00:16:51.140 --> 00:16:55.850
-solution. And what ended up
-happening was that last year
+00:15:59.590 --> 00:16:01.840
+on like a non to
+tech, all these things I
 
 266
-00:16:56.600 --> 00:17:04.040
-and into this year, maim
-actually absorbed our entire project.
+00:16:01.840 --> 00:16:05.080
+don't understand. And suddenly we're
+in a scenario where it
 
 267
-00:17:04.490 --> 00:17:09.740
-So there is now direct
-support for compiling, with JavaScript
+00:16:05.080 --> 00:16:07.480
+feels to me like the
+video card, the $600 video,
 
 268
-00:17:09.740 --> 00:17:14.060
-as a target in Maine,
-which means that technically the
+00:16:07.490 --> 00:16:10.480
+your card you can buy
+is as a good of
 
 269
-00:17:14.060 --> 00:17:18.410
-project that I worked on
-has been 100% obsoleted. That
+00:16:10.480 --> 00:16:13.090
+a CPU and a computer
+as my computer is, it's
 
 270
-00:17:18.410 --> 00:17:21.860
-is to say, we don't
-have to write any code
+00:16:13.090 --> 00:16:16.060
+got four gigs of Ram
+and it's got, you know,
 
 271
-00:17:22.280 --> 00:17:27.980
-to make meme, compile cleanly
-into JavaScript because now maim
+00:16:16.180 --> 00:16:19.030
+eight processors is that card
+that I put into my
 
 272
-00:17:27.980 --> 00:17:32.300
-recognizes JavaScript as one of
-its official outputs, along with
+00:16:19.030 --> 00:16:24.400
+desktop, as powerful as my
+desktop. It is very powerful.
 
 273
-00:17:32.300 --> 00:17:37.430
-Macintosh and, and OSX and,
-and, and you know, windows
+00:16:24.400 --> 00:16:27.880
+And what's fascinating about your
+question is it's just powerful
 
 274
-00:17:37.430 --> 00:17:39.500
-and everywhere else. So that,
-you know, that was a
+00:16:27.880 --> 00:16:33.130
+in a different way. So
+one of the easiest ways
 
 275
-00:17:39.500 --> 00:17:42.980
-huge step. And one of
-the side effects of that
+00:16:33.130 --> 00:16:36.430
+to explain that is to
+talk about multithreading and doing
 
 276
-00:17:42.980 --> 00:17:48.350
-of course, is that compiling
-out to the newest version
+00:16:36.430 --> 00:16:41.260
+things in parallel. So on,
+on your CPU, you don't
 
 277
-00:17:48.350 --> 00:17:50.280
-of meme. Cause a new
-version of meme comes out
+00:16:41.260 --> 00:16:46.180
+have nearly amount as as
+much ability to paralyze your
 
 278
-00:17:50.280 --> 00:17:55.130
-every month. This episode of
-Hansel minutes is brought to
+00:16:46.180 --> 00:16:49.570
+work as you do on
+your GPU. However, there are
 
 279
-00:17:55.130 --> 00:17:58.850
-you by brain tree payments.
-Why make payment integration more
+00:16:49.570 --> 00:16:52.120
+other advantages to your CPU.
+You have a lot more
 
 280
-00:17:58.850 --> 00:18:02.300
-difficult than it has to
-be? Braintree's powerful, full stack
+00:16:52.120 --> 00:16:56.380
+memory. It's, it's structured in
+a way that's better for,
 
 281
-00:18:02.330 --> 00:18:05.390
-payment platform allows you to
-accept nearly any type of
+00:16:56.560 --> 00:17:01.390
+for certain processes. GP was
+really good at doing simple
 
 282
-00:18:05.390 --> 00:18:09.230
-payment from any device. With
-one integration, it's flexible to
+00:17:01.390 --> 00:17:05.830
+actions all at the same
+time. And that makes sense,
 
 283
-00:18:09.230 --> 00:18:12.590
-your system's needs, supports most
-programming languages. So whether you're
+00:17:05.830 --> 00:17:09.700
+right? Because when we process
+graphics, we want to be
 
 284
-00:18:12.590 --> 00:18:16.250
-using Java, Ruby, or Python,
-you'll always have a range
+00:17:09.730 --> 00:17:13.810
+doing operations on all the
+pixels in our screen. Seriously,
 
 285
-00:18:16.250 --> 00:18:20.390
-of service side and client
-side SDKs available. Braintree makes
+00:17:13.810 --> 00:17:17.260
+every pixel gets processed by
+your graphics and we can't,
 
 286
-00:18:20.390 --> 00:18:23.510
-payments and your job a
-whole lot easier. You can
+00:17:17.890 --> 00:17:21.070
+we can't do that on
+four threads. Think about how
 
 287
-00:18:23.510 --> 00:18:37.130
-learn more@braintreepayments.com slash Hanselman. That's
-Braintree payments.com/hanselman. The internet archive,
+00:17:21.070 --> 00:17:24.940
+many pixels especially modern screens
+have. So the GPU is
 
 288
-00:18:37.160 --> 00:18:39.590
-where I work and where
-we have this running can
+00:17:24.940 --> 00:17:30.010
+able to highly highly parallelized
+those operations. The downside is
 
 289
-00:18:39.590 --> 00:18:45.170
-have the newest changes to
-maim in our web version
+00:17:30.040 --> 00:17:34.270
+that as GPS have gotten
+more powerful in some ways,
 
 290
-00:18:45.350 --> 00:18:48.800
-within the day of there
-being improvements. And if somebody
+00:17:34.330 --> 00:17:39.430
+memory is still a big
+concern for GPS. Everything still
 
 291
-00:18:48.800 --> 00:18:51.800
-makes an improvement immediately to
-fix a major bug, we
+00:17:39.430 --> 00:17:42.760
+starts on the CPU and
+is sent over. And the
 
 292
-00:18:51.800 --> 00:18:55.340
-can just turn around and
-have that copy. Whereas previously
+00:17:42.760 --> 00:17:47.620
+GPU is, is, is not
+great at dealing with large
 
 293
-00:18:55.340 --> 00:18:59.090
-it was a very, you
-know, bespoke and bunch of
+00:17:47.650 --> 00:17:52.350
+memory loads, which is partly
+why I'm focusing on compression
 
 294
-00:18:59.090 --> 00:19:02.990
-people working together and then
-dropping hints to each other.
+00:17:52.350 --> 00:17:56.360
+and doing that very well
+as is so important. Why
 
 295
-00:19:02.990 --> 00:19:06.710
-And we would slowly produce
-the new version. Now it's
+00:17:56.360 --> 00:17:59.360
+can't we just put 16
+gigs of Ram on a
 
 296
-00:19:06.950 --> 00:19:12.950
-pretty much automated. And so
-that's great to, to describe
+00:17:59.360 --> 00:18:01.670
+video card and load the
+whole game in or 32
 
 297
-00:19:13.010 --> 00:19:15.200
-to a greater extent what
-we're talking about here as
+00:18:01.670 --> 00:18:04.250
+gigs isn't memory Cho cheap
+now. I mean, they have
 
 298
-00:19:15.200 --> 00:19:18.830
-a philosophy. My goal always
-had been, I mean, the
+00:18:04.250 --> 00:18:06.260
+these giant fans and they've
+got all these processors and
 
 299
-00:19:18.830 --> 00:19:21.800
-reason why I spent a
-few years, you know, hurting
+00:18:06.260 --> 00:18:09.020
+why not just throw, you
+know, gigs and gigs of
 
 300
-00:19:21.800 --> 00:19:24.530
-people into this and talking
-about it was because I
+00:18:09.020 --> 00:18:12.920
+memory at the problem. That's
+actually, And extremely good question.
 
 301
-00:19:24.530 --> 00:19:28.610
-realized that with a lot
-of the history, the software
+00:18:12.920 --> 00:18:16.880
+And it's up to the
+GPU manufacturers. Maybe they should
 
 302
-00:19:28.610 --> 00:19:32.900
-history, yeah. I can sit
-here and I do and
+00:18:17.060 --> 00:18:21.070
+work on making that a
+bigger priority, but I, I
 
 303
-00:19:33.230 --> 00:19:39.050
-make images of CD ROMs
-or image floppies or image
+00:18:21.080 --> 00:18:24.470
+imagine I'm not a GPU
+manufacturer, but I imagine that
 
 304
-00:19:39.500 --> 00:19:42.230
-cassette tapes with data on
-them. And then we would
+00:18:24.590 --> 00:18:27.170
+there are a lot of
+things to consider. For instance,
 
 305
-00:19:42.230 --> 00:19:44.570
-end up with a big
-pile of data that would
+00:18:28.040 --> 00:18:31.910
+actually building memory into the
+GPU might be harder than
 
 306
-00:19:44.570 --> 00:19:48.410
-have meaning to a vanishingly,
-small number of people who
+00:18:32.210 --> 00:18:35.930
+harder than we think. And
+the other amount is the
 
 307
-00:19:48.590 --> 00:19:52.490
-they might say, okay, I
-want this, I will download
+00:18:35.930 --> 00:18:38.300
+more memory you put, the
+more you have to think
 
 308
-00:19:52.490 --> 00:19:54.350
-it. I will make it
-work in an emulator. I
+00:18:38.300 --> 00:18:42.620
+about, well, if I just
+make all of this memory
 
 309
-00:19:54.350 --> 00:19:58.370
-will analyze it and everything
-else, but that that's not
+00:18:42.650 --> 00:18:47.750
+equally, easily accessible, I'm going
+to overall slow down my
 
 310
-00:19:58.370 --> 00:20:02.240
-how people work. And that's
-not how value is recognized
+00:18:47.750 --> 00:18:51.110
+memory access. You know, the
+concept of caches, for instance,
 
 311
-00:20:02.480 --> 00:20:05.090
-in this history. You know,
-if somebody said to you,
+00:18:51.110 --> 00:18:54.440
+I want some memory that's
+really easily accessible, so they
 
 312
-00:20:05.090 --> 00:20:07.940
-trust me, there's, there's lots
-of paintings and they're in
+00:18:54.440 --> 00:18:56.720
+would have to, as they
+put more memory on a
 
 313
-00:20:07.940 --> 00:20:11.030
-the warehouse and we have
-them in boxes and don't
+00:18:56.720 --> 00:18:59.540
+GPU, they'd have to think
+about those problems some more
 
 314
-00:20:11.030 --> 00:20:15.470
-worry. They're good. People would
-be like, Oh, okay. How
+00:18:59.540 --> 00:19:02.720
+and design it in a
+way. So that memory access
 
 315
-00:20:15.470 --> 00:20:19.070
-do I see the paintings?
-Oh, by appointment with a
+00:19:02.720 --> 00:19:06.050
+is still really fast. It's,
+it's a very complex issue,
 
 316
-00:20:19.070 --> 00:20:23.000
-month warning that, you know,
-people wouldn't give money to
+00:19:06.050 --> 00:19:08.720
+but I actually, I agree
+that more memory should be
 
 317
-00:20:23.000 --> 00:20:26.930
-museums because they'd say, well,
-where's the stuff. And what
+00:19:08.720 --> 00:19:11.060
+on GPS and we should
+be solving that problem as
 
 318
-00:20:26.930 --> 00:20:28.250
-they do is they put
-the stuff up on the
+00:19:11.060 --> 00:19:15.140
+well. Yeah. So there's this
+new Nvidia card called a
 
 319
-00:20:28.250 --> 00:20:30.830
-wall. They make sure it's
-maintained and everything else. And
+00:19:15.150 --> 00:19:18.830
+10 80, which is, that's
+like the one that we
 
 320
-00:20:31.280 --> 00:20:37.280
-with movies and old radio
-shows and old texts, if
+00:19:18.830 --> 00:19:21.140
+all want, right. It was
+like 600 bucks though, or
 
 321
-00:20:37.280 --> 00:20:39.890
-a person can go to
-a website and in one
+00:19:21.140 --> 00:19:24.890
+something it's ridiculous in the
+list of all of the
 
 322
-00:20:39.890 --> 00:20:44.090
-click read an old newspaper
-or read an old magazine,
+00:19:24.920 --> 00:19:29.000
+huge numbers of things that
+it has. It has 160
 
 323
-00:20:44.540 --> 00:20:49.330
-they recognize both the contributions
-that magazine. And they're able
+00:19:29.030 --> 00:19:33.200
+texture units. What does that
+mean? That's a really good
 
 324
-00:20:49.330 --> 00:20:51.220
-to reference it and use
-it in their work. They
+00:19:33.200 --> 00:19:36.080
+question. Then I need to,
+I need to dig into
 
 325
-00:20:51.220 --> 00:20:53.050
-say, Hey, look at this,
-this was noted in this
+00:19:36.080 --> 00:19:38.600
+the specs of the 10
+80 and detail I haven't
 
 326
-00:20:53.050 --> 00:20:57.130
-magazine, here's a link. Or
-Hey, somebody made something that
+00:19:38.600 --> 00:19:42.890
+yet, but I imagine those
+are the units that I
 
 327
-00:20:57.130 --> 00:20:59.980
-feels much like an analog
-to what we're dealing with
+00:19:42.890 --> 00:19:47.240
+was discussing that process texture
+data in parallel. So it
 
 328
-00:20:59.980 --> 00:21:04.060
-today 50 years ago. Here's
-what it looked like. You
+00:19:47.240 --> 00:19:50.630
+allows, it allows that GPU
+to be even more parallel
 
 329
-00:21:04.060 --> 00:21:07.750
-know, we just become richer
-as a society. And as
+00:19:50.750 --> 00:19:54.680
+than the GPS that were
+prior. Okay. So this is,
 
 330
-00:21:07.750 --> 00:21:11.350
-a group of people who
-are working on anything that
+00:19:55.850 --> 00:19:58.490
+this is a logical unit
+that, that you can, that
 
 331
-00:21:11.350 --> 00:21:14.170
-touches a historical basis. And
-so I wanted that for
+00:19:58.490 --> 00:20:01.460
+you use a texture mapping
+unit for, for once you've
 
 332
-00:21:14.170 --> 00:21:17.350
-software. And so in the
-same way that you don't
+00:20:01.460 --> 00:20:04.340
+given it once you've decompressed
+your texture, it's the thing
 
 333
-00:21:17.350 --> 00:21:19.510
-even think about the fact
-that somebody links you to
+00:20:04.340 --> 00:20:06.350
+that rotates it and moves
+it around and does stuff
 
 334
-00:21:19.510 --> 00:21:22.870
-a YouTube video or a
-Vimeo or, or something else,
+00:20:06.350 --> 00:20:10.820
+with it. Right? Exactly. Exactly.
+Okay. So then they will
 
 335
-00:21:22.870 --> 00:21:25.510
-and you just watch it,
-I wanted it to be
+00:20:10.820 --> 00:20:15.950
+take your, your trans coders
+resulting textures and then spin
 
 336
-00:21:25.510 --> 00:21:29.860
-so transparent and seamless that
-a person would say, huh,
+00:20:15.950 --> 00:20:17.600
+them around and do stuff
+with them and then put
 
 337
-00:21:30.100 --> 00:21:34.870
-somebody made something like this
-app for the Apple two.
+00:20:17.600 --> 00:20:21.830
+them on the floor. And
+I walk on it. Okay.
 
 338
-00:21:35.290 --> 00:21:38.110
-Here's what it looked like.
-And then just linking you
+00:20:22.130 --> 00:20:26.300
+It's really fascinating. It's this
+might be a tidbit that
 
 339
-00:21:38.110 --> 00:21:41.020
-and beep, and there's an
-Apple two running in your
+00:20:26.300 --> 00:20:30.710
+isn't isn't necessary, but GPS
+work in a very tile
 
 340
-00:21:41.020 --> 00:21:42.970
-browser and what it was
-like, and you try it.
+00:20:30.710 --> 00:20:33.530
+based approach. So what they
+do is when I access
 
 341
-00:21:43.630 --> 00:21:47.470
-And, you know, in terms
-of how people in the
+00:20:33.530 --> 00:20:37.220
+a pixel on your cobblestone
+floor, for instance, I want
 
 342
-00:21:47.470 --> 00:21:50.140
-world regard it, I mean,
-I can tell you that,
+00:20:37.220 --> 00:20:40.280
+to turn that pixel yellow
+because the sun is shining
 
 343
-00:21:50.170 --> 00:21:54.310
-you know, thousands and thousands
-of people are using this
+00:20:40.280 --> 00:20:43.640
+on it. And it's really
+important that dot cobblestone floor
 
 344
-00:21:54.310 --> 00:21:57.880
-software emulator in the browser
-now in a way ranging
+00:20:43.640 --> 00:20:46.340
+reflects the sun in a
+good way. So I would
 
 345
-00:21:57.880 --> 00:22:02.140
-from just enjoying old entertainment
-that they used to play
+00:20:46.340 --> 00:20:50.260
+grab the, but instead of
+grabbing the entire image, I
 
 346
-00:22:02.140 --> 00:22:04.030
-as a kid, you know,
-in other words, a personal
+00:20:50.260 --> 00:20:53.650
+would just grab a small
+tile of the image to
 
 347
-00:22:04.030 --> 00:22:09.310
-narrative, or they're using it
-to reference things in classes
+00:20:53.650 --> 00:20:56.470
+work with. And that's one
+of the things that these
 
 348
-00:22:09.340 --> 00:22:12.370
-or their writings, or to
-use as a jumping off
+00:20:56.470 --> 00:21:00.250
+GPU formats and GPU hardware
+architecture is really good at.
 
 349
-00:22:12.370 --> 00:22:17.200
-point for their own work.
-And so the fact that
+00:21:00.490 --> 00:21:04.020
+And that helps with saving
+memory is only accessing things
 
 350
-00:22:17.260 --> 00:22:21.220
-it's becoming transparent and that
-the hard work underneath it
+00:21:04.270 --> 00:21:08.230
+in tiles, instead of always
+needing to grab the entire
 
 351
-00:22:21.610 --> 00:22:25.090
-is not necessarily at the
-forefront of people's minds is
+00:21:08.230 --> 00:21:13.440
+image from memory. And now
+your partner in crime here
 
 352
-00:22:26.140 --> 00:22:28.630
-actually to me an incredible
-sign of success because you
+00:21:13.440 --> 00:21:18.330
+at binomial is a, is
+rich Goldrich Gilda. And is
 
 353
-00:22:28.630 --> 00:22:32.680
-don't wake up. I mean,
-you know, there are dozens
+00:21:18.330 --> 00:21:20.310
+the name, the name of
+it is called, is crunch.
 
 354
-00:22:32.680 --> 00:22:37.180
-of tests that the YouTube
-player does to your browser,
+00:21:20.340 --> 00:21:23.580
+Is that correct? Yeah. So
+he previously worked on a
 
 355
-00:22:37.180 --> 00:22:39.820
-to your system when you
-run it to make sure
+00:21:23.640 --> 00:21:26.970
+free and open source library
+to anyone can use now
 
 356
-00:22:39.820 --> 00:22:42.130
-it gives you the smoothest
-experience, it figures out where
+00:21:27.450 --> 00:21:31.860
+called the crunch that essentially
+does everything I've. Well, most
 
 357
-00:22:42.130 --> 00:22:45.040
-you are and how your
-machine runs to give you
+00:21:31.860 --> 00:21:34.200
+of the things I've been
+telling you, our compressor will
 
 358
-00:22:45.040 --> 00:22:48.040
-video. That is as smooth
-as possible and working as
+00:21:34.200 --> 00:21:39.000
+do. Hasn't been actively maintained
+and worked on for a
 
 359
-00:22:48.040 --> 00:22:50.170
-well as it can with
-your network. But you don't,
+00:21:39.000 --> 00:21:43.800
+few years and we have
+just been talking nonstop about
 
 360
-00:22:51.310 --> 00:22:55.780
-you don't, you know, boot
-up a new Brittany Spears video
+00:21:43.800 --> 00:21:46.380
+all kinds of ways to
+improve it. And also the
 
 361
-00:22:55.780 --> 00:22:59.380
-and think, Oh, these brave
-engineers they're working so hard.
+00:21:46.380 --> 00:21:50.250
+fact that he only handles
+certain GPU formats. For instance,
 
 362
-00:23:00.340 --> 00:23:02.560
-Oh my God, can you
-imagine how they're able to
+00:21:50.430 --> 00:21:53.730
+if you wanted to make
+an iPhone game, you couldn't
 
 363
-00:23:02.560 --> 00:23:05.260
-keep this high definition thing
-going? Even though I'm downloading
+00:21:53.730 --> 00:21:57.390
+use crunch because it doesn't
+support that kind of GPU
 
 364
-00:23:05.260 --> 00:23:08.230
-this in the background, that's
-amazing. Like you don't eat.
+00:21:57.390 --> 00:22:01.200
+format. So we were thinking
+it's really important to get
 
 365
-00:23:08.530 --> 00:23:11.290
-I understand that just like
-you don't drive over a
+00:22:01.200 --> 00:22:04.890
+this technology in the hands
+of everyone. So if you're
 
 366
-00:23:11.290 --> 00:23:14.650
-bridge and thank the 500
-people that make that bridge
+00:22:04.890 --> 00:22:09.000
+not on a windows PC,
+you can still use this
 
 367
-00:23:14.680 --> 00:23:18.760
-not fall down. And the
-fact that you're not taken
+00:22:09.000 --> 00:22:12.960
+in your game. I think
+that's extremely important. Okay. So
 
 368
-00:23:18.760 --> 00:23:20.710
-out of the experience and
-that it boots up and
+00:22:12.960 --> 00:22:16.470
+then your, your encoder will
+take the formats that the
 
 369
-00:23:20.710 --> 00:23:23.080
-that you're looking at a
-computer or an old arcade
+00:22:16.470 --> 00:22:20.700
+asset creator is making and
+then hold them. And then
 
 370
-00:23:23.080 --> 00:23:28.030
-game or an old computer
-in the browser is just
+00:22:20.700 --> 00:22:24.060
+the transcoder will detect and
+figure out, or be told
 
 371
-00:23:28.450 --> 00:23:32.800
-great to me. So, so
-it's nice because in the
+00:22:24.060 --> 00:22:26.220
+that you're on an Nvidia,
+you're on an ATI, you're
 
 372
-00:23:32.800 --> 00:23:35.980
-last couple of years, we've
-really had a success in
+00:22:26.220 --> 00:22:29.610
+on an iPhone, you're on
+a Nvidia shield or whatever,
 
 373
-00:23:35.980 --> 00:23:40.420
-that area. And so it's,
-it's, it's not perfect. And
+00:22:29.880 --> 00:22:32.970
+and do the right thing
+is Exactly that's the basic
 
 374
-00:23:40.420 --> 00:23:43.210
-we certainly can whip out
-tests that show you how
+00:22:32.970 --> 00:22:36.570
+idea behind it. And that
+that'll make it so that
 
 375
-00:23:43.210 --> 00:23:48.410
-imperfect it is, but when
-it works, it's just in
+00:22:38.490 --> 00:22:42.450
+you don't need to use
+a text. It's not as
 
 376
-00:23:48.410 --> 00:23:52.310
-the background. The most prominent
-one right now is the
+00:22:42.450 --> 00:22:46.220
+good if you're developing, it's
+an iPhone game. This, this
 
 377
-00:23:52.310 --> 00:23:54.740
-number one item that people
-go to, to the internet
+00:22:46.230 --> 00:22:50.490
+really is for this particular
+use case, you know, moving
 
 378
-00:23:54.740 --> 00:23:58.580
-archive for, for the software
-reason. And I buy often
+00:22:50.490 --> 00:22:53.580
+texture data and displaying on
+the GPU. I actually don't
 
 379
-00:23:58.580 --> 00:24:00.800
-go, I mean, every eight
-seconds, a new one boots
+00:22:53.580 --> 00:22:56.910
+know of a better solution.
+And I don't, I don't
 
 380
-00:24:00.800 --> 00:24:05.120
-up is Oregon trail for
-dos. And it's used by
+00:22:56.910 --> 00:23:01.050
+want people who develop on
+different platforms to miss out
 
 381
-00:24:05.120 --> 00:24:09.380
-schools classic. Yeah, it's an
-absolute classic it's timeless. It's,
+00:23:01.050 --> 00:23:05.850
+on it. So what's the,
+what's the timeframe for this?
 
 382
-00:24:09.600 --> 00:24:13.190
-it's just, it's literally as
-timeless as Washington crossing the
+00:23:05.850 --> 00:23:08.070
+Is this something that's like
+a like doom, it'll be
 
 383
-00:24:13.190 --> 00:24:17.870
-Delaware or a Beethoven symphony
-in terms of how beautifully
+00:23:08.130 --> 00:23:11.760
+it'll, you'll release it when
+it's done In general, but
 
 384
-00:24:17.870 --> 00:24:22.580
-it brings all of these
-historical aspects of the Oregon
+00:23:11.760 --> 00:23:15.480
+we do have constraints right
+now. We're a company that's
 
 385
-00:24:22.580 --> 00:24:29.000
-trail and the, the difficulty
-of using, you know, oxen
+00:23:15.480 --> 00:23:18.600
+kind of bootstrapping ourselves and
+funding ourselves with part time
 
 386
-00:24:29.160 --> 00:24:32.600
-and a big pile of
-wood, dragging it across a
+00:23:18.600 --> 00:23:22.860
+contract work. We do VR
+and AR consulting and graphics
 
 387
-00:24:32.600 --> 00:24:39.200
-state, combined with lessons in
-economics and resource management and
+00:23:22.860 --> 00:23:27.090
+consulting primarily focused on optimization.
+Cause it's really similar to
 
 388
-00:24:39.200 --> 00:24:42.170
-history. I mean, you know,
-it's, it's this brilliant piece
+00:23:27.090 --> 00:23:32.790
+this compressor work, but that
+takes up time. So we're
 
 389
-00:24:42.170 --> 00:24:45.200
-of work and it's still
-in use, like people are
+00:23:32.790 --> 00:23:36.810
+thinking if we continue to
+do part time contracts, maybe
 
 390
-00:24:45.200 --> 00:24:48.650
-booting it up from schools
-in, in browsers. And having
+00:23:36.810 --> 00:23:39.990
+we'll have an initial build
+end of year early next,
 
 391
-00:24:48.650 --> 00:24:53.420
-people play these games because
-it's really, really functional. I
+00:23:39.990 --> 00:23:43.140
+but it depends on how
+much time that takes. What
 
 392
-00:24:53.420 --> 00:24:56.240
-mean, yeah, people will boot
-up a Pac-Man clone or
+00:23:43.140 --> 00:23:46.520
+we're working on now is
+if companies need it early,
 
 393
-00:24:56.240 --> 00:25:01.250
-an arcade machine clone and
-so on. But yeah, educational
+00:23:46.520 --> 00:23:49.430
+or if people just want
+to support development, we're taking
 
 394
-00:25:01.250 --> 00:25:05.150
-software in some ways is
-very evergreen. Like we, we
+00:23:49.430 --> 00:23:52.880
+preorders and that'll allow us
+to actually focus on this
 
 395
-00:25:05.150 --> 00:25:09.350
-haven't changed how we understand
-how fractions work. So an
+00:23:52.880 --> 00:23:56.560
+and get it done sooner.
+Very cool. So then people,
 
 396
-00:25:09.350 --> 00:25:11.900
-educational program that was written
-by experts and is of
+00:23:56.590 --> 00:23:59.680
+people who are listening right
+now and they know that
 
 397
-00:25:11.900 --> 00:25:14.330
-good quality and time has
-shown to be good. Quality
+00:23:59.680 --> 00:24:02.170
+someone is interested in a
+technology like this can reach
 
 398
-00:25:15.320 --> 00:25:17.720
-still works, you know, plunk
-a kid in front of
+00:24:02.170 --> 00:24:06.190
+out to binomial.info and get
+in touch with you. Absolutely.
 
 399
-00:25:17.720 --> 00:25:20.030
-it and they're going to
-learn. And the fact that
+00:24:06.220 --> 00:24:10.240
+Absolutely. My email is Stephanie
+binomial dye info. You can
 
 400
-00:25:20.030 --> 00:25:22.280
-it just functions that way
-is to me, just really
+00:24:10.240 --> 00:24:13.450
+email me anytime. Okay. So
+if you don't mind, I
 
 401
-00:25:22.280 --> 00:25:26.600
-amazing. And, and so it's,
-it's become interwoven into a
+00:24:13.450 --> 00:24:15.610
+want to shift gears a
+little bit and I want
 
 402
-00:25:26.600 --> 00:25:29.090
-certain amount of the fabric
-of life. At this point,
+00:24:15.610 --> 00:24:18.970
+to understand the kind of
+software engineering that you do
 
 403
-00:25:30.460 --> 00:25:34.060
-You, you said in 2011,
-when you kicked off this
+00:24:19.360 --> 00:24:21.610
+juxtapose with the kind that
+maybe I do, or maybe
 
 404
-00:25:34.060 --> 00:25:36.940
-idea, when you said, I
-want to help port MES
+00:24:21.610 --> 00:24:25.840
+our listeners do, because we
+all consider ourselves programmers, coders,
 
 405
-00:25:36.940 --> 00:25:41.350
-and maim to JavaScript that
-you had, basically, we're moving
+00:24:25.840 --> 00:24:30.400
+hackers, engineers, but it seems
+like, you know, in school,
 
 406
-00:25:41.350 --> 00:25:46.420
-from dealing with artifacts, to
-dealing with experiences like you've
+00:24:30.970 --> 00:24:32.230
+you know, I hung a
+left and you hung a
 
 407
-00:25:46.420 --> 00:25:48.790
-collected all these text files
-and collected all these artifacts
+00:24:32.230 --> 00:24:37.930
+right, because this feels very
+math, heavy, very, very, very
 
 408
-00:25:48.790 --> 00:25:51.730
-and these graphics and all
-these things, but they are,
+00:24:37.930 --> 00:24:41.500
+technical. Well, it makes me
+feel like as someone who's
 
 409
-00:25:51.730 --> 00:25:54.070
-they are artifacts, as opposed
-to saying, here is an
+00:24:41.500 --> 00:24:47.080
+a web developer doing CSS
+and doing HTML, like text
 
 410
-00:25:54.070 --> 00:25:55.930
-experience and you have this
-great sentence here where you
+00:24:47.080 --> 00:24:50.590
+boxes over data, just isn't
+simply a as hard a
 
 411
-00:25:55.930 --> 00:25:58.870
-say, you want to take
-someone from, I wonder what
+00:24:50.590 --> 00:24:52.660
+problem is this, does this
+mean that you have a
 
 412
-00:25:58.870 --> 00:26:01.540
-it was like to play
-shoplifter to, wow, I'm playing
+00:24:52.660 --> 00:24:56.650
+background in advanced math? What's
+fascinating about that is that
 
 413
-00:26:01.540 --> 00:26:05.470
-shoplifter. And five years later
-that has happened. It's exactly
+00:24:56.680 --> 00:24:58.240
+rich and I work on
+this together and we have
 
 414
-00:26:05.470 --> 00:26:08.800
-that I give, I show
-my kids the game, I
+00:24:58.240 --> 00:25:02.380
+very different backgrounds. I started
+school in mathematics. I wanted
 
 415
-00:26:08.800 --> 00:26:10.840
-give them the URL, they
-go to it. And it's
+00:25:02.380 --> 00:25:05.620
+to be a mathematician. So
+math is definitely my thing.
 
 416
-00:26:10.840 --> 00:26:12.430
-not that they're watching a
-video. It's not that they're
+00:25:05.650 --> 00:25:08.620
+I love it. But rich
+doesn't does not have a
 
 417
-00:26:12.430 --> 00:26:16.750
-looking at screenshots. They are
-experiencing it. And you're even
+00:25:08.620 --> 00:25:11.830
+background in math at all
+and has just kind of
 
 418
-00:26:16.750 --> 00:26:21.670
-going so far to make
-it look the way it
+00:25:11.950 --> 00:25:14.530
+picked it up as he
+goes and focused on making
 
 419
-00:26:21.670 --> 00:26:24.940
-was. I'm looking at a
-demo here of CRT effects.
+00:25:14.530 --> 00:25:19.420
+smart architecture decisions and, and
+learning about algorithms and computer
 
 420
-00:26:25.390 --> 00:26:29.050
-Sure. What's going on here?
-Okay. So one of the,
+00:25:19.420 --> 00:25:23.080
+science instead. So there are
+many, there, there are many
 
 421
-00:26:29.710 --> 00:26:33.580
-one of the great things
-about mankind is like Douglas Adams
+00:25:23.080 --> 00:25:26.080
+routes you can go and
+having mouth math is definitely
 
 422
-00:26:33.580 --> 00:26:36.730
-said, you know, we quickly
-go from, you know, how
+00:25:26.080 --> 00:25:29.320
+very helpful, but it's certainly
+not something you can't, you
 
 423
-00:26:36.730 --> 00:26:40.030
-do I eat to what
-is eating to where do
+00:25:29.320 --> 00:25:32.470
+can't pick up as well.
+And I actually encourage people
 
 424
-00:26:40.030 --> 00:26:43.590
-we eat? And, and, and
-the fact is, is people
+00:25:32.470 --> 00:25:35.380
+to not, not be discouraged
+by a lack of math
 
 425
-00:26:43.590 --> 00:26:47.520
-go, Hey, this is, this
-is working in my browser.
+00:25:35.380 --> 00:25:40.840
+background. Okay. So it is
+not like impossible for someone
 
 426
-00:26:47.520 --> 00:26:51.240
-What an amazing thing to,
-well, I remember it a
+00:25:40.840 --> 00:25:42.940
+to shift gears. If I
+wanted to switch out of
 
 427
-00:26:51.240 --> 00:26:55.470
-little differently and I don't
-think this is, this is
+00:25:42.940 --> 00:25:45.430
+web it, you know, I
+know I have a background
 
 428
-00:26:55.470 --> 00:26:58.290
-exactly how it was. You
-should really fix that. You
+00:25:45.490 --> 00:25:48.880
+somewhat in algorithms and I
+can a reasonable amount of
 
 429
-00:26:58.290 --> 00:27:01.590
-know, like it's a bug
-and in the same way
+00:25:48.940 --> 00:25:52.420
+code smell. I can tell
+when something smells bad. What
 
 430
-00:27:01.590 --> 00:27:05.280
-that you might, you know,
-play an old movie and
+00:25:52.420 --> 00:25:54.610
+levels of math do I
+need to understand to start
 
 431
-00:27:05.310 --> 00:27:09.480
-you will have it cropped
-or time stretched or the
+00:25:54.610 --> 00:25:57.490
+doing things in three D
+space like this? That is
 
 432
-00:27:09.480 --> 00:27:14.640
-sound, isn't what you remember.
-We quickly run into the
+00:25:57.490 --> 00:26:00.880
+an extremely good question. And
+I would say basics and
 
 433
-00:27:14.640 --> 00:27:18.900
-greatest problem that every preservation
-project has, which is bringing
+00:26:00.880 --> 00:26:04.750
+things like linear algebra are
+very good because that's, that
 
 434
-00:27:18.900 --> 00:27:22.470
-back, not just the fact
-of a thing and enough
+00:26:04.750 --> 00:26:07.810
+is the mathematics and moving
+things in space, for instance.
 
 435
-00:27:22.470 --> 00:27:25.200
-of its attributes for you
-to go, yes, that's true.
+00:26:08.140 --> 00:26:12.160
+But that's, that's good advice
+for three D graphics in
 
 436
-00:27:25.590 --> 00:27:28.590
-The woman in the painting
-has one head. There is
+00:26:12.160 --> 00:26:17.800
+general, but I would actually
+say, look up books. Like
 
 437
-00:27:28.590 --> 00:27:31.650
-a, there was a dog
-in the painting too. What
+00:26:18.190 --> 00:26:20.590
+I, I should look this
+up after so I can
 
 438
-00:27:31.650 --> 00:27:34.830
-is it like to stand
-in a gallery with this
+00:26:20.590 --> 00:26:23.200
+post it, but there, there
+are many good books focused
 
 439
-00:27:34.830 --> 00:27:38.400
-painting? And how can I
-reproduce that experience? Because that's
+00:26:23.200 --> 00:26:27.520
+around mathematics for game development,
+but moreover I would not,
 
 440
-00:27:38.400 --> 00:27:41.100
-part of what the painting's
-purpose was, was to wow.
+00:26:28.600 --> 00:26:31.390
+not go into the field
+until you had a math
 
 441
-00:27:41.100 --> 00:27:45.330
-You and with computers and
-video games. If you look
+00:26:31.390 --> 00:26:35.440
+background. I would dive in
+and start creating things because
 
 442
-00:27:45.330 --> 00:27:50.340
-back at that experience, it's
-both digital, you know, digital
+00:26:35.440 --> 00:26:38.590
+the chances are, you can
+build a lot of really,
 
 443
-00:27:50.340 --> 00:27:53.730
-data, but there's actually a
-lot of analog experience as
+00:26:38.590 --> 00:26:44.070
+really interesting things before having
+a strong math background. Really
 
 444
-00:27:53.730 --> 00:27:59.040
-well. We end up with
-things like, you know, putting
+00:26:44.100 --> 00:26:47.010
+That's, that's very encouraging because
+I, I can imagine that
 
 445
-00:27:59.040 --> 00:28:02.430
-a disc into a disc,
-drive, hearing the grind of
+00:26:47.010 --> 00:26:50.040
+there are people listening who
+might say, well, shoot, you
 
 446
-00:28:02.430 --> 00:28:05.370
-a disc as it would
-boot up different parts of
+00:26:50.040 --> 00:26:51.780
+know, I got to go
+to the Khan Academy now
 
 447
-00:28:05.370 --> 00:28:09.210
-the floppy during the game,
-people would tell me, you
+00:26:51.780 --> 00:26:55.170
+and I learned all about
+real coordinate spaces. And then
 
 448
-00:28:09.210 --> 00:28:12.990
-know, they, they would play
-an old game on an
+00:26:55.170 --> 00:26:57.600
+that means three years from
+now, I'll be a graphics
 
 449
-00:28:12.990 --> 00:28:17.190
-old computer with a floppy
-disc in the machine, and
+00:26:57.600 --> 00:27:01.530
+programmer you're saying start now
+and do it all in
 
 450
-00:28:17.460 --> 00:28:21.930
-they would move down a
-dungeon. And at one point
+00:27:01.530 --> 00:27:04.760
+parallel. I would highly encourage
+you to start now. For
 
 451
-00:28:21.930 --> 00:28:25.020
-they turn a corner and
-they would hear the disc
+00:27:04.760 --> 00:27:08.840
+instance, I got into the
+field through open source and
 
 452
-00:28:25.020 --> 00:28:30.420
-drive light turn on and
-grind, and they would reach
+00:27:08.840 --> 00:27:13.790
+free graphics engines like cinder
+and openFrameworks and people who
 
 453
-00:28:30.420 --> 00:28:34.620
-over reflexively and pop the
-door open because they knew
+00:27:13.790 --> 00:27:16.400
+use those graphics engines, which
+are written in C plus
 
 454
-00:28:34.620 --> 00:28:39.090
-it was about to write
-a death. And so they
+00:27:16.400 --> 00:27:19.850
+plus and open geo really
+low level stuff are typically
 
 455
-00:28:39.090 --> 00:28:41.370
-knew that they could do
-this. They could avoid a
+00:27:19.850 --> 00:27:23.330
+artists. And it is so
+inspiring to see them just
 
 456
-00:28:41.370 --> 00:28:48.090
-death by stopping the machine
-from writing anything floppy. And
+00:27:23.540 --> 00:27:26.330
+pick up these libraries. And
+if they don't know math,
 
 457
-00:28:48.690 --> 00:28:53.610
-that experience is not vital.
-I mean, for some people
+00:27:26.330 --> 00:27:29.060
+I'll Google it, but usually
+they can still build some
 
 458
-00:28:53.610 --> 00:28:57.390
-just knowing that there was
-a game that had Dungeons
+00:27:29.060 --> 00:27:32.570
+really amazing things. And you
+can see more examples of
 
 459
-00:28:57.390 --> 00:28:59.820
-and death and, and it
-was on a computer is
+00:27:32.570 --> 00:27:34.790
+artists using this kind of
+low level of tech on
 
 460
-00:28:59.820 --> 00:29:03.120
-sufficient. But for people who
-then try to compare it
+00:27:34.790 --> 00:27:41.360
+websites like GLSL sandbox or
+shader toy. It's, it's definitely
 
 461
-00:29:03.120 --> 00:29:07.260
-to how it really was
-things like sound and video
+00:27:41.360 --> 00:27:44.360
+something that I encourage everyone
+to go into and you
 
 462
-00:29:07.260 --> 00:29:14.070
-and performance need ironically much
-more work to emulate the
+00:27:44.360 --> 00:27:47.960
+don't need, you don't necessarily
+need years of school to
 
 463
-00:29:14.070 --> 00:29:18.660
-flaws and strangeness of the
-past. And so one of
+00:27:48.170 --> 00:27:52.160
+pick up an example and
+start playing with it. So
 
 464
-00:29:18.660 --> 00:29:21.720
-those projects that was started
-by some people involved with
+00:27:52.160 --> 00:27:56.450
+you were a mathematician, you
+discovered open source software. And
 
 465
-00:29:21.720 --> 00:29:27.510
-Mayme was to start emulating
-the way that monitors really
+00:27:56.480 --> 00:27:58.370
+did you pick up coding
+or were you doing math
 
 466
-00:29:27.510 --> 00:29:34.410
-worked pre LCD screen pre
-flat screen. You know, when
+00:27:58.370 --> 00:28:02.840
+and computer science simultaneous. I
+started at school studying mathematics
 
 467
-00:29:35.160 --> 00:29:38.340
-tubes were the order of
-the day inside of a
+00:28:02.870 --> 00:28:06.470
+and I ended up switching
+to computer science because I
 
 468
-00:29:38.340 --> 00:29:42.820
-monitor, and it was this
-beam that magnets were manipulating
+00:28:06.470 --> 00:28:11.270
+became really interested in visualizing
+my mathematics and building tools.
 
 469
-00:29:42.970 --> 00:29:47.020
-to make phosphorous glow on
-a screen so that a
+00:28:11.900 --> 00:28:15.350
+And I ended up going
+into that way more than
 
 470
-00:29:47.020 --> 00:29:50.860
-beam aimed at your eye
-was being stopped by this
+00:28:15.590 --> 00:28:19.670
+doing mathematics research itself. And
+then my first job out
 
 471
-00:29:51.190 --> 00:29:59.460
-painted curved glass that would
-glow and sometimes had a
+00:28:19.670 --> 00:28:24.440
+of college was working at
+an advertising firm that it
 
 472
-00:29:59.460 --> 00:30:04.290
-beam that would be different
-colors or actually color on
+00:28:24.440 --> 00:28:28.130
+was advertising, but it really
+kind of built art installations
 
 473
-00:30:04.710 --> 00:30:08.730
-the glass to be able
-to make vector games, right.
+00:28:28.160 --> 00:28:30.950
+around the companies we worked
+for. For instance, they would
 
 474
-00:30:08.760 --> 00:30:15.000
-Vector games and RCA televisions
-actually. And they would bring
+00:28:30.950 --> 00:28:36.200
+design lobbies that had very
+interesting digital sculptures in there.
 
 475
-00:30:15.000 --> 00:30:19.050
-out color, but at a
-cost of fidelity and Norris,
+00:28:36.470 --> 00:28:39.890
+And while building those, we
+had to get really low
 
 476
-00:30:19.470 --> 00:30:22.410
-I mean, you know, we
-start out with something as
+00:28:39.890 --> 00:28:43.010
+level because they were the
+types of art installations that
 
 477
-00:30:22.410 --> 00:30:28.020
-simple as, you know, UHF
-and VHF signals. And then
+00:28:43.010 --> 00:28:46.220
+weren't done before. So we
+had to make our own
 
 478
-00:30:28.020 --> 00:30:31.370
-we started moving to conversion
-that would kind of send
+00:28:46.220 --> 00:28:50.780
+tools and, and that required
+picking up low level graphics.
 
 479
-00:30:31.380 --> 00:30:34.440
-a, an earth hats signal
-to a television. You would
+00:28:51.980 --> 00:28:53.930
+You know, that gets me
+thinking about what are the
 
 480
-00:30:34.440 --> 00:30:37.560
-have to actually, you know,
-screw in wires in the
+00:28:53.930 --> 00:28:56.240
+most impressive things that I've
+seen in the real world,
 
 481
-00:30:37.560 --> 00:30:41.460
-back to make your video
-game, use the television, to
+00:28:56.240 --> 00:28:59.960
+which is when they map
+a projection onto an existing
 
 482
-00:30:41.520 --> 00:30:45.060
-changes, to format with things
-like S video, which is
+00:28:59.960 --> 00:29:02.300
+building and then they'll make
+it, make the building blow
 
 483
-00:30:45.060 --> 00:30:47.070
-now on its way while
-not even just on its
+00:29:02.300 --> 00:29:06.380
+up or whatever. Amazing it's,
+it's fascinating. And it, to
 
 484
-00:30:47.070 --> 00:30:49.110
-way out, it's out the
-door, it's down the street
+00:29:06.380 --> 00:29:08.990
+me, one of the most
+inspiring things and why I
 
 485
-00:30:49.110 --> 00:30:52.680
-it's gone. And then what
-we now have with HTMI
+00:29:08.990 --> 00:29:12.800
+like building graphics tools for
+people is building a tool
 
 486
-00:30:52.680 --> 00:30:57.900
-and, and other formats and
-the fidelity of how they
+00:29:12.800 --> 00:29:16.220
+for it, for an artist
+that has never used math
 
 487
-00:30:57.900 --> 00:31:02.340
-put these things together was
-calculated into the software. Most
+00:29:16.220 --> 00:29:19.820
+or programming before, but who
+has a very strong design
 
 488
-00:31:02.790 --> 00:31:05.910
-the, the most classic example.
-And he's more than happy
+00:29:19.820 --> 00:29:22.220
+sense and a very strong
+art background and seeing what
 
 489
-00:31:05.910 --> 00:31:09.000
-to tell you about this
-is David Crane, who did pitfall
+00:29:22.220 --> 00:29:24.740
+they're able to do with
+this amazing new medium we
 
 490
-00:31:09.420 --> 00:31:12.540
-and a hundred other games
-for Activision and many other
+00:29:24.740 --> 00:29:27.890
+have. And that's why I'm
+always encouraging of people to
 
 491
-00:31:12.540 --> 00:31:16.500
-companies. When he was working
-on video games in the
+00:29:27.890 --> 00:29:31.490
+try this out without needing
+a strong math background or
 
 492
-00:31:16.500 --> 00:31:22.290
-early eighties, his characters on
-the screen calculated a certain
+00:29:31.490 --> 00:29:34.460
+a strong computer science. It's
+likely you can still build
 
 493
-00:31:22.290 --> 00:31:26.190
-amount of fuzziness built into
-the beam so that he
+00:29:34.460 --> 00:29:37.850
+things. No. Are you a
+gamer as well? Or are
 
 494
-00:31:26.190 --> 00:31:29.580
-would leave a black Mark
-or a black line with
+00:29:37.850 --> 00:29:40.070
+you, you spend more time
+thinking about math than you
 
 495
-00:31:29.580 --> 00:31:32.400
-no light on it, because
-he knew the line above
+00:29:40.070 --> 00:29:43.240
+do actually using product. I
+spent a lot of time
 
 496
-00:31:32.430 --> 00:31:36.600
-and below would blend in
-that small gap. And when
+00:29:43.240 --> 00:29:46.090
+thinking about math, but I
+do love games very much
 
 497
-00:31:36.600 --> 00:31:38.970
-he went to quote unquote
-hard line, he would use
+00:29:46.090 --> 00:29:49.620
+so. So you do, we
+spend our time looking at
 
 498
-00:31:38.970 --> 00:31:42.930
-between two or three black
-lines to ensure that the
+00:29:49.620 --> 00:29:52.140
+your code on binomial, LLC.
+I know that you have
 
 499
-00:31:42.930 --> 00:31:46.410
-beam didn't overflow, but he
-was trying for a very
+00:29:52.140 --> 00:29:54.420
+part of it open source
+and part of it closed
 
 500
-00:31:46.410 --> 00:31:52.410
-smooth and soft experience fast
-forward. And now people are
+00:29:54.420 --> 00:29:56.670
+source, right? You're going to
+make the encoder closed and
 
 501
-00:31:52.410 --> 00:31:56.310
-playing these old games and
-they look like Lego bricks,
+00:29:56.670 --> 00:29:58.980
+that's how you'll make your
+money. And then the encoder
 
 502
-00:31:56.610 --> 00:32:00.330
-because we don't have that
-anymore. I mean, everybody wants
+00:29:58.980 --> 00:30:01.140
+will be open source and
+everyone can learn from it.
 
 503
-00:32:00.330 --> 00:32:02.580
-super fidelity. You want to
-be able to have a,
+00:30:01.650 --> 00:30:05.970
+Absolutely. So our transcoder will
+be open source. The encoder
 
 504
-00:32:03.510 --> 00:32:08.490
-you know, 75 dots per
-inch monitor. And again, you
+00:30:05.970 --> 00:30:08.550
+will be closed source, but
+for now you can go
 
 505
-00:32:08.490 --> 00:32:13.710
-know, dialing it back, having
-pitfall in your window in
+00:30:08.550 --> 00:30:12.330
+to binomial. LLC is get,
+get hub and check out
 
 506
-00:32:13.710 --> 00:32:17.610
-a second after you click
-a URL is miraculous and
+00:30:12.330 --> 00:30:16.440
+crutch Rich's crunch library that
+is entirely open source, including
 
 507
-00:32:17.610 --> 00:32:23.760
-now commonplace, but there are
-going to be iterative improvements
+00:30:16.440 --> 00:30:20.370
+the encoder. And it's a
+great way to see, see
 
 508
-00:32:23.760 --> 00:32:26.250
-to say, okay, yes, we
-did it. Everyone gets a
+00:30:20.370 --> 00:30:24.000
+something similar to what we'll
+be making. Very cool. Well,
 
 509
-00:32:26.250 --> 00:32:30.090
-cake, but wait a minute,
-we actually had this attribute.
+00:30:24.000 --> 00:30:25.920
+I really appreciate your time
+and thanks so much for
 
 510
-00:32:30.090 --> 00:32:33.450
-We would have slightly fuzzy
-screens. We would have screens
+00:30:25.920 --> 00:30:29.400
+talking with me today. Nice
+to meet you. Nice to
 
 511
-00:32:33.450 --> 00:32:38.190
-that bled color. When the
-beam stopped running the phosphorus,
+00:30:29.400 --> 00:30:32.400
+meet you too. This has
+been another episode of Hansel
 
 512
-00:32:38.190 --> 00:32:42.260
-doesn't just shut off in
-two seconds. It would do
-
-513
-00:32:42.260 --> 00:32:45.650
-a small afterglow and it
-would actually be possible to
-
-514
-00:32:45.650 --> 00:32:48.470
-burn in if you left
-the thing on for too
-
-515
-00:32:48.470 --> 00:32:52.790
-long and to emulate all
-of that is now where
-
-516
-00:32:52.790 --> 00:32:56.390
-we're headed. And it's much
-more processor intensive. It's much
-
-517
-00:32:56.390 --> 00:33:00.290
-more involved, certainly on certain
-machines. The example that we
-
-518
-00:33:00.290 --> 00:33:02.330
-put up, we took an
-old, I took an old
-
-519
-00:33:02.330 --> 00:33:04.790
-bootleg, or it wasn't so
-much a bootleg is kind
-
-520
-00:33:04.790 --> 00:33:07.460
-of an alternate version of
-donkey Kong called crazy Kong.
-
-521
-00:33:07.880 --> 00:33:11.510
-And it has its own
-interesting story. And we put
-
-522
-00:33:11.510 --> 00:33:13.490
-up a version of it
-on the internet archive, just
-
-523
-00:33:13.490 --> 00:33:17.090
-to enable you to kind
-of experience a kind of
-
-524
-00:33:17.810 --> 00:33:25.220
-subtle, weird video artifacting of
-CRTs in 1982, which meme
-
-525
-00:33:25.220 --> 00:33:28.610
-does. And again, if you
-have a slower machine, it
-
-526
-00:33:28.610 --> 00:33:30.950
-runs much slower now, because
-now it's doing a whole
-
-527
-00:33:30.950 --> 00:33:35.570
-layer of calculation and, and
-I've, I've, I've run tests
-
-528
-00:33:35.570 --> 00:33:39.170
-with people. Not everyone sees
-it, which may be the
-
-529
-00:33:39.170 --> 00:33:41.360
-greatest success of all right.
-But, but for some people
-
-530
-00:33:41.360 --> 00:33:44.390
-they're like, you know, what,
-what, what, yeah. Like it's
-
-531
-00:33:44.390 --> 00:33:47.600
-just not in their head.
-Yeah, no, the way, same
-
-532
-00:33:47.600 --> 00:33:49.670
-way an audio file might
-say, I can hear the
-
-533
-00:33:49.670 --> 00:33:53.210
-difference between this is a
-vinyl record and this is
-
-534
-00:33:53.210 --> 00:33:57.650
-a cassette off of the
-master tape in the same
-
-535
-00:33:57.650 --> 00:34:02.630
-way. You can have people
-whose eyes just kind of
-
-536
-00:34:02.660 --> 00:34:05.810
-bring in like, yup, that's
-an old video game and
-
-537
-00:34:05.810 --> 00:34:08.780
-people who go, wow, how
-is it ghosting the character
-
-538
-00:34:09.260 --> 00:34:12.470
-he's fading as he runs
-by suddenly that's amazing. And,
-
-539
-00:34:12.770 --> 00:34:16.640
-and they'll see it. So,
-so that's, you know, that's
-
-540
-00:34:16.640 --> 00:34:18.830
-one piece of it. And
-like I made a reference
-
-541
-00:34:18.830 --> 00:34:22.190
-to maim is now working
-very hard to emulate the
-
-542
-00:34:22.190 --> 00:34:25.640
-sounds of a floppy drive
-that will become a slider.
-
-543
-00:34:26.780 --> 00:34:29.480
-I'll, I'll be sure to
-add that when it's mature
-
-544
-00:34:29.480 --> 00:34:35.150
-enough, but basically there's been
-work to literally sample a
-
-545
-00:34:35.150 --> 00:34:41.510
-disc drive engine and read
-process, so that an accurate
-
-546
-00:34:41.510 --> 00:34:44.930
-portrayal of what that this
-drive sounded like next to
-
-547
-00:34:44.930 --> 00:34:49.670
-your machine can be included
-optionally. And that's the kind
-
-548
-00:34:49.670 --> 00:34:51.770
-of, that's the kind of
-work that like, you know,
-
-549
-00:34:51.770 --> 00:34:54.470
-I mean, I've been told
-there's like six people who
-
-550
-00:34:54.470 --> 00:34:59.600
-do silk painting restoring in
-the world and everybody who
-
-551
-00:35:00.260 --> 00:35:02.870
-apprentices under them has to
-apprentice for 15 or 20
-
-552
-00:35:02.870 --> 00:35:05.660
-years before they get their
-own shot at it. And
-
-553
-00:35:05.690 --> 00:35:09.590
-there is a very small
-amount of people and I
-
-554
-00:35:09.590 --> 00:35:12.200
-support and care about them
-very much who are focused
-
-555
-00:35:12.200 --> 00:35:18.080
-on this kind of level,
-because this is work. That
-
-556
-00:35:18.080 --> 00:35:22.490
-is, I would say relatively
-thankless, not, not in a
-
-557
-00:35:22.490 --> 00:35:27.680
-bad way, just relatively thankless.
-Yeah. Yeah. So as we
-
-558
-00:35:27.680 --> 00:35:29.930
-reached the end of our
-time here, let me ask
-
-559
-00:35:29.930 --> 00:35:32.930
-you this. Sure. The call
-to action to the audience,
-
-560
-00:35:32.930 --> 00:35:37.100
-isn't just go and experience,
-but it's also to appreciate,
-
-561
-00:35:37.140 --> 00:35:39.720
-and let me ask you
-this, how do we support
-
-562
-00:35:39.750 --> 00:35:41.910
-you? How do we support
-textiles? How do we support
-
-563
-00:35:42.360 --> 00:35:45.840
-archive.org? Is this isn't run
-by the government, right? How
-
-564
-00:35:45.840 --> 00:35:47.220
-do you all get money
-and how can we give
-
-565
-00:35:47.220 --> 00:35:50.850
-you money? So the internet
-archive is a nonprofit library
-
-566
-00:35:50.850 --> 00:35:53.040
-that people know of as
-the way back machine and
-
-567
-00:35:53.040 --> 00:35:55.860
-more and more people know
-about for the software and
-
-568
-00:35:55.860 --> 00:35:58.020
-obviously the books and movies
-and music and all the
-
-569
-00:35:58.020 --> 00:36:01.530
-other things that it hosts.
-And it's at archive.org, and
-
-570
-00:36:01.530 --> 00:36:06.150
-there's an archive.org/donate. And that's
-fine. I would love for
-
-571
-00:36:06.150 --> 00:36:10.470
-people to contribute in ways
-that help financially with such
-
-572
-00:36:10.470 --> 00:36:14.670
-a nonprofit. But beyond that,
-if you have a audience
-
-573
-00:36:14.670 --> 00:36:18.810
-who have technical expertise or
-who have influence in the
-
-574
-00:36:18.810 --> 00:36:23.310
-realm of understanding, you know,
-our computer history or presenting
-
-575
-00:36:23.310 --> 00:36:27.120
-it, I would say, you
-know, a project like Maine
-
-576
-00:36:27.150 --> 00:36:33.630
-and there's other ones really
-are depending on really technically
-
-577
-00:36:33.630 --> 00:36:39.330
-skilled people who are also
-working basically for free and
-
-578
-00:36:39.360 --> 00:36:43.440
-who are constantly on the
-move to try to make
-
-579
-00:36:43.440 --> 00:36:47.670
-sure that some record of
-old software and old hardware
-
-580
-00:36:48.000 --> 00:36:52.770
-persists. And they have like
-any large scale project, you
-
-581
-00:36:52.770 --> 00:36:55.080
-know, rules for adding code.
-So if you're a coder,
-
-582
-00:36:56.310 --> 00:37:00.000
-if you're doing work in
-meme and you're helping, it's
-
-583
-00:37:00.000 --> 00:37:02.970
-going to be reflected in
-code that thousands and thousands
-
-584
-00:37:02.970 --> 00:37:05.700
-of people will use around
-the world. So, so there's
-
-585
-00:37:05.700 --> 00:37:09.870
-a reward there and contributing
-your expertise would not just
-
-586
-00:37:09.870 --> 00:37:12.540
-be, you're helping some nerd
-play an old Atari game.
-
-587
-00:37:12.570 --> 00:37:16.590
-I mean, you are literally
-affecting computer history and online
-
-588
-00:37:16.620 --> 00:37:21.840
-and digital history by doing
-this. But beyond that, people
-
-589
-00:37:21.840 --> 00:37:27.350
-who have old hardware, old
-materials who are wondering about
-
-590
-00:37:28.130 --> 00:37:34.430
-like, does anyone care? We
-care and, and I'm not
-
-591
-00:37:34.430 --> 00:37:36.710
-afraid to give my email
-out. J Scott J a
-
-592
-00:37:36.710 --> 00:37:40.190
-C O T t@archive.org. I
-love hearing from people who
-
-593
-00:37:40.190 --> 00:37:43.850
-are like the, my favorite
-letters are, I don't know
-
-594
-00:37:43.850 --> 00:37:47.240
-if this is of interest,
-but because almost always is
-
-595
-00:37:47.240 --> 00:37:50.510
-of interest, you know? And,
-and, and, and people saying,
-
-596
-00:37:50.540 --> 00:37:52.340
-I don't even know where
-to begin with this. I
-
-597
-00:37:52.340 --> 00:37:58.280
-have stuff maybe it's useful.
-Maybe it's not. And just
-
-598
-00:37:58.310 --> 00:38:02.330
-that mental jump from, like,
-if you went up into
-
-599
-00:38:02.330 --> 00:38:05.660
-your attic and there were
-10 old paintings there and
-
-600
-00:38:05.660 --> 00:38:08.930
-they looked really old and
-they were wrapped really nicely,
-
-601
-00:38:09.470 --> 00:38:11.630
-you wouldn't be like, Oh
-no, what do you think?
-
-602
-00:38:11.630 --> 00:38:13.220
-Can I throw this out?
-Do I keep, like, you
-
-603
-00:38:13.220 --> 00:38:16.970
-would say, man, I better
-call local museum. And if
-
-604
-00:38:16.970 --> 00:38:19.940
-you've got a relative or
-yourself, and you've got some
-
-605
-00:38:19.940 --> 00:38:23.480
-old software, you may be
-the last person to have
-
-606
-00:38:23.480 --> 00:38:27.680
-that software or any record
-of that old software and
-
-607
-00:38:27.800 --> 00:38:31.730
-contacting us to say, look,
-I've got some stuff I,
-
-608
-00:38:31.730 --> 00:38:37.390
-you know, would wonderful that,
-that, you know, finance always
-
-609
-00:38:37.390 --> 00:38:41.290
-helpful. We do fundraising fundraising
-drives and, and meme has
-
-610
-00:38:41.290 --> 00:38:44.350
-fundraising drives to help acquire
-rare equipment when it needs
-
-611
-00:38:44.350 --> 00:38:49.300
-to be purchased. But, but
-you know, a technical expertise
-
-612
-00:38:49.600 --> 00:38:54.340
-and an emotional and supportive
-expertise. That's, that's where we
-
-613
-00:38:54.340 --> 00:38:58.360
-really, really, I think this
-thing needs, love. People need
-
-614
-00:38:58.360 --> 00:39:01.000
-to know, and people need
-to help it. And people
-
-615
-00:39:01.000 --> 00:39:04.240
-need to encourage it in
-just a, this is a
-
-616
-00:39:04.240 --> 00:39:09.400
-valid, wonderful thing that needs
-to be done culturally for
-
-617
-00:39:09.460 --> 00:39:11.650
-the way the world has
-been for the last half
-
-618
-00:39:11.650 --> 00:39:16.180
-century, as important as making
-sure that an old film
-
-619
-00:39:16.180 --> 00:39:19.510
-is still playable and making
-sure that an old car
-
-620
-00:39:20.140 --> 00:39:24.850
-still runs, this is still
-really vital and, and needs
-
-621
-00:39:24.850 --> 00:39:29.050
-to be there for future
-generations. Well, I think definitely
-
-622
-00:39:29.050 --> 00:39:31.090
-the work that you're doing
-is absolutely vital. And I
-
-623
-00:39:31.090 --> 00:39:34.270
-am in awe of the,
-the, the Corpus of information
-
-624
-00:39:34.270 --> 00:39:36.250
-that has been collected since
-you were, since you were
-
-625
-00:39:36.250 --> 00:39:39.820
-nine years old. And I
-think I speak on behalf
-
-626
-00:39:39.820 --> 00:39:42.640
-of the audience that we
-appreciate you. We appreciate text
-
-627
-00:39:42.640 --> 00:39:45.400
-files and we appreciate archive.org.
-And thanks so much for
-
-628
-00:39:45.460 --> 00:39:49.120
-chatting with me today. Hey,
-thank you. This has been
-
-629
-00:39:49.120 --> 00:39:51.550
-another episode of Hansel minutes
-and we'll see you again
-
-630
-00:39:51.550 --> 00:39:59.220
-next week. <inaudible>.
+00:30:32.400 --> 00:30:34.320
+minutes and we'll see you
+again next week.
 

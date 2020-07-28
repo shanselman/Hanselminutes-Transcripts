@@ -1,3316 +1,2832 @@
 WEBVTT FILE
 
 1
-00:00:12.060 --> 00:00:17.760
-From hanselminutes.com. It's Hanselman. It's
-a weekly discussion with web
+00:00:04.890 --> 00:00:17.540
+<inaudible> Hansel minutes. It's Hansel
+minutes, a weekly discussion with
 
 2
-00:00:17.760 --> 00:00:22.290
-developer and technologist Scott Hanselman.
-This is Lawrence Ryan announcing show
+00:00:17.540 --> 00:00:22.220
+web developer and technologist Scott
+Hanselman. This is Lawrence Ryan announcing
 
 3
-00:00:22.290 --> 00:00:28.500
-number three 29. Recorded live
-Thursday, July 19th, 2012. This episode is
+00:00:22.220 --> 00:00:28.400
+show number three 27. Recorded
+live Thursday, July 5th, 2012. This episode
 
 4
-00:00:28.500 --> 00:00:31.500
-brought to you by Tellerik
-offering the best in developer
+00:00:28.400 --> 00:00:31.100
+is brought to you by
+Tellerik offering the best in
 
 5
-00:00:31.500 --> 00:00:41.010
-tools and support online@telerikdotcomandbyfranklins.net training
-developers to work smarter and
+00:00:31.100 --> 00:00:40.430
+developer tools and support online@andtelerikdotcomandbyfranklin.net
+training developers to work smarter.
 
 6
-00:00:41.010 --> 00:00:44.460
-now offering gesture pack a
-powerful gesture, recording and recognition
+00:00:40.880 --> 00:00:43.850
+And now I'll bring gesture,
+pack a powerful gesture, recording
 
 7
-00:00:44.460 --> 00:00:51.990
-system for Microsoft connect for
-windows developers details@gesturepak.com. In this
+00:00:43.850 --> 00:00:47.870
+and recognition system for Microsoft
+connect for windows developers details
 
 8
-00:00:51.990 --> 00:00:55.440
-episode, Scott talks with emo
-landward about when R T
+00:00:47.870 --> 00:00:52.760
+at <inaudible> dot com. In
+this episode, Scott talks with
 
 9
-00:00:55.470 --> 00:01:02.150
-and windows eight for.net programmers.
-Hi, this is Scott Hanselman.
+00:00:52.760 --> 00:01:00.410
+Damien Edwards and Levi Broderick
+about asynchronous programming. Hi, this
 
 10
-00:01:02.150 --> 00:01:04.250
-This is another episode of
-Hansel minutes. And today I'm
+00:01:00.410 --> 00:01:02.600
+is Scott Hanselman. This is
+another episode of Hansel minutes
 
 11
-00:01:04.250 --> 00:01:07.640
-talking with emo land worth
-who works on windows runtime.
+00:01:03.080 --> 00:01:05.930
+today. I've got Damien Edwards
+on the phone, the quintessential
 
 12
-00:01:07.670 --> 00:01:10.490
-Thanks for chatting with me
-today. Good morning. Hey, how
+00:01:05.930 --> 00:01:09.380
+guest, and also we are
+joined by Levi Broderick, who
 
 13
-00:01:10.490 --> 00:01:13.730
-are you? I'm good. I'm
-good. Good day. So let
+00:01:09.380 --> 00:01:12.890
+is probably the smartest guy
+on the call right now.
 
 14
-00:01:13.730 --> 00:01:17.240
-me understand this. You, you
-work on windows runtime or
+00:01:12.890 --> 00:01:16.910
+Sorry, Damien, we're going to
+talk about async. Thanks for
 
 15
-00:01:17.240 --> 00:01:20.360
-they call it when R
-T and this is the
+00:01:16.940 --> 00:01:21.650
+talking to me today, guys.
+Thanks for having us. I
 
 16
-00:01:20.360 --> 00:01:23.720
-new programming model that is
-kind of introduced in windows
+00:01:21.860 --> 00:01:25.730
+think that most people just
+don't get how to do
 
 17
-00:01:23.720 --> 00:01:25.730
-eight. And what I wanted
-to talk to you about
+00:01:25.730 --> 00:01:28.850
+asynchronous programming and.net. And I'm
+going to throw my own
 
 18
-00:01:25.730 --> 00:01:30.260
-is how this fits in,
-because I've heard explanations of
+00:01:28.850 --> 00:01:30.410
+name in there as one
+of the people that just
 
 19
-00:01:30.260 --> 00:01:33.740
-windows runtime before. And I
-don't like the explanations that
+00:01:30.410 --> 00:01:34.130
+doesn't get it. I think
+that people think that they
 
 20
-00:01:33.740 --> 00:01:36.800
-I'm hearing. They're, they're too
-confusing. They make it seem
+00:01:34.130 --> 00:01:37.160
+have some expensive thing that
+they want to do. And
 
 21
-00:01:36.800 --> 00:01:39.860
-either like a bigger deal
-than it is or a
+00:01:37.160 --> 00:01:39.680
+their initial reaction is that,
+Oh, I'll fire off a
 
 22
-00:01:39.860 --> 00:01:43.100
-smaller deal than it is.
-And there's all this fluid,
+00:01:39.680 --> 00:01:42.740
+background thread. You know, if
+they're using asp.net, they might
 
 23
-00:01:43.220 --> 00:01:45.650
-there's all this fear, uncertainty
-and doubt. People are saying
+00:01:42.740 --> 00:01:45.890
+use Q user work item
+or something and they'll fire
 
 24
-00:01:45.980 --> 00:01:50.450
-it replaces.net and.net. People should
-be afraid and other people
+00:01:45.890 --> 00:01:48.710
+off a background thread. They'll
+think it kind of works.
 
 25
-00:01:50.450 --> 00:01:53.660
-are saying, you know, destroys
-everything. Other people say that
+00:01:48.710 --> 00:01:50.660
+They don't really test it
+because doing that kind of
 
 26
-00:01:53.660 --> 00:01:55.850
-this is really amazing and
-it's this great new thing.
+00:01:50.660 --> 00:01:54.410
+testing is hard and maybe
+it'll work. Maybe it won't
 
 27
-00:01:55.850 --> 00:01:58.670
-And I want to get
-a balanced understanding. So I
+00:01:54.410 --> 00:01:58.250
+work. If they're really in
+trouble, they might start poking
 
 28
-00:01:58.670 --> 00:02:01.490
-figured I'd go straight to
-you to talk about it.
+00:01:58.250 --> 00:02:01.640
+around inside of a machine
+dot config and messing around
 
 29
-00:02:01.820 --> 00:02:04.220
-Does that sound like a
-plan to you? That sounds
+00:02:01.640 --> 00:02:04.880
+with a number of threads
+per CPU that asp.net gets.
 
 30
-00:02:04.220 --> 00:02:09.110
-awesome. So technically I'm not
-working on the, you know,
+00:02:06.170 --> 00:02:09.020
+But ultimately they're not even
+doing async. Are they Damien
 
 31
-00:02:09.210 --> 00:02:11.870
-the windows perspective I'm actually
-working on the.net side of
+00:02:14.150 --> 00:02:17.720
+A very small set of
+scenarios that makes sense to
 
 32
-00:02:11.870 --> 00:02:15.500
-things, so even better. That's
-great. So basically that should
+00:02:17.990 --> 00:02:25.880
+leverage. And unless you really
+understand what it means, one
 
 33
-00:02:16.180 --> 00:02:17.720
-answer the question, whether it
-doesn't, that is dead. It's
+00:02:25.880 --> 00:02:27.170
+of the things we really
+want to do over the
 
 34
-00:02:17.720 --> 00:02:21.770
-not, we are very happily
-working with winter tea and
+00:02:27.170 --> 00:02:32.810
+next year, coming out with
+this big push in the
 
 35
-00:02:22.280 --> 00:02:26.450
-I think the overall picture
-is pretty similar to basically
+00:02:32.810 --> 00:02:39.350
+language and the framework is
+really help people understand in
 
 36
-00:02:26.450 --> 00:02:29.180
-everything that we did before.
-So if you could just
+00:02:39.350 --> 00:02:47.150
+web application scenarios, how can
+they leverage the features? So
 
 37
-00:02:29.180 --> 00:02:32.060
-think of like a, you
-know, an old school WinForms,
+00:02:47.210 --> 00:02:50.300
+I think to myself that
+there's basically four things that
 
 38
-00:02:32.630 --> 00:02:40.310
-you know, don't need 2.0
-app. The thing that <inaudible>,
+00:02:50.300 --> 00:02:52.670
+I might want to use
+async for, but you're saying
 
 39
-00:02:40.320 --> 00:02:43.460
-if you, you know, if
-you had to do something
+00:02:52.670 --> 00:02:55.340
+that maybe most people are
+using it too much. So
 
 40
-00:02:43.460 --> 00:02:46.130
-that wasn't part of the
-framework, and if you think
+00:02:55.340 --> 00:02:57.020
+I'm trying to understand that
+we're trying to promote this,
 
 41
-00:02:46.130 --> 00:02:50.420
-of winter tea being basically
-the successor of winter 32,
+00:02:57.020 --> 00:03:00.760
+or are we trying to
+dissuade people from In my
 
 42
-00:02:50.840 --> 00:02:52.460
-so you no longer have
-to pee and Volk and
+00:03:00.760 --> 00:03:06.490
+mind, there's really only three
+concrete scenarios where async makes
 
 43
-00:02:52.460 --> 00:02:57.770
-said, you can use winter
-and it's just nicer in
+00:03:06.490 --> 00:03:10.840
+sense in asp.net in a
+web application. And only one
 
 44
-00:02:57.770 --> 00:02:59.860
-essence. So if you call
-winner T API is from
+00:03:10.840 --> 00:03:12.520
+of the only one of
+those is actually popular. The
 
 45
-00:02:59.860 --> 00:03:03.790
-code, it looks almost exactly
-the same as regular.net code.
+00:03:12.520 --> 00:03:15.220
+other two are very, very
+rare. So the first one
 
 46
-00:03:03.790 --> 00:03:06.190
-So it's, it's, it's just
-a better version of wind
+00:03:15.280 --> 00:03:17.950
+is the one that most
+people associate with it, which
 
 47
-00:03:06.190 --> 00:03:09.420
-32 at a very, very
-high level. Okay. So that's,
+00:03:17.950 --> 00:03:21.430
+is IO. So this is,
+and this includes file IO
 
 48
-00:03:09.450 --> 00:03:11.880
-that's, that's a good place
-to start. So I started
+00:03:21.430 --> 00:03:25.240
+network IO database IO, which
+is generally just network IO
 
 49
-00:03:12.480 --> 00:03:17.010
-programming many years ago in
-windows before wind 32, when
+00:03:26.950 --> 00:03:28.630
+and then web service calls
+is the other one, which
 
 50
-00:03:17.010 --> 00:03:20.790
-hello world was about 90
-lines and, you know, fast
+00:03:28.630 --> 00:03:32.200
+obviously is network IO as
+well. So any time that
 
 51
-00:03:20.790 --> 00:03:25.110
-forward to today. And if
-you really want to exploit
+00:03:32.200 --> 00:03:35.200
+your service side I used
+to be our net code
 
 52
-00:03:25.110 --> 00:03:26.730
-the hardware for lack of
-a better word, if you
+00:03:35.230 --> 00:03:39.070
+is making a database call
+or a web service call
 
 53
-00:03:26.730 --> 00:03:29.730
-really want to get down
-to it, when 32 and
+00:03:39.070 --> 00:03:41.380
+or a network call or
+talking to the file system
 
 54
-00:03:29.730 --> 00:03:32.940
-the windows API APIs are
-where it's at, I mean,
+00:03:41.770 --> 00:03:46.690
+that can be done asynchronously
+such that while that operation
 
 55
-00:03:32.940 --> 00:03:35.070
-that's where the power is.
-And every once in a
+00:03:46.690 --> 00:03:51.130
+is in progress, asp.net, doesn't
+have to be consuming a
 
 56
-00:03:35.070 --> 00:03:37.710
-while, you'll do something in.net.
-If you're a dotnet programmer
+00:03:51.160 --> 00:03:56.770
+thread, which is a CPU
+resource on, on that box
 
 57
-00:03:37.710 --> 00:03:42.510
-like me and you'll hit
-a wall in.net, and then
+00:03:56.770 --> 00:03:58.720
+while that operation is taking
+place. And then once the
 
 58
-00:03:42.510 --> 00:03:44.910
-you have to go down
-to the windows layer and
+00:03:58.720 --> 00:04:01.840
+operation is finished, asp.net will
+do the work to bring
 
 59
-00:03:44.910 --> 00:03:47.880
-really call something like, just
-recently, I was working on
+00:04:01.840 --> 00:04:04.390
+that request, sort of rehydrate
+it and then continue it
 
 60
-00:03:47.880 --> 00:03:51.690
-this pan tilt, zoom camera,
-and I wanted to do
+00:04:04.390 --> 00:04:06.190
+on. Now that you have
+the result from that call.
 
 61
-00:03:51.690 --> 00:03:53.220
-it all in time. That,
-cause that's what I know,
+00:04:06.460 --> 00:04:08.290
+So that's, that's the, that's
+the first one and that's
 
 62
-00:03:54.090 --> 00:03:55.770
-not really interested in doing
-it in C or C
+00:04:08.290 --> 00:04:09.970
+the most popular one. And
+we can drill into these
 
 63
-00:03:55.770 --> 00:03:58.650
-plus plus, and I hit
-a wall immediately because there
+00:04:09.970 --> 00:04:12.130
+a little bit more as
+we go on. The second
 
 64
-00:03:58.650 --> 00:04:03.030
-are no dotnet APIs that
-really represent cameras on windows.
+00:04:12.130 --> 00:04:15.670
+one is when you, the
+scenario where you actually have
 
 65
-00:04:03.210 --> 00:04:05.880
-And then I was into
-direct show and calm and
+00:04:15.670 --> 00:04:18.970
+for a given request, you
+need to retrieve lots of
 
 66
-00:04:05.880 --> 00:04:09.570
-I felt like I was
-in hell. Yeah. And that's
+00:04:18.970 --> 00:04:23.230
+different pieces of information. Generally
+from off box systems. I
 
 67
-00:04:09.570 --> 00:04:11.730
-exactly the problem. Like if
-you, if you think back
+00:04:23.230 --> 00:04:25.720
+had a scenario once where
+I was building a dashboard
 
 68
-00:04:11.730 --> 00:04:13.830
-in the very early days
-of.net, you know, and don't
+00:04:25.750 --> 00:04:28.480
+type system, the users, the
+user count was going to
 
 69
-00:04:13.830 --> 00:04:16.590
-necessarily, you know, 1.1 and
-2.0, we had a whole
+00:04:28.480 --> 00:04:31.780
+be very, very low, you
+know, maybe only five to
 
 70
-00:04:16.590 --> 00:04:20.430
-bunch of people whose job
-is basically just was repping
+00:04:31.780 --> 00:04:35.800
+10 users, but this dashboard
+would have to call out
 
 71
-00:04:20.430 --> 00:04:23.880
-wind 32 work home-based API
-APIs in a nice.net outfit
+00:04:35.800 --> 00:04:38.410
+to lots of different API
+to collect information. Some of
 
 72
-00:04:23.880 --> 00:04:27.180
-so that you can easily
-consume those. So I think
+00:04:38.410 --> 00:04:41.410
+those APIs were local performance
+counters. Some of them were
 
 73
-00:04:27.270 --> 00:04:29.580
-from a dotnet perspective, I
-would not, not necessarily draw
+00:04:41.410 --> 00:04:44.350
+logs. Some of them were
+databases. And I wanted to
 
 74
-00:04:29.580 --> 00:04:31.650
-the line and say when
-32 were a column is
+00:04:44.350 --> 00:04:48.190
+show this sort of aggregate
+of, of this information on
 
 75
-00:04:31.680 --> 00:04:35.070
-where the power is. It's
-just a different technology to,
+00:04:48.190 --> 00:04:50.950
+the page now, rather than
+having the request for that
 
 76
-00:04:35.130 --> 00:04:38.760
-you know, do API APIs.
-And from a net perspective,
+00:04:50.950 --> 00:04:53.080
+page take, as long as
+it would take to call
 
 77
-00:04:38.760 --> 00:04:42.200
-you basically prefer.net. API is
-not because, you know, there
+00:04:53.080 --> 00:04:55.630
+each of those things, serially,
+they may have been 15
 
 78
-00:04:42.200 --> 00:04:44.760
-are dotnet APIs, but just
-because they are more usable
+00:04:55.630 --> 00:04:58.540
+or 20 of them. I
+literally did them all in
 
 79
-00:04:45.180 --> 00:04:48.570
-that typically have friendlier names
-and you can just new
+00:04:58.540 --> 00:05:01.480
+parallel so that I could
+get that page response down
 
 80
-00:04:48.570 --> 00:04:51.210
-up stuff, you don't have
-to poke in their registry.
+00:05:01.480 --> 00:05:04.930
+to a couple of seconds
+rather than 20 seconds. And
 
 81
-00:04:51.210 --> 00:04:53.520
-You don't have to do
-any magic stuff. Basically it
+00:05:04.930 --> 00:05:07.330
+I did so knowing that
+I was going to actually
 
 82
-00:04:53.520 --> 00:04:58.140
-just works. And basically the
-problem that we had is
+00:05:07.330 --> 00:05:11.920
+be consuming more resources that
+is more threads for that
 
 83
-00:04:58.140 --> 00:04:59.910
-going to be wrapped the
-winter, ready to work home-based
+00:05:11.920 --> 00:05:14.140
+request while I was doing
+that, because a lot of
 
 84
-00:04:59.910 --> 00:05:02.880
-API, is it windows or
-other Microsoft people provided is
+00:05:14.140 --> 00:05:16.840
+those things that I was
+calling into didn't have asynchronous
 
 85
-00:05:02.880 --> 00:05:07.770
-that we were basically abstracting
-their API this way and
+00:05:16.840 --> 00:05:19.840
+API APIs like calling into
+performance counters and things like
 
 86
-00:05:07.770 --> 00:05:09.740
-rep them in hours. So
-whenever they edit the feature
+00:05:19.840 --> 00:05:22.570
+that, generally don't aren't asynchronous.
+So I actually had to
 
 87
-00:05:09.750 --> 00:05:11.550
-in later releases, we had
-to do the same broken
+00:05:22.570 --> 00:05:25.450
+use more threads to get
+a better response time because
 
 88
-00:05:11.550 --> 00:05:14.790
-our side. So a good
-example is like investor. They
+00:05:25.450 --> 00:05:28.210
+the type of page that
+I was building required information
 
 89
-00:05:14.790 --> 00:05:18.180
-introduced all these, you know,
-nice UI features in the
+00:05:28.210 --> 00:05:30.460
+from lots of different places.
+And I didn't mind doing
 
 90
-00:05:18.180 --> 00:05:21.570
-shell, but the glass Chrome
-and whatever. And if you
+00:05:30.460 --> 00:05:32.560
+that because it had a
+very low user count. I
 
 91
-00:05:21.570 --> 00:05:24.120
-use WPF, for example, you
-have a hard time using
+00:05:32.560 --> 00:05:35.080
+had lots of CPU despair,
+and I only had to
 
 92
-00:05:24.120 --> 00:05:27.420
-those because it's WPF, you
-know, didn't have time, you
+00:05:35.080 --> 00:05:37.210
+support a very small number
+of users at any one
 
 93
-00:05:27.420 --> 00:05:30.870
-know, implementing those or, you
-know, providing API APIs and
+00:05:37.210 --> 00:05:41.320
+time to do it. So
+the third scenario is long
 
 94
-00:05:31.200 --> 00:05:33.570
-that side for those. So
-basically the people had to
+00:05:41.320 --> 00:05:44.170
+running event driven requests. So
+this is the idea where
 
 95
-00:05:33.570 --> 00:05:36.720
-do stuff on their own
-to actually use the new
+00:05:44.170 --> 00:05:46.510
+you have a request that
+comes in and then the
 
 96
-00:05:36.720 --> 00:05:39.810
-features. And the whole goal
-of winter tea is basically
+00:05:46.510 --> 00:05:49.690
+request goes to sleep for
+some time waiting for some
 
 97
-00:05:39.810 --> 00:05:42.930
-to stop that and to
-basically say, what if the
+00:05:49.720 --> 00:05:53.080
+other event to take place.
+And when that event takes
 
 98
-00:05:43.020 --> 00:05:45.990
-API is that are already
-provided by Microsoft for the
+00:05:53.080 --> 00:05:55.810
+place, you want the request
+to continue and then send
 
 99
-00:05:45.990 --> 00:05:49.080
-native developers, for the C
-plus plus type developers, if
+00:05:55.810 --> 00:05:59.450
+a response to the client.
+This is really popular when
 
 100
-00:05:49.080 --> 00:05:51.540
-they would already be in
-a shape where we don't
+00:05:59.450 --> 00:06:01.700
+you're trying to do things
+like HTTP streaming, which is
 
 101
-00:05:51.540 --> 00:05:53.790
-longer need to wrap them
-for you for usability reasons,
+00:06:01.700 --> 00:06:04.250
+what signaler does under the
+covers, where you have a
 
 102
-00:05:53.790 --> 00:05:57.710
-because they're already really, really
-usable. And that is basically
+00:06:04.250 --> 00:06:06.680
+request come in, you want
+the request to stay open
 
 103
-00:05:57.710 --> 00:05:59.150
-what we in our at
-T provides when our T
+00:06:06.680 --> 00:06:09.710
+for a long time and
+only wake up to pump
 
 104
-00:05:59.150 --> 00:06:02.480
-basically provides a new technology
-to do APIs in windows
+00:06:09.710 --> 00:06:12.590
+data down to the client
+when some events has taken
 
 105
-00:06:02.840 --> 00:06:06.110
-at the lowest level, outside
-the CLR, right? For CNC
+00:06:12.590 --> 00:06:14.930
+place sort of elsewhere. So
+you want that request to
 
 106
-00:06:06.110 --> 00:06:10.130
-plus developers. But if you
-consume them from.net, you can
+00:06:14.930 --> 00:06:17.870
+be async for, for all
+the times when it isn't
 
 107
-00:06:10.130 --> 00:06:14.990
-directly consume them. There's no
-like, you know, develop on
+00:06:17.870 --> 00:06:20.690
+doing anything. So they're the
+three concrete scenarios that are,
 
 108
-00:06:14.990 --> 00:06:17.120
-our side in your way
-that, you know, reps these
+00:06:20.690 --> 00:06:22.520
+you generally identify it. And
+as I said, the first
 
 109
-00:06:17.120 --> 00:06:19.280
-APIs and gives them to
-you. You can just directly
+00:06:22.520 --> 00:06:25.420
+one is really the only
+really popular one. Okay. So
 
 110
-00:06:19.280 --> 00:06:22.180
-consume it. That's a really
-interesting way to think about
+00:06:25.420 --> 00:06:28.030
+I, I, I chop them
+up differently. That's actually really
 
 111
-00:06:22.180 --> 00:06:24.460
-it because I think that
-this is my opinion, but
+00:06:28.030 --> 00:06:29.380
+a nice way to think
+about that. I w I
 
 112
-00:06:24.460 --> 00:06:29.020
-I think that the word
-runtime has, has, and had
+00:06:29.380 --> 00:06:33.400
+was chopping them up file
+access database access, calling out
 
 113
-00:06:29.050 --> 00:06:33.970
-a lot of baggage. So
-when I heard windows runtime,
+00:06:33.400 --> 00:06:35.560
+to the network and then
+CPU bound thing. So almost
 
 114
-00:06:34.030 --> 00:06:38.560
-I'm thinking that like.net is,
-is gone away and it's
+00:06:35.560 --> 00:06:40.020
+a different, a different aspect,
+a different slice, but a
 
 115
-00:06:38.560 --> 00:06:42.520
-being replaced by this entirely
-new CLR thing. But when
+00:06:40.060 --> 00:06:42.910
+lot more sense. It does
+bring up the question though,
 
 116
-00:06:42.520 --> 00:06:45.880
-you explain it, the idea
-that you're taking the windows
+00:06:42.910 --> 00:06:46.780
+that you, you mentioned asynchronous
+stuff, you mentioned running things
 
 117
-00:06:45.880 --> 00:06:47.650
-API APIs, and like you
-said, not necessarily the most
+00:06:46.780 --> 00:06:49.300
+in the background, which is
+different. And I think people
 
 118
-00:06:47.650 --> 00:06:49.630
-powerful ones, but simply the
-ones that are, that are
+00:06:49.300 --> 00:06:52.990
+sometimes use those words interchangeably
+and then running things in
 
 119
-00:06:49.630 --> 00:06:52.210
-the ones I want, whether
-they're powerful or not, doesn't
+00:06:52.990 --> 00:06:55.420
+parallel. So there might be
+an instance where I might
 
 120
-00:06:52.210 --> 00:06:54.340
-matter. The fact is I
-want to move my camera
+00:06:55.420 --> 00:06:58.540
+want to, in response to
+a page view on my
 
 121
-00:06:54.910 --> 00:06:57.250
-and I had to drop
-into a very low level
+00:06:58.540 --> 00:07:04.480
+site, fire off a background
+thread for a reason, split
 
 122
-00:06:57.250 --> 00:07:03.310
-world. That's not comfortable. And
-the, the abstraction leaked through,
+00:07:04.480 --> 00:07:08.440
+it into multiple parallel execution
+paths. And then some of
 
 123
-00:07:03.580 --> 00:07:05.590
-I mean, it was just,
-it was just leaking C
+00:07:08.440 --> 00:07:12.880
+those might do things on
+asynchronous IO. Is that correct?
 
 124
-00:07:05.590 --> 00:07:07.780
-plus plus and calm throughout
-everything I was trying to
+00:07:13.810 --> 00:07:19.690
+Correct. It's kind of a,
+is really a relative term.
 
 125
-00:07:07.780 --> 00:07:11.920
-do. And I was doing
-all this work to rap,
+00:07:19.780 --> 00:07:22.630
+I mean, something can, can
+or cannot be async relative
 
 126
-00:07:12.280 --> 00:07:14.560
-rap, rap, rap, and that's
-such a dirty word to
+00:07:22.630 --> 00:07:27.040
+to something else. Whereas the
+idea of parallelism and multithreaded
 
 127
-00:07:14.560 --> 00:07:19.300
-go and rap and hide
-complexity. So you're saying that
+00:07:27.040 --> 00:07:29.980
+programming is more concrete. It's
+like, well, multithreaded means I'm
 
 128
-00:07:19.630 --> 00:07:22.240
-when our T has an
-API that lets you get
+00:07:29.980 --> 00:07:33.040
+controlling more than one thread
+or a background thread means
 
 129
-00:07:22.240 --> 00:07:25.930
-to native stuff and windows
-do do low-level high level,
+00:07:33.040 --> 00:07:35.590
+that I actually kicked off
+a thread in the background
 
 130
-00:07:25.930 --> 00:07:28.300
-all sorts of different stuff,
-everything from beep to move
+00:07:35.590 --> 00:07:37.540
+from the thing that I
+kicked it off from such
 
 131
-00:07:28.300 --> 00:07:32.260
-cameras around. But when I
-consume them from.net, they look
+00:07:37.540 --> 00:07:39.160
+for it to do some
+work. And I may care
 
 132
-00:07:32.260 --> 00:07:36.430
-like they're in.net. They look
-like they're really high level
+00:07:39.160 --> 00:07:40.990
+about when it finishes and
+I might not. So it
 
 133
-00:07:36.490 --> 00:07:43.180
-API APIs. I mean, effectively,
-There's probably two important things
+00:07:40.990 --> 00:07:42.550
+might be a fire and
+forget, or it might be
 
 134
-00:07:43.180 --> 00:07:45.850
-that make this look like.net.
-API is the very first
+00:07:42.550 --> 00:07:47.050
+a parallel type of operation.
+And so, yeah, understanding those
 
 135
-00:07:45.850 --> 00:07:48.370
-thing is if you think
-of comm, you always think
+00:07:47.050 --> 00:07:49.960
+terms can interchange them can
+sometimes lead to a little
 
 136
-00:07:48.370 --> 00:07:52.630
-of things like, I dunno,
-I camera underscore two acts
+00:07:49.960 --> 00:07:53.140
+bit of confusion. But when
+we talk about async in
 
 137
-00:07:52.630 --> 00:07:56.830
-or something ugly names. And
-the other thing is you
+00:07:53.140 --> 00:07:57.580
+asp.net, what we generally talk
+about is the specific support
 
 138
-00:07:56.830 --> 00:07:59.830
-have to deal with things
-that are not necessarily things
+00:07:57.580 --> 00:08:01.780
+in asp.net to have a
+request handled by the asp.net
 
 139
-00:07:59.830 --> 00:08:01.660
-you want to do with,
-like, what is the format
+00:08:01.780 --> 00:08:05.230
+runtime in an asynchronous manner
+that is using one of
 
 140
-00:08:01.660 --> 00:08:03.250
-of the string? Is it
-a B string? Is it
+00:08:05.230 --> 00:08:10.540
+the asynchronous programming models. that.net
+actually provides you such that
 
 141
-00:08:03.250 --> 00:08:06.730
-a terminated string? Like they
-have like 500 types for
+00:08:10.540 --> 00:08:13.630
+when asp.net gets notification, that
+the request is now in
 
 142
-00:08:06.730 --> 00:08:08.800
-the same thing, more or
-less. And I think these
+00:08:13.630 --> 00:08:16.180
+async mode, that there's now
+nothing more for it to
 
 143
-00:08:08.800 --> 00:08:11.770
-are the two major things
-where complexity income kicks in.
+00:08:16.180 --> 00:08:19.030
+do until something else finishes
+that it can free up
 
 144
-00:08:11.770 --> 00:08:14.470
-If you consume it from
-the net today and in
+00:08:19.030 --> 00:08:21.850
+resources from the request until
+the async operation has finished.
 
 145
-00:08:14.470 --> 00:08:18.370
-winter T you know, some
-people might know him, his
+00:08:23.290 --> 00:08:25.720
+Levi, could you, could you
+help me understand that when
 
 146
-00:08:18.370 --> 00:08:20.950
-name is crystal Solina. He
-wrote the design guidelines that
+00:08:25.720 --> 00:08:29.830
+a request comes into asp.net,
+when I load a page
 
 147
-00:08:21.400 --> 00:08:24.040
-we pushed basically through the
-whole.net stack and make sure
+00:08:30.370 --> 00:08:33.430
+that that is handled by
+what, what kind of thread
 
 148
-00:08:24.040 --> 00:08:26.170
-that when we implemented API,
-as we do it, you
+00:08:33.430 --> 00:08:36.160
+is that that's called a
+real quick request thread or
 
 149
-00:08:26.170 --> 00:08:28.660
-know, in the, in the,
-in the same way, like
+00:08:36.160 --> 00:08:38.380
+a user request, or what
+does that in asp.net? That
 
 150
-00:08:28.660 --> 00:08:31.690
-methods that ethical actions are
-called always add and not
+00:08:38.380 --> 00:08:41.470
+is, that is rendering my
+page and then returning backed
 
 151
-00:08:31.690 --> 00:08:35.350
-sometimes pre pen, sometimes UPenn,
-sometimes ed and we made
+00:08:41.470 --> 00:08:46.630
+into a pool. So in
+the.net framework, we have basically
 
 152
-00:08:35.350 --> 00:08:37.870
-sure that we are consistent.
-And when the way I
+00:08:46.630 --> 00:08:53.020
+two big categories. The first
+are just regular users threads
 
 153
-00:08:37.880 --> 00:08:41.260
-T guys came along and
-designed their, their APIs, they
+00:08:53.470 --> 00:08:56.880
+that you can do by
+calling the, The system dot
 
 154
-00:08:41.590 --> 00:08:44.710
-explicitly asked for Christoph's expertise
-and said, can you help
+00:08:56.880 --> 00:09:00.480
+threading dot thread constructor, and
+then saying dot start on
 
 155
-00:08:44.710 --> 00:08:46.900
-us design our APIs in
-such a way that they
+00:09:00.480 --> 00:09:04.350
+that. And you as a
+user, as a developer, are
 
 156
-00:08:46.900 --> 00:08:51.040
-look familiar to you guys?
-And so just by naming
+00:09:04.350 --> 00:09:06.810
+able to just say, do
+this bit of work. And
 
 157
-00:08:51.040 --> 00:08:54.250
-stuff in a little bit
-easier way, I think lots
+00:09:06.810 --> 00:09:08.370
+then this thread is not
+going to be used for
 
 158
-00:08:54.250 --> 00:08:58.020
-of the, you know, calm
-Albinus already disappears. And the
+00:09:08.370 --> 00:09:10.800
+anything else anymore. The thread
+goes away once the work
 
 159
-00:08:58.020 --> 00:09:00.450
-other big thing is they
-simplify their type system a
+00:09:10.800 --> 00:09:14.430
+has finished, the dominant framework
+also has a thread pool.
 
 160
-00:09:00.450 --> 00:09:02.850
-lot by basically saying there's
-only a single type for
+00:09:14.910 --> 00:09:17.970
+And the nice thing about
+thread pools is that they
 
 161
-00:09:02.850 --> 00:09:04.590
-string, you know, and they're
-going to have to convert
+00:09:17.970 --> 00:09:22.170
+can reuse threads over and
+over and over again. And
 
 162
-00:09:04.590 --> 00:09:07.170
-one string to the other
-address, you know, for the,
+00:09:22.320 --> 00:09:25.800
+threads in windows are, I
+don't want to say they're
 
 163
-00:09:07.710 --> 00:09:09.870
-for the, for the front
-of it. And I think
+00:09:25.920 --> 00:09:29.340
+expensive because they're not really
+expensive, but they're also not
 
 164
-00:09:09.870 --> 00:09:13.410
-this is probably the two
-biggest things that they did,
+00:09:29.340 --> 00:09:32.610
+cheap because every time a
+thread is created or torn
 
 165
-00:09:13.470 --> 00:09:15.510
-like on the surface, like
-when you drill deeper, of
+00:09:32.610 --> 00:09:36.030
+down windows basically has to
+do a slight of hand
 
 166
-00:09:15.510 --> 00:09:17.430
-course, when our T and
-this is where the runtime
+00:09:36.030 --> 00:09:39.630
+in order to, in order
+to arrange resources for you
 
 167
-00:09:17.430 --> 00:09:20.190
-part kicks in runtime, if
-you think of runtime and
+00:09:39.960 --> 00:09:42.840
+in order to make sure
+that the appropriate data is,
 
 168
-00:09:20.190 --> 00:09:22.560
-you think of the CLR,
-that's the wrong thing. The
+00:09:43.320 --> 00:09:47.550
+is available to the core.
+That's running that thread now
 
 169
-00:09:22.560 --> 00:09:25.500
-CLR runtime is more like
-a VM, a virtual machine
+00:09:47.670 --> 00:09:52.110
+in asp.net. Whenever we do
+request processing, we're actually using
 
 170
-00:09:25.770 --> 00:09:29.420
-because it provides things like,
-you know, I L it
+00:09:52.140 --> 00:09:57.270
+the CLR ThreadPool. So if
+a developer uses ThreadPool doc,
 
 171
-00:09:29.490 --> 00:09:33.360
-provides things like a garbage
-collector and linkages competitor, that
+00:09:57.270 --> 00:10:01.110
+you use or work item,
+that's using the same resources
 
 172
-00:09:33.360 --> 00:09:36.060
-sort of thing. Whereas the
-classic, you know, very old
+00:10:01.140 --> 00:10:04.740
+that asp.net would have used
+to do regular page processing.
 
 173
-00:09:36.060 --> 00:09:38.160
-C run time is just
-a set of APIs. And
+00:10:06.050 --> 00:10:09.980
+Oh, okay. Interesting. So if
+someone like, like, let's just
 
 174
-00:09:38.160 --> 00:09:40.920
-it's called a runtime because,
-you know, instead of utility
+00:10:09.980 --> 00:10:13.580
+say someone who is not
+Levi or Damien, I'm not
 
 175
-00:09:41.340 --> 00:09:44.100
-methods or functions that you
-can call that do stuff
+00:10:13.580 --> 00:10:19.010
+naming names wants to make,
+decides to naively, make something
 
 176
-00:09:44.130 --> 00:09:47.880
-for you, like memory or
-location location. And if you
+00:10:19.010 --> 00:10:23.840
+work faster in asp.net, and
+they start firing off Q
 
 177
-00:09:47.880 --> 00:09:50.790
-think of modern apps like
-apps today, you know, talking
+00:10:23.840 --> 00:10:27.320
+user work item. They're really
+taking threads away. They're starving
 
 178
-00:09:50.790 --> 00:09:53.520
-to the camera is almost
-as basic as, you know,
+00:10:27.860 --> 00:10:31.880
+asp.net for, you know, resources
+it could be using to
 
 179
-00:09:53.580 --> 00:09:56.370
-allocating memory. So it makes
-sense that the operating system
+00:10:31.880 --> 00:10:35.870
+be doing page work. Yeah,
+that's correct. Now to be
 
 180
-00:09:56.370 --> 00:09:59.490
-provides those for you. And,
-you know, they just went
+00:10:35.870 --> 00:10:40.400
+fair, the doughnut framework is
+pretty good. At least in
 
 181
-00:09:59.490 --> 00:10:01.830
-with the term runtime because
-that's what, you know, even
+00:10:40.400 --> 00:10:43.070
+dotnet four or five, it's
+better, but it's pretty good
 
 182
-00:10:01.830 --> 00:10:04.110
-native developers use all the
-time, but they don't mean
+00:10:43.070 --> 00:10:45.530
+about detecting when there aren't
+enough threads in the thread
 
 183
-00:10:04.110 --> 00:10:08.010
-like full blown seal, our
-execution environment with all the
+00:10:45.530 --> 00:10:48.110
+pool, and it will start
+injecting new threads to handle
 
 184
-00:10:08.010 --> 00:10:10.620
-things that we would call
-managed. They're not part of
+00:10:48.110 --> 00:10:51.110
+the incoming workload. But in
+general, though, that point is
 
 185
-00:10:10.620 --> 00:10:13.370
-an RT. That's, that's where
-I think things get a
+00:10:51.110 --> 00:10:52.880
+correct. If you do it,
+the Redbook use or work
 
 186
-00:10:13.370 --> 00:10:15.860
-little confusing because the word
-runtime, like we said is
+00:10:52.880 --> 00:10:56.960
+item, you're taking the same
+resources@asp.net was trying to use
 
 187
-00:10:15.860 --> 00:10:19.340
-so overloaded, but you're saying
-that it's not like a
+00:10:56.960 --> 00:11:01.130
+to do request processing. I
+I've worked at a lot
 
 188
-00:10:19.340 --> 00:10:23.480
-complete runtime in that it's
-not someone else's perspective on
+00:11:01.130 --> 00:11:02.990
+of different companies and a
+lot of different things. And
 
 189
-00:10:23.480 --> 00:10:26.390
-what the CLR should look
-like. Correct. There is no
+00:11:02.990 --> 00:11:06.830
+one of the unfortunate things
+at, at companies, whether it
 
 190
-00:10:26.390 --> 00:10:29.810
-GC, for example, like the,
-the way the whole winter
+00:11:06.830 --> 00:11:09.790
+be banking or whether they
+be insurance companies, is that
 
 191
-00:10:29.810 --> 00:10:33.620
-T system works is effectively
-the same way converts today.
+00:11:09.800 --> 00:11:13.760
+everybody thinks that they are
+a unique snowflake. And they
 
 192
-00:10:33.620 --> 00:10:37.370
-You just add reference, you
-release the draft counted. And
+00:11:13.760 --> 00:11:16.820
+all think that what they're
+doing is magical and amazing
 
 193
-00:10:37.370 --> 00:10:39.620
-so there's no need for
-a garbage collector when you,
+00:11:16.820 --> 00:11:20.660
+and different from what everyone
+else is doing. And no
 
 194
-00:10:39.650 --> 00:10:41.840
-when you stop using stuff,
-you know, their vest count
+00:11:20.660 --> 00:11:23.720
+matter what they are smarter
+than the idiots at Microsoft.
 
 195
-00:10:41.840 --> 00:10:45.890
-goes to zero and stuff
-just disappears. And so it's
+00:11:25.160 --> 00:11:28.670
+So Y whether that's true
+or not, we don't know.
 
 196
-00:10:45.890 --> 00:10:48.350
-basically just a set of
-API that you call. And
+00:11:28.670 --> 00:11:31.160
+But there's one thing that
+I find consistently is that
 
 197
-00:10:48.350 --> 00:10:50.390
-then on top of that,
-there's a whole bunch of
+00:11:31.190 --> 00:11:34.310
+when a company reaches a
+certain size and a certain
 
 198
-00:10:50.390 --> 00:10:52.610
-things that are supposed to
-make your life easier. So
+00:11:34.340 --> 00:11:39.080
+amount of, in their mind,
+unique snowflake newness, they immediately
 
 199
-00:10:52.610 --> 00:10:54.650
-for example, in C plus,
-plus they did some language
+00:11:39.080 --> 00:11:42.140
+start messing around and machine
+dot config and web doc
 
 200
-00:10:54.650 --> 00:10:57.290
-extensions so that you don't
-have to do rest counting
+00:11:42.140 --> 00:11:45.080
+and fig and changing things
+away from the defaults. And
 
 201
-00:10:57.290 --> 00:10:59.930
-yourself that the language can
-do it for you. So
+00:11:45.080 --> 00:11:47.750
+when I talked to Stephan
+Chaco, who's one of the
 
 202
-00:10:59.930 --> 00:11:02.150
-it almost looks like don't
-have to actually deal okay.
+00:11:48.890 --> 00:11:53.830
+asp.net internals geniuses around the
+office here. He, there is
 
 203
-00:11:02.160 --> 00:11:04.370
-Memory, but, you know, in
-two plus plus it's part
+00:11:53.830 --> 00:11:56.530
+almost never a reason for
+you to be messing around
 
 204
-00:11:04.370 --> 00:11:06.410
-of the language that makes
-it easier. And then the
+00:11:56.530 --> 00:11:59.030
+with the defaults. Can you
+help me understand this, this
 
 205
-00:11:06.410 --> 00:11:10.700
-C sharp side, we obviously
-have MVP this well, like
+00:11:59.050 --> 00:12:03.600
+phenomenon, Levi, The phenomenon as
+to why people would want
 
 206
-00:11:10.700 --> 00:11:17.060
-we, the CLR has a,
-yeah, basically it has all
+00:12:03.600 --> 00:12:05.640
+to mess with it? Well,
+if we presume that they
 
 207
-00:11:17.060 --> 00:11:20.390
-the mechanisms to deal with
-calm already. So we basically
+00:12:05.640 --> 00:12:08.220
+are in fact not unique
+snowflakes, but they feel that
 
 208
-00:11:20.390 --> 00:11:23.690
-just leveraged that and updated
-it to work very nicely
+00:12:08.220 --> 00:12:10.290
+this is a knob or
+a dial or a switch
 
 209
-00:11:23.690 --> 00:11:26.150
-with when our T's. So
-from both sides, whether you
+00:12:10.290 --> 00:12:12.720
+that they need to mess
+around with, because obviously the
 
 210
-00:11:26.150 --> 00:11:27.680
-look from the C plus
-plus side, or from the
+00:12:12.720 --> 00:12:16.260
+guys at Redmond have made
+the mistake that whatever number
 
 211
-00:11:27.680 --> 00:11:31.250
-CSR upside, it looks as
-being part of the, of
+00:12:16.260 --> 00:12:20.010
+of concurrent requests per CPU
+is set, or number of
 
 212
-00:11:31.250 --> 00:11:34.880
-your everyday language activities. If
-you think that way, and
+00:12:20.010 --> 00:12:23.820
+threads per thread, pool is
+allowed, is wrong. And for
 
 213
-00:11:34.880 --> 00:11:37.910
-the same goes for JavaScript
-as well. And this is
+00:12:23.820 --> 00:12:28.260
+what they're doing at their
+fancy company is, is, is
 
 214
-00:11:37.910 --> 00:11:40.520
-what the, what the windows
-guys call language projection. So
+00:12:28.260 --> 00:12:32.340
+special. And they'll end up
+just turning knobs and dials
 
 215
-00:11:40.520 --> 00:11:42.830
-they basically tried to work
-with all the languages and
+00:12:32.340 --> 00:12:34.650
+trying to solve a problem.
+And I think that maybe
 
 216
-00:11:42.830 --> 00:11:45.650
-technologies together to make sure
-that when our T is
+00:12:34.650 --> 00:12:37.500
+the problem is that we,
+as a, as a, as
 
 217
-00:11:45.650 --> 00:11:49.850
-not necessarily the lowest common
-denominator, but a really great
+00:12:37.500 --> 00:12:39.840
+an industry, just aren't doing
+this work correctly when it
 
 218
-00:11:49.850 --> 00:11:52.460
-system, and it can be
-adopted to brick wall that,
+00:12:39.840 --> 00:12:43.530
+comes to async and background
+processing. So I'm, I'm not
 
 219
-00:11:52.460 --> 00:11:54.880
-you know, in all the
-wallet speed, JavaScript C sharp
+00:12:43.530 --> 00:12:46.020
+going to let our team
+get away. Scot-free on this
 
 220
-00:11:54.880 --> 00:11:57.270
-or C plus plus. Okay.
-So that was my next
+00:12:46.020 --> 00:12:51.900
+one in earlier versions of
+asp.net, we actually did cap
 
 221
-00:11:57.270 --> 00:12:00.870
-question. I want to understand
-this word projections. So I'm
+00:12:52.200 --> 00:12:55.530
+the default number of requests
+per CPU at a very
 
 222
-00:12:00.870 --> 00:12:03.450
-a dotnet programmer. So I
-care, you know, not only
+00:12:55.530 --> 00:12:58.350
+low number. I think it
+was maybe 12 requests per
 
 223
-00:12:03.450 --> 00:12:05.790
-about dinette, but primarily about.net,
-because that's where I feel
+00:12:58.350 --> 00:13:04.380
+CPU. And honestly, with the
+amount of memory that's in
 
 224
-00:12:05.790 --> 00:12:08.580
-like I can get the,
-get the work done. So
+00:13:04.380 --> 00:13:08.340
+most servers, I mean, we're
+talking, you know, eight, 12,
 
 225
-00:12:08.850 --> 00:12:11.790
-I can call when our
-T APIs and they'll feel
+00:13:08.490 --> 00:13:12.540
+24 gigabytes of Ram. You
+can certainly do more than
 
 226
-00:12:11.850 --> 00:12:15.600
-like.net APIs. It doesn't, I'm
-not going to feel like
+00:13:12.540 --> 00:13:15.210
+12 requests per CPU, even
+if all of those threads
 
 227
-00:12:15.600 --> 00:12:17.370
-I'm in a new world
-when I go doing this,
+00:13:15.210 --> 00:13:19.020
+are blocking, waiting for some
+event to take place. I
 
 228
-00:12:17.370 --> 00:12:20.670
-it should feel familiar and
-comfortable. Is that correct? Yes,
+00:13:19.020 --> 00:13:21.450
+think that might be the
+reason that a lot of
 
 229
-00:12:20.850 --> 00:12:23.070
-that's the goal. Okay. So
-the part that's interesting to
+00:13:21.450 --> 00:13:26.520
+people like messing with these
+switches, just because there's still
 
 230
-00:12:23.070 --> 00:12:27.690
-me is that then this
-is really not about.net. It's
+00:13:26.520 --> 00:13:31.140
+this misconception, that ASP dot
+nuts still does not scale
 
 231
-00:12:27.690 --> 00:12:30.060
-about making the windows API
-callable from anything. And that's
+00:13:31.140 --> 00:13:35.310
+well, where in FORO, especially
+we've made great strides so
 
 232
-00:12:30.060 --> 00:12:33.690
-what this projection term is.
-Yes, that's, that's what projection
+00:13:35.310 --> 00:13:38.460
+that that's no longer the
+case. Do you know what
 
 233
-00:12:33.690 --> 00:12:38.610
-basically means very fancy term,
-but it's, it's, it's not
+00:13:38.460 --> 00:13:41.910
+those values are now, guys?
+Yeah. So I think it's
 
 234
-00:12:38.610 --> 00:12:43.320
-very complicated. Is it projection
-like metadata? Is it a
+00:13:41.910 --> 00:13:44.490
+at least a hundred per
+fraud or per score. I
 
 235
-00:12:43.320 --> 00:12:45.780
-piece of metadata that gives
-a language enough information to
+00:13:44.490 --> 00:13:48.870
+thought 5,000 concurrent requests per
+CPU and ASP net for
 
 236
-00:12:45.780 --> 00:12:48.270
-call? I, could I write
-a projection? I don't know
+00:13:49.140 --> 00:13:52.710
+by default, we've had to
+fiddle with these a lot
 
 237
-00:12:48.270 --> 00:12:49.740
-if I'm using the words,
-right. But if, what if
+00:13:52.710 --> 00:13:54.900
+when doing signalized testing, which
+is why I've had some
 
 238
-00:12:49.740 --> 00:12:52.500
-I wanted to call when,
-when a R T from
+00:13:54.900 --> 00:13:56.910
+recent experience with it, but
+I used to be on
 
 239
-00:12:52.500 --> 00:12:54.540
-Ruby, what would I w
-what would I have to
+00:13:56.910 --> 00:13:58.770
+it. Isn't the only thing
+in the pipeline that you
 
 240
-00:12:54.540 --> 00:12:55.950
-write? Would I be writing
-a projection, or would I
+00:13:58.770 --> 00:14:00.600
+have to be aware of.
+Of course, I mean, I
 
 241
-00:12:55.950 --> 00:12:59.220
-be calling into a projection?
-No, you would ride your
+00:14:00.600 --> 00:14:03.150
+S is sitting in front
+of asp.net and it has
 
 242
-00:12:59.220 --> 00:13:01.950
-own a debtor. So basically,
-if you think from the
+00:14:03.150 --> 00:14:07.140
+its own queuing and, and
+sort of throttling mechanisms that
 
 243
-00:13:01.950 --> 00:13:06.270
-winner T side, they basically
-have defined how their, what
+00:14:07.140 --> 00:14:09.990
+you have to be aware
+of. So by default, the
 
 244
-00:13:06.270 --> 00:13:08.850
-they call the ABI level,
-which is the application binary
+00:14:09.990 --> 00:14:12.810
+Apple, there's some settings on
+the outpull one of which
 
 245
-00:13:08.850 --> 00:13:11.640
-interface. So they talk about
-like, how are things encoded?
+00:14:12.810 --> 00:14:16.860
+is the queue depth for
+the HCPCS. And that is
 
 246
-00:13:11.640 --> 00:13:13.770
-Like, how does metadata be
-represented? Like, how do I
+00:14:16.860 --> 00:14:20.310
+default to it's a thousand
+or 5,000 the car. Remember
 
 247
-00:13:13.770 --> 00:13:17.010
-discover what my sets are
-available? And in fact, the
+00:14:20.460 --> 00:14:23.610
+it's, it's much smaller than
+the default asp.net settings. If
 
 248
-00:13:17.010 --> 00:13:19.380
-underlying metadata forma that when
-our team is using is
+00:14:23.610 --> 00:14:26.100
+you have more than one
+CPU. So if you're trying
 
 249
-00:13:19.380 --> 00:13:21.180
-more or less the same
-that the net is using.
+00:14:26.100 --> 00:14:30.480
+to tune for concurrency, that
+is you want to choose
 
 250
-00:13:21.180 --> 00:13:24.450
-So they also using assemblies,
-but they don't contain code.
+00:14:30.480 --> 00:14:33.900
+such that your web server
+can deal with lots and
 
 251
-00:13:24.450 --> 00:13:26.910
-Right. They just use the
-metadata part of the, of
+00:14:33.900 --> 00:14:38.010
+lots of simultaneously running web
+requests at the same time,
 
 252
-00:13:26.910 --> 00:13:29.850
-the, of the dotnet assemblies,
-if you will, to encode
+00:14:39.000 --> 00:14:41.370
+then you need, you sometimes
+need to go and adjust
 
 253
-00:13:29.880 --> 00:13:32.850
-what APIs are available to
-you, right? And then there
+00:14:41.370 --> 00:14:44.970
+these settings because in a
+very, very high load web
 
 254
-00:13:32.850 --> 00:13:34.860
-are certain windows API that
-you have to call in
+00:14:44.970 --> 00:14:49.290
+server, you can get beyond
+5,000 current requests per CPU
 
 255
-00:13:34.860 --> 00:13:37.800
-order to really instantiate objects
-and to, and to get
+00:14:49.290 --> 00:14:53.120
+or 5,000 current requests for
+the entire, but generally that's
 
 256
-00:13:37.800 --> 00:13:40.080
-them. But this is all
-part of the, of the
+00:14:53.120 --> 00:14:55.430
+a lot of load you
+need to be getting before
 
 257
-00:13:40.080 --> 00:13:43.230
-winter T spec. And if
-you were a language implementer,
+00:14:55.430 --> 00:14:56.960
+you hit that sort of
+thing. The reason we have
 
 258
-00:13:43.230 --> 00:13:45.120
-let's say, Ruby, for example,
-you can just use that.
+00:14:56.960 --> 00:14:58.820
+to do it in signal
+hours, because most of our
 
 259
-00:13:45.120 --> 00:13:47.280
-And then you will have
-to do some work on
+00:14:58.820 --> 00:15:01.430
+requests never go away. We
+create a request and then
 
 260
-00:13:47.280 --> 00:13:48.480
-your side. So if we're
-going to, you have to
+00:15:01.430 --> 00:15:03.890
+it stays open forever while
+we pump data over it.
 
 261
-00:13:48.480 --> 00:13:52.020
-make a decision how the
-strings, that Ruby has a
+00:15:03.890 --> 00:15:07.220
+So we have to tune
+the server to do long
 
 262
-00:13:52.020 --> 00:13:56.700
-mapping to the strings that
-demo, or sorry, that when
+00:15:07.220 --> 00:15:13.160
+running concurrent requests versus lots
+and lots of very short
 
 263
-00:13:56.700 --> 00:13:59.430
-at T has so basically
-in the Danette side of
+00:15:13.160 --> 00:15:18.850
+running requests for high throughput.
+So I've been doing asp.net
 
 264
-00:13:59.430 --> 00:14:03.600
-things, we can just directly
-basically posit them along, because
+00:15:18.850 --> 00:15:21.580
+for a long time and.net
+since the day it came
 
 265
-00:14:03.600 --> 00:14:05.910
-it just happens to be
-that the underlying format is
+00:15:21.580 --> 00:15:24.940
+out. That's almost 10 years
+now. And a couple of
 
 266
-00:14:05.910 --> 00:14:09.180
-the same on both sides.
-So there's no string copying
+00:15:24.940 --> 00:15:29.170
+days ago, I was working
+on a, a pan tilt
 
 267
-00:14:09.180 --> 00:14:12.870
-involved, but if you decide
-to encode strings completely differently
+00:15:29.170 --> 00:15:31.630
+zoom thing that I'm working
+on and get a camera
 
 268
-00:14:13.200 --> 00:14:14.970
-than probably you want to
-have some smarts in your
+00:15:31.630 --> 00:15:34.960
+working. And I ended up
+finding an old, old library.
 
 269
-00:14:14.970 --> 00:14:18.630
-language, on your compiler to
-convert those strings automatically for
+00:15:34.960 --> 00:15:37.120
+So I'm in dotnet four
+or five doing some work.
 
 270
-00:14:18.630 --> 00:14:21.000
-your users, because otherwise it
-will be, you know, painful
+00:15:37.120 --> 00:15:41.170
+And I pull in this.net
+one, one library, and I
 
 271
-00:14:21.000 --> 00:14:23.430
-again. And that is what
-we mean by projection. Language
+00:15:41.170 --> 00:15:45.880
+find myself doing begin, start
+pan and end start pan.
 
 272
-00:14:23.430 --> 00:14:26.100
-has to make a decision
-to haul their constructs, like
+00:15:45.880 --> 00:15:47.950
+And it took me awhile
+to get my brain back
 
 273
-00:14:26.100 --> 00:14:29.100
-in strings and so on
-fly well with the, with
+00:15:47.950 --> 00:15:50.890
+on top of this. And
+then I pulled in another
 
 274
-00:14:29.130 --> 00:14:32.580
-the other side, which is
-the lower level when our
+00:15:50.890 --> 00:15:55.270
+library and it had something,
+something async in, something, something
 
 275
-00:14:32.580 --> 00:14:37.110
-team ABI level. Okay. So
-I think this is where
+00:15:55.600 --> 00:16:00.490
+async completed, but my brain
+is starting to get more
 
 276
-00:14:38.370 --> 00:14:40.770
-it's funny. There's several levels
-of confusion here. So the
+00:16:00.490 --> 00:16:03.220
+tuned to the way that
+the, the, the tasks and
 
 277
-00:14:40.770 --> 00:14:43.740
-first we talked about the
-word runtime, I think that
+00:16:03.220 --> 00:16:05.560
+background tasks and thing, like
+things like that are working.
 
 278
-00:14:43.740 --> 00:14:47.100
-provided confusion. Cause it is
-in fact a runtime, but
+00:16:06.100 --> 00:16:08.410
+What what's going on there.
+Why am I in one
 
 279
-00:14:47.100 --> 00:14:51.770
-that word freaks out.net. People
-who feel like we own
+00:16:08.410 --> 00:16:12.670
+project thinking about three different
+kinds of, of asynchronous programming
 
 280
-00:14:51.920 --> 00:14:54.800
-all runtimes. You know what
-I mean? So that's kinda
+00:16:12.670 --> 00:16:16.750
+and does one encapsulate the
+other? Is it like a
 
 281
-00:14:54.800 --> 00:14:57.320
-like the first step, but
-then the next one is
+00:16:16.750 --> 00:16:20.050
+series of onion layers where
+one lays on top of
 
 282
-00:14:57.320 --> 00:15:01.970
-really interesting is that when,
-when we, the.net people think
+00:16:20.050 --> 00:16:25.930
+the, the next Damien? No,
+unfortunately in some cases, yes,
 
 283
-00:15:01.970 --> 00:15:03.770
-about.net, we think of it
-as kind of an all
+00:16:26.110 --> 00:16:28.420
+but mostly no. So let,
+let, let us go through
 
 284
-00:15:03.770 --> 00:15:06.920
-or nothing thing. And you
-just said that the metadata
+00:16:28.420 --> 00:16:33.910
+the sorted history of asynchronous
+programming and.net. And we will
 
 285
-00:15:06.920 --> 00:15:11.240
-format used by windows runtime
-to, to talk about these,
+00:16:34.150 --> 00:16:37.360
+hopefully clarify what all these
+different things mean. Unfortunately, there
 
 286
-00:15:11.570 --> 00:15:16.100
-these API APIs is, is.net
-itself, but not in the,
+00:16:37.360 --> 00:16:40.810
+is some overlap. So in.net,
+one slash one, one world,
 
 287
-00:15:16.110 --> 00:15:18.560
-you know, it's, that's not
-the right word. The format
+00:16:41.110 --> 00:16:45.490
+we had what was called
+APM, the asynchronous programming model.
 
 288
-00:15:18.770 --> 00:15:21.230
-that it's encoded in is
-that the standard that we've
+00:16:45.880 --> 00:16:51.070
+And this is the begin
+slash end method pairs that
 
 289
-00:15:21.230 --> 00:15:25.280
-released, the ECMO three 35
-metadata format, the format that.net
+00:16:51.070 --> 00:16:52.750
+you talked about. So if
+you had some type of
 
 290
-00:15:25.280 --> 00:15:28.700
-uses is the same. And
-that kind of muddies the
+00:16:52.750 --> 00:16:57.790
+operation that when cold could
+be done asynchronously, meaning that
 
 291
-00:15:28.700 --> 00:15:33.710
-waters and makes, makes it
-blurry between what's dot net.
+00:16:58.210 --> 00:17:01.630
+you could re immediately return
+to the application, give them
 
 292
-00:15:33.710 --> 00:15:37.340
-And what's not, but really
-you guys just didn't need
+00:17:01.630 --> 00:17:05.350
+some token that represents whether
+that operation has finished or
 
 293
-00:15:37.340 --> 00:15:39.320
-to invent a new format.
-So you picked one that
+00:17:05.350 --> 00:17:10.360
+not. And then also have
+the Cola passing, a delegate,
 
 294
-00:15:39.320 --> 00:15:43.240
-already existed. Correct. They could
-have just chosen whatever format,
+00:17:10.810 --> 00:17:13.900
+which the consumer, which the
+not the consumer, the other
 
 295
-00:15:43.240 --> 00:15:45.340
-write it big. If you
-go very hard, you could,
+00:17:13.900 --> 00:17:16.750
+side will call back when
+the async operation is finished,
 
 296
-00:15:45.340 --> 00:15:47.830
-they could even have used
-XML for that. But, you
+00:17:17.050 --> 00:17:19.990
+then you would expose that
+operation with two methods. One
 
 297
-00:15:47.830 --> 00:15:49.540
-know, it's just not the
-most efficient way to store
+00:17:19.990 --> 00:17:22.570
+would be a begin method
+that returned an IAA sync
 
 298
-00:15:49.540 --> 00:15:53.500
-the information, but yeah, it's
-just like, you know, other
+00:17:22.570 --> 00:17:26.270
+result. That's I think result
+it's an interface in, in,
 
 299
-00:15:53.500 --> 00:15:55.510
-guys already did the work,
-so why reinvent the wheel?
+00:17:26.270 --> 00:17:29.350
+in the.net based class library.
+And then there would be
 
 300
-00:15:56.230 --> 00:15:58.660
-Okay. Are there other pieces
-of dotnet that are used
+00:17:29.350 --> 00:17:33.100
+an end pair to that
+method, which would return either
 
 301
-00:15:58.660 --> 00:16:01.600
-or is the metadata the
-primary thing? I think my
+00:17:33.100 --> 00:17:35.770
+void. If it was the
+type of async a method
 
 302
-00:16:01.600 --> 00:16:04.180
-editor is totally the primary
-thing. And then of course,
+00:17:35.770 --> 00:17:39.220
+that didn't return anything, or
+it would return some object.
 
 303
-00:16:04.240 --> 00:16:06.640
-like naming conventions or that
-sort of thing is also
+00:17:39.250 --> 00:17:41.320
+If you were perhaps looking
+up something from a database,
 
 304
-00:16:06.640 --> 00:16:09.610
-reused if you think of
-that way. But I think
+00:17:41.320 --> 00:17:44.170
+for instance, maybe a data
+Raider or something like that.
 
 305
-00:16:09.610 --> 00:16:13.090
-as the underlying thing, I
-can't really think of, of
+00:17:46.210 --> 00:17:48.400
+That's a model that's used
+for any kind of asynchronous
 
 306
-00:16:13.120 --> 00:16:15.460
-many other things. Like, of
-course, if you think of
+00:17:48.430 --> 00:17:50.760
+programming. Like I talking to
+hardware, or you could be
 
 307
-00:16:15.460 --> 00:16:19.060
-API design, like, you know,
-you know, depart just the
+00:17:50.760 --> 00:17:54.480
+talking to a database, it's
+just do something begin. Then
 
 308
-00:16:19.060 --> 00:16:23.380
-naming conventions, like for example,
-when at T also has
+00:17:54.480 --> 00:17:58.170
+there's a call back. And
+then you say, and in
 
 309
-00:16:23.380 --> 00:16:26.320
-a low level like type
-system, if you will. So
+00:17:58.170 --> 00:18:01.640
+the middle of that callback.
+So yeah, when you pass
 
 310
-00:16:26.320 --> 00:16:28.630
-they also have to provide
-collections for example, because if
+00:18:01.640 --> 00:18:04.280
+in a callback and then
+the other side, we'll call
 
 311
-00:16:28.630 --> 00:16:31.900
-they provide APIs that return
-many objects, you want to
+00:18:04.280 --> 00:18:06.620
+that call back when it's
+finished. And then the call
 
 312
-00:16:31.900 --> 00:16:34.000
-have to, you know, a
-unified set of APIs that
+00:18:06.620 --> 00:18:08.540
+back at you passed in
+inside the body of that
 
 313
-00:16:34.000 --> 00:16:37.450
-represent those collection types. And
-so they have, for example,
+00:18:08.540 --> 00:18:11.930
+call back. You will call
+the end method, passing in
 
 314
-00:16:37.660 --> 00:16:40.390
-Iterable, which is basically the
-winter tea equivalent of what
+00:18:11.930 --> 00:18:15.400
+the original IAA sync results
+that the begin method returned,
 
 315
-00:16:40.600 --> 00:16:43.450
-they thought that developers now
-is. I knew mobile. And
+00:18:15.410 --> 00:18:17.390
+because the, I think result
+is kind of the token
 
 316
-00:16:43.450 --> 00:16:46.450
-so they're not like low
-level types, but they're common
+00:18:17.390 --> 00:18:21.920
+that represents that asynchronous operation.
+And then once you call
 
 317
-00:16:46.450 --> 00:16:49.750
-enough that the.net side decided
-to have a projection. So
+00:18:21.920 --> 00:18:23.900
+and the other side will
+give you back the result,
 
 318
-00:16:49.750 --> 00:16:52.240
-if you call a winter
-tap API, that takes time,
+00:18:23.900 --> 00:18:26.690
+if there was a result
+to be handed back. So
 
 319
-00:16:52.270 --> 00:16:54.970
-it's doable on the.net side,
-it seems like it takes
+00:18:26.770 --> 00:18:31.670
+it's not, it's an easy
+program programming sort of paradigm
 
 320
-00:16:54.970 --> 00:16:56.860
-nine new mobile, and you
-can just pass on you.
+00:18:31.670 --> 00:18:34.880
+to understand if you're doing
+one asynchronous operation, you can
 
 321
-00:16:56.860 --> 00:16:58.270
-I knew more, you don't
-have to write any code
+00:18:34.880 --> 00:18:37.340
+kind of get your head
+around that fairly easily. Where
 
 322
-00:16:58.270 --> 00:17:00.970
-for that. It just happens
-automatically. And this is also
+00:18:37.340 --> 00:18:39.350
+I always had trouble with
+APM was when I had
 
 323
-00:17:00.970 --> 00:17:04.210
-part of the projection layer
-and originally designs. Like I
+00:18:39.350 --> 00:18:42.860
+to do any type of
+asynchronous composition, where I wanted
 
 324
-00:17:04.220 --> 00:17:07.090
-think they were like many
-different flavors of light trouble.
+00:18:42.860 --> 00:18:45.260
+to say, do this asynchronous
+task. And then when that's
 
 325
-00:17:07.090 --> 00:17:09.550
-Like if you think of
-the C plus plus STL
+00:18:45.260 --> 00:18:48.560
+finished do this asynchronous task,
+then fire off these two
 
 326
-00:17:09.550 --> 00:17:12.130
-the Santa template library, they
-have like 500 ways to
+00:18:48.560 --> 00:18:51.620
+in parallel asynchronously. And then
+when the whole thing finishes,
 
 327
-00:17:12.130 --> 00:17:15.040
-do like iterations over collections.
-So their model of the
+00:18:51.890 --> 00:18:54.830
+continue, want to do something
+else that type of programming
 
 328
-00:17:15.040 --> 00:17:17.250
-same thing on the C
-plus on the, on the
+00:18:54.830 --> 00:18:58.490
+with APM was really difficult
+because the perimeters didn't exist
 
 329
-00:17:17.340 --> 00:17:20.170
-winter T side, but in
-the design review meetings, we
+00:18:58.520 --> 00:19:01.580
+in.net to help you do
+that. Composition, you had to
 
 330
-00:17:20.170 --> 00:17:22.360
-basically said, well, it's very
-hard for us to do
+00:19:01.580 --> 00:19:06.170
+write your own custom IAA
+sync result implementations, or you
 
 331
-00:17:22.360 --> 00:17:25.090
-the projection. It's a very
-common thing. Many language features
+00:19:06.170 --> 00:19:10.130
+had to chain your own
+custom callback delegates in order
 
 332
-00:17:25.090 --> 00:17:27.750
-on our site depend on
-that and can be simplified
+00:19:10.130 --> 00:19:12.110
+to say, when this is
+finished, do that, then kick
 
 333
-00:17:27.750 --> 00:17:30.910
-these things. So I think
-there's this overall that's Ted
+00:19:12.110 --> 00:19:14.870
+this off and then do
+that. So that led to
 
 334
-00:17:30.910 --> 00:17:33.610
-on one thing, and it's
-not make too many things.
+00:19:14.870 --> 00:19:18.120
+what we had in dotnet
+two, which was, which was
 
 335
-00:17:34.060 --> 00:17:37.210
-I think this general attitude
-of.net being more productive because
+00:19:18.230 --> 00:19:21.830
+what we called a vented
+asynchronous or EAP the event
 
 336
-00:17:37.210 --> 00:17:40.930
-we have fewer concepts to
-deal. Birth thing is also
+00:19:21.830 --> 00:19:25.850
+at asynchronous pattern. So EAP
+where those letters again, and
 
 337
-00:17:41.160 --> 00:17:44.590
-part of the, of the
-winter T design philosophy. And
+00:19:25.850 --> 00:19:28.520
+that's where we start to
+see these new method pairs
 
 338
-00:17:44.590 --> 00:17:47.110
-so it's more like a
-reuse and it's the thinking
+00:19:29.630 --> 00:19:31.910
+or a method plus an
+event. So you alluded to
 
 339
-00:17:47.350 --> 00:17:50.610
-that went over. I don't,
-there is many other pieces
+00:19:31.910 --> 00:19:34.910
+it, you said you saw
+something like Fu a sink
 
 340
-00:17:51.210 --> 00:17:55.760
-in technology wise that reuse.
-So my initial reaction to
+00:19:35.240 --> 00:19:39.710
+and then food completed event.
+And the idea of this
 
 341
-00:17:55.760 --> 00:17:59.350
-this idea of I Iterable
-and I innumerable, it might
+00:19:39.710 --> 00:19:42.830
+was that you would call
+food a sink after you
 
 342
-00:17:59.350 --> 00:18:01.940
-kind of like my gut
-reaction is that, you know,
+00:19:42.830 --> 00:19:46.640
+had subscribed an event handler
+to the food completed events.
 
 343
-00:18:01.940 --> 00:18:04.580
-someone is looking in a
-thesaurus trying to find another
+00:19:47.240 --> 00:19:49.550
+Now it doesn't actually sound
+all that different. If you
 
 344
-00:18:04.580 --> 00:18:06.890
-word. That means the same
-thing. And I editable and
+00:19:49.550 --> 00:19:52.430
+think about it, all they're
+really doing is hiding the
 
 345
-00:18:06.890 --> 00:18:10.790
-I innumerable are effectively identical.
-And then, and then I'm
+00:19:52.430 --> 00:19:55.430
+IAA sink result from you.
+And rather than you providing
 
 346
-00:18:10.790 --> 00:18:14.780
-thinking why, aren't why isn't
-the window's runtime using more.net,
+00:19:55.430 --> 00:19:59.480
+a callback, you've attached the
+call back to an event
 
 347
-00:18:17.240 --> 00:18:21.980
-no idioms, but then I'm
-kind of remembering that that.net
+00:19:59.510 --> 00:20:02.480
+that will get raised by
+the object that you find
 
 348
-00:18:21.980 --> 00:18:24.860
-is not the, is not
-the only customer of when
+00:20:02.480 --> 00:20:05.240
+this, I think method on
+there. The big difference though,
 
 349
-00:18:24.860 --> 00:18:29.480
-RT presumably, correct. It has
-to look like windows for
+00:20:05.240 --> 00:20:09.260
+is that the event at
+async programming model utilizes something
 
 350
-00:18:29.900 --> 00:18:32.630
-C plus plus and JavaScript
-as well. I presume that
+00:20:09.260 --> 00:20:12.740
+under the covers called a
+synchronization context. So that it's
 
 351
-00:18:32.630 --> 00:18:35.180
-I could for each over
-an iPad or a bowl,
+00:20:12.740 --> 00:20:15.230
+really good for things like
+UI frameworks, where you have
 
 352
-00:18:35.600 --> 00:18:37.550
-and as I've gotten a
-program that would feel comfortable,
+00:20:15.230 --> 00:20:18.110
+this idea of a UI
+thread, this main thread, the
 
 353
-00:18:38.660 --> 00:18:40.880
-can I do the same
-thing in JavaScript using, you
+00:20:18.110 --> 00:20:20.660
+application is running on, and
+then you want to do
 
 354
-00:18:40.880 --> 00:18:45.050
-know, dot each in different
-JavaScript type idioms? I'm not
+00:20:20.690 --> 00:20:24.080
+a synchronous work in the
+background. And when that's finished,
 
 355
-00:18:45.050 --> 00:18:47.270
-too familiar with JavaScript, but
-yeah, I would think so.
+00:20:24.080 --> 00:20:27.080
+you need to marshal that
+result back onto the correct
 
 356
-00:18:48.800 --> 00:18:50.150
-Okay. So let me, I've
-got, I'm trying to get
+00:20:27.080 --> 00:20:30.080
+thread. Before you can update
+your UI. The event async
 
 357
-00:18:50.150 --> 00:18:52.550
-to, is the idea that,
-that that's, that's the point
+00:20:30.080 --> 00:20:32.540
+pattern kind of did this
+for you under the covers.
 
 358
-00:18:52.580 --> 00:18:56.240
-is that I think I'm
-understanding the point now that
+00:20:32.540 --> 00:20:35.390
+We had objects like the
+background worker class, which a
 
 359
-00:18:56.510 --> 00:18:59.080
-you've got these windows, API
-APIs, they are native API
+00:20:35.390 --> 00:20:38.030
+lot of people would have
+used in WinForms where you
 
 360
-00:18:59.080 --> 00:19:03.290
-APIs. They're built into windows
-and you have to find
+00:20:38.030 --> 00:20:39.590
+sort of gave it a
+delegate to run in the
 
 361
-00:19:03.290 --> 00:19:07.250
-a balance between being really
-awesome on windows, but not
+00:20:39.590 --> 00:20:41.600
+background, and it would go
+off and fire a new
 
 362
-00:19:07.280 --> 00:19:10.880
-making the programmer who's using
-their own language of choice,
+00:20:41.600 --> 00:20:44.540
+thread. And it would, then
+it would fire events back
 
 363
-00:19:10.880 --> 00:19:16.130
-feel uncomfortable. So a JavaScript
-person writing windows code shouldn't
+00:20:44.540 --> 00:20:47.380
+on the UI thread telling
+you when there was progress
 
 364
-00:19:16.130 --> 00:19:18.500
-feel like, Oh, this is
-gross. This feels windows Z.
+00:20:47.770 --> 00:20:49.780
+and when the thing had
+finished. So you didn't have
 
 365
-00:19:18.770 --> 00:19:21.080
-They should feel like, Oh,
-this is JavaScript. I know
+00:20:49.780 --> 00:20:51.940
+to worry about this whole
+marshaling of data from one
 
 366
-00:19:21.080 --> 00:19:23.900
-JavaScript. And the dotnet programmer,
-shouldn't have to be learning
+00:20:51.940 --> 00:20:57.010
+thread to another. So that's
+APM and EAP. And then
 
 367
-00:19:23.900 --> 00:19:25.700
-new stuff. They're gonna go,
-Oh, for each grade I
+00:20:57.010 --> 00:21:01.390
+in.net four, they introduced the
+task asynchronous patent or T
 
 368
-00:19:25.700 --> 00:19:28.220
-can for each just like,
-you know, just like I'm
+00:21:01.390 --> 00:21:04.480
+a P. Some people will
+know this as TPL, the
 
 369
-00:19:28.220 --> 00:19:31.490
-familiar with. So it should,
-it's a balance between feeling
+00:21:04.480 --> 00:21:08.530
+task parallel library. And this
+is where we saw a
 
 370
-00:19:31.910 --> 00:19:35.390
-idiomatic and comfortable in the
-language and still not watering
+00:21:08.530 --> 00:21:11.350
+new set of types. And
+you said a primitives introduced
 
 371
-00:19:35.390 --> 00:19:38.210
-down the power of windows.
-Is that correct? That is
+00:21:11.350 --> 00:21:13.750
+in the framework that are
+labeled us to get a
 
 372
-00:19:38.390 --> 00:19:42.620
-pretty much the best thing
-I've heard so far. Yeah.
+00:21:13.750 --> 00:21:16.540
+handle on an asynchronous operation
+a bit like I think
 
 373
-00:19:43.610 --> 00:19:46.010
-I think, I think that
-like, if you, if you
+00:21:16.540 --> 00:21:19.630
+result except this time it's
+called task. And the task
 
 374
-00:19:46.010 --> 00:19:50.480
-look up there the very
-first design sessions, or like,
+00:21:19.630 --> 00:21:22.240
+represents a promise. It represents
+the fact that something is
 
 375
-00:19:50.490 --> 00:19:53.210
-like, you know, architectural sessions
-for winter tea that were
+00:21:22.240 --> 00:21:24.820
+running it's either finished already,
+or it might finish in
 
 376
-00:19:53.210 --> 00:19:55.970
-on build, for example, they
-had these slides and then
+00:21:24.820 --> 00:21:27.790
+the future, but rather than
+just being a token, that
 
 377
-00:19:55.970 --> 00:19:59.000
-that confused many, many people
-because C sharp was on
+00:21:27.790 --> 00:21:29.860
+I then am able to
+pass into some other methods
 
 378
-00:19:59.000 --> 00:20:00.650
-the one hand side on
-desktop apps. It was listed
+00:21:29.860 --> 00:21:34.120
+to get the result. The
+task itself includes other methods
 
 379
-00:20:00.650 --> 00:20:03.290
-on top of the.net side.
-And then on the Metro
+00:21:34.120 --> 00:21:36.310
+that I can use to
+do composition. So I can
 
 380
-00:20:03.290 --> 00:20:05.510
-side of assistant top of
-winter tee. So people thought,
+00:21:36.310 --> 00:21:38.920
+say here is the task
+it represents is facing corporation.
 
 381
-00:20:05.810 --> 00:20:08.000
-or if you're using C-sharp
-in winter tea, you actually
+00:21:39.220 --> 00:21:42.460
+When that's finished dot continue
+with, go off and do
 
 382
-00:20:08.000 --> 00:20:10.910
-compiled down to native and
-then magically you, you run
+00:21:42.460 --> 00:21:45.880
+this other bunch of work
+and getting passed into the
 
 383
-00:20:10.910 --> 00:20:13.190
-on this windows runtime, but
-that's not the case. It's
+00:21:45.880 --> 00:21:49.510
+delegates you pass in. There
+is the previous task that
 
 384
-00:20:13.190 --> 00:20:16.610
-just API APIs. And yes,
-the goal of the NRT
+00:21:49.510 --> 00:21:51.220
+finished. So if it had
+a result, you can just
 
 385
-00:20:16.610 --> 00:20:20.210
-system is to enable windows,
-to provide APIs. And they're
+00:21:51.220 --> 00:21:55.810
+grab it off that task.
+So tap introduced much, much
 
 386
-00:20:20.240 --> 00:20:23.210
-immediately consumable from the programming
-language. And the immediate part
+00:21:55.810 --> 00:22:00.430
+nicer composition models for asynchronous
+programming while still utilizing the
 
 387
-00:20:23.210 --> 00:20:26.060
-is the important thing, because
-in the, in the past,
+00:22:00.430 --> 00:22:03.580
+synchronization context. If you, if
+necessary, if you want to,
 
 388
-00:20:26.900 --> 00:20:31.370
-every language already always has
-provided reference around operating system
+00:22:03.580 --> 00:22:06.910
+you can do that underneath
+the covers to do synchronization
 
 389
-00:20:31.370 --> 00:20:34.280
-stuff. But then the problem
-is when the operating system
+00:22:06.910 --> 00:22:12.720
+between different threads in different
+contexts, The async await keywords.
 
 390
-00:20:34.280 --> 00:20:38.570
-guys evolve over time, languages
-couldn't expose it as quickly.
+00:22:14.400 --> 00:22:19.560
+Levi. How did those make
+that better for pap sounds
 
 391
-00:20:38.930 --> 00:20:41.030
-And this is why sometimes
-people said, Oh yeah, if
+00:22:19.560 --> 00:22:24.000
+really, really straight forward, but
+people didn't necessarily flood in
 
 392
-00:20:41.030 --> 00:20:42.620
-you really want to use
-the API, you really have
+00:22:24.000 --> 00:22:27.720
+that direction and like start
+using this and clearly Anders
 
 393
-00:20:42.620 --> 00:20:44.210
-to go to plus sauce
-because it's the only way
+00:22:27.720 --> 00:22:29.640
+and the powers that be,
+felt the need to go
 
 394
-00:20:44.210 --> 00:20:46.550
-you can actually consume it.
-And then if you have
+00:22:29.640 --> 00:22:33.780
+and do keywords and that
+added to the mix here.
 
 395
-00:20:46.550 --> 00:20:48.430
-to add customers, yes, you
-have to write a wrapper
+00:22:35.250 --> 00:22:39.360
+So remember how Damien was
+talking about composition? The fact
 
 396
-00:20:48.430 --> 00:20:50.290
-on up here in between.
-And all of these things
+00:22:39.360 --> 00:22:43.140
+that when you want a
+task it's finished, you can
 
 397
-00:20:50.290 --> 00:20:53.170
-go away because all of
-these projections are now done.
+00:22:43.140 --> 00:22:46.180
+provide it a piece of
+work to continue with a
 
 398
-00:20:53.500 --> 00:20:56.170
-So whenever someone in renewals
-decides to use a new
+00:22:46.200 --> 00:22:52.200
+continuation retain most programmers in
+C sharp and VB, because
 
 399
-00:20:56.170 --> 00:21:00.970
-API, it's immediately in all
-three languages. You know, I
+00:22:52.200 --> 00:22:55.320
+C sharp and VB are
+imperative languages, as opposed to
 
 400
-00:21:00.970 --> 00:21:03.610
-should say stacks because like,
-it's the JavaScript stack, it's
+00:22:55.320 --> 00:22:58.200
+a functional language. They don't
+really think in terms of
 
 401
-00:21:03.610 --> 00:21:05.920
-the CLRs stack. And then
-it's the native stick. They're
+00:22:58.200 --> 00:23:04.110
+continuations. It's very, it's very
+odd for a programmer who's
 
 402
-00:21:05.930 --> 00:21:08.230
-all available in all of
-the, and then all of
+00:23:04.110 --> 00:23:07.650
+used to these languages to
+have to kind of divide
 
 403
-00:21:08.230 --> 00:21:11.890
-these texts immediately. So the
-operating system can evolve over
+00:23:07.650 --> 00:23:11.760
+his program up into a
+series of callbacks. And a
 
 404
-00:21:11.890 --> 00:21:15.430
-time and language Zang and
-develop press can immediately start
+00:23:11.760 --> 00:23:15.690
+series of callbacks is unfortunately
+what the task parallel library
 
 405
-00:21:15.430 --> 00:21:18.240
-consuming those as they come
-along. And I think that
+00:23:15.840 --> 00:23:19.830
+takes as a parameter. Now,
+the async and awake keywords
 
 406
-00:21:18.240 --> 00:21:22.170
-that's really good news for
-the developers as well. Okay.
+00:23:19.830 --> 00:23:23.760
+make this a lot easier
+because they'll automatically turn your
 
 407
-00:21:22.410 --> 00:21:25.320
-So does that mean that
-if I write a win
+00:23:23.760 --> 00:23:27.810
+method that is marked using
+the async and awake keywords
 
 408
-00:21:25.530 --> 00:21:30.480
-R T API, it'll be
-awesome on all three programming
+00:23:28.290 --> 00:23:31.680
+into a giant state machine
+that can provide its own
 
 409
-00:21:30.480 --> 00:21:34.770
-interfaces. That is the goal.
-Surely you have to do
+00:23:31.680 --> 00:23:36.090
+series of callbacks. It's very
+similar to what the yield
 
 410
-00:21:34.770 --> 00:21:37.140
-some work to make it
-awesome and all of these
+00:23:36.090 --> 00:23:40.140
+keyword does in C sharp.
+So if you imagine, if
 
 411
-00:21:37.140 --> 00:21:39.750
-things. So for example, if
-you decide to expose something
+00:23:40.140 --> 00:23:44.880
+you imagine that you write
+a regular synchronous program and
 
 412
-00:21:39.750 --> 00:21:43.110
-and when our T you
-have to think about having,
+00:23:44.930 --> 00:23:47.240
+all of a sudden you
+want to start calling the
 
 413
-00:21:43.110 --> 00:21:46.980
-like, if you implemented in,
-in, in, let's say a.net,
+00:23:47.240 --> 00:23:51.260
+method that ends in async,
+it returns a task. If
 
 414
-00:21:47.310 --> 00:21:50.160
-you have to think that
-your consumers are mobily, not
+00:23:51.260 --> 00:23:55.160
+you prefix that call with
+the await keyword, the compiler
 
 415
-00:21:50.160 --> 00:21:52.830
-necessarily in.net, right. They might
-be in.net, but they also
+00:23:55.160 --> 00:23:59.390
+will actually split that method
+into two. The first part
 
 416
-00:21:52.830 --> 00:21:55.560
-might be in Java script
-or in C plus plus.
+00:23:59.390 --> 00:24:02.600
+of the method, the first,
+the first method will be
 
 417
-00:21:56.190 --> 00:21:58.170
-So you have to make
-sure that when you author
+00:24:02.600 --> 00:24:06.650
+everything that is before the
+call to the task returning
 
 418
-00:21:58.530 --> 00:22:00.840
-a winner, a key component,
-you have to adhere to
+00:24:06.650 --> 00:24:11.060
+method. The second method will
+be everything that is after
 
 419
-00:22:00.840 --> 00:22:04.980
-the winter tea rules. And
-they're slightly different from the.net
+00:24:11.270 --> 00:24:14.750
+the call to the task
+returning method. And the compiler
 
 420
-00:22:04.980 --> 00:22:07.740
-rules for authors and DLLs,
-but they are not completely
+00:24:14.750 --> 00:24:18.590
+will automatically turn that second
+half of your code into
 
 421
-00:22:07.740 --> 00:22:10.170
-different. So you still have
-the concept of classes and
+00:24:18.590 --> 00:24:23.690
+a callback and pass it
+into the task routines. So
 
 422
-00:22:10.170 --> 00:22:12.180
-methods and so on and
-so forth, but there are
+00:24:24.020 --> 00:24:26.510
+you get all of the
+benefits of using the task
 
 423
-00:22:12.180 --> 00:22:16.320
-certain types for example, that
-you shouldn't or expose. So
+00:24:26.540 --> 00:24:30.800
+async pattern, but you get
+the nice language syntax of
 
 424
-00:22:16.330 --> 00:22:18.260
-for example, if you write
-an async method that you
+00:24:31.040 --> 00:24:34.220
+making your program. Look as
+if it were written synchronously,
 
 425
-00:22:18.270 --> 00:22:20.670
-would return a task, right?
-But on the winter T
+00:24:34.520 --> 00:24:37.340
+you as a developer, don't
+have to worry about splitting
 
 426
-00:22:20.670 --> 00:22:23.190
-side, they don't have tests.
-They have a different way
+00:24:37.340 --> 00:24:40.070
+your application up like this.
+The compiler does it on
 
 427
-00:22:23.190 --> 00:22:25.530
-to represent asynchronous operation. So
-you have to call a
+00:24:40.070 --> 00:24:44.230
+your behalf. Interesting. You know,
+this makes, this might be
 
 428
-00:22:25.530 --> 00:22:28.530
-method that converts them. So
-why did we do a
+00:24:44.710 --> 00:24:48.700
+my ignorance showing, but this
+makes me think about 10
 
 429
-00:22:28.530 --> 00:22:31.380
-language projection for that while,
-because it was too complicated
+00:24:48.700 --> 00:24:53.440
+years ago, when we all
+learned about I disposable and
 
 430
-00:22:31.830 --> 00:22:33.870
-and they couldn't cover all
-the cases. So we decided
+00:24:53.440 --> 00:24:56.830
+try catch finally, and things
+like that, and you would
 
 431
-00:22:33.870 --> 00:22:36.360
-to make it more obvious
-for developers so that they
+00:24:56.830 --> 00:24:59.830
+go and you'd make something,
+you would do a try
 
 432
-00:22:36.360 --> 00:22:40.020
-can make the corner case
-decisions themselves. And to say,
+00:24:59.830 --> 00:25:02.020
+catch finally, and then you
+dispose it. And then someone
 
 433
-00:22:40.020 --> 00:22:42.210
-well, here at API has
-that convert between the winner
+00:25:02.020 --> 00:25:05.200
+came out with using, and
+you would say using this
 
 434
-00:22:42.210 --> 00:22:46.380
-T representation of async API
-and task object. And then
+00:25:05.200 --> 00:25:07.810
+particular variable, and then you'd
+have a scope block and
 
 435
-00:22:46.380 --> 00:22:48.690
-you have to offer those
-and basically convert between them.
+00:25:07.810 --> 00:25:10.090
+you do your thing. And
+then we would all rush
 
 436
-00:22:49.590 --> 00:22:51.450
-But there are not many,
-like, it always sounds very
+00:25:10.090 --> 00:25:14.260
+over into <inaudible> or reflector.
+And we say, look, you
 
 437
-00:22:51.450 --> 00:22:53.490
-complicated when people start talking
-about these things. But I
+00:25:14.260 --> 00:25:16.660
+said using, and they put
+a try catch finally, and
 
 438
-00:22:53.490 --> 00:22:55.680
-mean, all in all, if
-you just start writing a
+00:25:16.660 --> 00:25:20.200
+seeing the finally they put
+a dispose automatically for you.
 
 439
-00:22:56.250 --> 00:22:59.460
-key component, you would just
-go to VSU, create a
+00:25:20.200 --> 00:25:21.880
+And we just thought that
+was amazing. That was the
 
 440
-00:22:59.460 --> 00:23:02.070
-new class library, you change
-the output type to when
+00:25:21.880 --> 00:25:26.620
+greatest thing. This is another
+example of that small comparatively
 
 441
-00:23:02.070 --> 00:23:05.190
-MD, which stands for windows
-metadata instead of the regular
+00:25:26.620 --> 00:25:31.240
+small, or apparently small syntactic
+sugar. That really turns into
 
 442
-00:23:05.190 --> 00:23:07.530
-DLL. And then you start
-coding and then you get
+00:25:31.240 --> 00:25:35.620
+an astonishingly useful pattern under,
+under the wire all done
 
 443
-00:23:07.530 --> 00:23:09.750
-compiler errors as for stuff
-that you're not supposed to
+00:25:35.620 --> 00:25:38.290
+by the UN under the
+covers all done by the
 
 444
-00:23:09.750 --> 00:23:11.820
-do. And they will ultimately
-guide you in the right
+00:25:38.290 --> 00:25:43.270
+compiler. Oh yeah, certainly. And
+if you, if you go
 
 445
-00:23:11.820 --> 00:23:16.350
-direction. There shouldn't be much
-to worry about. So the
+00:25:43.270 --> 00:25:46.090
+take a look at a
+program that's using async await
 
 446
-00:23:16.350 --> 00:23:18.360
-task async was the next
-thing. Cause we've got a
+00:25:46.090 --> 00:25:48.970
+and open it up in
+reflect or ill spy or
 
 447
-00:23:18.360 --> 00:23:21.150
-lot of really cool stuff
-around async in.net. And we've
+00:25:49.060 --> 00:25:52.900
+build as, or something you'll,
+your mind will be blown
 
 448
-00:23:21.150 --> 00:23:26.160
-also got a lot of
-really cool stuff around parallelism,
+00:25:53.080 --> 00:25:56.110
+by the IOL that's generated
+by Dan, before you look
 
 449
-00:23:26.340 --> 00:23:30.870
-you know, with a task
-parallel library. So these are
+00:25:56.110 --> 00:26:00.250
+at that, Maybe it's best
+that we not look at
 
 450
-00:23:30.870 --> 00:23:36.290
-becoming idioms that that.net programmers
-are going to expect. Are
+00:26:00.250 --> 00:26:03.940
+that. Actually all those things.
+Speaking of things that we
 
 451
-00:23:36.300 --> 00:23:40.260
-there a lot of idioms
-that don't have support and
+00:26:03.940 --> 00:26:08.470
+should look at, Rick Anderson,
+one of the technical writers
 
 452
-00:23:40.260 --> 00:23:42.090
-when our T that one
-should watch for, and are
+00:26:08.470 --> 00:26:11.110
+and a really talented guy
+on our team has got
 
 453
-00:23:42.090 --> 00:23:47.060
-those idioms that you'll kind
-of continue to expand? I
+00:26:11.140 --> 00:26:13.840
+this amazing article that everyone's
+gotta read. And it's a
 
 454
-00:23:47.060 --> 00:23:49.310
-think, except for the, like,
-I mean, the nice thing
+00:26:13.840 --> 00:26:16.630
+crime that there's not more
+comments on this article, where
 
 455
-00:23:49.730 --> 00:23:52.880
-with the winter tea async
-offers that they return. I
+00:26:16.630 --> 00:26:20.440
+he talks about doing asynchronous
+methods in asp.net for, and
 
 456
-00:23:52.880 --> 00:23:56.960
-think it's called <inaudible>. I
-remember correctly and then derived
+00:26:20.440 --> 00:26:22.330
+he points out a couple
+of things in here. First,
 
 457
-00:23:57.290 --> 00:23:59.620
-objects for them as well.
-Is that from a Donette
+00:26:22.660 --> 00:26:25.390
+he's got some really great
+examples where he's using web
 
 458
-00:23:59.620 --> 00:24:02.000
-perspective, if you start consuming
-those, you won't see a
+00:26:25.390 --> 00:26:28.960
+forms to do async, which
+I think all of, you
 
 459
-00:24:02.000 --> 00:24:05.120
-task off, let's say into
-whatever the API returns, you
+00:26:28.960 --> 00:26:32.440
+know, makes the point that
+really, really smart people do
 
 460
-00:24:05.120 --> 00:24:07.790
-would see whatever the winter
-tea type is, but you
+00:26:32.920 --> 00:26:37.330
+a web forms to smart
+people don't necessarily need to
 
 461
-00:24:07.790 --> 00:24:11.000
-can immediately use the C
-sharp language extensions await in
+00:26:37.330 --> 00:26:40.300
+go over to MVC to
+get a really productive environment.
 
 462
-00:24:11.000 --> 00:24:15.230
-async to basically directly await
-these operations. And this just
+00:26:40.630 --> 00:26:42.550
+But he's got this bit
+of code here where he
 
 463
-00:24:15.260 --> 00:24:18.050
-works because as you shop
-compiler itself, service, you know,
+00:26:42.550 --> 00:26:46.110
+says, he's got, he's going
+to call into three, three
 
 464
-00:24:18.080 --> 00:24:21.050
-didn't really bake the motion
-of tasking for a way.
+00:26:46.110 --> 00:26:49.440
+web services. So the page
+load does some stuff. Then
 
 465
-00:24:21.050 --> 00:24:23.150
-They basically said, if you
-provide the right message on
+00:26:49.440 --> 00:26:51.450
+it fires off into three
+web services and it doesn't,
 
 466
-00:24:23.150 --> 00:24:25.250
-the other guy, then you
-kind of wait this effectively.
+00:26:51.510 --> 00:26:55.920
+it does those asynchronously. And
+he says, await task went
 
 467
-00:24:25.520 --> 00:24:27.560
-So it's the same as
-with link. It was the
+00:26:55.920 --> 00:27:00.480
+all. And then he passes
+in the three tasks. If
 
 468
-00:24:27.560 --> 00:24:29.840
-same way, right? If you
-implement a certain pattern API,
+00:27:00.480 --> 00:27:03.720
+I understand correctly, is that
+literally saying, hang out here
 
 469
-00:24:29.930 --> 00:24:32.480
-you could use link queries
-on top of those. So
+00:27:03.720 --> 00:27:07.520
+until all three of these
+are done, Damien, It is
 
 470
-00:24:32.480 --> 00:24:35.690
-from a C sharp perspective,
-you just consume APIs. There
+00:27:07.610 --> 00:27:10.670
+saying that, but rather than
+saying, hang out here and
 
 471
-00:24:35.690 --> 00:24:38.120
-shouldn't be much to worry
-about. It will just work
+00:27:10.670 --> 00:27:15.440
+consume a thread, it's saying,
+make this request sort of
 
 472
-00:24:38.120 --> 00:24:41.270
-as you would expect it
-naturally, if you also want
+00:27:15.860 --> 00:27:18.800
+spin down for now. And
+then when all these things
 
 473
-00:24:41.270 --> 00:24:44.420
-our T components themselves, then
-yes, you have to be
+00:27:18.800 --> 00:27:21.680
+come back, spin the request
+up again, grab a new
 
 474
-00:24:44.420 --> 00:24:46.190
-aware of that. You know,
-when our T side you
+00:27:21.680 --> 00:27:24.110
+thread and continue execution. So
+that's what we call an
 
 475
-00:24:46.190 --> 00:24:48.740
-don't have to deal with,
-or you can use tasks,
+00:27:24.140 --> 00:27:30.020
+async wait versus a blocking.
+Wait, That is something that
 
 476
-00:24:49.160 --> 00:24:53.600
-but if you basically split
-the cam into two people,
+00:27:30.380 --> 00:27:33.860
+would be amazingly difficult and
+frustrating. A couple of years
 
 477
-00:24:53.900 --> 00:24:56.000
-one just consuming when our
-tap has the other one
+00:27:33.860 --> 00:27:38.510
+back speaking to what Levi
+was talking about, about chaining
 
 478
-00:24:56.030 --> 00:24:59.690
-producing them, you find that
-the producing campus much smaller
+00:27:38.510 --> 00:27:42.650
+things together. When I was
+doing this asynchronous work and
 
 479
-00:24:59.690 --> 00:25:02.900
-anyway. So typically you have
-component vendors that will be,
+00:27:42.650 --> 00:27:46.970
+background work on this, this
+little camera, I think I
 
 480
-00:25:02.900 --> 00:25:05.990
-you know, let's say both
-new components, let's say, and
+00:27:46.970 --> 00:27:49.880
+got four or five deep,
+and it was like, you'd
 
 481
-00:25:05.990 --> 00:25:10.100
-you daytime picker up for
-demo, for example. And yes,
+00:27:49.880 --> 00:27:52.010
+call something and then you'd
+wait for the call back.
 
 482
-00:25:10.100 --> 00:25:13.610
-they probably offered them in,
-in William D. But this
+00:27:52.040 --> 00:27:54.500
+And then in that callback,
+you'd go and fire something
 
 483
-00:25:13.610 --> 00:25:17.180
-is don't. I don't think
-this is the mainstream scenario.
+00:27:54.500 --> 00:27:56.240
+else off and then wait
+for that call back. And
 
 484
-00:25:17.180 --> 00:25:20.500
-I think the mainstream sentence
-scenario is consuming APS. Okay.
+00:27:56.240 --> 00:27:59.120
+I ended up with, you
+know, five, six, seven different
 
 485
-00:25:20.740 --> 00:25:23.170
-So when you're consuming API
-APIs, I know that in
+00:27:59.120 --> 00:28:01.940
+methods. It became really, really
+difficult to get my head
 
 486
-00:25:23.920 --> 00:25:28.060
-the idea of profiles is
-becoming more, more common in.net.
+00:28:01.940 --> 00:28:05.900
+around this and what, what
+was happening. And I kept
 
 487
-00:25:28.900 --> 00:25:31.450
-You have your references that
-appear over on the right
+00:28:05.900 --> 00:28:07.700
+going back and forth. Do
+I want to do this
 
 488
-00:25:31.450 --> 00:25:34.570
-hand side and the solution
-Explorer. And those, those are
+00:28:07.700 --> 00:28:11.360
+as one giant function with
+20 curly braces and nest
 
 489
-00:25:34.720 --> 00:25:37.720
-then collected more and more
-and more we're seeing in.net
+00:28:11.360 --> 00:28:13.010
+them? Or do I want
+to make a bunch of
 
 490
-00:25:37.930 --> 00:25:41.710
-collections of, of API. So
-like there's the portable library
+00:28:13.010 --> 00:28:17.420
+little tiny functions to do
+something very simple? Yeah. Yeah.
 
 491
-00:25:41.710 --> 00:25:44.590
-stuff where you can say,
-here are the API APIs,
+00:28:17.870 --> 00:28:19.610
+When I, when I see
+code like that, I mean,
 
 492
-00:25:44.590 --> 00:25:46.180
-and here are the references
-that I want to share.
+00:28:19.610 --> 00:28:21.080
+I think I actually had
+to look at the code
 
 493
-00:25:46.540 --> 00:25:49.300
-And even, even we on
-the, on the website have
+00:28:21.080 --> 00:28:23.870
+that you were writing. I,
+again, get into those. I
 
 494
-00:25:49.310 --> 00:25:51.880
-been thinking about maybe collapsing
-those references into some kind
+00:28:23.870 --> 00:28:25.400
+I'm the same as you.
+I go, well, shall I
 
 495
-00:25:51.880 --> 00:25:53.860
-of a web profile. So
-that would make it easier.
+00:28:25.400 --> 00:28:27.020
+do this? Like, you know,
+maybe like I would do
 
 496
-00:25:53.860 --> 00:25:59.710
-And there wouldn't be so
-many DLLs like visible when
+00:28:27.020 --> 00:28:29.390
+Java script and just have
+a whole bunch of Nicole Banks,
 
 497
-00:25:59.710 --> 00:26:03.490
-you are targeting a Metro
-applicant, Metro style application and.net.
+00:28:29.840 --> 00:28:32.660
+should I split them out?
+Like VF sort of leads
 
 498
-00:26:04.180 --> 00:26:06.790
-There's this Metro style profile,
-just like as if I
+00:28:32.660 --> 00:28:35.420
+me to do by using
+plus equals plus equals creating
 
 499
-00:26:06.790 --> 00:26:09.250
-were writing a portable library
-to run an Xbox, I
+00:28:35.420 --> 00:28:39.470
+extra delegates that I then
+call, or maybe I should
 
 500
-00:26:09.250 --> 00:26:11.590
-can, I can use specific
-things and other ones are
+00:28:39.470 --> 00:28:42.560
+do a little bit more
+work and create my own
 
 501
-00:26:11.590 --> 00:26:15.340
-unavailable to me, help me
-understand when, when can a.net
+00:28:42.560 --> 00:28:46.130
+wrapper around this entire mess
+and create sort of a
 
 502
-00:26:15.340 --> 00:26:19.150
-person call windows runtime API?
-Can I write a console
+00:28:46.130 --> 00:28:49.100
+mini fluent API for doing
+this. So I can say
 
 503
-00:26:19.150 --> 00:26:24.160
-app and call when our
-T methods? No, you can't.
+00:28:49.370 --> 00:28:51.680
+do this. And then that
+returns something that I can
 
 504
-00:26:24.250 --> 00:26:27.520
-And the reason being that
-we didn't expose those APIs,
+00:28:51.680 --> 00:28:54.080
+then do something else on.
+And then that returns something
 
 505
-00:26:27.520 --> 00:26:31.270
-if your target Metro, and
-this is also not necessarily
+00:28:54.080 --> 00:28:56.780
+that I can then do
+something else on. And while
 
 506
-00:26:31.270 --> 00:26:34.030
-news for developers, but if
-you are remembering the civil
+00:28:56.780 --> 00:28:58.340
+that may sound like a
+lot of work, if all
 
 507
-00:26:34.030 --> 00:26:36.970
-light days, when we produce
-civil light, we didn't expose
+00:28:58.340 --> 00:29:00.020
+you're trying to do is
+clean up the code of
 
 508
-00:26:36.970 --> 00:26:39.160
-all of those net. We
-only exposed some subset of
+00:29:00.020 --> 00:29:03.770
+a specifically complex series of
+operations where you're trying to
 
 509
-00:26:39.160 --> 00:26:42.460
-the doughnut API APIs because
-civil led was a separate
+00:29:03.770 --> 00:29:06.110
+do six or seven or
+more things that are asynchronous.
 
 510
-00:26:43.110 --> 00:26:47.850
-version of.net altogether. And Metro
-is similar in the sense
+00:29:06.380 --> 00:29:09.650
+I think sometimes it's worth
+the work because it really
 
 511
-00:26:47.850 --> 00:26:49.710
-that the number of APIs
-that we give to you
+00:29:09.710 --> 00:29:11.990
+will generally only take you
+a very short amount of
 
 512
-00:26:49.710 --> 00:26:53.520
-is severely restricted. And the
-reason being that, you know,
+00:29:11.990 --> 00:29:14.090
+time. And your code will
+be that much easier to
 
 513
-00:26:53.560 --> 00:26:55.800
-you want to make sure
-that you basically see the
+00:29:14.090 --> 00:29:17.030
+read in turn when scanning
+through and trying to understand
 
 514
-00:26:55.800 --> 00:26:58.170
-right API, is that applicable
-to Metro style apps and
+00:29:17.030 --> 00:29:20.210
+what this block of 40
+lines is doing. It will
 
 515
-00:26:58.170 --> 00:27:01.620
-not all of the history
-of.net, which is 10 years
+00:29:20.210 --> 00:29:23.810
+be much clearer to you
+later on Levi kind of
 
 516
-00:27:01.620 --> 00:27:04.290
-worth of, you know, APIs
-and not all that make
+00:29:23.810 --> 00:29:26.120
+in conclusion. Why do you
+think that all of this
 
 517
-00:27:04.290 --> 00:27:07.440
-sense. Some of them have
-actually been obsoleted or deprecated.
+00:29:26.120 --> 00:29:28.700
+is happening now? Why did
+it take this long for
 
 518
-00:27:07.440 --> 00:27:09.210
-Some of them are actually
-quite dangerous if you use
+00:29:28.700 --> 00:29:32.540
+async to, to come to.net?
+Is this something that's that's
 
 519
-00:27:09.210 --> 00:27:12.570
-them, you know, not necessarily
-correctly. And it's very easy
+00:29:33.590 --> 00:29:35.030
+if I go and look
+at lists, are they already
 
 520
-00:27:12.570 --> 00:27:15.510
-to use them incorrectly. And
-so we decided to subset
+00:29:35.030 --> 00:29:37.190
+doing this? Did they do
+this like awesome 40 years
 
 521
-00:27:15.770 --> 00:27:19.830
-the set of API significantly
-for Metro and all in
+00:29:37.190 --> 00:29:38.990
+ago? And we're just now
+catching up or is there
 
 522
-00:27:19.830 --> 00:27:22.500
-all, we are down to
-maybe 35% or whatever of
+00:29:38.990 --> 00:29:41.800
+a particular reason you think
+that frameworks are towards async
 
 523
-00:27:22.500 --> 00:27:24.090
-the, of the full frame
-we give to you a
+00:29:41.800 --> 00:29:47.920
+today? So if you look@the.net
+framework in particular, I think
 
 524
-00:27:24.100 --> 00:27:26.160
-Metro. And we've seen this
-as the right set of
+00:29:47.920 --> 00:29:49.510
+a lot of that has
+to do with the fact
 
 525
-00:27:26.160 --> 00:27:28.650
-APIs that we don't think
-we, we, we, we hid
+00:29:49.510 --> 00:29:52.660
+that since.net is supposed to
+be one of the ways
 
 526
-00:27:28.650 --> 00:27:31.350
-anything from you because we
-didn't like you to use
+00:29:52.660 --> 00:29:56.710
+of writing good windows, eight
+applications in particular, they wanted
 
 527
-00:27:31.350 --> 00:27:34.350
-it. It's just that we,
-we, we think having wind
+00:29:56.710 --> 00:30:01.180
+people to use asynchronous methods
+precisely because they use fewer
 
 528
-00:27:34.350 --> 00:27:37.230
-forms and WPF, for example,
-it doesn't make sense because
+00:30:01.180 --> 00:30:06.010
+resources, less CPU time. And
+it's honestly better on the
 
 529
-00:27:37.230 --> 00:27:38.760
-if you at a Metro
-app, for example, you have
+00:30:06.010 --> 00:30:10.120
+battery for mobile devices, but
+that that's just talking about
 
 530
-00:27:38.760 --> 00:27:41.790
-to use the RTS anyways.
-So it doesn't make sense
+00:30:10.120 --> 00:30:13.750
+the client side on the
+server side, you really have
 
 531
-00:27:41.790 --> 00:27:45.300
-to expose them to you.
-And so the challenge now
+00:30:13.750 --> 00:30:16.420
+issues of scale. We have
+all of these cloud services
 
 532
-00:27:45.300 --> 00:27:48.540
-for that development is obviously
-that typically you don't just
+00:30:16.420 --> 00:30:20.830
+now where you're expected to
+be able to handle hundreds,
 
 533
-00:27:48.540 --> 00:27:51.090
-write apps, right? You also
-write libraries that you can
+00:30:21.220 --> 00:30:25.600
+thousands, tens of thousands of
+simultaneous users. And when I
 
 534
-00:27:51.090 --> 00:27:54.540
-reuse across different apps. And
-so this is a part
+00:30:25.600 --> 00:30:29.050
+say simultaneous, I mean, you
+know, there are that many
 
 535
-00:27:54.540 --> 00:27:56.700
-of a class that really
-kicks in. So if you
+00:30:29.050 --> 00:30:35.830
+connections actually active to the
+server at once, and it's
 
 536
-00:27:56.700 --> 00:27:59.640
-basically target different platforms, portable
-costs, I will make sure
+00:30:35.830 --> 00:30:41.230
+just not practical to have
+10,000 threads running in the
 
 537
-00:27:59.640 --> 00:28:01.410
-that you get the right
-set of APIs that is
+00:30:41.530 --> 00:30:46.420
+S process, each threads taking
+up a 250 kilobyte stack.
 
 538
-00:28:01.410 --> 00:28:06.270
-effectively in the intersection of
-the, of the platforms. However,
+00:30:46.750 --> 00:30:49.060
+I mean, you're going to
+start using gigabytes of memory
 
 539
-00:28:06.270 --> 00:28:09.030
-moving forward, we think this
-is not necessarily something we
+00:30:49.060 --> 00:30:53.290
+just to handle threading at
+that point. And as far
 
 540
-00:28:09.030 --> 00:28:12.600
-want to do much anymore,
-because if you think of
+00:30:53.290 --> 00:30:57.430
+as scale goes, that's just
+a nonstarter. Damien, do you
 
 541
-00:28:12.600 --> 00:28:16.650
-civil and internet, for example,
-the subset was almost arbitrary,
+00:30:57.430 --> 00:31:00.160
+have anything that you want
+to add in conclusion, just
 
 542
-00:28:16.650 --> 00:28:18.600
-right? If you look at
-string, for example, string might
+00:31:00.160 --> 00:31:04.660
+that asp.net has had support
+for this asynchronous stuff? Pretty
 
 543
-00:28:18.600 --> 00:28:22.830
-have 50 members on.net and
-only 25 on civilized because,
+00:31:04.660 --> 00:31:07.960
+much since the very beginning,
+but I think the most
 
 544
-00:28:22.830 --> 00:28:25.620
-you know, just the way
-it was designed now in
+00:31:07.960 --> 00:31:10.120
+work we've done on this
+is in the latest release
 
 545
-00:28:25.620 --> 00:28:27.840
-the new world, what we
-have done in, in, in
+00:31:10.120 --> 00:31:12.460
+in four or five. And
+Levi did an awful lot
 
 546
-00:28:27.870 --> 00:28:32.070
-this release, we basically said
-we break down or assemblies
+00:31:12.460 --> 00:31:16.240
+of work to ensure that
+the async model in asp.net
 
 547
-00:28:32.100 --> 00:28:35.280
-in more fine grain, smaller
-components. So for example, ms
+00:31:16.240 --> 00:31:19.180
+works really, really well with
+the new icing, a white
 
 548
-00:28:35.280 --> 00:28:37.560
-call-up, as it is, today
-is a big pile of
+00:31:19.180 --> 00:31:21.310
+language support that we've introduced
+and on there four or
 
 549
-00:28:37.890 --> 00:28:41.110
-stuff that is almost unrelated.
-Like there's remoting in it,
+00:31:21.310 --> 00:31:22.930
+five as well. So if
+you haven't looked at it
 
 550
-00:28:41.130 --> 00:28:44.910
-there's reflection in it, there's
-strings in them, there's collection
+00:31:22.930 --> 00:31:25.030
+yet, it doesn't matter if
+you are a web forms,
 
 551
-00:28:44.910 --> 00:28:47.820
-types in them. So if
-you create a new platform,
+00:31:25.030 --> 00:31:29.590
+programmer, an MVC programmer, or
+even coding raw HTTP handlers,
 
 552
-00:28:47.820 --> 00:28:50.130
-it's very likely that you
-will subsidize call it one
+00:31:29.590 --> 00:31:31.900
+and they should to be
+modules. I think you'll find
 
 553
-00:28:50.130 --> 00:28:52.230
-way or the other. And
-so in the new world,
+00:31:31.900 --> 00:31:35.180
+that I'm using the async
+abilities and A's, but on
 
 554
-00:28:52.230 --> 00:28:56.040
-we basically created smaller assemblies.
-So for example, or if
+00:31:35.200 --> 00:31:38.080
+it today, you should be
+able to, it's a much
 
 555
-00:28:56.040 --> 00:28:57.090
-you have a bit of
-members call it, there's no
+00:31:38.080 --> 00:31:39.490
+happier place to be than
+it was a couple of
 
 556
-00:28:57.090 --> 00:28:59.850
-court system runtime, but this
-is really, really, really small.
+00:31:39.490 --> 00:31:42.970
+years ago. Put it that
+way. You guys are going
 
 557
-00:28:59.850 --> 00:29:02.760
-It only contains basically the
-primitive types and a few
+00:31:42.970 --> 00:31:44.320
+to give me links that
+we'll put in the show
 
 558
-00:29:02.760 --> 00:29:05.280
-interfaces. And that's it even
-collections is the longer part
+00:31:44.320 --> 00:31:49.110
+notes For articles and MSDN
+things and two and tutorials
 
 559
-00:29:05.280 --> 00:29:08.850
-of that. Collections is a
-separate assembly. And so the
+00:31:49.110 --> 00:31:51.870
+that we think that people
+should, should check out. And
 
 560
-00:29:08.850 --> 00:29:11.850
-idea is, if you decide
-what assemblies you actually want
+00:31:52.080 --> 00:31:54.150
+maybe, yeah, If you think
+about it, a couple of
 
 561
-00:29:11.850 --> 00:29:16.800
-to depend on, then you
-binary that you're competing against
+00:31:54.150 --> 00:31:57.600
+ideas of open source projects,
+that would be advanced example
 
 562
-00:29:16.800 --> 00:29:21.060
-those things is binary compatible
-with all future platforms. You
+00:31:58.010 --> 00:31:59.490
+And signal out is the
+first one that comes to
 
 563
-00:29:21.060 --> 00:29:23.220
-know, that support the dependencies
-that you have, but you
+00:31:59.490 --> 00:32:04.050
+mind. Cause he really see
+what tuned and continually tuned
 
 564
-00:29:23.220 --> 00:29:25.500
-can be sure if you're
-depends on system runtime, version
+00:32:04.050 --> 00:32:07.350
+asynchronous work sp.net looks like
+they should check out the
 
 565
-00:29:25.500 --> 00:29:29.340
-one, every platform that supports
-system runtime, version one, your
+00:32:07.350 --> 00:32:12.030
+signal on my brain. Alright.
+This has been another episode
 
 566
-00:29:29.340 --> 00:29:32.310
-applicate, your binary is compatible
-with that support of a
-
-567
-00:29:32.310 --> 00:29:35.390
-class diver. Instead of being
-a separate class library, it
-
-568
-00:29:35.390 --> 00:29:37.710
-would be just the default.
-You just create class libraries,
-
-569
-00:29:37.980 --> 00:29:41.440
-you'll pick your dependencies. And
-depending on the dependencies, you
-
-570
-00:29:41.440 --> 00:29:43.420
-were a portable to a
-platform, or you're not portable
-
-571
-00:29:43.420 --> 00:29:45.760
-to their platform, but it's
-really up to you. It's
-
-572
-00:29:45.760 --> 00:29:48.430
-no longer DePaul them that,
-Oh, shoot. If I created
-
-573
-00:29:48.430 --> 00:29:51.490
-the.net class library, I cannot
-just copy that one to
-
-574
-00:29:51.580 --> 00:29:55.470
-<inaudible> because it's a different
-platform. When, when I hear
-
-575
-00:29:55.470 --> 00:29:58.560
-that you're that people are
-limiting API APIs, it makes
-
-576
-00:29:58.560 --> 00:30:02.580
-me feel limited. Like, like
-you're saying you found the
-
-577
-00:30:02.580 --> 00:30:07.290
-right subset, but kind of
-experience usually means that that's
-
-578
-00:30:07.290 --> 00:30:09.720
-great, except for that one
-function that I really have
-
-579
-00:30:09.720 --> 00:30:13.350
-to call that you, you
-know, removed, how do you,
-
-580
-00:30:14.040 --> 00:30:17.970
-how do you get around
-that? So right now there's
-
-581
-00:30:17.970 --> 00:30:20.730
-no way around it, but
-we made sure that we
-
-582
-00:30:20.730 --> 00:30:23.700
-didn't just arbitrarily, you know,
-throw a dice. So basically
-
-583
-00:30:23.700 --> 00:30:25.440
-what we did when we
-decided what API is we
-
-584
-00:30:25.440 --> 00:30:28.470
-exposed, we, we do, we
-did two things. First of
-
-585
-00:30:28.470 --> 00:30:31.440
-all, for, for, for certain
-areas, let's say collections, for
-
-586
-00:30:31.440 --> 00:30:35.310
-example, we decided to stick
-with existing tech problems. So
-
-587
-00:30:35.310 --> 00:30:37.680
-for example, the idea was
-if you already shipped the
-
-588
-00:30:37.680 --> 00:30:40.890
-platform with that set of
-APIs, chances are that this
-
-589
-00:30:40.890 --> 00:30:43.830
-is the right subset for
-our, for, you know, this
-
-590
-00:30:43.830 --> 00:30:47.070
-set of people because, you
-know, we didn't just decide
-
-591
-00:30:47.070 --> 00:30:49.950
-to remove certain methods. For
-example, the other thing that
-
-592
-00:30:49.950 --> 00:30:53.220
-we did is we analyzed
-the phone app store for
-
-593
-00:30:53.220 --> 00:30:56.940
-API usages. So we basically
-created a list of APIs
-
-594
-00:30:56.940 --> 00:30:58.680
-and then said, you know,
-how many times are those
-
-595
-00:30:58.680 --> 00:31:00.570
-called per apps? So we
-know which APIs are called
-
-596
-00:31:00.570 --> 00:31:03.990
-frequently and which APIs are
-not called frequently. And we
-
-597
-00:31:03.990 --> 00:31:06.030
-made sure that if we,
-if we remove APIs that
-
-598
-00:31:06.030 --> 00:31:08.160
-are used frequently, we have
-to have really good reasons
-
-599
-00:31:08.160 --> 00:31:10.320
-to remove those API. So
-for example, it's a dangerous
-
-600
-00:31:10.320 --> 00:31:13.440
-API sort of applicable to
-Metro because it's wind farms,
-
-601
-00:31:13.440 --> 00:31:17.310
-for example. And so we
-hope that by construction, we,
-
-602
-00:31:17.310 --> 00:31:20.100
-we, we avoided the trap
-of just, you know, we
-
-603
-00:31:20.100 --> 00:31:24.510
-moving, you know, someone's favorite
-APIs, of course, it's a
-
-604
-00:31:24.510 --> 00:31:27.060
-V one. If you think
-of it, it's a new
-
-605
-00:31:27.060 --> 00:31:31.860
-product. So chances are their
-API is missing, but there's
-
-606
-00:31:31.860 --> 00:31:33.720
-no way for you around
-it. Because if you submit
-
-607
-00:31:33.720 --> 00:31:35.370
-your app to the app
-store, the app store itself,
-
-608
-00:31:35.400 --> 00:31:37.950
-actually validates that you only
-use the APS you're supposed
-
-609
-00:31:37.950 --> 00:31:41.430
-to use it. And the
-reason being is that, you
-
-610
-00:31:41.430 --> 00:31:43.590
-know, if you think of
-security problems or whatever else,
-
-611
-00:31:44.850 --> 00:31:46.560
-the windows app store guys
-really want to make sure
-
-612
-00:31:46.560 --> 00:31:49.170
-that if, if I, as
-a consumer download an app,
-
-613
-00:31:49.200 --> 00:31:51.810
-I have confidence that the
-app doesn't, you know, own
-
-614
-00:31:51.810 --> 00:31:55.110
-my computer or started doing
-crazy stuff. So they really
-
-615
-00:31:55.110 --> 00:31:57.210
-want to make sure that
-the apps have high quality.
-
-616
-00:31:57.210 --> 00:31:58.590
-And one of the ways
-to ensure it is to
-
-617
-00:31:58.590 --> 00:32:01.080
-make sure that they, that,
-you know, the right API
-
-618
-00:32:01.080 --> 00:32:03.090
-is available and not like
-the interest API is, are
-
-619
-00:32:03.090 --> 00:32:07.230
-exposed. Okay. All right. So
-it's not arbitrary. I mean,
-
-620
-00:32:07.230 --> 00:32:09.690
-there's analysis going on here
-and you know what we're
-
-621
-00:32:09.690 --> 00:32:12.360
-calling and cause I just,
-I would hate to start
-
-622
-00:32:12.360 --> 00:32:16.090
-getting really excited about Metro
-and then discover that, that,
-
-623
-00:32:16.090 --> 00:32:17.850
-that, that one method that
-I need is not going
-
-624
-00:32:17.850 --> 00:32:21.360
-to be available. No, and
-I think one other thing
-
-625
-00:32:21.440 --> 00:32:24.180
-too, to be aware of
-is that as we go
-
-626
-00:32:24.180 --> 00:32:27.240
-along now, in the future,
-we create new platforms, new
-
-627
-00:32:27.240 --> 00:32:30.870
-platforms that we create will
-be based on the assemblies
-
-628
-00:32:31.230 --> 00:32:34.590
-that we give you and
-Metro. So the Metro, if
-
-629
-00:32:34.670 --> 00:32:37.440
-you don't have to deal
-with assemblies, because if you
-
-630
-00:32:37.740 --> 00:32:41.000
-create a Metro app, the
-assembly list that you see
-
-631
-00:32:41.360 --> 00:32:43.790
-is collapsed to basically I
-think just two things. One
-
-632
-00:32:43.790 --> 00:32:47.030
-of them says windows runtime,
-and the other one says,
-
-633
-00:32:48.230 --> 00:32:50.210
-but that for Metro style
-apps or something along those
-
-634
-00:32:50.210 --> 00:32:54.260
-lines, right? Yeah. We just
-give you a basically, you
-
-635
-00:32:54.260 --> 00:32:56.360
-know, all of the dotnet
-assemblies that are exposed to
-
-636
-00:32:56.360 --> 00:32:58.670
-Metro, but if you actually
-look at the binary that
-
-637
-00:32:58.670 --> 00:33:01.670
-you're producing, you have dependencies
-on stuff like system collections,
-
-638
-00:33:01.760 --> 00:33:04.070
-system, runtime, that sort of
-thing. And if you actually
-
-639
-00:33:04.070 --> 00:33:05.780
-go to the, to the
-reference assemblies for the way
-
-640
-00:33:05.780 --> 00:33:08.390
-we show you all the
-assemblies, this is basically the
-
-641
-00:33:08.390 --> 00:33:10.450
-set of SMEs that we
-would give to you in
-
-642
-00:33:10.460 --> 00:33:13.820
-future versions of go, whatever
-other runtime we invent. Right?
-
-643
-00:33:14.480 --> 00:33:16.130
-And so we are really
-confident that this is the
-
-644
-00:33:16.130 --> 00:33:18.740
-right set of APIs and
-we probably add more contracts
-
-645
-00:33:18.740 --> 00:33:20.330
-along the way. So for
-example, the, right now there
-
-646
-00:33:20.330 --> 00:33:23.930
-is no contract for, sorry,
-no assembly for console, because
-
-647
-00:33:23.930 --> 00:33:26.330
-guess what a Metro comes
-with doesn't make sense. But
-
-648
-00:33:26.330 --> 00:33:27.980
-if we would create like
-a new version of the
-
-649
-00:33:27.980 --> 00:33:30.620
-one time that would specifically
-target console apps, for example,
-
-650
-00:33:31.070 --> 00:33:33.680
-yeah. Chances are, there is
-a system dot console and
-
-651
-00:33:34.430 --> 00:33:36.530
-this is a new assembly
-probably because it doesn't make
-
-652
-00:33:36.530 --> 00:33:39.850
-sense to keep it in
-the other assemblies. Okay. Cool.
-
-653
-00:33:39.880 --> 00:33:41.530
-All right. Well, I feel
-like I get it now.
-
-654
-00:33:41.590 --> 00:33:45.200
-I was a little bit
-concerned as a.net guy, that
-
-655
-00:33:45.790 --> 00:33:47.920
-there was some evil going
-on here or there was
-
-656
-00:33:47.920 --> 00:33:52.300
-some tension, but it seems,
-it seems better. I did
-
-657
-00:33:52.300 --> 00:33:55.060
-see, I see, I feel,
-I feel less concerned. I
-
-658
-00:33:55.060 --> 00:33:57.910
-did not want to learn
-an entirely different runtime. That
-
-659
-00:33:57.910 --> 00:33:59.710
-was like a parallel universe.
-You know what I mean?
-
-660
-00:34:00.160 --> 00:34:03.370
-Yup. And we hope we
-didn't create that either. All
-
-661
-00:34:03.370 --> 00:34:05.500
-right. Very cool. Thanks Emma,
-for talking to me today,
-
-662
-00:34:07.300 --> 00:34:10.450
-this has been another episode
+00:32:12.030 --> 00:32:14.220
 of Hansel minutes. We'll see
-
-663
-00:34:10.450 --> 00:34:11.380
 you again next week.
 

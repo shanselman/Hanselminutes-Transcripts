@@ -1,2942 +1,2701 @@
 WEBVTT FILE
 
 1
-00:00:00.240 --> 00:00:02.880
-Hey friends, we appreciate you
-the listener, and I hope
+00:00:00.510 --> 00:00:04.260
+Hey folks. Today's episode was
+sponsored by Datadog it's. A
 
 2
-00:00:02.880 --> 00:00:06.420
-you appreciate our sponsors because
-they make Hansel minutes possible.
+00:00:04.260 --> 00:00:08.460
+cloud scale monitoring and analytics
+platform. Datadog was built to
 
 3
-00:00:06.840 --> 00:00:10.470
-Today's first sponsor is Melissa.
-Are you looking to build
+00:00:08.460 --> 00:00:12.540
+bring clarity to complex dynamic
+applications in the cloud, on
 
 4
-00:00:10.500 --> 00:00:14.130
-real time contact data, validation,
-and enrichment into your applications?
+00:00:12.540 --> 00:00:16.890
+premises in containers or wherever
+they run with beautiful dashboards,
 
 5
-00:00:14.550 --> 00:00:18.450
-Try Melissa's developer portal. You'll
-gain easy access to flexible
+00:00:17.040 --> 00:00:21.360
+distributed tracing, and seamless integrations
+with more than 200 technologies,
 
 6
-00:00:18.450 --> 00:00:22.950
-APIs for global address verification,
-phone IP address, email and
+00:00:21.810 --> 00:00:26.220
+including Azure and Docker and
+PagerDuty Datadog provides deep end
 
 7
-00:00:22.950 --> 00:00:26.640
-property and business data sample
-code and get post methods.
+00:00:26.220 --> 00:00:28.890
+to end visibility into the
+health and performance of modern
 
 8
-00:00:26.670 --> 00:00:31.020
-Plus technical documentation are all
-included. Quick. Online payment makes
+00:00:28.890 --> 00:00:33.330
+apps. Visualize key metrics, set
+alerts to identify anomalies and
 
 9
-00:00:31.020 --> 00:00:39.150
-rapid application development easy. Please
-visit melissa.com/developer or call 1-800-MELISSA.
+00:00:33.330 --> 00:00:36.600
+collaborate with your team to
+troubleshoot and fix issues fast.
 
 10
-00:00:52.620 --> 00:00:54.780
-Hi, this is Scott Hanselman.
-This is another episode of
+00:00:37.110 --> 00:00:39.360
+I'd like you to try
+it yourself by starting a
 
 11
-00:00:54.780 --> 00:00:57.300
-Hansel minutes today. I've got
-a very special show for
+00:00:39.360 --> 00:00:43.320
+free 14 day trial today,
+listeners of this podcast will
 
 12
-00:00:57.300 --> 00:01:00.300
-you. I'm talking with Kent
-Sullivan and Derek coin. They
+00:00:43.320 --> 00:00:49.560
+also get a free Datadog
+t-shirt get started at bitly.com/data
 
 13
-00:01:00.300 --> 00:01:03.690
-are user research and UX
-consultants, and they're currently working
+00:00:49.560 --> 00:01:09.110
+dog shirt. That's bitly.com/datadog shirt,
+Friends. This is Scott Hanselman.
 
 14
-00:01:03.690 --> 00:01:08.400
-with be curious with us
-great URL, be curious with
+00:01:09.110 --> 00:01:12.050
+This is another episode of
+Hansel minutes today. I'm talking
 
 15
-00:01:08.610 --> 00:01:12.420
-dot U S a. They
-help teams and individuals develop
+00:01:12.050 --> 00:01:16.070
+with Christoph Cieslak who works
+on the safe stack. S
 
 16
-00:01:12.420 --> 00:01:15.930
-capabilities to make great user
-experiences. But I want to
+00:01:16.070 --> 00:01:20.020
+a F E. How are
+you? I'm fine. Thanks. Thanks
 
 17
-00:01:15.930 --> 00:01:18.840
-talk to you all about
-history. Thanks for being with
+00:01:20.210 --> 00:01:23.360
+for having me. Yeah, no
+worries. So the S we've
 
 18
-00:01:18.840 --> 00:01:21.150
-me today. Hey, great to
-be on the show, Scott.
+00:01:23.360 --> 00:01:29.000
+heard about the lamp stack
+Linux and Apache, and what
 
 19
-00:01:21.300 --> 00:01:24.660
-Yeah, thanks God. So I'm
-sitting here in front of
+00:01:29.000 --> 00:01:33.950
+is the safe stack? So
+safe stack is similar technology
 
 20
-00:01:24.660 --> 00:01:26.970
-my windows machine. I'm running
-windows 10 and then to
+00:01:33.950 --> 00:01:40.490
+stack, just built from the
+F sharp technologies and F
 
 21
-00:01:26.970 --> 00:01:29.340
-my right is my son's
-Chromebook. And then I'll be
+00:01:40.490 --> 00:01:45.740
+sharp.net functional first programming language.
+And on our webpage, we
 
 22
-00:01:29.340 --> 00:01:31.260
-on that as an, a
-boon to machine. And in
+00:01:45.740 --> 00:01:50.750
+have this soft speech, which
+says basically SciFest and functional
 
 23
-00:01:31.260 --> 00:01:34.860
-all instances, there's some button
-in the corner that I
+00:01:50.750 --> 00:01:55.310
+first stock for cloud ready
+web development, that focus on
 
 24
-00:01:34.860 --> 00:01:37.410
-click on a, for a
-lot of machines it's that
+00:01:55.310 --> 00:01:58.160
+type safe programming. And that's
+like a lot of buzzwords.
 
 25
-00:01:37.410 --> 00:01:39.870
-lower left corner. And for
-other ones, they mix it
+00:01:58.160 --> 00:02:01.820
+And I guess we can
+go deeper into that in
 
 26
-00:01:39.870 --> 00:01:43.050
-up, put it in another
-upper left corner. I started
+00:02:01.820 --> 00:02:06.560
+a moment. Well, the, the,
+if someone is listening to
 
 27
-00:01:43.050 --> 00:01:46.440
-realizing that's ubiquitous. There's always
-a start menu somewhere. So
+00:02:06.560 --> 00:02:10.130
+this show, they may be
+a C sharp programmer, and
 
 28
-00:01:46.440 --> 00:01:49.290
-I wanted to figure out
-where that came from. Maybe
+00:02:10.130 --> 00:02:12.680
+they probably just load up
+visual studio, go file new
 
 29
-00:01:49.770 --> 00:01:52.200
-one of you could give
-me a little background on
+00:02:12.680 --> 00:02:17.630
+project. And they probably use
+asp.net MVC. So they're familiar
 
 30
-00:01:52.560 --> 00:01:54.390
-where did the start, when
-you come from and where
+00:02:17.630 --> 00:02:21.860
+with the model view controller,
+but, you know, there's, some
 
 31
-00:01:54.390 --> 00:01:57.660
-were you when it happened?
-Yeah, so Kent and I
+00:02:21.860 --> 00:02:25.220
+people will change that they'll
+use open source software and
 
 32
-00:01:57.660 --> 00:02:00.060
-were actually, so this is
-Derek Kent and I were
+00:02:25.220 --> 00:02:27.260
+add to it. But I
+think there are a group
 
 33
-00:02:00.060 --> 00:02:04.890
-actually some of the first
-members of the user research
+00:02:27.260 --> 00:02:31.520
+of people that accept the
+defaults. And I think that
 
 34
-00:02:05.400 --> 00:02:09.450
-team at Microsoft. And so
-we started in the late
+00:02:31.700 --> 00:02:34.670
+the safe stack is great
+because it's none of the
 
 35
-00:02:09.450 --> 00:02:15.570
-eighties and at that time,
-dos reign Supreme, at least
+00:02:34.670 --> 00:02:38.360
+defaults, isn't it? Yeah. It's
+like, it's all the parts.
 
 36
-00:02:15.570 --> 00:02:18.930
-in the PC world, there
-were some other, you know,
+00:02:38.360 --> 00:02:41.840
+Well, all the parts of
+Asia, which is a, in
 
 37
-00:02:18.960 --> 00:02:23.310
-<inaudible> out and there was,
-you know, other graphical UX
+00:02:41.840 --> 00:02:47.330
+our safe acronym, it's like
+open source technology built by
 
 38
-00:02:23.310 --> 00:02:27.210
-is in development. I should
-say operating systems was shells
+00:02:47.420 --> 00:02:51.290
+an affluent community. So maybe
+I will go like letter
 
 39
-00:02:27.480 --> 00:02:30.180
-is the proper term of
-the developer term that were
+00:02:51.290 --> 00:02:54.020
+by letter and say, what
+are the technologies we use?
 
 40
-00:02:30.180 --> 00:02:35.850
-graphical. So Microsoft saw that
-it kind of had work
+00:02:54.890 --> 00:03:02.220
+So S S suave it's
+Web library, backend web library
 
 41
-00:02:35.850 --> 00:02:39.780
-to do to improve what
-was going to be the
+00:03:02.230 --> 00:03:06.280
+and implementation of web server,
+which is basically what, or
 
 42
-00:02:39.780 --> 00:02:45.690
-future of the operating system.
-And so obviously like Microsoft
+00:03:06.310 --> 00:03:08.800
+whatever, everything that you need
+to put on the backend
 
 43
-00:02:45.690 --> 00:02:49.560
-had had several versions of
-windows already in development windows
+00:03:09.100 --> 00:03:12.760
+then a, is Asia for
+the hosting, because like we
 
 44
-00:02:49.560 --> 00:02:53.880
-3.0 was in beta when
-Kent and I started. And
+00:03:12.760 --> 00:03:16.060
+live in the.net world and
+Asia is great fit for
 
 45
-00:02:54.780 --> 00:02:58.830
-so we, we were wondering
-like, well, where do we
+00:03:16.060 --> 00:03:20.800
+the hosting.net applications. Then we
+have F F S N
 
 46
-00:02:58.840 --> 00:03:02.830
-start? You know, where do
-we take Microsoft? There were
+00:03:21.130 --> 00:03:25.660
+fable fable is F set
+up to JavaScript compiler. And
 
 47
-00:03:02.830 --> 00:03:06.970
-various efforts and different kind
-of user testing efforts going
+00:03:25.690 --> 00:03:28.420
+I know that you had
+episode with Alfonzo couple of
 
 48
-00:03:06.970 --> 00:03:10.600
-on kind of bootstrapping within
-our group with different product
+00:03:28.420 --> 00:03:33.550
+weeks ago who created fiber.
+So that's great technology that
 
 49
-00:03:10.600 --> 00:03:14.110
-teams. But we knew that
-the, that the real heart
+00:03:33.640 --> 00:03:37.540
+enables us to write extra
+code and Tran this extra
 
 50
-00:03:14.110 --> 00:03:18.400
-of the battle was to
-start to bring some user
+00:03:37.570 --> 00:03:42.100
+code in the browser. And
+then he is a L
 
 51
-00:03:18.400 --> 00:03:23.920
-feedback into the windows development
-process. So, and can you
+00:03:42.100 --> 00:03:46.690
+Mitch Elvis is a F
+sharp implement fable F sharp
 
 52
-00:03:23.920 --> 00:03:26.020
-feel free to jump in
-here at any time, but
+00:03:46.690 --> 00:03:51.640
+implementation of so-called Elm architecture.
+And that's like, just not
 
 53
-00:03:26.410 --> 00:03:28.900
-we, you know, at some
-point we were like, you
+00:03:51.640 --> 00:03:54.730
+going too deep into details,
+but that's just UI library.
 
 54
-00:03:28.900 --> 00:03:31.870
-know what we need to
-do. We need to start
+00:03:54.730 --> 00:03:58.450
+We, we use and we
+recommend for everyone because we
 
 55
-00:03:31.870 --> 00:03:36.130
-kind of benchmarking where some
-of the, where we're, where
+00:03:58.450 --> 00:04:02.080
+think that it's good UI
+way to build UI in
 
 56
-00:03:36.130 --> 00:03:40.660
-we're at. And so we
-started to put windows 3.0,
+00:04:02.080 --> 00:04:05.460
+the browser. Okay. So let's
+dig into these a little
 
 57
-00:03:41.380 --> 00:03:46.210
-and then subsequently windows 3.1
-in front of different users.
+00:04:05.460 --> 00:04:09.660
+bit at a time. So
+suave is a lightweight nonblocking
 
 58
-00:03:46.210 --> 00:03:50.500
-And we trusted everybody from
-kids to grandmas. And you
+00:04:09.660 --> 00:04:15.150
+web server. Isn't Kestrel, a
+web server. Ah, yes, indeed.
 
 59
-00:03:50.500 --> 00:03:53.290
-have to remember at the
-time there was a large
+00:04:15.330 --> 00:04:20.430
+Castro is also lightweight nonblocking
+<inaudible>, which is really good.
 
 60
-00:03:53.320 --> 00:03:56.020
-percentage of the population that
-had never even used a
+00:04:21.440 --> 00:04:24.060
+The difference is that swath
+was created before the, there
 
 61
-00:03:56.020 --> 00:04:02.050
-computer before. So we use
-those people. We used developers.
+00:04:24.060 --> 00:04:29.090
+was even an idea for
+the Castro, or maybe, I
 
 62
-00:04:02.050 --> 00:04:03.790
-I mean, so we had
-re we really had the
+00:04:29.090 --> 00:04:31.950
+don't know the dates, it's
+like older technology than, than,
 
 63
-00:04:03.790 --> 00:04:08.620
-range of capabilities and abilities
-of people and experience with
+00:04:31.950 --> 00:04:36.240
+than the.net Corey and the
+Castro. So it's been around
 
 64
-00:04:08.620 --> 00:04:11.620
-computers. So we were putting
-them in front of windows.
+00:04:36.240 --> 00:04:40.170
+for a couple of years
+right now. So, so that's
 
 65
-00:04:12.040 --> 00:04:14.140
-Then we also put them
-in front of the Mac
+00:04:40.170 --> 00:04:45.690
+why we use that, but
+also after community created another
 
 66
-00:04:14.860 --> 00:04:20.140
-and we started noticing some
-patterns. And one of them
+00:04:45.690 --> 00:04:51.090
+great project called giraffe, which
+is implementation of same programming
 
 67
-00:04:20.170 --> 00:04:25.630
-was the fact that people
-generally, you know, obviously the
+00:04:51.150 --> 00:04:55.480
+model as in suave, just
+on top of Castro and
 
 68
-00:04:25.630 --> 00:04:28.390
-more advanced you got in
-your computer know how you
+00:04:55.500 --> 00:05:02.220
+isp.net code. So you can
+take your basically similar helper
 
 69
-00:04:28.390 --> 00:04:32.110
-could figure things out or,
-you know, deduct certain things
+00:05:02.220 --> 00:05:05.970
+functions and similar building blocks
+that you use in suave
 
 70
-00:04:32.110 --> 00:04:35.860
-if you were in an
-unfamiliar environment, but for by
+00:05:05.970 --> 00:05:08.700
+and put them on top
+of the, of the asp.net
 
 71
-00:04:35.860 --> 00:04:39.520
-and large, if you were
-new, you wouldn't know really
+00:05:08.730 --> 00:05:14.780
+core, if you prefer doing
+Oh, okay. Now suave, does
 
 72
-00:04:39.520 --> 00:04:42.970
-where to start. And so
-we would give people a
+00:05:14.780 --> 00:05:18.450
+suave use a live UV
+underneath it? Or what is
 
 73
-00:04:42.970 --> 00:04:46.270
-task like, Hey, you know,
-open up a note pad
+00:05:18.450 --> 00:05:22.170
+the socket library? Yeah, I
+believe that for Dalenex it
 
 74
-00:04:46.390 --> 00:04:49.240
-or can jump in here.
-Cause you were very familiar
+00:05:22.170 --> 00:05:29.580
+your sleep UV? Okay. So
+giraffe is a again, functional
 
 75
-00:04:49.240 --> 00:04:50.860
-with some of the tasks
-that we were giving them.
+00:05:29.580 --> 00:05:32.340
+web framework for F sharp
+developer built on top of
 
 76
-00:04:50.940 --> 00:04:55.470
-No, it was really basic
-stuff. Start notepad, openness, Microsoft
+00:05:32.340 --> 00:05:36.540
+Kestrel. Could I have the
+safe stack or the, I
 
 77
-00:04:55.470 --> 00:04:58.590
-word, document, you know, draw
-a picture and paint, really
+00:05:36.540 --> 00:05:39.300
+don't know what it would
+be GAF E GAF stack.
 
 78
-00:04:58.590 --> 00:05:03.690
-easy stuff. And people were
-just constantly relearning and would
+00:05:39.330 --> 00:05:41.070
+Could I swap them out
+or is it not quite
 
 79
-00:05:03.690 --> 00:05:06.360
-get lost, you know, and
-have multiple copies of the
+00:05:41.070 --> 00:05:45.030
+as easy as swapping? Yeah,
+you totally could swap those
 
 80
-00:05:06.360 --> 00:05:09.390
-same application open. It was
-just way worse than we
+00:05:45.030 --> 00:05:49.050
+things out. Actually you can
+swap probably every part of
 
 81
-00:05:09.390 --> 00:05:12.870
-thought, because basically up until
-that point, the only people
+00:05:49.050 --> 00:05:51.270
+safe stack. If you, if
+you want, just like with
 
 82
-00:05:12.930 --> 00:05:16.140
-using it more or less
-were people who already had
+00:05:51.270 --> 00:05:56.570
+lamp stack, people were swapping
+like B man, like ADA
 
 83
-00:05:16.140 --> 00:05:18.240
-a fair amount of computer
-knowledge. And as Derek said,
+00:05:56.570 --> 00:06:01.520
+or PHP, Python, or battle,
+whatever people wanted to use.
 
 84
-00:05:18.240 --> 00:05:22.200
-we were really interested in
-broadening who was using computers.
+00:06:01.850 --> 00:06:04.670
+We've saved stock. You can,
+you can do for the
 
 85
-00:05:22.200 --> 00:05:24.930
-That was really not just
-the mandate from management. Really
+00:06:04.670 --> 00:06:08.090
+first letter, you can do
+SWAT for the giraffe, for
 
 86
-00:05:24.930 --> 00:05:27.510
-the whole company is like,
-Hey, you know, computers are,
+00:06:08.090 --> 00:06:11.480
+the AE. You can do
+Asia, or maybe you want
 
 87
-00:05:27.570 --> 00:05:29.190
-if we're going to get
-one on every desktop and
+00:06:11.480 --> 00:06:16.370
+to do hosting on AWS.
+And then for the front
 
 88
-00:05:29.190 --> 00:05:30.750
-every home we need to,
-we've got a lot of
+00:06:16.370 --> 00:06:21.320
+end things, we recommend using
+fable as an F sort
 
 89
-00:05:30.750 --> 00:05:34.740
-work to do <inaudible> and
-windows 3.0, came out in
+00:06:21.320 --> 00:06:25.250
+of way. But as well,
+you can use something else.
 
 90
-00:05:34.740 --> 00:05:39.000
-1990, but people were thinking
-about windowing operating systems, you
+00:06:25.250 --> 00:06:29.170
+If you prefer to write
+normal JavaScript, What, what do
 
 91
-00:05:39.000 --> 00:05:41.370
-know, long before that. But
-I think in all of
+00:06:29.170 --> 00:06:31.030
+you think is going on
+in the community? That's so
 
 92
-00:05:41.370 --> 00:05:43.980
-those instances, when once a
-window, whether it be mindscape
+00:06:31.030 --> 00:06:34.330
+exciting that gives us so
+many choices. Like, I think
 
 93
-00:05:44.010 --> 00:05:48.690
-Minesweeper and notepad got to
-be full screen that took
+00:06:34.330 --> 00:06:37.450
+it's great now. Like we
+went from having only IIS
 
 94
-00:05:48.690 --> 00:05:51.900
-over and it felt like
-Minesweeper was the operating system.
+00:06:37.450 --> 00:06:41.110
+to choose from, and now
+we've got all these different
 
 95
-00:05:51.900 --> 00:05:54.390
-You couldn't find your way
-back. And I don't suppose
+00:06:41.110 --> 00:06:43.150
+things. Like it doesn't have
+to be just Kestrel or
 
 96
-00:05:54.420 --> 00:05:58.010
-hitting alt tab is very
-intuitive. No one's going to
+00:06:43.150 --> 00:06:46.600
+just suave or just draft,
+like, it's so cool that
 
 97
-00:05:58.010 --> 00:06:00.490
-Ever discover it. That's in
-the same category as control
+00:06:46.600 --> 00:06:50.380
+we have choices now. And
+I want, like, I want
 
 98
-00:06:00.520 --> 00:06:03.670
-delete. Unfortunately, It's just something
-you pass on by telling
+00:06:50.380 --> 00:06:52.720
+like the corporate developer to
+know that it's good to
 
 99
-00:06:03.670 --> 00:06:07.000
-you, Right? And the discoverability
-is something like that is
+00:06:52.720 --> 00:06:55.000
+have choices. Like there has,
+doesn't have to be a
 
 100
-00:06:07.030 --> 00:06:11.020
-near zero. Remember that there
-was talk when double-clicking became
+00:06:55.000 --> 00:06:59.620
+winner. I think that, well,
+there are two, two sides
 
 101
-00:06:11.020 --> 00:06:13.690
-a thing that people were
-concerned. That double-clicking was a
+00:06:59.630 --> 00:07:02.260
+of this question. First of
+all, the, if we talk
 
 102
-00:06:13.690 --> 00:06:17.050
-bad idea because it itself
-was not discoverable. I don't
+00:07:02.290 --> 00:07:05.800
+just about F sort of
+community after community was always
 
 103
-00:06:17.050 --> 00:06:19.450
-remember reading a usability study
-that said a monkey would
+00:07:06.190 --> 00:07:09.640
+focused, bit more on the
+open sort of side of
 
 104
-00:06:19.450 --> 00:06:23.050
-never intuitively DoubleClick, but a
-monkey would take a mouse,
+00:07:09.640 --> 00:07:14.470
+things. And like sub competitor
+was open source before the,
 
 105
-00:06:23.380 --> 00:06:25.360
-see how the mouse is
-connected to the pointer. And
+00:07:14.750 --> 00:07:19.740
+the C-sharp competitor was open
+source. There was excerpts after
 
 106
-00:06:25.360 --> 00:06:28.180
-it would click a single
-time. Right? If you look
+00:07:19.740 --> 00:07:23.200
+the foundation was created before
+the dotnet software, the foundation.
 
 107
-00:06:28.180 --> 00:06:30.790
-at the psychology and human
-development of all these things,
+00:07:23.620 --> 00:07:28.120
+So I've of always was
+this pushing forward boundary of
 
 108
-00:06:30.790 --> 00:06:33.040
-the things we call intuitive
-tend to be the things
+00:07:28.120 --> 00:07:32.950
+open source in dotnet ecosystem,
+answering the other part about
 
 109
-00:06:33.040 --> 00:06:34.840
-that we learned when we
-were so young, we don't
+00:07:32.950 --> 00:07:37.120
+general.net ecosystem and some model
+choices in, in that I
 
 110
-00:06:34.840 --> 00:06:38.680
-remember learning them. All knowledge
-is learned, you know, think
+00:07:37.120 --> 00:07:40.930
+think that with this whole
+change of Microsoft being more
 
 111
-00:06:38.680 --> 00:06:41.650
-about how many hours baby
-spend holding objects out in
+00:07:40.930 --> 00:07:44.260
+friendly to open source in
+general, it just encourages people
 
 112
-00:06:41.650 --> 00:06:43.600
-front of them and turning
-them in their hands and
+00:07:44.260 --> 00:07:48.340
+to, to build cool stuff
+on.net. And if people build
 
 113
-00:06:43.990 --> 00:06:46.900
-that kind of spatial work.
-So yeah, DoubleClick needs to
+00:07:48.340 --> 00:07:51.040
+cool, cool stuff on the
+internet, other people are starting
 
 114
-00:06:46.900 --> 00:06:48.760
-be learned. And once it's
-learned it can be remembered.
+00:07:51.040 --> 00:07:55.270
+to use it. And we
+have this nice raving ecosystem.
 
 115
-00:06:48.760 --> 00:06:51.460
-Same thing with context venues,
-right. There was a huge
+00:07:56.740 --> 00:07:59.530
+Why do you think that
+the F sharp community was
 
 116
-00:06:51.760 --> 00:06:56.050
-controversy at Microsoft about whether
-to put commands on that
+00:07:59.530 --> 00:08:02.320
+so open source? Like from
+the beginning, because it was
 
 117
-00:06:56.050 --> 00:06:58.660
-right button, menu. And today
-you don't even think about
+00:08:02.380 --> 00:08:05.680
+like in the early 2000
+tens it's it's been years
 
 118
-00:06:58.660 --> 00:07:00.760
-it. Cause that's something that
-people learn. The moment they
+00:08:05.680 --> 00:08:07.900
+and years and years, they
+have shop communities being been
 
 119
-00:07:00.760 --> 00:07:03.220
-start using computers. But to
-begin with, we were very,
+00:08:07.900 --> 00:08:11.530
+pushing open source. Right. 2005
+was when F sharp came
 
 120
-00:07:03.220 --> 00:07:05.740
-very careful to only put
-stuff there that was redundant
+00:08:11.530 --> 00:08:16.360
+out. Yes. And even back
+then in 2005, when AFTRA
 
 121
-00:07:05.920 --> 00:07:09.100
-and that it could be
-found somewhere else, visibly. Cause
+00:08:16.390 --> 00:08:20.020
+came out, the F set
+up compiler was released together
 
 122
-00:07:09.100 --> 00:07:11.680
-it's basically hidden. Right. Right.
-And that's interesting because that
+00:08:20.020 --> 00:08:22.510
+with its sort of scout.
+So that was like in
 
 123
-00:07:11.680 --> 00:07:14.770
-makes me think about things
-like iPads, where clearly touching
+00:08:22.510 --> 00:08:26.680
+2005, you could download the
+source code of f-stop compiler
 
 124
-00:07:14.770 --> 00:07:17.410
-things is intuitive. And one
-doesn't need to learn to
+00:08:26.680 --> 00:08:31.240
+and compile that. And that
+was like something that no
 
 125
-00:07:17.410 --> 00:07:20.650
-like take this magical bright
-window and put it in
+00:08:31.240 --> 00:08:36.370
+other Microsoft product did back
+then. I think that's lot
 
 126
-00:07:20.650 --> 00:07:23.350
-your hands and touch it.
-But now we've got iPhone
+00:08:36.460 --> 00:08:40.480
+of, lot of this push
+towards open source was cost.
 
 127
-00:07:23.350 --> 00:07:26.260
-Xs with like two fingers
-swipe from the upper right.
+00:08:40.480 --> 00:08:44.950
+First of all, thanks to
+Don Syme, who was designer
 
 128
-00:07:26.260 --> 00:07:31.450
-Corner type, totally undiscoverable things
-that we complain about today.
+00:08:44.950 --> 00:08:48.010
+of the, of the language
+and who really understood how,
 
 129
-00:07:31.450 --> 00:07:33.280
-But tomorrow they might not
-be a problem. Yeah. And
+00:08:48.730 --> 00:08:53.110
+how much importance community can
+have. And, and because he
 
 130
-00:07:33.280 --> 00:07:37.090
-I think there's an assumption,
-right. That these gestures yeah.
+00:08:53.110 --> 00:08:56.700
+had also some different backgrounds
+than only dotnet, he has
 
 131
-00:07:37.120 --> 00:07:40.390
-Like Ken was saying might
-be intuitive or something, but
+00:08:56.700 --> 00:09:00.510
+seen how, how it works
+out in other ecosystems. Other
 
 132
-00:07:40.390 --> 00:07:42.820
-they aren't for, there's always
-going to be a set
+00:09:00.510 --> 00:09:04.860
+thing is the lot of
+people were really excited about
 
 133
-00:07:42.820 --> 00:07:47.920
-of people where they aren't.
-And so usually gestures need
+00:09:05.070 --> 00:09:11.880
+Chabad. Microsoft support for EFSF
+was not always so good
 
 134
-00:07:47.920 --> 00:07:52.480
-some sort of visual cue
-first and then the gesture
+00:09:11.940 --> 00:09:14.550
+as for the C sharp
+visual basic, and people were
 
 135
-00:07:52.480 --> 00:07:54.970
-can be learned and then
-used as more of as
+00:09:14.550 --> 00:09:18.210
+kind of forced into building
+their own tools, their own
 
 136
-00:07:55.080 --> 00:07:58.510
-an accelerator. But you know,
-so back to, you know,
+00:09:18.240 --> 00:09:22.900
+ecosystem. And that's why that's
+how, how it started. And
 
 137
-00:07:58.510 --> 00:08:00.880
-the early days of windows,
-like, you know, we were
+00:09:24.150 --> 00:09:26.490
+I joined, I joined AFTRA
+community a bit later than
 
 138
-00:08:00.880 --> 00:08:05.050
-coming from dos windows had
-already kind of like again
+00:09:26.490 --> 00:09:29.880
+that. And that was like
+doing open source was just
 
 139
-00:08:05.050 --> 00:08:08.230
-had several versions, but there
-was a lot to be
+00:09:29.880 --> 00:09:34.050
+default default behavior when I
+started doing F sharp. So
 
 140
-00:08:08.230 --> 00:08:11.680
-done in terms of bringing
-user direct user feedback into
+00:09:34.890 --> 00:09:38.100
+people I knew from the
+internet and people who I've
 
 141
-00:08:11.680 --> 00:08:15.460
-the development process. Right. So
-that's kind of where we
+00:09:38.100 --> 00:09:41.160
+seen under conferences, and I've
+met them personally, they were
 
 142
-00:08:15.460 --> 00:08:18.070
-came into the picture. And
-actually there was a, I
+00:09:41.160 --> 00:09:44.280
+just doing open source. So
+when I've joined the community,
 
 143
-00:08:18.070 --> 00:08:21.940
-think a broad acknowledgement at
-Microsoft too, that windows could
+00:09:44.280 --> 00:09:48.090
+it was like, Oh, I
+guess that's how I've sort
 
 144
-00:08:21.940 --> 00:08:26.050
-be a ton better. So
-there were several kind of
+00:09:48.090 --> 00:09:51.330
+of people at all. So
+that's what we do. Yeah.
 
 145
-00:08:26.050 --> 00:08:28.510
-characters that we want to
-introduce into the story here.
+00:09:51.440 --> 00:09:53.120
+That's a really good point.
+I think that there's a
 
 146
-00:08:28.960 --> 00:08:31.300
-One of them was one
-of the program managers of
+00:09:53.120 --> 00:09:56.900
+couple of things there to
+parse first that Don Syme
 
 147
-00:08:31.300 --> 00:08:35.860
-windows 3.1, her name was
-Liz Dunn. There was another
+00:09:56.990 --> 00:10:00.770
+was out of Microsoft research.
+So kind of F sharp
 
 148
-00:08:35.860 --> 00:08:41.020
-person Mark Malamud who became
-one of the lead program
+00:10:00.770 --> 00:10:03.230
+kind of like snuck out
+of research because it's like,
 
 149
-00:08:41.020 --> 00:08:43.540
-managers. And I guess you
-could say was kind of
+00:10:03.230 --> 00:10:05.150
+Hey, look at this cool
+research thing that we're doing
 
 150
-00:08:43.540 --> 00:08:48.340
-the first true interaction designer
-at Microsoft. And he led
+00:10:05.660 --> 00:10:09.500
+while the P the product
+people at Microsoft were off
 
 151
-00:08:48.800 --> 00:08:52.180
-a new advanced windows team
-that they were going to
+00:10:09.500 --> 00:10:13.280
+trying to focus on products
+while Don was just making
 
 152
-00:08:52.180 --> 00:08:55.860
-call when X and then
-who else was on that
+00:10:13.280 --> 00:10:15.590
+something, you know, that was
+cool and amazing. And like
 
 153
-00:08:55.860 --> 00:08:59.430
-team can Roy Levian. Right.
-And, and so he was
+00:10:15.590 --> 00:10:20.600
+you said, open source by
+default. And while dotnet core
 
 154
-00:08:59.430 --> 00:09:03.240
-a developer on windows as
-well. And so the three
+00:10:20.600 --> 00:10:24.170
+is open source by default
+now you've got a tenure
 
 155
-00:09:03.240 --> 00:09:05.340
-of them, and I think
-probably a couple other people
+00:10:25.730 --> 00:10:28.760
+tenure jumpstart with F sharp,
+right. Everything's been opened by
 
 156
-00:09:05.340 --> 00:09:08.910
-had gotten together and started
-to talk about, okay, what
+00:10:28.760 --> 00:10:32.990
+default as a community for
+a decade or longer. Yes,
 
 157
-00:09:08.910 --> 00:09:13.230
-could the future windows look
-like? And they started paying
+00:10:33.020 --> 00:10:36.140
+indeed. And I really believe
+that's, that's like one of
 
 158
-00:09:13.230 --> 00:09:16.590
-us for data to say,
-what do you guys know?
+00:10:36.140 --> 00:10:42.110
+the huge parts of success
+in comparison to some other
 
 159
-00:09:16.590 --> 00:09:19.110
-What do we know about
-windows? And then that's when
+00:10:42.110 --> 00:10:45.170
+languages that we have. On
+the one hand, we have
 
 160
-00:09:19.110 --> 00:09:21.960
-we had, I think, begun
-and started to, you know,
+00:10:45.170 --> 00:10:50.990
+this strong induced, industrial already
+ecosystem of dotnet net and,
 
 161
-00:09:21.960 --> 00:09:24.420
-started to collect data on
-this, what we call our
+00:10:51.230 --> 00:10:54.980
+and in general Microsoft stack.
+But, but then at the
 
 162
-00:09:24.420 --> 00:09:29.190
-benchmarking effort. And we found
-that, you know, again, Mack
+00:10:54.980 --> 00:10:58.790
+same time, we have all
+many great people doing, doing
 
 163
-00:09:29.190 --> 00:09:32.340
-had the same problem that
-people didn't know where to
+00:10:59.030 --> 00:11:02.450
+their own things, open source
+things, and then community supporting
 
 164
-00:09:32.340 --> 00:09:35.430
-start. In fact, on the
-Mac, what was interesting is
+00:11:02.480 --> 00:11:05.150
+this open source things. And
+I think that's, that's really
 
 165
-00:09:35.430 --> 00:09:38.580
-that the Apple menu was
-the place that people would
+00:11:05.150 --> 00:11:09.170
+great and helpful for just
+creating courage ecosystem one where
 
 166
-00:09:38.580 --> 00:09:42.480
-go repeatedly to say, start
-a program or go find
+00:11:09.170 --> 00:11:14.480
+people can choose whatever fits
+they need. Yeah, exactly. And
 
 167
-00:09:42.480 --> 00:09:45.690
-a document or something like
-that. Now the, the Apple
+00:11:14.480 --> 00:11:16.820
+that's a really good point,
+I would say. And maybe
 
 168
-00:09:45.690 --> 00:09:47.640
-menu has gotten a lot
-better over the years. It's
+00:11:16.820 --> 00:11:19.790
+you would agree F sharp
+really was about choice from
 
 169
-00:09:47.640 --> 00:09:50.820
-still not perfect. But back
-then in the eighties, it
+00:11:19.790 --> 00:11:22.820
+the beginning, because, you know,
+in 2005, you didn't have
 
 170
-00:09:50.820 --> 00:09:54.510
-was a really weird collection
-of things. None of which
+00:11:22.820 --> 00:11:25.070
+to use visual studio use
+Emacs if it makes you
 
 171
-00:09:54.510 --> 00:09:58.230
-were primary tasks. Yeah. I
-had the font, da mover
+00:11:25.070 --> 00:11:28.760
+happy. Right? Like they had
+support for editors years and
 
 172
-00:09:58.260 --> 00:10:02.700
-control panel. I think shutdown
-was always there setting up
+00:11:28.760 --> 00:11:33.590
+years before other, you know,
+before C sharp and Omni
 
 173
-00:10:02.700 --> 00:10:06.630
-your printer, you have printers
-and stuff like that. It
+00:11:33.590 --> 00:11:36.350
+sharp happen. You've got support
+for VIM and Emacs and
 
 174
-00:10:06.630 --> 00:10:10.080
-was really a weird collection.
-And we were like, wow,
+00:11:36.350 --> 00:11:38.990
+sublime. And, you know, I,
+and I had for Adam
 
 175
-00:10:10.080 --> 00:10:12.390
-you know, there's a bit
-of an Achilles heel there.
+00:11:38.990 --> 00:11:41.420
+and visual studio code, like
+any editor anywhere at all,
 
 176
-00:10:12.870 --> 00:10:14.610
-And we were like, wow,
-you know, we could definitely
+00:11:41.420 --> 00:11:45.380
+you can do do this.
+And also didn't have sharp
 
 177
-00:10:14.610 --> 00:10:17.940
-do this better. And I
-think Mark, Malamud he, and
+00:11:45.380 --> 00:11:50.200
+starts supporting mano very early.
+Yes. I think that, that,
 
 178
-00:10:17.940 --> 00:10:20.430
-some other people that had
-done some studies of different
+00:11:50.210 --> 00:11:54.250
+like back home just a
+couple years after the first
 
 179
-00:10:20.430 --> 00:10:24.990
-operating systems, like obviously they
-looked at the star system
+00:11:54.460 --> 00:11:57.640
+release of F shrub, there
+was huge effort also from
 
 180
-00:10:24.990 --> 00:10:28.770
-from Xerox park, which was
-the predecessor to the Mac,
+00:11:57.640 --> 00:12:02.170
+community to, to port F
+sharp, to mano, and like
 
 181
-00:10:28.800 --> 00:10:31.740
-you know, that Steve jobs
-had also seen, you know,
+00:12:02.200 --> 00:12:04.870
+Dave Thomas, who is like,
+I've set up an NVP
 
 182
-00:10:31.740 --> 00:10:34.980
-that was documented in the
-book, fumbling the future. Anyway.
+00:12:04.870 --> 00:12:09.280
+and worked for Zamani studio
+for Xamarin for awhile, did
 
 183
-00:10:35.000 --> 00:10:38.910
-So he saw across these
-different operating systems that there
+00:12:09.460 --> 00:12:13.300
+great, great job of product
+piloting F sharp to the,
 
 184
-00:10:38.910 --> 00:10:42.840
-were, was kind of a
-persistent thing in the UI
+00:12:13.360 --> 00:12:17.320
+to the mono and also
+to the iOS and, and
 
 185
-00:10:42.870 --> 00:10:46.230
-where people could return to
-which windows three Oh and
+00:12:17.500 --> 00:12:20.770
+all these different devices that,
+that with some money and
 
 186
-00:10:46.230 --> 00:10:49.560
-windows 3.0, did not have,
-there was this thing called
+00:12:20.770 --> 00:12:24.990
+supports, Let's pivot a little
+bit. And explain to me
 
 187
-00:10:49.560 --> 00:10:52.970
-file manager and program manager.
-But if you were unlucky
+00:12:24.990 --> 00:12:28.530
+the relationship between suave and
+<inaudible> like, what is the
 
 188
-00:10:53.250 --> 00:10:56.940
-unlucky enough to minimize them,
-and there was no really
+00:12:28.530 --> 00:12:33.930
+responsibility of each of those
+two pieces? So Esther challis
 
 189
-00:10:56.940 --> 00:10:59.610
-good animation that told you
-where these things went, they
+00:12:33.930 --> 00:12:40.050
+swath is our backend. Usually
+we suggest people try to
 
 190
-00:10:59.610 --> 00:11:01.170
-would just kind of collect
-at the bottom of the
+00:12:40.050 --> 00:12:44.730
+just some kind of API,
+like crest, API APIs with
 
 191
-00:11:01.170 --> 00:11:06.270
-screen. Under these two, mr.
-Is icons. People would generally
+00:12:44.730 --> 00:12:50.610
+it, and then fable and
+El Mitch are the part
 
 192
-00:11:06.270 --> 00:11:09.720
-just think they just went
-away and we saw that
+00:12:50.610 --> 00:12:54.450
+that's responsible for doing the
+UI in the browser. So
 
 193
-00:11:09.720 --> 00:11:11.760
-over and over and over
-again. And can't do you
+00:12:54.480 --> 00:12:58.500
+they are responsible for creating
+single page applications that looks
 
 194
-00:11:11.760 --> 00:11:14.580
-want to give us some
-anecdotes or anything from that?
+00:12:58.500 --> 00:13:00.630
+nice and tend to have
+like all the form of
 
 195
-00:11:14.810 --> 00:11:17.570
-It was a while we're
-not cursing on this show,
+00:13:00.630 --> 00:13:04.470
+Santa and, and all the
+stuff. So basically swath is
 
 196
-00:11:17.570 --> 00:11:21.410
-but it was not pleasant.
-And th th th exposing
+00:13:04.470 --> 00:13:08.160
+a backend and then fable
+and omission is a front
 
 197
-00:11:21.410 --> 00:11:23.750
-the developers to windows of
-that in the usability lab
+00:13:08.160 --> 00:13:11.580
+end off of our stack.
+I see. Would you say
 
 198
-00:11:23.780 --> 00:11:25.910
-is a super eyeopening for
-them. Cause of course, it's
+00:13:11.600 --> 00:13:15.240
+suave, something that has views
+like MVC, or is swab
 
 199
-00:11:25.910 --> 00:11:28.820
-the same thing we see
-today, right? Once you know,
+00:13:15.270 --> 00:13:20.460
+primarily about web APIs? A
+suave can do views like
 
 200
-00:11:28.820 --> 00:11:31.760
-something you can't, it's really
-hard to take the viewpoint
+00:13:20.460 --> 00:13:24.540
+MVC, but from what I've
+noticed in both like my
 
 201
-00:11:31.760 --> 00:11:33.500
-of somebody who doesn't know
-it. So they, people were
+00:13:24.570 --> 00:13:28.020
+open source journey and, and
+like Mark my commercial projects,
 
 202
-00:11:33.500 --> 00:11:37.190
-just amazed that, you know,
-ordinary users were having these
+00:13:28.350 --> 00:13:33.300
+people usually use suave as
+just API as a way
 
 203
-00:11:37.190 --> 00:11:40.340
-kinds of problems, but specifically
-the fact that when you
+00:13:33.300 --> 00:13:37.320
+to, to just cost and
+API and points. So just
 
 204
-00:11:40.340 --> 00:11:43.820
-minimize things, they just disappear
-and windows, unlike most of
+00:13:37.320 --> 00:13:40.650
+set up some data in
+Jason or XML, and then
 
 205
-00:11:43.820 --> 00:11:46.520
-the other gooeys at that
-point, the desktop wasn't really
+00:13:40.650 --> 00:13:44.700
+build client side views, client
+side applications on top of
 
 206
-00:11:46.520 --> 00:11:50.030
-usable for anything. It was
-just a blank space. And
+00:13:44.700 --> 00:13:49.230
+that. Okay. So then LMS
+is the, is the pattern,
 
 207
-00:11:50.030 --> 00:11:53.740
-that was a huge problem.
-A big opportunity was missed.
+00:13:49.230 --> 00:13:52.170
+it's the abstractions that you
+need to do? You're, you're
 
 208
-00:11:53.980 --> 00:11:56.080
-And then within program manager,
-which is where you went
+00:13:52.170 --> 00:13:55.200
+not model view controller, but
+model view, updates style, the
 
 209
-00:11:56.080 --> 00:11:59.860
-to start all your programs,
-the metaphor was a multiple
+00:13:55.200 --> 00:13:59.670
+way that the Elm people
+do it. Yes, indeed. The,
 
 210
-00:11:59.860 --> 00:12:02.200
-document interface. It was as
-it was called in those
+00:14:00.420 --> 00:14:02.850
+I guess the, the call
+pattern was known for a
 
 211
-00:12:02.200 --> 00:12:04.960
-days. So it was really,
-really easy to get lost
+00:14:02.850 --> 00:14:06.660
+while. And like, as you
+said, it's model view update,
 
 212
-00:12:04.960 --> 00:12:07.600
-inside of program manager. Can,
-you know, screens, weren't very
+00:14:07.890 --> 00:14:12.960
+but everyone calls it is
+because probably the most, one
 
 213
-00:12:07.600 --> 00:12:09.670
-big in those days, right?
-Six 40 by four 80.
+00:14:12.990 --> 00:14:19.050
+of the first really successful
+implementations of this pattern. I
 
 214
-00:12:09.670 --> 00:12:11.500
-And here you were trying
-to manipulate three or four
+00:14:19.050 --> 00:14:23.550
+know that nowadays, if you
+do modern JavaScript with react
 
 215
-00:12:11.500 --> 00:12:14.470
-windows at once potentially. And
-they would clip each other.
+00:14:23.550 --> 00:14:28.200
+to JS and reduced JS,
+you basically implement the same
 
 216
-00:12:14.470 --> 00:12:16.360
-And then if you maximized
-one, you couldn't see the
+00:14:28.260 --> 00:14:31.590
+model view, update pattern just
+in bit more complex way.
 
 217
-00:12:16.360 --> 00:12:19.150
-rest of them. It was
-just, it was really, really
+00:14:31.920 --> 00:14:36.480
+But also if you do
+some maybe desktop applications using
 
 218
-00:12:19.150 --> 00:12:22.000
-bad. Yeah. It would be
-worth having the listeners check
+00:14:37.950 --> 00:14:42.480
+reactive extensions, the resulted code
+can look really similar to
 
 219
-00:12:22.000 --> 00:12:25.420
-out and go and Google
-for Xerox star and Xerox
+00:14:42.480 --> 00:14:47.670
+the, to the model view,
+update pattern. So maybe going
 
 220
-00:12:25.450 --> 00:12:28.120
-Park's operating system. And you'll
-note that there is a
+00:14:47.730 --> 00:14:50.790
+a bit more into this
+model view update, the pattern
 
 221
-00:12:28.120 --> 00:12:31.750
-persistent text box across the
-top. It's on a menu.
+00:14:50.790 --> 00:14:55.880
+is simple. Model is just
+a simple, plain type that
 
 222
-00:12:31.750 --> 00:12:34.480
-It's not a start menu.
-It's not a, a persistent
+00:14:56.270 --> 00:15:01.100
+class that represents the, the
+state of your application, then
 
 223
-00:12:34.480 --> 00:12:37.000
-menu bar. It's just basically,
-it's almost like the Cortana
+00:15:01.400 --> 00:15:06.840
+view is an function that
+takes existing model. That takes
 
 224
-00:12:37.030 --> 00:12:40.330
-text box, but you couldn't
-minimize things. You could move
+00:15:06.840 --> 00:15:10.820
+some message, some, something that
+happens in your application and
 
 225
-00:12:40.330 --> 00:12:44.620
-them around. But in the,
-in early 1980 10 years
+00:15:10.820 --> 00:15:16.970
+produces new model representing new
+state of your application. And
 
 226
-00:12:44.650 --> 00:12:48.130
-before windows 3.1, they were
-putting stuff on the desktop.
+00:15:17.390 --> 00:15:20.750
+that was update. And the
+view view is basically also
 
 227
-00:12:48.130 --> 00:12:50.590
-So I think that your,
-your point about that being
+00:15:20.750 --> 00:15:25.790
+simple function that takes model
+current state of your application
 
 228
-00:12:50.590 --> 00:12:53.680
-a missed opportunity was, was
-significant. One other thing I
+00:15:26.270 --> 00:15:31.130
+and prints out some HTML
+or whatever or whatever. And
 
 229
-00:12:53.680 --> 00:12:55.300
-wanted to point out and
-see what you thought about
+00:15:31.130 --> 00:15:34.550
+during QS, in case of
+El Mitch in Fibo, we
 
 230
-00:12:55.300 --> 00:12:59.350
-was that the science itself
-of usability was developing kind
+00:15:34.550 --> 00:15:38.780
+use a usual year react,
+a surrendering engine. So we
 
 231
-00:12:59.350 --> 00:13:02.230
-of in the late, mid
-to late seventies at IBM.
+00:15:38.780 --> 00:15:44.810
+built also on the industry
+ready and battle-tested solution from
 
 232
-00:13:02.590 --> 00:13:04.810
-And it wasn't until the
-eighties really that people were
+00:15:44.840 --> 00:15:50.860
+Facebook. Hey friends, a quick
+word from our sponsor progress.
 
 233
-00:13:05.170 --> 00:13:08.560
-doing usability studies. So you're
-only 10 years into this
+00:15:50.860 --> 00:15:53.860
+Telerik wants to send someone
+to the build conference. So
 
 234
-00:13:08.560 --> 00:13:12.160
-burgeoning, a science aren't you
-at this point? Yeah. That's
+00:15:53.860 --> 00:15:56.770
+they're having a contest. Step
+one is to sign up,
 
 235
-00:13:12.160 --> 00:13:15.370
-a good point. You know,
-really credit to bill Gates
+00:15:56.770 --> 00:15:59.800
+to learn about the new,
+innovative, modern UI tools that
 
 236
-00:13:15.820 --> 00:13:19.000
-for having the vision that
-he knew he needed to
+00:15:59.800 --> 00:16:02.680
+there'll be announcing at build.
+And by registering, you'll be
 
 237
-00:13:19.000 --> 00:13:21.100
-do something. And he knew
-that he needed to bring
+00:16:02.680 --> 00:16:05.920
+entered to win a full
+conference pass to Microsoft build,
 
 238
-00:13:21.100 --> 00:13:24.700
-people in to do it.
-So he turned to different
+00:16:06.130 --> 00:16:10.510
+plus a $500 travel stipend.
+They're also giving away three
 
 239
-00:13:24.700 --> 00:13:26.080
-people in the company. And
-one of the people that
+00:16:10.510 --> 00:16:13.960
+Tellerik dev craft UI licenses.
+All you have to do
 
 240
-00:13:26.080 --> 00:13:28.300
-really got interested, it was
-a guy named Tandy Trower
+00:16:13.960 --> 00:16:19.450
+is register at build contest
+dot plop that's PW, Oop,
 
 241
-00:13:29.170 --> 00:13:31.480
-and Tandy studied it and
-said, you know what? We
+00:16:19.540 --> 00:16:25.270
+dot me. That's built contest
+dot <inaudible> dot me progress
 
 242
-00:13:31.480 --> 00:13:34.240
-need to really think about
-investing in UX. And so
+00:16:25.270 --> 00:16:28.420
+offers the leading platform for
+developing and deploying mission, critical
 
 243
-00:13:34.420 --> 00:13:38.080
-he got the charter from
-bill to start a centralized
+00:16:28.420 --> 00:16:31.600
+business applications, and that they
+are the creator of the
 
 244
-00:13:38.110 --> 00:13:41.290
-UX group. And he hired
-designers and researchers. And we
+00:16:31.600 --> 00:16:36.010
+award winning tellerik.net and Kendo,
+UI JavaScript, user interface controls.
 
 245
-00:13:41.290 --> 00:13:43.330
-starting with a couple of
-people that he thought could
+00:16:36.400 --> 00:16:39.100
+They have reporting solutions and
+productivity tools and all the
 
 246
-00:13:43.330 --> 00:13:45.790
-grow into managers. And they
-did a woman named Virginia
+00:16:39.100 --> 00:16:42.700
+tools that developers need to
+build high performance, modern apps
 
 247
-00:13:45.790 --> 00:13:48.460
-Howlett who grew to be
-the manager of the design
+00:16:42.700 --> 00:16:47.170
+without standing UI go now
+to build contest dot <inaudible>
 
 248
-00:13:48.460 --> 00:13:51.640
-group and a woman named
-Mary D Ellie who built
+00:16:47.290 --> 00:16:50.830
+dot me that's PW, Oop,
+dot me, and sign up
 
 249
-00:13:51.640 --> 00:13:53.980
-a user research team. And
-that's who we reported to
+00:16:50.830 --> 00:16:54.820
+to win. Okay. So let
+me see if I understand
 
 250
-00:13:53.980 --> 00:13:56.290
-when we, when we first
-started it's I know crazy
+00:16:54.820 --> 00:17:01.810
+this because, because web applications
+that interact with humans go
 
 251
-00:13:56.290 --> 00:13:58.420
-to imagine, but there was
-kind of one team for
+00:17:01.810 --> 00:17:04.720
+through state, they have to
+go through multiple States like
 
 252
-00:13:58.420 --> 00:14:01.000
-the entire company at that
-time. How many people at
+00:17:04.720 --> 00:17:07.750
+you're in the login state,
+or you're in the creating
 
 253
-00:14:01.000 --> 00:14:03.340
-the company, while y'all all
-are off doing this when
+00:17:07.750 --> 00:17:10.330
+objects state. You know, that
+that state is a part
 
 254
-00:14:03.340 --> 00:14:05.770
-I started Derek, when you
-and I started about 4,000
+00:17:10.330 --> 00:17:14.650
+of human's life, but in
+F sharp, you know, you're
 
 255
-00:14:05.770 --> 00:14:08.490
-worldwide, wasn't it? Wow. Yeah,
-I was, I would say
+00:17:14.650 --> 00:17:18.640
+not just assigning variables and
+changing state you're, you have
 
 256
-00:14:08.490 --> 00:14:12.120
-it was like 2,500. Yeah.
-4,000 somewhere in there. I
+00:17:18.640 --> 00:17:21.310
+to create these immutable things,
+right? So you're moving through
 
 257
-00:14:12.120 --> 00:14:15.870
-thought, I think it was
-around 2,500. There might've been
+00:17:21.310 --> 00:17:24.880
+these different States. You're finding
+a balance between the state
 
 258
-00:14:16.020 --> 00:14:19.740
-maybe 4,000 on the outside
-cause of international, but domestically,
+00:17:24.880 --> 00:17:27.610
+of the UI and state,
+as it is represented in
 
 259
-00:14:20.160 --> 00:14:22.860
-yeah. Domestically, there was about
-2,500 people. It's a big
+00:17:27.610 --> 00:17:31.330
+F sharp and model view
+update means that the model
 
 260
-00:14:22.860 --> 00:14:26.850
-number, but not, not completely
-impossible to, to know most
+00:17:31.330 --> 00:17:33.940
+keeps changing and new instances
+of the model kind of
 
 261
-00:14:26.850 --> 00:14:30.480
-people for sure. Yeah. We
-could, we could walk down
+00:17:33.940 --> 00:17:39.490
+March forward. Is that correct?
+Yes. That's basically the, the
 
 262
-00:14:30.480 --> 00:14:33.420
-the halls and, you know,
-bill would walk by or
+00:17:39.490 --> 00:17:43.300
+really good description of the
+pattern. What's really nice about,
 
 263
-00:14:33.420 --> 00:14:35.760
-Steve bomber would walk by
-and you'd say, hi, you
+00:17:43.300 --> 00:17:47.410
+about the El Misha implementation
+in Fibo. And what's really
 
 264
-00:14:35.760 --> 00:14:38.430
-know, and you know, over
-time you could see them
+00:17:47.410 --> 00:17:52.260
+nice also about Elm implement
+original element implementation is that
 
 265
-00:14:38.430 --> 00:14:40.920
-enough that they might recognize
-your face, you know, kind
+00:17:52.890 --> 00:17:56.220
+both of those implementations basically
+hide the fact that you
 
 266
-00:14:40.920 --> 00:14:44.400
-of thing. So that, that
-definitely was a, was an
+00:17:56.220 --> 00:17:59.760
+have some mutable state under
+the hood, because, well, as
 
 267
-00:14:44.400 --> 00:14:47.880
-interesting time to be at
-the company. The way we
+00:17:59.760 --> 00:18:03.270
+you've said, the applications are
+mutable that the bros are
 
 268
-00:14:48.270 --> 00:14:50.760
-got connected was really that
-paper that I wrote after
+00:18:03.960 --> 00:18:09.000
+like dumb. The model is
+mutable. So web applications are
 
 269
-00:14:50.760 --> 00:14:53.060
-windows five was done. It
-Was for a, a UX
+00:18:09.000 --> 00:18:13.620
+just immutable applications, and we
+kinda cannot work around that,
 
 270
-00:14:53.060 --> 00:14:56.810
-conference, ACM sick guy. And
-I was interested, I was
+00:18:14.220 --> 00:18:18.200
+but we can hide this
+mutable state under the there's
 
 271
-00:14:56.810 --> 00:14:59.870
-surprised about the reaction people
-had, was like, wow, Microsoft
+00:18:18.200 --> 00:18:21.150
+some framework that we built.
+And El Mitch is this,
 
 272
-00:14:59.870 --> 00:15:02.810
-was doing this that long
-ago. And I think that's
+00:18:21.360 --> 00:18:24.510
+this framework, that two that
+we used it from point
 
 273
-00:15:02.810 --> 00:15:05.840
-a really interesting point is
-that we did make an
+00:18:24.510 --> 00:18:30.210
+of view of F sharp
+developer, both view and update
 
 274
-00:15:05.840 --> 00:15:08.240
-early investment in that. And
-of course there's lots of
+00:18:30.210 --> 00:18:34.110
+functions are just pure functions
+that just takes one, one
 
 275
-00:15:08.240 --> 00:15:10.910
-criticism. You could lob at
-Microsoft for kind of falling
+00:18:34.110 --> 00:18:39.330
+data and outputs. Some other
+data don't perform really side-effects.
 
 276
-00:15:10.910 --> 00:15:13.490
-off the path here and
-there, you know, during its
+00:18:40.110 --> 00:18:44.640
+And so don't do some
+magical stuff and don't mutate
 
 277
-00:15:13.640 --> 00:15:17.030
-growth and maturation as a
-company, they're doing great. Now
+00:18:44.850 --> 00:18:48.750
+new some global variables or
+anything like that. And the
 
 278
-00:15:17.030 --> 00:15:19.850
-they've got some really great
-UX people, but it is
+00:18:48.750 --> 00:18:55.830
+whole rendering views and changing
+your real state of application.
 
 279
-00:15:19.850 --> 00:15:23.150
-true that we really did
-have things going on way
+00:18:55.830 --> 00:18:59.910
+That's saved. Someone is handled
+by, by both Elemis and
 
 280
-00:15:23.150 --> 00:15:25.850
-back in 1988, 89, where
-we were really trying to
+00:19:00.000 --> 00:19:03.140
+react to JS. I see.
+Okay. So if you, if
 
 281
-00:15:25.850 --> 00:15:30.050
-be driven by a good
-design and good research principles.
+00:19:03.140 --> 00:19:05.990
+you want to hurt yourself,
+you could potentially hurt yourself
 
 282
-00:15:30.400 --> 00:15:33.100
-How often would people say
-no, do it this way?
+00:19:05.990 --> 00:19:08.930
+by writing your own JavaScript,
+but can you write a
 
 283
-00:15:33.100 --> 00:15:37.570
-Because I'm the manager, as
-opposed to the user experience
+00:19:08.930 --> 00:19:12.830
+safe application and an Elvish
+application only with F sharp,
 
 284
-00:15:37.570 --> 00:15:42.220
-be darned A lot. I
-mean, it was like, yup,
+00:19:12.860 --> 00:19:17.540
+never writing any custom JavaScript
+of your own? Yes, yes.
 
 285
-00:15:42.250 --> 00:15:45.850
-that's fair. It was probably
-like 80% of the time,
+00:19:17.570 --> 00:19:22.160
+Basically from point of view
+of normal user that just
 
 286
-00:15:45.880 --> 00:15:49.030
-you know, and that's where
-we tended to work with
+00:19:22.190 --> 00:19:27.680
+do an, a simple single
+page application. You just create
 
 287
-00:15:49.030 --> 00:15:52.870
-teams. We were a central
-resource within Microsoft. And so
+00:19:27.690 --> 00:19:31.580
+new new application from dotnet
+new template, and then you
 
 288
-00:15:52.870 --> 00:15:55.870
-we'd kind of be put
-on loan to different product
+00:19:31.600 --> 00:19:35.450
+write plain functions and that's
+all, that's all you need.
 
 289
-00:15:55.870 --> 00:15:59.380
-teams for periods of time
-and certain teams would go,
+00:19:36.290 --> 00:19:39.980
+Wow. When I hear as
+a, you know, maybe I'm
 
 290
-00:15:59.380 --> 00:16:01.360
-wow, this is such a
-great resource. We want to
+00:19:39.980 --> 00:19:42.560
+not an F sharp developer,
+I'm just learning, but when
 
 291
-00:16:01.360 --> 00:16:03.730
-keep using them. And so
-we would just kind of
+00:19:42.560 --> 00:19:46.130
+I hear about things that
+compile to JavaScript, and I
 
 292
-00:16:03.730 --> 00:16:07.060
-build more with those teams
-who were more receptive that's
+00:19:46.130 --> 00:19:50.450
+think I'm also speaking for
+the listener, I think, do
 
 293
-00:16:07.060 --> 00:16:11.500
-right. I mean, over time
-now it's pervasive. Right? So
+00:19:50.450 --> 00:19:52.670
+I want to bet my
+company on a thing that
 
 294
-00:16:11.530 --> 00:16:14.950
-it worked, but it definitely
-took decades. That's right. Our
+00:19:52.670 --> 00:19:55.490
+compiles a JavaScript? Because I
+think we have an image
 
 295
-00:16:14.950 --> 00:16:18.760
-managers, Mary Virginia Tandy were
-very explicit. It's like, you
+00:19:55.490 --> 00:19:59.540
+in our mind that it's
+going to compile to weird
 
 296
-00:16:18.760 --> 00:16:21.010
-know, work with the teams
-that want to work with
+00:19:59.810 --> 00:20:07.100
+JavaScript, you know, like unreadable,
+JavaScript. I mean, first of
 
 297
-00:16:21.010 --> 00:16:23.590
-us and, you know, we'll
-build from success. Cause we
+00:20:07.100 --> 00:20:11.210
+all, you are to give,
+you probably are using TypeScript
 
 298
-00:16:23.590 --> 00:16:26.560
-knew that the key was
-having the program managers and
+00:20:11.210 --> 00:20:13.730
+or something like that. So
+you are already using some
 
 299
-00:16:26.560 --> 00:16:29.260
-the developers talk to each
-other about the great results
+00:20:13.730 --> 00:20:19.730
+compilation to JavaScript, even, even
+if you write Java script,
 
 300
-00:16:29.260 --> 00:16:31.930
-they were getting. Cause there's,
-you know, Microsoft has this
+00:20:19.730 --> 00:20:23.540
+you really often do some
+JavaScript to JavaScript compilation with
 
 301
-00:16:31.930 --> 00:16:36.130
-history of hopefully friendly, sometimes
-not friendly competition between teams.
+00:20:23.550 --> 00:20:26.840
+Bible. And the Bible is
+a tool that enables you
 
 302
-00:16:36.130 --> 00:16:38.920
-And so if team B
-sees the teammates had a
+00:20:26.840 --> 00:20:32.510
+to write new modern ish
+JavaScript and compile it to
 
 303
-00:16:38.920 --> 00:16:41.320
-great result doing something new,
-they might be more willing
+00:20:33.050 --> 00:20:37.070
+play in all the birding
+JavaScript that's supported by all
 
 304
-00:16:41.320 --> 00:16:44.320
-to try it. Mm well,
-that's a good, a good
+00:20:37.070 --> 00:20:42.290
+our browsers. That's that's second
+thing. And the first thing
 
 305
-00:16:44.320 --> 00:16:45.910
-point. And it also brings
-up something we want to
+00:20:42.470 --> 00:20:45.950
+fable actually uses Bible under
+the hood. I think that
 
 306
-00:16:45.910 --> 00:16:48.400
-underscore is that, you know,
-great design is a team
+00:20:45.950 --> 00:20:47.980
+our funds are talked a
+bit that on the other
 
 307
-00:16:48.400 --> 00:16:51.010
-effort. It's not that one
-of you or one of
+00:20:47.980 --> 00:20:52.660
+podcast, but basically what fireball
+does is it doesn't manually
 
 308
-00:16:51.010 --> 00:16:53.620
-your bosses was just showed
-up one day and said,
+00:20:52.690 --> 00:20:57.550
+outputs, JavaScript code as a
+text, but instead it takes
 
 309
-00:16:53.620 --> 00:16:55.690
-here are the designs for
-the start menu. I did
+00:20:58.000 --> 00:21:02.830
+F sharp abstract syntax tree
+transforms this abstract abstract syntax
 
 310
-00:16:55.690 --> 00:16:59.170
-it overnight. But was there
-a moment though, where someone
+00:21:02.830 --> 00:21:07.030
+tree into the abstract syntax
+tree that Bible understands and
 
 311
-00:16:59.170 --> 00:17:02.410
-was like, let's use the
-four infinite corners as they
+00:21:07.600 --> 00:21:10.620
+feeds it to Bible. And
+then Bible is responsible for
 
 312
-00:17:02.410 --> 00:17:05.230
-refer to the, the four
-corners of the monitor? Well,
+00:21:11.080 --> 00:21:15.610
+outputting JavaScript. And the Bible
+is really popular tool in
 
 313
-00:17:05.230 --> 00:17:07.600
-we definitely saw that. I
-mean, it was kind of
+00:21:15.640 --> 00:21:19.390
+JavaScript ecosystem. So it's really
+battle tested and tend to
 
 314
-00:17:07.600 --> 00:17:11.200
-a convergence of two things.
-So the Winex program management
+00:21:19.450 --> 00:21:22.900
+be really powerful. And one
+of the, of the things
 
 315
-00:17:11.770 --> 00:17:14.830
-team that we just talked
-about, they got together and
+00:21:22.900 --> 00:21:27.220
+they focus on as a
+Bible project and Bible communities
 
 316
-00:17:14.830 --> 00:17:16.960
-they were like, you know,
-we see this certain pattern
+00:21:27.310 --> 00:21:31.150
+outputting nice readable, JavaScript code,
+that can be, is it
 
 317
-00:17:16.960 --> 00:17:20.470
-across other products. And then,
-you know, we in the
+00:21:31.150 --> 00:21:33.850
+in the, in, inside the
+browser and to end with
 
 318
-00:17:20.470 --> 00:17:24.940
-usability lab, we're seeing how
-coroners were so important to
+00:21:33.910 --> 00:21:40.330
+all tools that JavaScript ecosystem
+has. So in a case
 
 319
-00:17:24.940 --> 00:17:26.770
-people, you know, that they
-would grow. Like if you
+00:21:40.330 --> 00:21:43.000
+of, of, of this stock,
+I don't think that's really
 
 320
-00:17:26.770 --> 00:17:29.950
-just gave them no instruction
-and a blank screen and
+00:21:43.000 --> 00:21:45.340
+a problem just like it's
+not a problem in case
 
 321
-00:17:29.950 --> 00:17:34.510
-a mouse, they would go
-to corners, you know, like
+00:21:45.340 --> 00:21:49.230
+of That is a very,
+very good explanation. And it's
 
 322
-00:17:34.690 --> 00:17:38.170
-as a force of gravity
-kind of thing. So from
+00:21:49.230 --> 00:21:51.930
+really great. People should check
+out that show and they
 
 323
-00:17:38.170 --> 00:17:41.050
-a human perception, point of
-view, they're very important. And
+00:21:51.930 --> 00:21:55.410
+should also check out fable
+F a B L e.io.
 
 324
-00:17:41.050 --> 00:17:43.270
-so then that's when we
-discovered like, Oh wow, you
+00:21:55.740 --> 00:21:57.630
+What's nice is that you
+can go up there and
 
 325
-00:17:43.270 --> 00:17:45.190
-know, on the Mac, it's
-got the Apple menu in
+00:21:57.630 --> 00:21:59.940
+compile in the browser. So
+I'm actually, I've got F
 
 326
-00:17:45.190 --> 00:17:49.350
-the upper left. And Mark
-Malamud's team was like, okay,
+00:21:59.940 --> 00:22:02.670
+sharp on the left here,
+and I can hit all
 
 327
-00:17:49.350 --> 00:17:52.230
-well, what we should do
-is make this persistent space
+00:22:02.670 --> 00:22:04.830
+the enter. It will show
+me the code on the
 
 328
-00:17:52.290 --> 00:17:55.290
-in windows, kind of as
-a part of our trademark,
+00:22:04.830 --> 00:22:08.610
+right. And if you line
+it up, like it's really
 
 329
-00:17:56.040 --> 00:17:58.950
-essentially be the bottom. And
-then we could put other
+00:22:08.610 --> 00:22:11.910
+close, like it's, you can
+see it. It's not like
 
 330
-00:17:58.950 --> 00:18:02.520
-things down there. And so
-back to this idea of,
+00:22:11.910 --> 00:22:15.660
+it's compiling into unreadable assembly
+language. You know, it's really
 
 331
-00:18:02.580 --> 00:18:06.630
-you know, minimizing windows, people
-would minimize those windows and
+00:22:16.050 --> 00:22:18.270
+quite amazing. You get to
+write the language that makes
 
 332
-00:18:06.630 --> 00:18:08.130
-then they would think they
-were gone. We were like,
+00:22:18.270 --> 00:22:21.600
+you happy and then create
+the language that runs in
 
 333
-00:18:08.160 --> 00:18:10.140
-well, one of the primary
-things that you should be
+00:22:21.600 --> 00:22:25.680
+the browser. It's pretty extraordinary.
+Yes. And it's really an
 
 334
-00:18:10.140 --> 00:18:12.840
-able to do with this
-persistent space down below is
+00:22:25.700 --> 00:22:29.940
+important advantage of fable in
+general, in comparison to some
 
 335
-00:18:12.840 --> 00:18:16.560
-be able to switch tasks.
-So essentially making all tab
+00:22:29.940 --> 00:22:36.840
+other choices in compile to
+JavaScript ecosystem, because it enables
 
 336
-00:18:16.860 --> 00:18:21.750
-visible. And that's a perfect
-example of using the two,
+00:22:36.900 --> 00:22:40.800
+us to do really deep
+integration with existing JavaScript tooling,
 
 337
-00:18:21.750 --> 00:18:25.410
-like using a visible cue
-and then using an accelerator
+00:22:40.800 --> 00:22:45.540
+because we output JavaScript. That's
+understood by, by normal JavaScript
 
 338
-00:18:25.410 --> 00:18:27.810
-or AKA gesture, if you
-want to call it that.
+00:22:45.570 --> 00:22:50.490
+tools like Webpack and stuff
+like that. Oh, that's a
 
 339
-00:18:28.140 --> 00:18:30.750
-And so once you know
-what the visual cue is,
+00:22:50.490 --> 00:22:52.320
+very good point. So if
+I let them be, let
 
 340
-00:18:30.780 --> 00:18:34.320
-you can just use the
-accelerator once you've learned it,
+00:22:52.320 --> 00:22:54.930
+me ask you this, then
+let's talk about integration. If
 
 341
-00:18:34.500 --> 00:18:36.680
-you know, Hey friends, This
-is Scott, and I've got
+00:22:54.930 --> 00:22:58.740
+I'm a company that has
+some existing intellectual property in
 
 342
-00:18:36.680 --> 00:18:38.960
-a word from a new
-sponsor and a really cool
+00:22:58.740 --> 00:23:02.490
+JavaScript, and maybe I have
+some existing.net DLLs that are
 
 343
-00:18:38.960 --> 00:18:42.380
-sponsor. In fact that I
-use myself, they are Sikh
+00:23:02.490 --> 00:23:05.820
+in C-sharp or VB, and
+I'm looking at the safe
 
 344
-00:18:42.470 --> 00:18:44.720
-that's S E Q and
-you can check them out
+00:23:05.820 --> 00:23:09.250
+stack, I can combine my
+F sharp libraries with my
 
 345
-00:18:44.720 --> 00:18:49.760
-at, get seek.net. That's G
-E T S E q.net
+00:23:09.260 --> 00:23:13.950
+sharp libraries and my fable
+with existing JavaScript that I
 
 346
-00:18:50.060 --> 00:18:52.910
-seek is the easiest way
-for your team to capture
+00:23:13.950 --> 00:23:19.410
+have Indeed combining F sharp
+and C sharp is pretty
 
 347
-00:18:52.910 --> 00:18:57.290
-and search and visualize structured
-log events. You probably do
+00:23:19.410 --> 00:23:23.610
+straightforward. It's just normal DLL
+that reference or normal product
 
 348
-00:18:57.290 --> 00:18:59.600
-logging. Maybe you have a
-node app or an asp.net
+00:23:23.610 --> 00:23:28.140
+reference normal nuggets package, depending
+on how you, how you
 
 349
-00:18:59.630 --> 00:19:05.120
-core app, move beyond text
-files, check out structured, logging
+00:23:28.170 --> 00:23:33.480
+do it in your company
+for the integration between a
 
 350
-00:19:05.120 --> 00:19:08.390
-it, preserves those individual property
-values. As well as the
+00:23:34.140 --> 00:23:38.370
+fable. So F running in
+the browser and JavaScript because
 
 351
-00:19:08.390 --> 00:19:10.910
-text that's associated with each
-event, they get sent across
+00:23:38.400 --> 00:23:43.230
+modern JavaScript has this functionality
+of modules. And, and like
 
 352
-00:19:10.910 --> 00:19:14.000
-the network to seek which
-then displays them and makes
+00:23:43.770 --> 00:23:48.170
+all NPM and stuff are
+following one convention, how to
 
 353
-00:19:14.000 --> 00:19:17.030
-them searchable. It's really easy
-to get started. You can
+00:23:48.290 --> 00:23:51.680
+do things and how to
+pack things. You can say
 
 354
-00:19:17.030 --> 00:19:20.630
-probably instrument your application if
-you're already using logging in
+00:23:51.680 --> 00:23:55.160
+something like, I want to
+import just one function from
 
 355
-00:19:20.630 --> 00:19:23.690
-just minutes, just go to
-get seek that's G T
+00:23:55.160 --> 00:23:59.540
+this file and say, it's
+like in f-stop file, say,
 
 356
-00:19:24.050 --> 00:19:27.380
-S E q.net. You install
-the seek server, it's a
+00:23:59.780 --> 00:24:05.270
+I require a function called,
+do something from file. A
 
 357
-00:19:27.380 --> 00:19:30.850
-windows service. And then it
-listens and handles all of
+00:24:05.270 --> 00:24:12.530
+BC dot JS, and Webpack
+will put it together. And
 
 358
-00:19:30.850 --> 00:19:33.440
-the logging, whether you're using
-no JS and the Bunyan
+00:24:13.190 --> 00:24:16.180
+you will just use your
+JavaScript in dis from F
 
 359
-00:19:33.440 --> 00:19:37.490
-logging library, or maybe you
-use Sera log on.net or
+00:24:16.190 --> 00:24:20.150
+sharp, because under the hood,
+it's actually just compared to
 
 360
-00:19:37.490 --> 00:19:40.970
-just asp.net core is built
-in logging. Sikh is there
+00:24:20.150 --> 00:24:23.540
+normal Java scripts that required
+a statement. And it's normal.
 
 361
-00:19:41.060 --> 00:19:43.070
-for whatever you want to
-use, whether it be.net or
+00:24:23.540 --> 00:24:28.040
+JavaScript had quite a segment.
+I compiled by, by Webpack
 
 362
-00:19:43.070 --> 00:19:46.370
-node or Python or Java,
-it's a really great product.
+00:24:28.040 --> 00:24:31.850
+and bundled together, and all
+magic is done. So yes,
 
 363
-00:19:46.580 --> 00:19:48.650
-And I encourage you to
-check them out and support
+00:24:31.850 --> 00:24:35.960
+you can easily adjust, use
+both. So you start up
 
 364
-00:19:48.650 --> 00:19:51.350
-them the way that they
-support us here at Hansel
+00:24:35.960 --> 00:24:39.980
+from F up on the
+backend and JavaScript on the
 
 365
-00:19:51.350 --> 00:19:54.350
-minutes, when windows 95 started
-out for the first time,
+00:24:40.160 --> 00:24:42.980
+weave from F sharp on
+the front end, which is
 
 366
-00:19:54.800 --> 00:19:57.770
-There's this thing that they
-use internally at Microsoft called
+00:24:42.980 --> 00:24:44.990
+really nice in one, in
+one of the demos we
 
 367
-00:19:57.770 --> 00:20:00.620
-the Oop, the O O
-B the out of box
+00:24:44.990 --> 00:24:50.490
+have somewhere, we are building
+application using both TypeScript and
 
 368
-00:20:00.620 --> 00:20:03.440
-experience. And it would play
-a little video and tell
+00:24:50.660 --> 00:24:54.560
+abstract in one file, and
+all the link is working
 
 369
-00:20:03.440 --> 00:20:05.690
-you that the start menu
-is a thing. And it's
+00:24:54.560 --> 00:24:57.680
+together. So the watch mode
+we have, so this automatic
 
 370
-00:20:05.690 --> 00:20:08.210
-over here. I remember one
-of you said something that
+00:24:57.680 --> 00:25:01.010
+recompilation, we do change in
+the, in the type through
 
 371
-00:20:08.210 --> 00:20:10.190
-there was a problem with
-that video. People would click
+00:25:01.070 --> 00:25:04.910
+file. We save types of
+TypeScript file. Everything gets recompiled,
 
 372
-00:20:10.190 --> 00:20:13.460
-on the start menu picture
-in the video. Oh yeah,
+00:25:04.920 --> 00:25:08.600
+and ultimately the refresh in
+the browser, we do change
 
 373
-00:20:13.460 --> 00:20:16.460
-we definitely did see that,
-that kind of stuff happens
+00:25:08.600 --> 00:25:11.870
+in file and the same
+happen, the sentence you can
 
 374
-00:20:16.550 --> 00:20:19.520
-when you're teaching something that's
-brand new people have a
+00:25:11.870 --> 00:25:17.300
+edit both TypeScript, JavaScript, and
+F sharp fiber code at
 
 375
-00:20:19.520 --> 00:20:22.580
-hard time, often differentiating the
-thing from talking about the
+00:25:17.300 --> 00:25:21.010
+the same time and have
+this nice developer experience. Yeah,
 
 376
-00:20:22.580 --> 00:20:25.070
-thing. And that's just something
-that you like, what do
+00:25:21.310 --> 00:25:23.050
+I do want to point
+out also, if you looked
 
 377
-00:20:25.070 --> 00:20:27.260
-you do? Do you plan,
-did you solve that problem
+00:25:23.050 --> 00:25:26.590
+at the safe stack homepage
+about halfway down, it says,
 
 378
-00:20:27.260 --> 00:20:29.810
-or do you make a
-giant arrow, like start in
+00:25:26.590 --> 00:25:29.470
+retrofit your existing stack. It's
+got some really good examples
 
 379
-00:20:29.810 --> 00:20:31.160
-the center of the screen
-and then point down to
+00:25:29.470 --> 00:25:32.020
+that I was impressed with
+where it says, Oh, already
 
 380
-00:20:31.160 --> 00:20:33.680
-the corner? Well, in fact,
-one of the mitigations we
+00:25:32.020 --> 00:25:35.560
+using web API. That's cool.
+Use, use the safe, you
 
 381
-00:20:33.680 --> 00:20:36.500
-did do that got a
-little bit of laughter I
+00:25:35.560 --> 00:25:37.810
+know, use these parts of
+the safe stack. Or if
 
 382
-00:20:36.500 --> 00:20:39.170
-think from people, but you
-know, it was effective was
+00:25:37.810 --> 00:25:40.390
+you want to write your
+own sequel, that's cool. You
 
 383
-00:20:39.170 --> 00:20:42.410
-the, the bouncing animation that
-would come out from the
+00:25:40.390 --> 00:25:42.220
+don't have to, you know,
+you don't have to pick
 
 384
-00:20:42.410 --> 00:20:44.960
-right side along the task
-bar, when you first started
+00:25:42.220 --> 00:25:45.160
+the whole stack. You pick
+the piece that you already,
 
 385
-00:20:44.960 --> 00:20:47.830
-in pointing out the start
-menu. So kind embedding that
+00:25:45.490 --> 00:25:46.990
+you want to, and then
+you plug it into the
 
 386
-00:20:47.860 --> 00:20:50.560
-in The product, rather than
-having a separate popup window
+00:25:46.990 --> 00:25:50.350
+code you already have, which
+is pretty sweet. Yes. And
 
 387
-00:20:50.560 --> 00:20:53.320
-that might confuse people because
-there's two pictures of the
+00:25:50.740 --> 00:25:53.170
+again, I think that that's
+something really important for us
 
 388
-00:20:53.320 --> 00:20:55.920
-same thing on the screen
-Are things like that considered
+00:25:53.170 --> 00:25:57.430
+because not every product is
+Greenfield project. Not, not every
 
 389
-00:20:55.950 --> 00:20:59.070
-poor form or is that
-a pro appropriate UX? Yeah.
+00:25:57.670 --> 00:26:02.020
+company is willing to bet
+on four different technologies that
 
 390
-00:20:59.160 --> 00:21:02.580
-I mean, you know, great
-UX. Sometimes you get lucky
+00:26:02.020 --> 00:26:05.890
+they don't know, maybe they
+want to risk unjust front-end
 
 391
-00:21:02.580 --> 00:21:05.670
-and it's just totally obvious.
-And there's zero trial learning.
+00:26:05.890 --> 00:26:10.390
+or something. So it's not
+like that. We try to
 
 392
-00:21:05.790 --> 00:21:08.910
-And we realized that we
-were making such a huge
+00:26:10.390 --> 00:26:15.580
+sell safe as a do
+safe. Don't do anything else
 
 393
-00:21:08.910 --> 00:21:12.690
-change from what people had
-before that we were gaming
+00:26:15.610 --> 00:26:19.720
+and just use the technologies.
+We suggest we really believe
 
 394
-00:21:12.690 --> 00:21:14.700
-for what I would call
-one trial learning, you know,
+00:26:19.720 --> 00:26:24.760
+into this integration with existing
+ecosystems. Yeah. And people can
 
 395
-00:21:14.700 --> 00:21:16.980
-once you understand what it
-is, you don't ever forget
+00:26:24.790 --> 00:26:29.050
+set this up on their
+machines really easily without like,
 
 396
-00:21:16.980 --> 00:21:19.770
-it. And it makes sense
-from then on. And that's
+00:26:29.080 --> 00:26:31.960
+it won't hurt your machine.
+Like I went and hooked
 
 397
-00:21:19.770 --> 00:21:21.750
-really what we were aiming
-for. I see. So it's
+00:26:31.960 --> 00:26:36.430
+up the dotnet CLI safe
+template. So now I can
 
 398
-00:21:21.750 --> 00:21:25.890
-not necessarily a, it's not
-impugning the idea as bad
+00:26:36.430 --> 00:26:40.600
+say dotnet new safe. And
+it just kind of, it's
 
 399
-00:21:25.890 --> 00:21:28.680
-design because you have to
-teach them that once. Right?
+00:26:40.600 --> 00:26:43.140
+just another template that sits
+alongside the other things I
 
 400
-00:21:28.680 --> 00:21:32.160
-It's, it's changing, you know,
-everything about how you use
+00:26:43.140 --> 00:26:46.680
+can be playing with the
+safe stack while I'm doing
 
 401
-00:21:32.160 --> 00:21:35.310
-windows. If you were a
-windows three user, right. Everything
+00:26:46.680 --> 00:26:49.650
+my C sharp in my
+regular job. So safe can
 
 402
-00:21:35.340 --> 00:21:38.160
-looked different on windows 95
-program manager was gone, file
+00:26:49.650 --> 00:26:52.650
+kind of sneak into my
+life. And until maybe I'm
 
 403
-00:21:38.160 --> 00:21:42.480
-manager was transformed into a
-windows Explorer. So for those
+00:26:52.650 --> 00:26:56.750
+using it completely. Yes. I'm
+obviously for the, for the
 
 404
-00:21:42.480 --> 00:21:45.030
-people, well, yeah, we did
-the testing, right? So we
+00:26:56.780 --> 00:26:59.810
+front end part, you need
+also to have some other
 
 405
-00:21:45.030 --> 00:21:48.450
-saw that for computer novices,
-for example, trying to find
+00:26:59.810 --> 00:27:04.610
+dependencies like node and PM
+or yarn. But I think
 
 406
-00:21:48.450 --> 00:21:50.610
-a program in the first
-place and started took on
+00:27:04.610 --> 00:27:07.700
+nowadays that's not really like
+dangerous dependency and a lot
 
 407
-00:21:50.610 --> 00:21:54.090
-average, like 11 minutes. It
-was so incredibly painful. And
+00:27:07.700 --> 00:27:12.660
+of people have it installed
+under machines. So For the
 
 408
-00:21:54.090 --> 00:21:55.710
-then when we got the
-start button up and running,
+00:27:12.740 --> 00:27:16.730
+JavaScript and the, and the
+ultimately the table underneath. Yes,
 
 409
-00:21:55.740 --> 00:21:59.490
-even without the animation, depending,
-you know, we ran there's
+00:27:17.030 --> 00:27:19.100
+indeed. Hmm. One of the
+things that I think is
 
 410
-00:21:59.490 --> 00:22:02.130
-variability because different people who'd
-never used a computer before.
+00:27:19.100 --> 00:27:21.050
+worth pointing out that I
+was really surprised about is
 
 411
-00:22:02.130 --> 00:22:05.040
-Obviously had some challenges with
-the mouse, potentially things like
+00:27:21.050 --> 00:27:24.740
+the, the demo that you've
+got of the safe stack
 
 412
-00:22:05.040 --> 00:22:07.350
-that. But it was down
-around two and a half
+00:27:24.770 --> 00:27:27.530
+as it applies to react
+native. So now you're using
 
 413
-00:22:07.350 --> 00:22:09.510
-minutes to get started the
-very first time, which we
+00:27:27.530 --> 00:27:32.600
+F sharp to write a
+mobile application. Yes, that's really
 
 414
-00:22:09.510 --> 00:22:14.970
-thought was completely reasonable. I'm
-I'm curious, culturally is the
+00:27:32.600 --> 00:27:39.200
+great. Yeah. And, and that's
+works just fine. It's using
 
 415
-00:22:14.970 --> 00:22:18.960
-start menu on the lower
-right corner, in a right
+00:27:39.230 --> 00:27:42.620
+react native, as you've said.
+So we again has this
 
 416
-00:22:18.960 --> 00:22:22.650
-to left language society and
-like Arabic countries. No, I
+00:27:43.670 --> 00:27:48.950
+battle tested technology from Facebook,
+and we just simply compiled
 
 417
-00:22:22.650 --> 00:22:24.720
-think it is. It's been
-a long time since I've
+00:27:48.950 --> 00:27:51.500
+to the, to the react
+native and then react native
 
 418
-00:22:24.720 --> 00:22:27.660
-looked at a right to
-left UI. Derek, do you
+00:27:51.500 --> 00:27:55.430
+tooling does its magic to
+compile for the Android and
 
 419
-00:22:27.660 --> 00:22:31.350
-remember? I don't remember. I
-think it is Scott. Yeah.
+00:27:55.430 --> 00:28:01.100
+iOS devices. So this is
+really great. What's also really
 
 420
-00:22:31.380 --> 00:22:33.630
-I'm curious if that scratches
-your itch and makes you
+00:28:01.100 --> 00:28:04.940
+important when, when we talk
+about these different compilation targets
 
 421
-00:22:33.900 --> 00:22:36.600
-wonder like why the, why
-that corner, because I don't
+00:28:04.970 --> 00:28:10.490
+is that you can set
+your domain of your, your
 
 422
-00:22:36.600 --> 00:22:38.850
-think, I think it's now
-so ubiquitous that in windows
+00:28:10.490 --> 00:28:14.420
+code between all those targets.
+So I know companies that
 
 423
-00:22:38.850 --> 00:22:40.740
-10, it's every, it's always
-on the lower left corner,
+00:28:14.420 --> 00:28:20.120
+have basically same code, same
+domain browser on the mobile
 
 424
-00:22:40.860 --> 00:22:42.690
-but I'm curious if that
-was something you remember coming
+00:28:20.120 --> 00:28:23.840
+applications on the backend, and
+also on the Azure functions,
 
 425
-00:22:42.690 --> 00:22:46.170
-up Definitely right. To left
-language did come up maybe
+00:28:23.840 --> 00:28:29.690
+for example. So this enables
+people to be highly productive,
 
 426
-00:22:46.170 --> 00:22:48.120
-more so in the, in
-those days there was the
+00:28:29.720 --> 00:28:33.500
+because really often, when you
+do those different, different applications,
 
 427
-00:22:48.120 --> 00:22:51.540
-applications group, right? That's how
-Microsoft is organized. I know
+00:28:33.530 --> 00:28:38.420
+different client, client applications, you
+need to repeat some code
 
 428
-00:22:51.540 --> 00:22:54.270
-they were talking about it
-extensively in the context of
+00:28:38.450 --> 00:28:43.680
+because, Oh, the browser is
+written in JavaScript and the
 
 429
-00:22:54.270 --> 00:22:56.490
-things like word and Excel.
-You know, one thing I
+00:28:44.120 --> 00:28:48.320
+publication is written in C
+sharp in XAML. And we
 
 430
-00:22:56.490 --> 00:22:59.220
-wanted to mention about the
-coroners is we had a,
+00:28:48.320 --> 00:28:51.740
+fable, and we've saved stuck
+in general. You can easily
 
 431
-00:22:59.670 --> 00:23:02.970
-a really brilliant guy in
-our user research team, a
+00:28:51.740 --> 00:28:56.330
+share your code across the
+domain, across the different clients
 
 432
-00:23:02.970 --> 00:23:05.880
-guy named Marshall McClintock. And
-when we started seeing this
+00:28:56.330 --> 00:29:00.560
+and different parts of the
+stack. The, the most impressive
 
 433
-00:23:05.880 --> 00:23:08.670
-pattern of the coroners, he
-was very quick to educate
+00:29:00.560 --> 00:29:03.650
+thing that, of all of
+this, that I think is
 
 434
-00:23:08.670 --> 00:23:11.310
-us all about Fitz law,
-F I T T S,
+00:29:03.650 --> 00:29:08.120
+how clean the, the hot
+module replacement is. I know
 
 435
-00:23:11.670 --> 00:23:15.120
-which talks about the speed
-to acquire target, right. It
+00:29:08.120 --> 00:29:10.850
+that you use Webpack for
+that, but I think it's
 
 436
-00:23:15.120 --> 00:23:17.310
-has to do with acceleration
-and seeking and all that
+00:29:10.850 --> 00:29:13.970
+worth giving the people who
+are listening a task. You
 
 437
-00:23:17.310 --> 00:23:19.470
-sort of stuff. But that's
-where this idea of infinite
+00:29:13.970 --> 00:29:17.030
+should go and check out
+the safe bookstore. Maybe you
 
 438
-00:23:19.470 --> 00:23:22.170
-corners comes from is you
-can slam the mouse as
+00:29:17.030 --> 00:29:20.120
+can explain how this works,
+because I'm looking at this
 
 439
-00:23:22.170 --> 00:23:24.870
-fast as you want into
-a corner and you can't
+00:29:20.120 --> 00:29:24.050
+animation where, you know, someone
+has local host, 80, 80
 
 440
-00:23:24.870 --> 00:23:27.780
-overshoot it. And so that's
-another reason why the corners
+00:29:24.050 --> 00:29:27.350
+up, and they make a
+change to some F sharp
 
 441
-00:23:27.780 --> 00:23:31.170
-are such powerful places to
-put things is the accuracy
+00:29:27.350 --> 00:29:31.340
+code, not a, not a
+CSS, HTML, not some HTML.
 
 442
-00:23:31.470 --> 00:23:33.510
-you have to use to
-get there is very low.
+00:29:31.340 --> 00:29:34.580
+And they hit refresh, but
+they literally change F sharp
 
 443
-00:23:33.780 --> 00:23:36.120
-And so it doesn't take
-you out of the flow
+00:29:34.730 --> 00:29:38.450
+hits save. And the webpage
+changes, but doesn't lose state.
 
 444
-00:23:36.120 --> 00:23:38.100
-of whatever else you might
-be trying to get done.
+00:29:38.570 --> 00:29:43.990
+How is that possible? That's
+basically Is some Webpack magic,
 
 445
-00:23:38.460 --> 00:23:41.520
-Yeah. Interesting. I'm actually, I
-will put some of these
+00:29:45.250 --> 00:29:50.950
+but because the client code
+using El Mitch is really
 
 446
-00:23:41.520 --> 00:23:44.010
-things in the show notes,
-but I'm looking at a,
+00:29:50.950 --> 00:29:57.490
+structured and works with these
+messages that just change state.
 
 447
-00:23:44.040 --> 00:23:47.960
-a screenshot of windows XP,
-desktop that is Arabic. And
+00:29:57.940 --> 00:30:01.810
+It's really easy to basically
+the current current state of
 
 448
-00:23:47.960 --> 00:23:49.850
-in fact, the start menu
-is in the lower right
+00:30:01.810 --> 00:30:05.230
+your application is just set
+of messages that mutates the
 
 449
-00:23:49.850 --> 00:23:51.350
-corner. So now I'm going
-to have to go and
+00:30:05.230 --> 00:30:08.920
+state. So it's really easy
+for Webpack to just, Oh,
 
 450
-00:23:51.350 --> 00:23:53.150
-do a little research myself
-and find out that it's
+00:30:08.920 --> 00:30:11.230
+this is, this is this
+list of the messages that
 
 451
-00:23:53.150 --> 00:23:56.830
-still the case in windows
-10. Yeah. Yeah. That's interesting.
+00:30:11.230 --> 00:30:14.470
+happen. This actions that modify
+the state, we shouldn't touch
 
 452
-00:23:56.980 --> 00:24:01.000
-Yeah. Yeah. And back to
-some Microsoft history too. So
+00:30:14.470 --> 00:30:17.340
+that. And then, Oh, we
+can refer to the rest,
 
 453
-00:24:01.330 --> 00:24:04.510
-about the time that we
-were working on these issues,
+00:30:17.350 --> 00:30:21.040
+the rest of the code.
+So that's really nice. It's
 
 454
-00:24:04.540 --> 00:24:08.200
-well, particularly with the start
-menu, Microsoft had kind of
+00:30:21.040 --> 00:30:24.370
+actually from what I've heard,
+and I'm not super experienced,
 
 455
-00:24:08.200 --> 00:24:13.900
-formalized this when X a
-mythical product and turned it
+00:30:24.370 --> 00:30:26.800
+like react and to the
+Duke's developer, but from what
 
 456
-00:24:13.900 --> 00:24:17.830
-into a thing called Cairo
-name and yeah. Code named
+00:30:26.800 --> 00:30:31.480
+I've heard, these hot module
+replacement is actually working better
 
 457
-00:24:17.830 --> 00:24:22.060
-Cairo and S some very
-lucky few people at Microsoft
+00:30:31.540 --> 00:30:34.990
+in El Mitch than it
+works originally in reactor, Dukes,
 
 458
-00:24:22.060 --> 00:24:25.300
-probably still have the tee
-shirt. And Mark Malamud was
+00:30:36.300 --> 00:30:40.990
+even, even Facebook, Facebook on
+through webpage has this information
 
 459
-00:24:25.300 --> 00:24:29.650
-the head of the, essentially
-the UX team for Cairo.
+00:30:40.990 --> 00:30:44.080
+that, Oh, we have this
+hot module replacement, but it
 
 460
-00:24:29.950 --> 00:24:33.100
-And it was going to
-essentially merge a bunch of
+00:30:44.080 --> 00:30:47.290
+usually causes some problems and
+it might not be super
 
 461
-00:24:33.130 --> 00:24:35.410
-different technologies. So I think
-at the time that they
+00:30:47.290 --> 00:30:50.890
+perfect in case of Amish
+applications. It just works. And
 
 462
-00:24:35.410 --> 00:24:37.180
-made a code name for
-it, it was going to
+00:30:50.890 --> 00:30:55.090
+it's like amazing. And it
+gives really, really nice and
 
 463
-00:24:37.180 --> 00:24:41.380
-be based on the windows
-NT code base, which was
+00:30:55.330 --> 00:31:00.340
+totally different experience of editing
+care applications, because you don't
 
 464
-00:24:41.410 --> 00:24:45.970
-pretty ambitious given that Microsoft's
-entire, like, you know, millions
+00:31:00.340 --> 00:31:03.580
+need to repeat all actions
+to bring you to Allstate.
 
 465
-00:24:45.970 --> 00:24:49.420
-of lines of code was
-all 16 bit legacy code.
+00:31:03.900 --> 00:31:06.570
+Yeah. It's really interesting. It
+took me a moment to
 
 466
-00:24:49.720 --> 00:24:52.600
-And then they wanted to
-build this advanced UI on
+00:31:06.570 --> 00:31:08.880
+figure out what was going
+on, but you're actually running
 
 467
-00:24:52.600 --> 00:24:54.430
-top of it. And then
-also it was going to
+00:31:08.910 --> 00:31:12.420
+two different web servers at
+the same time. Right? You're
 
 468
-00:24:54.430 --> 00:24:58.240
-have some sort of like
-database as the file system
+00:31:12.420 --> 00:31:17.100
+running the.net, watch on your
+application for things like your
 
 469
-00:24:58.240 --> 00:25:01.180
-kind of thing, which is
-even kind of being bandied
+00:31:17.100 --> 00:31:20.160
+unit test, which then launches
+your server. But then you've
 
 470
-00:25:01.180 --> 00:25:04.600
-about these days too, like
-from Oracle and other other
+00:31:20.160 --> 00:31:24.690
+got a Webpack dev server
+that fable supports on another
 
 471
-00:25:04.600 --> 00:25:08.440
-companies. And anyway, so that
-was the idea behind Cairo.
+00:31:24.690 --> 00:31:27.420
+port and these things happen
+automatically. So you're running two
 
 472
-00:25:08.470 --> 00:25:12.760
-And so Cairo was going
-along and doing some really
+00:31:27.420 --> 00:31:30.030
+things at the same time,
+one to run your app
 
 473
-00:25:12.760 --> 00:25:16.960
-amazing things with regards to
-the user interface. But as
+00:31:30.060 --> 00:31:35.700
+and one to support your
+development. Yes, indeed. Most of
 
 474
-00:25:17.380 --> 00:25:20.380
-things got scheduled out, they
-saw that the timeline was
+00:31:35.700 --> 00:31:38.970
+the configure, of course it
+requires some configuration, but most
 
 475
-00:25:20.410 --> 00:25:23.470
-kind of too long to
-be able to, you know,
+00:31:38.970 --> 00:31:43.080
+of the configuration is done
+automatically when you create the
 
 476
-00:25:23.470 --> 00:25:27.250
-keep the pipeline flowing for
-both revenue and just delivering
+00:31:43.080 --> 00:31:49.110
+application with DotNetNuke save template.
+So basically when you create
 
 477
-00:25:27.250 --> 00:25:31.750
-products that people want. And
-so they, they created another
+00:31:49.380 --> 00:31:52.350
+the new safe, you should
+have all these things ready
 
 478
-00:25:31.750 --> 00:25:36.400
-product called codename Chicago, which
-was not as far away.
+00:31:52.350 --> 00:31:55.560
+to work and just press
+a five in visual studio
 
 479
-00:25:37.270 --> 00:25:41.650
-And that became known as
-windows 95. Right. And that's
+00:31:55.560 --> 00:31:59.370
+code and it will start
+everything and it will just
 
 480
-00:25:41.680 --> 00:25:45.460
-where Kent got placed on
-the windows 95 team as
+00:31:59.370 --> 00:32:03.990
+work. Yeah. Once I had
+yarn and node installed, yarn
 
 481
-00:25:45.460 --> 00:25:50.110
-their main user research guy,
-then a woman named Jill
+00:32:03.990 --> 00:32:08.850
+is an NPM package manager.
+I installed, I saw node,
 
 482
-00:25:50.110 --> 00:25:52.960
-wrote Jack and I got
-placed on the Cairo team
+00:32:08.880 --> 00:32:12.300
+I installed yarn. I put
+on dotnet SDK. I ended
 
 483
-00:25:52.990 --> 00:25:55.780
-as the user research people
-on the Cairo effort. So
+00:32:12.300 --> 00:32:16.850
+up using packet and, and
+it just worked any, and
 
 484
-00:25:55.780 --> 00:26:00.280
-we were working on two
-parallel, essentially code bases, but
+00:32:16.850 --> 00:32:18.900
+of course I could even
+use Docker for my deployment
 
 485
-00:26:00.280 --> 00:26:04.600
-trying to share some common
-user interface ideas that had
+00:32:18.900 --> 00:32:21.240
+at the end. I think
+it took me 15 minutes
 
 486
-00:26:04.600 --> 00:26:07.900
-been spearheaded by the Cairo
-team and the Windex team.
+00:32:21.780 --> 00:32:25.170
+to get that working. And
+it was really amazing. Yeah.
 
 487
-00:26:08.410 --> 00:26:12.460
-So one of the things
-that became controversial was the
+00:32:25.200 --> 00:32:27.360
+So I'm just happy to
+hear that, that you had
 
 488
-00:26:12.460 --> 00:26:15.490
-word start and whether or
-not it was okay to
+00:32:27.450 --> 00:32:30.660
+really good experience with that.
+And I really think that
 
 489
-00:26:15.490 --> 00:26:19.600
-put the word start next
-to the windows logo, because
+00:32:31.170 --> 00:32:34.910
+there are actually still some
+places in the, in the
 
 490
-00:26:19.660 --> 00:26:21.820
-guys on the Cairo team
-or people on the Cairo
+00:32:34.920 --> 00:32:39.030
+hall, especially on the Fibo
+site where the developer experience
 
 491
-00:26:21.820 --> 00:26:25.330
-team thought that, you know,
-the windows logo should stand
+00:32:39.050 --> 00:32:42.920
+can be made better and
+does like huge, huge, huge
 
 492
-00:26:25.330 --> 00:26:28.270
-on its own. Right. As
-a representation of the brand.
+00:32:42.980 --> 00:32:47.330
+effort right now right now
+is made to make some
 
 493
-00:26:28.510 --> 00:26:31.450
-Oh, right. It looks like
-the company has start. Right.
+00:32:47.330 --> 00:32:51.230
+things a bit better. Because
+as we, as we are
 
 494
-00:26:31.720 --> 00:26:34.990
-Right. But what we were
-seeing in the user research
+00:32:51.230 --> 00:32:54.560
+talking here, you need to
+have some knowledge about this
 
 495
-00:26:34.990 --> 00:26:36.670
-lab and kind of back
-to what you guys were
+00:32:54.560 --> 00:32:58.170
+weird JavaScript things I'm talking
+about. So you need to
 
 496
-00:26:36.670 --> 00:26:41.080
-talking about about these animations,
-we were trying different animations
+00:32:58.190 --> 00:33:02.150
+understand that, Oh, you are
+using react for the rendering
 
 497
-00:26:41.080 --> 00:26:46.230
-to point people to the
-windows. Sometimes they would get
+00:33:02.210 --> 00:33:06.710
+engine and it has some,
+some features and send some
 
 498
-00:26:46.230 --> 00:26:49.440
-it. Sometimes they wouldn't and
-we couldn't rely on it.
+00:33:06.710 --> 00:33:09.560
+stuff happens because of that.
+And then you have to
 
 499
-00:26:50.160 --> 00:26:54.450
-So although it was working,
-it wasn't perfect. And so
+00:33:09.560 --> 00:33:13.700
+use this web thing for
+this hot module replacement. And
 
 500
-00:26:54.450 --> 00:26:57.090
-I was a huge advocate.
-Honestly, I was the one
+00:33:13.740 --> 00:33:17.960
+while it is configured, when
+it stops working probably as
 
 501
-00:26:57.090 --> 00:26:59.910
-that was kind of talking
-to Kent, I think every
+00:33:18.140 --> 00:33:22.730
+normal.net developer or someone who
+haven't played with the, with
 
 502
-00:26:59.910 --> 00:27:01.770
-other day, have they put
-the word start on the
+00:33:22.730 --> 00:33:27.530
+the fountain stuck so far,
+you don't know what's going
 
 503
-00:27:01.770 --> 00:27:05.490
-button yet? Cause Chicago was
-going to ship first. So
+00:33:27.530 --> 00:33:31.820
+on. So we kinda like,
+especially Alfonzo is working on
 
 504
-00:27:05.490 --> 00:27:07.590
-can't, do you want to
-talk about that? Yeah. I
+00:33:31.820 --> 00:33:35.770
+the, on making all this
+stuff it's nicer. Well, it
 
 505
-00:27:07.590 --> 00:27:10.140
-mean, it was just really
-a matter of what's the
+00:33:35.770 --> 00:33:38.050
+was, there was some magic,
+but the nice thing about
 
 506
-00:27:10.140 --> 00:27:13.710
-priority here and we decided
-the priority was making sure
+00:33:38.050 --> 00:33:40.000
+it is that it's magic,
+open source all the way
 
 507
-00:27:13.710 --> 00:27:17.880
-people could get started like
-immediately, immediately. Right. And just
+00:33:40.000 --> 00:33:43.270
+down. So as long as
+you understand the stack you'll
 
 508
-00:27:17.880 --> 00:27:20.520
-really take that out of
-the equation where, you know,
+00:33:43.270 --> 00:33:47.620
+have a good experience. Yes,
+indeed. Fantastic. Also one more
 
 509
-00:27:20.520 --> 00:27:22.620
-people are having to fumble
-around. We did want that
+00:33:47.620 --> 00:33:50.560
+thing. Probably another important thing
+I want to mention is
 
 510
-00:27:22.620 --> 00:27:25.350
-to be their first experience,
-again, thinking about the novices
+00:33:50.560 --> 00:33:54.520
+that the safe stack has,
+it's not only like those
 
 511
-00:27:25.350 --> 00:27:27.360
-in particular, because we were
-trying to expand the market
+00:33:54.520 --> 00:33:59.140
+couple of libraries put together
+about, we actually provide a
 
 512
-00:27:27.360 --> 00:27:29.910
-and we're like, you know,
-so what if it says
+00:33:59.170 --> 00:34:02.590
+couple of companies, provide commercial
+support for this stock. So
 
 513
-00:27:29.910 --> 00:27:32.850
-start, it's fine. And, and
-you see what's happened. Of
+00:34:02.590 --> 00:34:06.580
+if an a company is
+interested in having some commercial
 
 514
-00:27:32.850 --> 00:27:36.240
-course over time, we've been
-able to remove that because
+00:34:06.580 --> 00:34:10.780
+support, because I totally understand
+that not everyone wants to
 
 515
-00:27:36.240 --> 00:27:39.420
-it's now something people worldwide
-just kind of know what
+00:34:10.780 --> 00:34:14.170
+just buy into this open
+source stack, not having an
 
 516
-00:27:39.420 --> 00:27:41.580
-the deal is and it
-doesn't need to be there
+00:34:14.170 --> 00:34:17.350
+inquire aunties and not having
+any help other than dinner,
 
 517
-00:27:41.580 --> 00:27:45.410
-as sort of a redundant
-cue. Yeah. Interesting. Now this,
+00:34:18.850 --> 00:34:23.620
+asking questions on GitHub. So
+if any company and <inaudible>
 
 518
-00:27:45.440 --> 00:27:47.630
-this actually speaks to something
-that I think is super
+00:34:23.980 --> 00:34:29.650
+has this need to have
+formal commercial support for, for
 
 519
-00:27:47.630 --> 00:27:50.120
-important that you mentioned to
-me before, when we were
+00:34:29.740 --> 00:34:33.280
+such applications that are a
+couple of companies that, that
 
 520
-00:27:50.120 --> 00:27:54.080
-preparing for this show, which
-is that, that really good
+00:34:33.460 --> 00:34:36.100
+provides that. And I think
+that's also really important from
 
 521
-00:27:54.080 --> 00:27:58.160
-user research is managing your
-influence and your job as
+00:34:36.100 --> 00:34:39.100
+just F sort of community
+point of view because after
 
 522
-00:27:58.160 --> 00:28:01.340
-the user researcher isn't to
-advocate for the company. It's
+00:34:39.100 --> 00:34:42.550
+community, for a lot of
+time had this, there was
 
 523
-00:28:01.340 --> 00:28:03.170
-the, be the voice of
-the user. This is a
+00:34:42.580 --> 00:34:46.030
+this opinion about deaf community.
+Oh, it's just bunch of
 
 524
-00:28:03.170 --> 00:28:06.770
-perfect example where you went
-up against marketing and branding
+00:34:46.030 --> 00:34:49.270
+those crazy open sort of
+skips that are, they just
 
 525
-00:28:06.770 --> 00:28:09.320
-and everyone to say, no,
-it says, start it doesn't
+00:34:49.270 --> 00:34:52.480
+do those stuff for fun.
+And no one is using
 
 526
-00:28:09.320 --> 00:28:11.690
-say windows in the corner.
-It should say. Yeah. And
+00:34:52.510 --> 00:34:57.550
+this commercially and tent safe,
+stuck also showing that, that
 
 527
-00:28:11.690 --> 00:28:16.880
-we had really clear empirical
-research. Like we had video
+00:34:57.610 --> 00:35:00.700
+there are some companies that
+work on that and provide
 
 528
-00:28:16.970 --> 00:28:20.180
-evidence and timing data that
-showed like, if we gave
+00:35:01.030 --> 00:35:05.590
+support with F serpent. This
+stuck in particular, That is
 
 529
-00:28:20.180 --> 00:28:23.570
-this task, this task list
-of things to do with
+00:35:05.590 --> 00:35:07.630
+a very good point. And
+if you go to safe,
 
 530
-00:28:23.600 --> 00:28:25.700
-a version of windows that
-didn't have the word start
+00:35:07.660 --> 00:35:12.280
+hyphen stack.github.io, you can see
+that there's not only a
 
 531
-00:28:25.700 --> 00:28:29.210
-next to the windows logo.
-And then one that didn't
+00:35:12.280 --> 00:35:15.580
+rich community, but there's companies
+like Lambda factory in compensational
 
 532
-00:28:29.930 --> 00:28:32.090
-the people that had the
-word start, could do it.
+00:35:15.580 --> 00:35:18.040
+it and others and others.
+So just like when you
 
 533
-00:28:32.090 --> 00:28:35.420
-Like, I don't know, twice
-as fast, three times as
+00:35:18.040 --> 00:35:21.190
+use open source, like node,
+you call node source with
 
 534
-00:28:35.420 --> 00:28:37.550
-fast, I forget what the
-numbers were exactly. But it
+00:35:21.190 --> 00:35:23.770
+the safe stack, there is
+a community of people putting
 
 535
-00:28:37.550 --> 00:28:41.030
-literally was like within 30
-seconds, people could find the
+00:35:23.770 --> 00:35:26.740
+this stuff into production who
+can help you commercially and,
 
 536
-00:28:41.030 --> 00:28:43.730
-button get started and be
-on their Merry way and
+00:35:27.250 --> 00:35:30.070
+and make you successful. I
+really appreciate you chatting with
 
 537
-00:28:43.730 --> 00:28:46.400
-complete all the tasks that
-we had given them. And
+00:35:30.070 --> 00:35:33.670
+me today. Thanks. It was
+great experience for me and
 
 538
-00:28:46.640 --> 00:28:48.920
-this was the same task
-list that Kent was using
+00:35:34.600 --> 00:35:41.310
+happy, happy, happy, too. Happy
+to share Stuff. Fantastic. This
 
 539
-00:28:48.920 --> 00:28:52.070
-on the Mac and other
-things, when we saw that
+00:35:41.310 --> 00:35:44.250
+has been another episode of
+Hanselminutes and we'll see you
 
 540
-00:28:52.460 --> 00:28:56.330
-repeatedly, we were like, there's,
-it's undeniable. This is working.
-
-541
-00:28:56.450 --> 00:29:01.190
-If this is science at
-work. So it's same in
-
-542
-00:29:01.190 --> 00:29:04.250
-the same kind of vein,
-you know, the, the whole
-
-543
-00:29:04.250 --> 00:29:06.620
-process of getting, finding the
-start button and then getting
-
-544
-00:29:06.620 --> 00:29:11.390
-that first application launched. We
-noticed that the hierarchical structure
-
-545
-00:29:11.390 --> 00:29:13.340
-worked pretty well. It was
-way better than the program
-
-546
-00:29:13.340 --> 00:29:16.310
-manager. Cause you could see
-all the folders and it
-
-547
-00:29:16.310 --> 00:29:18.710
-didn't take people long to
-figure out the Aerosmith. They
-
-548
-00:29:18.710 --> 00:29:21.620
-could scoot to the right
-and see something more, but
-
-549
-00:29:21.620 --> 00:29:24.500
-people would fall off the
-menus because again, remember people
-
-550
-00:29:24.500 --> 00:29:27.020
-were brand new to the
-mouse. And so I can't
-
-551
-00:29:27.020 --> 00:29:29.030
-remember if we were able
-to get the code into
-
-552
-00:29:29.030 --> 00:29:32.390
-the very first shipping version
-of windows 95 or if
-
-553
-00:29:32.390 --> 00:29:34.820
-it was like a quick
-followup we did where we
-
-554
-00:29:34.940 --> 00:29:37.070
-were able to relax, how
-do you want to say
-
-555
-00:29:37.070 --> 00:29:40.010
-they hit target, I guess,
-for the menu. So you
-
-556
-00:29:40.010 --> 00:29:41.980
-can write, you could wander
-little bit in the menu,
-
-557
-00:29:41.980 --> 00:29:44.590
-wouldn't close on you anymore.
-Yeah. And so just to
-
-558
-00:29:44.650 --> 00:29:47.920
-clarify some history too. So
-Kent was working with a
-
-559
-00:29:47.920 --> 00:29:51.100
-program manager on the windows
-95 team that AKA the
-
-560
-00:29:51.100 --> 00:29:55.000
-Chicago team, his name was
-Danny Iran. And so if
-
-561
-00:29:55.000 --> 00:29:58.450
-you do searches on, you
-know, the, the start button
-
-562
-00:29:58.780 --> 00:30:02.080
-and who created it, Danny
-Iran's name really comes up
-
-563
-00:30:02.470 --> 00:30:06.070
-as the main, you know,
-hit target. But the interesting
-
-564
-00:30:06.070 --> 00:30:08.500
-thing is there was a
-lot of us, you know,
-
-565
-00:30:08.740 --> 00:30:11.530
-and I want to give
-really shout out to Mark
-
-566
-00:30:11.530 --> 00:30:16.210
-Malamud who really, the design
-came originally from him with
-
-567
-00:30:16.210 --> 00:30:20.530
-influence from the user research
-team. And so there were
-
-568
-00:30:20.530 --> 00:30:23.500
-many people, so you can't
-really point to one person,
-
-569
-00:30:23.530 --> 00:30:26.770
-there were many people involved.
-And I think that that's
-
-570
-00:30:26.830 --> 00:30:30.400
-part of the hallmark of
-arriving to great designs is
-
-571
-00:30:30.400 --> 00:30:33.580
-that it, you know, you
-can't just rely on what,
-
-572
-00:30:33.670 --> 00:30:36.100
-you know, sometimes we call
-a big brain like a
-
-573
-00:30:36.100 --> 00:30:38.920
-Steve jobs, just pluck it
-out of thin air. And
-
-574
-00:30:38.920 --> 00:30:42.580
-then everybody worships it as
-the best idea ever. Like
-
-575
-00:30:42.850 --> 00:30:46.330
-if you really want to
-repeatedly deliver great products into
-
-576
-00:30:46.330 --> 00:30:49.720
-the marketplace, it has to
-be a, a team effort
-
-577
-00:30:50.170 --> 00:30:53.140
-and B it has to
-be backed by real user
-
-578
-00:30:53.140 --> 00:30:56.590
-data. And that takes a
-team to really pull that
-
-579
-00:30:56.590 --> 00:31:01.510
-off. Yeah, definitely. Well, I
-really appreciate you both chatting
-
-580
-00:31:01.510 --> 00:31:04.360
-with me today. This was
-fun. Thanks. Yeah, this is
-
-581
-00:31:04.360 --> 00:31:06.880
-great, Scott. Thanks for having
-us. I'm going to put
-
-582
-00:31:06.880 --> 00:31:08.320
-a lot of these things
-we talked about in the
-
-583
-00:31:08.320 --> 00:31:11.080
-show notes, including an article
-that the verge did on
-
-584
-00:31:11.080 --> 00:31:14.260
-the start menu in 2016.
-And I want to make
-
-585
-00:31:14.260 --> 00:31:18.610
-sure that folks check out,
-be curious with.us and you
-
-586
-00:31:18.610 --> 00:31:21.340
-can connect with Kent and
-Derek. All right. Thanks so
-
-587
-00:31:21.340 --> 00:31:24.940
-much. Thank you, Scott. Thanks.
-This has been another episode
-
-588
-00:31:24.940 --> 00:31:47.370
-of Hanselminutes and we'll see
-you again next week. <inaudible>.
+00:35:44.250 --> 00:35:45.150
+again next week.
 

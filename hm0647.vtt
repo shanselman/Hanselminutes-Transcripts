@@ -1,2952 +1,2702 @@
 WEBVTT FILE
 
 1
-00:00:00.480 --> 00:00:04.230
-Hey folks. Today's episode was
-sponsored by Datadog it's. A
+00:00:00.480 --> 00:00:02.970
+Hey folks, Intel is a
+sponsor this week and I
 
 2
-00:00:04.230 --> 00:00:08.460
-cloud scale monitoring and analytics
-platform. Datadog was built to
+00:00:02.970 --> 00:00:06.840
+welcome them because they're bringing
+some high performance developer tools
 
 3
-00:00:08.460 --> 00:00:12.510
-bring clarity to complex dynamic
-applications in the cloud, on
+00:00:06.840 --> 00:00:10.740
+for all of us. Check
+out Intel's parallel studio X,
 
 4
-00:00:12.510 --> 00:00:16.920
-premises in containers or wherever
-they run with beautiful dashboards,
+00:00:10.770 --> 00:00:13.860
+E I've talked about parallelism
+before on the show and
 
 5
-00:00:16.980 --> 00:00:21.360
-distributed tracing, and seamless integrations
-with more than 200 technologies,
+00:00:13.860 --> 00:00:17.460
+the importance of using the
+complete instruction set, unlocking the
 
 6
-00:00:21.810 --> 00:00:26.190
-including Azure and Docker and
-PagerDuty Datadog provides deep end
+00:00:17.460 --> 00:00:19.530
+power of the process or
+that your code is running
 
 7
-00:00:26.190 --> 00:00:28.860
-to end visibility into the
-health and performance of modern
+00:00:19.530 --> 00:00:22.260
+on. Now, you all might
+be writing C or C
 
 8
-00:00:28.860 --> 00:00:33.300
-apps. Visualize key metrics, set
-alerts to identify anomalies and
+00:00:22.260 --> 00:00:25.740
+plus plus Python or even
+Fortran, but is your code
 
 9
-00:00:33.300 --> 00:00:36.570
-collaborate with your team to
-troubleshoot and fix issues fast.
+00:00:25.770 --> 00:00:27.750
+building in such a way
+and written in such a
 
 10
-00:00:37.110 --> 00:00:39.330
-I'd like you to try
-it yourself by starting a
+00:00:27.750 --> 00:00:32.610
+way that it uses the
+latest techniques for vectorization multithreading
 
 11
-00:00:39.330 --> 00:00:43.290
-free 14 day trial today,
-listeners of this podcast will
+00:00:32.610 --> 00:00:38.250
+multi-node parallelization or memory optimization?
+Intel parallel studio XC as
 
 12
-00:00:43.290 --> 00:00:49.530
-also get a free Datadog
-t-shirt get started at bitly.com/data
+00:00:38.250 --> 00:00:40.740
+a lot of new stuff
+for 2018 across all these
 
 13
-00:00:49.530 --> 00:01:08.720
-dog shirt. That's bitly.com/datadog shirt.
-<inaudible>. Hi, this is Scott
+00:00:40.740 --> 00:00:45.330
+languages. Get a free download
+at <inaudible> dot com slash
 
 14
-00:01:08.720 --> 00:01:11.420
-Hanselman. This is another episode
-of Hanselminutes today. I'm talking
+00:00:45.420 --> 00:00:49.350
+parallels studio Z, or certainly
+go and Google or Google
 
 15
-00:01:11.420 --> 00:01:14.120
-with Heather Terenzio, she's the
-co founder and CEO of
+00:00:49.350 --> 00:00:53.040
+with being for Intel parallel
+studio XC and get started.
 
 16
-00:01:14.120 --> 00:01:18.560
-tectonic group. How are you?
-I'm great. Thanks. Scott tectonic
+00:00:53.040 --> 00:00:56.610
+Boosting your apps performance with
+smart parallel code with a
 
 17
-00:01:18.560 --> 00:01:21.710
-group has a great web
-presence. That explains what you
+00:00:56.610 --> 00:01:02.970
+lot less effort. Check them
+out. bitly.com/parallel studio X E
 
 18
-00:01:21.710 --> 00:01:24.320
-do, but I dug into
-the Academy part of it.
+00:01:08.360 --> 00:01:19.040
+<inaudible>. This is Scott Hanselman.
+This is another episode of
 
 19
-00:01:24.320 --> 00:01:26.600
-Can you explain the difference
-between the group and the
+00:01:19.040 --> 00:01:22.880
+Hansel minutes today. I'm talking
+with Gary Nissenbaum from GDN
 
 20
-00:01:26.600 --> 00:01:31.940
-Academy? Sure. About five years
-ago, we were having problems
+00:01:22.880 --> 00:01:28.370
+law.com GDN law.com. You may
+remember Gary from show six
 
 21
-00:01:31.940 --> 00:01:36.230
-finding our own talent, and
-we decided we wanted to
+00:01:28.370 --> 00:01:31.220
+Oh one, where we talked
+about terms of service for
 
 22
-00:01:36.560 --> 00:01:39.530
-find talent in all different
-kinds of places and train
+00:01:31.220 --> 00:01:34.220
+developers. How are you sharing
+your fast becoming our favorite
 
 23
-00:01:39.530 --> 00:01:42.800
-them ourselves to write code
-the way that we thought
+00:01:34.220 --> 00:01:36.620
+lawyer on the show? I
+am thrilled to be back.
 
 24
-00:01:42.800 --> 00:01:47.030
-was best. And what we
-did was we created tectonic
+00:01:36.620 --> 00:01:40.550
+I had a terrific time
+being interviewed by you last
 
 25
-00:01:47.030 --> 00:01:50.600
-Academy and what we do
-is we go out and
+00:01:40.550 --> 00:01:42.860
+time, and I'm really looking
+forward to this one because
 
 26
-00:01:50.600 --> 00:01:53.600
-we look for talent and
-all kinds of unexpected places
+00:01:42.860 --> 00:01:46.370
+I think it's a very
+topical and important subject. Yeah.
 
 27
-00:01:53.600 --> 00:01:57.830
-like baristas bus boys, you
-name it. They've, we've actually
+00:01:46.370 --> 00:01:49.580
+Well, we're going to talk
+about GDPR, the general data
 
 28
-00:01:57.830 --> 00:02:01.130
-had folks out of the
-foster care system, the jail
+00:01:49.580 --> 00:01:54.470
+protection regulations. I was literally
+trying to work on this
 
 29
-00:02:01.130 --> 00:02:05.060
-system, and then all the
-way up to people who
+00:01:54.500 --> 00:01:58.310
+a little bit late on
+my own podcast site. I
 
 30
-00:02:05.060 --> 00:02:09.080
-have graduated from college with
-mechanical engineering degrees. But now
+00:01:58.730 --> 00:02:02.060
+am a small business, you
+know, a micro business. Even
 
 31
-00:02:09.110 --> 00:02:11.120
-these are people who just
-are passionate and really want
+00:02:02.870 --> 00:02:06.470
+I put my cookie consent
+pop up there and looked
 
 32
-00:02:11.120 --> 00:02:13.610
-to get into software development.
-And so we bring them
+00:02:06.470 --> 00:02:09.170
+at all the different places
+where I store data. And
 
 33
-00:02:13.610 --> 00:02:17.480
-into our Academy. It's actually
-really selective to get into
+00:02:09.170 --> 00:02:12.590
+I, I think I'm okay,
+but you know, I'm not
 
 34
-00:02:17.990 --> 00:02:20.450
-and through the Academy, we
-train them in about a
+00:02:12.590 --> 00:02:15.080
+a big company. I don't
+have the time where the
 
 35
-00:02:20.450 --> 00:02:23.930
-12 week program. And after
-the program, they start pair
+00:02:15.080 --> 00:02:18.800
+lawyers, frankly, to read all
+the paperwork, it seemed kind
 
 36
-00:02:23.930 --> 00:02:28.610
-programming with our software developers
-and eventually start working on
+00:02:18.800 --> 00:02:20.960
+of weird that this is
+even affecting me over here
 
 37
-00:02:28.610 --> 00:02:32.060
-real life projects. And actually
-the way our model works
+00:02:20.960 --> 00:02:23.960
+in America. Not only that,
+but when you say you
 
 38
-00:02:32.060 --> 00:02:34.280
-now is that a client
-can hire us to write
+00:02:23.960 --> 00:02:27.020
+don't have the lawyers to
+do this, my question would
 
 39
-00:02:34.280 --> 00:02:36.290
-their software. And we'll do
-that with our real senior
+00:02:27.020 --> 00:02:30.470
+be, are you talking about
+American lawyers or are you
 
 40
-00:02:36.290 --> 00:02:39.830
-level development team, but we'll
-also be training up apprentices
+00:02:30.920 --> 00:02:35.430
+referring to European lawyers? And
+if you're not talking, if
 
 41
-00:02:39.830 --> 00:02:42.890
-at the same time and
-our clients can actually hire
+00:02:35.450 --> 00:02:39.260
+you're not referring to European
+lawyers, then how do you
 
 42
-00:02:42.890 --> 00:02:46.220
-those apprentices as full time
-employees after working with us
+00:02:39.260 --> 00:02:42.800
+know you're complying with the
+European law? And that's part
 
 43
-00:02:46.220 --> 00:02:49.430
-for about six months. Oh,
-interesting. I worked as a
+00:02:42.800 --> 00:02:46.070
+of what I want to
+discuss today, which is a
 
 44
-00:02:49.430 --> 00:02:52.370
-consultant for many years and
-we always had a situation
+00:02:46.070 --> 00:02:51.650
+terrific, very important principle, which
+is maintaining privacy of data.
 
 45
-00:02:52.370 --> 00:02:54.950
-where the client would really
-enjoy working with someone and
+00:02:52.850 --> 00:02:55.850
+I believe in it, 100%,
+I'm a big civil libertarian,
 
 46
-00:02:54.950 --> 00:02:57.620
-then they try to hire
-them and we discourage that.
+00:02:56.450 --> 00:03:01.570
+but the implementation is lacking
+The forethought of how to
 
 47
-00:02:57.620 --> 00:03:00.040
-But in fact, you're doing
-the opposite. Yeah. You know,
+00:03:01.570 --> 00:03:06.640
+do it without unintended consequences
+seems to have been lacking.
 
 48
-00:03:00.040 --> 00:03:02.680
-it's been an interesting pivot
-for us in terms of
+00:03:07.410 --> 00:03:08.910
+Oh, there's a lot to
+be. There's a lot to
 
 49
-00:03:02.680 --> 00:03:06.520
-our business model, because what
-we're finding is actually millennials
+00:03:08.910 --> 00:03:11.490
+dig into here, but let's
+start at the beginning. You
 
 50
-00:03:06.700 --> 00:03:10.270
-change jobs about every two
-years anyway, and our clients
+00:03:11.490 --> 00:03:14.040
+know, what is it, what
+is the general data protection
 
 51
-00:03:10.270 --> 00:03:12.640
-are looking for talent. And
-so we figured we would
+00:03:14.040 --> 00:03:18.630
+regulations and how does it
+affect what America does? Well,
 
 52
-00:03:12.640 --> 00:03:15.970
-find a way to kind
-of smooth that transition from
+00:03:18.780 --> 00:03:23.430
+the re the general, the
+data protection regulations that we're
 
 53
-00:03:15.970 --> 00:03:18.430
-working for us and getting
-them trained up on client
+00:03:23.430 --> 00:03:30.840
+talking about is the culmination
+of a series of proposals
 
 54
-00:03:18.430 --> 00:03:21.100
-projects and then working for
-our clients. So we've now
+00:03:30.840 --> 00:03:35.580
+and directives and regulations that
+have gone on since around
 
 55
-00:03:21.100 --> 00:03:23.860
-become this company that writes
-software, but also creates a
+00:03:35.580 --> 00:03:39.780
+2002. And they all STEM
+from the basic thrust that
 
 56
-00:03:23.860 --> 00:03:28.080
-talent pipeline for our clients,
-Not to put too fine
+00:03:40.170 --> 00:03:45.330
+Europeans want to protect the
+collection of data, the storage
 
 57
-00:03:28.080 --> 00:03:31.590
-a point on it, but
-your, you have an advanced
+00:03:45.330 --> 00:03:49.980
+of data, and the use
+of data. And they want
 
 58
-00:03:31.590 --> 00:03:34.770
-degree. You went to Cornell,
-you have civil engineering degree,
+00:03:49.980 --> 00:03:54.030
+to do that for the
+people that the European union
 
 59
-00:03:34.770 --> 00:03:37.260
-you have an environmental engineering
-degree, but now you're talking
+00:03:54.630 --> 00:04:00.660
+protects. And that is citizens
+of those countries. The issue
 
 60
-00:03:37.260 --> 00:03:41.010
-about creating software engineers from,
-and again, no disrespect to
+00:04:00.660 --> 00:04:05.760
+that we're going to discuss
+today is that European users
 
 61
-00:03:41.010 --> 00:03:45.000
-hard work from baristas. Where
-does someone with a formal
+00:04:06.000 --> 00:04:11.460
+don't just access websites in
+those countries. So to the
 
 62
-00:03:45.000 --> 00:03:47.670
-engineering background, where do you
-fall on whether or not
+00:04:11.460 --> 00:04:15.690
+extent that they are accessing
+an American website, and to
 
 63
-00:03:47.670 --> 00:03:51.060
-college is necessary to be
-an engineer? Well, what's really
+00:04:15.690 --> 00:04:19.800
+the extent that the American
+website is not compliant, there
 
 64
-00:03:51.060 --> 00:03:54.630
-interesting. It's because of my
-background that, and I actually
+00:04:19.800 --> 00:04:23.970
+is a strong argument that
+the American website is a,
 
 65
-00:03:54.630 --> 00:03:56.670
-didn't learn how to code
-until I was on the
+00:04:24.030 --> 00:04:29.190
+is a in violation with
+all the attendant implications that
 
 66
-00:03:56.670 --> 00:04:00.840
-job. And so, and everybody
-in, in technology has a
+00:04:29.190 --> 00:04:32.370
+that brings in terms of
+fines and other sorts of
 
 67
-00:04:00.840 --> 00:04:04.410
-story around the best software
-that developer that they ever
+00:04:32.370 --> 00:04:36.510
+things. Doesn't that imply that
+we can't win. I mean,
 
 68
-00:04:04.410 --> 00:04:07.620
-met didn't necessarily have a
-college degree. We've if you're
+00:04:36.510 --> 00:04:39.180
+there's 200 and something plus
+countries in the world. And
 
 69
-00:04:07.620 --> 00:04:10.020
-been in this industry long
-enough, you know, some English
+00:04:39.180 --> 00:04:42.480
+if any European decides to
+swing by, you know, a
 
 70
-00:04:10.050 --> 00:04:14.700
-major or self-taught coder, who's
-been teaching themselves to code.
+00:04:42.480 --> 00:04:46.020
+website in Djibouti, now they're
+going to be subject to
 
 71
-00:04:15.120 --> 00:04:17.280
-And so as a part
-of my degree, I took
+00:04:46.020 --> 00:04:50.610
+laws of Europe. Let's, I'll
+double down on that. It
 
 72
-00:04:17.280 --> 00:04:20.430
-some software development classes, but
-I didn't actually learn how
+00:04:50.610 --> 00:04:56.490
+implies that any country that
+has users of the internet
 
 73
-00:04:20.430 --> 00:04:22.770
-to code until I was
-on the job. And it
+00:04:57.030 --> 00:05:01.560
+can create a more stringent
+law than even the Europeans.
 
 74
-00:04:22.770 --> 00:04:26.400
-was that experience that gave
-me the aha idea that,
+00:05:02.820 --> 00:05:07.410
+And then on the basis
+of that become the preeminent
 
 75
-00:04:27.270 --> 00:04:29.070
-you know, Hey, this isn't
-stuff I learned in college,
+00:05:07.470 --> 00:05:12.600
+regulatory body of the world,
+because it's a race to
 
 76
-00:04:29.070 --> 00:04:31.020
-this is stuff I learned
-actually on the job. And
+00:05:12.600 --> 00:05:16.140
+who can be the most
+restrictive, because the most restrictive
 
 77
-00:04:31.020 --> 00:04:32.910
-there's probably a lot of
-people out there who can
+00:05:16.140 --> 00:05:19.860
+is whatever one needs to
+comply with. So if Tanzania
 
 78
-00:04:32.910 --> 00:04:36.930
-do the same without a
-college degree. That's interesting now,
+00:05:20.310 --> 00:05:23.100
+decides that it is going
+to be the most restrictive
 
 79
-00:04:36.960 --> 00:04:39.870
-but your degrees are in
-civil engineering and environmental engineering.
+00:05:23.100 --> 00:05:26.100
+country in terms of the
+laws, the privacy regulations, and
 
 80
-00:04:39.870 --> 00:04:41.610
-Does that mean that someone
-could go and become one
+00:05:26.100 --> 00:05:30.570
+frankly, other regulations that, that,
+that relate to internet use
 
 81
-00:04:41.610 --> 00:04:43.920
-of those kinds of engineers,
-not a software engineer, but
+00:05:31.020 --> 00:05:36.810
+of their citizens, theoretically, all
+websites around the world have
 
 82
-00:04:43.920 --> 00:04:47.610
-one of those without a
-degree, I would say not
+00:05:36.810 --> 00:05:41.460
+to be concerned about that
+because there are users they
 
 83
-00:04:47.610 --> 00:04:51.720
-necessarily, because there's a lot
-more that goes into it.
+00:05:41.460 --> 00:05:44.220
+could, that could be accessing
+their website from Tanzania. They
 
 84
-00:04:52.260 --> 00:04:55.530
-And there's actually accreditations that
-have to happen to be
+00:05:44.220 --> 00:05:46.380
+wouldn't even know it. Right.
+Let me see if I
 
 85
-00:04:55.620 --> 00:04:58.200
-a civil engineer. And I
-think that would be hard
+00:05:46.380 --> 00:05:49.950
+can parse that though. So
+you're saying that the idea
 
 86
-00:04:58.200 --> 00:05:00.690
-to get on your own,
-but with software development, it
+00:05:49.950 --> 00:05:54.630
+that Europe, as an entity
+could create a thing as
 
 87
-00:05:00.690 --> 00:05:04.950
-truly is a skill that
-can be learned. And, you
+00:05:54.630 --> 00:05:58.670
+broad reaching. And as you
+know, let's just say broad
 
 88
-00:05:04.950 --> 00:05:09.180
-know, with a foundation, a
-little ambition and desire, you
+00:05:58.670 --> 00:06:01.820
+reaching as a GDPR that,
+that opens up a precedent
 
 89
-00:05:09.180 --> 00:05:11.730
-can actually teach yourself how
-to be a software developer.
+00:06:01.940 --> 00:06:04.850
+that anyone else could go
+and do the same thing
 
 90
-00:05:11.730 --> 00:05:14.190
-Whereas, you know, there's a
-lot, obviously there's a lot
+00:06:04.850 --> 00:06:07.840
+that then it would affect
+all of us. That's right.
 
 91
-00:05:14.190 --> 00:05:17.250
-more at stake with civil
-engineering, right? You're building bridges
+00:06:07.930 --> 00:06:10.510
+And when you borders to
+something that doesn't have borders
 
 92
-00:05:17.250 --> 00:05:21.420
-and roads. And you know,
-there's a long history of
+00:06:11.050 --> 00:06:14.440
+and the reason that's exactly
+right. And the reason that
 
 93
-00:05:21.420 --> 00:05:24.810
-academics that come into being
-good civil engineers and mechanical
+00:06:14.440 --> 00:06:20.920
+that is so critical is
+that the entire Canon of
 
 94
-00:05:24.810 --> 00:05:28.680
-engineers. But with software development,
-it's, you know, it's something
+00:06:20.920 --> 00:06:24.400
+American law going all the
+way back to the founding
 
 95
-00:05:28.680 --> 00:05:31.260
-that can be taught and
-it's something you mostly learn
+00:06:24.430 --> 00:06:30.070
+of the country is that
+our courts are the prime,
 
 96
-00:05:31.260 --> 00:05:33.990
-on the job. And I
-think most college grads in
+00:06:31.300 --> 00:06:36.730
+the prime movers on statements
+of law, that if you
 
 97
-00:05:33.990 --> 00:05:36.960
-computer science would tell you
-that they got a great
+00:06:36.790 --> 00:06:40.150
+have a lawsuit and you
+litigate it in a trial
 
 98
-00:05:36.960 --> 00:05:39.720
-foundation in college, but they
-didn't really learn how to
+00:06:40.150 --> 00:06:42.460
+level court, and you don't
+like the result, you can
 
 99
-00:05:39.720 --> 00:05:43.050
-do software engineering until they
-were on the job. Yeah.
+00:06:42.460 --> 00:06:44.980
+take your appeal. But at
+the, at the, in the
 
 100
-00:05:43.230 --> 00:05:45.480
-We talk a lot about
-that foundation on the show
+00:06:44.980 --> 00:06:48.550
+final analysis, when you've exhausted
+your appeals, that is the
 
 101
-00:05:45.480 --> 00:05:49.560
-here. And sometimes I use
-the term historical context about
+00:06:48.550 --> 00:06:51.970
+law. That is what has
+to be complied with. But
 
 102
-00:05:49.560 --> 00:05:53.460
-whether or not someone needs
-to understand the historical context
+00:06:51.970 --> 00:06:56.020
+what we're seeing here is
+a sea change in how
 
 103
-00:05:53.460 --> 00:05:55.560
-of the internet in order
-to write good HTML or
+00:06:56.320 --> 00:07:01.090
+laws are enforced and the
+primacy of law, because you
 
 104
-00:05:55.560 --> 00:05:58.220
-good JavaScript and people seem
-to be split on the,
+00:07:01.090 --> 00:07:05.710
+could theoretically have a situation
+where a digital company is
 
 105
-00:05:58.520 --> 00:06:00.880
-on that subject. Well, I
-think there's, there's always going
+00:07:05.710 --> 00:07:08.350
+in a lawsuit. The lawsuit
+goes all the way up
 
 106
-00:06:00.880 --> 00:06:04.000
-to be different levels of
-engineers and there's people who
+00:07:08.350 --> 00:07:11.590
+to the United States Supreme court,
+the United States Supreme court finds
 
 107
-00:06:04.000 --> 00:06:07.090
-we need to write code.
-And then there's people who
+00:07:11.590 --> 00:07:14.950
+in favor of one party
+or the other, but that's
 
 108
-00:06:07.090 --> 00:06:10.150
-need to take a much,
-you know, the 50,000 foot
+00:07:14.950 --> 00:07:18.460
+not the final answer that,
+that even though the Supreme
 
 109
-00:06:10.150 --> 00:06:12.550
-view of what you're building
-and how the product's going
+00:07:18.460 --> 00:07:22.960
+court has said that the
+activity is allowed, that privacy
 
 110
-00:06:12.550 --> 00:06:15.490
-to be built and see
-the bigger picture. And so
+00:07:22.960 --> 00:07:28.210
+of American citizens is not
+being infringed upon based upon
 
 111
-00:06:15.490 --> 00:06:17.920
-there's, you know, there's definitely
-a need for both, right?
+00:07:28.810 --> 00:07:32.710
+first amendment protections and other
+sorts of, of statutory protections.
 
 112
-00:06:17.920 --> 00:06:20.110
-There's need for people who
-can write code and get
+00:07:33.250 --> 00:07:37.690
+You could still have a
+whole regime of laws from
 
 113
-00:06:20.110 --> 00:06:22.750
-the application to do exactly
-what you want it to
+00:07:37.780 --> 00:07:41.740
+outside the borders of the
+United States that would still apply
 
 114
-00:06:22.750 --> 00:06:24.370
-do. And then there's people
-who have to look at
+00:07:41.740 --> 00:07:44.470
+to the same activity that
+the Supreme court has just
 
 115
-00:06:24.370 --> 00:06:27.430
-the big picture and understand
-from a business standpoint, an
+00:07:44.470 --> 00:07:47.590
+said. You could, you could
+engage in, Okay. So not
 
 116
-00:06:27.430 --> 00:06:31.810
-engineering standpoint and architectural standpoint,
-what this application is going
+00:07:47.590 --> 00:07:49.090
+to put too fine a
+point on it, but then
 
 117
-00:06:31.810 --> 00:06:34.180
-to look like. And so
-both those people can work
+00:07:49.360 --> 00:07:52.690
+what legal basis does the
+EU have to levy fines
 
 118
-00:06:34.210 --> 00:06:38.560
-very closely together to build
-great software products. Yeah. Yeah.
+00:07:52.690 --> 00:07:55.480
+or sanctions against a us
+company that doesn't have any
 
 119
-00:06:38.560 --> 00:06:40.840
-That's a good point. I
-think that it's really easy
+00:07:55.480 --> 00:07:59.530
+jurisdictional presence or nexus in
+the EU? The company is
 
 120
-00:06:40.840 --> 00:06:42.610
-to say, Oh, I'm a
-coder or, Oh, I'm a
+00:07:59.530 --> 00:08:05.110
+entering into the jurisdiction of
+that European country by virtue
 
 121
-00:06:42.610 --> 00:06:46.840
-programmer, but there are there's
-intersectionality within programming. There's not
+00:08:05.110 --> 00:08:10.110
+of providing services to its
+citizens. So if I let's
 
 122
-00:06:46.840 --> 00:06:51.580
-just junior, senior architect, et
-cetera, but there's, there's testing,
+00:08:10.120 --> 00:08:12.430
+say for example, and this
+is a real, a real
 
 123
-00:06:51.580 --> 00:06:54.850
-there's automation, there's build engineers.
-There's all kinds of flavors
+00:08:12.430 --> 00:08:17.380
+example, that this is a
+municipality in America that is
 
 124
-00:06:54.850 --> 00:06:57.340
-of engineer that one could
-be and they don't all
+00:08:17.410 --> 00:08:22.000
+letting citizens pay their water
+bill completely, utterly, legitimately, U
 
 125
-00:06:57.340 --> 00:07:02.500
-need formal education. Absolutely. So
-this is very exclusive. I
+00:08:22.000 --> 00:08:25.870
+S only. Now a us
+person is in Europe, on
 
 126
-00:07:02.500 --> 00:07:05.560
-understand that there was one,
-one time you had 400
+00:08:25.870 --> 00:08:28.930
+vacation. They can't pay their
+water bill. It's more along
 
 127
-00:07:05.560 --> 00:07:10.330
-folks show up for five
-spots. Yeah, it is. Well,
+00:08:28.930 --> 00:08:31.660
+the lines of the example
+I would give similar to
 
 128
-00:07:10.360 --> 00:07:12.850
-the great thing about what
-we do is we pay
+00:08:31.660 --> 00:08:38.260
+where you're going is someone
+in the EU owns American
 
 129
-00:07:12.850 --> 00:07:15.400
-people on day one to
-be a member of our
+00:08:38.260 --> 00:08:41.830
+property. And so they need
+to pay their water bill,
 
 130
-00:07:15.400 --> 00:07:18.880
-apprenticeship program. And that's because
-we're a department of labor
+00:08:41.830 --> 00:08:44.140
+but they're a citizen of
+that country. They're an investor.
 
 131
-00:07:18.880 --> 00:07:23.140
-approved apprenticeship program as part
-of the DOL regulations are
+00:08:44.140 --> 00:08:48.610
+They have a vacation home
+here. The fact is that
 
 132
-00:07:23.140 --> 00:07:25.870
-that you pay people on
-day one. So think about
+00:08:48.610 --> 00:08:52.180
+they are accessing this website
+that normally you would think
 
 133
-00:07:25.870 --> 00:07:28.840
-your options in terms of
-choosing a bootcamp or choosing
+00:08:52.180 --> 00:08:54.970
+Americans would be accessing, but
+this is a very legitimate
 
 134
-00:07:28.930 --> 00:07:31.600
-us at a bootcamp, you'll
-have to take six months
+00:08:55.290 --> 00:08:58.380
+why someone from Europe would
+be accessing that website. I
 
 135
-00:07:31.600 --> 00:07:36.160
-off of work and pay
-20, sometimes $30,000. And with
+00:08:58.380 --> 00:09:00.720
+would argue that you could
+say that the GDPR does
 
 136
-00:07:36.160 --> 00:07:40.000
-us, you're actually getting paid
-on day one. So it's
+00:09:00.720 --> 00:09:03.260
+apply to it. You just
+turned that on its head
 
 137
-00:07:40.000 --> 00:07:44.770
-become very competitive to get
-in. And we've actually had
+00:09:03.260 --> 00:09:06.680
+very nicely. That was a
+very, that was a judo
 
 138
-00:07:44.770 --> 00:07:49.240
-to modify our entrance criteria
-and the work it takes
+00:09:06.680 --> 00:09:10.580
+flip. It's my job. That
+was an excellent doodle flip
 
 139
-00:07:49.240 --> 00:07:51.730
-to actually get in. But
-we really feel like we're
+00:09:10.580 --> 00:09:13.490
+because you're like, I'm like,
+wow, you're absolutely right. Well
 
 140
-00:07:51.730 --> 00:07:55.210
-producing an amazing software developer
-at the end of our
+00:09:13.490 --> 00:09:16.220
+then it's like, well, private,
+we all agree. Privacy is
 
 141
-00:07:55.210 --> 00:07:57.910
-program. Can you talk a
-little bit about what that
+00:09:16.220 --> 00:09:21.290
+good, but you know, this
+seems very heavy handed way
 
 142
-00:07:57.910 --> 00:08:00.610
-means to be an a
-department of labor approved apprenticeship
+00:09:21.290 --> 00:09:23.750
+to do things. And I'm
+afraid, I don't know what
 
 143
-00:08:00.610 --> 00:08:03.220
-program? Because you've mentioned that
-before in interviews, and I
+00:09:23.750 --> 00:09:26.420
+I'm storing now, you know,
+on a blog comment or
 
 144
-00:08:03.220 --> 00:08:05.710
-wonder, is that a hard
-thing? Is that more paperwork?
+00:09:26.420 --> 00:09:28.190
+something like that. Something what
+I think of as being
 
 145
-00:08:05.710 --> 00:08:08.380
-What does that, what does
-that stamp of approval? It's
+00:09:28.190 --> 00:09:31.310
+harmless. Well, I mean, let's,
+you know, let's talk about
 
 146
-00:08:08.380 --> 00:08:11.590
-hard paperwork. So it takes
-a lot of paperwork to
+00:09:31.310 --> 00:09:36.560
+this. You're, you're, you're forcing
+companies that don't have the
 
 147
-00:08:11.590 --> 00:08:14.740
-get through it, but when
-we actually, well, the story
+00:09:36.560 --> 00:09:40.520
+capital to really go into
+this kind of depth about
 
 148
-00:08:14.740 --> 00:08:17.710
-behind it is that we
-started calling ourselves an apprenticeship
+00:09:40.520 --> 00:09:44.990
+European law to comply with
+the European law. So essentially
 
 149
-00:08:17.710 --> 00:08:20.770
-program fairly early on because
-that's what we were doing.
+00:09:44.990 --> 00:09:47.150
+people are flying blind. Let
+me, let me bring this
 
 150
-00:08:20.770 --> 00:08:22.720
-We were bringing people in
-and we were training them
+00:09:47.150 --> 00:09:52.190
+down to the practical in
+terms of my clients and
 
 151
-00:08:22.720 --> 00:08:25.870
-side by side with more
-senior level folks, exactly like
+00:09:52.190 --> 00:09:55.340
+in terms of people that
+I've seen in other situations
 
 152
-00:08:26.170 --> 00:08:29.890
-a plumber or an electrician
-might learn their trade. And
+00:09:55.340 --> 00:10:01.040
+that are not my clients,
+very few businesses are actually
 
 153
-00:08:30.100 --> 00:08:33.730
-we soon learned that it
-was an actual federal designation
+00:10:01.040 --> 00:10:07.160
+having the opt in, pop
+up on that homepage. And
 
 154
-00:08:33.730 --> 00:08:36.220
-to be an apprenticeship program.
-And so kind of tongue
+00:10:07.160 --> 00:10:10.280
+there's a reason it's not
+just that it's difficult to
 
 155
-00:08:36.220 --> 00:08:39.430
-in cheek, we thought we
-were being clever and we
+00:10:10.280 --> 00:10:13.490
+implement because frankly, you know,
+in WordPress, it's not, not
 
 156
-00:08:39.430 --> 00:08:43.930
-applied to become an official
-apprenticeship program. And it was
+00:10:13.490 --> 00:10:17.120
+that difficult to implement. It's
+more that when you have
 
 157
-00:08:43.930 --> 00:08:46.690
-a lot of paperwork, but
-actually no software development company
+00:10:17.120 --> 00:10:21.140
+that opt in, nobody goes
+to your website that you
 
 158
-00:08:46.690 --> 00:08:49.870
-had ever applied for this
-before. So it was actually
+00:10:21.140 --> 00:10:25.070
+will have a tremendous drop
+in visitors. People don't want
 
 159
-00:08:49.870 --> 00:08:53.290
-written for plumbers and electricians,
-and we had to rewrite
+00:10:25.070 --> 00:10:27.290
+to deal with you. They
+don't, they want to go
 
 160
-00:08:53.290 --> 00:08:59.100
-the entire documentation to a
-software development career. And we
+00:10:27.290 --> 00:10:29.510
+to the next website where
+there's no opt in because
 
 161
-00:08:59.100 --> 00:09:01.560
-did all that. We worked
-very closely with the DOL.
+00:10:29.510 --> 00:10:32.960
+they don't know what they're
+opting into. So the interesting
 
 162
-00:09:01.740 --> 00:09:03.840
-It took us about 18
-months to get through the
+00:10:32.960 --> 00:10:35.900
+part, another interesting part of
+this is that the very
 
 163
-00:09:03.840 --> 00:09:07.980
-whole process. And we were
-the first DOL approved software
+00:10:36.290 --> 00:10:39.770
+thing that the European union
+is trying to say, which
 
 164
-00:09:07.980 --> 00:09:12.240
-development apprenticeship program in the
-country. There's a couple today.
+00:10:39.770 --> 00:10:44.210
+is we don't realize what
+we are sharing and how
 
 165
-00:09:12.240 --> 00:09:15.480
-There's a handful out there
-and it's actually, I believe
+00:10:44.210 --> 00:10:47.630
+our information is being shared
+and where, how it's being
 
 166
-00:09:15.480 --> 00:09:18.540
-it's much easier today because
-we laid a lot of
+00:10:47.630 --> 00:10:50.390
+stored. And, and the fact
+that it's not being stored
 
 167
-00:09:18.540 --> 00:09:23.150
-that groundwork early on How
-long is a registered apprentice
+00:10:50.390 --> 00:10:53.540
+with complete security, therefore there
+would need to be an
 
 168
-00:09:23.180 --> 00:09:26.540
-program. I understand that a
-plumber might spend 32 months
+00:10:53.570 --> 00:10:57.290
+opt in. That's the very
+reason that people are not
 
 169
-00:09:26.820 --> 00:09:29.300
-learning to be a plumber
-before they move on. Ours
+00:10:57.290 --> 00:11:00.200
+staying on that website and
+moving on because they don't
 
 170
-00:09:29.300 --> 00:09:34.070
-is a purely competency-based and,
-and skills based. So it's
+00:11:00.200 --> 00:11:03.650
+want to deal with the
+issue. So in essence, it's
 
 171
-00:09:34.070 --> 00:09:37.580
-not time restricted. And with
-plumbers and electricians, I believe
+00:11:03.650 --> 00:11:07.160
+our limited attention span. The
+fact that we're not digging
 
 172
-00:09:37.580 --> 00:09:39.650
-most of them are time
-restricted. And it does take
+00:11:07.160 --> 00:11:09.800
+down as consumers, and I'm
+probably as guilty of this
 
 173
-00:09:39.650 --> 00:09:41.270
-a certain amount of time
-that you have to put
+00:11:09.800 --> 00:11:12.170
+as anybody, when I go
+on a website and I
 
 174
-00:09:41.270 --> 00:09:44.390
-in. But with us, it's
-a minimum of six months,
+00:11:12.170 --> 00:11:15.440
+just am viewing things casually,
+why am I opting into
 
 175
-00:09:44.420 --> 00:09:46.880
-but it's actually taken people
-longer just to get all
+00:11:15.440 --> 00:11:19.010
+anything? It always gives me
+a sense of somehow agreeing
 
 176
-00:09:46.880 --> 00:09:50.990
-their competencies signed off on.
-So at a minimum six
+00:11:19.010 --> 00:11:21.740
+to something that I don't
+understand. And I don't know
 
 177
-00:09:50.990 --> 00:09:55.070
-months, but sometimes a little
-bit longer. And then there's
+00:11:21.740 --> 00:11:24.110
+why, why they're asking me
+and I have a lot
 
 178
-00:09:55.070 --> 00:09:57.890
-usually a competency model or
-a way to go and
+00:11:24.110 --> 00:11:28.730
+of questions. So the consumer
+who's using the internet is
 
 179
-00:09:57.890 --> 00:10:02.000
-determine someone's competency. How do
-you determine that someone is,
+00:11:28.730 --> 00:11:32.960
+not really on the same
+wavelengths as the regulators in
 
 180
-00:10:02.140 --> 00:10:04.430
-is ready to be a
-junior engineer and move? Do
+00:11:32.960 --> 00:11:37.610
+the EU. Yeah. Additionally, I'm
+noticing more and more. There
 
 181
-00:10:04.430 --> 00:10:08.030
-they move from intern to,
-or rather apprentice to journeyman
+00:11:37.610 --> 00:11:40.010
+was the move towards an
+active opt in, which is
 
 182
-00:10:08.030 --> 00:10:10.910
-or journey person to junior
-engineer? Yeah. Which approximates the
+00:11:40.010 --> 00:11:42.920
+simply the act of pushing,
+okay. Versus hitting the back
 
 183
-00:10:10.910 --> 00:10:14.900
-progress. We've moved from apprentice
-to a full time junior
+00:11:42.920 --> 00:11:47.120
+button. Now I'm hearing interpretations
+where I have arrived at
 
 184
-00:10:14.900 --> 00:10:19.220
-engineer. And that's a, that's
-part of our process And
+00:11:47.120 --> 00:11:50.150
+a website. I've received no
+cookies, but if I click
 
 185
-00:10:19.520 --> 00:10:21.770
-it does someone need to
-have a GED or a
+00:11:50.150 --> 00:11:53.830
+any link, I have implicitly
+opted in by simply moving
 
 186
-00:10:21.770 --> 00:10:24.080
-high school, you know, what's
-the, what's the spread of
+00:11:53.830 --> 00:11:56.470
+forward. Right. That's something that
+I don't think I could
 
 187
-00:10:24.110 --> 00:10:26.360
-education that people come into
-this with. Yeah. We've had
+00:11:56.470 --> 00:12:01.720
+explain to nontechnical parent Cambridge
+Analytica. Look what happened in
 
 188
-00:10:26.360 --> 00:10:29.690
-folks with GDS and you
-know, who just had been
+00:12:01.740 --> 00:12:06.990
+2016, the idea that you
+would go on Facebook and
 
 189
-00:10:29.690 --> 00:10:33.590
-teaching themselves to code for
-years. And then we've had
+00:12:07.260 --> 00:12:12.390
+you're the friends of your
+friends, their information is now
 
 190
-00:10:33.590 --> 00:10:37.340
-people with advanced degrees in
-other fields who now decided
+00:12:12.390 --> 00:12:17.970
+available because you completed a
+survey that did not disclose
 
 191
-00:10:37.340 --> 00:10:39.770
-they want to get into
-software development. And I think
+00:12:18.540 --> 00:12:21.120
+that it was actually not
+so much a survey as
 
 192
-00:10:39.770 --> 00:10:43.670
-actually we've been really successful
-in attracting women to these
+00:12:21.120 --> 00:12:25.110
+a means into your private
+data. So the point I'm
 
 193
-00:10:43.670 --> 00:10:46.760
-fields. I think a lot
-of women go into college
+00:12:25.110 --> 00:12:30.360
+making is we have two
+irreconcilable principles and they're both
 
 194
-00:10:46.760 --> 00:10:50.330
-and start out as English
-majors or philosophy sociology, kind
+00:12:30.780 --> 00:12:35.520
+good principles. The privacy of
+this data is really, really
 
 195
-00:10:50.330 --> 00:10:54.110
-of the softer sciences, and
-then decide they want to
+00:12:35.520 --> 00:12:38.940
+important. People have to know
+that no one's opening their
 
 196
-00:10:54.110 --> 00:10:56.750
-get into a tech career,
-but can't necessarily afford to
+00:12:38.970 --> 00:12:42.750
+mail, essentially, you know, but,
+but on the other hand,
 
 197
-00:10:56.750 --> 00:10:59.420
-start from the beginning again.
-But we give them an
+00:12:43.200 --> 00:12:48.720
+the sophistication and the frankly,
+the attention span of the
 
 198
-00:10:59.420 --> 00:11:04.700
-opportunity to cost-effectively launch their
-careers in tech. And so
+00:12:48.720 --> 00:12:55.110
+casual user is just not
+correlated. It's not in proportion
 
 199
-00:11:05.240 --> 00:11:08.840
-are actually, our next class
-was over 50% women. And
+00:12:55.620 --> 00:12:58.830
+to the complex nature of
+what you're giving up when
 
 200
-00:11:08.870 --> 00:11:11.510
-a lot of them have
-those kinds of backgrounds who,
+00:12:58.830 --> 00:13:02.610
+you're on the internet. So
+there is this disconnect between
 
 201
-00:11:11.570 --> 00:11:15.020
-you know, have a college
-degree, but in something else
+00:13:03.360 --> 00:13:06.510
+the something, an activity that
+you're doing that seems to
 
 202
-00:11:15.050 --> 00:11:18.950
-and now want to get
-into technology. Yeah. It really
+00:13:06.510 --> 00:13:10.140
+be innocuous and innocent and
+that you're in control of.
 
 203
-00:11:18.950 --> 00:11:21.050
-resonated with me when you
-said that everyone has that
+00:13:10.170 --> 00:13:12.810
+And then whether you actually
+are in control of it,
 
 204
-00:11:21.050 --> 00:11:24.020
-story of that person with
-a non tech degree, who
+00:13:13.320 --> 00:13:16.290
+and then how you reconcile
+those two things without becoming
 
 205
-00:11:24.020 --> 00:11:26.000
-is the best program where
-they ever met the best
+00:13:16.350 --> 00:13:20.970
+overly regulatory and overly complex.
+Right? And if you think
 
 206
-00:11:26.000 --> 00:11:28.700
-one I ever met had
-a masters in music. Yeah.
+00:13:20.970 --> 00:13:24.240
+about just simply the act
+of being on the internet
 
 207
-00:11:28.730 --> 00:11:33.770
-Actually music majors are really
-great software developers. There's something
+00:13:24.660 --> 00:13:28.320
+is enough to give your
+IP address away, which is
 
 208
-00:11:33.770 --> 00:11:36.020
-with the mindset of a
-music major that makes you
+00:13:28.320 --> 00:13:31.440
+enough to get very likely
+to hear municipality, if not
 
 209
-00:11:36.020 --> 00:11:38.600
-a really great software developer.
-And we've had actually several
+00:13:31.680 --> 00:13:35.070
+your neighborhood, without even using
+any JavaScript at all. So
 
 210
-00:11:38.600 --> 00:11:43.520
-really talented musicians come into
-our program. You mentioned also
+00:13:35.070 --> 00:13:39.600
+simply visiting a site is
+giving information, logging an IP
 
 211
-00:11:43.520 --> 00:11:46.790
-that you're pulling from kind
-of nontraditional places. You said
+00:13:39.600 --> 00:13:42.420
+address, I assume is a
+problem. If I am a,
 
 212
-00:11:46.820 --> 00:11:49.640
-millennials, but you also mentioned
-the foster care system. But
+00:13:43.200 --> 00:13:45.780
+a site owner, if I'm
+logging IP addresses, I'm indirectly
 
 213
-00:11:49.640 --> 00:11:52.970
-I understand also that you
-have had a convicted felons,
+00:13:45.780 --> 00:13:50.190
+logging where you are. Is
+that allowed if I don't
 
 214
-00:11:53.020 --> 00:11:56.260
-which are folks who very
-often feel like construction or
+00:13:50.610 --> 00:13:54.030
+keep track of who you
+are? Well, yeah, that's that,
 
 215
-00:11:56.260 --> 00:11:58.810
-food service is all that
-they're able to define from
+00:13:54.030 --> 00:13:57.210
+that's the whole point is
+that all those sorts of
 
 216
-00:11:58.810 --> 00:12:02.520
-a jobs perspective. Yeah. I
-mean, you know, companies are
+00:13:57.210 --> 00:14:02.160
+activities are impacted by these
+regulations. And then let me
 
 217
-00:12:02.720 --> 00:12:06.870
-much more open to, you
-know, look overlooking people's backgrounds.
+00:14:02.160 --> 00:14:07.080
+just take it to another
+level because the States of
 
 218
-00:12:06.900 --> 00:12:10.140
-But the story we have
-with a felon was that
+00:14:07.080 --> 00:14:13.530
+the United States are passing their
+own privacy laws and regulations
 
 219
-00:12:10.560 --> 00:12:13.050
-we were in our office
-one day and this young
+00:14:14.130 --> 00:14:21.840
+that are in parallel to
+the GDPR. Meaning California just
 
 220
-00:12:13.050 --> 00:12:15.930
-man walked in and said,
-I read an article about
+00:14:21.870 --> 00:14:28.290
+passed a digital privacy law.
+And it was fascinating to
 
 221
-00:12:15.930 --> 00:12:19.140
-Heather and Forbes when I
-was in jail. And I've
+00:14:28.290 --> 00:14:32.280
+look at how that all
+went down. The state legislature
 
 222
-00:12:19.140 --> 00:12:21.540
-been teaching myself to code
-for the past 10 years.
+00:14:32.280 --> 00:14:38.910
+in California really was in
+opposition to this at first,
 
 223
-00:12:21.540 --> 00:12:24.150
-And I'd love to work
-here. And we said, great,
+00:14:39.540 --> 00:14:42.390
+but then what came out
+was that there was going
 
 224
-00:12:24.150 --> 00:12:25.800
-you know, leave us a
-resume. We'll take a look
+00:14:42.390 --> 00:14:46.950
+to be a referendum on
+it. And what the legislators
 
 225
-00:12:25.800 --> 00:12:27.540
-at it. And he said,
-I don't want to put
+00:14:46.950 --> 00:14:50.010
+realized was that if the
+referendum passed, there'd be no
 
 226
-00:12:27.540 --> 00:12:29.670
-my resume on a stack
-of resumes. I want to,
+00:14:50.010 --> 00:14:57.020
+way to hone this and
+correct any unintended consequences and
 
 227
-00:12:29.760 --> 00:12:31.950
-I really want to work
-here. And so we asked
+00:14:57.110 --> 00:15:00.230
+amend it and sort of
+make it do what they
 
 228
-00:12:31.950 --> 00:12:34.080
-them to volunteer for a
-couple of weeks, for two
+00:15:00.230 --> 00:15:03.230
+wanted it to do. So
+they felt they were boxed
 
 229
-00:12:34.080 --> 00:12:36.630
-weeks to see what he
-had. And it turned out
+00:15:03.230 --> 00:15:06.380
+in politically and they passed
+it. And it's not going
 
 230
-00:12:36.630 --> 00:12:39.960
-he was a very, very
-talented developer and he'd spent
+00:15:06.380 --> 00:15:08.570
+to go into effect for
+a couple of years until
 
 231
-00:12:39.960 --> 00:12:42.630
-a lot of time learning
-to code and he made
+00:15:08.570 --> 00:15:12.890
+2020. I understand that. But
+the larger point is that
 
 232
-00:12:42.630 --> 00:12:45.540
-some mistakes early. He was
-a fairly young guy. He
+00:15:13.220 --> 00:15:16.220
+they're going to need to
+look at this law, which,
 
 233
-00:12:45.540 --> 00:12:47.880
-was only 20 years old,
-but when he was 18,
+00:15:16.400 --> 00:15:20.510
+which has been passed in
+relation to European law, which
 
 234
-00:12:47.880 --> 00:12:51.420
-he was selling drugs and
-you know, wasn't a bad
+00:15:20.510 --> 00:15:23.960
+is regulating some of the
+same things, but not all
 
 235
-00:12:51.420 --> 00:12:55.050
-guy. He wasn't violent and
-he needed a second chance
+00:15:23.960 --> 00:15:27.230
+the same things. So there
+are differences. And then look
 
 236
-00:12:55.050 --> 00:12:57.360
-and we gave that to
-him. And she's now a
+00:15:27.230 --> 00:15:31.070
+at that in relation to
+other States that are similarly
 
 237
-00:12:57.360 --> 00:13:01.770
-really successful software developer. Does
-that seem like something that
+00:15:31.070 --> 00:15:36.260
+passing privacy regulations related to
+internet use. So now you
 
 238
-00:13:01.770 --> 00:13:05.160
-could be scalable? I wonder
-with 400 folks for five
+00:15:36.260 --> 00:15:39.830
+have a patchwork of not
+just countries, but States in
 
 239
-00:13:05.160 --> 00:13:07.860
-spots, how do you scale
-something like this? Well, our
+00:15:39.830 --> 00:15:43.610
+the United States, all sorts of
+doing the same thing. And
 
 240
-00:13:07.860 --> 00:13:11.310
-next class is actually 20
-people and we're working with
+00:15:43.610 --> 00:15:48.920
+it becomes so chaotic that
+an eCommerce website much less
 
 241
-00:13:11.310 --> 00:13:16.230
-some really large national companies
-to create a larger talent
+00:15:48.980 --> 00:15:53.030
+a, a developer who is
+working under a master services
 
 242
-00:13:16.230 --> 00:13:20.100
-strategy for them. So kind
-of having them leverage our
+00:15:53.030 --> 00:15:55.310
+agreement and all the rest
+of that doesn't know what
 
 243
-00:13:20.100 --> 00:13:24.360
-apprenticeship program to streamline people
-who are specifically trained in
+00:15:55.310 --> 00:15:56.930
+to do. They don't know
+where to turn. They don't
 
 244
-00:13:24.360 --> 00:13:27.750
-their technologies to go work
-for their companies. And so
+00:15:56.930 --> 00:16:01.360
+know how to comply. Yeah,
+I'm, I'm hearing questions online
 
 245
-00:13:27.750 --> 00:13:30.960
-we'd see, 'em, we'd probably
-be in three different cities
+00:16:01.360 --> 00:16:04.960
+that are difficult for anyone
+to parse. An example was
 
 246
-00:13:30.960 --> 00:13:33.930
-in the next couple of
-years. And, you know, I
+00:16:05.670 --> 00:16:07.750
+we talked about opting in,
+but certainly a big part
 
 247
-00:13:33.930 --> 00:13:36.570
-could see us building out
-our Boulder Denver presence quite
+00:16:07.750 --> 00:16:10.960
+of the GDPR is the
+right to be forgotten, right?
 
 248
-00:13:36.570 --> 00:13:39.360
-a bit in the next
-few years as well. I've
+00:16:10.960 --> 00:16:14.620
+The explicit opt out. So
+let's say for example, I'm
 
 249
-00:13:39.360 --> 00:13:43.020
-heard interns at big companies,
-the Microsofts and the Googles
+00:16:14.620 --> 00:16:17.320
+encrypting all the data that's
+being kept of my users.
 
 250
-00:13:43.020 --> 00:13:45.960
-and the Facebooks say that
-they felt that the pace
+00:16:18.130 --> 00:16:22.090
+And then you've decided to
+opt out, you've invoked your
 
 251
-00:13:45.960 --> 00:13:48.240
-was too much and that
-the engineers that were working
+00:16:22.090 --> 00:16:25.920
+right to be forgotten if
+I delete the, the, the
 
 252
-00:13:48.240 --> 00:13:50.910
-there, I didn't have time
-to sit with them. And
+00:16:26.020 --> 00:16:30.310
+encryption key, but your data
+exists on disc in some
 
 253
-00:13:50.910 --> 00:13:53.400
-to really spend that time.
-How do you build that
+00:16:30.310 --> 00:16:33.880
+format, but it cannot be
+accessed. Have I deleted you
 
 254
-00:13:53.400 --> 00:13:56.880
-into something as, as, as
-competitive as, as you know,
+00:16:33.910 --> 00:16:36.940
+Or not? That's a good
+sort of technical architecture, The
 
 255
-00:13:56.880 --> 00:13:59.640
-software for hire? Yeah. Well,
-it's interesting in our field
+00:16:36.940 --> 00:16:39.910
+questions that how could anyone
+know that it would really
 
 256
-00:13:59.640 --> 00:14:02.820
-too, is when people like
-Microsoft or Google talk about
+00:16:39.910 --> 00:16:43.090
+just be your as a
+lawyers interpretation of the law?
 
 257
-00:14:02.820 --> 00:14:05.520
-an entry level software developer,
-they're really talking about somebody
+00:16:43.630 --> 00:16:46.090
+Wouldn't it. Let me, let
+me give you my take
 
 258
-00:14:05.520 --> 00:14:08.430
-with three to five years
-of experience and you can't
+00:16:46.090 --> 00:16:49.760
+on that. In my experience
+with that, you know, I,
 
 259
-00:14:08.430 --> 00:14:10.920
-get three to five years
-of experience. If nobody will
+00:16:49.760 --> 00:16:54.730
+I, our firm, we do
+a huge amount of e-commerce
 
 260
-00:14:10.920 --> 00:14:13.710
-take a junior level person
-with less than that. So
+00:16:54.730 --> 00:16:57.640
+work and work with digital
+clients. And one of the
 
 261
-00:14:13.710 --> 00:14:16.710
-it was kind of this
-interesting catch 22, but that's
+00:16:57.640 --> 00:17:02.380
+things that comes up a
+great deal is newspapers in
 
 262
-00:14:16.710 --> 00:14:19.050
-really where we come in
-to bridge that gap. And
+00:17:02.380 --> 00:17:07.960
+the United States, major publications that
+are refusing to take down
 
 263
-00:14:19.050 --> 00:14:23.340
-we are taking people and
-giving them that initial entree
+00:17:07.960 --> 00:17:12.070
+articles that are incorrect about
+my clients. So I get
 
 264
-00:14:23.370 --> 00:14:26.430
-into this field. I mean,
-if you think about somebody
+00:17:12.070 --> 00:17:15.910
+people contacting me, asking me
+to as a last resort,
 
 265
-00:14:26.430 --> 00:14:29.670
-coming through a bootcamp and
-you look on their resume
+00:17:15.910 --> 00:17:18.400
+cause they've tried for years
+to get this stuff down.
 
 266
-00:14:29.670 --> 00:14:33.240
-and it says Starbucks bootcamp,
-and now I want a
+00:17:19.420 --> 00:17:21.730
+They can't, they can't get
+a job. They go on
 
 267
-00:14:33.240 --> 00:14:37.290
-job as opposed to somebody
-who comes from Starbucks, then
+00:17:21.730 --> 00:17:24.340
+job interviews. Somebody goes on,
+Google puts their name in
 
 268
-00:14:37.380 --> 00:14:41.670
-apprenticeship program. Then I was
-an employee at tectonic, and
+00:17:24.340 --> 00:17:26.590
+and finds out that they
+did these horrible things. They
 
 269
-00:14:41.670 --> 00:14:43.770
-now I'm looking for a
-job. That second person is
+00:17:26.590 --> 00:17:29.140
+assaulted somebody, they were involved
+in summer, but none of
 
 270
-00:14:43.770 --> 00:14:46.110
-going to be a lot
-more attractive because they have
+00:17:29.140 --> 00:17:32.110
+it's true. It was just
+erroneous reporting in the heat
 
 271
-00:14:46.110 --> 00:14:50.070
-on the job experience and
-much higher percentage of getting
+00:17:32.110 --> 00:17:35.590
+of a confrontation of some
+type. They didn't do anything.
 
 272
-00:14:50.070 --> 00:14:53.540
-placed at a great company.
-So it's that bootcamp doesn't
+00:17:36.220 --> 00:17:40.510
+And the newspaper literally refuses
+to take it down, even
 
 273
-00:14:53.540 --> 00:14:56.840
-necessarily give you the launch.
-You need, you really need
+00:17:40.510 --> 00:17:44.740
+if it's incorrect. So you
+have a situation where the
 
 274
-00:14:56.840 --> 00:14:59.990
-that job experience. And that's
-the stop gap that we
+00:17:44.740 --> 00:17:48.610
+newspaper is asserting its first
+amendment, right? First amendment to
 
 275
-00:14:59.990 --> 00:15:04.420
-provide. How much context do
-you think people need in
+00:17:48.610 --> 00:17:53.670
+the United States constitution. The Supreme
+court will normally back that
 
 276
-00:15:04.420 --> 00:15:07.630
-just using a computer I've
-met? Well, we were joking
+00:17:53.670 --> 00:17:57.720
+up. And then that newspaper
+now has to decide not
 
 277
-00:15:07.630 --> 00:15:12.760
-about something recently on Twitter.
-Jack Ryan is on Amazon right
+00:17:57.720 --> 00:18:01.020
+so much whether they want
+to take it down because
 
 278
-00:15:12.760 --> 00:15:15.580
-now and he has a
-PhD in economics and he
+00:18:01.020 --> 00:18:03.390
+this person has a right
+to be forgotten because it's
 
 279
-00:15:15.580 --> 00:15:20.140
-made a comment about using
-SQL queries, you know, and
+00:18:03.390 --> 00:18:06.450
+an erroneous article. That's not
+the issue. The issue is
 
 280
-00:15:20.140 --> 00:15:22.810
-everyone's talking about that. And
-one of the people, someone
+00:18:06.450 --> 00:18:08.850
+they want to keep it
+up, but now they're being
 
 281
-00:15:22.810 --> 00:15:24.730
-from academia came in and
-said, well, he has a
+00:18:08.850 --> 00:18:10.950
+forced to take it down
+by a law of another
 
 282
-00:15:24.730 --> 00:15:27.760
-PhD in economics. Like don't
-expect him to talk like
+00:18:10.950 --> 00:18:16.110
+country. So it becomes highly
+complicated and, and it's just
 
 283
-00:15:27.760 --> 00:15:30.010
-a software engineer. And I
-thought that was a really
+00:18:16.110 --> 00:18:18.570
+not the way these decisions
+should be made. They should
 
 284
-00:15:30.010 --> 00:15:33.010
-interesting comment because just because
-someone has an advanced degree
+00:18:18.570 --> 00:18:20.700
+be made on the merits
+of somebody deserves to be
 
 285
-00:15:33.370 --> 00:15:36.490
-in anything engineering or otherwise,
-it doesn't mean that they're
+00:18:20.700 --> 00:18:24.540
+forgotten. You should have a
+dialogue with the newspaper and
 
 286
-00:15:36.490 --> 00:15:40.540
-an expert computer user, which
-brings me to the question
+00:18:24.540 --> 00:18:26.580
+the newspaper should be reasonable.
+And there should be some
 
 287
-00:15:40.540 --> 00:15:42.850
-I'm noticing as I teach
-my 10 and 12 year
+00:18:26.580 --> 00:18:30.360
+kind of compromise on some
+level, even, even just a
 
 288
-00:15:42.850 --> 00:15:46.120
-olds that they get lost
-in the computer a lot,
+00:18:30.360 --> 00:18:34.680
+second article or something or
+correction, but that's not what's
 
 289
-00:15:46.150 --> 00:15:48.790
-they can browse, but if
-they could lose a file,
+00:18:34.680 --> 00:18:36.870
+going on. What's going on
+is what you're talking about,
 
 290
-00:15:48.820 --> 00:15:51.700
-it might end up on
-C colon temp instead of
+00:18:36.870 --> 00:18:40.110
+which is at a digital
+level, they may delete the
 
 291
-00:15:51.700 --> 00:15:54.610
-their desktop. And then they
-go hunting for it. I
+00:18:40.110 --> 00:18:47.070
+article. Well, deleting the article
+comes very close to modifying
 
 292
-00:15:54.610 --> 00:15:56.830
-could see the same things
-happening with someone starting out
+00:18:47.070 --> 00:18:51.720
+the historical record. You know,
+it, it gets very close
 
 293
-00:15:56.830 --> 00:16:00.310
-as an engineer, getting confused
-as they move around the
+00:18:51.720 --> 00:18:54.330
+to exactly what, what you
+don't want to have in
 
 294
-00:16:00.310 --> 00:16:03.100
-machine itself. Well, most of
-the people that come to
+00:18:54.330 --> 00:18:59.250
+a, in a democracy that,
+that, that prizes, civil liberties.
 
 295
-00:16:03.100 --> 00:16:05.740
-us kind of already know
-they want to get into
+00:18:59.640 --> 00:19:01.920
+So how do you balance
+all of that? And that's
 
 296
-00:16:05.740 --> 00:16:09.670
-this career and have really
-started dabbling in, you know,
+00:19:01.920 --> 00:19:06.350
+really the question And definitely
+an unintended consequence and that
 
 297
-00:16:09.670 --> 00:16:13.480
-computers and building code and
-writing applications. And most of
+00:19:06.350 --> 00:19:08.600
+echo is going to echo
+through for, for many years.
 
 298
-00:16:13.480 --> 00:16:16.360
-them have written something on
-their own or at least
+00:19:09.080 --> 00:19:11.510
+Hey friends, this is Scott.
+You know, listening to podcasts
 
 299
-00:16:16.360 --> 00:16:19.720
-gone onto code Academy and
-taken a few classes. But
+00:19:11.510 --> 00:19:13.220
+is a great way to
+keep up to date on
 
 300
-00:16:19.750 --> 00:16:22.060
-you know, in this day
-and age, like everybody should
+00:19:13.220 --> 00:19:16.670
+technology. Since we're always learning
+as software people. And you
 
 301
-00:16:22.060 --> 00:16:25.270
-know what SQL Curry is,
-right. Everybody should have some
+00:19:16.670 --> 00:19:19.460
+can also find a job
+by listening to a podcast.
 
 302
-00:16:25.270 --> 00:16:28.330
-kind of foundation in what
-it takes to make a
+00:19:19.470 --> 00:19:22.610
+If you check out our
+new sponsor, hired.com, that's H
 
 303
-00:16:28.330 --> 00:16:31.840
-computer are, do what you
-want it to do. And,
+00:19:22.610 --> 00:19:27.950
+I R E d.com/hansel minutes
+on hire.com. Software engineers can
 
 304
-00:16:31.900 --> 00:16:35.200
-you know, maybe instead of
-teaching Shakespeare going forward, you
+00:19:27.950 --> 00:19:30.920
+get interview requests from companies
+that want to hire you.
 
 305
-00:16:35.200 --> 00:16:38.290
-know, we should be teaching,
-you know, the basics of
+00:19:31.250 --> 00:19:33.290
+Each offer will have the
+salary and the equity up
 
 306
-00:16:38.290 --> 00:16:43.180
-software development. And so that,
-yeah, absolutely not nothing against
+00:19:33.290 --> 00:19:36.470
+front. You can view those
+interview requests and, you know,
 
 307
-00:16:43.180 --> 00:16:46.720
-Shakespeare. Yeah, of course. My
-10 year old recently took
+00:19:36.470 --> 00:19:38.810
+except project change the offer
+before even talking to a
 
 308
-00:16:46.720 --> 00:16:49.660
-a class that was called
-tech skills for middle school
+00:19:38.810 --> 00:19:40.790
+company. It's a great way
+to find out what's out
 
 309
-00:16:49.660 --> 00:16:53.020
-success. And it was literally,
-you know, copying files from
+00:19:40.790 --> 00:19:43.430
+there and maybe make a
+move they're working with over
 
 310
-00:16:53.020 --> 00:16:55.150
-here to there opening word
-and doing those kinds of
+00:19:43.430 --> 00:19:47.810
+6,000 companies from startups to
+large companies from 14 major
 
 311
-00:16:55.150 --> 00:16:56.710
-things. I think a lot
-of stuff that people take
+00:19:47.810 --> 00:19:50.960
+tech hubs throughout North America
+and Europe. What's great about
 
 312
-00:16:57.100 --> 00:17:00.370
-to people take for granted
-a big thank you to
+00:19:50.960 --> 00:19:54.020
+this is it's totally free
+for software engineers. And if
 
 313
-00:17:00.370 --> 00:17:02.860
-our sponsors because they make
-this show possible. And I
+00:19:54.020 --> 00:19:57.260
+you get a job to
+hire.com, that'll ordinarily give you
 
 314
-00:17:02.860 --> 00:17:05.440
-hope that you support them
-the way they support us
+00:19:57.260 --> 00:20:00.110
+a $300. Thank you bonus.
+But if you use our
 
 315
-00:17:06.190 --> 00:17:09.160
-progress. Software is the creator
-of the most comprehensive developer
+00:20:00.110 --> 00:20:02.780
+special link, they'll double that
+bonus. So you'll actually get
 
 316
-00:17:09.160 --> 00:17:12.700
-toolkit for building modern apps
-on the market. Today Tellerik
+00:20:02.780 --> 00:20:06.440
+paid $600 when you accept
+that job. Now, if you're
 
 317
-00:17:12.760 --> 00:17:16.900
-dev craft with more than
-1100 tellerik.net and Kendo, UI
+00:20:06.440 --> 00:20:08.450
+not looking for a job,
+but you know, someone who
 
 318
-00:17:16.900 --> 00:17:21.010
-JavaScript components and controls. You
-can easily build modern high-performance
+00:20:08.450 --> 00:20:12.320
+is refer them to hire.com/hansel
+minutes, and they'll give you
 
 319
-00:17:21.010 --> 00:17:24.550
-web mobile and desktop apps,
-as well as chatbots. The
+00:20:12.320 --> 00:20:16.550
+a lead bonus, a $1,337
+bonus when they accept a
 
 320
-00:17:24.550 --> 00:17:28.450
-tool set also includes reporting
-solutions, automated testing, and productivity
+00:20:16.550 --> 00:20:19.970
+job. So check them out
+at <inaudible> dot com slash
 
 321
-00:17:28.450 --> 00:17:31.870
-tools, and come to the
-range of support options. New
+00:20:20.000 --> 00:20:23.810
+Hanselman. Let's talk about the
+size of companies like in
 
 322
-00:17:31.870 --> 00:17:34.570
-this year is a free
-online training program for all
+00:20:23.810 --> 00:20:27.020
+my day job, I work
+at Microsoft and it's big
 
 323
-00:17:34.570 --> 00:17:38.260
-license holders, with this alongside
-thousands of demos and source
+00:20:27.020 --> 00:20:30.350
+enough that it has a
+whole GDPR department, you know,
 
 324
-00:17:38.260 --> 00:17:41.830
-code available, comprehensive documentation and
-a full assortment of visual
+00:20:30.350 --> 00:20:32.930
+and it's not a temporary
+thing anymore. Like it's full
 
 325
-00:17:41.830 --> 00:17:44.530
-studio templates, you'll be up
-and running with the progress
+00:20:32.930 --> 00:20:36.650
+time making sure that people
+don't do the wrong thing,
 
 326
-00:17:44.530 --> 00:17:48.160
-Tellerik and Kendo UI controls
-in no time download a
+00:20:36.650 --> 00:20:39.620
+which is good from a
+privacy perspective. And in my
 
 327
-00:17:48.160 --> 00:17:54.480
-free 30 day trial today
-At tellerik.com/hanselman that's T L
+00:20:39.620 --> 00:20:43.160
+side job, I have a
+podcast and a blog, and
 
 328
-00:17:54.720 --> 00:18:01.320
-E R I k.com/hanselman. So
-when people come into your,
+00:20:44.210 --> 00:20:48.940
+there are a million or
+millions of little small developers
 
 329
-00:18:01.550 --> 00:18:05.040
-your program, now they are
-given that the title apprentice,
+00:20:49.240 --> 00:20:51.490
+that have no idea. If
+they're going to get nailed.
 
 330
-00:18:05.070 --> 00:18:08.190
-then junior engineer, what kind
-of money can they can
+00:20:51.490 --> 00:20:55.060
+Am I going to lose
+my house? If someone comes
 
 331
-00:18:08.190 --> 00:18:11.400
-someone make? And if they
-started as a junior engineer,
+00:20:55.060 --> 00:20:58.030
+and says, I want to
+be forgotten off of your
 
 332
-00:18:11.400 --> 00:18:14.760
-do, does it help or
-hinder their long term earning
+00:20:58.030 --> 00:21:01.240
+blog and I don't have
+a way to solve that.
 
 333
-00:18:14.760 --> 00:18:18.000
-potential? Well, when we, when
-you first come into our
+00:21:01.930 --> 00:21:05.700
+Well, you're absolutely right. The
+first day that the GDPR
 
 334
-00:18:18.000 --> 00:18:21.660
-apprenticeship program, you'll make $15
-an hour to start. And
+00:21:05.700 --> 00:21:10.710
+was enforced, there were complaints
+filed against a bunch of
 
 335
-00:18:21.660 --> 00:18:25.560
-that actually starts stepping up
-and junior engineers really, depending
+00:21:10.710 --> 00:21:16.830
+these very large companies. Facebook
+is an obvious example, $664,000
 
 336
-00:18:25.560 --> 00:18:27.480
-on the level that you
-finish up at and the
+00:21:16.830 --> 00:21:21.480
+was the equivalent of that
+fine and dollars based upon
 
 337
-00:18:27.480 --> 00:18:30.450
-kinds of responsibility that you're
-taking on, I mean, you
+00:21:21.480 --> 00:21:25.500
+what they, what happened with
+Cambridge Analytica. You know, you're
 
 338
-00:18:30.450 --> 00:18:33.810
-can make anywhere from 50
-to 75,000 a year, and
+00:21:25.500 --> 00:21:29.100
+talking about Google being found
+fine for abusing its mobile
 
 339
-00:18:33.810 --> 00:18:37.740
-we've had people start all
-within those ranges. And then,
+00:21:29.100 --> 00:21:33.810
+software monopoly five point $1 billion.
+They got a two point
 
 340
-00:18:37.740 --> 00:18:41.580
-you know, as it actually
-scales up very quickly from
+00:21:33.810 --> 00:21:38.430
+$7 billion fine for a prior
+year for abusing a search
 
 341
-00:18:41.580 --> 00:18:46.050
-there. So within three years
-you can be making $90,000
+00:21:38.430 --> 00:21:41.580
+monopoly. So my point is,
+all these big companies are
 
 342
-00:18:46.050 --> 00:18:50.190
-a year. It's a, it's
-a really fast career path.
+00:21:41.580 --> 00:21:45.450
+getting fined, enormous amounts of
+money, but they're not missing
 
 343
-00:18:50.220 --> 00:18:52.980
-And the unemployment rate in
-at least in Colorado is
+00:21:45.450 --> 00:21:49.320
+a beat. The fines are
+not destroying them. The fines
 
 344
-00:18:52.980 --> 00:18:56.040
-less than 2% for software
-developers. So you can really,
+00:21:49.320 --> 00:21:53.010
+are not putting them out
+of business. Whereas someone like
 
 345
-00:18:56.790 --> 00:19:00.270
-you know, bounce around and
-look for higher and higher
+00:21:53.010 --> 00:21:56.940
+you're describing someone such as
+yourself operating something on your
 
 346
-00:19:00.270 --> 00:19:02.460
-salaries, or you can look
-for more and more meaningful
+00:21:56.940 --> 00:22:00.840
+own, you know, if you
+even get a modest, fine,
 
 347
-00:19:02.460 --> 00:19:06.240
-work whatever's important to you.
-But yeah, the pay is
+00:22:01.950 --> 00:22:05.130
+that can shut you down.
+So there was a, there
 
 348
-00:19:06.240 --> 00:19:08.850
-definitely there. And I mean,
-really what we're doing is
+00:22:05.130 --> 00:22:09.870
+was a disproportionality of impact.
+The fact that, that these
 
 349
-00:19:08.850 --> 00:19:11.610
-we're providing a great pathway
-to a middle class career
+00:22:09.870 --> 00:22:12.840
+fines are large is not
+the issue. The issue is
 
 350
-00:19:11.910 --> 00:19:14.850
-without having to incur any
-of that college debt. If
+00:22:12.840 --> 00:22:16.560
+the proportionality of the fine
+to the ability to pay.
 
 351
-00:19:14.850 --> 00:19:18.030
-that's the route you're taking
-with us. And I shop
+00:22:18.000 --> 00:22:21.390
+And one of the wonderful
+things about the, the internet
 
 352
-00:19:18.060 --> 00:19:21.000
-somewhere, if I, if I'm,
-if I remember correctly that
+00:22:21.390 --> 00:22:25.290
+about, about the web is
+that anybody can just throw
 
 353
-00:19:21.000 --> 00:19:24.570
-you had something like a
-95% placement rate. Yeah. Because
+00:22:25.290 --> 00:22:30.210
+up a website with very
+little capital and just go,
 
 354
-00:19:24.570 --> 00:19:26.430
-I mean, if you make
-it, our, first of all,
+00:22:31.020 --> 00:22:33.720
+it's not the same kind
+of infrastructure that has to
 
 355
-00:19:26.430 --> 00:19:28.920
-our selection process is really
-hard to get through. And
+00:22:33.720 --> 00:22:35.310
+be paid for when you
+have a brick and mortar
 
 356
-00:19:28.920 --> 00:19:31.440
-then once you get through
-the class and then you're
+00:22:35.310 --> 00:22:37.920
+business, the way it used
+to be. But, but if
 
 357
-00:19:31.440 --> 00:19:33.450
-on the floor with us
-for awhile. So there's a
+00:22:37.950 --> 00:22:41.550
+by going, you're going right
+into a sand trap and
 
 358
-00:19:33.450 --> 00:19:37.080
-lot of hoops to get
-through. And, you know, if
+00:22:41.550 --> 00:22:44.790
+you're going to be bankrupted
+by some kind of crazy
 
 359
-00:19:37.080 --> 00:19:38.850
-you can make it through
-all that, you will be
+00:22:44.790 --> 00:22:49.950
+fine that you never anticipated.
+That's a problem. And it's
 
 360
-00:19:38.850 --> 00:19:42.570
-successful in this field. And
-really the people, the 5%
+00:22:49.950 --> 00:22:54.540
+an unintended consequence of all
+this. And I also want
 
 361
-00:19:42.600 --> 00:19:46.140
-who are not included, or
-just decided to, you know,
+00:22:54.540 --> 00:22:57.240
+to, if I may just
+sort of get to another
 
 362
-00:19:46.170 --> 00:19:49.860
-go back to school or
-stay at home with kids
+00:22:57.240 --> 00:23:01.620
+level on this issue, because
+when you think about it,
 
 363
-00:19:49.860 --> 00:19:53.850
-kind of things. But yeah,
-it's, it's a great career
+00:23:02.370 --> 00:23:06.600
+the other countries are getting
+involved in this regulation of
 
 364
-00:19:53.850 --> 00:19:57.930
-path. I understand that inclusion
-is a big part of
+00:23:06.600 --> 00:23:10.590
+privacy on the internet, various
+States, such as California and
 
 365
-00:19:57.930 --> 00:20:00.180
-this. You're bringing in women,
-you're bringing in people of
+00:23:10.590 --> 00:23:15.690
+others are getting involved, but
+someone's missing that. Someone's missing
 
 366
-00:20:00.180 --> 00:20:04.410
-color veterans at risk youth.
-Everyone has a different communication
+00:23:15.690 --> 00:23:21.450
+from the discussion. Well, the
+United States government, the federal government.
 
 367
-00:20:04.410 --> 00:20:10.200
-style and you're describing a
-very, very, you know, intense
+00:23:21.450 --> 00:23:25.380
+And I will tell you
+that my view is that
 
 368
-00:20:10.380 --> 00:20:13.470
-onboarding process and vetting process.
-How do you make sure
+00:23:25.560 --> 00:23:28.980
+to some extent, one extent
+or another, and I guess
 
 369
-00:20:13.470 --> 00:20:17.160
-that you're not losing a
-potential talent because you might
+00:23:28.980 --> 00:23:32.100
+historians looking back on this
+period of history will, will
 
 370
-00:20:17.160 --> 00:20:21.180
-be thinking culture fit and
-how people communicate everyone's different.
+00:23:32.100 --> 00:23:34.170
+give us the answer. We
+don't know a completely right
 
 371
-00:20:21.180 --> 00:20:23.430
-You know, actually something I
-write about quite a bit
+00:23:34.170 --> 00:23:36.990
+now to one extent. I
+know that the reason for
 
 372
-00:20:23.430 --> 00:20:26.220
-is that I, I can't
-stand the term culture fit.
+00:23:36.990 --> 00:23:40.200
+all this chaos and the
+reason for all these questions
 
 373
-00:20:26.460 --> 00:20:31.080
-I apologize. I think too
-many companies have grabbed onto
+00:23:40.260 --> 00:23:45.090
+is that our federal government
+meaning our Congress has not
 
 374
-00:20:31.080 --> 00:20:34.710
-that. And it, to me
-it's become code for, you
+00:23:45.560 --> 00:23:49.040
+taken up the issue of
+digital privacy in a robust
 
 375
-00:20:34.710 --> 00:20:36.930
-know, we hire people who
-look like us, act like
+00:23:49.040 --> 00:23:54.560
+way. Congress de-funded its own
+office of technology years and
 
 376
-00:20:36.930 --> 00:20:39.210
-us at the same background
-as us and cause that's
+00:23:54.560 --> 00:23:57.440
+years ago, that would have
+been the place to get
 
 377
-00:20:39.210 --> 00:20:42.300
-our culture. And so what
-we have said is, you
+00:23:57.440 --> 00:23:59.390
+the kind of advice they
+need to deal with this.
 
 378
-00:20:42.300 --> 00:20:44.820
-know, we don't hire for
-cultural fit. What we hire
+00:23:59.390 --> 00:24:03.950
+They, they had Mark Zuckerberg
+testifying, but the questions they
 
 379
-00:20:44.820 --> 00:20:47.950
-for is skills. And we
-hire for people who can
+00:24:03.950 --> 00:24:06.740
+were, they were really showing
+a lack of understanding of
 
 380
-00:20:47.950 --> 00:20:51.100
-communicate effectively with us. And
-we actually like that people
+00:24:06.740 --> 00:24:11.660
+what Facebook does. So my
+point is that in past,
 
 381
-00:20:51.100 --> 00:20:53.530
-are all different kinds of
-backgrounds and all different kinds
+00:24:11.720 --> 00:24:15.620
+in the past, these issues
+that, that were broad, that
 
 382
-00:20:53.530 --> 00:20:57.070
-of cultures and say, we,
-you know, we write better
+00:24:15.620 --> 00:24:19.910
+related to the entire United States
+that were States were disagreeing
 
 383
-00:20:57.070 --> 00:20:59.140
-software because of it. Because
-when we come at a
+00:24:19.910 --> 00:24:23.930
+with one another. The idea
+was that each state was
 
 384
-00:20:59.140 --> 00:21:02.440
-problem, we have six people
-sitting around the table who
+00:24:23.930 --> 00:24:26.630
+sort of a laboratory of
+democracy. That's what it was
 
 385
-00:21:02.440 --> 00:21:05.920
-are coming at it from
-very different backgrounds and viewpoints.
+00:24:26.630 --> 00:24:29.960
+called. And then together, they
+would all go up to
 
 386
-00:21:06.340 --> 00:21:10.240
-And ultimately we're able to
-build better software because of
+00:24:29.960 --> 00:24:33.260
+the Supreme court. There would
+be a decision that it
 
 387
-00:21:10.240 --> 00:21:12.940
-it because we have people
-who aren't all of the
+00:24:33.260 --> 00:24:35.840
+would, they would go to
+their, to their congressmen and
 
 388
-00:21:12.940 --> 00:21:17.670
-same, you know, culture. Right.
-I appreciate that. And I
+00:24:35.840 --> 00:24:38.390
+congresswomen, and they would ask
+them to pass a law.
 
 389
-00:21:17.670 --> 00:21:19.890
-think people who are listening
-will appreciate that as well.
+00:24:38.420 --> 00:24:41.480
+And there would be a
+national consensus that would be
 
 390
-00:21:20.160 --> 00:21:23.190
-I understand also that you
-received a grant from the
+00:24:41.480 --> 00:24:47.780
+created through preemption of state
+law, federal law, primacy over
 
 391
-00:21:23.190 --> 00:21:26.040
-Colorado department of labor too,
-to grow this forward. How
+00:24:47.780 --> 00:24:52.010
+state law. That's not happening.
+That's not even on the
 
 392
-00:21:26.040 --> 00:21:27.870
-do you get visibility at
-the government level on an
+00:24:52.010 --> 00:24:55.940
+radar right now. So far
+as I know. And because
 
 393
-00:21:27.870 --> 00:21:31.530
-apprenticeship? Well, because we're a
-DOL certified apprenticeship program. It
+00:24:55.940 --> 00:24:59.660
+of that, we're all left
+to our own devices there
 
 394
-00:21:31.530 --> 00:21:35.370
-actually qualifies us for grants.
-You know, most people think
+00:25:00.020 --> 00:25:03.470
+to, to, to sort of
+sum it up. My opinion
 
 395
-00:21:35.370 --> 00:21:39.630
-of grants going to only
-nonprofits, but apprenticeship programs also
+00:25:03.740 --> 00:25:09.020
+is there should have been
+much more robust negotiations between
 
 396
-00:21:39.630 --> 00:21:43.440
-do qualify for grants. And
-there's not a ton of
+00:25:09.020 --> 00:25:12.110
+the American government and the
+European union, so that the
 
 397
-00:21:43.440 --> 00:21:46.020
-them. There's a few each
-year, but Colorado has been
+00:25:12.110 --> 00:25:15.500
+implementation of this was not
+going to be this disruptive
 
 398
-00:21:46.020 --> 00:21:49.110
-an amazing state to grow
-this program because they are
+00:25:15.530 --> 00:25:19.040
+and raise this many questions.
+Number two, there should, the
 
 399
-00:21:49.110 --> 00:21:54.000
-very interested in this apprenticeship
-concept and creating talent and
+00:25:19.040 --> 00:25:23.270
+federal government should have been
+helping small businesses and medium
 
 400
-00:21:54.000 --> 00:21:56.430
-helping to solve the skills
-gap that we have here
+00:25:23.270 --> 00:25:27.170
+sized businesses to understand their
+obligations and make it reasonable
 
 401
-00:21:56.430 --> 00:22:00.000
-in Colorado. And so we
-work really closely with our
+00:25:27.500 --> 00:25:30.920
+and assist. I'm not talking
+about handouts. I'm talking about
 
 402
-00:22:00.000 --> 00:22:05.040
-local workforce centers, with CDLE
-con Colorado department of labor
+00:25:30.920 --> 00:25:34.430
+information, places to call right
+now. We're all on our
 
 403
-00:22:05.040 --> 00:22:08.640
-and employment to, to help
-grow this. And they've really
+00:25:34.430 --> 00:25:37.640
+own. And number three, I
+do believe States should be
 
 404
-00:22:08.640 --> 00:22:13.350
-been instrumental partners in this
-entire process for us. And
+00:25:37.640 --> 00:25:41.300
+able to put in place
+privacy regulations and laws. Of
 
 405
-00:22:13.350 --> 00:22:15.540
-you've been appointed to a
-board by the governor to
+00:25:41.300 --> 00:25:43.220
+course, that that is something
+the state should be able
 
 406
-00:22:15.540 --> 00:22:17.580
-work on things like that.
-Yeah. I'm on the Colorado
+00:25:43.220 --> 00:25:46.430
+to do, but there should
+also be an overarching way
 
 407
-00:22:17.580 --> 00:22:22.050
-workforce development board. And actually
-I'm just getting started. I've
+00:25:46.430 --> 00:25:49.550
+that the federal government is
+organizing this. So that business
 
 408
-00:22:22.050 --> 00:22:24.810
-only attended two meetings thus
-far, but it's actually been
+00:25:49.880 --> 00:25:54.860
+has predictability and simplicity because
+if you don't have that,
 
 409
-00:22:24.810 --> 00:22:30.060
-really interesting digging in from
-policy level into these workforce
+00:25:55.370 --> 00:26:00.760
+the very unknown becomes a
+drag on commerce. And just
 
 410
-00:22:30.060 --> 00:22:33.690
-solutions because you know, if
-companies can't find the right
+00:26:00.760 --> 00:26:02.860
+to give a little bit
+of context for folks who
 
 411
-00:22:33.690 --> 00:22:37.410
-talent, they can't grow. And
-you know, obviously in Colorado,
+00:26:02.860 --> 00:26:06.340
+might not have it in
+1972, the office of technology
 
 412
-00:22:37.410 --> 00:22:42.450
-the politicians are very interested
-in keeping us growing Last
+00:26:06.340 --> 00:26:11.680
+assessment was created. It was
+defunded in 1995. And interestingly
 
 413
-00:22:42.450 --> 00:22:45.930
-year about December-ish the U
-S rate unemployment rate was
+00:26:11.680 --> 00:26:16.000
+enough, in June of 2018,
+it was at attempted to
 
 414
-00:22:45.930 --> 00:22:50.550
-about four, 4.1, but Colorado
-has a, almost 3% or
+00:26:16.000 --> 00:26:19.990
+put in an amendment to
+reinstate that long defunct office.
 
 415
-00:22:50.550 --> 00:22:52.110
-a little bit less than
-3%. So you've got a
+00:26:19.990 --> 00:26:23.140
+And that was voted down
+a long party. And that
 
 416
-00:22:52.110 --> 00:22:54.600
-really low unemployment rate, but
-then you commented that there
+00:26:23.140 --> 00:26:26.460
+office of technology, you are
+totally right about that. And
 
 417
-00:22:54.600 --> 00:22:58.020
-was a skills gap. So
-you've got low unemployment, but
+00:26:26.470 --> 00:26:31.420
+that office of technology assessment
+was meant to deal with
 
 418
-00:22:58.020 --> 00:23:00.090
-maybe you can't find the
-people you with the skills
+00:26:31.480 --> 00:26:34.960
+the future. It was, it
+was put in place decades
 
 419
-00:23:00.090 --> 00:23:03.450
-you need. Yeah. And that's,
-that's why our, The program
+00:26:34.960 --> 00:26:37.870
+ago with the understanding that
+they knew this is where
 
 420
-00:23:03.450 --> 00:23:06.360
-has been getting so much
-attention as because we're able
+00:26:37.870 --> 00:26:39.850
+things were headed, but they
+didn't know exactly how it
 
 421
-00:23:06.360 --> 00:23:13.110
-to convert retail workers, baristas
-into software developers. So even
+00:26:39.850 --> 00:26:42.220
+was going to go. But
+the one thing they did
 
 422
-00:23:13.110 --> 00:23:16.560
-though the Colorado economy is
-doing amazing and lots of
+00:26:42.220 --> 00:26:47.310
+know was that Congress would
+need to have objective advice
 
 423
-00:23:16.560 --> 00:23:18.990
-people are doing really well.
-There's a lot of people
+00:26:47.700 --> 00:26:50.550
+from its own body, that
+they would, they would need
 
 424
-00:23:18.990 --> 00:23:21.960
-who are left behind and
-they're in these minimum wage
+00:26:50.550 --> 00:26:55.110
+their own people to look
+at this, not lobbyists, not
 
 425
-00:23:21.990 --> 00:23:24.150
-jobs and they can't afford
-to go to a bootcamp
+00:26:55.110 --> 00:26:57.960
+people with an agenda, but
+their own people sort of
 
 426
-00:23:24.150 --> 00:23:26.310
-and they can't afford to
-get into these kinds of
+00:26:57.960 --> 00:27:00.750
+like the office of management
+and budget and things like
 
 427
-00:23:26.310 --> 00:23:29.130
-careers. And what this has
-really done for those kinds
+00:27:00.750 --> 00:27:05.310
+that, where the government advises
+itself and they defunded it.
 
 428
-00:23:29.130 --> 00:23:33.330
-of people is provided that
-bridge from barista to software
+00:27:05.930 --> 00:27:09.050
+So I've got two questions
+here. The first one is
 
 429
-00:23:33.330 --> 00:23:38.070
-developer or even English major
-into software developer. Interesting. I'm
+00:27:09.320 --> 00:27:12.500
+what, what can I, what
+can a small or medium
 
 430
-00:23:38.070 --> 00:23:40.500
-curious why you use <inaudible>
-seems to be like a
+00:27:12.500 --> 00:27:15.860
+sized business do about this?
+And should they do what
 
 431
-00:23:40.500 --> 00:23:43.320
-good go-to kind of archetype
-though, but I think we
+00:27:15.860 --> 00:27:19.160
+major us news sites are
+doing? Thousands of us news
 
 432
-00:23:43.320 --> 00:23:46.070
-all, we all know that
-person that's on way somewhere.
+00:27:19.160 --> 00:27:21.920
+sites have simply punted. I
+know that we think of
 
 433
-00:23:46.070 --> 00:23:49.570
-If they haven't chosen barista
-as their final destination, We've
+00:27:21.920 --> 00:27:25.520
+news sites as being large
+businesses, but they're surprisingly small
 
 434
-00:23:49.570 --> 00:23:53.920
-had amazing luck with baristas
-because they know that the
+00:27:25.610 --> 00:27:28.220
+businesses. And a number of
+them have just said, forget
 
 435
-00:23:54.010 --> 00:23:59.410
-customer service side they're good
-communicators, good multitaskers. We also
+00:27:28.220 --> 00:27:31.070
+it. We don't really want
+to serve the European community.
 
 436
-00:23:59.410 --> 00:24:02.080
-had amazing luck with folks
-from the Verizon store and
+00:27:31.070 --> 00:27:33.530
+And if you come in,
+we'll just, we won't even
 
 437
-00:24:02.080 --> 00:24:07.600
-the Apple store, again, personable,
-outgoing, but like technology and
+00:27:33.530 --> 00:27:37.130
+do anything with GDPR. We'll
+simply ignore the problem and
 
 438
-00:24:07.660 --> 00:24:09.760
-our, you know, kind of
-looking for the next step
+00:27:37.130 --> 00:27:42.260
+block you entirely. Right? And,
+and that, that is a
 
 439
-00:24:09.760 --> 00:24:13.030
-in their career. My wife
-and I were trying to
+00:27:42.260 --> 00:27:46.430
+major problem. And I would
+argue that that those news
 
 440
-00:24:13.030 --> 00:24:15.910
-teach the boys about that
-idea of that person that
+00:27:46.430 --> 00:27:51.410
+sites are really doing a
+disservice to their readers. Let's
 
 441
-00:24:15.910 --> 00:24:18.580
-you meet behind the counter,
-where, you know, they're going
+00:27:51.410 --> 00:27:53.960
+start with what shouldn't be
+happening and then talk about
 
 442
-00:24:18.580 --> 00:24:21.370
-somewhere. Cause they just have
-that, that spark a personality,
+00:27:53.960 --> 00:27:59.210
+what should the businesses from,
+from what I can tell
 
 443
-00:24:21.370 --> 00:24:24.610
-whether it's the person that
-puts the guacamole on your
+00:27:59.240 --> 00:28:02.150
+from, from people I see
+from clients, I see from
 
 444
-00:24:24.610 --> 00:24:27.310
-food at Chipotle, you just
-go, Hey, this person's going
+00:28:02.150 --> 00:28:06.590
+people who are just in
+this area, I will tell
 
 445
-00:24:27.310 --> 00:24:30.400
-to be running this place
-within a year. And those
+00:28:06.590 --> 00:28:10.760
+you that there is a
+patchwork of solutions. And the
 
 446
-00:24:30.400 --> 00:24:31.660
-are the kinds of people
-you want sounds like you
+00:28:10.760 --> 00:28:17.240
+patchwork generally is inadequate. You
+have people with consent banners
 
 447
-00:24:31.660 --> 00:24:34.300
-want to hire. Yes, exactly.
-And like I said, we've
+00:28:17.660 --> 00:28:22.940
+and opt out, as well
+as opt ins and not
 
 448
-00:24:34.300 --> 00:24:37.180
-had many, many of them
-come through and they've been
+00:28:22.940 --> 00:28:26.150
+making a distinction between them.
+They have something called a
 
 449
-00:24:37.210 --> 00:24:40.840
-very successful with us. Why
-do you think that apprenticeships
+00:28:26.210 --> 00:28:32.690
+nuke button to let you
+reject everything, you know, basically.
 
 450
-00:24:40.840 --> 00:24:43.360
-kind of fell out of
-Vogue after the, you know,
+00:28:32.690 --> 00:28:35.240
+And then, and then all
+sorts of banners and other
 
 451
-00:24:43.360 --> 00:24:45.880
-the eighties and nineties and
-why are we rediscovering them
+00:28:35.240 --> 00:28:38.930
+things that you do. So
+essentially it's such a panoply
 
 452
-00:24:45.910 --> 00:24:49.030
-and almost 2020, well, you
-know, for better or worse,
+00:28:38.950 --> 00:28:42.560
+of, of, of cause I'll
+call it solutions. That's, that's
 
 453
-00:24:49.060 --> 00:24:51.220
-there's been this huge push
-for people to go to
+00:28:42.560 --> 00:28:46.310
+really solving nothing. So that's
+so, so number one is
 
 454
-00:24:51.220 --> 00:24:55.030
-college. And I come from
-an immigrant family and I
+00:28:46.310 --> 00:28:49.160
+you shouldn't, you know, there's
+an old saying you don't
 
 455
-00:24:55.030 --> 00:24:57.280
-was the first generation among
-my family to go to
+00:28:49.160 --> 00:28:52.760
+want to react. What you
+want to do is respond.
 
 456
-00:24:57.280 --> 00:24:59.470
-college. And there was really
-never any question that I
+00:28:53.510 --> 00:28:57.200
+So the first thing is
+don't just do something to
 
 457
-00:24:59.470 --> 00:25:02.500
-wasn't going to go to
-college. And that was the
+00:28:57.200 --> 00:29:02.150
+do something. Number two, I
+think that there should be
 
 458
-00:25:02.500 --> 00:25:06.130
-road from, you know, my
-grandfather came from Italy as
+00:29:02.150 --> 00:29:09.500
+collaboration with the developers, with
+the outside vendors, with, with
 
 459
-00:25:07.030 --> 00:25:10.060
-you know, Mason and you
-know, then his son went
+00:29:09.530 --> 00:29:12.860
+people who are putting up
+the content, you know, the
 
 460
-00:25:10.060 --> 00:25:12.040
-to community college and then
-I was able to go
+00:29:12.860 --> 00:29:16.640
+idea of just assessing liability
+and figuring that there'll be
 
 461
-00:25:12.040 --> 00:25:13.930
-to an Ivy league college
-and that's kind of the
+00:29:16.640 --> 00:29:19.370
+a lawsuit someday, if there's
+a problem and let the
 
 462
-00:25:13.930 --> 00:25:18.490
-immigrant American dream. And everybody
-has this mindset. That college
+00:29:19.370 --> 00:29:21.620
+judge or jury figure it
+out is not really a
 
 463
-00:25:18.490 --> 00:25:20.980
-is the way, you know,
-to get into these white
+00:29:21.620 --> 00:29:24.500
+solution. I think that there
+has to be a collaborative
 
 464
-00:25:20.980 --> 00:25:25.000
-collar jobs. But you know,
-now with everybody going to
+00:29:24.500 --> 00:29:28.310
+approach within the company with
+its own vendors, with its
 
 465
-00:25:25.000 --> 00:25:29.290
-college and you know, and
-incurring so much student debt,
+00:29:28.310 --> 00:29:31.370
+own developers, where everyone's talking
+to one another, that may
 
 466
-00:25:29.290 --> 00:25:31.600
-it really isn't making as
-much sense as it did
+00:29:31.370 --> 00:29:35.060
+sound pretty straight forward, but
+I will tell you that
 
 467
-00:25:31.600 --> 00:25:34.600
-in the past. And so
-I, I heard a statistic
+00:29:35.060 --> 00:29:39.020
+the CEO of the company
+is getting advice from the
 
 468
-00:25:34.600 --> 00:25:36.070
-that used to be that
-you could work through the
+00:29:39.020 --> 00:29:43.090
+accounting firm, from the internal
+marketing people and from the
 
 469
-00:25:36.070 --> 00:25:38.170
-summer and be able to
-afford a year of college.
+00:29:43.090 --> 00:29:47.350
+developer. And it's all disjointed.
+There should be a collaboration
 
 470
-00:25:38.560 --> 00:25:40.960
-And today you'd need to
-work for an entire year
+00:29:47.350 --> 00:29:49.930
+among all of them. They
+should all be talking together
 
 471
-00:25:40.960 --> 00:25:43.180
-full time in order to
-be able to afford a
+00:29:49.930 --> 00:29:51.940
+and coming up with something
+that works for the company
 
 472
-00:25:43.180 --> 00:25:47.260
-year of college. And so
-everybody encouraging that kind of
+00:29:51.940 --> 00:29:54.370
+and complies with the law,
+which then leads me to
 
 473
-00:25:47.260 --> 00:25:50.380
-debt to be an English
-major or something, that's not
+00:29:54.370 --> 00:29:58.750
+the final point, which is,
+I think that you need
 
 474
-00:25:50.380 --> 00:25:53.050
-going to get them an
-immediate payback in terms of
+00:29:58.750 --> 00:30:01.840
+a lawyer that is sort
+of in this world and
 
 475
-00:25:53.050 --> 00:25:56.260
-a career. It's not making
-as much sense as it
+00:30:01.840 --> 00:30:06.820
+understands it because the decision
+on what to do is
 
 476
-00:25:56.260 --> 00:25:59.770
-did in the past. And
-so apprenticeships fell out of
+00:30:06.820 --> 00:30:11.440
+going to be fairly nuanced.
+And you know, that that
 
 477
-00:25:59.770 --> 00:26:03.850
-favor because you know, the
-trades, weren't a great pathway
+00:30:11.440 --> 00:30:15.400
+is a problem. And certainly
+it is another layer of
 
 478
-00:26:03.850 --> 00:26:06.580
-to a middle class career,
-but at least in Colorado,
+00:30:15.700 --> 00:30:18.820
+responsibility and other way of
+expense. And I'm not minimizing
 
 479
-00:26:06.580 --> 00:26:10.090
-there's a huge need for
-the trades and they pay
+00:30:18.820 --> 00:30:21.910
+that. I understand the problem,
+but if you, if you
 
 480
-00:26:10.090 --> 00:26:12.910
-really well. And with you
-can get into the trades
+00:30:21.910 --> 00:30:25.930
+aren't bringing all the players
+together and having them collaborate
 
 481
-00:26:12.910 --> 00:26:15.910
-without actually any college debt.
-Would you think it's fair
+00:30:26.350 --> 00:30:29.290
+to come up with some
+kind of unifying solution, which
 
 482
-00:26:15.910 --> 00:26:18.520
-to say then that software
-engineering is now part of
+00:30:29.290 --> 00:30:31.870
+I'll, I'll be, it will
+be an inadequate one because
 
 483
-00:26:18.550 --> 00:26:20.350
-the trades. Would you put
-it up there with a
+00:30:31.870 --> 00:30:35.680
+we don't know all the
+answers yet. You're making a
 
 484
-00:26:20.350 --> 00:26:23.740
-skilled electrician? I think it
-could be a it's again,
+00:30:35.680 --> 00:30:39.010
+situation worse by just reacting
+and just doing something to
 
 485
-00:26:23.740 --> 00:26:26.260
-it's something you can learn.
-It's something you don't need
+00:30:39.010 --> 00:30:42.540
+do it. So it sounds
+like those of us that
 
 486
-00:26:26.260 --> 00:26:28.780
-a full on college degree
-to be really good at.
+00:30:42.540 --> 00:30:45.840
+have small businesses, we can,
+you know, do the popups,
 
 487
-00:26:30.250 --> 00:26:33.070
-And I don't see why
-not? Yeah. Let me ask
+00:30:45.840 --> 00:30:49.320
+do the privacy policy, make
+sure that people have the
 
 488
-00:26:33.070 --> 00:26:37.030
-you this though. We see
-people doing HTML and CSS.
+00:30:49.320 --> 00:30:52.890
+right to withdraw the water,
+the right, to have their
 
 489
-00:26:37.030 --> 00:26:39.790
-Could you bring someone in
-doing IOT or hardware or
+00:30:52.890 --> 00:30:55.740
+data removed. All of the
+things that you know, the
 
 490
-00:26:39.790 --> 00:26:42.490
-cloud development? Is it just
-about front end web development
+00:30:55.740 --> 00:30:59.340
+basics, but that really should
+be looked at by someone
 
 491
-00:26:42.490 --> 00:26:45.980
-or is it software engineering
-of all flavors? It's all
+00:30:59.520 --> 00:31:02.520
+who has experienced in the
+space. I think it has
 
 492
-00:26:45.980 --> 00:26:49.010
-flavors. I mean, it can
-be taught, right? You don't
+00:31:02.520 --> 00:31:05.670
+to be. And at the
+end of the day, we
 
 493
-00:26:49.070 --> 00:26:52.700
-and you know, in college
-probably, you know, how much
+00:31:05.670 --> 00:31:09.390
+have to have a commercial
+maturity about this. And what
 
 494
-00:26:52.700 --> 00:26:55.220
-of those credits are within
-your actual major and how
+00:31:09.390 --> 00:31:13.530
+I mean by that is
+it's not about setting people
 
 495
-00:26:55.220 --> 00:26:57.710
-much of that is all
-the stuff to make you
+00:31:13.530 --> 00:31:18.120
+up to blame later on.
+If it goes wrong, that's
 
 496
-00:26:57.710 --> 00:27:01.400
-a really well rounded individual.
-And so if you kind
+00:31:18.120 --> 00:31:22.200
+a simplistic and frankly not
+constructive way of doing business.
 
 497
-00:27:01.400 --> 00:27:04.130
-of scrape away all the
-other stuff and unbundle the
+00:31:22.200 --> 00:31:24.900
+In my opinion, you know,
+the clients I work with
 
 498
-00:27:04.130 --> 00:27:06.920
-college experience so that you're
-just learning the pieces you
+00:31:24.960 --> 00:31:29.160
+generally, don't do that. You
+know, we, we tell our
 
 499
-00:27:06.920 --> 00:27:10.700
-need for your actual job,
-you know, you can be
+00:31:29.160 --> 00:31:33.840
+clients that, that we know
+this area. We know what
 
 500
-00:27:10.700 --> 00:27:13.970
-a great software developer. You
-might not be great at
+00:31:33.840 --> 00:31:35.550
+we think you should be
+doing. We're aware of the
 
 501
-00:27:13.970 --> 00:27:18.020
-cocktail parties talking about other
-things, but you'll know software
+00:31:35.550 --> 00:31:40.110
+laws, but at a certain
+level, there is always going
 
 502
-00:27:18.020 --> 00:27:22.250
-development. And you know, most
-colleges pride themselves on not
+00:31:40.110 --> 00:31:42.060
+to be a leap of
+faith as to how a
 
 503
-00:27:22.250 --> 00:27:25.730
-being trade schools, but you
-know, there is a need
+00:31:42.060 --> 00:31:46.050
+regulator or how law enforcement
+in this country or any
 
 504
-00:27:25.730 --> 00:27:29.060
-for this trade of software
-developer. And we need to
+00:31:46.050 --> 00:31:50.010
+other country would see something.
+Especially if the complaint comes
 
 505
-00:27:29.060 --> 00:27:31.970
-kind of fast track people
-into these careers just to
+00:31:50.040 --> 00:31:52.650
+not, not this month, but
+comes, you know, two years
 
 506
-00:27:31.970 --> 00:27:35.930
-support the businesses that we
-have in the country Back.
+00:31:52.650 --> 00:31:55.410
+from now. And there just
+has to be an understanding
 
 507
-00:27:36.150 --> 00:27:40.040
-I've been in software now
-for 25 years, but 15
+00:31:55.770 --> 00:31:59.730
+that ultimately the client needs
+to make the decision, but
 
 508
-00:27:40.040 --> 00:27:42.110
-years ago, I went back
-to school to finish my
+00:31:59.730 --> 00:32:02.370
+it has to be based
+upon facts. They have to
 
 509
-00:27:42.110 --> 00:27:45.590
-degree. So the first 10
-years of my software experience,
+00:32:02.370 --> 00:32:06.630
+understand the situation, which means
+that, you know, business, people
 
 510
-00:27:46.040 --> 00:27:49.790
-I was not a degreed
-software engineer. I went back
+00:32:06.660 --> 00:32:10.950
+need to immerse themselves in
+an understanding of, of the
 
 511
-00:27:49.790 --> 00:27:52.340
-for myself. I didn't go
-back because I necessarily felt
+00:32:10.950 --> 00:32:13.560
+law and the regulations they're
+dealing with. And they can't
 
 512
-00:27:52.370 --> 00:27:54.020
-pressure. I just felt like
-it was a thing that
+00:32:13.560 --> 00:32:17.040
+just abdicate that to their
+professionals. One of the, one
 
 513
-00:27:54.020 --> 00:27:59.990
-was not completed, but a
-number of people in underrepresented
+00:32:17.040 --> 00:32:20.610
+of the things we try
+to do is, is bring
 
 514
-00:27:59.990 --> 00:28:02.630
-minorities expressed to me that
-there's a certain amount of
+00:32:20.610 --> 00:32:23.340
+our clients in and not,
+not talk down to them,
 
 515
-00:28:02.630 --> 00:28:06.200
-privilege involved in being able
-to be 10, 15, 20
+00:32:24.120 --> 00:32:26.190
+not just say, look, we're
+the lawyers. We know the
 
 516
-00:28:06.200 --> 00:28:08.660
-years into the business and
-not think about your degree
+00:32:26.190 --> 00:32:28.110
+law, just do it our
+way. And if you don't
 
 517
-00:28:08.660 --> 00:28:12.950
-anymore. Well, some folks still,
-even with a decade plus
+00:32:28.110 --> 00:32:30.300
+want to do it our
+way, well, good luck. That's
 
 518
-00:28:12.950 --> 00:28:15.770
-get asked, what school did
-you go to? And as
+00:32:30.300 --> 00:32:32.820
+not how we do it.
+We explain all these things.
 
 519
-00:28:15.770 --> 00:28:18.230
-such, like you said, the
-immigrant dream is to go
+00:32:32.820 --> 00:32:35.610
+And to some extent, we
+give them a level of
 
 520
-00:28:18.230 --> 00:28:20.000
-to like an Ivy league
-school or a top tier
+00:32:35.610 --> 00:32:37.470
+a, of instruction that you
+wouldn't even see in a
 
 521
-00:28:20.000 --> 00:28:22.400
-school, as opposed to a
-state school. Do you think
+00:32:37.470 --> 00:32:40.310
+law school in terms of
+the specifics of the law
 
 522
-00:28:22.400 --> 00:28:26.390
-that that interns or pardon
-me rather apprentices who have
+00:32:40.310 --> 00:32:43.070
+and the regulations so that
+they, but the important thing
 
 523
-00:28:26.810 --> 00:28:29.540
-become engineers and then grown
-up to senior will have
+00:32:43.070 --> 00:32:46.370
+is they need the tools
+to make the decisions because
 
 524
-00:28:29.540 --> 00:28:32.540
-any kind of, for lack
-of a better word, prejudice
+00:32:46.370 --> 00:32:48.560
+ultimately they're the ones that
+are going to be dealing
 
 525
-00:28:32.630 --> 00:28:35.180
-against them saying, well, you
-came up in a nontraditional
+00:32:48.560 --> 00:32:53.330
+with the consequences to their
+business. And so the, the
 
 526
-00:28:35.180 --> 00:28:37.370
-way and then they would
-have to go back to
+00:32:53.330 --> 00:32:56.390
+real answer here is that
+if, if you, if anyone
 
 527
-00:28:37.370 --> 00:28:39.890
-school. You know, I think
-in the past that may
+00:32:56.510 --> 00:32:59.180
+assumes that there is a
+simple way of handling this,
 
 528
-00:28:39.890 --> 00:28:42.650
-have been the case. I'm
-actually still surprised at how
+00:33:00.140 --> 00:33:04.220
+they're probably wrong. It is
+complicated and you just have
 
 529
-00:28:42.650 --> 00:28:45.170
-much my education comes up
-and you know, it was
+00:33:04.220 --> 00:33:06.800
+to live with that because
+that's the world we're in.
 
 530
-00:28:45.170 --> 00:28:49.070
-20 years ago or longer
-in it. But, you know,
+00:33:08.000 --> 00:33:09.800
+Well, I appreciate you taking
+the time to chat with
 
 531
-00:28:49.130 --> 00:28:52.940
-especially in software development, once
-you've proven your chops, people
+00:33:09.800 --> 00:33:12.260
+us today. Thank you. This
+was absolutely wonderful. And I'm
 
 532
-00:28:52.940 --> 00:28:57.410
-want you on board and
-it really doesn't matter as
+00:33:12.260 --> 00:33:14.810
+glad we, we spoke about
+all these issues and if
 
 533
-00:28:57.410 --> 00:29:00.560
-much anymore. It's really matters
-what you can do. And,
+00:33:14.810 --> 00:33:23.540
+anybody wants to contact me,
+email's probably best gdn@gdnlaw.com. Gary David
 
 534
-00:29:00.590 --> 00:29:03.590
-you know, even with our
-industry credentials kind of come
+00:33:23.540 --> 00:33:28.460
+Nissenbaum, gdn@gdnlaw.com. And you know,
+I just like, I like
 
 535
-00:29:03.590 --> 00:29:06.920
-in and out of Vogue
-because, you know, you can
+00:33:28.460 --> 00:33:31.040
+it last time I was
+on your, your listeners gave
 
 536
-00:29:06.920 --> 00:29:09.350
-have all the credentials you
-need, but you could still
+00:33:31.040 --> 00:33:34.670
+me terrific feedback. And I
+just like to hear what
 
 537
-00:29:09.350 --> 00:29:13.130
-not be a great software
-developer, right? So we just
+00:33:34.670 --> 00:33:38.330
+people think. So I'm interested.
+We appreciate that they are
 
 538
-00:29:13.130 --> 00:29:16.130
-need people who can work
-well with, within a team
+00:33:38.330 --> 00:33:40.670
+some of the best listeners
+out there. And I appreciate
 
 539
-00:29:16.130 --> 00:29:19.280
-and write good code and
-think critically about what they're
+00:33:40.670 --> 00:33:44.390
+them a lot. This has
+been another episode of Hanselminutes
 
 540
-00:29:19.280 --> 00:29:23.000
-doing. And, you know, the
-school stuff doesn't matter as
-
-541
-00:29:23.000 --> 00:29:26.360
-much, but I should actually
-mention though that as being
-
-542
-00:29:26.360 --> 00:29:30.080
-a DOL apprenticeship program, when
-you get through our program,
-
-543
-00:29:30.080 --> 00:29:34.970
-you qualify for 39 credits
-college credits. Oh Wow. So
-
-544
-00:29:34.970 --> 00:29:38.030
-you could jumpstart your college
-career as an athlete. I
-
-545
-00:29:38.030 --> 00:29:41.860
-mean, we were accredited for
-39 credits. It depends on
-
-546
-00:29:41.860 --> 00:29:45.130
-whether that college will take
-all 39 of those, but
-
-547
-00:29:45.130 --> 00:29:49.060
-it's a great start to
-a college degree and getting
-
-548
-00:29:49.060 --> 00:29:51.160
-what you need. And we're
-actually really proud of that
-
-549
-00:29:51.160 --> 00:29:56.260
-fact because, you know, we're
-recognized as an educational facility
-
-550
-00:29:56.260 --> 00:29:59.260
-here because we're teaching, you
-know, all the basics of
-
-551
-00:29:59.260 --> 00:30:01.690
-software development and learning it
-on the job. And we're
-
-552
-00:30:01.690 --> 00:30:05.800
-glad that, you know, other
-colleges recognize that no, no
-
-553
-00:30:05.800 --> 00:30:08.380
-disrespect to boot camps, but
-there are some that are
-
-554
-00:30:08.380 --> 00:30:11.440
-saying that kind of the
-shine is off of the
-
-555
-00:30:11.440 --> 00:30:13.900
-enthusiasm around boot camps. And
-I was one of the
-
-556
-00:30:13.900 --> 00:30:16.300
-biggest events that would remain
-a large fan of bootcamps,
-
-557
-00:30:16.630 --> 00:30:21.100
-but when bootcamps became as
-expensive as my belief, you
-
-558
-00:30:21.100 --> 00:30:23.020
-know, a year and I
-would make school 25 grand
-
-559
-00:30:23.020 --> 00:30:25.600
-people were, you know, could,
-could have used the system.
-
-560
-00:30:25.600 --> 00:30:28.840
-Do you think that the
-apprenticeship program is superior to
-
-561
-00:30:28.840 --> 00:30:31.090
-bootcamps and the shine might
-be off boot camps? I
-
-562
-00:30:31.090 --> 00:30:34.630
-really do. I mean, you
-know, I built this program
-
-563
-00:30:34.630 --> 00:30:37.240
-from the ground up. We
-built it out of a
-
-564
-00:30:37.240 --> 00:30:41.860
-need to be more inclusive.
-I think bootcamps, the face
-
-565
-00:30:41.860 --> 00:30:44.620
-of the bootcamp is still
-reflective of, you know, the
-
-566
-00:30:44.620 --> 00:30:49.450
-typical tech employee, which is
-predominantly white male, but really
-
-567
-00:30:49.450 --> 00:30:52.360
-because we pay people on
-day one, it's really opened
-
-568
-00:30:52.360 --> 00:30:54.520
-the doors to all different
-kinds of people. And actually
-
-569
-00:30:54.520 --> 00:30:57.970
-without even really trying, we,
-we are incredibly diverse as
-
-570
-00:30:57.970 --> 00:31:02.530
-a company where 75% women
-minorities and veterans. And that's
-
-571
-00:31:02.530 --> 00:31:06.940
-just because we've paved the
-way for somebody who might
-
-572
-00:31:06.940 --> 00:31:09.310
-have a minimum wage job
-right now to actually get
-
-573
-00:31:09.310 --> 00:31:11.470
-into this kind of a
-career. And it really shows
-
-574
-00:31:11.470 --> 00:31:14.830
-that once you strip away
-that level of privilege, that
-
-575
-00:31:14.860 --> 00:31:17.320
-all different kinds of people
-are really interested in getting
-
-576
-00:31:17.320 --> 00:31:21.370
-involved in software. It really
-feels like if you cast
-
-577
-00:31:21.370 --> 00:31:24.370
-a wide net, if you
-cast a really wide net,
-
-578
-00:31:24.400 --> 00:31:27.130
-you will pull in a
-representative group of people and,
-
-579
-00:31:27.130 --> 00:31:31.390
-and, and you get kind
-of diversity and inclusion, I
-
-580
-00:31:31.390 --> 00:31:33.820
-wouldn't say for free, but
-because of that wide net,
-
-581
-00:31:34.000 --> 00:31:37.840
-you're getting what America looks
-like as opposed to our
-
-582
-00:31:37.840 --> 00:31:41.530
-slide, a small slice of
-it. Yes, exactly. Fantastic. Well,
-
-583
-00:31:41.530 --> 00:31:43.390
-thank you so much for
-chatting with me today. Yeah.
-
-584
-00:31:43.420 --> 00:31:45.130
-Thank you. This has been
-fun. I'm going to put
-
-585
-00:31:45.130 --> 00:31:47.560
-links to everything that the
-tectonic group is doing in
-
-586
-00:31:47.560 --> 00:31:49.510
-the show notes, and you
-can be sure to connect
-
-587
-00:31:49.510 --> 00:31:52.000
-with them and learn all
-about the great work that
-
-588
-00:31:52.000 --> 00:31:54.460
-they're doing out there in
-Boulder. Thanks so much. Thank
-
-589
-00:31:54.460 --> 00:31:57.550
-you, Scott. This has been
-another episode of Hanselminutes and
-
-590
-00:31:57.550 --> 00:32:19.440
-we'll see you again next
-week. <inaudible>.
+00:33:44.480 --> 00:33:45.950
+and we'll see you again
+next week.
 

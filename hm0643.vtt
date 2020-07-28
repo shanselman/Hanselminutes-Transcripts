@@ -1,2702 +1,3476 @@
 WEBVTT FILE
 
 1
-00:00:00.480 --> 00:00:02.970
-Hey folks, Intel is a
-sponsor this week and I
+00:00:00.480 --> 00:00:03.210
+Hey friends. I just want
+to thank our sponsor. Next
 
 2
-00:00:02.970 --> 00:00:06.840
-welcome them because they're bringing
-some high performance developer tools
+00:00:03.210 --> 00:00:07.020
+Mo next Mo is an
+API platform that allows developers
 
 3
-00:00:06.840 --> 00:00:10.740
-for all of us. Check
-out Intel's parallel studio X,
+00:00:07.020 --> 00:00:10.560
+to integrate communications features like
+voice and SMS into their
 
 4
-00:00:10.770 --> 00:00:13.860
-E I've talked about parallelism
-before on the show and
+00:00:10.560 --> 00:00:15.110
+projects. Next most comprehensive set
+of tools includes powerful API
 
 5
-00:00:13.860 --> 00:00:17.460
-the importance of using the
-complete instruction set, unlocking the
+00:00:15.110 --> 00:00:19.200
+APIs, libraries, and SDKs that
+allow developers to build and
 
 6
-00:00:17.460 --> 00:00:19.530
-power of the process or
-that your code is running
+00:00:19.200 --> 00:00:22.470
+iterate quickly in the language
+of their choice, whether it's
 
 7
-00:00:19.530 --> 00:00:22.260
-on. Now, you all might
-be writing C or C
+00:00:22.470 --> 00:00:28.320
+C-sharp node, PHP, Java, Python,
+and more visit developer dot
 
 8
-00:00:22.260 --> 00:00:25.740
-plus plus Python or even
-Fortran, but is your code
+00:00:28.350 --> 00:00:35.040
+<inaudible> dot com that's N
+E X M o.com/hansel. To
 
 9
-00:00:25.770 --> 00:00:27.750
-building in such a way
-and written in such a
+00:00:35.040 --> 00:00:39.570
+learn more about next month
+that's developer Dutton next mo.com/hansel,
 
 10
-00:00:27.750 --> 00:00:32.610
-way that it uses the
-latest techniques for vectorization multithreading
+00:00:39.570 --> 00:00:55.070
+H a N S E
+L to learn more. <inaudible>.
 
 11
-00:00:32.610 --> 00:00:38.250
-multi-node parallelization or memory optimization?
-Intel parallel studio XC as
-
-12
-00:00:38.250 --> 00:00:40.740
-a lot of new stuff
-for 2018 across all these
-
-13
-00:00:40.740 --> 00:00:45.330
-languages. Get a free download
-at <inaudible> dot com slash
-
-14
-00:00:45.420 --> 00:00:49.350
-parallels studio Z, or certainly
-go and Google or Google
-
-15
-00:00:49.350 --> 00:00:53.040
-with being for Intel parallel
-studio XC and get started.
-
-16
-00:00:53.040 --> 00:00:56.610
-Boosting your apps performance with
-smart parallel code with a
-
-17
-00:00:56.610 --> 00:01:02.970
-lot less effort. Check them
-out. bitly.com/parallel studio X E
-
-18
-00:01:08.360 --> 00:01:19.040
-<inaudible>. This is Scott Hanselman.
+00:00:55.130 --> 00:00:57.260
+Hi, this is Scott Hanselman.
 This is another episode of
 
+12
+00:00:57.260 --> 00:01:00.170
+Hansel minutes. And today I'm
+talking with Julia Evans. She is
+
+13
+00:01:00.170 --> 00:01:05.150
+a infrastructure engineer at Stripe
+and a famous Xen creator.
+
+14
+00:01:05.150 --> 00:01:08.210
+I love your zenes and
+I'm excited every time I
+
+15
+00:01:08.210 --> 00:01:10.490
+see one go by on
+my timeline. Thanks so much
+
+16
+00:01:10.490 --> 00:01:14.510
+for having me on the
+show. Yeah, absolutely. So you
+
+17
+00:01:14.540 --> 00:01:18.140
+make zenes, they are kind
+of hard to define. What,
+
+18
+00:01:18.140 --> 00:01:20.360
+how would you call what
+is a Xen from your
+
 19
-00:01:19.040 --> 00:01:22.880
-Hansel minutes today. I'm talking
-with Gary Nissenbaum from GDN
+00:01:20.360 --> 00:01:23.750
+perspective? I think a lot
+of the time people confuse
 
 20
-00:01:22.880 --> 00:01:28.370
-law.com GDN law.com. You may
-remember Gary from show six
+00:01:23.750 --> 00:01:26.420
+the word, like Xen and
+comic, if that makes sense.
 
 21
-00:01:28.370 --> 00:01:31.220
-Oh one, where we talked
-about terms of service for
+00:01:26.570 --> 00:01:29.270
+So what I need to
+do is it's like usually
 
 22
-00:01:31.220 --> 00:01:34.220
-developers. How are you sharing
-your fast becoming our favorite
+00:01:29.540 --> 00:01:32.990
+a handmade 20 page ish
+thing that you make, and
 
 23
-00:01:34.220 --> 00:01:36.620
-lawyer on the show? I
-am thrilled to be back.
+00:01:32.990 --> 00:01:36.350
+you either like giveaway yourself
+to people or is like,
 
 24
-00:01:36.620 --> 00:01:40.550
-I had a terrific time
-being interviewed by you last
+00:01:36.350 --> 00:01:39.860
+it's something which is usually
+independently published. It's not like
 
 25
-00:01:40.550 --> 00:01:42.860
-time, and I'm really looking
-forward to this one because
+00:01:39.860 --> 00:01:42.350
+the production values are not
+usually that high, right? Like
 
 26
-00:01:42.860 --> 00:01:46.370
-I think it's a very
-topical and important subject. Yeah.
+00:01:42.620 --> 00:01:44.270
+when I make scenes, I
+like print them on my
 
 27
-00:01:46.370 --> 00:01:49.580
-Well, we're going to talk
-about GDPR, the general data
+00:01:44.270 --> 00:01:46.790
+home printer and like give
+them to full or sell
 
 28
-00:01:49.580 --> 00:01:54.470
-protection regulations. I was literally
-trying to work on this
+00:01:46.790 --> 00:01:49.550
+them to people. Sometimes I
+go to my local print
 
 29
-00:01:54.500 --> 00:01:58.310
-a little bit late on
-my own podcast site. I
+00:01:49.550 --> 00:01:52.030
+shop and I'll print like
+200, but it's like, it's
 
 30
-00:01:58.730 --> 00:02:02.060
-am a small business, you
-know, a micro business. Even
+00:01:52.030 --> 00:01:54.950
+like an independent undertaking where
+you write like a small
 
 31
-00:02:02.870 --> 00:02:06.470
-I put my cookie consent
-pop up there and looked
+00:01:54.950 --> 00:01:57.620
+booklet about something that you
+love or that you think
 
 32
-00:02:06.470 --> 00:02:09.170
-at all the different places
-where I store data. And
+00:01:57.620 --> 00:02:01.970
+more people should know that
+this makes me, it makes
 
 33
-00:02:09.170 --> 00:02:12.590
-I, I think I'm okay,
-but you know, I'm not
+00:02:01.970 --> 00:02:03.500
+me feel like I was,
+I was in like in
 
 34
-00:02:12.590 --> 00:02:15.080
-a big company. I don't
-have the time where the
+00:02:03.500 --> 00:02:06.110
+the eighties when I was
+in school, I would print
 
 35
-00:02:15.080 --> 00:02:18.800
-lawyers, frankly, to read all
-the paperwork, it seemed kind
+00:02:06.110 --> 00:02:09.410
+out like, like I couldn't
+afford like trading cards for
 
 36
-00:02:18.800 --> 00:02:20.960
-of weird that this is
-even affecting me over here
+00:02:09.410 --> 00:02:11.330
+like, you know, garbage pail
+kids or whatever. So we
 
 37
-00:02:20.960 --> 00:02:23.960
-in America. Not only that,
-but when you say you
+00:02:11.330 --> 00:02:13.700
+just make our own like,
+and cut them out with
 
 38
-00:02:23.960 --> 00:02:27.020
-don't have the lawyers to
-do this, my question would
+00:02:13.700 --> 00:02:15.230
+scissors and give them to
+our friends. And they're all
 
 39
-00:02:27.020 --> 00:02:30.470
-be, are you talking about
-American lawyers or are you
+00:02:15.230 --> 00:02:17.930
+black and white. And if
+you could find someone's copy
 
 40
-00:02:30.920 --> 00:02:35.430
-referring to European lawyers? And
-if you're not talking, if
+00:02:17.930 --> 00:02:20.150
+machine where you didn't have
+to pay 5 cents a page,
 
 41
-00:02:35.450 --> 00:02:39.260
-you're not referring to European
-lawyers, then how do you
+00:02:20.210 --> 00:02:22.550
+like all the better. Yeah.
+I think that's the, that's
 
 42
-00:02:39.260 --> 00:02:42.800
-know you're complying with the
-European law? And that's part
+00:02:22.550 --> 00:02:25.760
+the aesthetic. And then so
+like I make scenes, which
 
 43
-00:02:42.800 --> 00:02:46.070
-of what I want to
-discuss today, which is a
+00:02:25.760 --> 00:02:29.750
+are collections of comics. And
+sometimes people refer to those
 
 44
-00:02:46.070 --> 00:02:51.650
-terrific, very important principle, which
-is maintaining privacy of data.
+00:02:29.750 --> 00:02:31.880
+comics as deans, but as
+Dean, as like a, it
 
 45
-00:02:52.850 --> 00:02:55.850
-I believe in it, 100%,
-I'm a big civil libertarian,
+00:02:31.880 --> 00:02:36.590
+has multiple pages, like a
+thing, and some of them
 
 46
-00:02:56.450 --> 00:03:01.570
-but the implementation is lacking
-The forethought of how to
+00:02:36.620 --> 00:02:39.830
+are, have a lot of
+text. Like there's like some
 
 47
-00:03:01.570 --> 00:03:06.640
-do it without unintended consequences
-seems to have been lacking.
+00:02:39.830 --> 00:02:41.660
+of the, some of your
+Linux comics you have like
 
 48
-00:03:07.410 --> 00:03:08.910
-Oh, there's a lot to
-be. There's a lot to
+00:02:41.660 --> 00:02:46.460
+really cool, 24 page scene
+of comics, Lennox. And sometimes
 
 49
-00:03:08.910 --> 00:03:11.490
-dig into here, but let's
-start at the beginning. You
+00:02:46.460 --> 00:02:48.680
+there'll be like an, a
+whole page with like one
 
 50
-00:03:11.490 --> 00:03:14.040
-know, what is it, what
-is the general data protection
+00:02:48.680 --> 00:02:51.590
+stick figure, but then you'll
+do other ones, like you
 
 51
-00:03:14.040 --> 00:03:18.630
-regulations and how does it
-affect what America does? Well,
+00:02:51.590 --> 00:02:54.500
+have a whole Xen on
+TCP dump, which is like
 
 52
-00:03:18.780 --> 00:03:23.430
-the re the general, the
-data protection regulations that we're
+00:02:54.980 --> 00:02:57.860
+totally different art style. And
+it's very, very sophisticated. Your
 
 53
-00:03:23.430 --> 00:03:30.840
-talking about is the culmination
-of a series of proposals
+00:02:57.860 --> 00:03:01.630
+art style seems to with
+the topic, Is that true?
 
 54
-00:03:30.840 --> 00:03:35.580
-and directives and regulations that
-have gone on since around
+00:03:01.630 --> 00:03:03.520
+I think that, that those
+two are the same, like
 
 55
-00:03:35.580 --> 00:03:39.780
-2002. And they all STEM
-from the basic thrust that
+00:03:03.520 --> 00:03:06.550
+their covers, the cover of
+the TCP Dempsey in is
 
 56
-00:03:40.170 --> 00:03:45.330
-Europeans want to protect the
-collection of data, the storage
+00:03:06.550 --> 00:03:09.510
+different, but Oh, okay. So
+the cover has a different
 
 57
-00:03:45.330 --> 00:03:49.980
-of data, and the use
-of data. And they want
+00:03:09.510 --> 00:03:12.240
+style than the inside. Yeah,
+because I hired illustrators to
 
 58
-00:03:49.980 --> 00:03:54.030
-to do that for the
-people that the European union
+00:03:12.240 --> 00:03:14.880
+do the covers, but I
+did everything inside to myself
 
 59
-00:03:54.630 --> 00:04:00.660
-protects. And that is citizens
-of those countries. The issue
+00:03:14.910 --> 00:03:17.310
+and I only know how
+to draw stick figures. Oh,
 
 60
-00:04:00.660 --> 00:04:05.760
-that we're going to discuss
-today is that European users
+00:03:17.310 --> 00:03:18.870
+okay. I w I was
+always wondering that, cause I,
 
 61
-00:04:06.000 --> 00:04:11.460
-don't just access websites in
-those countries. So to the
+00:03:18.900 --> 00:03:20.940
+when I saw they're kind
+of your most famous one
 
 62
-00:04:11.460 --> 00:04:15.690
-extent that they are accessing
-an American website, and to
+00:03:20.940 --> 00:03:22.440
+and you want to be
+a, so you want to
 
 63
-00:04:15.690 --> 00:04:19.800
-the extent that the American
-website is not compliant, there
+00:03:22.440 --> 00:03:25.110
+be a wizard, like I'm
+like, wow, she can draw
 
 64
-00:04:19.800 --> 00:04:23.970
-is a strong argument that
-the American website is a,
+00:03:25.110 --> 00:03:28.380
+stick figures and this, this
+like totally comic front end
 
 65
-00:04:24.030 --> 00:04:29.190
-is a in violation with
-all the attendant implications that
+00:03:28.380 --> 00:03:30.240
+front end. So that's cool.
+So the cover art is
 
 66
-00:04:29.190 --> 00:04:32.370
-that brings in terms of
-fines and other sorts of
+00:03:30.240 --> 00:03:33.270
+by another person. Yeah. I
+can only draw stick figures
 
 67
-00:04:32.370 --> 00:04:36.510
-things. Doesn't that imply that
-we can't win. I mean,
+00:03:33.810 --> 00:03:37.440
+actually. For sure. It's still
+a successful Xen art doing
 
 68
-00:04:36.510 --> 00:04:39.180
-there's 200 and something plus
-countries in the world. And
+00:03:37.440 --> 00:03:40.320
+only stick figures, DDM on
+the computer or is it
 
 69
-00:04:39.180 --> 00:04:42.480
-if any European decides to
-swing by, you know, a
+00:03:40.320 --> 00:03:42.510
+like an iPad pencil or
+something? I do them on
 
 70
-00:04:42.480 --> 00:04:46.020
-website in Djibouti, now they're
-going to be subject to
+00:03:42.510 --> 00:03:46.380
+an iPad with the Apple
+pencil. Yeah. Yeah. I'm looking
 
 71
-00:04:46.020 --> 00:04:50.610
-laws of Europe. Let's, I'll
-double down on that. It
+00:03:46.380 --> 00:03:49.620
+at one for example. And
+I'm thinking to myself, okay.
 
 72
-00:04:50.610 --> 00:04:56.490
-implies that any country that
-has users of the internet
+00:03:49.620 --> 00:03:53.580
+Like, let's say, how does
+DNS work? Right. It's like
 
 73
-00:04:57.030 --> 00:05:01.560
-can create a more stringent
-law than even the Europeans.
+00:03:53.580 --> 00:03:58.050
+four frames of a comic
+and it's got a minimal
 
 74
-00:05:02.820 --> 00:05:07.410
-And then on the basis
-of that become the preeminent
+00:03:58.050 --> 00:04:01.020
+amount of text and some
+stick figures. If I copied
 
 75
-00:05:07.470 --> 00:05:12.600
-regulatory body of the world,
-because it's a race to
+00:04:01.020 --> 00:04:04.050
+it as a PowerPoint, I
+have a feeling it would
 
 76
-00:05:12.600 --> 00:05:16.140
-who can be the most
-restrictive, because the most restrictive
+00:04:04.050 --> 00:04:06.900
+not go viral and no
+one would care and it
 
 77
-00:05:16.140 --> 00:05:19.860
-is whatever one needs to
-comply with. So if Tanzania
+00:04:06.900 --> 00:04:09.930
+probably wouldn't teach anyone. But
+it's so fun in the
 
 78
-00:05:20.310 --> 00:05:23.100
-decides that it is going
-to be the most restrictive
+00:04:09.930 --> 00:04:12.990
+style. Like why does a
+Xen work when a PowerPoint
 
 79
-00:05:23.100 --> 00:05:26.100
-country in terms of the
-laws, the privacy regulations, and
+00:04:12.990 --> 00:04:16.530
+doesn't? So, one thing that
+I actually think is really
 
 80
-00:05:26.100 --> 00:05:30.570
-frankly, other regulations that, that,
-that relate to internet use
+00:04:16.560 --> 00:04:19.620
+important about deans is kind
+of like the physical nature
 
 81
-00:05:31.020 --> 00:05:36.810
-of their citizens, theoretically, all
-websites around the world have
+00:04:19.620 --> 00:04:22.680
+of them. Like, like I
+write, I definitely like have
 
 82
-00:05:36.810 --> 00:05:41.460
-to be concerned about that
-because there are users they
+00:04:22.680 --> 00:04:24.900
+them on the internet and
+like, I let people read
 
 83
-00:05:41.460 --> 00:05:44.220
-could, that could be accessing
-their website from Tanzania. They
+00:04:24.900 --> 00:04:27.750
+them on the internet and
+you can read it on
 
 84
-00:05:44.220 --> 00:05:46.380
-wouldn't even know it. Right.
-Let me see if I
+00:04:27.750 --> 00:04:31.950
+your screen. Of course. But
+the reason I started writing
 
 85
-00:05:46.380 --> 00:05:49.950
-can parse that though. So
-you're saying that the idea
+00:04:31.950 --> 00:04:34.380
+scenes is that I was
+going to a conference. I
 
 86
-00:05:49.950 --> 00:05:54.630
-that Europe, as an entity
-could create a thing as
+00:04:34.380 --> 00:04:36.090
+was going to pike on
+actually. And I was giving
 
 87
-00:05:54.630 --> 00:05:58.670
-broad reaching. And as you
-know, let's just say broad
+00:04:36.090 --> 00:04:38.070
+a talk at Python, which
+was a big deal. And
 
 88
-00:05:58.670 --> 00:06:01.820
-reaching as a GDPR that,
-that opens up a precedent
+00:04:38.070 --> 00:04:40.110
+I was very excited and
+I decided to bring it
 
 89
-00:06:01.940 --> 00:06:04.850
-that anyone else could go
-and do the same thing
+00:04:40.110 --> 00:04:42.480
+a long and hand it
+out to everyone in the
 
 90
-00:06:04.850 --> 00:06:07.840
-that then it would affect
-all of us. That's right.
+00:04:42.480 --> 00:04:44.670
+audience. Right. So I went
+to the fringe drop, like
 
 91
-00:06:07.930 --> 00:06:10.510
-And when you borders to
-something that doesn't have borders
+00:04:44.670 --> 00:04:48.270
+paid $200, like printed, a
+few hundred scenes. And then
 
 92
-00:06:11.050 --> 00:06:14.440
-and the reason that's exactly
-right. And the reason that
+00:04:48.270 --> 00:04:50.910
+I gave them out to
+everyone. And like, people have
 
 93
-00:06:14.440 --> 00:06:20.920
-that is so critical is
-that the entire Canon of
+00:04:50.910 --> 00:04:52.320
+told me, they were like,
+Oh, I still have that
 
 94
-00:06:20.920 --> 00:06:24.400
-American law going all the
-way back to the founding
+00:04:52.320 --> 00:04:54.390
+scene. And I still like,
+look at it like four
 
 95
-00:06:24.430 --> 00:06:30.070
-of the country is that
-our courts are the prime,
+00:04:54.390 --> 00:04:57.270
+years later. Right. And of
+course it's never going to
 
 96
-00:06:31.300 --> 00:06:36.730
-the prime movers on statements
-of law, that if you
+00:04:57.270 --> 00:05:00.490
+happen with a PowerPoint. Right.
+Or the, or they'll say
 
 97
-00:06:36.790 --> 00:06:40.150
-have a lawsuit and you
-litigate it in a trial
+00:05:00.490 --> 00:05:02.430
+like, Oh, I saw your
+Z. And like someone gave
 
 98
-00:06:40.150 --> 00:06:42.460
-level court, and you don't
-like the result, you can
+00:05:02.430 --> 00:05:04.200
+it to me or I
+saw it in someone's office
 
 99
-00:06:42.460 --> 00:06:44.980
-take your appeal. But at
-the, at the, in the
+00:05:04.200 --> 00:05:05.910
+and I picked it up
+and then I learned something.
 
 100
-00:06:44.980 --> 00:06:48.550
-final analysis, when you've exhausted
-your appeals, that is the
+00:05:06.210 --> 00:05:08.160
+And I think that, like
+the fact that it's like
 
 101
-00:06:48.550 --> 00:06:51.970
-law. That is what has
-to be complied with. But
+00:05:08.160 --> 00:05:10.170
+an artifact in the world,
+but you can like pass
 
 102
-00:06:51.970 --> 00:06:56.020
-what we're seeing here is
-a sea change in how
+00:05:10.170 --> 00:05:12.360
+around and give to your
+friends. It makes it something
 
 103
-00:06:56.320 --> 00:07:01.090
-laws are enforced and the
-primacy of law, because you
+00:05:12.360 --> 00:05:14.040
+that I think is a
+lot easier to learn from.
 
 104
-00:07:01.090 --> 00:07:05.710
-could theoretically have a situation
-where a digital company is
+00:05:14.370 --> 00:05:17.490
+Interesting. That it does. It's
+interesting because you want it
 
 105
-00:07:05.710 --> 00:07:08.350
-in a lawsuit. The lawsuit
-goes all the way up
+00:05:17.490 --> 00:05:22.710
+to seem small and personal,
+but if it's scales, like
 
 106
-00:07:08.350 --> 00:07:11.590
-to the United States Supreme court,
-the United States Supreme court finds
+00:05:22.710 --> 00:05:25.260
+if you became super famous
+Jean person, how would you
 
 107
-00:07:11.590 --> 00:07:14.950
-in favor of one party
-or the other, but that's
+00:05:25.260 --> 00:05:27.810
+make them all small and
+personal for a million people?
 
 108
-00:07:14.950 --> 00:07:18.460
-not the final answer that,
-that even though the Supreme
+00:05:28.500 --> 00:05:31.230
+Well, I don't know. This
+is a good question, but
 
 109
-00:07:18.460 --> 00:07:22.960
-court has said that the
-activity is allowed, that privacy
+00:05:31.230 --> 00:05:32.580
+I feel like I've read
+a lot of books, which
 
 110
-00:07:22.960 --> 00:07:28.210
-of American citizens is not
-being infringed upon based upon
+00:05:32.590 --> 00:05:36.180
+did feel like small and
+personal to me, if that
 
 111
-00:07:28.810 --> 00:07:32.710
-first amendment protections and other
-sorts of, of statutory protections.
+00:05:36.390 --> 00:05:38.790
+makes sense. Like, cause like
+sometimes when you, when you
 
 112
-00:07:33.250 --> 00:07:37.690
-You could still have a
-whole regime of laws from
+00:05:38.790 --> 00:05:40.680
+read a book, it like,
+it feels like the person
 
 113
-00:07:37.780 --> 00:07:41.740
-outside the borders of the
-United States that would still apply
+00:05:40.680 --> 00:05:43.560
+is just speaking to you.
+Right. And you're like, Oh,
 
 114
-00:07:41.740 --> 00:07:44.470
-to the same activity that
-the Supreme court has just
+00:05:43.560 --> 00:05:45.450
+this is like, this book
+was written for me. How
 
 115
-00:07:44.470 --> 00:07:47.590
-said. You could, you could
-engage in, Okay. So not
+00:05:45.450 --> 00:05:48.660
+did you know? And I
+think that's kind of the
 
 116
-00:07:47.590 --> 00:07:49.090
-to put too fine a
-point on it, but then
+00:05:48.660 --> 00:05:51.600
+feeling I want in part
+is like, hello, I wrote
 
 117
-00:07:49.360 --> 00:07:52.690
-what legal basis does the
-EU have to levy fines
+00:05:51.600 --> 00:05:55.140
+this for you. Yeah. That's
+really cool. And I think
 
 118
-00:07:52.690 --> 00:07:55.480
-or sanctions against a us
-company that doesn't have any
+00:05:55.140 --> 00:05:57.880
+that's like the amazing thing
+about print. Right. And, and
 
 119
-00:07:55.480 --> 00:07:59.530
-jurisdictional presence or nexus in
-the EU? The company is
+00:05:57.880 --> 00:06:01.660
+about writing, Do you even
+like this, this started out
 
 120
-00:07:59.530 --> 00:08:05.110
-entering into the jurisdiction of
-that European country by virtue
+00:06:01.660 --> 00:06:03.550
+and you print it out
+for 200 people, but do
 
 121
-00:08:05.110 --> 00:08:10.110
-of providing services to its
-citizens. So if I let's
+00:06:03.550 --> 00:06:06.070
+you do like thousand print
+runs now? And like it's
 
 122
-00:08:10.120 --> 00:08:12.430
-say for example, and this
-is a real, a real
+00:06:06.100 --> 00:06:09.580
+become a big thing. Yeah.
+So I spoke at deconstruct
 
 123
-00:08:12.430 --> 00:08:17.380
-example, that this is a
-municipality in America that is
+00:06:09.580 --> 00:06:11.850
+recently, which is this conference
+in Seattle and we printed
 
 124
-00:08:17.410 --> 00:08:22.000
-letting citizens pay their water
-bill completely, utterly, legitimately, U
+00:06:11.860 --> 00:06:15.340
+two thousands genes. Oh wow.
+Which was really fun. Yeah.
 
 125
-00:08:22.000 --> 00:08:25.870
-S only. Now a us
-person is in Europe, on
+00:06:15.340 --> 00:06:17.890
+We've like we printed copies,
+like maybe 300 copies of
 
 126
-00:08:25.870 --> 00:08:28.930
-vacation. They can't pay their
-water bill. It's more along
+00:06:17.990 --> 00:06:21.190
+all of, all of my
+scenes. Do you consciously try
 
 127
-00:08:28.930 --> 00:08:31.660
-the lines of the example
-I would give similar to
+00:06:21.190 --> 00:06:24.040
+to make them like, and
+forgive the way I'm phrasing
 
 128
-00:08:31.660 --> 00:08:38.260
-where you're going is someone
-in the EU owns American
+00:06:24.040 --> 00:06:27.700
+this? Like not polished, like
+for example, if a Xen
 
 129
-00:08:38.260 --> 00:08:41.830
-property. And so they need
-to pay their water bill,
+00:06:27.700 --> 00:06:31.120
+is like you photocopied and
+then slightly a skew, it
 
 130
-00:08:41.830 --> 00:08:44.140
-but they're a citizen of
-that country. They're an investor.
+00:06:31.120 --> 00:06:34.360
+just means it has personality.
+Right. But if you did
 
 131
-00:08:44.140 --> 00:08:48.610
-They have a vacation home
-here. The fact is that
+00:06:34.360 --> 00:06:36.790
+like an actual print run
+for like a New York times
 
 132
-00:08:48.610 --> 00:08:52.180
-they are accessing this website
-that normally you would think
+00:06:36.790 --> 00:06:39.340
+bestselling something and it was
+a skew, people would like
 
 133
-00:08:52.180 --> 00:08:54.970
-Americans would be accessing, but
-this is a very legitimate
+00:06:39.370 --> 00:06:43.930
+lose their minds. Yeah. It
+do. Is it intentional? I
 
 134
-00:08:55.290 --> 00:08:58.380
-why someone from Europe would
-be accessing that website. I
+00:06:43.930 --> 00:06:46.180
+mean, it's kind of a
+matter of like, I'm not
 
 135
-00:08:58.380 --> 00:09:00.720
-would argue that you could
-say that the GDPR does
+00:06:46.690 --> 00:06:51.370
+an extremely good designer or
+artist. Right. Like, so I
 
 136
-00:09:00.720 --> 00:09:03.260
-apply to it. You just
-turned that on its head
+00:06:51.370 --> 00:06:52.990
+think that there's kind of
+like an upper limit to
 
 137
-00:09:03.260 --> 00:09:06.680
-very nicely. That was a
-very, that was a judo
+00:06:52.990 --> 00:06:55.570
+like the metaphors. I'm probably
+as close as you can
 
 138
-00:09:06.680 --> 00:09:10.580
-flip. It's my job. That
-was an excellent doodle flip
+00:06:55.570 --> 00:06:57.370
+go into produce, especially because
+I do it in my
 
 139
-00:09:10.580 --> 00:09:13.490
-because you're like, I'm like,
-wow, you're absolutely right. Well
+00:06:57.370 --> 00:07:00.880
+spare time. Right. Like I
+do it after work. So
 
 140
-00:09:13.490 --> 00:09:16.220
-then it's like, well, private,
-we all agree. Privacy is
+00:07:01.990 --> 00:07:04.030
+I think it's just not
+going to happen. Like maybe
 
 141
-00:09:16.220 --> 00:09:21.290
-good, but you know, this
-seems very heavy handed way
+00:07:04.030 --> 00:07:05.950
+at some point that'll make
+things that are more polished,
 
 142
-00:09:21.290 --> 00:09:23.750
-to do things. And I'm
-afraid, I don't know what
+00:07:06.460 --> 00:07:10.000
+but I think people really
+like it too. Like I
 
 143
-00:09:23.750 --> 00:09:26.420
-I'm storing now, you know,
-on a blog comment or
+00:07:10.000 --> 00:07:12.460
+think having something handwritten is,
+is, is a huge deal
 
 144
-00:09:26.420 --> 00:09:28.190
-something like that. Something what
-I think of as being
+00:07:12.460 --> 00:07:14.620
+in like the fact that
+like, like, I think a
 
 145
-00:09:28.190 --> 00:09:31.310
-harmless. Well, I mean, let's,
-you know, let's talk about
+00:07:14.630 --> 00:07:17.050
+part of a part of
+it is like, people are
 
 146
-00:09:31.310 --> 00:09:36.560
-this. You're, you're, you're forcing
-companies that don't have the
+00:07:17.050 --> 00:07:18.910
+like, Oh, you took the
+time to write all this
 
 147
-00:09:36.560 --> 00:09:40.520
-capital to really go into
-this kind of depth about
+00:07:18.910 --> 00:07:23.680
+information down by hand. It
+must be important. Oh, that's
 
 148
-00:09:40.520 --> 00:09:44.990
-European law to comply with
-the European law. So essentially
+00:07:23.680 --> 00:07:27.310
+interesting. You think that people
+are like a scribing depth
 
 149
-00:09:44.990 --> 00:09:47.150
-people are flying blind. Let
-me, let me bring this
+00:07:27.340 --> 00:07:30.490
+to something that's not, that's
+consciously not deep because it
 
 150
-00:09:47.150 --> 00:09:52.190
-down to the practical in
-terms of my clients and
+00:07:30.490 --> 00:07:34.960
+was handwritten. I think so
+like, well, cause I think
 
 151
-00:09:52.190 --> 00:09:55.340
-in terms of people that
-I've seen in other situations
+00:07:34.960 --> 00:07:36.670
+if you read something by
+hand, it does make it
 
 152
-00:09:55.340 --> 00:10:01.040
-that are not my clients,
-very few businesses are actually
+00:07:36.670 --> 00:07:39.040
+more important. Right? Cause it
+takes me like five times
 
 153
-00:10:01.040 --> 00:10:07.160
-having the opt in, pop
-up on that homepage. And
+00:07:39.040 --> 00:07:40.750
+longer to write something by
+hand than at which type
 
 154
-00:10:07.160 --> 00:10:10.280
-there's a reason it's not
-just that it's difficult to
+00:07:40.750 --> 00:07:43.330
+it, How many times do
+you have to do these
 
 155
-00:10:10.280 --> 00:10:13.490
-implement because frankly, you know,
-in WordPress, it's not, not
+00:07:43.330 --> 00:07:45.070
+before? You know that you've
+got it right. Because it's
 
 156
-00:10:13.490 --> 00:10:17.120
-that difficult to implement. It's
-more that when you have
+00:07:45.070 --> 00:07:48.040
+not just like, you didn't
+just scribble you. Like there
 
 157
-00:10:17.120 --> 00:10:21.140
-that opt in, nobody goes
-to your website that you
+00:07:48.040 --> 00:07:51.640
+is structure and thought because
+there is a learning style
 
 158
-00:10:21.140 --> 00:10:25.070
-will have a tremendous drop
-in visitors. People don't want
+00:07:51.640 --> 00:07:55.240
+where you ask a question,
+you present a problem and
 
 159
-00:10:25.070 --> 00:10:27.290
-to deal with you. They
-don't, they want to go
+00:07:55.240 --> 00:07:57.880
+then you make a helpful,
+you, you walk someone through
 
 160
-00:10:27.290 --> 00:10:29.510
-to the next website where
-there's no opt in because
+00:07:57.880 --> 00:08:00.940
+it, like there's, there's a
+linear as Asian to this.
 
 161
-00:10:29.510 --> 00:10:32.960
-they don't know what they're
-opting into. So the interesting
+00:08:00.940 --> 00:08:04.600
+That is important. Yeah. So
+what, like one hard thing
 
 162
-00:10:32.960 --> 00:10:35.900
-part, another interesting part of
-this is that the very
+00:08:04.720 --> 00:08:06.730
+is like, so let's say
+like you're writing a comic
 
 163
-00:10:36.290 --> 00:10:39.770
-thing that the European union
-is trying to say, which
+00:08:06.730 --> 00:08:09.730
+about some important concept. Like
+I don't know, virtual memory.
 
 164
-00:10:39.770 --> 00:10:44.210
-is we don't realize what
-we are sharing and how
+00:08:09.760 --> 00:08:13.420
+Right. And like in these,
+like, especially in these six
 
 165
-00:10:44.210 --> 00:10:47.630
-our information is being shared
-and where, how it's being
+00:08:13.420 --> 00:08:16.360
+panel comics, I do, I'll
+often only write something like
 
 166
-00:10:47.630 --> 00:10:50.390
-stored. And, and the fact
-that it's not being stored
+00:08:16.360 --> 00:08:18.430
+50 words in that. Right.
+So you have this huge
 
 167
-00:10:50.390 --> 00:10:53.540
-with complete security, therefore there
-would need to be an
+00:08:18.430 --> 00:08:22.030
+topic and you to describe
+it in 50 words and
 
 168
-00:10:53.570 --> 00:10:57.290
-opt in. That's the very
-reason that people are not
+00:08:22.030 --> 00:08:24.100
+how do you do that?
+And so what I do
 
 169
-00:10:57.290 --> 00:11:00.200
-staying on that website and
-moving on because they don't
+00:08:24.100 --> 00:08:25.360
+a lot of the time
+is it like, sit on
 
 170
-00:11:00.200 --> 00:11:03.650
-want to deal with the
-issue. So in essence, it's
+00:08:25.360 --> 00:08:27.730
+my couch with this like
+paint, look on my face
 
 171
-00:11:03.650 --> 00:11:07.160
-our limited attention span. The
-fact that we're not digging
+00:08:27.730 --> 00:08:30.310
+and I'll be like, what
+can I say? Like, what
 
 172
-00:11:07.160 --> 00:11:09.800
-down as consumers, and I'm
-probably as guilty of this
+00:08:30.310 --> 00:08:32.590
+are five words that I
+can say that are true
 
 173
-00:11:09.800 --> 00:11:12.170
-as anybody, when I go
-on a website and I
+00:08:32.680 --> 00:08:36.580
+about this topic? It's really
+hard. Right? Cause like making
 
 174
-00:11:12.170 --> 00:11:15.440
-just am viewing things casually,
-why am I opting into
+00:08:36.610 --> 00:08:41.260
+statements that are like, at
+least like 90% true that
 
 175
-00:11:15.440 --> 00:11:19.010
-anything? It always gives me
-a sense of somehow agreeing
+00:08:41.260 --> 00:08:46.690
+are short and that are
+understandable is so hard, but
 
 176
-00:11:19.010 --> 00:11:21.740
-to something that I don't
-understand. And I don't know
+00:08:46.690 --> 00:08:48.280
+it's possible. Right. And then
+once I do it, people
 
 177
-00:11:21.740 --> 00:11:24.110
-why, why they're asking me
-and I have a lot
+00:08:48.280 --> 00:08:51.280
+are like, Oh wow, I
+understand this now. And so
 
 178
-00:11:24.110 --> 00:11:28.730
-of questions. So the consumer
-who's using the internet is
+00:08:51.280 --> 00:08:53.080
+maybe like sometimes it'll take
+me an hour to write
 
 179
-00:11:28.730 --> 00:11:32.960
-not really on the same
-wavelengths as the regulators in
+00:08:53.080 --> 00:08:57.480
+like a 10 word sentence.
+Like I usually, usually I
 
 180
-00:11:32.960 --> 00:11:37.610
-the EU. Yeah. Additionally, I'm
-noticing more and more. There
+00:08:57.480 --> 00:09:00.140
+can come up with something
+faster than that. But Yeah,
 
 181
-00:11:37.610 --> 00:11:40.010
-was the move towards an
-active opt in, which is
+00:09:00.140 --> 00:09:02.240
+like I'm looking, for example,
+like the memory allocation one,
 
 182
-00:11:40.010 --> 00:11:42.920
-simply the act of pushing,
-okay. Versus hitting the back
+00:09:02.240 --> 00:09:04.820
+like we've all read like
+entire books on memory allocation,
 
 183
-00:11:42.920 --> 00:11:47.120
-button. Now I'm hearing interpretations
-where I have arrived at
+00:09:05.630 --> 00:09:07.940
+but you're, you're getting it
+down to the essence. And
 
 184
-00:11:47.120 --> 00:11:50.150
-a website. I've received no
-cookies, but if I click
+00:09:07.940 --> 00:09:10.220
+it's clear that you didn't
+just like bang that out
 
 185
-00:11:50.150 --> 00:11:53.830
-any link, I have implicitly
-opted in by simply moving
+00:09:10.220 --> 00:09:14.540
+in five minutes. Well, it
+says at any given time,
 
 186
-00:11:53.830 --> 00:11:56.470
-forward. Right. That's something that
-I don't think I could
+00:09:14.540 --> 00:09:16.640
+your program has a fixed
+amount of memory. And then
 
 187
-00:11:56.470 --> 00:12:01.720
-explain to nontechnical parent Cambridge
-Analytica. Look what happened in
+00:09:16.640 --> 00:09:19.850
+it shows like a kind
+of a, defragmentation kind of
 
 188
-00:12:01.740 --> 00:12:06.990
-2016, the idea that you
-would go on Facebook and
+00:09:19.850 --> 00:09:22.040
+a thing where it shows
+pieces of memory, some of
 
 189
-00:12:07.260 --> 00:12:12.390
-you're the friends of your
-friends, their information is now
+00:09:22.040 --> 00:09:24.080
+which is used in some
+which is free. And then
 
 190
-00:12:12.390 --> 00:12:17.970
-available because you completed a
-survey that did not disclose
+00:09:24.080 --> 00:09:26.630
+it says, and you can
+ask the OSTP for more
 
 191
-00:12:18.540 --> 00:12:21.120
-that it was actually not
-so much a survey as
+00:09:26.630 --> 00:09:28.580
+memory. And then you've got
+like this happy figure that
 
 192
-00:12:21.120 --> 00:12:25.110
-a means into your private
-data. So the point I'm
+00:09:28.580 --> 00:09:32.210
+represents Google Chrome taking two
+gigabytes of your Ram, which
 
 193
-00:12:25.110 --> 00:12:30.360
-making is we have two
-irreconcilable principles and they're both
+00:09:32.210 --> 00:09:35.060
+I thought was funny. And
+then it has like a
 
 194
-00:12:30.780 --> 00:12:35.520
-good principles. The privacy of
-this data is really, really
+00:09:35.060 --> 00:09:37.790
+person who's allocating. It's like,
+Oh, can I allocate some?
 
 195
-00:12:35.520 --> 00:12:38.940
-important. People have to know
-that no one's opening their
+00:09:37.790 --> 00:09:41.150
+And then you basically show
+pieces of memory being Malak.
 
 196
-00:12:38.970 --> 00:12:42.750
-mail, essentially, you know, but,
-but on the other hand,
+00:09:41.810 --> 00:09:45.290
+And then you talk about
+different alternatives to Malik with
 
 197
-00:12:43.200 --> 00:12:48.720
-the sophistication and the frankly,
-the attention span of the
+00:09:45.290 --> 00:09:48.590
+Facebook and Google having different
+Malik's Right. And like this
 
 198
-00:12:48.720 --> 00:12:55.110
-casual user is just not
-correlated. It's not in proportion
+00:09:48.590 --> 00:09:51.440
+thing where you can ask
+your operating system for more
 
 199
-00:12:55.620 --> 00:12:58.830
-to the complex nature of
-what you're giving up when
+00:09:51.440 --> 00:09:54.830
+memory is like, it's like
+not a trivial piece of
 
 200
-00:12:58.830 --> 00:13:02.610
-you're on the internet. So
-there is this disconnect between
+00:09:54.830 --> 00:09:58.610
+information. Right. And like, it's
+not obvious that like this,
 
 201
-00:13:03.360 --> 00:13:06.510
-the something, an activity that
-you're doing that seems to
+00:09:58.630 --> 00:10:00.830
+this interaction where you're like,
+Hey, offering system, can you,
 
 202
-00:13:06.510 --> 00:13:10.140
-be innocuous and innocent and
-that you're in control of.
+00:10:01.130 --> 00:10:04.100
+can I have more memory
+is something that your program
 
 203
-00:13:10.170 --> 00:13:12.810
-And then whether you actually
-are in control of it,
+00:10:04.100 --> 00:10:07.340
+is doing, but then you,
+like, when you explain it
 
 204
-00:13:13.320 --> 00:13:16.290
-and then how you reconcile
-those two things without becoming
+00:10:07.340 --> 00:10:09.350
+like that, it seems simple.
+And I think it's cool
 
 205
-00:13:16.350 --> 00:13:20.970
-overly regulatory and overly complex.
-Right? And if you think
+00:10:09.350 --> 00:10:13.400
+that you always have the
+little people having a conversation
 
 206
-00:13:20.970 --> 00:13:24.240
-about just simply the act
-of being on the internet
+00:10:13.400 --> 00:10:16.820
+with the computer, which somehow
+makes the computer more approachable.
 
 207
-00:13:24.660 --> 00:13:28.320
-is enough to give your
-IP address away, which is
+00:10:17.150 --> 00:10:19.340
+What I think is interesting
+is that since you are
 
 208
-00:13:28.320 --> 00:13:31.440
-enough to get very likely
-to hear municipality, if not
+00:10:19.340 --> 00:10:22.610
+a infrastructure engineer and you're
+a backend engineer and you're
 
 209
-00:13:31.680 --> 00:13:35.070
-your neighborhood, without even using
-any JavaScript at all. So
+00:10:22.610 --> 00:10:26.840
+a low level Linux engineer,
+you're talking about like CIS
 
 210
-00:13:35.070 --> 00:13:39.600
-simply visiting a site is
-giving information, logging an IP
+00:10:26.840 --> 00:10:30.050
+calls, which for a lot
+of people is a scary
 
 211
-00:13:39.600 --> 00:13:42.420
-address, I assume is a
-problem. If I am a,
+00:10:30.050 --> 00:10:32.870
+thing. Right. And we have
+these happy little people making
 
 212
-00:13:43.200 --> 00:13:45.780
-a site owner, if I'm
-logging IP addresses, I'm indirectly
+00:10:32.870 --> 00:10:34.730
+six calls and I'm like,
+Oh, well, is that all
 
 213
-00:13:45.780 --> 00:13:50.190
-logging where you are. Is
-that allowed if I don't
+00:10:34.730 --> 00:10:36.140
+it's just called? It is.
+That's not as scary as
 
 214
-00:13:50.610 --> 00:13:54.030
-keep track of who you
-are? Well, yeah, that's that,
+00:10:36.140 --> 00:10:38.990
+I thought it was. Right.
+Because there's this thing that
 
 215
-00:13:54.030 --> 00:13:57.210
-that's the whole point is
-that all those sorts of
+00:10:38.990 --> 00:10:41.270
+like where you asked for
+more memory, you're either using
 
 216
-00:13:57.210 --> 00:14:02.160
-activities are impacted by these
-regulations. And then let me
+00:10:41.270 --> 00:10:44.300
+like the Burke, like BRK
+Siskel or you're using the
 
 217
-00:14:02.160 --> 00:14:07.080
-just take it to another
-level because the States of
+00:10:44.330 --> 00:10:47.480
+map Siskel. And it's not
+like, I mean, I guess
 
 218
-00:14:07.080 --> 00:14:13.530
-the United States are passing their
-own privacy laws and regulations
+00:10:47.480 --> 00:10:49.520
+if you, if you, like,
+you could write it in
 
 219
-00:14:14.130 --> 00:14:21.840
-that are in parallel to
-the GDPR. Meaning California just
+00:10:49.520 --> 00:10:52.430
+a way that sounds really
+unapproachable, but really like computers
 
 220
-00:14:21.870 --> 00:14:28.290
-passed a digital privacy law.
-And it was fascinating to
+00:10:52.430 --> 00:10:54.890
+are just communicating all the
+time. And so I think
 
 221
-00:14:28.290 --> 00:14:32.280
-look at how that all
-went down. The state legislature
+00:10:54.890 --> 00:10:57.590
+comics are a really good
+way to show that because
 
 222
-00:14:32.280 --> 00:14:38.910
-in California really was in
-opposition to this at first,
+00:10:57.590 --> 00:11:00.620
+you're always doing networking. Right?
+Like your program is talking
 
 223
-00:14:39.540 --> 00:14:42.390
-but then what came out
-was that there was going
+00:11:00.620 --> 00:11:02.600
+to your operating system, your
+programs are talking to each
 
 224
-00:14:42.390 --> 00:14:46.950
-to be a referendum on
-it. And what the legislators
+00:11:02.600 --> 00:11:04.940
+other. And so I, what
+I like to do is
 
 225
-00:14:46.950 --> 00:14:50.010
-realized was that if the
-referendum passed, there'd be no
+00:11:04.940 --> 00:11:07.070
+kind of like break down
+what the interfaces are, right?
 
 226
-00:14:50.010 --> 00:14:57.020
-way to hone this and
-correct any unintended consequences and
+00:11:07.070 --> 00:11:09.350
+Like, like the system college
+or phase, and then just
 
 227
-00:14:57.110 --> 00:15:00.230
-amend it and sort of
-make it do what they
+00:11:09.350 --> 00:11:11.030
+like show that with a
+comic. And you're like, okay,
 
 228
-00:15:00.230 --> 00:15:03.230
-wanted it to do. So
-they felt they were boxed
+00:11:11.180 --> 00:11:13.670
+here's piece one and here's
+piece two. And then here's
 
 229
-00:15:03.230 --> 00:15:06.380
-in politically and they passed
-it. And it's not going
+00:11:13.670 --> 00:11:15.320
+like the interface where they
+talk to each other. And
 
 230
-00:15:06.380 --> 00:15:08.570
-to go into effect for
-a couple of years until
+00:11:15.320 --> 00:11:17.810
+then here's what they're saying.
+Cause that's just what happens
 
 231
-00:15:08.570 --> 00:15:12.890
-2020. I understand that. But
-the larger point is that
+00:11:17.810 --> 00:11:20.750
+on computers. Right? Like that's
+how I think about it
 
 232
-00:15:13.220 --> 00:15:16.220
-they're going to need to
-look at this law, which,
+00:11:20.870 --> 00:11:23.630
+is you just have these
+different components interacting. And I
 
 233
-00:15:16.400 --> 00:15:20.510
-which has been passed in
-relation to European law, which
+00:11:23.630 --> 00:11:25.520
+think trying to explain it
+with comics makes it seem
 
 234
-00:15:20.510 --> 00:15:23.960
-is regulating some of the
-same things, but not all
+00:11:25.520 --> 00:11:27.800
+a lot just like makes
+it a lot more straight
 
 235
-00:15:23.960 --> 00:15:27.230
-the same things. So there
-are differences. And then look
+00:11:27.800 --> 00:11:30.920
+forward. Yeah. I like also
+that some of the comics
 
 236
-00:15:27.230 --> 00:15:31.070
-at that in relation to
-other States that are similarly
+00:11:30.930 --> 00:11:33.800
+are kind of unapologetic about
+stuff. So for example, you've
 
 237
-00:15:31.070 --> 00:15:36.260
-passing privacy regulations related to
-internet use. So now you
+00:11:33.800 --> 00:11:35.960
+got one on the OSI
+model for networking. I'm like,
 
 238
-00:15:36.260 --> 00:15:39.830
-have a patchwork of not
-just countries, but States in
+00:11:35.990 --> 00:11:38.510
+Oh, she's going to explain
+like all the layers, right.
 
 239
-00:15:39.830 --> 00:15:43.610
-the United States, all sorts of
-doing the same thing. And
+00:11:38.510 --> 00:11:42.440
+Layer seven. And she's like,
+Oh, well layer five and
 
 240
-00:15:43.610 --> 00:15:48.920
-it becomes so chaotic that
-an eCommerce website much less
+00:11:42.440 --> 00:11:44.660
+six. No one ever talks
+about these. Like you just
 
 241
-00:15:48.980 --> 00:15:53.030
-a, a developer who is
-working under a master services
+00:11:44.660 --> 00:11:46.700
+like, we're not going to
+talk about those two layers
 
 242
-00:15:53.030 --> 00:15:55.310
-agreement and all the rest
-of that doesn't know what
+00:11:46.700 --> 00:11:50.180
+because they suck. Yeah. I
+thought that was awesome. They
 
 243
-00:15:55.310 --> 00:15:56.930
-to do. They don't know
-where to turn. They don't
+00:11:50.180 --> 00:11:54.010
+do layers five and six.
+Are, are you willing to
 
 244
-00:15:56.930 --> 00:16:01.360
-know how to comply. Yeah,
-I'm, I'm hearing questions online
+00:11:54.010 --> 00:11:59.220
+speak with them again? Yeah.
+Yeah. Yeah. One thing that
 
 245
-00:16:01.360 --> 00:16:04.960
-that are difficult for anyone
-to parse. An example was
+00:11:59.220 --> 00:12:01.110
+I kind of think is
+important is I try not
 
 246
-00:16:05.670 --> 00:16:07.750
-we talked about opting in,
-but certainly a big part
+00:12:01.110 --> 00:12:04.030
+to use metaphors. Cause I
+don't understand metaphors like, like
 
 247
-00:16:07.750 --> 00:16:10.960
-of the GDPR is the
-right to be forgotten, right?
+00:12:04.040 --> 00:12:05.550
+I try to make things
+simple, but I don't try
 
 248
-00:16:10.960 --> 00:16:14.620
-The explicit opt out. So
-let's say for example, I'm
+00:12:05.550 --> 00:12:07.020
+to be like, Oh, this
+is like this other thing.
 
 249
-00:16:14.620 --> 00:16:17.320
-encrypting all the data that's
-being kept of my users.
+00:12:07.020 --> 00:12:10.230
+Cause often it's like not,
+Hmm. Probably people use metaphors.
 
 250
-00:16:18.130 --> 00:16:22.090
-And then you've decided to
-opt out, you've invoked your
+00:12:10.230 --> 00:12:12.000
+I'm like, I don't understand
+what you mean. Like, That's
 
 251
-00:16:22.090 --> 00:16:25.920
-right to be forgotten if
-I delete the, the, the
+00:12:12.000 --> 00:12:14.280
+really interesting because like I
+think of myself as a
 
 252
-00:16:26.020 --> 00:16:30.310
-encryption key, but your data
-exists on disc in some
+00:12:14.280 --> 00:12:18.210
+teacher and all I have
+is metaphors. So that's very
 
 253
-00:16:30.310 --> 00:16:33.880
-format, but it cannot be
-accessed. Have I deleted you
+00:12:18.210 --> 00:12:20.940
+interesting. So here we are
+two people presenting information in
 
 254
-00:16:33.910 --> 00:16:36.940
-Or not? That's a good
-sort of technical architecture, The
+00:12:20.940 --> 00:12:23.460
+two different ways and sometimes
+it's effective and sometimes it's
 
 255
-00:16:36.940 --> 00:16:39.910
-questions that how could anyone
-know that it would really
+00:12:23.460 --> 00:12:26.760
+not. Yeah. Yeah. And I
+mean, obviously other people use
 
 256
-00:16:39.910 --> 00:16:43.090
-just be your as a
-lawyers interpretation of the law?
+00:12:26.760 --> 00:12:28.890
+metaphors effectively, but I don't
+understand how to use them
 
 257
-00:16:43.630 --> 00:16:46.090
-Wouldn't it. Let me, let
-me give you my take
+00:12:28.890 --> 00:12:30.780
+at all. So I just
+try to simplify things and
 
 258
-00:16:46.090 --> 00:16:49.760
-on that. In my experience
-with that, you know, I,
+00:12:30.780 --> 00:12:33.090
+then like the simplest version
+of the truth that I
 
 259
-00:16:49.760 --> 00:16:54.730
-I, our firm, we do
-a huge amount of e-commerce
+00:12:33.090 --> 00:12:35.010
+can come up with. And
+then I just say that,
 
 260
-00:16:54.730 --> 00:16:57.640
-work and work with digital
-clients. And one of the
+00:12:35.160 --> 00:12:37.440
+Hmm, this is a tough
+question. But have you ever
 
 261
-00:16:57.640 --> 00:17:02.380
-things that comes up a
-great deal is newspapers in
+00:12:37.440 --> 00:12:40.050
+had a Xen? That was
+just a huge fail. Like
 
 262
-00:17:02.380 --> 00:17:07.960
-the United States, major publications that
-are refusing to take down
+00:12:40.050 --> 00:12:41.880
+you put it out there
+and nobody got it and
 
 263
-00:17:07.960 --> 00:17:12.070
-articles that are incorrect about
-my clients. So I get
+00:12:41.880 --> 00:12:44.400
+no one understood. And then
+you just like made that
 
 264
-00:17:12.070 --> 00:17:15.910
-people contacting me, asking me
-to as a last resort,
+00:12:44.400 --> 00:12:49.650
+gene disappear and recruited. I
+don't think so. Well, I
 
 265
-00:17:15.910 --> 00:17:18.400
-cause they've tried for years
-to get this stuff down.
+00:12:49.650 --> 00:12:52.350
+don't know. I mean, I've,
+I've written like seventeens, right?
 
 266
-00:17:19.420 --> 00:17:21.730
-They can't, they can't get
-a job. They go on
+00:12:52.740 --> 00:12:55.030
+But you've written hundreds of
+hundred comics. I've written a
 
 267
-00:17:21.730 --> 00:17:24.340
-job interviews. Somebody goes on,
-Google puts their name in
+00:12:55.040 --> 00:12:56.310
+lot of comics. I mean,
+some of, some of the
 
 268
-00:17:24.340 --> 00:17:26.590
-and finds out that they
-did these horrible things. They
+00:12:56.310 --> 00:12:59.040
+comics are of course bad.
+Well, yeah, let me, let
 
 269
-00:17:26.590 --> 00:17:29.140
-assaulted somebody, they were involved
-in summer, but none of
+00:12:59.040 --> 00:13:00.780
+me back it up. So
+not I'm misused, but I
 
 270
-00:17:29.140 --> 00:17:32.110
-it's true. It was just
-erroneous reporting in the heat
+00:13:00.780 --> 00:13:02.520
+see, I actually did what
+you want me to, I
 
 271
-00:17:32.110 --> 00:17:35.590
-of a confrontation of some
-type. They didn't do anything.
+00:13:02.520 --> 00:13:06.300
+misused zenes are collections of
+comics. Have you done an
 
 272
-00:17:36.220 --> 00:17:40.510
-And the newspaper literally refuses
-to take it down, even
+00:13:06.300 --> 00:13:08.670
+individual comic that just didn't
+land the way you wanted
 
 273
-00:17:40.510 --> 00:17:44.740
-if it's incorrect. So you
-have a situation where the
+00:13:08.670 --> 00:13:11.730
+to do it? I can't
+remember a specific one that
 
 274
-00:17:44.740 --> 00:17:48.610
-newspaper is asserting its first
-amendment, right? First amendment to
+00:13:11.730 --> 00:13:14.910
+I thought, okay. He here's
+like, this is more of
 
 275
-00:17:48.610 --> 00:17:53.670
-the United States constitution. The Supreme
-court will normally back that
+00:13:14.910 --> 00:13:18.090
+a blog post. Maybe there
+are all these Linux tracing
 
 276
-00:17:53.670 --> 00:17:57.720
-up. And then that newspaper
-now has to decide not
+00:13:18.090 --> 00:13:21.660
+systems, which let you basically
+trace what your operating system
 
 277
-00:17:57.720 --> 00:18:01.020
-so much whether they want
-to take it down because
+00:13:21.660 --> 00:13:25.880
+is doing. So like there's
+like F trays and they're,
 
 278
-00:18:01.020 --> 00:18:03.390
-this person has a right
-to be forgotten because it's
+00:13:25.880 --> 00:13:27.750
+they're all, they're all a
+little bit obscure, I guess
 
 279
-00:18:03.390 --> 00:18:06.450
-an erroneous article. That's not
-the issue. The issue is
+00:13:28.470 --> 00:13:30.570
+have like, most people don't
+know about them. And I
 
 280
-00:18:06.450 --> 00:18:08.850
-they want to keep it
-up, but now they're being
+00:13:30.570 --> 00:13:32.790
+was really upset that I
+couldn't like find like a
 
 281
-00:18:08.850 --> 00:18:10.950
-forced to take it down
-by a law of another
+00:13:32.790 --> 00:13:34.710
+summary of like what all
+the like Tracy's sister she's
 
 282
-00:18:10.950 --> 00:18:16.110
-country. So it becomes highly
-complicated and, and it's just
+00:13:34.710 --> 00:13:36.630
+of some floor. So I
+wrote this really long blog
 
 283
-00:18:16.110 --> 00:18:18.570
-not the way these decisions
-should be made. They should
+00:13:36.630 --> 00:13:38.730
+post kind of summarizing, like
+at a high level, like
 
 284
-00:18:18.570 --> 00:18:20.700
-be made on the merits
-of somebody deserves to be
+00:13:38.730 --> 00:13:41.100
+what all these systems do.
+And I thought, I think
 
 285
-00:18:20.700 --> 00:18:24.540
-forgotten. You should have a
-dialogue with the newspaper and
+00:13:41.100 --> 00:13:43.200
+that it would be, everyone
+would be really excited about
 
 286
-00:18:24.540 --> 00:18:26.580
-the newspaper should be reasonable.
-And there should be some
+00:13:43.200 --> 00:13:45.450
+it. And what I forgot
+is that like, I don't
 
 287
-00:18:26.580 --> 00:18:30.360
-kind of compromise on some
-level, even, even just a
+00:13:45.450 --> 00:13:48.990
+think most people really care
+about clinics, tracing systems. I
 
 288
-00:18:30.360 --> 00:18:34.680
-second article or something or
-correction, but that's not what's
+00:13:48.990 --> 00:13:52.230
+think it's mostly just me.
+And like, I mean, people
 
 289
-00:18:34.680 --> 00:18:36.870
-going on. What's going on
-is what you're talking about,
+00:13:52.230 --> 00:13:54.300
+do like, I mean, my
+partner just told me the
 
 290
-00:18:36.870 --> 00:18:40.110
-which is at a digital
-level, they may delete the
+00:13:54.300 --> 00:13:55.830
+other day, he was like,
+Oh, I saw someone like
 
 291
-00:18:40.110 --> 00:18:47.070
-article. Well, deleting the article
-comes very close to modifying
+00:13:55.830 --> 00:13:58.260
+link your blog post on
+this mailing list saying that
 
 292
-00:18:47.070 --> 00:18:51.720
-the historical record. You know,
-it, it gets very close
+00:13:58.260 --> 00:13:59.760
+it was really useful. And
+I was like, Oh cool.
 
 293
-00:18:51.720 --> 00:18:54.330
-to exactly what, what you
-don't want to have in
+00:13:59.880 --> 00:14:05.130
+Like somebody did care. But
+like, I think like I
 
 294
-00:18:54.330 --> 00:18:59.250
-a, in a democracy that,
-that, that prizes, civil liberties.
+00:14:05.130 --> 00:14:08.790
+forgot how Nisha topic it
+was in a way fine.
 
 295
-00:18:59.640 --> 00:19:01.920
-So how do you balance
-all of that? And that's
+00:14:08.790 --> 00:14:10.540
+Like I like to write
+about things that are niche
 
 296
-00:19:01.920 --> 00:19:06.350
-really the question And definitely
-an unintended consequence and that
+00:14:10.590 --> 00:14:13.170
+topics, because I guess, cause
+I think that those things
 
 297
-00:19:06.350 --> 00:19:08.600
-echo is going to echo
-through for, for many years.
+00:14:13.170 --> 00:14:16.320
+often end up being really
+underserved. And like I was
 
 298
-00:19:09.080 --> 00:19:11.510
-Hey friends, this is Scott.
-You know, listening to podcasts
+00:14:16.380 --> 00:14:18.120
+in a way rather write
+about that than write about
 
 299
-00:19:11.510 --> 00:19:13.220
-is a great way to
-keep up to date on
+00:14:18.120 --> 00:14:20.790
+something like Jason, cause I'm
+like, well, people understand Jason.
 
 300
-00:19:13.220 --> 00:19:16.670
-technology. Since we're always learning
-as software people. And you
+00:14:20.820 --> 00:14:24.330
+Like I don't need to
+explain Jason. There's a lot
 
 301
-00:19:16.670 --> 00:19:19.460
-can also find a job
-by listening to a podcast.
+00:14:24.330 --> 00:14:26.640
+of material out there. I'd
+rather write about political tracing
 
 302
-00:19:19.470 --> 00:19:22.610
-If you check out our
-new sponsor, hired.com, that's H
+00:14:26.640 --> 00:14:29.250
+systems and explain what's going
+on with like after race.
 
 303
-00:19:22.610 --> 00:19:27.950
-I R E d.com/hansel minutes
-on hire.com. Software engineers can
+00:14:29.880 --> 00:14:31.860
+It is kind of frustrating
+though. Like I've, I've been
 
 304
-00:19:27.950 --> 00:19:30.920
-get interview requests from companies
-that want to hire you.
+00:14:32.100 --> 00:14:34.200
+blogging for a long time
+and I'll feel like I'll
 
 305
-00:19:31.250 --> 00:19:33.290
-Each offer will have the
-salary and the equity up
+00:14:34.200 --> 00:14:36.450
+spend a week on a
+blog. It's like sample code
 
 306
-00:19:33.290 --> 00:19:36.470
-front. You can view those
-interview requests and, you know,
+00:14:36.450 --> 00:14:40.080
+and charts and graphs and
+tables and like timings and
 
 307
-00:19:36.470 --> 00:19:38.810
-except project change the offer
-before even talking to a
+00:14:40.080 --> 00:14:42.180
+I get no comments and
+no one cares and you
 
 308
-00:19:38.810 --> 00:19:40.790
-company. It's a great way
-to find out what's out
+00:14:42.180 --> 00:14:44.850
+get like 10 likes, but
+then you write a blog
 
 309
-00:19:40.790 --> 00:19:43.430
-there and maybe make a
-move they're working with over
+00:14:44.880 --> 00:14:49.080
+post about like character turn
+line feed, and get internet
 
 310
-00:19:43.430 --> 00:19:47.810
-6,000 companies from startups to
-large companies from 14 major
+00:14:49.080 --> 00:14:52.910
+loses their mind. Yeah. I
+try To sort of time
 
 311
-00:19:47.810 --> 00:19:50.960
-tech hubs throughout North America
-and Europe. What's great about
+00:14:52.910 --> 00:14:54.530
+box how much time I
+spend on it on any
 
 312
-00:19:50.960 --> 00:19:54.020
-this is it's totally free
-for software engineers. And if
+00:14:54.530 --> 00:14:57.830
+given thing. Like this is
+part of why I like
 
 313
-00:19:54.020 --> 00:19:57.260
-you get a job to
-hire.com, that'll ordinarily give you
+00:14:57.830 --> 00:15:01.040
+to post like individual pages
+on Twitter as I go
 
 314
-00:19:57.260 --> 00:20:00.110
-a $300. Thank you bonus.
-But if you use our
+00:15:01.250 --> 00:15:03.860
+to sort of like see
+what the reaction is and
 
 315
-00:20:00.110 --> 00:20:02.780
-special link, they'll double that
-bonus. So you'll actually get
+00:15:03.860 --> 00:15:05.720
+just like get a sense
+of what people think about
 
 316
-00:20:02.780 --> 00:20:06.440
-paid $600 when you accept
-that job. Now, if you're
+00:15:05.720 --> 00:15:08.420
+it. And sometimes you will
+find mistakes also, which is
 
 317
-00:20:06.440 --> 00:20:08.450
-not looking for a job,
-but you know, someone who
+00:15:08.420 --> 00:15:12.230
+great. It's very helpful. But
+yeah, like for any individual
 
 318
-00:20:08.450 --> 00:20:12.320
-is refer them to hire.com/hansel
-minutes, and they'll give you
+00:15:12.230 --> 00:15:14.030
+comic, I think I try
+not to spend more than
 
 319
-00:20:12.320 --> 00:20:16.550
-a lead bonus, a $1,337
-bonus when they accept a
+00:15:14.420 --> 00:15:17.440
+a couple of hours on
+it. Cool. And you're publishing
 
 320
-00:20:16.550 --> 00:20:19.970
-job. So check them out
-at <inaudible> dot com slash
+00:15:17.440 --> 00:15:19.510
+these though. Now, like you
+started making these and you
 
 321
-00:20:20.000 --> 00:20:23.810
-Hanselman. Let's talk about the
-size of companies like in
+00:15:19.510 --> 00:15:21.340
+would just like put them
+out. You'd hand them to
 
 322
-00:20:23.810 --> 00:20:27.020
-my day job, I work
-at Microsoft and it's big
+00:15:21.340 --> 00:15:22.900
+people like a couple of
+hundred here. You'd print them
 
 323
-00:20:27.020 --> 00:20:30.350
-enough that it has a
-whole GDPR department, you know,
+00:15:22.900 --> 00:15:25.720
+all yourself, but I can
+go up now and I
 
 324
-00:20:30.350 --> 00:20:32.930
-and it's not a temporary
-thing anymore. Like it's full
+00:15:25.720 --> 00:15:28.450
+can buy these, like get
+the print version. If I
 
 325
-00:20:32.930 --> 00:20:36.650
-time making sure that people
-don't do the wrong thing,
+00:15:28.450 --> 00:15:30.040
+like do the, get the
+print version. Do you want
 
 326
-00:20:36.650 --> 00:20:39.620
-which is good from a
-privacy perspective. And in my
+00:15:30.040 --> 00:15:32.230
+me to print this out
+or should I buy it
 
 327
-00:20:39.620 --> 00:20:43.160
-side job, I have a
-podcast and a blog, and
+00:15:32.230 --> 00:15:34.120
+from kind of buy it
+from Amazon? Are you selling
 
 328
-00:20:44.210 --> 00:20:48.940
-there are a million or
-millions of little small developers
+00:15:34.120 --> 00:15:37.300
+them? You can't buy a
+printed version right now. That's
 
 329
-00:20:49.240 --> 00:20:51.490
-that have no idea. If
-they're going to get nailed.
+00:15:37.360 --> 00:15:41.530
+a project that I need
+to discover an extra few
 
 330
-00:20:51.490 --> 00:20:55.060
-Am I going to lose
-my house? If someone comes
+00:15:41.920 --> 00:15:46.000
+dozens of hours. Get to
+have it. I haven't figured
 
 331
-00:20:55.060 --> 00:20:58.030
-and says, I want to
-be forgotten off of your
+00:15:46.000 --> 00:15:48.160
+out how to do it
+yet, but yeah. So is
 
 332
-00:20:58.030 --> 00:21:01.240
-blog and I don't have
-a way to solve that.
+00:15:48.160 --> 00:15:49.450
+it right now? If you
+buy it, you can print
 
 333
-00:21:01.930 --> 00:21:05.700
-Well, you're absolutely right. The
-first day that the GDPR
+00:15:49.450 --> 00:15:52.020
+it out. It does. Does
+it feel like it's a,
 
 334
-00:21:05.700 --> 00:21:10.710
-was enforced, there were complaints
-filed against a bunch of
+00:15:52.020 --> 00:15:53.950
+there's a business here though.
+Like I could go and
 
 335
-00:21:10.710 --> 00:21:16.830
-these very large companies. Facebook
-is an obvious example, $664,000
+00:15:53.950 --> 00:15:57.850
+get like t-shirts of zines
+and comics. I don't know.
 
 336
-00:21:16.830 --> 00:21:21.480
-was the equivalent of that
-fine and dollars based upon
+00:15:57.850 --> 00:16:01.660
+So I'm like, I feel
+like apparel is exciting. People
 
 337
-00:21:21.480 --> 00:21:25.500
-what they, what happened with
-Cambridge Analytica. You know, you're
+00:16:01.660 --> 00:16:05.740
+love apparel, but I'm really
+excited about selling like printed
 
 338
-00:21:25.500 --> 00:21:29.100
-talking about Google being found
-fine for abusing its mobile
+00:16:06.130 --> 00:16:10.300
+stuff and like educational material,
+because I feel like there's
 
 339
-00:21:29.100 --> 00:21:33.810
-software monopoly five point $1 billion.
-They got a two point
+00:16:10.300 --> 00:16:15.070
+a huge need for it.
+And like, I guess I've
 
 340
-00:21:33.810 --> 00:21:38.430
-$7 billion fine for a prior
-year for abusing a search
+00:16:15.070 --> 00:16:17.320
+been writing for free for
+a long time. Right. And
 
 341
-00:21:38.430 --> 00:21:41.580
-monopoly. So my point is,
-all these big companies are
+00:16:17.360 --> 00:16:19.600
+that's been great and I
+love doing it, but I've
 
 342
-00:21:41.580 --> 00:21:45.450
-getting fined, enormous amounts of
-money, but they're not missing
+00:16:19.600 --> 00:16:21.070
+kind of realized, I think
+that there's sort of like
 
 343
-00:21:45.450 --> 00:21:49.320
-a beat. The fines are
-not destroying them. The fines
+00:16:21.070 --> 00:16:22.810
+an upper bound, like how
+much you can do for
 
 344
-00:21:49.320 --> 00:21:53.010
-are not putting them out
-of business. Whereas someone like
+00:16:22.810 --> 00:16:27.910
+free actually really like, well,
+yeah, because like, if you
 
 345
-00:21:53.010 --> 00:21:56.940
-you're describing someone such as
-yourself operating something on your
+00:16:27.910 --> 00:16:29.950
+want to make something really
+good, you know, spend time
 
 346
-00:21:56.940 --> 00:22:00.840
-own, you know, if you
-even get a modest, fine,
+00:16:29.950 --> 00:16:34.480
+on it. Yeah. And there's
+like only so much time.
 
 347
-00:22:01.950 --> 00:22:05.130
-that can shut you down.
-So there was a, there
+00:16:34.510 --> 00:16:36.640
+I think that it's possible
+to spend doing things for
 
 348
-00:22:05.130 --> 00:22:09.870
-was a disproportionality of impact.
-The fact that, that these
+00:16:36.640 --> 00:16:39.550
+free. If that makes sense.
+It's like, I've been thinking
 
 349
-00:22:09.870 --> 00:22:12.840
-fines are large is not
-the issue. The issue is
+00:16:39.550 --> 00:16:42.670
+about like, like sometimes I
+go to conferences and I
 
 350
-00:22:12.840 --> 00:22:16.560
-the proportionality of the fine
-to the ability to pay.
+00:16:42.670 --> 00:16:47.380
+feel like frustrated with the
+talks, but what I realized
 
 351
-00:22:18.000 --> 00:22:21.390
-And one of the wonderful
-things about the, the internet
+00:16:47.380 --> 00:16:49.540
+is like people don't get
+paid to give talks. Right?
 
 352
-00:22:21.390 --> 00:22:25.290
-about, about the web is
-that anybody can just throw
+00:16:49.660 --> 00:16:51.760
+Yeah. Well, most, well, some
+people, I guess, I guess
 
 353
-00:22:25.290 --> 00:22:30.210
-up a website with very
-little capital and just go,
+00:16:51.760 --> 00:16:54.250
+there's like there are paid
+like famous people that get
 
 354
-00:22:31.020 --> 00:22:33.720
-it's not the same kind
-of infrastructure that has to
+00:16:54.280 --> 00:16:58.150
+money, I guess. Yeah. Yeah.
+Right. I believe like the
 
 355
-00:22:33.720 --> 00:22:35.310
-be paid for when you
-have a brick and mortar
+00:16:58.150 --> 00:17:01.870
+incentives are sort of misaligned,
+right? Like, like people aren't
 
 356
-00:22:35.310 --> 00:22:37.920
-business, the way it used
-to be. But, but if
+00:17:01.870 --> 00:17:04.600
+being paid to give educational
+talks. Yeah. And like, I
 
 357
-00:22:37.950 --> 00:22:41.550
-by going, you're going right
-into a sand trap and
+00:17:04.600 --> 00:17:06.150
+mean, to the extent that
+people at tech conferences do
 
 358
-00:22:41.550 --> 00:22:44.790
-you're going to be bankrupted
-by some kind of crazy
+00:17:06.160 --> 00:17:08.080
+get paid to give talks,
+they're getting paid to like
 
 359
-00:22:44.790 --> 00:22:49.950
-fine that you never anticipated.
-That's a problem. And it's
+00:17:08.420 --> 00:17:11.530
+Market. Thanks to you. That's
+a good point. That's a
 
 360
-00:22:49.950 --> 00:22:54.540
-an unintended consequence of all
-this. And I also want
+00:17:11.530 --> 00:17:13.360
+good point because the famous
+people all have a book
 
 361
-00:22:54.540 --> 00:22:57.240
-to, if I may just
-sort of get to another
+00:17:13.360 --> 00:17:16.930
+to sell or whatever. Yeah.
+And so I've been thinking
 
 362
-00:22:57.240 --> 00:23:01.620
-level on this issue, because
-when you think about it,
+00:17:16.930 --> 00:17:19.000
+about sort of like, how
+can you structure like a
 
 363
-00:23:02.370 --> 00:23:06.600
-the other countries are getting
-involved in this regulation of
+00:17:19.000 --> 00:17:21.880
+business so that the incentives
+are correctly aligned so that
 
 364
-00:23:06.600 --> 00:23:10.590
-privacy on the internet, various
-States, such as California and
+00:17:21.910 --> 00:17:26.200
+you can actually like focus
+on education, which I feel
 
 365
-00:23:10.590 --> 00:23:15.690
-others are getting involved, but
-someone's missing that. Someone's missing
+00:17:26.200 --> 00:17:28.630
+like isn't really true in
+the publishing industry right now.
 
 366
-00:23:15.690 --> 00:23:21.450
-from the discussion. Well, the
-United States government, the federal government.
+00:17:28.840 --> 00:17:30.460
+Because if you publish a
+book with like a mainstream
 
 367
-00:23:21.450 --> 00:23:25.380
-And I will tell you
-that my view is that
+00:17:30.460 --> 00:17:33.580
+tech publisher, you're not gonna
+make that much money. And
 
 368
-00:23:25.560 --> 00:23:28.980
-to some extent, one extent
-or another, and I guess
+00:17:33.580 --> 00:17:36.460
+so like, it's like your
+financial incentives are not actually
 
 369
-00:23:28.980 --> 00:23:32.100
-historians looking back on this
-period of history will, will
+00:17:36.460 --> 00:17:39.580
+set up to really focus
+on it. Right. Right. Well,
 
 370
-00:23:32.100 --> 00:23:34.170
-give us the answer. We
-don't know a completely right
+00:17:39.580 --> 00:17:41.590
+and they're going to go
+and sell red trees and
 
 371
-00:23:34.170 --> 00:23:36.990
-now to one extent. I
-know that the reason for
+00:17:41.590 --> 00:17:43.690
+they'll sell the dead tree
+for like $40 to a
 
 372
-00:23:36.990 --> 00:23:40.200
-all this chaos and the
-reason for all these questions
+00:17:43.690 --> 00:17:46.510
+teacher who can't afford it
+and you'll get a dollar
 
 373
-00:23:40.260 --> 00:23:45.090
-is that our federal government
-meaning our Congress has not
+00:17:46.510 --> 00:17:49.170
+or two and then their
+next year, they're going to
 
 374
-00:23:45.560 --> 00:23:49.040
-taken up the issue of
-digital privacy in a robust
+00:17:49.170 --> 00:17:50.760
+want you to update all
+of your stuff with the
 
 375
-00:23:49.040 --> 00:23:54.560
-way. Congress de-funded its own
-office of technology years and
+00:17:50.760 --> 00:17:53.840
+latest version and they can
+sell more. Yeah. And part,
 
 376
-00:23:54.560 --> 00:23:57.440
-years ago, that would have
-been the place to get
+00:17:53.870 --> 00:17:55.670
+part of the reason I
+think scenes are exciting is
 
 377
-00:23:57.440 --> 00:23:59.390
-the kind of advice they
-need to deal with this.
+00:17:55.670 --> 00:17:58.880
+that they're pretty fast to
+produce. And because like technology
 
 378
-00:23:59.390 --> 00:24:03.950
-They, they had Mark Zuckerberg
-testifying, but the questions they
+00:17:58.880 --> 00:18:02.270
+is always moving, you can
+write something like fairly quickly
 
 379
-00:24:03.950 --> 00:24:06.740
-were, they were really showing
-a lack of understanding of
+00:18:02.270 --> 00:18:06.950
+about something maybe even relatively
+recent, which is, I mean,
 
 380
-00:24:06.740 --> 00:24:11.660
-what Facebook does. So my
-point is that in past,
+00:18:06.950 --> 00:18:08.390
+I don't do this. Right.
+I read about things like
 
 381
-00:24:11.720 --> 00:24:15.620
-in the past, these issues
-that, that were broad, that
+00:18:08.390 --> 00:18:10.700
+Sri are like 10 years
+old or about like GCP
 
 382
-00:24:15.620 --> 00:24:19.910
-related to the entire United States
-that were States were disagreeing
+00:18:10.700 --> 00:18:14.360
+that I actually write about
+extremely, relatively old stuff. Most
 
 383
-00:24:19.910 --> 00:24:23.930
-with one another. The idea
-was that each state was
+00:18:14.360 --> 00:18:16.430
+of the time that hasn't
+changed and probably isn't going
 
 384
-00:24:23.930 --> 00:24:26.630
-sort of a laboratory of
-democracy. That's what it was
+00:18:16.430 --> 00:18:19.550
+to change. But, but, but,
+but you can write and
 
 385
-00:24:26.630 --> 00:24:29.960
-called. And then together, they
-would all go up to
+00:18:19.550 --> 00:18:21.740
+I think it's a lot
+easier to write something short
 
 386
-00:24:29.960 --> 00:24:33.260
-the Supreme court. There would
-be a decision that it
+00:18:21.890 --> 00:18:24.380
+and then people will actually
+read short things, unlike books,
 
 387
-00:24:33.260 --> 00:24:35.840
-would, they would go to
-their, to their congressmen and
+00:18:24.380 --> 00:18:27.050
+which I think they mostly
+won't read. No, that's a
 
 388
-00:24:35.840 --> 00:24:38.390
-congresswomen, and they would ask
-them to pass a law.
+00:18:27.050 --> 00:18:30.740
+good point though, because like
+I've had, I have memorized
 
 389
-00:24:38.420 --> 00:24:41.480
-And there would be a
-national consensus that would be
+00:18:30.740 --> 00:18:33.200
+like every single line to
+Hamilton and the OT and
 
 390
-00:24:41.480 --> 00:24:47.780
-created through preemption of state
-law, federal law, primacy over
+00:18:33.200 --> 00:18:35.090
+the audio book. And I
+follow the guy on Twitter
 
 391
-00:24:47.780 --> 00:24:52.010
-state law. That's not happening.
-That's not even on the
+00:18:35.520 --> 00:18:37.970
+and I've been sitting on
+the actual book of Hamilton.
 
 392
-00:24:52.010 --> 00:24:55.940
-radar right now. So far
-as I know. And because
+00:18:38.360 --> 00:18:40.400
+I think the one that
+he based the musical on,
 
 393
-00:24:55.940 --> 00:24:59.660
-of that, we're all left
-to our own devices there
+00:18:40.430 --> 00:18:44.750
+it's like 600 pages. It's
+been moving around my house,
 
 394
-00:25:00.020 --> 00:25:03.470
-to, to, to sort of
-sum it up. My opinion
+00:18:44.960 --> 00:18:47.390
+but it's never actually been
+read, which is stressing me
 
 395
-00:25:03.740 --> 00:25:09.020
-is there should have been
-much more robust negotiations between
+00:18:47.390 --> 00:18:49.910
+out. I feel like Twitter
+has ruined my ability to
 
 396
-00:25:09.020 --> 00:25:12.110
-the American government and the
-European union, so that the
+00:18:49.910 --> 00:18:53.720
+read long form stuff, but
+I'll read your zenes there,
 
 397
-00:25:12.110 --> 00:25:15.500
-implementation of this was not
-going to be this disruptive
+00:18:53.720 --> 00:18:56.540
+you know? Cause they're not
+600 pages. Yeah. Yeah. And
 
 398
-00:25:15.530 --> 00:25:19.040
-and raise this many questions.
-Number two, there should, the
+00:18:56.540 --> 00:18:58.490
+I think even some of
+my favorite tech books, I'll,
 
 399
-00:25:19.040 --> 00:25:23.270
-federal government should have been
-helping small businesses and medium
+00:18:58.500 --> 00:19:02.120
+I've only read like two
+chapters of that. Yeah. Code
 
 400
-00:25:23.270 --> 00:25:27.170
-sized businesses to understand their
-obligations and make it reasonable
+00:19:02.120 --> 00:19:06.860
+complete Steve McConnell's code complete.
+Right. And some of those
 
 401
-00:25:27.500 --> 00:25:30.920
-and assist. I'm not talking
-about handouts. I'm talking about
+00:19:06.860 --> 00:19:10.100
+chapters are really good. Like
+they're not bad books, but
 
 402
-00:25:30.920 --> 00:25:34.430
-information, places to call right
-now. We're all on our
+00:19:10.180 --> 00:19:11.840
+I've been thinking about like,
+well, like what if we
 
 403
-00:25:34.430 --> 00:25:37.640
-own. And number three, I
-do believe States should be
+00:19:11.840 --> 00:19:14.360
+focus on smaller things and
+like really focused on being
 
 404
-00:25:37.640 --> 00:25:41.300
-able to put in place
-privacy regulations and laws. Of
+00:19:14.360 --> 00:19:15.980
+like, what if we just
+make 20 pages, we'll make
 
 405
-00:25:41.300 --> 00:25:43.220
-course, that that is something
-the state should be able
+00:19:15.980 --> 00:19:19.850
+those 20 pages so good
+and make them like really
 
 406
-00:25:43.220 --> 00:25:46.430
-to do, but there should
-also be an overarching way
+00:19:19.850 --> 00:19:22.520
+what you need to know.
+Yeah. Like, like some of
 
 407
-00:25:46.430 --> 00:25:49.550
-that the federal government is
-organizing this. So that business
+00:19:22.520 --> 00:19:24.590
+your, like I could read
+an entire chapter on like
 
 408
-00:25:49.880 --> 00:25:54.860
-has predictability and simplicity because
-if you don't have that,
+00:19:24.590 --> 00:19:27.980
+how the Linux proc directory
+works, but I read your
 
 409
-00:25:55.370 --> 00:26:00.760
-the very unknown becomes a
-drag on commerce. And just
+00:19:27.980 --> 00:19:29.630
+Xen and I feel like
+I pretty much get it.
 
 410
-00:26:00.760 --> 00:26:02.860
-to give a little bit
-of context for folks who
+00:19:29.750 --> 00:19:32.180
+And there's probably a hundred
+words on the entire thing.
 
 411
-00:26:02.860 --> 00:26:06.340
-might not have it in
-1972, the office of technology
+00:19:32.750 --> 00:19:35.210
+Yeah. Yeah, exactly. And then
+you can always go to
 
 412
-00:26:06.340 --> 00:26:11.680
-assessment was created. It was
-defunded in 1995. And interestingly
+00:19:35.210 --> 00:19:39.170
+the man page, right? Like
+if you want Exactly. Hey
 
 413
-00:26:11.680 --> 00:26:16.000
-enough, in June of 2018,
-it was at attempted to
+00:19:39.170 --> 00:19:41.870
+folks, Intel is a sponsor
+this week and I welcome
 
 414
-00:26:16.000 --> 00:26:19.990
-put in an amendment to
-reinstate that long defunct office.
+00:19:41.870 --> 00:19:45.470
+them because they're bringing some
+high performance developer tools for
 
 415
-00:26:19.990 --> 00:26:23.140
-And that was voted down
-a long party. And that
+00:19:45.470 --> 00:19:49.640
+all of us check out
+Intel's parallel studio X, E
 
 416
-00:26:23.140 --> 00:26:26.460
-office of technology, you are
-totally right about that. And
+00:19:50.210 --> 00:19:52.430
+I've talked about parallelism before
+on the show and the
 
 417
-00:26:26.470 --> 00:26:31.420
-that office of technology assessment
-was meant to deal with
+00:19:52.430 --> 00:19:56.270
+importance of using the complete
+instruction set, unlocking the power
 
 418
-00:26:31.480 --> 00:26:34.960
-the future. It was, it
-was put in place decades
+00:19:56.270 --> 00:19:58.280
+of the process or that
+your code is running on.
 
 419
-00:26:34.960 --> 00:26:37.870
-ago with the understanding that
-they knew this is where
+00:19:58.820 --> 00:20:00.980
+Now, you all might be
+writing C or C plus
 
 420
-00:26:37.870 --> 00:26:39.850
-things were headed, but they
-didn't know exactly how it
+00:20:00.980 --> 00:20:04.670
+plus Python or even Fortran,
+but is your code building
 
 421
-00:26:39.850 --> 00:26:42.220
-was going to go. But
-the one thing they did
+00:20:04.670 --> 00:20:06.320
+in such a way and
+written in such a way
 
 422
-00:26:42.220 --> 00:26:47.310
-know was that Congress would
-need to have objective advice
+00:20:06.320 --> 00:20:11.780
+that it uses the latest
+techniques for vectorization multithreading multi-node
 
 423
-00:26:47.700 --> 00:26:50.550
-from its own body, that
-they would, they would need
+00:20:11.780 --> 00:20:16.790
+parallelization or memory optimization? Intel
+parallel studio ECC has a
 
 424
-00:26:50.550 --> 00:26:55.110
-their own people to look
-at this, not lobbyists, not
+00:20:16.790 --> 00:20:19.730
+lot of new stuff for
+2018 across all these languages.
 
 425
-00:26:55.110 --> 00:26:57.960
-people with an agenda, but
-their own people sort of
+00:20:20.180 --> 00:20:24.500
+Get a free download at
+<inaudible> dot com slash parallels
 
 426
-00:26:57.960 --> 00:27:00.750
-like the office of management
-and budget and things like
+00:20:24.500 --> 00:20:28.040
+studio Z, or certainly go
+and Google or Google with
 
 427
-00:27:00.750 --> 00:27:05.310
-that, where the government advises
-itself and they defunded it.
+00:20:28.040 --> 00:20:32.000
+being for Intel parallel studio
+XE and get started boosting
 
 428
-00:27:05.930 --> 00:27:09.050
-So I've got two questions
-here. The first one is
+00:20:32.000 --> 00:20:35.510
+your apps performance with smart
+parallel code with a lot
 
 429
-00:27:09.320 --> 00:27:12.500
-what, what can I, what
-can a small or medium
+00:20:35.510 --> 00:20:43.070
+less effort, check them out.
+bitly.com/parallels, studio X, E. So
 
 430
-00:27:12.500 --> 00:27:15.860
-sized business do about this?
-And should they do what
+00:20:43.460 --> 00:20:46.430
+you know, you're, you know,
+you're somewhat senior. Would you
 
 431
-00:27:15.860 --> 00:27:19.160
-major us news sites are
-doing? Thousands of us news
+00:20:46.430 --> 00:20:48.580
+call yourself an intermediate developer?
+Him? How long have you
 
 432
-00:27:19.160 --> 00:27:21.920
-sites have simply punted. I
-know that we think of
+00:20:48.580 --> 00:20:51.990
+been in developing Helen? So
+I learned from him 15
 
 433
-00:27:21.920 --> 00:27:25.520
-news sites as being large
-businesses, but they're surprisingly small
+00:20:51.990 --> 00:20:55.380
+years ago. Okay. So do
+you feel like there's a
 
 434
-00:27:25.610 --> 00:27:28.220
-businesses. And a number of
-them have just said, forget
+00:20:55.380 --> 00:20:59.790
+special place for like that
+10, 15 year intermediate developer
 
 435
-00:27:28.220 --> 00:27:31.070
-it. We don't really want
-to serve the European community.
+00:20:59.790 --> 00:21:03.810
+learning where we want to
+learn more a certain way?
 
 436
-00:27:31.070 --> 00:27:33.530
-And if you come in,
-we'll just, we won't even
+00:21:04.920 --> 00:21:08.160
+Like, I feel like there's
+so much material for beginners
 
 437
-00:27:33.530 --> 00:27:37.130
-do anything with GDPR. We'll
-simply ignore the problem and
+00:21:08.280 --> 00:21:10.320
+right now. Like if you
+want to learn a programming
 
 438
-00:27:37.130 --> 00:27:42.260
-block you entirely. Right? And,
-and that, that is a
+00:21:10.320 --> 00:21:12.900
+language, there's like these like
+learn Python the hard way.
 
 439
-00:27:42.260 --> 00:27:46.430
-major problem. And I would
-argue that that those news
+00:21:12.930 --> 00:21:16.320
+Right. Which I've heard really
+good things about. And there's
 
 440
-00:27:46.430 --> 00:27:51.410
-sites are really doing a
-disservice to their readers. Let's
+00:21:16.320 --> 00:21:20.910
+so little material, I think
+for, for intermediate to like
 
 441
-00:27:51.410 --> 00:27:53.960
-start with what shouldn't be
-happening and then talk about
+00:21:21.150 --> 00:21:24.660
+maybe advanced developers. I think
+I had this really sort
 
 442
-00:27:53.960 --> 00:27:59.210
-what should the businesses from,
-from what I can tell
+00:21:24.660 --> 00:21:28.740
+of formative experience five years
+ago where someone told me
 
 443
-00:27:59.240 --> 00:28:02.150
-from, from people I see
-from clients, I see from
+00:21:28.740 --> 00:21:31.020
+that Estrace, which is this
+tool that traces system calls
 
 444
-00:28:02.150 --> 00:28:06.590
-people who are just in
-this area, I will tell
+00:21:31.020 --> 00:21:33.720
+on Lex. And I didn't
+know. Well, I didn't know
 
 445
-00:28:06.590 --> 00:28:10.760
-you that there is a
-patchwork of solutions. And the
+00:21:33.720 --> 00:21:36.300
+that system calls existed. Like,
+I didn't know how Perkins
 
 446
-00:28:10.760 --> 00:28:17.240
-patchwork generally is inadequate. You
-have people with consent banners
+00:21:36.300 --> 00:21:38.220
+talked to the operating system
+at all. And I didn't
 
 447
-00:28:17.660 --> 00:28:22.940
-and opt out, as well
-as opt ins and not
+00:21:38.220 --> 00:21:40.350
+know that you could trace
+them with Estrace. I think
 
 448
-00:28:22.940 --> 00:28:26.150
-making a distinction between them.
-They have something called a
+00:21:40.350 --> 00:21:42.930
+at that point I'd been
+programming for 10 years and
 
 449
-00:28:26.210 --> 00:28:32.690
-nuke button to let you
-reject everything, you know, basically.
+00:21:42.930 --> 00:21:45.270
+I felt kind of like
+angry almost like I was
 
 450
-00:28:32.690 --> 00:28:35.240
-And then, and then all
-sorts of banners and other
+00:21:45.270 --> 00:21:48.600
+like, why didn't anyone tell
+me before? Right. And like,
 
 451
-00:28:35.240 --> 00:28:38.930
-things that you do. So
-essentially it's such a panoply
+00:21:48.600 --> 00:21:51.750
+where was I supposed to
+learn this? And I realized
 
 452
-00:28:38.950 --> 00:28:42.560
-of, of, of cause I'll
-call it solutions. That's, that's
+00:21:51.750 --> 00:21:53.250
+that for a lot of
+things, there's sort of no
 
 453
-00:28:42.560 --> 00:28:46.310
-really solving nothing. So that's
-so, so number one is
+00:21:53.250 --> 00:21:55.920
+way, like, I mean, of
+course, like someone could have
 
 454
-00:28:46.310 --> 00:28:49.160
-you shouldn't, you know, there's
-an old saying you don't
+00:21:55.920 --> 00:21:58.560
+told me, right? Like it's
+possible that I guess I
 
 455
-00:28:49.160 --> 00:28:52.760
-want to react. What you
-want to do is respond.
+00:21:58.560 --> 00:22:00.300
+could have met someone who
+told him, but I didn't.
 
 456
-00:28:53.510 --> 00:28:57.200
-So the first thing is
-don't just do something to
+00:22:00.330 --> 00:22:03.480
+Right. So I was like,
+wait, how am I supposed
 
 457
-00:28:57.200 --> 00:29:02.150
-do something. Number two, I
-think that there should be
+00:22:03.480 --> 00:22:06.540
+to learn these straight? Like,
+how are we supposed to
 
 458
-00:29:02.150 --> 00:29:09.500
-collaboration with the developers, with
-the outside vendors, with, with
+00:22:06.540 --> 00:22:10.200
+learn new things that are
+pretty fundamental, right? Like the
 
 459
-00:29:09.530 --> 00:29:12.860
-people who are putting up
-the content, you know, the
+00:22:10.200 --> 00:22:12.270
+fact that like system calls
+or how your program talks
 
 460
-00:29:12.860 --> 00:29:16.640
-idea of just assessing liability
-and figuring that there'll be
+00:22:12.270 --> 00:22:14.100
+to your operating system, it's
+like a pretty fundamental fact
 
 461
-00:29:16.640 --> 00:29:19.370
-a lawsuit someday, if there's
-a problem and let the
+00:22:14.100 --> 00:22:16.620
+about how computers work. And
+of course, like you can
 
 462
-00:29:19.370 --> 00:29:21.620
-judge or jury figure it
-out is not really a
+00:22:16.620 --> 00:22:18.450
+say like, Oh, well Julia,
+you should have taken the
 
 463
-00:29:21.620 --> 00:29:24.500
-solution. I think that there
-has to be a collaborative
+00:22:18.450 --> 00:22:21.120
+operating systems class in university
+instead of not taking it.
 
 464
-00:29:24.500 --> 00:29:28.310
-approach within the company with
-its own vendors, with its
+00:22:21.300 --> 00:22:25.320
+Right. But like university classes
+are not, I don't think
 
 465
-00:29:28.310 --> 00:29:31.370
-own developers, where everyone's talking
-to one another, that may
+00:22:25.320 --> 00:22:28.440
+are like the solution to
+like ongoing developer education. Right?
 
 466
-00:29:31.370 --> 00:29:35.060
-sound pretty straight forward, but
-I will tell you that
+00:22:28.440 --> 00:22:30.840
+Like once you graduated from
+university, you will have learned
 
 467
-00:29:35.060 --> 00:29:39.020
-the CEO of the company
-is getting advice from the
+00:22:30.840 --> 00:22:33.570
+some things. But like, no
+matter what university you went
 
 468
-00:29:39.020 --> 00:29:43.090
-accounting firm, from the internal
-marketing people and from the
+00:22:33.570 --> 00:22:35.820
+to, you're still going, I'm
+not learn some like important
 
 469
-00:29:43.090 --> 00:29:47.350
-developer. And it's all disjointed.
-There should be a collaboration
+00:22:35.820 --> 00:22:38.430
+and fundamental things anyway. And
+so it's like, well, how
 
 470
-00:29:47.350 --> 00:29:49.930
-among all of them. They
-should all be talking together
+00:22:38.430 --> 00:22:40.830
+do you, how, how, how
+does it happen that you've
 
 471
-00:29:49.930 --> 00:29:51.940
-and coming up with something
-that works for the company
+00:22:40.830 --> 00:22:42.960
+learned those things? Right? Well,
+like I was talking to
 
 472
-00:29:51.940 --> 00:29:54.370
-and complies with the law,
-which then leads me to
+00:22:42.960 --> 00:22:46.380
+my, to my spouse a
+couple of days ago and
 
 473
-00:29:54.370 --> 00:29:58.750
-the final point, which is,
-I think that you need
+00:22:46.380 --> 00:22:48.450
+it turns out that she
+doesn't know how to change
 
 474
-00:29:58.750 --> 00:30:01.840
-a lawyer that is sort
-of in this world and
+00:22:48.450 --> 00:22:51.990
+her oil. Now here's a
+person who's been driving for
 
 475
-00:30:01.840 --> 00:30:06.820
-understands it because the decision
-on what to do is
+00:22:51.990 --> 00:22:55.770
+20 years. Right? Yeah. I
+could. So she's a senior
 
 476
-00:30:06.820 --> 00:30:11.440
-going to be fairly nuanced.
-And you know, that that
+00:22:55.890 --> 00:22:59.640
+driving engineer. Yeah. Who am
+I to say? How do
 
 477
-00:30:11.440 --> 00:30:15.400
-is a problem. And certainly
-it is another layer of
+00:22:59.640 --> 00:23:01.950
+you not know how to
+change your oil? Like, but
 
 478
-00:30:15.700 --> 00:30:18.820
-responsibility and other way of
-expense. And I'm not minimizing
+00:23:01.950 --> 00:23:04.110
+that seems to be the
+way the community approaches, stuff
 
 479
-00:30:18.820 --> 00:30:21.910
-that. I understand the problem,
-but if you, if you
+00:23:04.110 --> 00:23:06.330
+like that. Like how do
+you not know that she
 
 480
-00:30:21.910 --> 00:30:25.930
-aren't bringing all the players
-together and having them collaborate
+00:23:06.330 --> 00:23:08.490
+also doesn't know how to
+drive a stick shift? I
 
 481
-00:30:26.350 --> 00:30:29.290
-to come up with some
-kind of unifying solution, which
+00:23:08.490 --> 00:23:11.100
+could like lose my mind
+and, and like, I don't
 
 482
-00:30:29.290 --> 00:30:31.870
-I'll, I'll be, it will
-be an inadequate one because
+00:23:11.100 --> 00:23:13.680
+know, stick shift to shame
+her for not knowing how
 
 483
-00:30:31.870 --> 00:30:35.680
-we don't know all the
-answers yet. You're making a
+00:23:13.680 --> 00:23:15.720
+to drive a stick, but
+at the same time, shouldn't
 
 484
-00:30:35.680 --> 00:30:39.010
-situation worse by just reacting
-and just doing something to
+00:23:15.720 --> 00:23:18.570
+I be happy that automatic
+shift cars work and they
 
 485
-00:30:39.010 --> 00:30:42.540
-do it. So it sounds
-like those of us that
+00:23:18.570 --> 00:23:20.730
+work great so much so
+that she doesn't need to
 
 486
-00:30:42.540 --> 00:30:45.840
-have small businesses, we can,
-you know, do the popups,
+00:23:20.730 --> 00:23:22.950
+own to know that. So
+then the question is as
 
 487
-00:30:45.840 --> 00:30:49.320
-do the privacy policy, make
-sure that people have the
+00:23:22.950 --> 00:23:25.440
+an intermediate developer, what am
+I supposed to know? And
 
 488
-00:30:49.320 --> 00:30:52.890
-right to withdraw the water,
-the right, to have their
+00:23:25.440 --> 00:23:27.210
+what's a waste, like, do
+I need to know how
 
 489
-00:30:52.890 --> 00:30:55.740
-data removed. All of the
-things that you know, the
+00:23:27.210 --> 00:23:29.100
+to change my own oil?
+Or do I just hire
 
 490
-00:30:55.740 --> 00:30:59.340
-basics, but that really should
-be looked at by someone
+00:23:29.100 --> 00:23:32.190
+someone to do that? Yeah.
+Right. So it's like, how
 
 491
-00:30:59.520 --> 00:31:02.520
-who has experienced in the
-space. I think it has
+00:23:32.190 --> 00:23:34.140
+do you figure out what,
+what you do need to
 
 492
-00:31:02.520 --> 00:31:05.670
-to be. And at the
-end of the day, we
+00:23:34.140 --> 00:23:36.390
+know? And like, once you
+decide, you want to know
 
 493
-00:31:05.670 --> 00:31:09.390
-have to have a commercial
-maturity about this. And what
+00:23:36.390 --> 00:23:38.220
+those things, like what are
+the resources you're going to
 
 494
-00:31:09.390 --> 00:31:13.530
-I mean by that is
-it's not about setting people
+00:23:38.310 --> 00:23:40.770
+use to learn? Yeah. Yeah.
+There's no, like you wouldn't
 
 495
-00:31:13.530 --> 00:31:18.120
-up to blame later on.
-If it goes wrong, that's
+00:23:40.770 --> 00:23:43.560
+go and find Python for
+intermediate people. There's not like
 
 496
-00:31:18.120 --> 00:31:22.200
-a simplistic and frankly not
-constructive way of doing business.
+00:23:43.560 --> 00:23:46.400
+that book doesn't exist. Yeah.
+And I think Like I
 
 497
-00:31:22.200 --> 00:31:24.900
-In my opinion, you know,
-the clients I work with
+00:23:46.400 --> 00:23:48.410
+was reading the C plus
+plus programming book a little
 
 498
-00:31:24.960 --> 00:31:29.160
-generally, don't do that. You
-know, we, we tell our
+00:23:48.410 --> 00:23:49.760
+bit. Cause I wanted to
+learn a little bit of
 
 499
-00:31:29.160 --> 00:31:33.840
-clients that, that we know
-this area. We know what
+00:23:49.760 --> 00:23:51.440
+C plus plus. And it
+was like, Oh, here's what
 
 500
-00:31:33.840 --> 00:31:35.550
-we think you should be
-doing. We're aware of the
+00:23:51.440 --> 00:23:54.200
+a variable is. And I
+was like, Oh, what, like,
 
 501
-00:31:35.550 --> 00:31:40.110
-laws, but at a certain
-level, there is always going
+00:23:54.200 --> 00:23:57.560
+what is this book? Like,
+I'm not reading this. Right.
 
 502
-00:31:40.110 --> 00:31:42.060
-to be a leap of
-faith as to how a
+00:23:57.770 --> 00:23:59.690
+Like I'm not reading someone
+like explain to me what
 
 503
-00:31:42.060 --> 00:31:46.050
-regulator or how law enforcement
-in this country or any
+00:23:59.690 --> 00:24:02.660
+a function is for 10
+pages. Like I want to
 
 504
-00:31:46.050 --> 00:31:50.010
-other country would see something.
-Especially if the complaint comes
+00:24:02.660 --> 00:24:04.520
+learn like what I need
+to know about people's pluses,
 
 505
-00:31:50.040 --> 00:31:52.650
-not, not this month, but
-comes, you know, two years
+00:24:04.520 --> 00:24:07.310
+someone who knows like these
+like eight other programming languages
 
 506
-00:31:52.650 --> 00:31:55.410
-from now. And there just
-has to be an understanding
+00:24:07.310 --> 00:24:10.100
+already, but I don't know
+C plus plus, right? Like
 
 507
-00:31:55.770 --> 00:31:59.730
-that ultimately the client needs
-to make the decision, but
+00:24:10.100 --> 00:24:11.990
+they're their list is like
+tricky things about C plus
 
 508
-00:31:59.730 --> 00:32:02.370
-it has to be based
-upon facts. They have to
+00:24:11.990 --> 00:24:15.860
+plus that are really surprising
+someone coming from another language.
 
 509
-00:32:02.370 --> 00:32:06.630
-understand the situation, which means
-that, you know, business, people
+00:24:16.520 --> 00:24:18.170
+But yeah, I dunno. I
+was like, this is really
 
 510
-00:32:06.660 --> 00:32:10.950
-need to immerse themselves in
-an understanding of, of the
+00:24:18.170 --> 00:24:21.100
+hard. It is. It almost
+feels weird. Like I learned
 
 511
-00:32:10.950 --> 00:32:13.560
-law and the regulations they're
-dealing with. And they can't
+00:24:21.520 --> 00:24:24.400
+that I was mispronouncing a
+word for the last 40
 
 512
-00:32:13.560 --> 00:32:17.040
-just abdicate that to their
-professionals. One of the, one
+00:24:24.400 --> 00:24:28.680
+years of my life, like
+yesterday now that my wife
 
 513
-00:32:17.040 --> 00:32:20.610
-of the things we try
-to do is, is bring
+00:24:28.690 --> 00:24:31.210
+is not, you know, she's
+like, how did you make
 
 514
-00:32:20.610 --> 00:32:23.340
-our clients in and not,
-not talk down to them,
+00:24:31.210 --> 00:24:34.420
+it this far? So if
+that's happening to me as
 
 515
-00:32:24.120 --> 00:32:26.190
-not just say, look, we're
-the lawyers. We know the
+00:24:34.420 --> 00:24:37.720
+a native English speaker, like
+imagine how much computer science
 
 516
-00:32:26.190 --> 00:32:28.110
-law, just do it our
-way. And if you don't
+00:24:37.720 --> 00:24:40.660
+or software engineering that I've
+gotten wrong. That I'm like
 
 517
-00:32:28.110 --> 00:32:30.300
-want to do it our
-way, well, good luck. That's
+00:24:40.660 --> 00:24:44.680
+walking around thinking I know
+X, and it's actually why
 
 518
-00:32:30.300 --> 00:32:32.820
-not how we do it.
-We explain all these things.
+00:24:44.710 --> 00:24:47.260
+it's going to blow my
+mind. And there's not only
 
 519
-00:32:32.820 --> 00:32:35.610
-And to some extent, we
-give them a level of
+00:24:47.260 --> 00:24:48.640
+like, where do I go
+to learn it? And where
 
 520
-00:32:35.610 --> 00:32:37.470
-a, of instruction that you
-wouldn't even see in a
+00:24:48.640 --> 00:24:50.230
+do I learn to fix
+that? But also like as
 
 521
-00:32:37.470 --> 00:32:40.310
-law school in terms of
-the specifics of the law
+00:24:50.230 --> 00:24:52.540
+a community, we should be
+able to be public and
 
 522
-00:32:40.310 --> 00:32:43.070
-and the regulations so that
-they, but the important thing
+00:24:52.540 --> 00:24:54.580
+be comfortable to say, Oh,
+I never learned how to
 
 523
-00:32:43.070 --> 00:32:46.370
-is they need the tools
-to make the decisions because
+00:24:54.580 --> 00:24:56.650
+do that. Right. But if
+you told someone, you didn't
 
 524
-00:32:46.370 --> 00:32:48.560
-ultimately they're the ones that
-are going to be dealing
+00:24:56.650 --> 00:24:58.180
+know how to do a
+bubble sort, you probably lose
 
 525
-00:32:48.560 --> 00:32:53.330
-with the consequences to their
-business. And so the, the
+00:24:58.180 --> 00:25:01.480
+your job. Yeah. That's interesting.
+You know, I feel we
 
 526
-00:32:53.330 --> 00:32:56.390
-real answer here is that
-if, if you, if anyone
+00:25:01.480 --> 00:25:04.090
+should be more kind of
+supportive of people in their
 
 527
-00:32:56.510 --> 00:32:59.180
-assumes that there is a
-simple way of handling this,
+00:25:04.090 --> 00:25:07.900
+learning. And I always appreciate
+you on, on Twitter because
 
 528
-00:33:00.140 --> 00:33:04.220
-they're probably wrong. It is
-complicated and you just have
+00:25:07.900 --> 00:25:10.360
+I know you are know
+what you're talking about. It's
 
 529
-00:33:04.220 --> 00:33:06.800
-to live with that because
-that's the world we're in.
+00:25:10.360 --> 00:25:13.090
+clear in your writing, you
+have a great blog and
 
 530
-00:33:08.000 --> 00:33:09.800
-Well, I appreciate you taking
-the time to chat with
+00:25:13.090 --> 00:25:15.610
+a mediums and all of
+your jeans are fantastic. But
 
 531
-00:33:09.800 --> 00:33:12.260
-us today. Thank you. This
-was absolutely wonderful. And I'm
+00:25:15.610 --> 00:25:17.830
+at the same time, I
+feel like you're very enthusiastic
 
 532
-00:33:12.260 --> 00:33:14.810
-glad we, we spoke about
-all these issues and if
+00:25:18.160 --> 00:25:21.580
+about learning stuff. And I
+wonder if people are ever
 
 533
-00:33:14.810 --> 00:33:23.540
-anybody wants to contact me,
-email's probably best gdn@gdnlaw.com. Gary David
+00:25:21.580 --> 00:25:23.770
+like, Oh, you should have
+known that Juliet. How did
 
 534
-00:33:23.540 --> 00:33:28.460
-Nissenbaum, gdn@gdnlaw.com. And you know,
-I just like, I like
+00:25:23.770 --> 00:25:25.720
+you get this far? I
+hate it when people do
 
 535
-00:33:28.460 --> 00:33:31.040
-it last time I was
-on your, your listeners gave
+00:25:25.720 --> 00:25:28.570
+that kind of stuff, because
+I'm always learning new hotkeys
 
 536
-00:33:31.040 --> 00:33:34.670
-me terrific feedback. And I
-just like to hear what
+00:25:28.570 --> 00:25:33.910
+and new SIS calls. Yeah,
+I guess so I think,
 
 537
-00:33:34.670 --> 00:33:38.330
-people think. So I'm interested.
-We appreciate that they are
+00:25:33.910 --> 00:25:38.050
+I think I've spent a
+lot of time getting better
 
 538
-00:33:38.330 --> 00:33:40.670
-some of the best listeners
-out there. And I appreciate
+00:25:38.050 --> 00:25:41.140
+at learning. I think it's
+really exciting to come up
 
 539
-00:33:40.670 --> 00:33:44.390
-them a lot. This has
-been another episode of Hanselminutes
+00:25:41.140 --> 00:25:44.550
+with like questions of things
+that I don't know. It's
 
 540
-00:33:44.480 --> 00:33:45.950
-and we'll see you again
-next week.
+00:25:44.550 --> 00:25:47.050
+like, to me, it's exciting
+to learn new things, right?
+
+541
+00:25:47.110 --> 00:25:49.480
+Like it's not exciting to
+say that like, Oh, I
+
+542
+00:25:49.480 --> 00:25:52.150
+know everything already. Cause like
+that's not true. And also
+
+543
+00:25:52.150 --> 00:25:54.550
+it's pretty boring. Like if
+I knew everything in programming,
+
+544
+00:25:54.550 --> 00:25:58.120
+I would probably quit. Like,
+I don't know. It sounds
+
+545
+00:25:58.120 --> 00:26:02.980
+awful. I would much rather
+be learning new things. And
+
+546
+00:26:02.980 --> 00:26:07.660
+so like, I think the
+idea that it's like even
+
+547
+00:26:07.690 --> 00:26:10.990
+desirable to know everything is
+something that I don't believe.
+
+548
+00:26:11.470 --> 00:26:14.860
+And like, I mean sometimes
+like maybe someone, a hacker
+
+549
+00:26:14.860 --> 00:26:17.980
+news, it would be like,
+Oh, like, I can't believe
+
+550
+00:26:17.980 --> 00:26:20.950
+he didn't know like such
+and such. That's your hacker
+
+551
+00:26:20.950 --> 00:26:25.390
+news accent, But it's just
+kind of silly, right? Like,
+
+552
+00:26:25.390 --> 00:26:27.850
+I mean, and like a
+lot of people don't know
+
+553
+00:26:27.850 --> 00:26:30.850
+a lot of things and
+like, it's like an exciting
+
+554
+00:26:30.850 --> 00:26:33.070
+opportunity to learn that thing.
+Right. You're like, Oh great.
+
+555
+00:26:33.070 --> 00:26:36.910
+Today is today that today's
+the day that I guess
+
+556
+00:26:36.920 --> 00:26:40.090
+lose that thing. And that's
+fine. Exactly. And that's, that's
+
+557
+00:26:40.090 --> 00:26:41.950
+the way we all should
+be. You know, we should
+
+558
+00:26:41.950 --> 00:26:45.390
+be positive that stuff. And
+because not everyone has, like,
+
+559
+00:26:45.390 --> 00:26:47.190
+we may all have 10
+or 15 years of experience,
+
+560
+00:26:47.190 --> 00:26:50.190
+but not everyone has the
+same years. Yeah. We're doing
+
+561
+00:26:50.190 --> 00:26:52.140
+different stuff. What were you
+doing before? You were an
+
+562
+00:26:52.140 --> 00:26:55.790
+infrastructure engineer. Okay. Machine learning.
+Okay. I switched from machine
+
+563
+00:26:55.790 --> 00:26:58.850
+learning to doing infrastructure engineering
+two years ago. Oh wow.
+
+564
+00:26:59.120 --> 00:27:00.710
+But like in like machine
+learning is like the new
+
+565
+00:27:00.710 --> 00:27:02.810
+hotness that everyone's talking about.
+So you're doing it before
+
+566
+00:27:02.810 --> 00:27:05.390
+it was the hotness. Well,
+I don't know. I think
+
+567
+00:27:05.390 --> 00:27:07.130
+it was good because it
+was also the hotness two
+
+568
+00:27:07.130 --> 00:27:09.380
+years ago. I don't know.
+I don't have a sense
+
+569
+00:27:09.380 --> 00:27:11.450
+in my mind. Like when
+machine learning started being amazing,
+
+570
+00:27:12.910 --> 00:27:18.350
+Cool for a minute, My
+bed, my bed. So you
+
+571
+00:27:18.350 --> 00:27:20.810
+also do a lot of
+open source and you actually
+
+572
+00:27:20.810 --> 00:27:23.690
+took a sabbatical from work
+to write a profiler. How
+
+573
+00:27:23.690 --> 00:27:26.420
+did you do that? Actually,
+I sort of don't do
+
+574
+00:27:26.420 --> 00:27:29.000
+a lot of opensource. I
+took a sabbatical from work
+
+575
+00:27:29.000 --> 00:27:31.010
+to do opensource for three
+months, but the reason I
+
+576
+00:27:31.010 --> 00:27:33.170
+did that was that I
+don't do open source. Am
+
+577
+00:27:33.170 --> 00:27:37.130
+I spare time at all?
+Really? Yeah. Well I do
+
+578
+00:27:37.130 --> 00:27:39.230
+a lot of other like
+writing in my spare time.
+
+579
+00:27:39.230 --> 00:27:41.690
+So if I also programmed
+in my spare time, in
+
+580
+00:27:41.690 --> 00:27:43.750
+addition, it would, I think
+it would not be healthy.
+
+581
+00:27:44.840 --> 00:27:47.390
+I think it would be
+too much, but yeah. So
+
+582
+00:27:47.420 --> 00:27:49.340
+I have this profiler I
+want to write and I
+
+583
+00:27:49.340 --> 00:27:51.150
+was like, well, I wanna
+do this programming project. And
+
+584
+00:27:51.150 --> 00:27:52.610
+it, realistically speaking, I'm not
+going to do it in
+
+585
+00:27:52.610 --> 00:27:56.660
+my spare time. So I
+applied for a fellowship and
+
+586
+00:27:56.930 --> 00:27:58.820
+they gave me the fellowship
+and then I took three
+
+587
+00:27:58.820 --> 00:28:02.240
+months off work and wrote
+this real violet. Wow. Was
+
+588
+00:28:02.340 --> 00:28:05.660
+that stressful? No, it was
+great. That's a good sign.
+
+589
+00:28:05.660 --> 00:28:08.060
+Amazing. I must be. That's
+something that only Canadians could
+
+590
+00:28:08.060 --> 00:28:09.500
+do because I don't know
+if I could get healthcare
+
+591
+00:28:09.500 --> 00:28:11.630
+if I took three months
+off work. Oh yeah. That's
+
+592
+00:28:11.630 --> 00:28:15.230
+true. I don't know about
+that. I think so someone
+
+593
+00:28:15.230 --> 00:28:16.430
+asks you, they're like, Oh,
+do you get health care
+
+594
+00:28:16.430 --> 00:28:17.570
+here? Your tobacco? And I
+was like, I have no
+
+595
+00:28:17.570 --> 00:28:20.900
+idea. I didn't think about
+that at all. Yeah. That's
+
+596
+00:28:20.900 --> 00:28:22.670
+what I got another whole
+podcast right there. If it's
+
+597
+00:28:22.670 --> 00:28:24.380
+like, Oh my goodness. A
+three months sabbatical to work
+
+598
+00:28:24.380 --> 00:28:26.060
+on something I want to
+work on. That would be
+
+599
+00:28:26.060 --> 00:28:29.720
+amazing. Yeah. Yeah. I just
+asked my manager for permission.
+
+600
+00:28:29.840 --> 00:28:32.810
+I'm like six months. Oh
+really? Okay. So you like
+
+601
+00:28:32.840 --> 00:28:35.720
+paused your job and came
+back to the same job.
+
+602
+00:28:36.320 --> 00:28:40.100
+Yeah. Yeah, exactly. That's amazing.
+That's amazing. So you made
+
+603
+00:28:40.190 --> 00:28:42.620
+a RB spy and people
+can go and Google for
+
+604
+00:28:42.620 --> 00:28:45.710
+our Spire go to Arby's
+by dot get hub.io. Have
+
+605
+00:28:45.710 --> 00:28:48.860
+other people gotten involved with
+this profiler? Cause it it's
+
+606
+00:28:48.860 --> 00:28:51.320
+got lots of, lots of
+forks and stars, but are
+
+607
+00:28:51.320 --> 00:28:53.840
+people using to and digging
+it? People that are using
+
+608
+00:28:53.840 --> 00:28:56.660
+it. Yeah. They've told one
+person left this really delightful
+
+609
+00:28:56.660 --> 00:28:59.660
+comment, but maybe happy where
+they said that they'd had
+
+610
+00:28:59.660 --> 00:29:02.150
+this like really bad performance
+problem and the Ruby program.
+
+611
+00:29:02.150 --> 00:29:04.730
+And then they used our
+baseline and then the, then
+
+612
+00:29:04.730 --> 00:29:06.200
+it was wrong right away.
+And they fixed it and
+
+613
+00:29:06.200 --> 00:29:08.750
+their boss thought that they
+were a genius, Which is
+
+614
+00:29:08.750 --> 00:29:11.930
+exactly like become a wizard
+programmer. Like they've done an
+
+615
+00:29:11.930 --> 00:29:14.090
+exactly what you told them
+they could do. Yeah. Which
+
+616
+00:29:14.090 --> 00:29:16.310
+is what you want. Right.
+I feel like it's like,
+
+617
+00:29:16.340 --> 00:29:18.980
+it's exciting to build tools
+to tell people like, it'd
+
+618
+00:29:18.980 --> 00:29:22.730
+be better and like make
+them feel like, I don't
+
+619
+00:29:22.730 --> 00:29:24.290
+know, like I don't want
+people to feel like they
+
+620
+00:29:24.290 --> 00:29:26.900
+can do anything. Right. And
+was it a, was it
+
+621
+00:29:26.900 --> 00:29:29.180
+a problem that had existed
+before? Like was there, is
+
+622
+00:29:29.180 --> 00:29:32.300
+there just no good profiling
+for Ruby right now Are
+
+623
+00:29:32.300 --> 00:29:34.490
+there is a good profiler,
+but it doesn't work the
+
+624
+00:29:34.490 --> 00:29:36.800
+same way that Arby's fireworks.
+So the way RVs fireworks
+
+625
+00:29:36.800 --> 00:29:38.660
+is you can just attach
+it to any running Ruby
+
+626
+00:29:38.660 --> 00:29:42.310
+program, no matter what. And
+the other profilers that already
+
+627
+00:29:42.310 --> 00:29:44.110
+existed, you need to just
+kind of like edit your
+
+628
+00:29:44.110 --> 00:29:47.230
+program source code. And so
+being able to just like
+
+629
+00:29:47.260 --> 00:29:49.000
+poke it something that's already
+running and be like, Hey,
+
+630
+00:29:49.020 --> 00:29:51.160
+what are you doing? What
+are some is something that
+
+631
+00:29:51.160 --> 00:29:53.460
+wasn't possible before. Cool. And
+I understand that it's a
+
+632
+00:29:53.460 --> 00:29:55.530
+sampling profiler, so you can
+actually run it like in
+
+633
+00:29:55.530 --> 00:29:59.730
+production without fear. Yeah, that's
+right. That's pretty sweet. And
+
+634
+00:29:59.730 --> 00:30:01.140
+are you continuing work on
+it or do you, have
+
+635
+00:30:01.140 --> 00:30:03.060
+you developed a community and
+a team around it or
+
+636
+00:30:03.060 --> 00:30:06.120
+is it just you? It's
+mostly, it's mostly just me.
+
+637
+00:30:06.240 --> 00:30:09.180
+I'm still working on it
+a little bit. And I
+
+638
+00:30:09.180 --> 00:30:11.010
+understand that you were trying
+to do some flame graphs
+
+639
+00:30:11.010 --> 00:30:13.830
+as well. Like it, it
+produces like information that you
+
+640
+00:30:13.830 --> 00:30:16.080
+can then use to go
+and visualize. Yeah. Yeah. So
+
+641
+00:30:16.080 --> 00:30:19.980
+it produces visualizations by default,
+which was an early important
+
+642
+00:30:19.980 --> 00:30:23.430
+design decision I made actually,
+because I think like a
+
+643
+00:30:23.430 --> 00:30:25.710
+lot of profilers will require
+you to do like extra
+
+644
+00:30:25.710 --> 00:30:28.740
+work, to get a visualization.
+And I thought, well, that
+
+645
+00:30:28.740 --> 00:30:30.630
+doesn't really work for people
+because I think people who
+
+646
+00:30:30.630 --> 00:30:33.990
+are profiling usually like if
+they're doing profiling, they probably
+
+647
+00:30:33.990 --> 00:30:36.630
+haven't done it for like
+two years. Right. Like they've
+
+648
+00:30:36.630 --> 00:30:38.520
+just decided, okay, today is
+the day that I'm going
+
+649
+00:30:38.520 --> 00:30:39.870
+to do profiling. And I
+don't know how to do
+
+650
+00:30:39.870 --> 00:30:42.660
+this. What's going on. So
+you really like want to
+
+651
+00:30:42.660 --> 00:30:44.280
+give them, like, you want
+to make the experience as
+
+652
+00:30:44.280 --> 00:30:47.100
+easy for them as possible
+because profiling is something that
+
+653
+00:30:47.100 --> 00:30:49.860
+people do do something frequently.
+Right. So I thought it
+
+654
+00:30:49.860 --> 00:30:52.410
+was really important to create
+the visualization by default. And
+
+655
+00:30:52.410 --> 00:30:53.910
+people have said, they're like,
+Oh wow. I didn't know
+
+656
+00:30:53.910 --> 00:30:56.340
+that you could make this
+kind of visualization. And so
+
+657
+00:30:56.340 --> 00:30:57.900
+I think they wouldn't have
+thought to go do it
+
+658
+00:30:57.960 --> 00:31:00.870
+themselves. Cause they didn't know
+that it existed. Right. Yeah.
+
+659
+00:31:00.870 --> 00:31:02.070
+Like, and if you have
+to go and do a
+
+660
+00:31:02.070 --> 00:31:04.080
+bunch of setup, just because
+you want to ask like,
+
+661
+00:31:04.350 --> 00:31:07.680
+answer and ask a question,
+then we won't bother doing
+
+662
+00:31:07.680 --> 00:31:09.990
+it. So the flame graph
+comes out of the box.
+
+663
+00:31:10.080 --> 00:31:13.590
+Yeah. That's cool. Awesome. And
+that you did that in
+
+664
+00:31:13.590 --> 00:31:15.840
+just a, in three months.
+Had you been working out
+
+665
+00:31:15.840 --> 00:31:18.450
+before or did you do
+it all like beginning to
+
+666
+00:31:18.450 --> 00:31:22.080
+end in three months I
+built a prototype before, so
+
+667
+00:31:22.080 --> 00:31:23.730
+I kind of had an
+idea that it was possible,
+
+668
+00:31:23.730 --> 00:31:25.740
+which is what kind of
+gave you the confidence to
+
+669
+00:31:25.800 --> 00:31:27.480
+actually take three months off
+work, to work on it.
+
+670
+00:31:27.480 --> 00:31:29.820
+Right. And did the, when
+you did the grant, like,
+
+671
+00:31:29.820 --> 00:31:31.080
+do you have to then
+go to the grant people
+
+672
+00:31:31.080 --> 00:31:33.090
+and say, look, I did
+a thing. Yeah. I mean,
+
+673
+00:31:33.090 --> 00:31:35.550
+I said like, I think
+I I've been blogging about
+
+674
+00:31:35.550 --> 00:31:37.230
+it. So they obviously knew
+that I had been working
+
+675
+00:31:37.230 --> 00:31:39.480
+on it. And so I
+think like at the end
+
+676
+00:31:39.480 --> 00:31:40.560
+I just sent them an
+email and I was like,
+
+677
+00:31:40.560 --> 00:31:42.300
+Hey, I did the thing.
+Can you send me the
+
+678
+00:31:42.300 --> 00:31:44.930
+money? It was, it was
+pretty simple. They were there.
+
+679
+00:31:44.940 --> 00:31:47.730
+They were really great to
+work with. That's that's really
+
+680
+00:31:47.730 --> 00:31:50.370
+cool. I didn't even realize
+that one could like ask
+
+681
+00:31:50.370 --> 00:31:52.110
+for a grant and get
+it and do something like
+
+682
+00:31:52.110 --> 00:31:54.450
+that. And that's inspirational to
+know that you can do
+
+683
+00:31:54.450 --> 00:31:57.930
+that. Yeah. Yeah. The program
+was called the segment opensource
+
+684
+00:31:57.930 --> 00:32:00.930
+fellowship. There's this analytics company
+called segment that ran it
+
+685
+00:32:02.040 --> 00:32:04.560
+So people can check out
+your zenes. Should they just
+
+686
+00:32:04.560 --> 00:32:07.170
+go to JV and s.ca
+or is there a better
+
+687
+00:32:07.170 --> 00:32:10.170
+homepage for your jeans? Yeah,
+they can go there. Cool.
+
+688
+00:32:10.290 --> 00:32:12.930
+So you can just Google
+for Julia Evans, jeans, your everywhere
+
+689
+00:32:12.930 --> 00:32:15.540
+and follow you on Twitter.
+And you're kind of working
+
+690
+00:32:15.540 --> 00:32:17.520
+on comics all the time
+and I follow you on
+
+691
+00:32:17.520 --> 00:32:20.310
+Twitter and see those things
+go by and RB spy
+
+692
+00:32:20.310 --> 00:32:23.670
+of course is RB spider
+github.io. Thanks so much for
+
+693
+00:32:23.670 --> 00:32:25.740
+chatting with me today. Thanks
+so much for having me.
+
+694
+00:32:25.980 --> 00:32:28.590
+This has been another episode
+of Hanselminutes and we'll see
+
+695
+00:32:28.590 --> 00:32:29.030
+you again.
 

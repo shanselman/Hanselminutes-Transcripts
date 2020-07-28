@@ -1,3141 +1,3187 @@
 WEBVTT FILE
 
 1
-00:00:00.330 --> 00:00:02.820
-Hey folks, Intel is a
-sponsor this week and I
+00:00:00.330 --> 00:00:02.160
+Hey friends, we have a
+new sponsor today, and I
 
 2
-00:00:02.820 --> 00:00:06.690
-welcome them because they're bringing
-some high performance developer tools
+00:00:02.160 --> 00:00:04.350
+want to make sure that
+you support them because they
 
 3
-00:00:06.690 --> 00:00:10.590
-for all of us. Check
-out Intel's parallel studio X,
+00:00:04.350 --> 00:00:09.270
+make Hansel minutes possible. Raven
+DB, it's a document database
 
 4
-00:00:10.650 --> 00:00:13.710
-E I've talked about parallelism
-before on the show and
+00:00:09.270 --> 00:00:13.770
+that's non-relational and fully transactional.
+It's available for windows and
 
 5
-00:00:13.710 --> 00:00:17.340
-the importance of using the
-complete instruction set, unlocking the
+00:00:13.770 --> 00:00:18.570
+Linux with official client API
+APIs for.net. The JVM go
 
 6
-00:00:17.340 --> 00:00:19.380
-power of the process or
-that your code is running
+00:00:18.570 --> 00:00:22.410
+Ruby, no JS and Python.
+Raven DB is designed for
 
 7
-00:00:19.380 --> 00:00:22.110
-on. Now, you all might
-be writing C or C
+00:00:22.410 --> 00:00:26.010
+high performance handling tens of
+thousands of requests, even on
 
 8
-00:00:22.110 --> 00:00:25.590
-plus plus Python or even
-Fortran, but is your code
+00:00:26.010 --> 00:00:29.310
+a single node. Now, Raven
+DB is capable of on
 
 9
-00:00:25.620 --> 00:00:27.600
-building in such a way
-and written in such a
+00:00:29.310 --> 00:00:33.810
+the fly optimization, dynamic indexes,
+and much more. It has
 
 10
-00:00:27.600 --> 00:00:32.460
-way that it uses the
-latest techniques for vectorization multithreading
+00:00:33.810 --> 00:00:36.600
+a fully loaded gooey, which
+means it's simpler to operate
 
 11
-00:00:32.460 --> 00:00:38.130
-multi-node parallelization or memory optimization?
-Intel parallel studio XE has
+00:00:36.630 --> 00:00:39.300
+and you don't need, you
+know, arcane incantations on the
 
 12
-00:00:38.130 --> 00:00:40.590
-a lot of new stuff
-for 2018 across all these
+00:00:39.300 --> 00:00:41.970
+command line. It just works.
+It's fast and it's right.
 
 13
-00:00:40.590 --> 00:00:46.980
-languages. Get a free download
-at bitly.com/parallels studio X, Z,
+00:00:42.510 --> 00:00:48.330
+Download your free community edition@ravendb.net.
+That's R a V E
 
 14
-00:00:47.460 --> 00:00:49.920
-or certainly go and Google
-or Google with being for
+00:00:48.330 --> 00:01:05.400
+N db.net. I hope you
+check it out. Hi, this
 
 15
-00:00:49.920 --> 00:00:53.850
-Intel parallel studio XE and
-get started. Boosting your apps
+00:01:05.400 --> 00:01:07.740
+is Scott Hanselman. This is
+another episode of Hansel minutes.
 
 16
-00:00:53.850 --> 00:00:57.690
-performance with smart parallel code
-with a lot less effort.
+00:01:08.040 --> 00:01:10.590
+Today. I am talking with
+Katy McCaffrey. She is the
 
 17
-00:00:58.020 --> 00:01:16.830
-Check them out. piddly.com/parallels studio
-X E. Hi, this is
+00:01:10.590 --> 00:01:14.670
+engineering lead on Azure sphere.
+That's a cool code name.
 
 18
-00:01:16.830 --> 00:01:19.650
-Scott Hanselman. This is another
-episode of Hansel minutes today.
+00:01:14.670 --> 00:01:17.030
+Is that like a code
+name or a thing? No,
 
 19
-00:01:19.650 --> 00:01:22.110
-I'm talking with Maurice cherry.
-He's a designer and a
+00:01:17.030 --> 00:01:20.030
+this is our official real
+name now. Awesome. I like
 
 20
-00:01:22.110 --> 00:01:25.470
-producer at glitchy fog Creek,
-and he recently won the
+00:01:20.030 --> 00:01:22.220
+cool names. I'd hate us
+to call it something boring.
 
 21
-00:01:25.470 --> 00:01:28.830
-Steven Heller prize for his
-podcast revision path from the
+00:01:23.120 --> 00:01:24.970
+Yeah, I'm pretty happy with
+the name we got. It's
 
 22
-00:01:28.830 --> 00:01:31.140
-AGA the American Institute of
-graphic arts. How are you,
+00:01:24.970 --> 00:01:27.560
+it's exciting to have it
+be public and out there.
 
 23
-00:01:31.140 --> 00:01:34.290
-sir? Darn pretty good. Scott,
-how are you? I'm doing
+00:01:28.130 --> 00:01:29.930
+It's awesome. So I can
+go up and just, you
 
 24
-00:01:34.290 --> 00:01:38.130
-pretty well. I've known you
-for a while and just
+00:01:29.930 --> 00:01:33.710
+know, search for Azure sphere
+or microsoft.com/azure hyphen sphere. And
 
 25
-00:01:38.130 --> 00:01:40.740
-like my podcast, your podcast
-has been chugging along for
+00:01:33.710 --> 00:01:37.370
+it says a solution for
+creating highly secured connected MCU
 
 26
-00:01:40.740 --> 00:01:44.430
-a long time. You are
-definitely been in the podcast
+00:01:37.400 --> 00:01:40.220
+devices, MCU. I had to
+go and search for what
 
 27
-00:01:44.430 --> 00:01:46.680
-game for a while. You
-have to almost 250 episodes
+00:01:40.220 --> 00:01:44.300
+that is. Yeah. So an
+MCU is a microcontroller unit.
 
 28
-00:01:46.680 --> 00:01:50.270
-at this point. Yeah, we
-are actually, I think factoring
+00:01:44.300 --> 00:01:47.690
+So you can think of
+these as really tiny chips
 
 29
-00:01:50.270 --> 00:01:52.730
-in our bonus episodes. We
-might be right at two
+00:01:48.120 --> 00:01:51.140
+about the size of like
+your thumbnail or a fingernail.
 
 30
-00:01:52.730 --> 00:01:55.310
-50, but we're getting up
-there. We'll hit, we'll definitely
+00:01:51.890 --> 00:01:54.260
+And, and we like to
+differentiate this. This is basically
 
 31
-00:01:55.310 --> 00:02:00.230
-hit 250 regular episodes in
-July. That's fantastic. Like I
+00:01:54.260 --> 00:01:56.990
+smaller than if you think
+about in our Duino or
 
 32
-00:02:00.230 --> 00:02:02.690
-know that having hit, you
-know, I'm over 500 now,
+00:01:56.990 --> 00:02:00.860
+a raspberry PI, usually an
+MCU, you can think about
 
 33
-00:02:02.690 --> 00:02:05.420
-basically every week is your
-show weekly or biweekly. It's
+00:02:00.860 --> 00:02:02.360
+it. If it's something in
+your house, it has a
 
 34
-00:02:05.440 --> 00:02:08.720
-weekly, weekly. So you've been
-doing this now five years.
+00:02:02.360 --> 00:02:06.650
+button or a light, or
+maybe a really low power
 
 35
-00:02:08.750 --> 00:02:11.360
-Plus there's so many podcasts
-that are out there where
+00:02:06.660 --> 00:02:10.970
+display, like a monochromatic display.
+That's probably running an MCU.
 
 36
-00:02:11.360 --> 00:02:14.450
-people get into it for,
-you know, 11, 12, 15
+00:02:11.960 --> 00:02:14.390
+Okay. So I've got lots
+of raspberry pies, but I
 
 37
-00:02:14.450 --> 00:02:18.660
-episodes. They miss one and
-then they miss another. And
+00:02:14.390 --> 00:02:16.760
+can boot those up into
+a desktop and they run
 
 38
-00:02:18.660 --> 00:02:20.000
-then, you know what I
-mean? Then their weekly show
+00:02:16.760 --> 00:02:19.100
+like a, I don't know
+what the right word is,
 
 39
-00:02:20.000 --> 00:02:22.310
-is a monthly show. And
-then it's like, it's just
+00:02:19.100 --> 00:02:21.680
+a proper OSTP or a
+desktop OS. Like they have
 
 40
-00:02:22.310 --> 00:02:24.620
-sad. How did you stick
-with it for so long
+00:02:21.680 --> 00:02:25.040
+a lot of weight to
+them. Yeah. So those are,
 
 41
-00:02:24.620 --> 00:02:28.550
-and, and, and not stop.
-It really helps to have
+00:02:25.040 --> 00:02:29.120
+those are bigger than microcontrollers
+because they're doing more things
 
 42
-00:02:28.550 --> 00:02:31.040
-a plan and a schedule.
-The good thing with these
+00:02:29.120 --> 00:02:31.430
+they have, you can think
+about it, a high level
 
 43
-00:02:31.040 --> 00:02:33.710
-interviews is that I do
-a lot of them ahead
+00:02:31.430 --> 00:02:33.620
+operating system that has a
+user space in it as
 
 44
-00:02:33.710 --> 00:02:36.470
-of time. So I usually
-try to put at least
+00:02:33.620 --> 00:02:36.500
+well. Ah, the user space.
+Okay. But I'm looking for
 
 45
-00:02:36.500 --> 00:02:39.680
-maybe about a month between
-the interview and when it
+00:02:36.500 --> 00:02:39.620
+example, at an Xbox controller
+that happens to be on
 
 46
-00:02:39.680 --> 00:02:42.980
-airs, which gives me more
-than enough time to juggle
+00:02:39.620 --> 00:02:42.770
+my desk here that probably
+doesn't have an operating system.
 
 47
-00:02:42.980 --> 00:02:46.100
-scheduling, to handle any sort
-of editing issues or things
+00:02:43.880 --> 00:02:46.670
+It has an operating system
+of sorts, but it's not
 
 48
-00:02:46.100 --> 00:02:48.740
-like that. And I've really
-just been able to kind
+00:02:46.670 --> 00:02:48.680
+as fully featured as you
+would think of as like
 
 49
-00:02:48.740 --> 00:02:52.520
-of keep on that particular
-path now for five years.
+00:02:48.680 --> 00:02:51.530
+your traditional windows or Linux
+or do we know operating
 
 50
-00:02:53.360 --> 00:02:55.760
-And you've been doing this
-for a while. You switched
+00:02:51.530 --> 00:02:54.440
+system. So then all these
+things that I'm looking at,
 
 51
-00:02:55.760 --> 00:02:58.850
-to weekly in April of
-2013, are you producing all
+00:02:54.440 --> 00:02:57.410
+they're scattered on my desk
+here. I've got a, you
 
 52
-00:02:58.850 --> 00:03:02.200
-of by yourself? No, no.
-I do have an editor,
+00:02:57.410 --> 00:03:01.450
+know, USB to SD adapter
+and I've got a tiny
 
 53
-00:03:02.200 --> 00:03:08.050
-so that also helps my,
-my editor, RJ is worth
+00:03:01.450 --> 00:03:05.260
+link, SIS, a USB wifi
+thing. You know, how can
 
 54
-00:03:08.050 --> 00:03:10.000
-his weight in gold and
-he is the one that
+00:03:05.260 --> 00:03:07.810
+I tell what's an MCU?
+Is it have to be
 
 55
-00:03:10.360 --> 00:03:13.360
-sort of takes the raw
-conversations that I end up
+00:03:07.810 --> 00:03:09.940
+connected or does it have
+to have Bluetooth or wifi
 
 56
-00:03:13.360 --> 00:03:15.700
-having. And he sort of
-edits and shapes them into
+00:03:09.970 --> 00:03:13.230
+to be an MCU? So
+MCU is traditionally, don't have
 
 57
-00:03:15.700 --> 00:03:18.970
-something. Now I still produce
-the episode every week. So
+00:03:13.230 --> 00:03:16.290
+to be connected. And, and
+most of them are not,
 
 58
-00:03:19.210 --> 00:03:22.720
-while he may handle the
-actual interview part, I still
+00:03:16.290 --> 00:03:20.670
+for instance, there's 9 billion or
+9 billion MCUs created every single
 
 59
-00:03:22.720 --> 00:03:26.110
-record every intro and outro
-and every ad every week.
+00:03:20.670 --> 00:03:23.040
+year. So that's like a
+lot of them they're kind
 
 60
-00:03:26.110 --> 00:03:28.540
-And I package the show
-together and export it and
+00:03:23.040 --> 00:03:25.440
+of in everything like most
+appliances in your house have
 
 61
-00:03:28.540 --> 00:03:32.790
-schedule it. Yeah, my editor,
-Mandy, who is hopefully listening
+00:03:25.440 --> 00:03:28.470
+an MCU. You can think
+of MCQs are usually in
 
 62
-00:03:32.790 --> 00:03:35.220
-to this right now, if
-she's editing a is also
+00:03:28.470 --> 00:03:30.480
+anything that has like a
+switch or a pump that's
 
 63
-00:03:35.220 --> 00:03:37.950
-worth their weight in gold.
-And so you won the
+00:03:30.480 --> 00:03:34.950
+controlled with some code, right?
+It's just a very lightweight
 
 64
-00:03:37.950 --> 00:03:41.340
-Steven Heller prize, which is
-actually for cultural commentary and
+00:03:36.210 --> 00:03:38.970
+computer chip that you can
+run sort of simple logic
 
 65
-00:03:41.340 --> 00:03:44.310
-you've also won awards, like
-most inspiring design pockets. It's
+00:03:38.970 --> 00:03:41.850
+on to control things. But
+now the interesting thing is,
 
 66
-00:03:44.310 --> 00:03:48.000
-a design podcast for about
-and by designers, but it's
+00:03:41.850 --> 00:03:44.310
+is many of these are
+becoming only like 1% of
 
 67
-00:03:48.000 --> 00:03:52.380
-250 episodes and it is
-black designers. So for someone
+00:03:44.310 --> 00:03:46.950
+them now are connected to
+the internet, but that's sort
 
 68
-00:03:52.380 --> 00:03:56.040
-who says there aren't 250
-black designers, it sounds to
+00:03:46.950 --> 00:03:49.710
+of all changing, right? Everyone
+wants to do IOT and
 
 69
-00:03:56.040 --> 00:03:57.660
-me like you've still got
-hundreds and hundreds and hundreds
+00:03:49.710 --> 00:03:52.920
+have smart devices and extend
+the cloud to the intelligent
 
 70
-00:03:57.660 --> 00:03:59.400
-of shows to do beyond
-this. You don't have any
+00:03:52.920 --> 00:03:55.110
+edge and bring that into
+your home or your workplace
 
 71
-00:03:59.400 --> 00:04:02.790
-trouble finding guests. Oh no,
-there's no trouble with, with
+00:03:55.110 --> 00:03:58.770
+or, or factories and make
+that a richer experience where
 
 72
-00:04:02.820 --> 00:04:06.000
-finding guests. And I should
-say it's mostly designed, does
+00:03:58.770 --> 00:04:02.310
+he gathered more data. Yeah.
+And as a, as a
 
 73
-00:04:06.000 --> 00:04:08.010
-that all designer? So I
-say it's probably a good
+00:04:02.310 --> 00:04:04.500
+user, not as a developer,
+but thinking in terms of
 
 74
-00:04:08.010 --> 00:04:13.200
-mix of some designers, developers
-and just overall creatives. I
+00:04:04.500 --> 00:04:07.290
+a user, I can say
+that I've got all these
 
 75
-00:04:13.200 --> 00:04:17.970
-mean, we've had presentation designers,
-apparel designers, we've got software
+00:04:07.290 --> 00:04:09.720
+devices. As you know, I'm
+kind of an early adopter,
 
 76
-00:04:17.970 --> 00:04:21.060
-engineers, we have design educators.
-We've got a pretty good
+00:04:09.990 --> 00:04:13.140
+I've got light bulbs and
+switches and, and you know,
 
 77
-00:04:21.630 --> 00:04:26.040
-cross section across, I think,
-design and development in terms
+00:04:13.140 --> 00:04:15.510
+their voice controlled and stuff.
+The thing is though, it
 
 78
-00:04:26.040 --> 00:04:28.230
-of who we had on
-the show. And it's of
+00:04:15.510 --> 00:04:19.170
+all feels very tense. Like
+I feel the psychic weight
 
 79
-00:04:28.230 --> 00:04:29.790
-course not just here in
-the U S we've had
+00:04:19.590 --> 00:04:22.950
+of these devices pressing on
+me because like I bought
 
 80
-00:04:29.790 --> 00:04:34.950
-people throughout Europe, throughout Africa
-through the Caribbean. I'm hoping
+00:04:22.950 --> 00:04:25.650
+this cool light bulb on
+Kickstarter. And now that company
 
 81
-00:04:34.950 --> 00:04:37.260
-this year to get to
-Asia and South America working
+00:04:25.650 --> 00:04:27.690
+has gone out of business,
+which means that I now
 
 82
-00:04:37.260 --> 00:04:40.020
-on that. So it's really
-kind of a good mix
+00:04:27.690 --> 00:04:30.210
+have this device that has
+a little operating system that
 
 83
-00:04:40.020 --> 00:04:43.860
-of what designers are doing
-around the world. And are
+00:04:30.210 --> 00:04:34.230
+has no firmware updates ever.
+And like that light bulb
 
 84
-00:04:43.900 --> 00:04:47.130
-you like me? My podcast
-is a side thing. I
+00:04:34.290 --> 00:04:36.510
+is, it's silly to say
+this, but it's stressing me
 
 85
-00:04:47.130 --> 00:04:49.830
-mean, I have a job.
-This is still a side,
+00:04:36.510 --> 00:04:39.330
+out. Yeah. Cause it's talking
+to the internet. Right. And
 
 86
-00:04:49.920 --> 00:04:52.830
-a side hustle, Actually. No,
-it's part of my job
+00:04:39.330 --> 00:04:42.210
+so internet connectivity, it's sort
+of this two way street
 
 87
-00:04:52.860 --> 00:04:55.260
-now. Seriously. How did you
-hook that up? I need
+00:04:42.210 --> 00:04:45.420
+where it provides a lot
+of really useful functionality, right?
 
 88
-00:04:55.260 --> 00:05:01.590
-to get that up. That's
-cool. Shower. I don't know.
+00:04:45.420 --> 00:04:46.650
+Like you can do a
+lot of cool things with
 
 89
-00:05:02.910 --> 00:05:05.690
-Well, fog Creek is, is
-a, is a, is a
+00:04:46.650 --> 00:04:49.860
+this light bulb or with,
+you know, connected thermostat or
 
 90
-00:05:05.700 --> 00:05:08.580
-sponsor, but they're also gracious
-enough for me to do
+00:04:49.860 --> 00:04:53.280
+even your refrigerator for instance.
+Right. But then we've also
 
 91
-00:05:08.580 --> 00:05:12.420
-this right alongside my regular
-work. So with that, you
+00:04:53.280 --> 00:04:56.460
+now invited attackers or hackers
+into our homes by providing
 
 92
-00:05:12.420 --> 00:05:14.430
-know, we're also able to
-kind of bring the revision
+00:04:56.460 --> 00:04:59.970
+internet connected devices. And so
+they love when things aren't
 
 93
-00:05:14.430 --> 00:05:17.190
-path audience along for things
-that we're doing at fall
+00:04:59.970 --> 00:05:02.670
+updated because they can find
+an exploit and then use
 
 94
-00:05:17.190 --> 00:05:18.870
-Creek, as it relates to
-glitch, you know, if there
+00:05:02.670 --> 00:05:05.190
+it forever. Just think of
+this as a scenario where
 
 95
-00:05:18.870 --> 00:05:22.410
-are certain campaigns that we're
-doing or a certain, you
+00:05:05.190 --> 00:05:07.770
+you like come home and
+you have, or you have
 
 96
-00:05:22.410 --> 00:05:24.840
-know, audience or segment that
-we're trying to hit, then
+00:05:07.770 --> 00:05:10.500
+an email in your inbox
+that says, you know, give
 
 97
-00:05:24.840 --> 00:05:26.970
-the revision path audience is,
-you know, kind of a
+00:05:10.500 --> 00:05:12.330
+me five Bitcoin or I'm
+going to melt all the
 
 98
-00:05:26.970 --> 00:05:30.270
-built in component of that.
-That's great. And glitch, of
+00:05:12.330 --> 00:05:14.850
+ice cream in your freezer,
+like, right. Like that's sort
 
 99
-00:05:30.270 --> 00:05:33.240
-course, everyone's learning about and
-hearing about glitch on Twitter
+00:05:14.850 --> 00:05:17.610
+of, you know, the world
+we're in. And that's a
 
 100
-00:05:33.450 --> 00:05:37.380
-because you're CEO and Neil
-dash is like the King
+00:05:17.610 --> 00:05:22.410
+funny example, but I think
+there are real or ones
 
 101
-00:05:37.380 --> 00:05:40.860
-of Twitter right now, glitch
-calm. It's a, it's a
+00:05:22.440 --> 00:05:25.350
+around like, you know, if
+you think about like a
 
 102
-00:05:40.860 --> 00:05:43.440
-friendly community where you build
-the app of your dreams.
+00:05:25.350 --> 00:05:28.290
+stove, for instance, like a
+gas powered stove that you
 
 103
-00:05:44.070 --> 00:05:48.000
-It's not code pen, but
-it's also not an IDE
+00:05:28.290 --> 00:05:30.420
+could remotely turn on and
+off like that could be
 
 104
-00:05:48.000 --> 00:05:51.540
-it's something else. Yeah. It's,
-it's something else. All right.
+00:05:30.420 --> 00:05:33.840
+weaponized because it's connected to
+the internet where you could
 
 105
-00:05:51.630 --> 00:05:54.390
-I mean, what we're trying
-to do with glitch has
+00:05:33.840 --> 00:05:36.240
+turn the gas on and
+then later a hacker could
 
 106
-00:05:54.390 --> 00:05:56.880
-really kind of opened up,
-you know, design and development
+00:05:36.240 --> 00:05:39.030
+remotely light the ignition. Yeah.
+Well, I mean, keep in
 
 107
-00:05:56.880 --> 00:06:00.200
-for new audience. We want
-to eliminate the barriers that,
+00:05:39.030 --> 00:05:41.550
+mind who you're talking to,
+I've got an insulin pump
 
 108
-00:06:00.230 --> 00:06:02.390
-you know, kind of prevent
-people from wanting to learn
+00:05:42.150 --> 00:05:44.670
+that is ultimately cloud connected,
+although there's a couple of
 
 109
-00:06:02.630 --> 00:06:04.880
-how to create on the
-web. So you can either
+00:05:44.670 --> 00:05:48.300
+bounces between the pump and
+the, and the net. And
 
 110
-00:06:05.210 --> 00:06:07.730
-create a brand new blank
-project. You can remix any
+00:05:48.300 --> 00:05:50.940
+there's been a lots of
+examples of, you know, episodes
 
 111
-00:06:07.730 --> 00:06:10.220
-of the projects that we
-have on our website or
+00:05:50.940 --> 00:05:53.190
+of law and order where
+some poor schmuck gets killed
 
 112
-00:06:10.220 --> 00:06:13.670
-in any of our collections.
-It's really open for people
+00:05:53.190 --> 00:05:56.010
+by a hacker cause they
+deliver too much insulin. So
 
 113
-00:06:13.670 --> 00:06:17.290
-to just explore and learn
-and, you know, have a
+00:05:56.340 --> 00:05:59.090
+I think your point, you
+know, these, the need for
 
 114
-00:06:17.300 --> 00:06:19.250
-good time on the web.
-You know, we we've taken
+00:05:59.090 --> 00:06:03.790
+security is intense. Yeah. And,
+and we really looked in,
 
 115
-00:06:19.250 --> 00:06:22.970
-out all the, you know,
-kind of barriers and jerky
+00:06:03.790 --> 00:06:06.550
+so what we designed Azure
+sphere to be is from
 
 116
-00:06:22.970 --> 00:06:25.490
-stuff that sort of prevents
-people from wanting to learn
+00:06:06.550 --> 00:06:08.830
+the ground up, let's think
+about security and how we
 
 117
-00:06:25.490 --> 00:06:27.860
-how to code or to
-really get active on the
+00:06:08.830 --> 00:06:11.560
+secure these internet connected devices
+that are going to be
 
 118
-00:06:27.860 --> 00:06:29.690
-way we want to bring
-the fun back. We want
+00:06:11.560 --> 00:06:15.340
+prevalent in everywhere. Hmm. That's
+interesting because I feel like
 
 119
-00:06:29.690 --> 00:06:32.900
-to bring back that sort
-of, you know, late nineties,
+00:06:15.340 --> 00:06:17.920
+the last, you know, five
+or 10 years and watching
 
 120
-00:06:33.290 --> 00:06:37.490
-geo cities, angel, fire, tripod,
-kind of fun with creation
+00:06:17.920 --> 00:06:20.920
+this as a hobbyist and
+getting involved in IOT, I'm
 
 121
-00:06:37.490 --> 00:06:41.350
-on the web. Yeah, it's
-interesting because it is clearly
+00:06:20.920 --> 00:06:23.260
+just buying all sorts of
+chips that I see from
 
 122
-00:06:41.380 --> 00:06:44.410
-designed in that it is,
-it is thoughtful, right? It
+00:06:23.260 --> 00:06:27.910
+various vendors from overseas. And
+they're all very hobbyist and
 
 123
-00:06:44.410 --> 00:06:47.050
-doesn't look slapped together. It
-has a design language, the
+00:06:27.910 --> 00:06:31.060
+fun, but I feel like
+if we were going to
 
 124
-00:06:47.050 --> 00:06:50.920
-buttons, the hovers, everything is
-clean, but it also has,
+00:06:31.060 --> 00:06:33.730
+go and secure them, we'd
+be playing kind of whack-a-mole.
 
 125
-00:06:52.330 --> 00:06:54.240
-and I don't mean this
-in any way in, in
+00:06:34.330 --> 00:06:37.810
+And so you're saying that
+Azure sphere is not just
 
 126
-00:06:54.240 --> 00:06:58.840
-a to insult it. It
-has a, a nineties kind
+00:06:38.470 --> 00:06:40.720
+the cloud is not just
+the S it's the chip
 
 127
-00:06:58.840 --> 00:07:01.540
-of silliness or sloppiness almost
-like I was looking at
+00:06:40.720 --> 00:06:43.930
+dos and the cloud all
+as one platform. Yes. So
 
 128
-00:07:01.780 --> 00:07:05.040
-a little, a little cat
-popped up, you know, and
+00:06:43.930 --> 00:06:45.700
+this is sort of like
+the first end to end
 
 129
-00:07:05.040 --> 00:07:06.430
-you don't really think of
-a corporate site with little
+00:06:45.700 --> 00:06:48.220
+holistic solution for all of
+this. And one of the
 
 130
-00:07:06.430 --> 00:07:08.650
-cat in the corner, click
-on the cat. And then
+00:06:48.220 --> 00:06:50.170
+things that I think is
+super cool about this project
 
 131
-00:07:08.650 --> 00:07:10.840
-it talks about like, here's
-some new stuff. And then
+00:06:50.800 --> 00:06:52.450
+when I joined it about
+a year ago, is this
 
 132
-00:07:10.840 --> 00:07:12.820
-there's like a little dog
-with this. And then there's
+00:06:52.450 --> 00:06:57.250
+started in Microsoft research and
+gala and hunt and crew
 
 133
-00:07:12.820 --> 00:07:15.520
-like, Oh, here's a animated
-gift from no limit records.
+00:06:57.250 --> 00:06:59.740
+basically spent some time looking
+at what does it even
 
 134
-00:07:15.850 --> 00:07:19.450
-Like it does. It is
-both simultaneously well-designed and thoughtful,
+00:06:59.740 --> 00:07:03.400
+mean to have secure connected
+devices? Like what properties would
 
 135
-00:07:19.450 --> 00:07:23.620
-but also silly in its
-color scheme and its use
+00:07:03.400 --> 00:07:05.020
+we have to have? Let's
+take a step back and
 
 136
-00:07:23.620 --> 00:07:26.560
-of animated gifts and stuff.
-It's kind of got a
+00:07:05.290 --> 00:07:08.590
+look at it from first
+principles and take learnings from,
 
 137
-00:07:26.560 --> 00:07:28.300
-foot in both worlds. You
-know what I mean? Yeah.
+00:07:08.860 --> 00:07:11.830
+you know, all of the
+learnings from securing windows and
 
 138
-00:07:28.300 --> 00:07:30.790
-I think the kids these
-days would call that aesthetic.
+00:07:11.830 --> 00:07:15.430
+updating windows over, you know,
+however many years. And like,
 
 139
-00:07:31.300 --> 00:07:36.040
-Is that the aesthetic is
-that the glitches Imagine aesthetic
+00:07:15.430 --> 00:07:17.950
+let's look at Xbox, right.
+And what learnings can we
 
 140
-00:07:36.040 --> 00:07:39.520
-and like a, like a
-model line font spaced out
+00:07:17.950 --> 00:07:21.550
+get from, you know, 15
+years of securing the Xbox.
 
 141
-00:07:39.550 --> 00:07:41.260
-people who are listed might
-know what I'm talking about.
+00:07:21.880 --> 00:07:24.640
+And so they published a
+paper called the seven properties
 
 142
-00:07:41.260 --> 00:07:44.200
-It's very, we do intentionally
-make sure that we have
+00:07:24.640 --> 00:07:27.850
+of highly secured devices. That
+list the seven properties that
 
 143
-00:07:44.200 --> 00:07:46.840
-that kind of fun design.
-So it becomes more approachable.
+00:07:27.850 --> 00:07:30.130
+you have to have that
+we believe are fundamental to
 
 144
-00:07:46.990 --> 00:07:49.540
-You know, I really want
-to empower people to create.
+00:07:30.130 --> 00:07:35.470
+providing a secure, secure, connected
+device. And then from that
 
 145
-00:07:49.540 --> 00:07:53.200
-And if it just looks
-like some boring staid, IDE,
+00:07:36.040 --> 00:07:39.130
+Azure sphere was created to
+like in re everything's rebuilt
 
 146
-00:07:53.200 --> 00:07:55.540
-then people might not want
-to want to use it.
+00:07:39.130 --> 00:07:42.850
+from the ground up to
+fulfill those seven properties. Wow.
 
 147
-00:07:56.170 --> 00:07:58.330
-Yeah, exactly. And this is
-a great way to pick
+00:07:43.060 --> 00:07:45.910
+And that PDF of course
+is still available online. You
 
 148
-00:07:58.330 --> 00:08:02.470
-up, you know, node programming,
-JavaScript programming, whether it be
+00:07:45.910 --> 00:07:47.770
+can go and search for
+it. It's off hangs off
 
 149
-00:08:02.470 --> 00:08:04.300
-on the back end or
-the front end and then
+00:07:47.770 --> 00:07:53.260
+of microsoft.com/slash research. And it
+talks about the hardware kind
 
 150
-00:08:04.300 --> 00:08:07.120
-maybe graduate to a, a,
-an IDE like visual studio
+00:07:53.260 --> 00:07:55.900
+of the, the root of
+trust. They can, nothing is
 
 151
-00:08:07.120 --> 00:08:09.340
-code at some point know
-down the road when you've
+00:07:55.900 --> 00:07:59.230
+nothing is secure unless the
+hardware and the has, has
 
 152
-00:08:09.340 --> 00:08:12.520
-learned what you want to
-learn. Yeah. And, but the
+00:07:59.230 --> 00:08:02.680
+crypto at the root level.
+Yes. So, and what's cool
 
 153
-00:08:12.520 --> 00:08:14.530
-way that we have set
-up, you can even, you
+00:08:02.680 --> 00:08:04.420
+about the seven properties is
+if you go and look
 
 154
-00:08:14.530 --> 00:08:16.930
-know, export to get hub.
-If you are more familiar
+00:08:04.420 --> 00:08:06.430
+at them is, you know,
+some of them we can
 
 155
-00:08:16.930 --> 00:08:19.360
-with GitHub or you want
-to graduate to using, you
+00:08:06.430 --> 00:08:08.200
+do just in Silicon, like
+the root of trust, like
 
 156
-00:08:19.360 --> 00:08:22.060
-know, kind of a different
-environment like that, you can
+00:08:08.200 --> 00:08:10.360
+you mentioned, but some of
+them, we actually need all
 
 157
-00:08:22.060 --> 00:08:25.240
-even do that. You can
-import repos from GitHub just
+00:08:10.360 --> 00:08:14.170
+three components, which is Silicon
+operating system and cloud. So
 
 158
-00:08:25.240 --> 00:08:28.210
-to kind of play around
-with and test out. It's
+00:08:14.170 --> 00:08:18.310
+one that, that is called
+renewable security is like actually
 
 159
-00:08:28.210 --> 00:08:32.380
-really flexible. It's really, really
-flexible. What is this rewind
+00:08:18.310 --> 00:08:20.680
+providing updates, which you touched
+on earlier. And so we
 
 160
-00:08:32.380 --> 00:08:34.330
-feature? I'm trying to understand
-what I'm looking at is
+00:08:20.680 --> 00:08:22.840
+need Silicon and an operating
+system that knows how to
 
 161
-00:08:34.330 --> 00:08:37.120
-this like source control, but
-it's done like a DVR.
+00:08:22.840 --> 00:08:25.390
+provide updates and then a
+cloud service to actually push
 
 162
-00:08:38.050 --> 00:08:40.600
-That's a, that's a good
-point. So glittery wind is
+00:08:25.390 --> 00:08:28.300
+those updates out, which is
+something that Azure sphere provides.
 
 163
-00:08:40.600 --> 00:08:43.270
-a new feature that we
-came out with not too
+00:08:29.710 --> 00:08:31.630
+It's a really, actually a
+very, like you think about
 
 164
-00:08:43.270 --> 00:08:45.880
-long ago because we just
-came out of beta. And
+00:08:31.630 --> 00:08:33.850
+reading a paper by a
+bunch of PhDs might be
 
 165
-00:08:45.880 --> 00:08:48.820
-what glittery wine does, is
-it reinvents version control and
+00:08:33.850 --> 00:08:36.250
+really dull. It's actually quite
+a good paper and it's
 
 166
-00:08:48.820 --> 00:08:52.420
-undo, you know, when you're
-learning something or when you're
+00:08:36.250 --> 00:08:37.780
+quite easy to read. And
+it says a lot of
 
 167
-00:08:52.420 --> 00:08:55.590
-really kind of trying to
-figure something out, we want
+00:08:37.780 --> 00:08:41.350
+things that make you go,
+Hmm, like common sense type
 
 168
-00:08:55.590 --> 00:08:58.380
-to put that confidence back
-into coding. So with rewind,
+00:08:41.350 --> 00:08:44.080
+stuff. But I like the
+way that it phrases, it
 
 169
-00:08:58.740 --> 00:09:01.440
-you can undo any of
-your mistakes at any time,
+00:08:44.080 --> 00:08:48.070
+says single purpose hardware should
+be immune to reuse for
 
 170
-00:09:01.440 --> 00:09:05.310
-just by clicking the rewind
-button and dragging the scrubber
+00:08:48.070 --> 00:08:50.770
+unintended actions. Like this is
+a light switch. It should
 
 171
-00:09:05.310 --> 00:09:08.310
-across the timeline back to
-a point or a state
+00:08:50.770 --> 00:08:53.260
+only switch on my light.
+It should not kill my
 
 172
-00:09:08.310 --> 00:09:11.030
-in your code where things
-were were better. Yeah. And
+00:08:53.260 --> 00:08:56.370
+family. Right. Yes. Would be
+an ideal goal For a
 
 173
-00:09:11.030 --> 00:09:13.730
-it's interesting because you know,
-I've been, I've been running
+00:08:56.370 --> 00:09:00.830
+light switch. So the idea
+being that the, we want
 
 174
-00:09:13.730 --> 00:09:15.320
-around and trying to break
-it, figure out what I
+00:09:00.830 --> 00:09:02.540
+it to do its job
+and do its job as
 
 175
-00:09:15.320 --> 00:09:17.630
-can do to break clips.
-Cause you know, hackers always
+00:09:02.540 --> 00:09:04.910
+intended. And it kind of
+melt into the fabric of
 
 176
-00:09:17.630 --> 00:09:20.270
-kind of my fear and
-I was moving too fast
+00:09:04.910 --> 00:09:08.540
+our lives as users, without
+all the, like the psychic
 
 177
-00:09:20.270 --> 00:09:21.710
-maybe, and I got some
-kind of an error and
+00:09:08.540 --> 00:09:10.910
+weight of my light bulb
+stressing me out. That's one
 
 178
-00:09:21.710 --> 00:09:24.890
-it looks like you are
-using get underneath. So you're
+00:09:10.910 --> 00:09:14.240
+label that I bought on
+Kickstarter. Imagine if you're a
 
 179
-00:09:24.890 --> 00:09:28.520
-almost teaching them source control
-without making them think about,
+00:09:14.240 --> 00:09:16.790
+big car developer and you've
+got now a, you know,
 
 180
-00:09:28.640 --> 00:09:32.600
-get that's right. That's pretty
-slick. That's a really nice
+00:09:16.820 --> 00:09:20.360
+multimillion, multiple millions of cars
+out there, or multiple million
 
 181
-00:09:32.600 --> 00:09:35.420
-way to get people up
-to speed, but it's in
+00:09:21.050 --> 00:09:25.100
+refrigerators, that that would be
+very stressful. And they're refrigerator
 
 182
-00:09:35.420 --> 00:09:38.330
-a safe place for lack
-of a better word. Yeah.
+00:09:25.100 --> 00:09:29.030
+makers like we've seen on
+Silicon Valley, people hacking into
 
 183
-00:09:38.330 --> 00:09:40.580
-It's a safe place. It's
-very easy to share your
+00:09:29.030 --> 00:09:31.790
+appliances. Like that's not their
+job to be worrying about
 
 184
-00:09:40.580 --> 00:09:44.150
-work. You can invite others
-to, to work on a
+00:09:31.790 --> 00:09:34.730
+that stuff. Right. And so
+Azure sphere is basically sort
 
 185
-00:09:44.150 --> 00:09:46.550
-project with you. And even
-if you get stuck on
+00:09:34.730 --> 00:09:37.670
+of this turnkey solution where
+we say, you know, like
 
 186
-00:09:46.550 --> 00:09:49.430
-anything, there's also another new
-feature that we have put
+00:09:37.910 --> 00:09:40.100
+here's a, here's a tool,
+here's a productivity tool and
 
 187
-00:09:49.430 --> 00:09:51.980
-out. I think we're sort
-of internally calling it hand
+00:09:40.150 --> 00:09:43.640
+a solution basically, where if
+you use an Azure sphere
 
 188
-00:09:51.980 --> 00:09:53.960
-raise or at least that's
-how I've heard it called
+00:09:43.640 --> 00:09:47.540
+certified Silicon chip, and then
+you get, once you buy
 
 189
-00:09:53.960 --> 00:09:56.810
-internally where you can highlight
-a line that you might
+00:09:47.540 --> 00:09:50.240
+the chip, you get licensed
+to use the operating system
 
 190
-00:09:56.810 --> 00:09:59.510
-be having a problem with
-and a little icon will
+00:09:50.240 --> 00:09:52.580
+for 10 years. And then
+you also get 10 years
 
 191
-00:09:59.510 --> 00:10:01.610
-appear next to it. And
-you can click that and
+00:09:52.580 --> 00:09:56.360
+of the security services guarding
+that device. And then, so
 
 192
-00:10:01.610 --> 00:10:04.640
-get help from other members
-of the glitch community, Right.
+00:09:56.360 --> 00:09:58.160
+you just don't have to
+worry about it, right? You
 
 193
-00:10:04.640 --> 00:10:07.220
-I'm inside of a server
-dot JS right now. I
+00:09:58.160 --> 00:10:01.430
+could build the application for
+your refrigerator or, you know,
 
 194
-00:10:07.230 --> 00:10:10.270
-there's a line here that
-says app express. I, if
+00:10:01.460 --> 00:10:04.100
+whatever you are building and
+just think about that. And
 
 195
-00:10:10.270 --> 00:10:11.960
-I don't know what that
-means, I can click next
+00:10:04.100 --> 00:10:07.040
+then we take care of
+the security for you. So
 
 196
-00:10:11.960 --> 00:10:14.300
-to it. And then a
-little person pops up. I
+00:10:07.040 --> 00:10:09.380
+you say that it has
+three components, Chipo S and
 
 197
-00:10:14.300 --> 00:10:16.400
-can click on it. It
-says, ask for help from
+00:10:09.380 --> 00:10:11.690
+cloud connectivity. When you say
+chip, like I know that
 
 198
-00:10:16.400 --> 00:10:19.340
-the community. And it gives
-me a URL. That means
+00:10:11.690 --> 00:10:14.210
+we're in the surface business,
+we make, we make computers
 
 199
-00:10:19.340 --> 00:10:21.470
-the community could be with
-English or it could be
+00:10:14.210 --> 00:10:16.370
+now, although I'm sure that
+we outsource a lot of
 
 200
-00:10:21.470 --> 00:10:23.180
-on Twitter. And I could
-say, Hey, what's this line
+00:10:16.370 --> 00:10:18.620
+the parts and stuff, are
+we suddenly making chips or
 
 201
-00:10:23.180 --> 00:10:26.450
-what's going on here? Yeah,
-absolutely. This is cool though.
+00:10:18.620 --> 00:10:21.650
+where do these chips come
+from? Right. So the piece
 
 202
-00:10:26.450 --> 00:10:29.000
-But I am fascinated to
-understand how you're going to
+00:10:21.650 --> 00:10:23.450
+of Azure sphere, we, you
+may have heard me say
 
 203
-00:10:29.000 --> 00:10:30.710
-make money off of it,
-but it's certainly got people
+00:10:23.450 --> 00:10:26.450
+certified Azure sphere chips. So
+we work with Silicon partners
 
 204
-00:10:30.710 --> 00:10:35.140
-excited. Well, you know, I
-don't know if I'm, I'm
+00:10:26.450 --> 00:10:29.450
+who actually produce Azure spirit
+chips. And what makes it
 
 205
-00:10:35.150 --> 00:10:38.270
-a really qualified to talk
-about how we'll make money
+00:10:29.450 --> 00:10:34.490
+an Azure sphere chip is
+that it has the plutonic
 
 206
-00:10:38.270 --> 00:10:41.300
-off of it, but certainly
-we've gotten people excited about
+00:10:34.490 --> 00:10:38.120
+security system is Silicon that
+was developed by Microsoft and
 
 207
-00:10:41.300 --> 00:10:43.520
-building on the web. Again,
-that's really, I think our
+00:10:38.120 --> 00:10:41.300
+that we license royalty free
+to these Silicon partners so
 
 208
-00:10:43.520 --> 00:10:46.700
-primary goal right now. Exactly.
-Well, it definitely feels like,
+00:10:41.300 --> 00:10:44.600
+that they can then make
+these chips. So media tech
 
 209
-00:10:46.940 --> 00:10:49.190
-like the geo cities of
-the past. And it's also
+00:10:44.630 --> 00:10:47.150
+is our first partner that
+is producing the first chip.
 
 210
-00:10:49.190 --> 00:10:52.160
-nice that the name of
-your project becomes then the
+00:10:47.610 --> 00:10:49.190
+And so you can go
+look and see the specs
 
 211
-00:10:52.160 --> 00:10:54.930
-sub domain. So I could
-then pass, you know, you
+00:10:49.190 --> 00:10:53.240
+on their website, but, you
+know, device manufacturers and whoever
 
 212
-00:10:54.930 --> 00:10:58.940
-know, food-bar.glitch.me off to someone
-and put it in my
+00:10:53.240 --> 00:10:55.370
+wants to buy these chips
+would actually be buying them
 
 213
-00:10:58.940 --> 00:11:01.790
-portfolio. So this could actually
-allow someone to build a
+00:10:55.370 --> 00:10:59.180
+from the Silicon manufacturers. And
+there therefore could be many,
 
 214
-00:11:01.790 --> 00:11:04.250
-project and then put it
-out there and say, look,
+00:10:59.180 --> 00:11:00.740
+many different skews in the
+future. I think there are
 
 215
-00:11:04.250 --> 00:11:06.800
-I made this, stick it
-in their LinkedIn or a
+00:11:00.740 --> 00:11:03.770
+12 parts Silicon partner's announced
+on the website right now.
 
 216
-00:11:06.860 --> 00:11:10.100
-tweet about it. Yeah. That's
-pretty slick. I'm digging it.
+00:11:04.140 --> 00:11:06.050
+I see. So I'm going
+to ask you a very
 
 217
-00:11:10.610 --> 00:11:14.060
-So you are working as
-a content producer and a
+00:11:06.050 --> 00:11:08.240
+ignorant question because I, you
+know, I, the most I
 
 218
-00:11:14.060 --> 00:11:17.990
-designer, but I noticed when
-we were setting up for
+00:11:08.240 --> 00:11:09.770
+ever did in the hardware
+space was I made a
 
 219
-00:11:17.990 --> 00:11:22.460
-this podcast, you were running
-windows. Is that, is that
+00:11:09.770 --> 00:11:12.110
+clock. I had a bunch
+of, a bunch of NAND
 
 220
-00:11:22.460 --> 00:11:25.460
-weird? Do you feel like
-out of sorts, I thought
+00:11:12.110 --> 00:11:16.690
+Gates. So we we've designed,
+or Microsoft is designed the
 
 221
-00:11:25.460 --> 00:11:27.980
-you, I thought you required
-as a designer, like to
+00:11:16.790 --> 00:11:19.330
+Silicon in the sense that
+they would give or licensed
 
 222
-00:11:27.980 --> 00:11:31.640
-run back. Oh Boy. Oh,
-the dilemma of being a
+00:11:19.330 --> 00:11:23.150
+the plans and say, here's
+the layout, here's the Silicon.
 
 223
-00:11:31.640 --> 00:11:36.440
-windows only designer, I've been,
-I've been wondering A windows
+00:11:23.150 --> 00:11:25.490
+And how you lay it
+down, like just as I
 
 224
-00:11:36.440 --> 00:11:41.900
-developer or windows designer feel
-about that. I mean, so
+00:11:25.490 --> 00:11:28.070
+give you source code, but
+you compile it. Yeah. And
 
 225
-00:11:41.900 --> 00:11:44.990
-I I've just always been
-more comfortable with using windows.
+00:11:28.070 --> 00:11:30.170
+we actually give them like
+a block. And so there
 
 226
-00:11:44.990 --> 00:11:48.470
-I have used, you know,
-max before. I mean, certainly
+00:11:30.170 --> 00:11:32.960
+will be that Pluton, runtime
+subsystem on the chip, but
 
 227
-00:11:48.470 --> 00:11:51.140
-I think everyone of a
-certain age has probably used
+00:11:32.960 --> 00:11:38.150
+there could also be additional
+things like for instance, different
 
 228
-00:11:51.140 --> 00:11:54.220
-the Apple Toohey. And when
-I was in high school,
+00:11:38.150 --> 00:11:40.640
+cores and, and some of
+it, we do have specs
 
 229
-00:11:54.220 --> 00:11:58.180
-we had like power max,
-I think, or Macintoshes. But
+00:11:40.640 --> 00:11:43.850
+around, like, we have an
+application core and a realtime
 
 230
-00:11:58.180 --> 00:12:00.190
-once I got into college,
-I just switched over to
+00:11:43.850 --> 00:11:47.450
+core on, on these chips
+and we call that across,
 
 231
-00:12:00.190 --> 00:12:03.310
-windows. And at that was
-that, I mean, for me,
+00:11:47.450 --> 00:11:49.820
+over chips. So that's a
+requirement, but there's others. There's
 
 232
-00:12:03.310 --> 00:12:06.370
-it's just been a more
-comfortable environment to work in.
+00:11:49.820 --> 00:11:51.500
+other things that go in.
+So it might be like
 
 233
-00:12:07.420 --> 00:12:12.010
-I wish that there wasn't
-this weird, stupid division that
+00:11:51.500 --> 00:11:52.790
+a, it's a, you can
+think of it as like
 
 234
-00:12:12.010 --> 00:12:15.550
-I think parts of the
-design community put up between
+00:11:52.790 --> 00:11:55.360
+an and some in some
+code that I give you.
 
 235
-00:12:15.550 --> 00:12:17.950
-windows and Mac, as it
-relates to the tools that
+00:11:55.860 --> 00:11:57.660
+I got you. I got
+ya. And then the one
 
 236
-00:12:17.950 --> 00:12:22.810
-we use. I, I hate
-that it's gotten divisive to
+00:11:57.660 --> 00:11:59.400
+from media tech, and you
+can go up and search
 
 237
-00:12:22.810 --> 00:12:26.530
-that point where Mac users
-have these special design tools
+00:11:59.400 --> 00:12:02.040
+for this. If you'd like,
+it's got an arm processor,
 
 238
-00:12:26.530 --> 00:12:28.960
-that only they use that
-they're trying to sort of
+00:12:02.040 --> 00:12:04.530
+it's got two general purpose
+ones. It also has a
 
 239
-00:12:28.960 --> 00:12:32.260
-make industry standard, but they
-can't become industry standard. If
+00:12:04.530 --> 00:12:07.620
+dedicated wifi subsystem. So it
+is connected by it's by
 
 240
-00:12:32.260 --> 00:12:34.960
-windows users can't use them.
-Yes. I'm talking about sketch.
+00:12:07.620 --> 00:12:10.140
+default. Yes. And all the
+address here, your certified chips
 
 241
-00:12:36.190 --> 00:12:39.520
-I don't like that kind
-of, sort of weird division
+00:12:10.140 --> 00:12:13.800
+will be connected by default.
+Cool. Now is I'm making
 
 242
-00:12:39.520 --> 00:12:42.010
-with, with kind of the
-way the design tools are
+00:12:13.800 --> 00:12:17.640
+a refrigerator. Do I build
+a bunch of stuff that
 
 243
-00:12:42.010 --> 00:12:44.590
-right now. But I don't
-think being a designer and
+00:12:17.640 --> 00:12:19.620
+I know how to build
+as a refrigerator manufacturer? And
 
 244
-00:12:44.590 --> 00:12:48.490
-being on a Mac are,
-are like, requirement's, you know,
+00:12:19.620 --> 00:12:23.310
+then there's a, a thumbnail
+sized hole in my, in
 
 245
-00:12:49.390 --> 00:12:53.590
-I think it's that way
-because perhaps I think it's
+00:12:23.310 --> 00:12:25.770
+my board. And that's where
+I pop the Azure sphere
 
 246
-00:12:53.590 --> 00:12:56.050
-more of an, I use
-that word aesthetic again. I
+00:12:25.770 --> 00:12:28.980
+in. Yeah. And so that's
+up to obviously the device
 
 247
-00:12:56.050 --> 00:12:58.300
-feel like it's another kind
-of aesthetic choice. People think
+00:12:28.980 --> 00:12:31.410
+manufacturer about how they want
+to lay out their boards,
 
 248
-00:12:58.300 --> 00:13:02.080
-that, you know, max just
-look better. They, you know,
+00:12:31.410 --> 00:12:34.710
+but wherever you would put
+your chip on your board,
 
 249
-00:13:02.080 --> 00:13:04.870
-render the fonts better or
-what have you, maybe the
+00:12:34.740 --> 00:12:36.390
+that's, that's where you would
+place it. And then you
 
 250
-00:13:04.870 --> 00:13:07.690
-tools are better, et cetera,
-blah, blah, blah. But I
+00:12:36.390 --> 00:12:39.150
+might, there's a, this is
+a whole very complex beast,
 
 251
-00:13:07.690 --> 00:13:09.490
-mean, at the end of
-the day, you know, as
+00:12:39.150 --> 00:12:41.760
+right. So yes, you take
+our chip, you put it
 
 252
-00:13:09.490 --> 00:13:13.240
-a designer, it's it doesn't
-really it, the tools that
+00:12:41.760 --> 00:12:43.500
+on the board and then
+you could design your own
 
 253
-00:13:13.240 --> 00:13:15.130
-you use, I think are
-not important. You know, if
+00:12:43.500 --> 00:12:46.260
+board from there. So the
+whole point is though, that
 
 254
-00:13:15.130 --> 00:13:17.530
-you're on a Mac or
-on windows, if you can
+00:12:46.260 --> 00:12:49.020
+would be secure. Do we,
+are we going to offer
 
 255
-00:13:17.530 --> 00:13:19.780
-design, you can design. So
-I don't like the fact
+00:12:49.590 --> 00:12:52.320
+as, as you're going to
+offer like, well, this part
 
 256
-00:13:19.780 --> 00:13:23.260
-that the tools are kind
-of furthering this weird separation
+00:12:52.330 --> 00:12:55.020
+secure, cause it's Azure sphere,
+but this other stuff around
 
 257
-00:13:23.290 --> 00:13:26.050
-when it's, it's sort of
-standing in the way of
+00:12:55.020 --> 00:12:56.880
+it that I made when
+I did my refrigerator's not
 
 258
-00:13:26.050 --> 00:13:29.460
-having designers create. That's how
-I feel. At least I
+00:12:56.880 --> 00:12:58.890
+secure because I did it
+wrong or I didn't know
 
 259
-00:13:29.460 --> 00:13:31.350
-think the idea of the
-aesthetic or the sense of
+00:12:58.890 --> 00:13:01.980
+what it was. Yeah. So
+that's a great question. So
 
 260
-00:13:31.350 --> 00:13:33.600
-like I brought into this
-ecosystem. Like, I mean, I'm
+00:13:03.540 --> 00:13:06.570
+we, part of the operating
+system, that's super cool. I
 
 261
-00:13:33.600 --> 00:13:37.830
-team iPhone because I, I,
-I say we approve of
+00:13:06.570 --> 00:13:09.210
+think about the, we call
+it a high level operating
 
 262
-00:13:37.830 --> 00:13:39.900
-the aesthetic, but you know,
-it just, it feels like
+00:13:09.210 --> 00:13:11.010
+system that we built from
+the ground up to be
 
 263
-00:13:39.900 --> 00:13:42.690
-my space, it feels like
-my place. And presumably you
+00:13:11.010 --> 00:13:16.080
+secure has basically an application
+sandbox. And so as a
 
 264
-00:13:42.690 --> 00:13:45.030
-use windows and I use
-windows because we also feel
+00:13:16.080 --> 00:13:19.800
+device manufacturer, you would write
+your refrigerator app and then
 
 265
-00:13:45.030 --> 00:13:47.910
-like that. But then you
-feel like, well, but now
+00:13:19.830 --> 00:13:22.590
+you would put it in
+our application sandbox. And so
 
 266
-00:13:47.910 --> 00:13:50.310
-this tool I want to
-use, isn't available to me
+00:13:22.590 --> 00:13:25.470
+it's actually a multilayered operating
+system. Whereas if you think
 
 267
-00:13:50.310 --> 00:13:52.020
-on this platform. So what
-do you do when the
+00:13:25.470 --> 00:13:29.160
+of an artist toss that
+usually runs on these devices,
 
 268
-00:13:52.020 --> 00:13:54.570
-app you want is on
-the other platform, but that
+00:13:29.430 --> 00:13:32.070
+it's all like one big
+component. And so it's, once
 
 269
-00:13:54.570 --> 00:13:58.980
-doesn't feel like home, You
-know, I'm not all windows.
+00:13:32.070 --> 00:13:34.350
+you compromise any of it,
+whether it be the application
 
 270
-00:13:58.980 --> 00:14:01.980
-So like my main, my
-main computer and my work
+00:13:34.350 --> 00:13:37.620
+or the Colonel, the whole
+thing is compromised. We actually
 
 271
-00:14:01.980 --> 00:14:05.790
-laptop are windows, but I
-also have a iPad mini
+00:13:37.620 --> 00:13:40.350
+have different layers. Like you
+could think of in your
 
 272
-00:14:05.880 --> 00:14:07.380
-that's mounted to my desk.
-I'm looking at it right
+00:13:40.350 --> 00:13:44.250
+traditional kernel, like user space
+and like more like the
 
 273
-00:14:07.380 --> 00:14:10.380
-now and I have iPad
-pro. So there are some
+00:13:44.250 --> 00:13:48.210
+kernel space and things like
+that. So device manufacturers can
 
 274
-00:14:10.380 --> 00:14:12.900
-things that I will still
-kind of use the Mac
+00:13:48.210 --> 00:13:51.030
+run in their application sandbox.
+And even if, for instance,
 
 275
-00:14:13.350 --> 00:14:16.230
-ecosystem for now. Granted, I
-don't, I mean, I don't
+00:13:51.030 --> 00:13:56.280
+there was a vulnerability that
+was discovered in their application,
 
 276
-00:14:16.230 --> 00:14:18.390
-think sketches of no, it's
-not available for iPad pro.
+00:13:56.280 --> 00:13:58.260
+they could then push an
+update over there to fix
 
 277
-00:14:18.390 --> 00:14:20.100
-So there are some things
-that I still would not
+00:13:58.260 --> 00:14:01.050
+that. And the rest of
+our operating system would ensure
 
 278
-00:14:20.460 --> 00:14:22.800
-be able to use because
-there's a difference between, you
+00:14:01.050 --> 00:14:05.280
+that that, that application got
+updated. Now you said R
 
 279
-00:14:22.800 --> 00:14:29.220
-know, Mac iOS and iOS.
-So I mean, tool wise,
+00:14:05.280 --> 00:14:08.340
+toss, R T O S
+real time operating system. Yeah.
 
 280
-00:14:29.940 --> 00:14:31.710
-I don't know. The only
-issue I really run up
+00:14:08.370 --> 00:14:12.600
+So that's traditionally what's runs
+on microcontroller devices. This is
 
 281
-00:14:31.710 --> 00:14:35.130
-against is sketch. I found
-that there are, there's always
+00:14:12.600 --> 00:14:17.100
+actually a super old operating
+system. It's was built originally
 
 282
-00:14:35.130 --> 00:14:38.010
-going to be a crafty
-developer that might create a
+00:14:17.100 --> 00:14:20.310
+before devices were even connected
+to the internet. Right. And
 
 283
-00:14:38.010 --> 00:14:41.400
-windows version of a Mac
-only kind of tool hasn't
+00:14:20.310 --> 00:14:24.030
+so internet connectivity and security
+has sort of been added
 
 284
-00:14:41.400 --> 00:14:43.020
-really happened with sketch it.
-I guess you could call
+00:14:24.030 --> 00:14:26.910
+on and sort of like
+taped, you know, sort of
 
 285
-00:14:43.020 --> 00:14:45.990
-Adobe XD that, but I
-don't use that either. So
+00:14:26.910 --> 00:14:29.640
+duct taped on, and these
+features have been added, but
 
 286
-00:14:46.800 --> 00:14:50.010
-it's Are you like a
-creative cloud person? I am
+00:14:29.640 --> 00:14:32.370
+there's still vulnerabilities that keep
+popping up in that and
 
 287
-00:14:50.010 --> 00:14:53.960
-a creative cloud person. I
-mostly these days in Photoshop,
+00:14:32.370 --> 00:14:35.880
+things like that. And so
+we actually built one from
 
 288
-00:14:53.990 --> 00:14:58.250
-illustrator, InDesign, and premiere, and
-a little bit of after
+00:14:35.880 --> 00:14:39.390
+scratch to go and say,
+let's, what would it look
 
 289
-00:14:58.250 --> 00:15:02.530
-effects and audition, of course,
-for, for audio. Yeah, exactly.
+00:14:39.390 --> 00:14:41.880
+like to devise an operating
+system for these small devices
 
 290
-00:15:02.530 --> 00:15:05.170
-Myself as well. I got
-the, getting the creative cloud
+00:14:42.750 --> 00:14:45.240
+from the ground up? So
+that it's purpose built for
 
 291
-00:15:05.170 --> 00:15:07.210
-subscription has been super useful.
-I actually, I liked the
+00:14:45.240 --> 00:14:50.640
+security You, well, you've seen
+probably online, everyone lose their
 
 292
-00:15:07.210 --> 00:15:08.980
-way that everything is moving
-to subscriptions like this. I
+00:14:50.640 --> 00:14:54.440
+minds when the Sphero S
+like announcement came out and
 
 293
-00:15:08.980 --> 00:15:10.810
-know some people don't dig
-it, but back in the
+00:14:54.830 --> 00:14:56.840
+there's a whole bunch of
+stuff to read about. I've
 
 294
-00:15:10.810 --> 00:15:13.800
-day I didn't have $500
-to buy word or $500
+00:14:56.840 --> 00:14:59.540
+got dozens and dozens of
+pages open. I read the
 
 295
-00:15:13.810 --> 00:15:17.350
-by Photoshop, but I can
-probably swing 1995 and yeah.
+00:14:59.540 --> 00:15:04.580
+original, the original PDF about
+the characteristics, what need, but
 
 296
-00:15:17.410 --> 00:15:19.090
-Yeah. And I mean, for
-me, my job pays for
+00:15:04.700 --> 00:15:08.240
+the, the title of the
+headline is like Microsoft makes
 
 297
-00:15:19.090 --> 00:15:24.350
-it. So that's even better.
-Great work on your podcast.
+00:15:08.240 --> 00:15:10.340
+its own Linux. And I'm
+like, this seems a lot
 
 298
-00:15:28.060 --> 00:15:31.450
-That's cool. A big thank
-you to our sponsors because
+00:15:10.400 --> 00:15:13.340
+different than what I thought
+people think, think is being
 
 299
-00:15:31.450 --> 00:15:33.490
-they make the show possible.
-And I hope that you
+00:15:13.340 --> 00:15:16.760
+made. So why did everyone,
+like, I don't know, focus
 
 300
-00:15:33.490 --> 00:15:37.420
-support them the way they
-support us progress. Software is
+00:15:16.760 --> 00:15:19.570
+on that. I mean, I
+think so. Yeah. So I'll
 
 301
-00:15:37.420 --> 00:15:40.420
-the creator of the most
-comprehensive developer toolkit for building
+00:15:19.570 --> 00:15:22.150
+address the question is our
+operating system, our high level
 
 302
-00:15:40.420 --> 00:15:44.440
-modern apps on the market.
-Today Tellerik dev craft with
+00:15:22.150 --> 00:15:24.880
+operating system does run a
+custom Linux kernel. It has
 
 303
-00:15:44.440 --> 00:15:48.250
-more than 1100 tellerik.net and
-Kendo, UI JavaScript components and
+00:15:24.880 --> 00:15:27.820
+sort of four layers, which
+is our security monitor, our
 
 304
-00:15:48.250 --> 00:15:52.090
-controls. You can easily build
-modern high-performance web mobile and
+00:15:27.820 --> 00:15:34.930
+custom Linux kernel sort of
+like applications that run as
 
 305
-00:15:52.090 --> 00:15:55.420
-desktop apps as well as
-chatbots. The tool set also
+00:15:34.930 --> 00:15:37.420
+part of the operating system.
+And then there's like your
 
 306
-00:15:55.420 --> 00:15:59.680
-includes reporting solutions, automated testing,
-and productivity tools and come
+00:15:37.420 --> 00:15:40.000
+app that runs. And so
+the custom Linux kernel, I
 
 307
-00:15:59.680 --> 00:16:02.800
-to the range of support
-options. New this year is
+00:15:40.000 --> 00:15:42.820
+think, you know, it's funny.
+I feel like every time
 
 308
-00:16:02.800 --> 00:16:06.190
-a free online training program
-for all license holders, with
+00:15:42.820 --> 00:15:45.190
+I see this, like everyone
+forgets that Microsoft has a
 
 309
-00:16:06.190 --> 00:16:10.120
-this alongside thousands of demos
-and source code available, comprehensive
+00:15:45.190 --> 00:15:49.060
+long storied history with supporting
+Linux, right? Like 40% of
 
 310
-00:16:10.120 --> 00:16:13.240
-documentation and a full assortment
-of visual studio templates, you'll
+00:15:49.060 --> 00:15:51.190
+the VMs that run in
+Azure are Linux based. But
 
 311
-00:16:13.240 --> 00:16:15.700
-be up and running with
-the progress Tellerik and Kendo
+00:15:51.190 --> 00:15:53.380
+I think it's just, you
+know, maybe some sticker shock
 
 312
-00:16:15.700 --> 00:16:19.420
-UI controls in no time
-download a free 30 day
+00:15:53.380 --> 00:15:57.430
+over the history of Microsoft's
+careers and having windows versus
 
 313
-00:16:19.420 --> 00:16:25.840
-trial today at tellerik.com/hanselman that's
-T L E R I
+00:15:57.430 --> 00:16:00.280
+Linux and in this sort
+of dichotomy folks have in
 
 314
-00:16:25.840 --> 00:16:31.450
-k.com/hanselman. So it sounds like
-being a, a windows developer.
+00:16:00.280 --> 00:16:03.490
+their heads, but it's really
+nothing new. Well, and it
 
 315
-00:16:31.450 --> 00:16:33.970
-You are a windows developer
-in the fog Creek offices,
+00:16:03.490 --> 00:16:06.610
+seems like a reasonable thing
+to, to choose given the,
 
 316
-00:16:33.970 --> 00:16:36.670
-but you're still cool with
-your choice. And it hasn't
+00:16:06.610 --> 00:16:08.770
+the, the size of the
+operating system and the modularity
 
 317
-00:16:36.670 --> 00:16:38.800
-been a huge problem with
-this kind of, you know,
+00:16:08.770 --> 00:16:11.230
+of it, as well as
+the ubiquity of Lennox, I
 
 318
-00:16:38.800 --> 00:16:44.500
-design monoculture. I mean, it
-really hasn't because the work
+00:16:11.230 --> 00:16:13.990
+expect people would have code
+that would become, would be
 
 319
-00:16:44.500 --> 00:16:47.410
-that I'm doing is at
-least the deliverables I can
+00:16:13.990 --> 00:16:17.290
+more compatible because you're using
+Linux as the operating system.
 
 320
-00:16:47.410 --> 00:16:49.600
-do them easily in Photoshop.
-I mean, there might be
+00:16:17.650 --> 00:16:19.750
+Yeah. And I think, you
+know, I don't even know
 
 321
-00:16:49.600 --> 00:16:52.780
-an issue where maybe something
-export it from sketch might
+00:16:19.750 --> 00:16:22.330
+that it's necessarily a size
+issue. Like we've cut down
 
 322
-00:16:52.780 --> 00:16:55.930
-look a little wonky in
-illustrator, but even then I
+00:16:22.360 --> 00:16:25.000
+the Linux kernel. We have
+a custom Linux kernel, partly
 
 323
-00:16:55.930 --> 00:16:59.080
-found a workaround because there
-might be someone else on
+00:16:25.000 --> 00:16:28.780
+for security, because right. You
+don't want to ship like
 
 324
-00:16:59.080 --> 00:17:01.570
-the design team that has
-Mac, so they can kind
+00:16:28.840 --> 00:16:31.690
+a shell on these devices
+because you don't need it.
 
 325
-00:17:01.570 --> 00:17:03.940
-of work with it. If
-I can't now I don't
+00:16:31.690 --> 00:16:34.090
+And so that's just a
+different attack factor that we're
 
 326
-00:17:03.940 --> 00:17:06.520
-know what everyone else remotely
-is using. There might be
+00:16:34.090 --> 00:16:37.390
+not exposing. For instance, I
+see. So this is not
 
 327
-00:17:06.520 --> 00:17:09.520
-some other remote windows users,
-but certainly I think with
+00:16:37.420 --> 00:16:39.820
+really an operating system, as
+it is a paired down
 
 328
-00:17:09.520 --> 00:17:12.700
-the design elements that we're
-doing with fall Creek, we're
+00:16:39.820 --> 00:16:44.620
+modified Colonel The, the Linux
+bit is the accustom paired
 
 329
-00:17:12.700 --> 00:17:18.070
-mostly Mac. And then I'm
-the, I'm the outlier, These,
+00:16:44.620 --> 00:16:47.050
+down kernel, and then we
+have built an entire operating
 
 330
-00:17:18.730 --> 00:17:21.190
-these new design sites that
-are out there, like people
+00:16:47.050 --> 00:16:49.960
+system. Right. I see. I
+see. And then as, as
 
 331
-00:17:21.190 --> 00:17:23.380
-see my blog and they'll
-try to steal the design
+00:16:49.960 --> 00:16:51.880
+open source, is this a
+thing that I'm going to
 
 332
-00:17:23.380 --> 00:17:25.570
-or they'll steal my CSS.
-And that is what it
+00:16:51.880 --> 00:16:53.710
+go and learn about and
+poke about, or does it
 
 333
-00:17:25.570 --> 00:17:27.820
-is. But the thing that
-I'm noticing the most right
+00:16:53.710 --> 00:16:58.120
+have to be open source?
+So we will, we will
 
 334
-00:17:27.820 --> 00:17:30.550
-now online are these, these
-design sites where I can
+00:16:58.150 --> 00:17:01.240
+basically follow the license, the
+GPL two V two licenses.
 
 335
-00:17:30.550 --> 00:17:34.210
-buy a theme for five
-bucks. Don't make it difficult
+00:17:01.240 --> 00:17:03.580
+And so there will be
+more information on, on what
 
 336
-00:17:34.210 --> 00:17:36.400
-when in the past you'd
-have to pay a designer,
+00:17:03.700 --> 00:17:06.070
+as we publish that and
+adhere to that license in
 
 337
-00:17:36.580 --> 00:17:38.800
-you know, for their hourly
-wage or a, you know,
+00:17:06.070 --> 00:17:09.550
+the future. That's cool. Hey
+folks, I want to take
 
 338
-00:17:38.800 --> 00:17:43.540
-their time, $500 thousand dollars
-or thousands of dollars for
+00:17:09.550 --> 00:17:11.980
+a moment to thank our
+sponsors and remind you that
 
 339
-00:17:43.540 --> 00:17:46.400
-a full site. What do
-you feel about these, these
+00:17:11.980 --> 00:17:15.340
+when you support them, you're
+supporting Hansel minutes because they
 
 340
-00:17:46.420 --> 00:17:48.970
-inexpensive logo sites and theme
-sites and what that says
+00:17:15.340 --> 00:17:19.840
+make this show possible. Innovative
+developers help improve the lives
 
 341
-00:17:48.990 --> 00:17:51.500
-about design on the web
-today? I mean, I think
+00:17:19.840 --> 00:17:22.900
+of millions of small businesses
+and accountants that use QuickBooks
 
 342
-00:17:51.500 --> 00:17:55.610
-that those marketplaces certainly have
-a purpose. I think the
+00:17:22.900 --> 00:17:26.200
+worldwide. Your app could make
+the difference that helps them
 
 343
-00:17:55.610 --> 00:17:59.060
-problem becomes, or I think
-the problem happens when consumers
+00:17:26.200 --> 00:17:30.070
+work smarter and put more
+money in their pocket. Enter
 
 344
-00:17:59.060 --> 00:18:04.160
-tend to think that equals
-design. A lot of people
+00:17:30.100 --> 00:17:34.090
+Intuit developer from tech tools
+to growing your customer base,
 
 345
-00:18:04.160 --> 00:18:07.130
-might think that these marketplaces
-have kind of cheapened design
+00:17:34.120 --> 00:17:37.750
+to helping you get funding.
+Intuit developer helps your app
 
 346
-00:18:07.130 --> 00:18:08.870
-because of that. But if
-anything, I think it's only
+00:17:37.780 --> 00:17:43.750
+go from concept to company,
+find out more at intuit.me/code
 
 347
-00:18:08.870 --> 00:18:12.890
-further commodity commoditized it to
-the point where they will
+00:17:44.110 --> 00:17:51.090
+that's I N T U
+I t.me/code. So is this
 
 348
-00:18:12.890 --> 00:18:15.770
-go to a designer that
-maybe doesn't ask something on
+00:17:51.090 --> 00:17:52.890
+something that is going to
+show up in my light
 
 349
-00:18:15.770 --> 00:18:17.870
-theme forest, but they think
-that they're able to kind
+00:17:52.890 --> 00:17:54.870
+bulb, or are we thinking
+that this is not light
 
 350
-00:18:17.870 --> 00:18:21.770
-of use these same types
-of tactics and bargains. Like,
+00:17:54.870 --> 00:17:58.790
+bulb appropriate? So it depends.
+Some of this is if
 
 351
-00:18:22.250 --> 00:18:24.650
-do you have discounts or
-do you have packages or
+00:17:58.790 --> 00:18:01.640
+you think about light bulbs
+themselves, usually they run very,
 
 352
-00:18:24.650 --> 00:18:27.350
-things like that where most
-designers, at least I know
+00:18:01.640 --> 00:18:04.730
+very small chips. Like sometimes
+you might think if you're
 
 353
-00:18:27.350 --> 00:18:29.870
-independent ones will try to
-come from a place of
+00:18:04.730 --> 00:18:06.950
+familiar with the arm ecosystem,
+it's called like an M
 
 354
-00:18:29.870 --> 00:18:32.660
-value as opposed to just
-a strict, you know, sort
+00:18:06.950 --> 00:18:09.560
+zero. So that's like a
+really, really small chip. What
 
 355
-00:18:32.660 --> 00:18:36.830
-of dollar amount. Like it
-costs exactly this much. I
+00:18:09.560 --> 00:18:12.200
+is on the first Azure
+sphere? Certified chip is an
 
 356
-00:18:36.830 --> 00:18:39.350
-don't, I don't, I think
-there's a place for them.
+00:18:12.200 --> 00:18:16.550
+M four, which is a
+slightly bigger realtime processing core.
 
 357
-00:18:39.440 --> 00:18:41.990
-I mean, I've used them.
-I'm not gonna lie. I've
+00:18:16.550 --> 00:18:19.790
+And then an a seven,
+which is an application level
 
 358
-00:18:41.990 --> 00:18:45.200
-definitely used them before, because
-sometimes you just need that,
+00:18:19.790 --> 00:18:23.210
+processor, which is actually more
+powerful. And so that's sort
 
 359
-00:18:45.650 --> 00:18:48.350
-that $5 thing for something
-really quick and dirty that
+00:18:23.210 --> 00:18:27.470
+of new to the, the
+ecosystem, but usually what's determined.
 
 360
-00:18:48.350 --> 00:18:49.790
-you need to just throw
-it together and put it
+00:18:27.470 --> 00:18:29.300
+There is based on the
+cost of like, how much
 
 361
-00:18:49.790 --> 00:18:54.470
-up there. I mean, but
-then it depends, I think
+00:18:29.300 --> 00:18:30.950
+do you want your light
+bulb to cost, right. Is
 
 362
-00:18:54.470 --> 00:18:57.200
-on what the value of
-what, what the value is
+00:18:30.950 --> 00:18:33.050
+how, how beefy of a
+chip we could put in
 
 363
-00:18:57.200 --> 00:19:00.650
-that your, your in result
-is going to be. So
+00:18:33.050 --> 00:18:36.170
+it. I see. And if
+you look at this at
 
 364
-00:19:00.680 --> 00:19:02.810
-if you're trying to put
-up something, I don't know,
+00:18:36.170 --> 00:18:40.130
+the, at the diagrams online,
+there's this whole family tree
 
 365
-00:19:02.810 --> 00:19:04.280
-maybe if you're putting up
-a blog or something that
+00:18:40.130 --> 00:18:43.670
+of these arm processors from
+the tiniest to the, you
 
 366
-00:19:04.280 --> 00:19:06.800
-you're not really making any
-money off of. I mean,
+00:18:43.670 --> 00:18:45.470
+know, the ones that went
+on raw watches that go
 
 367
-00:19:06.800 --> 00:19:09.740
-yes, you probably should go
-with a designer that can
+00:18:45.470 --> 00:18:47.420
+all the way up and
+you can run a whole,
 
 368
-00:19:09.740 --> 00:19:12.650
-make your custom thing, but
-you may not even know
+00:18:47.960 --> 00:18:53.300
+a whole computer almost. So
+this is the, the, the
 
 369
-00:19:12.650 --> 00:19:14.390
-if you like the blog.
-You may not even know
+00:18:53.300 --> 00:18:56.810
+ultra low power M zero
+is maybe sometime in the
 
 370
-00:19:14.390 --> 00:19:16.880
-if this is something that
-you continue. And so if
+00:18:56.810 --> 00:19:00.290
+future, but you're starting at
+the end for, Well, I
 
 371
-00:19:16.880 --> 00:19:19.640
-you put maybe a 40
-to $50 investment into a
+00:19:00.290 --> 00:19:02.570
+mean, our chip does rent
+have a couple or sorry,
 
 372
-00:19:19.640 --> 00:19:22.940
-theme and it doesn't pan
-out, you've only lost 40
+00:19:02.630 --> 00:19:05.420
+MTK chip does have two
+and fours on it and
 
 373
-00:19:22.940 --> 00:19:25.580
-or $50. You know, if
-you go to a designer,
+00:19:05.420 --> 00:19:07.520
+an eight, seven processor. So
+it actually has multiple cores.
 
 374
-00:19:25.580 --> 00:19:28.400
-maybe it's a, it's a
-different conversation of, you know,
+00:19:08.130 --> 00:19:11.150
+And so we, while we
+realize that we're sort of
 
 375
-00:19:28.430 --> 00:19:33.020
-thousands of dollars, perhaps different
-tools and different kinds of
+00:19:11.150 --> 00:19:15.260
+not targeting the super, super
+low end MCUs in, in
 
 376
-00:19:33.020 --> 00:19:35.690
-things that you buy, I
-think are, are okay. I
+00:19:15.260 --> 00:19:17.840
+the current skews that are
+being built by our Silicon
 
 377
-00:19:35.690 --> 00:19:38.120
-mean, I've even flirted at
-some point with putting little
+00:19:17.840 --> 00:19:22.550
+manufacturers right now, Where do
+you see the, the cloud
 
 378
-00:19:38.600 --> 00:19:41.990
-templates or icon packs or
-something up for sale, because
+00:19:22.550 --> 00:19:24.710
+side then? What is, what
+is the thing in the,
 
 379
-00:19:42.290 --> 00:19:45.710
-sometimes you just need that
-one thing. You may not
+00:19:24.710 --> 00:19:27.500
+in the cloud that supports
+these tiny devices? Cause on
 
 380
-00:19:45.710 --> 00:19:48.770
-need to always go to
-a designer to get the
+00:19:27.500 --> 00:19:30.560
+the tiny devices they've got,
+of course limited, limited everything.
 
 381
-00:19:48.770 --> 00:19:51.170
-full package, but it depends
-on what your project is.
+00:19:30.590 --> 00:19:33.050
+They are limited by the
+design, but the cloud is
 
 382
-00:19:51.170 --> 00:19:55.070
-You know, if you're a
-multinational, you know, multimillion dollar
+00:19:33.050 --> 00:19:36.020
+the exact opposite by design.
+It is unlimited and infinite.
 
 383
-00:19:55.070 --> 00:19:58.310
-company, and you're only going
-to theme forest or something
+00:19:36.380 --> 00:19:40.190
+Yeah. So what's super cool.
+So I'm maybe I'm biased
 
 384
-00:19:58.310 --> 00:20:00.980
-like that, that might be
-an issue, you know, because
+00:19:40.190 --> 00:19:43.700
+because I run the cloud
+security services. But what I
 
 385
-00:20:00.980 --> 00:20:03.980
-you certainly might have the,
-the, the manpower or the
+00:19:43.700 --> 00:19:45.470
+think is super cool is
+it provides a couple of
 
 386
-00:20:03.980 --> 00:20:07.550
-budget to hire someone or
-to, you know, bring on
+00:19:45.470 --> 00:19:49.460
+key features. One of them
+is certificate based authentication via
 
 387
-00:20:07.550 --> 00:20:10.460
-a designer to actually do
-something more custom. But I
+00:19:49.490 --> 00:19:53.630
+remote device authentication and attestation.
+And I'll get into more
 
 388
-00:20:10.460 --> 00:20:13.070
-see. So you're saying that
-these, these $5 themes are
+00:19:53.630 --> 00:19:56.570
+what those mean there's renewable
+security, which I briefly mentioned
 
 389
-00:20:13.070 --> 00:20:17.330
-making, you know, design and
-presumably design of some quality
+00:19:56.570 --> 00:19:58.940
+earlier. So you can think
+of like providing operating system
 
 390
-00:20:17.600 --> 00:20:21.050
-available to regular folks. Like,
-you know, like myself and
+00:19:58.940 --> 00:20:02.150
+updates and a secure pipeline
+for device manufacturers to provide
 
 391
-00:20:21.050 --> 00:20:23.630
-the listeners, but then at
-some point you have to
+00:20:02.150 --> 00:20:05.510
+their own updates for their
+applications to the devices. And
 
 392
-00:20:23.630 --> 00:20:27.770
-decide your corporate identity requires
-a custom set up a
+00:20:05.510 --> 00:20:08.180
+then the third one is
+failure reporting. So these actually
 
 393
-00:20:27.770 --> 00:20:30.020
-custom design, and it's time
-to start paying someone some,
+00:20:08.180 --> 00:20:12.140
+aligned with our seven properties.
+So we proactively get information
 
 394
-00:20:30.050 --> 00:20:32.300
-some money. And also, I
-mean, you get what you
+00:20:12.140 --> 00:20:14.510
+about the dice device about
+when it's crashing and when
 
 395
-00:20:32.300 --> 00:20:35.210
-pay for. I mean, if
-you pay for something, that's
+00:20:14.510 --> 00:20:18.020
+like things are failing so
+that we can detect potential
 
 396
-00:20:35.210 --> 00:20:37.910
-$5. The other thing that
-these marketplaces do is that
+00:20:18.020 --> 00:20:22.700
+attacks that are brewing as
+people probe to see usually
 
 397
-00:20:37.910 --> 00:20:39.830
-they really don't give you
-that much of a preview
+00:20:22.700 --> 00:20:25.010
+a, an attack will be
+predicated by, you'll see a
 
 398
-00:20:40.070 --> 00:20:42.590
-of what's under the hood.
-You don't really know what
+00:20:25.010 --> 00:20:26.690
+bunch of crashes as people
+are trying to probe a
 
 399
-00:20:42.590 --> 00:20:46.160
-the documentation or the options
-panels or anything look like
+00:20:26.690 --> 00:20:29.420
+system to try and do
+a buffer overflow or whatever
 
 400
-00:20:46.160 --> 00:20:49.390
-until you've purchased. I know
-that I bought some things
+00:20:29.420 --> 00:20:31.610
+their attack vector is. So
+the cloud does sort of
 
 401
-00:20:49.390 --> 00:20:52.630
-and I've gotten the documentation
-and everything and it's trash
+00:20:31.610 --> 00:20:33.560
+all of this forward you,
+I think one of the
 
 402
-00:20:52.960 --> 00:20:55.510
-and I can barely use
-it, but I paid X
+00:20:33.560 --> 00:20:37.070
+cooler ones that was like,
+it took a while for
 
 403
-00:20:55.510 --> 00:20:58.030
-amount of dollars for it.
-And oftentimes you can't get
+00:20:37.070 --> 00:20:39.440
+it to sink in. And
+then I didn't even realize
 
 404
-00:20:58.030 --> 00:20:59.800
-that money back. So he
-can be a little bit
+00:20:39.440 --> 00:20:41.450
+this when I first started.
+But basically if you think
 
 405
-00:20:59.800 --> 00:21:01.900
-of a crapshoot, but you
-get what you pay for.
+00:20:41.450 --> 00:20:43.800
+about default passwords, right? Like
+we sort of realized this
 
 406
-00:21:02.400 --> 00:21:04.290
-Yeah, definitely. And I'm speaking
-if we get what you
+00:20:43.800 --> 00:20:46.130
+is a security industry, passwords
+are not great. They're easily
 
 407
-00:21:04.290 --> 00:21:06.750
-pay for, I'm starting to
-be frustrated. As I see
+00:20:46.130 --> 00:20:51.490
+stealable or, or whatever. And
+a lot of these IOT
 
 408
-00:21:06.750 --> 00:21:10.290
-people saying, give me some
-design, I'll give you exposure.
+00:20:51.490 --> 00:20:54.550
+devices come with a default
+password. And if you remember
 
 409
-00:21:10.380 --> 00:21:13.110
-How do you feel about
-that? I mean, exposure is
+00:20:54.550 --> 00:20:57.280
+them, or I bought that
+attack that happened a little
 
 410
-00:21:13.110 --> 00:21:17.550
-for cameras. So not a
-fan, Not a fan. I
+00:20:57.280 --> 00:21:00.040
+over over a year ago,
+I believe, or two years
 
 411
-00:21:17.550 --> 00:21:19.530
-mean, the thing with the
-internet is that anyone can
+00:21:00.040 --> 00:21:03.160
+ago. Now that was a
+D hackers exploiting the fact
 
 412
-00:21:19.530 --> 00:21:22.590
-have some level of exposure.
-I don't, I don't buy
+00:21:03.160 --> 00:21:06.940
+that these devices have default
+passwords users often don't change
 
 413
-00:21:22.590 --> 00:21:24.990
-that whole. Oh, if you
-do it for XYZ exposure
+00:21:06.940 --> 00:21:09.910
+them because like, you might
+not even think about this
 
 414
-00:21:24.990 --> 00:21:28.320
-thing, I really hate when
-that comes. Particularly from celebrities
+00:21:09.910 --> 00:21:12.700
+thing being in your house.
+And it's just a pain
 
 415
-00:21:28.320 --> 00:21:31.080
-who you would think would
-know better. You know? I
+00:21:12.700 --> 00:21:15.460
+to go and change the
+default password. And so they
 
 416
-00:21:31.080 --> 00:21:32.640
-mean, I think it's one
-thing. If they feel like
+00:21:15.460 --> 00:21:17.440
+were able to then gain
+control of these devices using
 
 417
-00:21:32.640 --> 00:21:34.770
-you have to pay your
-dues, but, but nah, I
+00:21:17.440 --> 00:21:20.020
+just a default password. So
+Azure sphere doesn't even have
 
 418
-00:21:34.770 --> 00:21:36.990
-don't, I don't buy that
-Somehow. It seems like the
+00:21:20.020 --> 00:21:22.210
+this attack vector cause we
+don't use passwords anywhere on
 
 419
-00:21:36.990 --> 00:21:38.730
-celebrities are good. Like they're
-the ones that we think
+00:21:22.210 --> 00:21:26.250
+the device. We issue certificates.
+I see. Which is interesting.
 
 420
-00:21:38.730 --> 00:21:40.080
-have the most money, but
-they're the ones that get
+00:21:26.250 --> 00:21:27.420
+Cause it gets to that
+point you made at the
 
 421
-00:21:40.080 --> 00:21:42.930
-the most free stuff. Why
-don't we get free stuff
+00:21:27.420 --> 00:21:30.510
+beginning, which is let's just
+start from first principles. Right?
 
 422
-00:21:42.930 --> 00:21:45.870
-for the people? I mean,
-politicians do the same thing.
+00:21:30.810 --> 00:21:35.400
+Right. And so the cloud
+security services will basically issue
 
 423
-00:21:45.870 --> 00:21:48.720
-So it's kind of that
-same, it's that same thing.
+00:21:35.400 --> 00:21:39.480
+certificates to every Azure sphere
+connected device to say that,
 
 424
-00:21:48.720 --> 00:21:50.550
-If they can get it
-for free, they will. Yeah.
+00:21:39.480 --> 00:21:42.180
+yes, this is its own
+device. Like every device gets
 
 425
-00:21:50.610 --> 00:21:54.780
-That's not cool. So, so
-you've interviewed 150 plus designers,
+00:21:42.180 --> 00:21:45.510
+its own certificate that uniquely
+identifies that device and that
 
 426
-00:21:54.780 --> 00:21:58.680
-developers, front end people. I
-don't know about you, but
+00:21:45.510 --> 00:21:48.030
+it is running what we
+consider to be valid, secure
 
 427
-00:21:58.680 --> 00:22:01.260
-I've always struggled a little
-bit with imposter syndrome. The
+00:21:48.030 --> 00:21:52.640
+software. So it's actually doing
+not only identity authentication, but
 
 428
-00:22:01.260 --> 00:22:03.540
-idea of feeling like a
-phony. When you look at
+00:21:52.650 --> 00:21:56.070
+attestation of the fact that
+it's running valid software. I
 
 429
-00:22:03.540 --> 00:22:05.820
-that kind of like crush
-of talented people that you've
+00:21:56.070 --> 00:21:58.860
+see. So the, the ISO
+kind of that built in
 
 430
-00:22:05.820 --> 00:22:07.950
-had on the show, do
-you think that all these
+00:21:58.860 --> 00:22:01.320
+isolation means that if a
+bad person gets a hold
 
 431
-00:22:07.950 --> 00:22:11.490
-visible designers are giving other
-designers a sense of imposter
+00:22:01.320 --> 00:22:04.830
+of something, whether it be
+remotely or physically, you really
 
 432
-00:22:11.490 --> 00:22:13.470
-syndrome? I mean, there's so
-much great design on the
+00:22:04.830 --> 00:22:08.550
+are compartmentalized. Yeah. I mean,
+so for whatever reason, if
 
 433
-00:22:13.470 --> 00:22:18.750
-web right now. I think
-sometimes, sometimes that can happen.
+00:22:08.550 --> 00:22:11.910
+you could get a certificate
+and run bad software on
 
 434
-00:22:19.740 --> 00:22:21.960
-I know there are times
-when I reach out to
+00:22:11.910 --> 00:22:14.040
+one device, you're only getting
+a certificate for that single
 
 435
-00:22:21.960 --> 00:22:25.500
-people for the show and
-they've seen that I've interviewed,
+00:22:14.040 --> 00:22:17.760
+device. There's no like broad
+attack vector here, right? There's
 
 436
-00:22:25.500 --> 00:22:31.530
-you know, Kristy Tillman or
-Eddie APAR or, or, you
+00:22:17.760 --> 00:22:20.880
+no, there's no skeleton key
+certificate for all the systems.
 
 437
-00:22:31.530 --> 00:22:33.570
-know, Sarah Hunter young or something
-like that. They see that
+00:22:21.420 --> 00:22:24.030
+Right. And what's actually super
+cool about these certificates is
 
 438
-00:22:33.570 --> 00:22:36.420
-I've interviewed these well known
-designers and they'll say, Oh,
+00:22:24.030 --> 00:22:27.240
+that you use it to
+authenticate to the cloud security
 
 439
-00:22:36.420 --> 00:22:38.880
-I'm not at that level
-yet. Oh, I'm not there
+00:22:27.240 --> 00:22:30.270
+services obviously. And then you
+can also then take the
 
 440
-00:22:38.880 --> 00:22:41.400
-yet. And oftentimes I have
-to tell them, well, that's
+00:22:30.270 --> 00:22:32.940
+certificate as a device manufacturer
+and use it to authenticate
 
 441
-00:22:41.400 --> 00:22:43.380
-the reason why I want
-to talk to you. I
+00:22:32.940 --> 00:22:36.240
+to your device applications. And
+that could be in Azure,
 
 442
-00:22:43.380 --> 00:22:45.510
-don't think it's the one
-thing that I think I
+00:22:36.240 --> 00:22:38.970
+which there's like a great
+story and path there. But
 
 443
-00:22:45.510 --> 00:22:47.370
-really like about revision path
-is that I've tried to
+00:22:38.970 --> 00:22:40.710
+if for whatever reason you
+want to go and use
 
 444
-00:22:47.370 --> 00:22:52.110
-get people at all different
-levels. I've got students, I've
+00:22:40.710 --> 00:22:42.750
+a different cloud, because maybe
+you already have that set
 
 445
-00:22:52.110 --> 00:22:55.170
-got captains of industry. I've
-got educators, I've got junior
+00:22:42.750 --> 00:22:47.190
+up like AWS or Google,
+or you have your own
 
 446
-00:22:55.170 --> 00:22:58.770
-designers, I've got senior designers.
-I think it's more important
+00:22:47.370 --> 00:22:50.490
+custom server servers. Like you
+can take that certificate and
 
 447
-00:22:58.770 --> 00:23:01.860
-that they just tell their
-story about where they're at,
+00:22:50.490 --> 00:22:54.630
+use that with any service.
+When, when I heard, you
 
 448
-00:23:01.860 --> 00:23:04.050
-because where you're at is
-not where you're always going
+00:22:54.630 --> 00:22:56.400
+know, I've, I've met, we've
+hung up before I met
 
 449
-00:23:04.050 --> 00:23:07.590
-to be. So even if
-someone thinks that, Oh, I'm
+00:22:56.400 --> 00:23:00.870
+you. And you're always doing
+amazing stuff. You worked, you
 
 450
-00:23:07.590 --> 00:23:09.510
-not, I'm not good enough
-to be on here or
+00:23:00.870 --> 00:23:03.150
+worked at Microsoft, you worked
+on halo, you worked at
 
 451
-00:23:09.510 --> 00:23:12.030
-whatever. I'll tell them if
-I've reached out to you
+00:23:03.150 --> 00:23:05.760
+Twitter. And then I heard
+that you were coming back
 
 452
-00:23:12.030 --> 00:23:13.560
-to be on the show,
-I feel like you have
+00:23:05.760 --> 00:23:09.450
+to work on this. And,
+and I first I was
 
 453
-00:23:13.560 --> 00:23:17.310
-something that's worth sharing. That's
-cool. Hopefully they don't feel
+00:23:09.450 --> 00:23:12.750
+like, well, it doesn't sound
+like, like I think of
 
 454
-00:23:17.310 --> 00:23:18.930
-that way. But I do
-know that some do. I
+00:23:12.750 --> 00:23:15.540
+you as like the giant
+cloud scale person, like when
 
 455
-00:23:18.930 --> 00:23:21.630
-mean, I certainly have gotten
-pushback from folks that will
+00:23:15.540 --> 00:23:17.280
+you went to Twitter, I
+was like, Oh, she's going
 
 456
-00:23:21.630 --> 00:23:24.060
-say, Oh, I don't know
-if I'm, if I'm ready.
+00:23:17.280 --> 00:23:20.160
+to go and do stuff
+of even larger scale. Like
 
 457
-00:23:24.060 --> 00:23:26.220
-If I know that's, that's
-the other thing, if they're
+00:23:20.160 --> 00:23:22.440
+that's always been your thing.
+And now I'm thinking about
 
 458
-00:23:26.220 --> 00:23:29.100
-ready and I'm like, well,
-there's never really going to
+00:23:22.440 --> 00:23:26.070
+these tiny little devices and
+I'm like, why are you
 
 459
-00:23:29.100 --> 00:23:32.430
-be a ready. You either
-are gonna, I mean, you're
+00:23:26.070 --> 00:23:29.430
+doing this? Yeah. So, I
+mean, so the devices themselves
 
 460
-00:23:32.430 --> 00:23:34.110
-either going to do the
-interview and that to the
+00:23:29.430 --> 00:23:31.650
+are small and the code
+that runs on the devices
 
 461
-00:23:34.110 --> 00:23:35.670
-interview, but they feel like
-they have to get to
+00:23:31.650 --> 00:23:33.990
+is small. But when you
+think about them in aggregate,
 
 462
-00:23:35.670 --> 00:23:38.820
-a certain point in their
-career in order for people
+00:23:33.990 --> 00:23:37.110
+right, like 9 billion MCUs, the
+market is 9 billion MCs are
 
 463
-00:23:38.820 --> 00:23:42.390
-to talk to them about
-their work. And no, I
+00:23:37.110 --> 00:23:40.320
+being produced every single year.
+You know, even if we
 
 464
-00:23:42.390 --> 00:23:44.340
-mean, you get to that
-point by talking about what
+00:23:40.320 --> 00:23:42.630
+only have a fraction of
+them hitting our services, that'll
 
 465
-00:23:44.340 --> 00:23:47.210
-you're doing step of the
-way. So people know what
+00:23:42.630 --> 00:23:45.500
+actually be bigger than anything
+I've ever built a in
 
 466
-00:23:47.210 --> 00:23:48.770
-it is that you're doing.
-So they see that you're
+00:23:45.500 --> 00:23:47.840
+the past. This is actually
+even an even bigger, large
 
 467
-00:23:48.770 --> 00:23:51.620
-visible and you're out there
-and you're working and you're
+00:23:47.840 --> 00:23:51.080
+scale challenge for, you know,
+for the services I've built
 
 468
-00:23:51.620 --> 00:23:55.640
-hustling. If you're just staying
-in the sidelines and grinding
+00:23:51.230 --> 00:23:55.030
+prior to this. I see.
+So this is well in
 
 469
-00:23:55.640 --> 00:23:58.370
-and biggest, I was going
-to notice you, that's probably
+00:23:55.030 --> 00:23:57.700
+your, the stuff that you
+work on, it's a giant,
 
 470
-00:23:58.370 --> 00:24:00.820
-not going to happen. Yeah.
-It really is a challenge
+00:23:57.700 --> 00:24:01.450
+giant scale. Yes. It's a
+giant scale. I still find
 
 471
-00:24:00.820 --> 00:24:02.920
-because people, you know, you
-don't want to say fake
+00:24:01.450 --> 00:24:03.940
+that incredibly interesting. And then,
+you know, I was also
 
 472
-00:24:02.920 --> 00:24:05.920
-it till you make it
-right. But you, but at
+00:24:03.940 --> 00:24:06.520
+very enticed by the security
+aspect of it. This is
 
 473
-00:24:05.920 --> 00:24:10.450
-the same time there Self,
-self promotion with Promotion, like
+00:24:06.910 --> 00:24:09.130
+personally like I've been watching
+the IOT space for a
 
 474
-00:24:10.450 --> 00:24:14.320
-it's okay to own your
-awesomeness and be like, you
+00:24:09.130 --> 00:24:12.700
+long time and I think
+it's super cool, but also
 
 475
-00:24:14.320 --> 00:24:17.290
-did something awesome and own
-it. And that talking about,
+00:24:12.700 --> 00:24:16.870
+realizing that like there, isn't
+a great security story around
 
 476
-00:24:17.320 --> 00:24:18.700
-Hey, I did a thing
-and it makes me happy
+00:24:16.870 --> 00:24:19.390
+a lot of the devices
+out there currently. Right. And
 
 477
-00:24:18.700 --> 00:24:20.050
-and I did a good
-job. I don't think that
+00:24:19.390 --> 00:24:23.440
+so I think in order
+to enable like, you know,
 
 478
-00:24:20.050 --> 00:24:24.520
-necessarily is, is saying, you
-know, look how slick I
+00:24:24.100 --> 00:24:26.950
+more device manufacturers and people
+to be more productive and
 
 479
-00:24:24.520 --> 00:24:27.850
-am. Right. I hope it
-doesn't. It really shouldn't. Yeah.
+00:24:26.950 --> 00:24:29.260
+do this safely, there needs
+to be a great security
 
 480
-00:24:27.880 --> 00:24:30.370
-Yeah. I hope not. And
-I've had similar issues trying
+00:24:29.260 --> 00:24:31.930
+story out there. And so
+this sort of aligned with
 
 481
-00:24:30.370 --> 00:24:33.650
-to get people on, on
-my show. I had a
+00:24:31.930 --> 00:24:36.340
+that interest. So I think
+the impact is huge because
 
 482
-00:24:33.670 --> 00:24:36.880
-guest on recently who was
-concerned. They couldn't fill the
+00:24:36.340 --> 00:24:38.890
+we could build things that
+we can now trust and
 
 483
-00:24:36.880 --> 00:24:41.770
-half an hour and it
-was pretty clear that I
+00:24:38.890 --> 00:24:42.610
+put in our homes. W
+can you, maybe this is
 
 484
-00:24:41.770 --> 00:24:44.200
-could have talked to them
-for 90 minutes or two
+00:24:42.610 --> 00:24:45.460
+a appropriate, maybe it's not,
+if you talk about this
 
 485
-00:24:44.200 --> 00:24:45.970
-hours, or maybe that they
-could have done it an
+00:24:45.460 --> 00:24:48.190
+thing that you worked on
+before distributed sagas and does
 
 486
-00:24:45.970 --> 00:24:49.510
-eight hour session, like an
-entire workshop. There was such
+00:24:48.190 --> 00:24:50.950
+that relate to the stuff
+that you're doing now? So
 
 487
-00:24:49.510 --> 00:24:51.730
-a huge amount of information.
-30 minutes goes by like
+00:24:50.950 --> 00:24:55.420
+we're not using distributed sagas
+at currently right now that
 
 488
-00:24:51.730 --> 00:24:57.160
-that. Yeah. When, what was
-the environment like for designers
+00:24:55.420 --> 00:24:57.460
+doesn't outline it. So for
+those listening, who might not
 
 489
-00:24:57.160 --> 00:25:00.490
-online when you started revision
-path tagging and five years
+00:24:57.460 --> 00:25:00.820
+know distributed sagas are a
+pattern for doing sort of
 
 490
-00:25:00.490 --> 00:25:04.930
-ago, six years ago, What
-was the environment like, Like
+00:25:01.180 --> 00:25:04.480
+long live transactions and distributed
+systems, except for we don't
 
 491
-00:25:04.930 --> 00:25:08.200
-online, were there a lot
-of visible designers with designers,
+00:25:04.480 --> 00:25:07.240
+provide, it's not a full
+blown, distributed transaction, but it
 
 492
-00:25:08.200 --> 00:25:10.150
-personalities that you would go
-and say, Oh yeah, I
+00:25:07.240 --> 00:25:10.480
+is a pattern for insurance.
+Something either all happens or
 
 493
-00:25:10.150 --> 00:25:12.550
-know that name. I know
-honey. I know Chrissy Tillman
+00:25:10.480 --> 00:25:15.100
+doesn't happen in a rollback
+strategy. So I I've used
 
 494
-00:25:12.820 --> 00:25:15.610
-or, or is that a
-new thing? The star designer,
+00:25:15.100 --> 00:25:17.080
+this tribute as August and
+halo. I've used them at
 
 495
-00:25:15.610 --> 00:25:18.850
-the visible designer? No, I
-think the visible designer has
+00:25:17.080 --> 00:25:21.850
+Twitter right now. We don't
+currently have an implementation in
 
 496
-00:25:18.850 --> 00:25:22.600
-always been there because the
-problem that design media has
+00:25:21.850 --> 00:25:23.740
+this stack. That doesn't mean
+we wouldn't use it in
 
 497
-00:25:22.600 --> 00:25:25.150
-is that they tend to
-regurgitate the same seven or
+00:25:23.740 --> 00:25:27.130
+the future. I see. Okay.
+So sagas would be for
 
 498
-00:25:25.150 --> 00:25:29.380
-eight dozen people out on
-conferences and podcasts and things
+00:25:27.130 --> 00:25:31.450
+like big giant two phase
+commit, huge transact cloud scale
 
 499
-00:25:29.380 --> 00:25:31.990
-like that. So there are,
-there's always been that level
+00:25:31.450 --> 00:25:34.810
+transactions. Yeah. So the, the
+example I use a lot
 
 500
-00:25:31.990 --> 00:25:35.080
-of visible designer. I think
-the problem is that that
+00:25:34.810 --> 00:25:37.600
+is if you're like booking
+on a travel site, for
 
 501
-00:25:35.080 --> 00:25:39.010
-visible designer has always looked
-one way. It's always been,
+00:25:37.600 --> 00:25:40.390
+instance, you might want to
+book a car or rental
 
 502
-00:25:39.010 --> 00:25:42.550
-you know, one certain type
-of person. And so the,
+00:25:40.390 --> 00:25:42.610
+car or a hotel and
+a plane, and those are
 
 503
-00:25:42.670 --> 00:25:44.950
-the look of what a
-designer could be or who
+00:25:42.610 --> 00:25:45.460
+all talking to three different
+microservices, right. That don't even
 
 504
-00:25:44.950 --> 00:25:48.250
-a designer could be, is
-I think has drastically changed
+00:25:45.460 --> 00:25:49.120
+have the same storage behind
+them probably. And so how
 
 505
-00:25:48.250 --> 00:25:51.040
-as I've started revision path.
-I don't want to be
+00:25:49.120 --> 00:25:51.880
+do you ensure that either
+you get all three or
 
 506
-00:25:51.040 --> 00:25:53.170
-boastful and say that I've
-really helped to change it
+00:25:51.880 --> 00:25:53.800
+if you can't get all
+three, you have to like
 
 507
-00:25:53.200 --> 00:25:55.960
-a lot. I think we
-just said to own that
+00:25:53.800 --> 00:25:56.620
+roll back the operation that
+you ensure that the roll
 
 508
-00:25:55.960 --> 00:25:59.680
-though. Didn't we just talk
-about that? So, I mean,
+00:25:56.620 --> 00:25:59.230
+back complete successfully so that
+you end up eventually in
 
 509
-00:25:59.680 --> 00:26:02.170
-I, I hope that, you
-know, with all the people
+00:25:59.230 --> 00:26:02.320
+the state of you either
+hold all the reservations or
 
 510
-00:26:02.170 --> 00:26:03.670
-that I've been able to
-interview and get out there
+00:26:02.320 --> 00:26:05.440
+holding none of them. I
+see. So part of the
 
 511
-00:26:03.670 --> 00:26:06.700
-that I've helped to change
-those perceptions and certainly people
+00:26:05.440 --> 00:26:07.750
+big scale stuff that you've
+worked on, but not, not
 
 512
-00:26:06.700 --> 00:26:09.550
-that I have interviewed for
-the show have now gone
+00:26:07.810 --> 00:26:11.740
+currently specific to anything around
+sphere, maybe someone who was
 
 513
-00:26:09.550 --> 00:26:12.340
-on and they're doing, you
-know, really big and great,
+00:26:11.740 --> 00:26:13.960
+doing business stuff on top
+of all of this would
 
 514
-00:26:12.340 --> 00:26:15.970
-amazing things. So it's changing
-that definition of what a
+00:26:14.050 --> 00:26:17.290
+implement something like that, but
+not related. Yeah. And I
 
 515
-00:26:15.970 --> 00:26:18.790
-designer looks like and what
-a designer can do and
+00:26:17.290 --> 00:26:21.460
+think as the sphere security
+services grow, we might find
 
 516
-00:26:18.790 --> 00:26:23.020
-who our designers should be.
-That has definitely changed a
+00:26:21.460 --> 00:26:24.130
+a great use case where
+building bringing this in makes
 
 517
-00:26:23.020 --> 00:26:26.800
-lot since I started revision
-path. I'm curious if you
+00:26:24.130 --> 00:26:27.430
+a lot of sense When
+I'm digging into the seven
 
 518
-00:26:26.800 --> 00:26:30.310
-think, what do you think
-that, that white folks or
+00:26:27.430 --> 00:26:31.840
+properties of highly secure devices,
+paper, it's always talking about
 
 519
-00:26:30.340 --> 00:26:33.460
-non-black folks who are listening
-and they hear that there
+00:26:31.840 --> 00:26:35.600
+defense and depth and compartmentalization
+and certificates. You know, I
 
 520
-00:26:33.460 --> 00:26:37.630
-is a show that's all
-about black designers and, you
+00:26:35.620 --> 00:26:37.450
+always brings me back to
+that joke that the most
 
 521
-00:26:37.630 --> 00:26:40.130
-know, talks to black designers
-in front of developers. W
+00:26:37.450 --> 00:26:39.760
+secure device is one that
+is not connected to the
 
 522
-00:26:40.130 --> 00:26:42.520
-what do we, what do
-we tell them about the
+00:26:39.760 --> 00:26:42.940
+internet, but I'm curious, is
+it just a constant series
 
 523
-00:26:42.520 --> 00:26:46.440
-importance? Why, why a show
-is needed? Like, what would,
+00:26:42.940 --> 00:26:45.300
+of offs? It's like, well,
+you know, we really just
 
 524
-00:26:46.650 --> 00:26:51.080
-what does race matter for
-web design? I think it
+00:26:45.300 --> 00:26:47.670
+should not be connected at
+all at this point. I
 
 525
-00:26:51.080 --> 00:26:53.960
-matters because there's not just
-one particular race of person
+00:26:47.670 --> 00:26:49.890
+mean, you're asking for it
+when you put anything on
 
 526
-00:26:53.960 --> 00:26:56.840
-that's using the web. So
-there are certainly is not
+00:26:49.890 --> 00:26:53.270
+the internet these days. So
+I think, you know, it's
 
 527
-00:26:57.260 --> 00:27:00.590
-more than one particular ways.
-That's, that's building the web.
+00:26:53.270 --> 00:26:56.810
+definitely a, anytime you put
+something on the internet you
 
 528
-00:27:00.920 --> 00:27:03.980
-I mean, the web is
-out there for everybody and
+00:26:56.810 --> 00:26:58.700
+have now opened it up
+to being attacked, right. It's
 
 529
-00:27:03.980 --> 00:27:05.630
-you don't want to have
-just, or you don't want
+00:26:58.700 --> 00:27:01.640
+a two way street, I
+believe. And we believe with
 
 530
-00:27:05.630 --> 00:27:07.880
-to at least showcase just
-a certain type of designer,
+00:27:01.640 --> 00:27:06.200
+the seven properties that we
+can secure these devices and
 
 531
-00:27:08.210 --> 00:27:12.320
-designing things for a big
-diverse global audience. You want
+00:27:06.200 --> 00:27:08.420
+respond to any potential tax
+as well. It gives us
 
 532
-00:27:12.320 --> 00:27:15.410
-to show a diverse global
-group of designers. That's doing
+00:27:08.420 --> 00:27:10.340
+the idea to say like,
+right, we're not naive. We
 
 533
-00:27:15.410 --> 00:27:18.290
-the same thing. I think
-people will look at revision
+00:27:10.340 --> 00:27:13.580
+don't think this will prevent
+every single problem in the
 
 534
-00:27:18.290 --> 00:27:21.500
-path and they'll see our
-archives page. And they see
+00:27:13.580 --> 00:27:15.740
+future because it's a cat
+and mouse game with security.
 
 535
-00:27:22.010 --> 00:27:25.790
-this wall of black faces.
-And they might think that
+00:27:15.740 --> 00:27:17.630
+Right. But it does give
+us defense and depth and
 
 536
-00:27:25.850 --> 00:27:28.850
-as a monolith, but there's
-a lot of diversity within
+00:27:17.630 --> 00:27:20.930
+compartmentalization and certificate based authentication
+and all of these properties
 
 537
-00:27:28.850 --> 00:27:34.730
-that monolith. There's young, old,
-gay, straight trans in the
+00:27:20.930 --> 00:27:23.210
+give us the ability to
+go in and fix or
 
 538
-00:27:34.730 --> 00:27:37.310
-U S not in the
-U S they're across all
+00:27:23.240 --> 00:27:26.540
+update these systems. Yeah. Yeah.
+And it also, one of
 
 539
-00:27:37.310 --> 00:27:42.170
-different parts of the design
-industry, summer developers, summer public
+00:27:26.540 --> 00:27:28.400
+the things that was interesting
+was the idea of failure
 
 540
-00:27:42.170 --> 00:27:47.900
-speakers, summer educators. Like there's
-a huge swath of diversity
+00:27:28.400 --> 00:27:31.550
+reporting that in order to
+be secure, a device needs
 
 541
-00:27:47.900 --> 00:27:49.610
-and what could be viewed
-as just this sort of
+00:27:31.550 --> 00:27:33.680
+to be able to talk
+to a failure analysis system,
 
 542
-00:27:49.610 --> 00:27:52.790
-monolithic set. And I can
-tell, you know, for, I'd
+00:27:33.980 --> 00:27:38.060
+you know, in a timely
+manner. Yeah. And so I
 
 543
-00:27:52.790 --> 00:27:54.890
-say maybe 90% of the
-people who I've had on
+00:27:38.060 --> 00:27:42.140
+think Bailey reporting is really
+interesting from the perspective of
 
 544
-00:27:54.890 --> 00:27:58.160
-the show, it was their
-very first interview. And it
+00:27:42.140 --> 00:27:44.600
+us trying to prevent things
+in the future and to
 
 545
-00:27:58.160 --> 00:28:00.440
-was their very first time
-anyone had ever really talked
+00:27:44.780 --> 00:27:47.810
+detect, detect potential attacks, I
+guess, before they happen, it's
 
 546
-00:28:00.440 --> 00:28:03.890
-to them seriously about their
-work. And th and these
+00:27:47.810 --> 00:27:49.940
+a little minority report. Ish,
+if you think about it,
 
 547
-00:28:03.890 --> 00:28:07.370
-are people at all different
-levels, not just, you know,
+00:27:49.940 --> 00:27:53.420
+but it's a cool idea.
+That's an interesting, that's an
 
 548
-00:28:07.370 --> 00:28:09.610
-junior people starting out or
-anything like that. This, this
+00:27:53.420 --> 00:27:55.640
+interesting point. You can say
+that this looks suspicious, right?
 
 549
-00:28:09.610 --> 00:28:13.220
-is at all different levels.
-It's the first time anyone's
+00:27:55.640 --> 00:27:58.220
+It's just like when, when
+I was working on banking,
 
 550
-00:28:13.220 --> 00:28:16.160
-ever really cared to talk
-to them about what they
+00:27:58.220 --> 00:28:01.250
+we would have varying levels
+of suspicion around something like,
 
 551
-00:28:16.160 --> 00:28:18.680
-know and why they love
-what they do and why
+00:28:01.790 --> 00:28:04.400
+Oh, you logged in, okay,
+well it's you? Same IP,
 
 552
-00:28:18.680 --> 00:28:20.810
-they're a designer, or why
-they're an illustrator or anything
+00:28:04.400 --> 00:28:06.860
+same browser. It's probably fine.
+We'll just ask for your
 
 553
-00:28:20.810 --> 00:28:24.110
-like that. So I think
-that is what is really
+00:28:06.860 --> 00:28:09.560
+password. Hey, look, now you're
+in, you know, you're in
 
 554
-00:28:24.110 --> 00:28:26.540
-important is that every designer
-has a story to tell.
+00:28:09.560 --> 00:28:12.770
+Russia on a wifi, in
+a strange hotel with a
 
 555
-00:28:27.200 --> 00:28:29.810
-And I think it's important
-to kind of hold the
+00:28:12.770 --> 00:28:15.440
+new browser, right. This all
+added up to varying levels.
 
 556
-00:28:29.810 --> 00:28:32.810
-mic and, and let them
-tell that story. Yeah. I
+00:28:15.440 --> 00:28:17.030
+And then what we're going
+to double challenge or triple
 
 557
-00:28:32.840 --> 00:28:35.990
-really feel, I have always
-Longfeld since I met you
+00:28:17.030 --> 00:28:20.480
+J now you're moving money,
+you know, varying levels of
 
 558
-00:28:35.990 --> 00:28:38.990
-many years ago, that I
-felt a kinship with revision
+00:28:20.480 --> 00:28:22.730
+trust. And you can think
+about this for developers who
 
 559
-00:28:38.990 --> 00:28:41.330
-path that I also feel
-with, with, with, with the
+00:28:22.850 --> 00:28:25.940
+run services. This is sort
+of like observability and metrics
 
 560
-00:28:41.330 --> 00:28:44.480
-show that we're on right
-now, which is that there's
+00:28:25.940 --> 00:28:29.000
+of what these devices are
+doing, right? Like just like
 
 561
-00:28:44.480 --> 00:28:46.280
-yeah. You have some famous
-people on, and yeah, you
+00:28:29.000 --> 00:28:30.650
+you would look at a
+server and see like, are
 
 562
-00:28:46.280 --> 00:28:49.460
-have some really accomplished people
-on, but I love catching
+00:28:30.650 --> 00:28:33.170
+you seeing a bunch of
+crashes? Something's probably wrong with
 
 563
-00:28:49.460 --> 00:28:53.030
-people on the come up
-and then going back and
+00:28:33.170 --> 00:28:36.740
+the software or about to
+go wrong, right? Or like
 
 564
-00:28:53.030 --> 00:28:54.950
-saying, Hey, you know what
-I had, so and so
+00:28:36.740 --> 00:28:38.810
+the calls are becoming more
+latent. Like this just gives
 
 565
-00:28:54.950 --> 00:28:58.100
-on the show and folk
-didn't know who that person
+00:28:38.810 --> 00:28:41.960
+us visibility into what's actually
+happening in these devices in
 
 566
-00:28:58.100 --> 00:29:00.170
-was, and now look what
-they're doing. You know, I'm
+00:28:41.960 --> 00:28:46.010
+the world where a system
+that didn't have failure reporting
 
 567
-00:29:00.170 --> 00:29:03.110
-not saying I gave him
-a stepping stool, but I,
+00:28:46.010 --> 00:28:49.310
+would have no visibility into
+what's going on. Is his
 
 568
-00:29:03.170 --> 00:29:04.760
-you know, I gave him
-a thumbs up. I gave
+00:28:49.310 --> 00:28:52.190
+update ability. One of the
+things that's part of this,
 
 569
-00:29:04.760 --> 00:29:07.730
-them an up vote when
-I started, you know what
+00:28:52.190 --> 00:28:55.490
+because I don't want to
+have my, my nontechnical spouse
 
 570
-00:29:07.730 --> 00:29:10.430
-I mean? Well, you gave
-them the mic. You gave
+00:28:55.490 --> 00:28:59.540
+flash the firmware on the
+fridge. It's not really. Yes.
 
 571
-00:29:10.430 --> 00:29:13.160
-them a platform to at
-least tell people what it
+00:28:59.540 --> 00:29:02.180
+So one of the properties
+that the cloud services provides
 
 572
-00:29:13.160 --> 00:29:14.870
-is they're doing, because there's
-no telling who's going to
+00:29:02.180 --> 00:29:05.660
+renewable security is for, you
+know, for 10 years of
 
 573
-00:29:14.870 --> 00:29:17.570
-listen to the episode once
-you've put it out there.
+00:29:05.660 --> 00:29:08.960
+these devices, we will commit
+to updating the operating system
 
 574
-00:29:17.660 --> 00:29:19.850
-Yeah, exactly. Like I'm looking
-back at my wall of
+00:29:08.960 --> 00:29:11.450
+and shipping regular updates. And
+you don't have to think
 
 575
-00:29:19.850 --> 00:29:23.090
-faces and I see Kimberly Bryant
-from black girls code. I
+00:29:11.450 --> 00:29:13.910
+about it. It just, you
+know, our operating system does
 
 576
-00:29:23.090 --> 00:29:26.510
-had her on in 2012,
-you know, wow. Six years
+00:29:13.910 --> 00:29:16.580
+this for you. And then
+the device manufacturers can also
 
 577
-00:29:26.510 --> 00:29:29.180
-ago, you know, I there's
-dozens and dozens and dozens
+00:29:16.580 --> 00:29:19.370
+ship their own updates, whether
+those be security patches, or
 
 578
-00:29:29.180 --> 00:29:31.730
-of great stories like that,
-of fun people doing amazing
+00:29:19.550 --> 00:29:21.710
+for instance, lighting up a
+new feature that they want
 
 579
-00:29:31.730 --> 00:29:36.860
-work and catching them while
-they are already going to
+00:29:21.710 --> 00:29:24.410
+to give you access to.
+I see. And then does
 
 580
-00:29:36.860 --> 00:29:39.080
-become superstars, whether they're on
-their, on our shows or
+00:29:24.410 --> 00:29:27.590
+this all plug into the
+Azure IOT stuff that like,
 
 581
-00:29:39.080 --> 00:29:40.790
-not. It's just so nice
-to look back and say,
+00:29:27.840 --> 00:29:30.980
+I already know how to
+do? Yeah. So the, you
 
 582
-00:29:40.790 --> 00:29:44.350
-look at that, look at
-that, that Corpus, that, that
+00:29:30.980 --> 00:29:33.440
+can use this easily with
+Azure IOT, you would take
 
 583
-00:29:44.350 --> 00:29:47.350
-wall of content that we
-created and having made hundreds
+00:29:33.440 --> 00:29:36.650
+that certificate that the security
+services issued you and use
 
 584
-00:29:47.350 --> 00:29:50.860
-of hours of audio has
-gotta be really satisfying. Yeah.
+00:29:36.650 --> 00:29:38.900
+that to authenticate to your
+Azure IOT hubs so that
 
 585
-00:29:50.860 --> 00:29:53.770
-And I mean, even for
-them, like, I know we've
+00:29:38.900 --> 00:29:42.670
+you could process the telemetry
+you're already. And there's a
 
 586
-00:29:53.770 --> 00:29:55.990
-had a couple of repeat
-guests that have come back
+00:29:42.670 --> 00:29:46.810
+whole connected devices set up.
+That's very, very easy, you
 
 587
-00:29:56.590 --> 00:29:58.150
-and just, you know, have
-said like, this is what
+00:29:46.810 --> 00:29:49.780
+know, sort of like one,
+two button clicks that are,
 
 588
-00:29:58.150 --> 00:29:59.650
-I've been up to. This
-is what I've been working
+00:29:49.810 --> 00:29:52.920
+that's a great experience. So
+last question I want to
 
 589
-00:29:59.650 --> 00:30:02.710
-on since the show. And
-they're like, they really love
+00:29:52.920 --> 00:29:55.740
+ask you because I've always
+wondered is everyone's talking about
 
 590
-00:30:02.710 --> 00:30:07.330
-that revision path is giving
-this voice for black designers
+00:29:55.740 --> 00:29:58.800
+IOT edge, like the edge,
+the intelligent edge, the edge.
 
 591
-00:30:07.330 --> 00:30:10.450
-and developers and creatives to
-really tell their story about
+00:29:58.800 --> 00:30:00.480
+Do I have no idea
+what any of that means?
 
 592
-00:30:10.450 --> 00:30:13.300
-what's going on, because they
-may not get approached by
+00:30:01.170 --> 00:30:02.670
+Why is it on the
+edge? What ads are we
 
 593
-00:30:13.300 --> 00:30:15.220
-any other design media to
-tell it, they may just
+00:30:02.670 --> 00:30:06.150
+on? So yeah, I mean,
+so Azure IOT edge is
 
 594
-00:30:15.220 --> 00:30:17.440
-have to say it on
-Twitter. They may have to
+00:30:06.150 --> 00:30:09.780
+a super cool product. I
+think this edge that we're
 
 595
-00:30:17.440 --> 00:30:20.350
-be their own cheerleader. And
-then that way revision path
+00:30:09.780 --> 00:30:12.420
+talking about and, you know,
+it was funny at RSA.
 
 596
-00:30:20.380 --> 00:30:22.210
-kind of, you know, as
-a megaphone for the work
+00:30:12.420 --> 00:30:16.770
+Like a lot of folks
+were confused about, about the
 
 597
-00:30:22.210 --> 00:30:24.880
-that they're doing. Yeah. I
-also liked the term that
+00:30:16.770 --> 00:30:18.630
+Azure branding name. Cause really
+this, if you can think
 
 598
-00:30:24.880 --> 00:30:28.150
-you used before when you
-said monoculture, because you're, you're
+00:30:18.630 --> 00:30:21.570
+about it, that the cloud
+edge is expanding and maybe
 
 599
-00:30:28.150 --> 00:30:30.700
-saying it's important to show
-people that there's lots of
+00:30:21.570 --> 00:30:25.650
+that gets a little like
+philosophical, right. But if you
 
 600
-00:30:30.700 --> 00:30:33.280
-different folks out there doing
-amazing work. And I, I
+00:30:25.650 --> 00:30:28.530
+think about it, we're, we're
+putting like all the data
 
 601
-00:30:33.280 --> 00:30:36.490
-like that. You, it's not
-just, Hey, look, black developers,
+00:30:28.530 --> 00:30:30.870
+processing and all the information
+and knowledge used to be
 
 602
-00:30:36.490 --> 00:30:40.720
-black designers, there's a spectrum
-within any subgroup of people.
+00:30:30.870 --> 00:30:33.030
+like in single data centers
+in the cloud. Right. And
 
 603
-00:30:41.320 --> 00:30:44.680
-But it's interesting to see
-techies complain about things like
+00:30:33.030 --> 00:30:35.460
+now we're reaching out to
+the edge and saying, you
 
 604
-00:30:44.770 --> 00:30:48.040
-browser monoculture. You hear that
-a lot amongst designers like,
+00:30:35.460 --> 00:30:37.770
+know, there's compute running at
+the edge and there are
 
 605
-00:30:48.040 --> 00:30:51.010
-well, we shouldn't have to,
-to Chrome. So, so we're
+00:30:37.770 --> 00:30:40.140
+these devices that are collecting
+and reporting data at the
 
 606
-00:30:51.010 --> 00:30:54.670
-upset about there being just
-one browser, but we're not
+00:30:40.140 --> 00:30:42.990
+edge. And those are really
+part of the whole cloud
 
 607
-00:30:54.670 --> 00:30:56.740
-upset about there being just
-one kind of designer or
+00:30:43.050 --> 00:30:46.770
+ecosystem. I see. So if
+I've got a thermostat, I
 
 608
-00:30:56.740 --> 00:31:00.040
-one flavor of developer. That's
-interesting, isn't it? It is.
+00:30:46.770 --> 00:30:49.320
+can centralize all of the
+information or I can think,
 
 609
-00:31:00.040 --> 00:31:03.070
-So I think that if
-we, as techies, no matter
+00:30:49.320 --> 00:30:50.970
+well, this is a much
+more powerful device than it
 
 610
-00:31:03.070 --> 00:31:05.260
-what color we are or
-what our background is, can
+00:30:50.970 --> 00:30:52.860
+used to be extra little
+database of its own. It
 
 611
-00:31:05.260 --> 00:31:09.340
-agree that lots of different
-kinds of technology are no,
+00:30:52.860 --> 00:30:54.930
+can hang on to the
+data and I'll go and
 
 612
-00:31:09.340 --> 00:31:11.440
-there's not just one language.
-There's not just one browser.
+00:30:54.930 --> 00:30:59.190
+get it from the edge.
+Okay. That was the date.
 
 613
-00:31:11.440 --> 00:31:12.970
-There's not just one render,
-or there's not just one
+00:30:59.220 --> 00:31:00.750
+I was just trying to
+figure out like a, you
 
 614
-00:31:12.970 --> 00:31:17.500
-design that seems uncontroversial. We
-should apply that to our
+00:31:00.750 --> 00:31:02.670
+know, I've seen ready player
+one, and I just want
 
 615
-00:31:17.500 --> 00:31:20.110
-lives as well. And the
-more kind of mixed up
+00:31:02.670 --> 00:31:04.380
+to understand where the edge
+is and how far we're
 
 616
-00:31:20.140 --> 00:31:22.330
-our group is our friends
-are, and our designers are
+00:31:04.380 --> 00:31:07.380
+going to push it. I
+think it's an always moving
 
 617
-00:31:22.330 --> 00:31:23.980
-the better. The web is
-going to be for everybody.
+00:31:07.380 --> 00:31:09.900
+boundary. Yeah. It's like, do
+you want me to draw
 
 618
-00:31:24.850 --> 00:31:27.790
-I agree. Yeah. I dig
-it so people can check
+00:31:09.900 --> 00:31:12.240
+a line on your house
+where the edges would be
 
 619
-00:31:27.790 --> 00:31:33.760
-you out@revisionpath.com and you are
-on basically every podcast app
+00:31:12.240 --> 00:31:15.480
+great? Yeah. Like do a
+little like purple pen marker.
 
 620
-00:31:33.760 --> 00:31:36.820
-network site that anyone could
-possibly find, which I need
+00:31:15.610 --> 00:31:19.230
+Here's the edge. Here's the
+glove. So if people are
 
 621
-00:31:36.820 --> 00:31:38.950
-you to up my game,
-because some of these you're
+00:31:19.230 --> 00:31:22.740
+listening, if listeners for the
+podcast are like into this,
 
 622
-00:31:38.950 --> 00:31:43.330
-on SoundCloud, you're on overcast
-or everywhere, and we're on
+00:31:22.740 --> 00:31:24.810
+what do they do? I
+mean, I'm looking here, where's
 
 623
-00:31:43.330 --> 00:31:46.450
-Twitter and Facebook and Instagram,
-just search for revision path.
+00:31:24.810 --> 00:31:27.120
+the sign up now? Or
+do they have to call
 
 624
-00:31:46.720 --> 00:31:48.670
-Very cool. Well, thanks so
-much for chatting with me
+00:31:27.420 --> 00:31:29.700
+someone to learn about this
+if they, if it's perfect
 
 625
-00:31:48.670 --> 00:31:51.220
-today, Scott, thank you so
-much for having me on
+00:31:29.700 --> 00:31:33.090
+for what they're working on?
+Yeah. So we basically announced
 
 626
-00:31:51.220 --> 00:31:53.860
-the show. I really appreciate
-it. This has been another
+00:31:33.180 --> 00:31:37.230
+at RSA that we are
+in private preview. And so
 
 627
-00:31:53.860 --> 00:31:56.530
-episode of Hansel minutes and
-we'll see you again next
+00:31:37.230 --> 00:31:40.180
+I believe if you go
+to the websites, there's a
 
 628
-00:31:56.530 --> 00:32:16.960
-week. <inaudible>.
+00:31:40.200 --> 00:31:42.540
+way to contact us. Or
+you can always email Azure
+
+629
+00:31:42.540 --> 00:31:49.200
+sphere@microsoft.com if you're interested. And
+then we've talked about being
+
+630
+00:31:49.200 --> 00:31:52.500
+more, being in a public
+preview sometime later this year.
+
+631
+00:31:52.500 --> 00:31:57.120
+And then the first devices
+that, you know, a device
+
+632
+00:31:57.120 --> 00:32:00.600
+manufacturer will produce containing an
+Azure sphere. Certified chip is
+
+633
+00:32:00.600 --> 00:32:02.550
+targeted to be on shelves
+by the end of the
+
+634
+00:32:02.550 --> 00:32:05.790
+year. Very cool. This is
+great. Thanks so much for
+
+635
+00:32:06.150 --> 00:32:08.490
+explaining this to me. Awesome.
+Thanks for having me, Scott.
+
+636
+00:32:09.030 --> 00:32:12.000
+All right. This has been
+another episode of Hanselminutes and
+
+637
+00:32:12.000 --> 00:32:13.380
+we'll see you again next
+week.
 

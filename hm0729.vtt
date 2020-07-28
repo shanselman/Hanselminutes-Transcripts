@@ -1,3236 +1,2812 @@
 WEBVTT FILE
 
 1
-00:00:00.300 --> 00:00:04.320
-I'd like to welcome our
-new sponsor. Couchbase Couchbase is
+00:00:00.420 --> 00:00:03.990
+Today's episode is sponsored by
+Datadog a modern full stack
 
 2
-00:00:04.320 --> 00:00:07.350
-an open source, no SQL
-document and key value store
+00:00:03.990 --> 00:00:09.180
+monitoring platform for cloud infrastructure,
+applications, and logs metrics, all
 
 3
-00:00:07.350 --> 00:00:12.180
-database requires no external cash
-support SQL and analytical queries
+00:00:09.180 --> 00:00:12.420
+in one place from their
+recent report on serverless, adoption
 
 4
-00:00:12.180 --> 00:00:18.360
-for Jason data Couchbase supports
-technologies like Kubernetes, java.net, JavaScript,
+00:00:12.420 --> 00:00:16.200
+and trends. Datadog found half
+their customer base using <inaudible>
 
 5
-00:00:18.390 --> 00:00:21.810
-go and Python. Download it,
-give it a try at
+00:00:16.230 --> 00:00:20.580
+have now adopted AWS Lambda.
+They've examined real world serverless
 
 6
-00:00:21.870 --> 00:00:30.120
-couchbase.com/hansel minutes. That's couchbased.com/hansel minutes.
-And I'll remind you that
+00:00:20.580 --> 00:00:23.700
+usage by thousands of companies
+running on millions of distinct
 
 7
-00:00:30.120 --> 00:00:47.150
-when you support our sponsors,
-you support this show. Scott
+00:00:23.880 --> 00:00:27.060
+serverless functions. And they found
+that half of the Lambda
 
 8
-00:00:47.150 --> 00:00:49.370
-Hanselman. This is another episode
-of Hansel minutes today. I'm
+00:00:27.060 --> 00:00:30.540
+invocations run for less than
+800 milliseconds, you can easily
 
 9
-00:00:49.370 --> 00:00:53.990
-talking with Courtney Nash, holloway.com.
-How are you, Scott? How
+00:00:30.540 --> 00:00:33.870
+monitor all your serverless functions
+in one place and generate
 
 10
-00:00:53.990 --> 00:00:58.370
-are you? Very well. I
-am working remotely, certainly, but
+00:00:33.870 --> 00:00:37.500
+serverless metrics straight from Datadog.
+Check it out yourself by
 
 11
-00:00:58.370 --> 00:01:00.320
-I've been doing that for
-13 years, but somehow the
+00:00:37.500 --> 00:00:40.440
+signing up for a free
+14 day trial and get
 
 12
-00:01:00.320 --> 00:01:03.890
-current situation as we record
-this in March of 2020,
+00:00:40.440 --> 00:00:47.700
+a free t-shirt visit datadog.com/hanselman
+it's show to get started.
 
 13
-00:01:04.220 --> 00:01:06.470
-I just feel somehow more
-remote. I feel farther away
+00:00:48.060 --> 00:01:06.590
+That's datadog.com/hansel minutes show to
+get started. Hi, this is
 
 14
-00:01:06.470 --> 00:01:09.560
-from people than usual. I
-think we all feel, I
+00:01:06.590 --> 00:01:10.070
+Scott Hanselman, this Hansel minutes
+today. I'm here with Chris
 
 15
-00:01:09.560 --> 00:01:11.660
-think it's a weird mix
-for me. I feel I've
+00:01:10.070 --> 00:01:13.250
+Conner coming up with season
+two of altered carbon. How
 
 16
-00:01:11.660 --> 00:01:15.110
-been working remotely myself for
-over about 11 years now,
+00:01:13.250 --> 00:01:16.730
+are you, sir? And yourself?
+I am living the dream
 
 17
-00:01:15.620 --> 00:01:19.760
-and I feel more remote
-in some ways and almost
+00:01:17.390 --> 00:01:20.360
+right now and I'm very,
+very happy to be chatting
 
 18
-00:01:19.880 --> 00:01:24.350
-weirdly more connected or maybe
-just attached to my phone.
+00:01:20.360 --> 00:01:23.810
+with you. My, my wife
+and I, you know how,
 
 19
-00:01:25.310 --> 00:01:28.220
-Twitter. Maybe it's not the
-same thing I suppose, but
+00:01:23.810 --> 00:01:26.450
+when you love a show
+so much that it's like,
 
 20
-00:01:29.090 --> 00:01:33.080
-more people are caring about
-and interested in how everyone's
+00:01:26.480 --> 00:01:28.910
+do I binge it? And
+then I've done this to
 
 21
-00:01:33.080 --> 00:01:36.260
-going to handle this. And
-so I feel less alone
+00:01:28.910 --> 00:01:31.550
+myself, then the show, isn't
+the thing you've absorbed. It's
 
 22
-00:01:36.380 --> 00:01:39.440
-being a remote worker than
-I did before. So it's,
+00:01:31.550 --> 00:01:33.920
+a thing you've done to
+yourself. And you're like, Oh,
 
 23
-00:01:39.500 --> 00:01:41.300
-it's a weird mix for
-me. I'd have to say,
+00:01:33.920 --> 00:01:36.140
+what have I done to
+myself? But you love it
 
 24
-00:01:41.990 --> 00:01:46.520
-I'm hoping that the, the
-empathy of the remote experience
+00:01:36.140 --> 00:01:39.800
+so much. You also want
+to watch other people watch
 
 25
-00:01:46.520 --> 00:01:49.640
-increases. And then when everyone
-goes back, it won't be,
+00:01:39.800 --> 00:01:42.350
+the show. So I want
+to put an ad on
 
 26
-00:01:49.670 --> 00:01:52.440
-they won't forget. You know,
-because we are w I
+00:01:42.350 --> 00:01:45.470
+Craigslist or something, right. Come
+and watch this show so
 
 27
-00:01:52.440 --> 00:01:54.260
-I've said this before, and
-I think I say it
+00:01:45.470 --> 00:01:48.800
+I can watch you watch
+the show. There's nothing creepy
 
 28
-00:01:54.360 --> 00:01:58.580
-with love and people who
-are differently abled will understand
+00:01:48.800 --> 00:01:51.560
+about no it's because I
+want them to go. Oh,
 
 29
-00:01:58.580 --> 00:02:01.190
-the metaphor, but when you
-are remote or the only
+00:01:51.620 --> 00:01:55.700
+and then turn. And I'll
+be like, yeah. Yeah. It's
 
 30
-00:02:01.190 --> 00:02:04.430
-remote in a entirely, let's
-all go to the office
+00:01:55.700 --> 00:01:58.070
+interesting that we haven't come
+up with like Skype parties
 
 31
-00:02:04.430 --> 00:02:07.790
-and sit together team, you
-are differently abled, and they
+00:01:58.070 --> 00:02:00.830
+for watching shows yet. Why
+can't I just call someone
 
 32
-00:02:07.790 --> 00:02:11.210
-can leave the room and
-you'll be like, Hey, anybody
+00:02:00.830 --> 00:02:03.020
+say, let's push them one,
+two, three, hit the clapper
 
 33
-00:02:11.510 --> 00:02:13.370
-you go, Oh, I guess
-you all left. And they
+00:02:03.020 --> 00:02:06.980
+and we synchronize our show
+so we can have reactions
 
 34
-00:02:13.370 --> 00:02:16.100
-just leave you there. You
-can't move. They can't see,
+00:02:06.980 --> 00:02:08.600
+to each other about why
+the show is so great.
 
 35
-00:02:16.130 --> 00:02:17.720
-you can't see them if
-they don't turn their cameras
+00:02:08.630 --> 00:02:10.520
+That's a great idea. I'm
+just saying we could go
 
 36
-00:02:17.720 --> 00:02:19.580
-on. So you can't see
-if they're rolling their eyes
+00:02:10.520 --> 00:02:13.730
+and patent that right now.
+Okay. So a ultra carbon,
 
 37
-00:02:19.580 --> 00:02:23.600
-at you. You lose a
-lot. Maybe now they will
+00:02:13.730 --> 00:02:18.170
+I read the books. I've
+watched the show and you
 
 38
-00:02:23.600 --> 00:02:29.030
-appreciate us. I certainly hope
-so. I've, I've always worked
+00:02:18.170 --> 00:02:20.180
+play. And for the context
+for the folks that are
 
 39
-00:02:29.030 --> 00:02:32.750
-at hybrid remote kinds of
-organizations. I've never been the
+00:02:20.180 --> 00:02:22.400
+listening, who may not have
+watched the show, I would
 
 40
-00:02:32.750 --> 00:02:35.990
-sole remote person though, but
-I, I have a great
+00:02:22.400 --> 00:02:24.290
+encourage you to pause right
+now and run off and
 
 41
-00:02:35.990 --> 00:02:39.410
-deal of empathy for how
-much harder. That must be
+00:02:24.290 --> 00:02:26.090
+see that I can't guarantee
+there won't be any spoilers,
 
 42
-00:02:40.250 --> 00:02:42.320
-more so than even at
-least, if you have a
+00:02:26.090 --> 00:02:29.450
+but they'll certainly be thematic
+spoilers. But if I may
 
 43
-00:02:42.320 --> 00:02:45.470
-band of other remote people
-and hopefully, maybe a company
+00:02:29.450 --> 00:02:31.100
+and you can correct me
+if I'm wrong, the general
 
 44
-00:02:45.470 --> 00:02:49.880
-that is aware of what
-that separation is like, then
+00:02:31.100 --> 00:02:33.800
+structure of this is that
+in the future, there are
 
 45
-00:02:49.880 --> 00:02:52.160
-it's a bit better. But
-yeah, the, the, I think
+00:02:33.800 --> 00:02:37.130
+these things called stacks, which
+are effectively USB keys for
 
 46
-00:02:52.160 --> 00:02:54.320
-there's no there's far fewer,
-still remote people out there
+00:02:37.130 --> 00:02:40.400
+people that hold DHF, digital
+human freight and digital human
 
 47
-00:02:54.320 --> 00:02:57.860
-anymore after what's happened recently.
-And I agree that empathy,
+00:02:40.400 --> 00:02:43.790
+freight is you in a
+thing that goes into the
 
 48
-00:02:58.130 --> 00:03:00.580
-I don't think it's something
-people forget after this, especially
+00:02:43.790 --> 00:02:45.380
+back of the neck. And
+it allows us to do
 
 49
-00:03:00.580 --> 00:03:01.930
-I, the thing I want
-to point out though, is
+00:02:45.380 --> 00:02:50.660
+things like what's called narrow
+cast needle cast, needle cast.
 
 50
-00:03:01.930 --> 00:03:06.850
-this is not normal remote.
-I saw someone say someone
+00:02:50.660 --> 00:02:52.970
+You can go and basically
+beam yourself to another planet
 
 51
-00:03:06.850 --> 00:03:09.460
-wrote something the other day
-that was folks were not
+00:02:52.970 --> 00:02:55.070
+because it's too tedious to
+get on a ship and
 
 52
-00:03:09.460 --> 00:03:13.390
-working from home. This isn't
-w you know, FH, this
+00:02:55.070 --> 00:02:57.590
+fly there. We'll just upload
+you to the other planet.
 
 53
-00:03:13.390 --> 00:03:18.780
-is w DP it's working
-during a pandemic. Yeah, it
+00:02:57.980 --> 00:03:00.580
+Of course, you'd have to
+yourself on ice so that
 
 54
-00:03:18.780 --> 00:03:21.420
-is definitely not the same
-you're being forced to and
+00:03:00.580 --> 00:03:04.090
+your sleeve, your body is
+not double sleeve. You don't
 
 55
-00:03:21.420 --> 00:03:23.370
-having, you know, and choosing
-to are very, very different
+00:03:04.090 --> 00:03:07.990
+want to have Chris in
+two planets at once. And
 
 56
-00:03:23.370 --> 00:03:25.560
-things. Yeah. But I think
-that the benefit of all
+00:03:08.830 --> 00:03:12.220
+then it will certainly, if
+you apply capitalism that then
 
 57
-00:03:25.560 --> 00:03:27.480
-of this, as we said,
-is that empathy will be
+00:03:12.220 --> 00:03:15.340
+really rich people will have
+the very best backups. Yep.
 
 58
-00:03:27.480 --> 00:03:29.940
-increased. People will start checking
-on each other and then
+00:03:15.430 --> 00:03:18.340
+Everyone's in the cloud and
+then you'll never die. Exactly.
 
 59
-00:03:29.970 --> 00:03:33.390
-normalizing little kids wandering in
-a meeting sometimes. And also
+00:03:18.550 --> 00:03:20.830
+So then people, people who
+don't ever die are called
 
 60
-00:03:33.390 --> 00:03:36.900
-appreciating that while sometimes I
-felt in the past, people
+00:03:20.830 --> 00:03:24.340
+myths, which is like Methuselah
+and the Bible. Exactly. Okay.
 
 61
-00:03:36.900 --> 00:03:38.910
-look at me working remotely,
-Oh man, you got a
+00:03:25.000 --> 00:03:27.690
+But you don't play any
+of those people? No, no.
 
 62
-00:03:38.910 --> 00:03:41.340
-sweet deal. I answer when,
-I mean, you pick kids
+00:03:27.700 --> 00:03:31.930
+I'm an artificial intelligent life
+form that has taken the
 
 63
-00:03:41.340 --> 00:03:42.960
-up at school, you do
-this, you can do that.
+00:03:32.260 --> 00:03:39.600
+existence form of Edgar. Allen
+Poe Is the identity of
 
 64
-00:03:42.960 --> 00:03:45.120
-And it's like, well, yeah,
-that is part of it.
+00:03:39.600 --> 00:03:44.280
+the artificial intelligence that you
+play intrinsically attached to ed
 
 65
-00:03:45.150 --> 00:03:47.250
-But then I also have
-that, maybe you've had this
+00:03:44.280 --> 00:03:46.170
+ground pole. Did he exist
+in a void and then
 
 66
-00:03:47.250 --> 00:03:49.740
-feeling, this remote worker, low
-self esteem where it's like,
+00:03:46.170 --> 00:03:49.950
+decided this? Did he pick
+his sleeve? Yes. In for
 
 67
-00:03:50.070 --> 00:03:51.660
-they can't see me. So
-they don't really know that
+00:03:49.950 --> 00:03:52.860
+all intents and purposes, the
+artificial intelligent life form, I
 
 68
-00:03:51.660 --> 00:03:53.760
-I'm doing anything. So I'll
-work extra hard to make
+00:03:52.860 --> 00:03:59.820
+play has gone through many
+different versions. When people watch
 
 69
-00:03:53.760 --> 00:03:56.700
-sure that I produce. And
-I ended up working more
+00:03:59.820 --> 00:04:04.530
+the show, they'll see the
+floor of the hotel, Raven,
 
 70
-00:03:56.700 --> 00:03:59.070
-at night and more hours
-than I did when I
+00:04:04.560 --> 00:04:07.380
+which I am the hotel.
+The hotel is me in
 
 71
-00:03:59.070 --> 00:04:02.220
-was in the office. There's
-and there's data on that
+00:04:07.380 --> 00:04:10.260
+artificial intelligent life form that
+is serving humans as a
 
 72
-00:04:02.310 --> 00:04:06.420
-out there. There's research on
-that. You know, there's a
+00:04:10.260 --> 00:04:15.600
+hotel. That floor looks like
+an MC Escher piece of
 
 73
-00:04:06.420 --> 00:04:09.810
-lot of anecdotal information. There's
-a lot of surveys of
+00:04:16.020 --> 00:04:20.640
+art. At some point, my
+artificial intelligent life form toyed
 
 74
-00:04:09.810 --> 00:04:13.390
-companies, you know, by companies
-who are remote and, and
+00:04:20.640 --> 00:04:25.350
+with being Essure in the
+books. Richard Morgan wrote the hotel
 
 75
-00:04:13.460 --> 00:04:17.040
-a lot of them have
-people report that phenomenon. But
+00:04:25.350 --> 00:04:28.890
+as the Hendrix based on
+Jimmy Hendrix. Fortunately for me,
 
 76
-00:04:17.040 --> 00:04:20.790
-my favorite example of this
-is as I was working
+00:04:28.890 --> 00:04:32.010
+they couldn't get the rights
+from the Hendrix estate. So
 
 77
-00:04:20.820 --> 00:04:23.100
-on researching this, the guide
-to remote work that we
+00:04:32.220 --> 00:04:35.100
+they ended up settling on
+PO for the television show.
 
 78
-00:04:23.100 --> 00:04:26.550
-put out, there's too often
-cited studies that talk about
+00:04:35.520 --> 00:04:38.460
+And, and it's been a
+joy to be able to
 
 79
-00:04:26.550 --> 00:04:30.120
-the increased productivity of remote
-workers that are the closest
+00:04:38.460 --> 00:04:42.690
+play someone with such depth
+and romanticism and darkness. And
 
 80
-00:04:30.120 --> 00:04:33.750
-thing to actual controlled study,
-not just surveys or, you
+00:04:42.690 --> 00:04:45.300
+the fact that there is
+that backstory, I think actually
 
 81
-00:04:33.750 --> 00:04:37.830
-know, sort of self reported,
-anecdotal measures. One is a
+00:04:45.300 --> 00:04:48.240
+expands. It makes it even
+more interesting because Hendrix was
 
 82
-00:04:37.830 --> 00:04:41.970
-Chinese travel agency that sends
-half their workforce home to
+00:04:48.240 --> 00:04:53.010
+certainly complicated, but PO is
+well of background information. Yeah.
 
 83
-00:04:42.090 --> 00:04:44.430
-do book travel bookings. And
-another one is the us
+00:04:53.040 --> 00:04:57.030
+Yeah. You know, when we
+started it, it all the
 
 84
-00:04:44.430 --> 00:04:48.270
-patent office. And so it's
-patent officers who, again, same
+00:04:57.030 --> 00:05:00.390
+process was very quick. When
+we began, I got cast
 
 85
-00:04:48.270 --> 00:04:50.460
-thing. They sort of did
-a controlled study of patent
+00:05:00.420 --> 00:05:04.050
+and I was pretty much
+shipped off to Canada. We
 
 86
-00:04:50.460 --> 00:04:53.100
-officers working from home and
-approving patents and folks doing
+00:05:04.050 --> 00:05:09.840
+shot in Vancouver, BC, and
+immediately diving into all of
 
 87
-00:04:53.100 --> 00:04:56.040
-that in the office. And
-both of them reported in
+00:05:10.410 --> 00:05:17.760
+post-work. I knew quite a
+bit from college and growing
 
 88
-00:04:56.040 --> 00:04:59.100
-some cases sort of magical,
-you know, productivity numbers, 20%
+00:05:17.760 --> 00:05:20.670
+up reading a little bit
+of Pope, but to actually
 
 89
-00:04:59.100 --> 00:05:01.950
-more productivity from the folks
-at home. But the bit
+00:05:20.670 --> 00:05:23.400
+delve into his letters, his
+life, it really started to
 
 90
-00:05:01.950 --> 00:05:03.720
-that got me when I
-really dug in and read
+00:05:23.400 --> 00:05:27.210
+flesh out the idea of
+what the character and the
 
 91
-00:05:03.720 --> 00:05:08.190
-the Chinese travel agency study
-is the quote unquote productivity
+00:05:27.210 --> 00:05:30.990
+true wants of this character
+are in our world. As
 
 92
-00:05:08.190 --> 00:05:10.800
-numbers was just that they
-were actually spending almost an
+00:05:30.990 --> 00:05:34.080
+far as the television show
+goes, Poe in his life
 
 93
-00:05:10.800 --> 00:05:14.760
-entire day more working collectively
-aggregated over the week. They
+00:05:34.110 --> 00:05:39.240
+was a profoundly prolific, but
+also an incredibly sad individual.
 
 94
-00:05:14.760 --> 00:05:16.440
-weren't getting more done in
-the same amount of time.
+00:05:39.270 --> 00:05:43.140
+Like he couldn't catch a
+break, utter object failure. He
 
 95
-00:05:16.440 --> 00:05:18.900
-They were just working more
-cause they Right. And that's
+00:05:43.290 --> 00:05:48.750
+distanced himself from most members
+of the artistic community by
 
 96
-00:05:18.900 --> 00:05:21.180
-the trick. So when I
-went 13 years ago to
+00:05:49.590 --> 00:05:53.730
+being a bit of an
+ass and had many enemies
 
 97
-00:05:21.240 --> 00:05:23.190
-work remotely, I thought, Oh,
-you know, I'm going to,
+00:05:53.790 --> 00:06:00.200
+and almost every in his
+life tragically died. And then
 
 98
-00:05:23.580 --> 00:05:24.960
-I'm going to go home.
-I'm going to work maybe
+00:06:00.200 --> 00:06:02.570
+of course he tragically died
+and we're still not sure
 
 99
-00:05:24.960 --> 00:05:28.740
-what, 30 hours, and then
-hang out. And that's not
+00:06:02.570 --> 00:06:05.630
+how the circumstances of his
+death, but he was beaten
 
 100
-00:05:28.740 --> 00:05:31.230
-what happens. You don't, you
-could do that, but you
+00:06:05.630 --> 00:06:09.860
+to death and found in
+another man's clothes on the
 
 101
-00:05:31.230 --> 00:05:34.500
-always seem to find yourself
-working differently like that. And,
+00:06:09.860 --> 00:06:15.230
+streets in Baltimore, incredibly drunk
+on laudanum. So it's a
 
 102
-00:05:34.520 --> 00:05:36.600
-and I end up being,
-I feel more productive because
+00:06:15.350 --> 00:06:18.920
+tragic end. He, you mentioned
+that he had issues with
 
 103
-00:05:36.600 --> 00:05:39.240
-people aren't wandering into my
-office. I'm not getting interrupted
+00:06:18.950 --> 00:06:23.360
+the women in his life.
+His mom, he is, is
 
 104
-00:05:39.270 --> 00:05:43.470
-or I'm getting interrupted differently.
-And there's, there's, I, I
+00:06:23.690 --> 00:06:27.470
+his wife in any relationship
+with his women was bad
 
 105
-00:05:43.470 --> 00:05:46.380
-missed the chatter. I missed
-the, the water cooler. And
+00:06:27.470 --> 00:06:30.230
+or they died? His mom
+died right at the very
 
 106
-00:05:46.380 --> 00:05:48.090
-I think that that re
-know that adds me a
+00:06:30.230 --> 00:06:33.260
+beginning of his life. She
+was an actress. Ironically. Then
 
 107
-00:05:48.150 --> 00:05:50.100
-half an hour, an hour
-a day. And then I
+00:06:33.260 --> 00:06:36.740
+he was adopted that woman
+who adopted him, who for
 
 108
-00:05:50.100 --> 00:05:52.110
-think another bad thing about
-remote workers at home is
+00:06:36.740 --> 00:06:39.170
+all intensive purposes was probably
+the most stable woman in
 
 109
-00:05:52.110 --> 00:05:55.260
-we tend not to, you
-know, we eat lunch at
+00:06:39.170 --> 00:06:43.940
+his life. She died. He
+ends up marrying his cousin
 
 110
-00:05:55.260 --> 00:05:57.470
-our desks a lot. There's
-not a lot of out
+00:06:44.270 --> 00:06:47.120
+who happens to be 14
+at the time, years later,
 
 111
-00:05:58.280 --> 00:06:01.340
-for lunch with the team,
-which can burn 90 minutes
+00:06:47.360 --> 00:06:50.180
+she does. You could say
+the guy just couldn't catch
 
 112
-00:06:01.630 --> 00:06:03.790
-Of the sort of care
-things that are built into
+00:06:50.180 --> 00:06:52.760
+a break, but he didn't
+necessarily put himself in the
 
 113
-00:06:03.790 --> 00:06:07.030
-an in person, environment. You
-know, so much of remote
+00:06:52.760 --> 00:06:56.120
+best position because he was
+a heavy substance abuser. Yeah.
 
 114
-00:06:07.180 --> 00:06:09.160
-work is intense. It has
-to become so much more
+00:06:56.200 --> 00:06:59.240
+Yeah. He did not make
+good decisions. There's a depth
 
 115
-00:06:09.160 --> 00:06:11.740
-intentional, not just how do
-you communicate with people or
+00:06:59.270 --> 00:07:01.820
+to the AI of PO
+in the, in the show,
 
 116
-00:06:11.740 --> 00:06:14.170
-how do you write things
-down or when, and how
+00:07:01.820 --> 00:07:05.510
+but you didn't bring, I
+felt the, the pain, I
 
 117
-00:06:14.170 --> 00:06:16.750
-do you meet? But you
-have to be intentional then
+00:07:05.510 --> 00:07:07.970
+didn't feel like there was
+a pain in the AI
 
 118
-00:06:16.750 --> 00:06:19.390
-about all this. You know,
-once I saw something, somebody
+00:07:07.970 --> 00:07:10.910
+APOE. There was a longing,
+well, I think that's, if
 
 119
-00:06:19.390 --> 00:06:22.420
-was mentioning where, you know,
-people are now doing something
+00:07:10.910 --> 00:07:13.520
+you go back and read
+all of PO's work, that
 
 120
-00:06:22.420 --> 00:06:25.390
-that staffs were doing for
-them. If they went into
+00:07:13.520 --> 00:07:17.600
+was the thing that I,
+I gleaned specifically, was this
 
 121
-00:06:25.390 --> 00:06:28.930
-an office, right office managers
-and, you know, heads of
+00:07:17.630 --> 00:07:20.780
+longing, this romanticism, even in
+the mask of red death,
 
 122
-00:06:28.930 --> 00:06:32.200
-people or culture, people, or
-folks who made sure they're
+00:07:20.810 --> 00:07:23.960
+which is such a beautiful
+story at the very end
 
 123
-00:06:32.200 --> 00:06:35.020
-always snacks or whatever in
-your office, you're now the
+00:07:23.960 --> 00:07:28.040
+it's, it's this almost tranquil
+calming, I guess that's not
 
 124
-00:06:35.020 --> 00:06:39.850
-COO of your home office.
-And if you're not thinking
+00:07:28.040 --> 00:07:32.750
+necessarily a good reference in
+these times of calm. Yeah.
 
 125
-00:06:39.850 --> 00:06:44.200
-about what your quote unquote
-employee health is like, then,
+00:07:33.800 --> 00:07:38.990
+But you really see this,
+this there's a, there's almost
 
 126
-00:06:44.230 --> 00:06:47.290
-well, no one else is
-doing it. And I had
+00:07:38.990 --> 00:07:42.380
+a sweetness to it. And
+I think he, he distills
 
 127
-00:06:47.290 --> 00:06:51.190
-to get very intentional about
-that myself as well. And
+00:07:42.380 --> 00:07:47.000
+that in his poetry, probably
+better than any American Reiner.
 
 128
-00:06:51.190 --> 00:06:53.800
-I mean, I finally ended
-up getting onto a really
+00:07:47.480 --> 00:07:48.860
+I, I liked that. You
+said that there's almost a
 
 129
-00:06:54.190 --> 00:06:56.890
-specific gym schedule that worked
-with me and my family,
+00:07:48.860 --> 00:07:52.790
+sweetness to it because there's
+a lot of relationships that
 
 130
-00:06:56.920 --> 00:06:58.420
-but I would also make
-sure that I would always
+00:07:52.790 --> 00:07:56.690
+poll the AI in altered
+carbon has primarily with women
 
 131
-00:06:58.420 --> 00:07:00.640
-carve out time to sit
-at my table and eat
+00:07:57.680 --> 00:08:02.930
+that are incredibly sweet. And
+I kept waiting because I
 
 132
-00:07:00.640 --> 00:07:03.310
-lunch and not do any
-work, take the dog for
+00:08:02.930 --> 00:08:05.840
+guess I watched too much
+TV and I'm just assuming
 
 133
-00:07:03.310 --> 00:07:04.690
-a walk. And I would
-have to, I put these
+00:08:05.840 --> 00:08:10.190
+something bad is gonna happen
+for some lurid, some gays,
 
 134
-00:07:04.690 --> 00:07:06.640
-things on my calendar. I
-mean, I scheduled a man
+00:08:10.220 --> 00:08:13.280
+something literate or in an
+uncomfortable, and it never came.
 
 135
-00:07:06.640 --> 00:07:09.940
-and my whole team can
-see what I'm doing. And
+00:08:13.340 --> 00:08:16.310
+Yeah. Which made me feel
+that pose as an AI
 
 136
-00:07:09.940 --> 00:07:12.760
-I think that that self
-care aspect is something that's
+00:08:16.310 --> 00:08:20.000
+was relationships with other AIS
+and with people was chased
 
 137
-00:07:12.760 --> 00:07:16.720
-even more important right now.
-And even harder to do
+00:08:20.210 --> 00:08:23.420
+and kind, but there's still
+a longing, but he doesn't
 
 138
-00:07:17.470 --> 00:07:20.740
-in this environment. You can
-go to the gym. Some
+00:08:23.420 --> 00:08:27.200
+know what he longs for.
+Yeah. The, the, the searching
 
 139
-00:07:20.740 --> 00:07:24.010
-people can't even go outside.
-And so I think those
+00:08:27.200 --> 00:08:30.200
+for what the human existence
+is, is probably the biggest
 
 140
-00:07:24.010 --> 00:07:27.430
-challenges are really exacerbated right
-now. So you work for
+00:08:30.200 --> 00:08:34.490
+quest for Poe's life and
+the television show. And within
 
 141
-00:07:27.430 --> 00:07:30.280
-Holloway, it's H O L
-L O w a Y.
+00:08:34.490 --> 00:08:37.820
+that, he ends up having
+a young ward that he
 
 142
-00:07:30.310 --> 00:07:33.580
-And this is a company
-that publishes comprehensive guides, right?
+00:08:37.820 --> 00:08:42.140
+needs to rehabilitate named Lizzie.
+And when we started to
 
 143
-00:07:33.580 --> 00:07:35.320
-It's a world out there
-where everybody can take their
+00:08:42.140 --> 00:08:46.400
+play with that character in
+the first season, it was
 
 144
-00:07:35.320 --> 00:07:37.390
-blog and I could take
-my blog and I could
+00:08:46.460 --> 00:08:50.180
+my job not to make
+it lurid. And you want
 
 145
-00:07:37.390 --> 00:07:40.030
-throw it into a remote
-guide for, you know, whatever
+00:08:50.180 --> 00:08:52.220
+to be able to root
+for this character. And as
 
 146
-00:07:40.030 --> 00:07:41.680
-I can make a PDF
-and a couple of days.
+00:08:52.220 --> 00:08:59.280
+soon as something as disgusting
+is that comes through like
 
 147
-00:07:42.010 --> 00:07:44.590
-And that would be Scott's
-guide to remote work. But
+00:08:59.520 --> 00:09:06.360
+this male gaze, that's not,
+that's utterly horrifying towards a
 
 148
-00:07:44.590 --> 00:07:52.030
-Holloway is not that I
-am looking right now@thehollowayguidetoremoteworkthatyoucanpickupatholloway.com. You've
+00:09:06.360 --> 00:09:09.150
+young woman. You want to
+try to push against that
 
 149
-00:07:52.030 --> 00:07:56.770
-got a huge amount of
-reviewers contributors, contributing authors. This
+00:09:09.150 --> 00:09:12.780
+and make sure it's really
+almost a father daughter relationship.
 
 150
-00:07:56.770 --> 00:07:59.290
-looks, this is not a
-blog. There's not a medium
+00:09:12.930 --> 00:09:15.780
+Yeah. And I cheat to
+your credit. And I really
 
 151
-00:07:59.290 --> 00:08:04.000
-post. This is a 300
-page research book with editorial
+00:09:15.780 --> 00:09:21.870
+appreciate how kind and nurturing
+father like uncle, like, but,
 
 152
-00:08:04.000 --> 00:08:07.690
-and a, an appendix. It
-almost feels somewhere like close
+00:09:21.900 --> 00:09:25.020
+but there was also a,
+there's a peer relationship there
 
 153
-00:08:07.690 --> 00:08:10.600
-to the level of effort
-that gets put into a,
+00:09:25.020 --> 00:09:28.830
+because it isn't, it's simply,
+I am a, a parental
 
 154
-00:08:11.590 --> 00:08:14.770
-a Forester report. This is
-you put some work into
+00:09:29.190 --> 00:09:31.110
+figure in your life because
+there's a time where that
 
 155
-00:08:14.770 --> 00:08:18.790
-this. I was in links.
-It did. I think the
+00:09:31.110 --> 00:09:35.430
+switches and miss Elizabeth is
+really leading you Poe through
 
 156
-00:08:18.790 --> 00:08:21.970
-challenge right now about talking
-to people about this guide
+00:09:35.430 --> 00:09:39.090
+an adventure. Yeah, exactly. I
+mean, it's almost more sophisticated,
 
 157
-00:08:21.970 --> 00:08:23.710
-is people in our, like,
-yeah. Okay, I got it.
+00:09:39.090 --> 00:09:42.330
+more emotionally, whole than, you
+know, in her journey. Totally,
 
 158
-00:08:23.710 --> 00:08:25.060
-You got a guide to
-remote work. That's great. I
+00:09:42.390 --> 00:09:45.120
+totally. When she flees at
+the end of season one,
 
 159
-00:08:25.060 --> 00:08:27.910
-mean, it's the environment it's
-in the tech universe at
+00:09:45.120 --> 00:09:48.930
+spoiler, when I cast her
+upon the array, it is
 
 160
-00:08:27.910 --> 00:08:33.070
-least, and is saturated with
-discussions and material about remote
+00:09:48.930 --> 00:09:51.210
+a huge jump for her.
+It's that it's the big
 
 161
-00:08:33.070 --> 00:08:37.060
-work. But we started on
-this last fall. So we
+00:09:51.210 --> 00:09:53.490
+life decision that, that then
+propels the rest of the
 
 162
-00:08:37.060 --> 00:08:39.640
-had published some other guides
-in, you know, sort of
+00:09:53.490 --> 00:09:56.910
+story and the ending of
+season one. Yeah. It's, it's
 
 163
-00:08:39.700 --> 00:08:42.850
-adjacent areas around startups and
-high growth companies, things around
+00:09:56.910 --> 00:10:00.660
+a beautiful little storyline between
+two characters that could get
 
 164
-00:08:42.850 --> 00:08:47.300
-venture capital or hiring and
-scaling software teams. And I
+00:10:00.660 --> 00:10:02.340
+very complex. But I think
+at the end of the
 
 165
-00:08:47.300 --> 00:08:49.540
-had had this, I'd had,
-we had lots of topics
+00:10:02.340 --> 00:10:06.090
+day is as a story
+about love. And she is
 
 166
-00:08:49.540 --> 00:08:50.980
-we want to work on.
-And I basically said, we
+00:10:06.090 --> 00:10:09.060
+a person who is uploaded
+into, into the machine and
 
 167
-00:08:50.980 --> 00:08:55.180
-should do this last, like
-September, October, full gut instinct
+00:10:09.060 --> 00:10:12.000
+she has for awhile, no
+physical body. And then she
 
 168
-00:08:55.650 --> 00:08:59.850
-kind of decisions. And, and
-so, yeah, we've, we've, these
+00:10:12.000 --> 00:10:15.960
+eventually can move around into
+synthetic sleeves. We have since
 
 169
-00:08:59.850 --> 00:09:02.130
-things take a huge amount
-of time and effort to
+00:10:15.960 --> 00:10:18.390
+two, which is a whole
+other different part of altered
 
 170
-00:09:02.130 --> 00:09:03.960
-do. And when we started
-on this, of course, we
+00:10:18.390 --> 00:10:21.360
+carbon, which is really exciting.
+And if we do get
 
 171
-00:09:03.960 --> 00:09:07.500
-had no idea what was
-going to happen now, but
+00:10:21.360 --> 00:10:23.040
+a season three, that would
+be really fun to play
 
 172
-00:09:07.500 --> 00:09:10.860
-the goal with these guides
-that we produce ourselves versus
+00:10:23.040 --> 00:10:25.560
+with. Yeah. It would be
+interesting to understand now your
 
 173
-00:09:10.920 --> 00:09:13.140
-other things, we are starting
-to publish other people on
+00:10:25.800 --> 00:10:28.410
+character is an AI, but
+you're not that kind of
 
 174
-00:09:13.140 --> 00:09:15.240
-our platform, but we started
-with our own work. It's
+00:10:28.500 --> 00:10:32.070
+typical AI, that's like a
+red dot on the, on
 
 175
-00:09:15.240 --> 00:09:17.340
-kind of like a reverse
-Netflix. Like we did the
+00:10:32.130 --> 00:10:35.280
+the, you know, it's like,
+you're not letting disembodied AI
 
 176
-00:09:17.340 --> 00:09:19.620
-fancy high end stuff first,
-and then we're gonna open
+00:10:35.280 --> 00:10:38.730
+like travelers or something. Yeah.
+You're not how you have
 
 177
-00:09:19.620 --> 00:09:22.410
-it up to everyone else.
-But the premise of the
+00:10:38.730 --> 00:10:42.390
+a body, but it's a
+nano swarm of stuff. Yeah.
 
 178
-00:09:22.410 --> 00:09:24.720
-initial premise at Holloway was
-so much, there's so much
+00:10:42.400 --> 00:10:45.330
+Yeah. We played with the
+idea of in season two,
 
 179
-00:09:24.720 --> 00:09:26.010
-knowledge in the world. And
-so much of it as
+00:10:45.330 --> 00:10:48.060
+we definitely play with the
+idea of a hologram form
 
 180
-00:09:26.010 --> 00:09:28.230
-sort of locked away and
-the internet doesn't really help
+00:10:48.120 --> 00:10:52.500
+and then actual nano swarm
+form. So a tangible things
 
 181
-00:09:28.230 --> 00:09:31.050
-you get to it. It's
-either in books, which are
+00:10:52.560 --> 00:10:58.770
+like my shotgun are achievable
+in the nano swarm forum.
 
 182
-00:09:31.050 --> 00:09:36.900
-largely controlled by Amazon now,
-like so many things, and
+00:10:58.770 --> 00:11:02.280
+And then in holographic form,
+we can play with the
 
 183
-00:09:36.960 --> 00:09:39.330
-it's not easy to discover
-and find things online and
+00:11:02.280 --> 00:11:06.570
+idea of being present intellectually,
+but not being there physically.
 
 184
-00:09:39.330 --> 00:09:41.550
-anybody who's tried to Google
-something, I mean, try to
+00:11:06.570 --> 00:11:08.610
+Which what does that do
+to our main character Takeshi
 
 185
-00:09:41.550 --> 00:09:46.710
-Google coronavirus right now. There's
-so much information online and
+00:11:08.610 --> 00:11:12.180
+COVID shoe I'm in service,
+right? And then COVID eventually
 
 186
-00:09:46.710 --> 00:09:48.930
-it's so hard to Wade
-through and figure out and
+00:11:12.180 --> 00:11:14.940
+starts carrying you around or
+a projector that enables him
 
 187
-00:09:48.930 --> 00:09:52.350
-find what's valuable and what's
-helpful. And so we thought,
+00:11:14.940 --> 00:11:17.160
+to quote unquote, carry around.
+So then those times you
 
 188
-00:09:52.380 --> 00:09:55.260
-well, why don't we just
-start building those things? And
+00:11:17.160 --> 00:11:20.100
+are a projection. Yeah. But
+when you are the hotel,
 
 189
-00:09:55.260 --> 00:09:58.950
-so the intention is to
-be very rigorous and to
+00:11:20.100 --> 00:11:22.560
+the hotel is you, you
+can be in an analyst
 
 190
-00:09:58.950 --> 00:10:01.560
-be as helpful as possible.
-And that means we don't
+00:11:22.560 --> 00:11:24.030
+warm, you can physically pick
+things up and hand it
 
 191
-00:10:01.560 --> 00:10:05.850
-want to present one single
-person or company's perspective, especially
+00:11:24.030 --> 00:11:27.960
+to people. Yes. And, and
+that, that changes throughout the
 
 192
-00:10:05.850 --> 00:10:09.840
-for very complex kinds of
-topics where there is, there
+00:11:27.960 --> 00:11:30.300
+season, which is really fascinating.
+And to see what we
 
 193
-00:10:09.840 --> 00:10:11.640
-is no one answer and
-there certainly is no one
+00:11:30.300 --> 00:11:32.760
+could do with that technology
+in the third season would
 
 194
-00:10:11.640 --> 00:10:14.070
-way of doing things, but
-there, there are a lot
+00:11:32.760 --> 00:11:36.150
+be really fun. The idea
+that you're playing in AI
 
 195
-00:10:14.070 --> 00:10:16.680
-of, like you said, sort
-of individual perspectives out there.
+00:11:36.150 --> 00:11:39.390
+though, but there's, there's 30,
+40 years of AIS in
 
 196
-00:10:17.040 --> 00:10:19.110
-And so we like to
-pull those together with as
+00:11:39.390 --> 00:11:41.910
+film. How do you make
+sure that you don't fall
 
 197
-00:10:19.110 --> 00:10:21.930
-much research as we can
-find. And then, yeah, a
+00:11:41.910 --> 00:11:44.910
+into a trope, an AI
+trope and obvious easy trope?
 
 198
-00:10:21.930 --> 00:10:25.470
-lot of rigor around how
-that material is presented and
+00:11:44.970 --> 00:11:47.490
+That's such a good question.
+I was such a huge
 
 199
-00:10:25.470 --> 00:10:30.450
-evaluated and, and reviewed. I
-have an academic background, quite
+00:11:47.520 --> 00:11:49.830
+fan of so many of
+those people who played AIS,
 
 200
-00:10:30.450 --> 00:10:33.840
-a few of us actually
-at Holloway do and, and
+00:11:50.310 --> 00:11:54.430
+Bret Spiner, who played data.
+I think hung with me
 
 201
-00:10:33.840 --> 00:10:36.660
-a research background. So I
-think it sort of comes
+00:11:55.030 --> 00:11:57.850
+when I was a child.
+And I loved the next
 
 202
-00:10:36.660 --> 00:10:38.920
-naturally to me, but there's
-not a lot of, of,
+00:11:57.850 --> 00:12:01.630
+generation as when I was
+young, watching him play a
 
 203
-00:10:39.050 --> 00:10:40.860
-of material like that out
-there for these kinds of
+00:12:01.630 --> 00:12:06.280
+character that was never going
+to be a human. And
 
 204
-00:10:40.860 --> 00:10:43.260
-topics. So hopefully the biggest
-thing for us is to
+00:12:06.310 --> 00:12:10.030
+this idea, this trope, I
+mean, dates back to Pinocchio,
 
 205
-00:10:43.260 --> 00:10:45.660
-be helpful. Like our art,
-one of our biggest editorial
+00:12:10.030 --> 00:12:14.290
+really where we're talking about
+something that is longing to
 
 206
-00:10:45.660 --> 00:10:50.430
-principles is to be helpful.
-And I think having a
+00:12:14.290 --> 00:12:17.560
+join a world, that it
+can only exist in with
 
 207
-00:10:50.490 --> 00:10:53.640
-very well researched material is
-one of the more helpful
+00:12:17.830 --> 00:12:20.110
+rules that were set by
+the people who get to
 
 208
-00:10:53.640 --> 00:10:55.640
-things that we can do
-for people. Is this a
+00:12:20.110 --> 00:12:23.170
+live in that world. And
+how we push against that
 
 209
-00:10:55.640 --> 00:10:58.880
-guide that is a, like,
-sit down one on one
+00:12:23.200 --> 00:12:28.240
+is having an artificial intelligent
+life form that at times
 
 210
-00:10:58.880 --> 00:11:01.430
-remote work, one Oh one
-for the remote worker, is
+00:12:28.240 --> 00:12:32.590
+seems more human than the
+people living in this dystopian
 
 211
-00:11:01.430 --> 00:11:05.390
-it for the, the C
-level exec? Who's our audience
+00:12:32.590 --> 00:12:35.020
+society that have been so
+cut off from themselves by
 
 212
-00:11:05.390 --> 00:11:07.490
-here that we're trying to
-convince them? Or are we
+00:12:35.020 --> 00:12:37.720
+technology. That is the trope
+that I think we do
 
 213
-00:11:07.490 --> 00:11:09.920
-trying to enable them Trying
-to enable them? I can't
+00:12:37.720 --> 00:12:40.510
+appreciate though, the idea that
+the AI is the most
 
 214
-00:11:09.920 --> 00:11:14.060
-convince you. I can't convince
-anyone. And, and I shouldn't,
+00:12:40.510 --> 00:12:43.360
+human of us. All right,
+right. But the other thing
 
 215
-00:11:14.240 --> 00:11:15.950
-you know, prior to what
-just happened, I had a
+00:12:43.360 --> 00:12:44.980
+though, is that in the
+example of data and other
 
 216
-00:11:15.950 --> 00:11:19.040
-whole spiel about how companies
-need to really examine what
+00:12:44.980 --> 00:12:48.130
+AI's, they're always struggling to
+become human, but they didn't
 
 217
-00:11:19.040 --> 00:11:21.830
-works for them, what works
-for one company. And if
+00:12:48.130 --> 00:12:51.760
+fall into the easy trap
+of trying to give PO
 
 218
-00:11:21.890 --> 00:11:23.690
-it's what stage it's at,
-and what it's trying to
+00:12:51.940 --> 00:12:54.820
+a body and let him
+long to be human. He
 
 219
-00:11:23.690 --> 00:11:26.360
-achieve is very different than,
-you know, say like a
+00:12:54.820 --> 00:12:57.790
+just longed for connection and
+in the connection would find
 
 220
-00:11:26.360 --> 00:11:28.190
-get lab who was one
-of the more well known
+00:12:57.790 --> 00:13:02.800
+humanity. Yeah, exactly. I am.
+It's really a relationship based
 
 221
-00:11:28.430 --> 00:11:32.270
-all remote companies, but we've
-lost that choice. Now everybody
+00:13:02.800 --> 00:13:05.170
+story. It's about intimacy at
+the end of the day.
 
 222
-00:11:32.270 --> 00:11:35.930
-is doing this. So our
-goal was always to enable,
+00:13:05.380 --> 00:13:09.070
+There's a great quote. I
+think it's Juno Diaz, the
 
 223
-00:11:35.930 --> 00:11:39.830
-to give people information and
-to tackle some of the
+00:13:09.070 --> 00:13:13.840
+author who says real love
+or intimacy and paraphrasing intimacy
 
 224
-00:11:39.830 --> 00:11:42.710
-harder things. I think that
-for me, what happened when
+00:13:13.840 --> 00:13:16.780
+is letting someone else find
+out who you really are.
 
 225
-00:11:42.710 --> 00:11:45.200
-I started researching this was
-there, wasn't a lot of
+00:13:17.590 --> 00:13:19.810
+And there's, that's an idea
+that we played with a
 
 226
-00:11:45.200 --> 00:11:49.250
-information about like the really
-thorny, nitty gritty stuff. There's
+00:13:19.810 --> 00:13:22.870
+lot at the beginning of
+season one. And for me,
 
 227
-00:11:49.250 --> 00:11:51.230
-plenty of things that are
-about how, you know, how
+00:13:22.870 --> 00:13:26.680
+it related directly to Falstaff's
+relationship with Henry or how,
 
 228
-00:11:51.230 --> 00:11:53.890
-to communicate asynchronous honestly, and
-how to set up your
+00:13:26.680 --> 00:13:30.730
+and Henry parts, one Henry Ford
+parts one and two, and
 
 229
-00:11:53.890 --> 00:11:56.410
-home office. But it's hard.
-Like how do you hire
+00:13:30.730 --> 00:13:37.090
+in Henry five, that Falstaff
+is, I'm a failure as
 
 230
-00:11:56.410 --> 00:11:59.110
-people internationally? What are the
-tax laws like? What are
+00:13:37.090 --> 00:13:40.360
+a human, but how loves
+him anyway? Because he sees
 
 231
-00:11:59.110 --> 00:12:01.390
-all the, you know, those
-kinds of things. And so
+00:13:40.420 --> 00:13:45.520
+all of his failures is
+really what drives him to
 
 232
-00:12:01.390 --> 00:12:04.750
-we, we went into all
-these deep pockets of the
+00:13:45.520 --> 00:13:49.840
+be the individual that he
+is PO in the, in
 
 233
-00:12:04.750 --> 00:12:07.750
-topic that are largely or
-less, so, you know, sort
+00:13:49.840 --> 00:13:52.300
+the, in the, in the
+show feels like he is
 
 234
-00:12:07.750 --> 00:12:10.240
-of examined. So the audience
-for this, one's pretty broad.
+00:13:52.600 --> 00:13:55.930
+introspective. He is thinking about
+himself. He's, he's keeping a
 
 235
-00:12:11.440 --> 00:12:14.620
-I think it's useful for
-sort of C level folks
+00:13:55.930 --> 00:13:58.690
+stock of where he is
+in his, how he feels
 
 236
-00:12:14.650 --> 00:12:17.920
-to get the landscape and
-to kind of understand the
+00:13:58.690 --> 00:14:01.210
+and how he, you know,
+how he is, his journey
 
 237
-00:12:17.920 --> 00:12:22.660
-kinds of problems that line
-managers and sort of departmental,
+00:14:01.210 --> 00:14:04.960
+goes. Yeah. But to Kashi
+his, his, you know, the
 
 238
-00:12:22.690 --> 00:12:24.580
-you know, managers and folks
-are going to be dealing
+00:14:04.960 --> 00:14:11.110
+Ronin that he follows is
+utterly unapologetic, almost has doesn't
 
 239
-00:12:24.580 --> 00:12:27.010
-with. And also, again, like
-you said, to develop some
+00:14:11.440 --> 00:14:15.370
+care about anything and tolerate
+PO yeah. There's kind of
 
 240
-00:12:27.010 --> 00:12:29.710
-empathy for the individual workers
-who are going to be
+00:14:15.370 --> 00:14:17.500
+a laptop thing there, but
+I'm not comfortable with the
 
 241
-00:12:29.710 --> 00:12:32.260
-in these positions. And so
-there's a lot in there
+00:14:17.500 --> 00:14:21.310
+dog or the pet metaphor.
+Right. Right. Squire is a
 
 242
-00:12:32.260 --> 00:12:35.710
-for managers, teams, and individuals
-who are on those teams,
+00:14:21.310 --> 00:14:22.930
+bit of a square. There's
+a bit of a Batman
 
 243
-00:12:35.950 --> 00:12:38.950
-I'd say that's really the
-core audience that we're looking
+00:14:22.930 --> 00:14:26.170
+and Robin thing. I think
+in the, in the minds
 
 244
-00:12:38.950 --> 00:12:40.720
-at. There's also, like I
-said, there's some material in
+00:14:26.170 --> 00:14:28.600
+of some of the audience
+members I've been told that,
 
 245
-00:12:40.720 --> 00:12:44.500
-there for folks who are
-sort of HR, operational, you
+00:14:28.600 --> 00:14:32.680
+or the one that's been
+circulating since season two dropped
 
 246
-00:12:44.500 --> 00:12:46.900
-know, like Holy cow, one
-of the things that people
+00:14:33.010 --> 00:14:36.340
+was, I'm a bit of
+the Tardis and, and to
 
 247
-00:12:46.900 --> 00:12:48.910
-say about remote work is
-you can hire someone from
+00:14:36.340 --> 00:14:40.030
+Kashi is the doctor who,
+but I think at the
 
 248
-00:12:48.910 --> 00:12:52.150
-anywhere, but that's actually not
-entirely true. And it's really
+00:14:40.030 --> 00:14:41.950
+end of the day, it's,
+it goes back to intimacy
 
 249
-00:12:52.150 --> 00:12:57.150
-hard once you start sort
-of scaling internationally, Got maybe
+00:14:41.950 --> 00:14:45.670
+between these two characters in
+the same way that Poe
 
 250
-00:12:57.180 --> 00:13:01.050
-20% of the Microsoft developer
-division working remotely. And when
+00:14:45.680 --> 00:14:49.330
+is trying to find himself
+through, whether it be Lizzie,
 
 251
-00:13:01.050 --> 00:13:03.360
-people hear that, they're like,
-Oh, that's amazing. That's fantastic.
+00:14:49.330 --> 00:14:52.340
+his ward at one point,
+or whether it be dig
 
 252
-00:13:03.360 --> 00:13:06.750
-I'd love to work remotely
-from country. Right. It's like,
+00:14:52.340 --> 00:14:54.710
+through a one who shows
+up in a season to
 
 253
-00:13:06.780 --> 00:13:08.730
-eh, you know, like, do
-I pay you in that?
+00:14:54.950 --> 00:15:00.140
+another AI, into Kashi, he,
+he sees a, a friend
 
 254
-00:13:08.730 --> 00:13:10.050
-Like, how do I pay?
-Like even just the, how
+00:15:00.710 --> 00:15:05.600
+and, and to Kashi at
+some point, realizes that they
 
 255
-00:13:10.050 --> 00:13:12.300
-do I pay you, But
-how do I pay you
+00:15:05.600 --> 00:15:09.620
+have an intimate connection. It's
+season two feels a little
 
 256
-00:13:12.300 --> 00:13:15.090
-is, could be months of
-work by the way. That's
+00:15:09.620 --> 00:15:12.290
+bit like a marriage that's
+been around for a long
 
 257
-00:13:15.090 --> 00:13:18.060
-a book right there. Yeah.
-And, and, you know, pro
+00:15:12.290 --> 00:15:14.420
+time. You know, it's 30
+years after season one. And
 
 258
-00:13:18.060 --> 00:13:20.520
-tip, it's not just PayPal
-and I can't just go
+00:15:14.420 --> 00:15:19.550
+these two entities have been
+traveling the galaxy, looking for
 
 259
-00:13:20.520 --> 00:13:23.100
-and yeah, zoom some money
-over to you. So that's
+00:15:19.550 --> 00:15:22.160
+something and not finding it.
+And it's a bit like
 
 260
-00:13:23.100 --> 00:13:26.310
-a challenge. Yeah. So we
-went there, you know, so
+00:15:22.160 --> 00:15:25.780
+a husband or wife, you
+know, stuck at Disneyland. But
 
 261
-00:13:26.310 --> 00:13:28.740
-like with those kinds of
-things, but we do have
+00:15:25.780 --> 00:15:28.630
+at the same time, there
+are things happening. The relationship
 
 262
-00:13:28.740 --> 00:13:31.290
-a bunch for people who
-are individual, you know, workers
+00:15:28.630 --> 00:15:30.760
+with miss Elizabeth, their relationship,
+like you just said with
 
 263
-00:13:31.290 --> 00:13:34.170
-as well. So it's, it's
-a pretty broad mix. I
+00:15:30.760 --> 00:15:33.160
+dig three Oh one paid
+by Tina show hobby, a
 
 264
-00:13:34.170 --> 00:13:36.630
-think there's a lot more
-for managers in there as
+00:15:33.170 --> 00:15:38.230
+very excellently, everyone pole gets
+to interact with people with,
 
 265
-00:13:36.630 --> 00:13:41.100
-well. Then I've seen more
-depth for managers. You know,
+00:15:38.290 --> 00:15:42.550
+with entities across the spectrum
+of what is available in
 
 266
-00:13:41.100 --> 00:13:44.820
-Katie Walmsley, one of the
-lead authors is a veteran
+00:15:42.550 --> 00:15:45.100
+this universe. He gets to
+interact with humans. He gets
 
 267
-00:13:44.970 --> 00:13:47.970
-engineering manager. She works for
-buffer and she's been remote
+00:15:45.100 --> 00:15:47.890
+to interact with synth people
+in synthetics leaves, and he
 
 268
-00:13:47.970 --> 00:13:51.270
-for pretty much her whole
-career. And the, you know,
+00:15:47.890 --> 00:15:51.430
+has to have his own
+entire emotional relationship with another
 
 269
-00:13:51.270 --> 00:13:53.310
-the folks that she talked
-to and the insights that
+00:15:51.430 --> 00:15:55.780
+AI, with no humans around
+what does dig three Oh
 
 270
-00:13:53.310 --> 00:13:56.520
-she had around managing remote
-teams. There were things I
+00:15:55.780 --> 00:15:57.850
+one, one, does this show
+us that all the AI's
 
 271
-00:13:56.520 --> 00:13:58.620
-learned from her and I've
-been doing this for a
+00:15:57.850 --> 00:16:01.510
+want human interaction in the
+season in season one, we
 
 272
-00:13:58.620 --> 00:14:01.770
-while now. So I think,
-especially the things that are
+00:16:01.510 --> 00:16:06.370
+definitely saw that a lot
+of the AIS are, have
 
 273
-00:14:01.770 --> 00:14:05.070
-in there for managers are
-really valuable. One of the
+00:16:06.370 --> 00:16:09.550
+no use for humans anymore.
+They're quite disaffected and, and
 
 274
-00:14:05.100 --> 00:14:07.020
-terms that I've used, sometimes
-I'm not, I think I
+00:16:09.550 --> 00:16:17.500
+malicious. There's a reason why
+those sex clubs or some
 
 275
-00:14:07.020 --> 00:14:10.770
-made it up was organizational
-willpower. And it's my it's
+00:16:17.500 --> 00:16:22.420
+of the houses of ill
+repute are run specifically by
 
 276
-00:14:10.770 --> 00:14:12.930
-when I get frustrated with
-a company and some, they
+00:16:22.420 --> 00:16:26.350
+AIS. They are, it requires
+an emotional detachment and are
 
 277
-00:14:12.930 --> 00:14:15.480
-don't do something. And I
-say, why doesn't remote work
+00:16:26.350 --> 00:16:30.700
+tools of maths who are,
+you know, keeping the 99%
 
 278
-00:14:15.480 --> 00:14:18.240
-here? It's like, well, organizational
-willpower, I guess that's like
+00:16:30.700 --> 00:16:33.910
+down dig three Oh one
+was looking for a purpose.
 
 279
-00:14:18.270 --> 00:14:22.560
-buy in, right? You need
-somebody to actually care at
+00:16:34.060 --> 00:16:37.180
+And it's exactly what she
+says, a dig without a
 
 280
-00:14:22.560 --> 00:14:25.260
-a higher level. You can't
-build it. I mean, can
+00:16:37.180 --> 00:16:41.710
+dig, because she's actually an
+excavator and a anthropologist as
 
 281
-00:14:25.260 --> 00:14:27.840
-you do it from the
-ground up Remote work? No.
+00:16:41.710 --> 00:16:44.620
+an artificial intelligent life form.
+And she uses looking for
 
 282
-00:14:28.110 --> 00:14:30.450
-Everybody tells you, you can
-do things like DevOps and
+00:16:44.620 --> 00:16:50.110
+something to, to research or
+fix, or, and she finds
 
 283
-00:14:30.450 --> 00:14:32.070
-whatnot from the ground up.
-And anybody who's tried to
+00:16:50.110 --> 00:16:53.230
+that, wow, exactly. She, she
+finds it as a plot
 
 284
-00:14:32.070 --> 00:14:33.960
-do, even that will tell
-you how hard that is.
+00:16:53.230 --> 00:16:55.300
+device in like the plot
+and the things that everyone
 
 285
-00:14:34.410 --> 00:14:39.000
-Remote work to succeed requires
-buy in at the highest
+00:16:55.300 --> 00:16:56.890
+else is trying to excavate,
+but it is in fact
 
 286
-00:14:39.000 --> 00:14:41.700
-levels of a company. And
-it doesn't just require buy
+00:16:56.890 --> 00:17:00.100
+Poe and his pain that
+she's trying to go and
 
 287
-00:14:41.700 --> 00:14:45.780
-in. It requires empathy and
-modeling of those behaviors, The
+00:17:00.100 --> 00:17:03.780
+excavate and dig into. Yeah.
+Yeah. It's very specific to,
 
 288
-00:14:45.780 --> 00:14:48.930
-modeling, the modeling. That's so
-important. Yeah. Yeah. And there's,
+00:17:04.060 --> 00:17:07.600
+that's a Testament to good
+writing considering that we've, we
 
 289
-00:14:48.960 --> 00:14:51.560
-you know, people talk about
-culture. There's a reason you
+00:17:07.600 --> 00:17:10.420
+jumped so far away from
+the source material, which I
 
 290
-00:14:51.560 --> 00:14:54.590
-see about remote work talks
-about culture because well, first
+00:17:10.420 --> 00:17:13.540
+think you have to do
+for a television or film.
 
 291
-00:14:54.590 --> 00:14:57.140
-of all, culture is important
-for any company. And I
+00:17:14.020 --> 00:17:18.100
+It's, it's a lovely thing
+to see and to get
 
 292
-00:14:57.140 --> 00:15:00.050
-feel like what a remote
-environment situation for a company
+00:17:18.100 --> 00:17:22.510
+to act such good storytelling.
+And we were lucky to
 
 293
-00:15:00.380 --> 00:15:02.960
-is, is it pushes at
-all the hard spots of
+00:17:22.510 --> 00:17:25.420
+have Alison chapter as our
+showrunner this year, helping us
 
 294
-00:15:02.960 --> 00:15:05.990
-running a business and having
-people have to work together.
+00:17:25.420 --> 00:17:28.600
+along the journey. When you
+need to focus on building,
 
 295
-00:15:06.800 --> 00:15:09.860
-I feel like it finds
-your weaknesses. It's like having
+00:17:28.630 --> 00:17:30.670
+do you want to get
+bogged down by your database?
 
 296
-00:15:09.860 --> 00:15:11.870
-two year olds. So just
-all to find all the
+00:17:30.910 --> 00:17:34.210
+Mongo DB is an intuitive,
+flexible document database that lets
 
 297
-00:15:11.870 --> 00:15:14.990
-cracks, right. And then just
-wedge it in there and
+00:17:34.210 --> 00:17:37.360
+you get to building Mongo.
+DBS document model is a
 
 298
-00:15:14.990 --> 00:15:18.890
-keep pushing. Yes. I mean,
-if you don't, if you
+00:17:37.360 --> 00:17:39.790
+natural way to represent data
+so you can focus on
 
 299
-00:15:18.890 --> 00:15:23.450
-don't spend time explicitly thinking
-about your culture and whether
+00:17:39.790 --> 00:17:43.090
+what matters. Mongo DB Atlas
+is the best way to
 
 300
-00:15:23.450 --> 00:15:27.770
-it is set up to
-handle the kinds of challenges
+00:17:43.090 --> 00:17:46.630
+use Mongo DB. It's a
+global cloud database service that
 
 301
-00:15:27.800 --> 00:15:33.440
-that are remote a remote
-workforce has, that's going to
+00:17:46.630 --> 00:17:49.150
+gives you all of the
+developer productivity of Mongo DB.
 
 302
-00:15:33.440 --> 00:15:37.850
-be one of your biggest
-challenges I believe firmly. And
+00:17:49.500 --> 00:17:53.010
+Plus the added simplicity of
+a fully managed database service.
 
 303
-00:15:37.850 --> 00:15:39.980
-if you don't have a
-set of values that support
+00:17:53.430 --> 00:17:59.600
+You can get started free
+with DB atlas@mongodb.com slash mm.
 
 304
-00:15:39.980 --> 00:15:45.050
-that, that are like very
-clearly articulated and regularly reinforced,
+00:18:00.530 --> 00:18:03.350
+So speaking about the acting
+aspect of it specifically, how
 
 305
-00:15:45.140 --> 00:15:49.370
-then I think that's incredibly
-critical for leadership for companies
+00:18:03.350 --> 00:18:05.810
+do you know when you're
+doing this? That it works?
 
 306
-00:15:49.370 --> 00:15:53.680
-who are doing this. No
-one wants to manage databases.
+00:18:05.840 --> 00:18:07.460
+I mean, I'm sure that
+there's table reads, but how
 
 307
-00:15:53.690 --> 00:15:57.130
-If they can avoid it.
-That's why Mongo DB made
+00:18:07.460 --> 00:18:09.440
+did you know it would
+work? Yeah, I don't, I,
 
 308
-00:15:57.130 --> 00:16:01.390
-Mongo DB Atlas, a global
-cloud database service that runs
+00:18:09.450 --> 00:18:12.920
+I never know. I'm terrified.
+And I would come home
 
 309
-00:16:01.390 --> 00:16:05.830
-on AWS, GCP and Azure.
-You can deploy a fully
+00:18:12.920 --> 00:18:15.080
+to my wife every night
+and say, this is I'm
 
 310
-00:16:05.830 --> 00:16:09.400
-managed Mongo DB database in
-minutes with just a few
+00:18:15.080 --> 00:18:17.120
+going to get laughed at,
+this is the worst acting
 
 311
-00:16:09.400 --> 00:16:13.600
-clicks or a few API
-calls, Mongo DB, Atlas, automates
+00:18:17.120 --> 00:18:19.100
+I've ever done in my
+life. It's a leap of
 
 312
-00:16:13.600 --> 00:16:17.530
-deployment, automates updates, handles scaling,
-and more so that you
+00:18:19.100 --> 00:18:21.920
+faith, a lot of ways.
+I'm a theater actor. So
 
 313
-00:16:17.530 --> 00:16:20.440
-can focus on your application
-instead of taking care of
+00:18:22.040 --> 00:18:24.800
+the suspending disbelief is pretty
+easy for me or at
 
 314
-00:16:20.440 --> 00:16:27.460
-your database, you can get
-started free@mongodb.com slash Atlas. Now,
+00:18:24.800 --> 00:18:27.140
+least that's the thing I
+have the most joy in
 
 315
-00:16:27.460 --> 00:16:30.490
-if you're already managing a
-Mongo DB deployment, Atlas has
+00:18:27.140 --> 00:18:29.180
+doing. So I have a
+good time with it. And
 
 316
-00:16:30.490 --> 00:16:34.150
-a live migration service. So
-you can migrate it easily
+00:18:29.180 --> 00:18:33.860
+it's a Shakespearian story. It's
+larger than life. Hopefully that
 
 317
-00:16:34.180 --> 00:16:36.880
-with minimal downtime and then
-get back to what matters.
+00:18:33.860 --> 00:18:36.530
+we don't turn into such
+a dystopian society such as
 
 318
-00:16:37.060 --> 00:16:41.380
-Stop managing your database and
-start using Mongo DB Atlas.
+00:18:36.530 --> 00:18:42.170
+this. And you, you step
+out on the stage or
 
 319
-00:16:42.370 --> 00:16:44.470
-So are you saying that
-if you have an unhealthy
+00:18:42.320 --> 00:18:45.500
+in this case, in front
+of a camera and hope
 
 320
-00:16:44.470 --> 00:16:46.390
-org and then you decide
-to move people remote, you're
+00:18:45.740 --> 00:18:50.480
+that someone understands your struggle
+and your wants as a
 
 321
-00:16:46.390 --> 00:16:48.490
-just going to have a
-nice, big remote, unhealthy org
+00:18:50.480 --> 00:18:52.820
+character when they watch the
+show. And you hope that
 
 322
-00:16:49.070 --> 00:16:52.090
-You're to, yes. You will
-have a nice day. It's
+00:18:52.820 --> 00:18:54.800
+you get to tell a
+story like we did in
 
 323
-00:16:52.090 --> 00:16:53.950
-going to get worse is
-what I'm going to say.
+00:18:54.800 --> 00:18:58.820
+season two of a character,
+struggling with mental instability. Now
 
 324
-00:16:54.250 --> 00:16:58.570
-Yeah. Interesting. So one of
-the things that we've been
+00:18:58.820 --> 00:19:01.940
+you are a guest teaching
+artists and you've taught Shakespeare.
 
 325
-00:16:58.570 --> 00:17:01.120
-dealing with is that, you
-know, everyone was kicked out
+00:19:02.210 --> 00:19:04.820
+You've said you're a stage
+actor. What is the difference
 
 326
-00:17:01.120 --> 00:17:03.940
-of their offices, right? So
-I've been doing my thing.
+00:19:04.820 --> 00:19:09.230
+between presenting and projecting out
+to a room of a,
 
 327
-00:17:03.940 --> 00:17:06.580
-And then suddenly in a
-day there was like, go
+00:19:09.270 --> 00:19:12.680
+of a hundred or 300
+where you've got about 50
 
 328
-00:17:06.580 --> 00:17:08.740
-to the office, grab your
-monitor, grab your mouse and
+00:19:12.680 --> 00:19:18.170
+feet of emotional radius? Yeah.
+Well art over carbon, tens
 
 329
-00:17:08.740 --> 00:17:13.180
-run. Right. And we're dealing
-with a, a, not a
+00:19:18.170 --> 00:19:19.700
+of millions of people that
+are watching it right now.
 
 330
-00:17:13.180 --> 00:17:16.330
-very level playing field. We've
-got wifi people that people
+00:19:19.730 --> 00:19:22.190
+Are you acting for those
+tens of millions of people?
 
 331
-00:17:16.330 --> 00:17:17.740
-never thought about what it
-was like to be on
+00:19:22.190 --> 00:19:25.940
+Are you acting for the
+people on set is the
 
 332
-00:17:17.740 --> 00:17:19.750
-wifi at home for eight
-hours, Or how about their
+00:19:25.940 --> 00:19:28.910
+set of stage. Yeah. Sometimes
+I, I, we had such
 
 333
-00:17:19.750 --> 00:17:22.810
-whole family on wifi at
-home for eight hours, We
+00:19:28.910 --> 00:19:31.640
+a great crew and they
+respond so well as audience
 
 334
-00:17:22.810 --> 00:17:25.900
-had a very nice young
-person who was, had set
+00:19:31.640 --> 00:19:33.660
+members that it really does
+help you as an actor.
 
 335
-00:17:25.900 --> 00:17:29.500
-up a home office in
-their, in their pantry. Yeah.
+00:19:33.980 --> 00:19:38.480
+I Canadian crews in general,
+in Vancouver, British Columbia have
 
 336
-00:17:30.130 --> 00:17:33.550
-Cause it was the only
-room space. Yeah. Someone else
+00:19:38.480 --> 00:19:41.210
+been stellar. And not just
+because they laugh at your
 
 337
-00:17:33.550 --> 00:17:37.090
-had a laundry hamper, flipped
-upside down and they were
+00:19:41.210 --> 00:19:47.330
+jokes, but they are responsive
+and, and are nurturing and
 
 338
-00:17:37.090 --> 00:17:39.010
-at the end of the
-hallway and they just made
+00:19:47.330 --> 00:19:49.790
+helping you as a, as
+a performer. I think the
 
 339
-00:17:39.010 --> 00:17:42.010
-the hallway, the space. Right.
-All of these and not
+00:19:49.790 --> 00:19:53.330
+difference between being on a,
+a stage that is in
 
 340
-00:17:42.010 --> 00:17:44.500
-everyone has the space or
-the privilege to go and
+00:19:53.330 --> 00:19:56.840
+front of 1400 live people,
+and the difference between being
 
 341
-00:17:44.500 --> 00:17:46.720
-make a spare bedroom. Like
-I have a spare bedroom
+00:19:56.840 --> 00:19:59.150
+in front of a camera,
+it's just that it's a
 
 342
-00:17:46.720 --> 00:17:49.320
-and that's an office and
-I filled it with toys.
+00:19:59.150 --> 00:20:03.110
+camera is basically an intimate
+one person. It doesn't mean
 
 343
-00:17:49.860 --> 00:17:51.690
-You know, it's full of
-Legos and crap. And the
+00:20:03.110 --> 00:20:07.280
+that the size of the
+performance changes sometimes because if
 
 344
-00:17:51.690 --> 00:17:53.220
-kids come in here, grab
-the Legos and they come
+00:20:07.280 --> 00:20:10.280
+you watch some of my
+favorite actors, Phillip Seymour Hoffman
 
 345
-00:17:53.220 --> 00:17:55.300
-back out. But it looks
-pretty cool. And I, I,
+00:20:10.370 --> 00:20:14.930
+comes to mind right away.
+Joaquin comes to mind. All
 
 346
-00:17:55.390 --> 00:17:57.950
-the most important part is
-I have a door. Yeah.
+00:20:14.930 --> 00:20:20.510
+of these guys sometimes are
+enormous with their performance, but
 
 347
-00:17:57.950 --> 00:18:00.320
-So do I, I have
-a dedicated office and we're
+00:20:20.510 --> 00:20:22.910
+because they're so grounded in
+front of the camera, it
 
 348
-00:18:00.320 --> 00:18:03.620
-so privileged to, we built,
-we bought this house because
+00:20:22.910 --> 00:20:27.920
+reads and comes across as
+being captivating and really propelling.
 
 349
-00:18:03.650 --> 00:18:05.870
-I was working remote. My
-husband works remote. And so
+00:20:28.160 --> 00:20:31.160
+As far as telling the
+story goes, there were moments,
 
 350
-00:18:05.870 --> 00:18:08.090
-we were able to, well,
-partly I'd part of the
+00:20:31.160 --> 00:20:35.180
+there are appropriate pauses. There
+are seconds that, that extend.
 
 351
-00:18:08.090 --> 00:18:11.690
-thing about working remotely was
-we moved someplace cheap and
+00:20:35.270 --> 00:20:37.010
+They feel like a second
+is a minute. There are
 
 352
-00:18:11.690 --> 00:18:13.670
-then you could afford a
-house. Not everybody has that.
+00:20:37.010 --> 00:20:39.950
+moments where you're using your
+face. You're twitching, you're moving
 
 353
-00:18:13.670 --> 00:18:15.500
-I mean, you know, so
-you have people who are
+00:20:39.950 --> 00:20:41.930
+in some way. How do
+you know that the show
 
 354
-00:18:15.500 --> 00:18:18.230
-living in New York city in
-San Francisco and they're jammed
+00:20:41.930 --> 00:20:43.520
+runner, the director, the editor
+is going to give you
 
 355
-00:18:18.230 --> 00:18:20.810
-in there and yeah, they
-certainly don't have the luxury
+00:20:43.520 --> 00:20:47.350
+that space to emote. They
+seem to give you of
 
 356
-00:18:20.810 --> 00:18:25.010
-of even a separate room
-and children running everywhere. Trying
+00:20:47.350 --> 00:20:49.300
+space. And that's why I
+think people are connecting with
 
 357
-00:18:25.010 --> 00:18:27.050
-to do this in the,
-in the kitchen. My wife
+00:20:49.300 --> 00:20:54.700
+Poe. Yeah. The gift of
+having bosses and collaborators that
 
 358
-00:18:27.050 --> 00:18:28.760
-always says, when I, when
-the door is closed, you
+00:20:55.090 --> 00:20:57.790
+have faith in you as
+an artist is it sounds
 
 359
-00:18:28.760 --> 00:18:31.550
-know, I'm not available. Yeah.
-So when we originally started
+00:20:57.790 --> 00:21:02.290
+so pretentious, but it's true
+that they give you that
 
 360
-00:18:31.550 --> 00:18:35.570
-working remotely, I tried to
-express that I'm, I'm remote.
+00:21:02.290 --> 00:21:06.580
+space is it's so far
+and few between as far
 
 361
-00:18:35.570 --> 00:18:38.840
-Like I'm, I'm away, like
-consider the metaphor was I've
+00:21:06.580 --> 00:21:10.360
+as being a working actor
+to get it. And that's
 
 362
-00:18:38.840 --> 00:18:42.470
-gone to work and that
-metaphor doesn't really work. Cause
+00:21:10.360 --> 00:21:13.570
+the joy of streaming services.
+Now you don't have as
 
 363
-00:18:42.470 --> 00:18:44.540
-I am here and they
-can hear me in here.
+00:21:13.570 --> 00:21:17.440
+many suits on set saying
+what the audience needs, because
 
 364
-00:18:45.680 --> 00:18:48.530
-So what do I do?
-Do I say, do I
+00:21:17.890 --> 00:21:22.540
+there, while there are still
+notes that they're not focus
 
 365
-00:18:49.130 --> 00:18:50.900
-give them access to my
-calendar? Do I put a
+00:21:22.540 --> 00:21:26.590
+groups, they're not playing to
+some common denominator. That seems
 
 366
-00:18:50.900 --> 00:18:52.490
-light outside? And like right
-now I have to like,
+00:21:26.590 --> 00:21:30.400
+to be what would sell
+soap at the end of
 
 367
-00:18:52.490 --> 00:18:54.890
-literally have a light outside.
-That's like a smart light.
+00:21:30.400 --> 00:21:33.010
+the day. Right? That's what
+number television really is. So
 
 368
-00:18:55.760 --> 00:18:58.520
-Right. So I just say,
-you know, set the daddy
+00:21:33.010 --> 00:21:35.140
+you've been a working actor
+for, for many, many years.
 
 369
-00:18:58.520 --> 00:19:02.930
-light to red and, and
-that's working so far, but
+00:21:35.170 --> 00:21:38.200
+Have there, there have been
+suits on set versus this
 
 370
-00:19:02.930 --> 00:19:04.970
-I, my kids are 12.
-I don't know if that
+00:21:38.200 --> 00:21:40.510
+concept of a showrunner. I've
+only heard that word show
 
 371
-00:19:04.970 --> 00:19:06.680
-would work with a fighter.
-My five year old would
+00:21:40.510 --> 00:21:43.180
+runner in the last, like
+since the wire, right? Yeah.
 
 372
-00:19:06.680 --> 00:19:08.540
-be like red light and
-not mom told me open
+00:21:43.210 --> 00:21:46.600
+David Simon really did a break
+out as the show runner.
 
 373
-00:19:08.550 --> 00:19:12.350
-the door. You know, any
-that's what's happened. I gave
+00:21:46.610 --> 00:21:51.250
+And now there's so many
+people who have a distinct
 
 374
-00:19:12.350 --> 00:19:14.600
-up, I'm not going to
-lie. I just stopped. I
+00:21:51.250 --> 00:21:54.220
+vision for their show. And
+it did usher in the
 
 375
-00:19:14.600 --> 00:19:16.520
-was having so much stress.
-I mean, and, and the
+00:21:54.220 --> 00:21:57.640
+era of the golden age
+of television. Some people call
 
 376
-00:19:16.520 --> 00:19:18.350
-folks I work with are,
-I mean, I'm the only
+00:21:57.640 --> 00:22:00.550
+it the wire being one
+of the best examples or
 
 377
-00:19:18.350 --> 00:19:21.710
-parent and they're working really
-hard to support me, but,
+00:22:00.550 --> 00:22:03.640
+the Sopranos or there's there's.
+But if you go back
 
 378
-00:19:22.910 --> 00:19:24.710
-you know, I just, I
-was, I was so stressed
+00:22:03.970 --> 00:22:05.890
+and you saw what Alan
+Alda did with mass, she
 
 379
-00:19:24.710 --> 00:19:26.960
-out cause I was like,
-you know, the kids have
+00:22:05.890 --> 00:22:09.910
+really was a show runner
+back then the television shows
 
 380
-00:19:26.960 --> 00:19:28.520
-to stay out and I'm
-wanting to dah, dah, dah.
+00:22:09.910 --> 00:22:12.670
+that are procedurals that at
+wild, I still have a
 
 381
-00:19:28.520 --> 00:19:29.600
-And even though I knew
-in the back of my
+00:22:12.670 --> 00:22:16.300
+show runner running them. They
+are exactly that. They are
 
 382
-00:19:29.600 --> 00:19:31.310
-head, I'm always, I'm telling
-people in the guide, like,
+00:22:16.360 --> 00:22:19.570
+a system of numbers that
+you put together and you
 
 383
-00:19:31.340 --> 00:19:33.710
-you know, like your kids
-in that's okay, let people
+00:22:19.570 --> 00:22:22.840
+make something that is more
+like a, you know, instant
 
 384
-00:19:33.710 --> 00:19:36.170
-see your life. And I
-just thought, I was like,
+00:22:22.840 --> 00:22:28.030
+baked brownies, as opposed to
+from scratch and showrunners provide
 
 385
-00:19:36.170 --> 00:19:38.450
-well, I got, I they're
-just coming in and out
+00:22:28.060 --> 00:22:33.040
+a, a common thread and
+vision that gives everybody the
 
 386
-00:19:38.450 --> 00:19:41.540
-now, even when it's my
-husband and I are sort
+00:22:33.040 --> 00:22:36.400
+basis of how to tell
+the story, the best to
 
 387
-00:19:41.540 --> 00:19:43.730
-of divvying up trying to
-have like mornings with them
+00:22:36.400 --> 00:22:39.580
+serve the artistic vision of
+what the showrunner wants. Right.
 
 388
-00:19:43.730 --> 00:19:46.430
-and afternoons, you know, each
-of us taking half of
+00:22:39.580 --> 00:22:41.500
+And it also allows, and
+this is a wonderful thing.
 
 389
-00:19:46.430 --> 00:19:48.470
-the day seems to be,
-what's working for our structure
+00:22:41.500 --> 00:22:44.800
+It allows a diversity of
+directors to come in and
 
 390
-00:19:48.470 --> 00:19:49.610
-because I have an eight
-and a five year old.
+00:22:44.800 --> 00:22:46.780
+you might watch 10 episodes
+of something. And you go
 
 391
-00:19:49.670 --> 00:19:52.760
-And five-year-old, can't self entertain
-for more than, you know,
+00:22:46.780 --> 00:22:48.700
+out of season seven, had
+a flavor to it. What
 
 392
-00:19:54.110 --> 00:19:58.160
-whatever 15 minutes. And when
-I just sort of threw
+00:22:48.700 --> 00:22:52.180
+was that? Oh, that was
+guest director who the showrunner
 
 393
-00:19:58.160 --> 00:20:00.680
-up in the boundaries and
-just started letting them in
+00:22:52.180 --> 00:22:55.180
+then gave their break. And
+they were as opposed to
 
 394
-00:20:00.680 --> 00:20:04.340
-my stress level, went down,
-their stress level, went down,
+00:22:55.180 --> 00:22:58.060
+having the same director for
+an entire season or having
 
 395
-00:20:05.840 --> 00:20:08.630
-my team, got to see
-even more, really what I'm
+00:22:58.060 --> 00:23:01.060
+a different director. Every episode,
+we had the gift of
 
 396
-00:20:08.630 --> 00:20:12.140
-dealing with. You know, I
-had like one, the five-year-old
+00:23:01.060 --> 00:23:04.810
+doing a block shooting and
+each director for the second
 
 397
-00:20:12.140 --> 00:20:13.910
-came in and interrupted a
-conversation. I was having with
+00:23:04.810 --> 00:23:06.490
+season and the first season
+for the most part, got
 
 398
-00:20:13.910 --> 00:20:15.830
-someone and he completely lost
-his train of thought. And
+00:23:06.490 --> 00:23:09.160
+two episodes. So you really
+build a rapport cause you
 
 399
-00:20:15.830 --> 00:20:17.720
-I was like, yeah, imagine
-that like 10 times a
+00:23:09.160 --> 00:23:12.160
+really making a two hour
+movie with these people and
 
 400
-00:20:17.720 --> 00:20:20.480
-day, buddy, This brings me
-up to another topic, which
+00:23:12.220 --> 00:23:16.450
+like MJ, Bassett directed three
+and four of season two.
 
 401
-00:20:20.480 --> 00:20:23.510
-is, I think there's a
-new flavor of professionalism, right?
+00:23:16.690 --> 00:23:21.190
+And she's a powerhouse as
+far as vision and energy
 
 402
-00:20:23.510 --> 00:20:25.220
-Yeah. If you go back
-to what I was saying,
+00:23:21.460 --> 00:23:24.130
+and pushing a story along
+and challenging you as an
 
 403
-00:20:25.310 --> 00:20:29.000
-I'm trying to create an
-office professional, which I'm going
+00:23:24.130 --> 00:23:27.160
+actor, asking more of you
+than you thought you were
 
 404
-00:20:29.000 --> 00:20:32.480
-to recreate the office. Exactly.
-And I'm hearing that that's
+00:23:27.160 --> 00:23:31.840
+willing to be able to
+do in that gift of
 
 405
-00:20:32.480 --> 00:20:36.950
-wrong. I think we shouldn't.
-And the more people I
+00:23:31.840 --> 00:23:36.970
+having a director who is
+I've asking for better storytelling
 
 406
-00:20:36.950 --> 00:20:40.700
-talk to, at least at
-what seems like fairly healthy,
+00:23:36.970 --> 00:23:41.710
+continually on a daily basis,
+only happens now for me,
 
 407
-00:20:40.790 --> 00:20:46.430
-especially largely remote companies, that's
-what I'm hearing. Just, they've
+00:23:41.710 --> 00:23:45.440
+at least on streaming service
+television. When we, as people
 
 408
-00:20:46.430 --> 00:20:52.360
-just it. And I think
-that's a long road for
+00:23:45.440 --> 00:23:47.660
+who basically see the behind
+the scenes stuff at the
 
 409
-00:20:52.360 --> 00:20:54.970
-a lot of the rest
-of America and the world
+00:23:47.660 --> 00:23:49.910
+end of the DVD, and
+we see whatever the YouTube
 
 410
-00:20:54.970 --> 00:20:57.700
-in some cases, depending on
-how different cultures approach that.
+00:23:49.910 --> 00:23:53.000
+behind the scenes is, we
+see only the thing that
 
 411
-00:20:58.270 --> 00:21:03.100
-But for me, it's been,
-it's been very freeing and
+00:23:53.000 --> 00:23:56.240
+you put on, on film.
+And then we see a
 
 412
-00:21:03.130 --> 00:21:05.920
-it's, it turns out that
-if I'm less stressed out
+00:23:56.240 --> 00:24:00.050
+still of you standing with
+a director, presumably they're giving
 
 413
-00:21:05.920 --> 00:21:08.860
-about it, they can come
-in, get a hug and
+00:24:00.050 --> 00:24:02.990
+you notes, right. That can't
+be the complete extent of
 
 414
-00:21:08.860 --> 00:21:09.820
-they know they're going to
-get the hug and they
+00:24:02.990 --> 00:24:04.760
+that. I mean, he does.
+It's like you, you, you
 
 415
-00:21:09.820 --> 00:21:11.470
-can go and we're fine.
-And then I'm not like
+00:24:04.760 --> 00:24:06.380
+kill it. You do a
+whole great scene and they
 
 416
-00:21:11.470 --> 00:21:13.870
-yelling at my children to
-like get out of my
+00:24:06.380 --> 00:24:07.340
+go, well, let me give
+you a couple of notes
 
 417
-00:21:13.870 --> 00:21:18.520
-office, you know? And the
-flip side is I have
+00:24:07.340 --> 00:24:09.860
+and then do it all
+over again. Yeah. Are there
 
 418
-00:21:18.520 --> 00:21:22.060
-a job that is normally
-I need large chunks of
+00:24:09.980 --> 00:24:11.750
+one of the times that
+they give you that, do
 
 419
-00:21:22.060 --> 00:21:26.140
-focus, time editorial work and
-software development have a lot
+00:24:11.750 --> 00:24:14.150
+you dress up as PO
+and sit at a conference
 
 420
-00:21:26.140 --> 00:21:28.630
-of figs in common. And
-one of them is that
+00:24:14.150 --> 00:24:16.640
+table and try to like,
+this is who I'm thinking
 
 421
-00:21:28.630 --> 00:21:31.720
-you have to sit and
-spend time constructing and thinking
+00:24:16.640 --> 00:24:20.270
+I'm going to be today.
+That's funny. Well, close to
 
 422
-00:21:31.720 --> 00:21:35.800
-or debugging and fixing. And
-I don't have that right
+00:24:20.270 --> 00:24:23.180
+it. I mean, you do
+you do the, the, the
 
 423
-00:21:35.800 --> 00:21:38.320
-now. And a lot of
-the, the advice and our
+00:24:23.720 --> 00:24:27.620
+table read usually, but it,
+it, it starts early in
 
 424
-00:21:38.320 --> 00:21:40.390
-guidance about how to do
-deep work and how to
+00:24:27.620 --> 00:24:31.940
+the morning script in hand
+walking through the scene on
 
 425
-00:21:40.390 --> 00:21:42.370
-set up your calendar and
-like, you know, because we
+00:24:31.940 --> 00:24:37.700
+a set. I come to
+the set with my own
 
 426
-00:21:42.370 --> 00:21:43.690
-wrote it when we wrote
-it. And now it's, now
+00:24:38.810 --> 00:24:43.340
+idea of what I want
+to do. I luckily was
 
 427
-00:21:43.690 --> 00:21:46.300
-I don't have any advice
-in there about this, but
+00:24:45.110 --> 00:24:48.080
+gifted with directors who were
+willing to listen to me
 
 428
-00:21:46.300 --> 00:21:49.060
-I think that's the biggest
-challenge for people is, and
+00:24:48.080 --> 00:24:52.820
+and my ideas. And sometimes,
+and I've worked with directors
 
 429
-00:21:49.060 --> 00:21:52.540
-we're having to adjust our
-work styles and how much
+00:24:52.820 --> 00:24:56.180
+in the past who just
+throw out everything the actor
 
 430
-00:21:52.540 --> 00:21:54.220
-work we can do and
-what kind of work we
+00:24:56.210 --> 00:24:58.850
+wants and they come up
+with what they want and
 
 431
-00:21:54.220 --> 00:21:56.800
-can get done. And that's
-a lot to communicate with,
+00:24:58.850 --> 00:25:02.000
+it ends up being stilted.
+It ends up being a
 
 432
-00:21:57.250 --> 00:21:59.590
-you know, your teams or
-your managers. And so there's,
+00:25:02.000 --> 00:25:06.750
+little fragmented and I can
+see it in performances. When
 
 433
-00:21:59.860 --> 00:22:02.470
-that's the other big shift.
-I think that's going on
+00:25:06.750 --> 00:25:10.160
+you, when I watch it,
+the notes as part of,
 
 434
-00:22:03.070 --> 00:22:06.460
-aside from just trying to
-work during a pandemic, a
+00:25:10.220 --> 00:25:14.900
+part of the process during
+the day, once you build
 
 435
-00:22:06.460 --> 00:22:08.710
-lot of people are finding,
-especially if you have family
+00:25:14.900 --> 00:25:24.380
+a language with a director
+like Kieran, who directed one
 
 436
-00:22:08.710 --> 00:22:12.100
-around that and you don't
-have, don't have a dedicated
+00:25:24.380 --> 00:25:30.080
+and two of episode of
+season two, he's an Irishman
 
 437
-00:22:12.100 --> 00:22:14.080
-space or whatever, like we
-were just talking about, you
+00:25:30.440 --> 00:25:33.830
+with a brilliant sense of
+humor and could just take
 
 438
-00:22:14.080 --> 00:22:17.440
-just can't necessarily plan to
-sit and focus and think
+00:25:33.830 --> 00:25:37.340
+the piss out of me.
+And then immediately I would
 
 439
-00:22:17.440 --> 00:22:19.930
-and contemplate. And so we're
-having to learn how to
+00:25:37.340 --> 00:25:40.400
+understand, okay, I need to
+lighten this up, brighten it
 
 440
-00:22:19.930 --> 00:22:22.990
-work in very different ways.
-But I think the new
+00:25:40.400 --> 00:25:44.090
+a little bit. And it's
+also, it's a relationship of
 
 441
-00:22:22.990 --> 00:22:26.620
-professionalism is that we are
-humans who are in this
+00:25:44.090 --> 00:25:47.510
+trust. It's the same thing
+of like you project managing
 
 442
-00:22:26.800 --> 00:22:31.120
-unique situation together. And I
-hope that breaks down some
+00:25:47.510 --> 00:25:50.720
+your own team or having
+a, a relationship at work
 
 443
-00:22:31.120 --> 00:22:36.640
-of the cultural expectations we
-have about the office that
+00:25:50.720 --> 00:25:53.930
+with people who you expect
+them to show up on
 
 444
-00:22:36.640 --> 00:22:40.470
-are, in my opinion, just
-really outdated. It seems like
+00:25:53.930 --> 00:25:56.180
+time and do what they're
+asked to do. It's the
 
 445
-00:22:40.650 --> 00:22:43.260
-for the, you know, I've
-been working for, what is
+00:25:56.180 --> 00:26:00.220
+same. There were a number
+of, I wouldn't say Easter
 
 446
-00:22:43.260 --> 00:22:46.440
-it now? 30 years and
-I've seen madman. So really
+00:26:00.220 --> 00:26:02.230
+eggs, but there were a
+little bit of subtle sprinkles
 
 447
-00:22:46.440 --> 00:22:48.300
-I've been working for 60
-years. So I know that,
+00:26:02.230 --> 00:26:04.750
+and flavor in, in, in,
+in the hotel, in the
 
 448
-00:22:49.110 --> 00:22:51.390
-I know I've know how
-people worked in the forties.
+00:26:04.750 --> 00:26:07.210
+background, there were moments that
+you needed to pause and
 
 449
-00:22:51.390 --> 00:22:54.720
-Right. That's exactly what it
-was like, you know, but
+00:26:07.210 --> 00:26:08.890
+go look at that. There's
+one, just put that on
 
 450
-00:22:54.780 --> 00:22:57.960
-it seems like finally for
-the first time, and probably
+00:26:08.890 --> 00:26:12.760
+a shelf. Or, and you
+also did other things. And
 
 451
-00:22:57.960 --> 00:23:00.630
-only in tech, as you
-said, the tech kind of
+00:26:13.060 --> 00:26:15.550
+the, for example, the eye
+Twitch, was that real? Or
 
 452
-00:23:00.630 --> 00:23:04.080
-leads the leads, the cutting
-edge here is we're recognizing
+00:26:15.550 --> 00:26:19.210
+was that an effect or
+I'm doing it right now.
 
 453
-00:23:04.080 --> 00:23:08.610
-that people are humans and
-they're not resources. And if
+00:26:19.390 --> 00:26:21.280
+She's doing it right now.
+What's weird about this is
 
 454
-00:23:08.610 --> 00:23:10.410
-you're nice to them, they
-will do better work than
+00:26:21.280 --> 00:26:24.250
+that I tried this this
+morning in my research. I'm
 
 455
-00:23:10.410 --> 00:23:12.570
-if you're mean to them
-and burn them out. And
+00:26:24.250 --> 00:26:28.150
+like, can I move one
+eye without even a hint
 
 456
-00:23:12.570 --> 00:23:15.390
-now we need to take
-that from privileged tech, West
+00:26:28.210 --> 00:26:30.730
+of squinting on the other
+eye? And it's fricking heart
 
 457
-00:23:15.390 --> 00:23:18.390
-coast, to East coast, to
-middle America, to the world
+00:26:31.100 --> 00:26:32.320
+of those things. You're not
+supposed to be able to
 
 458
-00:23:18.870 --> 00:23:22.380
-and be nice to people
-and let them prioritize And
+00:26:32.320 --> 00:26:34.930
+do you remove a couple
+of frames? And that's a
 
 459
-00:23:22.380 --> 00:23:25.170
-treat them with respect. You
-hired them. If they're like,
+00:26:34.990 --> 00:26:37.910
+really interesting effect to show
+a glitch. Yeah. Yeah. Well,
 
 460
-00:23:25.200 --> 00:23:26.940
-that's the thing. I think
-I'm seeing a lot of
+00:26:38.620 --> 00:26:40.240
+in the first season we
+came up with the idea
 
 461
-00:23:26.940 --> 00:23:29.820
-unfortunate things out there of,
-you know, sort of examples
+00:26:40.300 --> 00:26:43.320
+actually was on the fly.
+Well, not on the, for
 
 462
-00:23:29.820 --> 00:23:35.340
-of, of horrible micromanagement and
-expectations, which were bad enough
+00:26:43.320 --> 00:26:47.190
+me. I had, I rehearse
+everything beforehand before I get
 
 463
-00:23:35.370 --> 00:23:38.790
-if it weren't working during
-pandemic and with children at
+00:26:47.190 --> 00:26:49.350
+to work. And so I
+had come up with this
 
 464
-00:23:38.790 --> 00:23:43.830
-home. But the, the office
-is the office as a
+00:26:49.410 --> 00:26:52.680
+idea of downloading data and
+having some way of showing
 
 465
-00:23:43.830 --> 00:23:48.050
-hall monitor the office, a
-built in presence indicator. And
+00:26:52.680 --> 00:26:57.780
+it, right. And then we
+got to season two when
 
 466
-00:23:48.080 --> 00:23:51.200
-a lot of managers have
-always used that if they're
+00:26:57.780 --> 00:27:01.650
+the deterioration of posts, mental
+state is happening and how
 
 467
-00:23:51.200 --> 00:23:53.630
-not the kind, if I'm
-just gonna come out and
+00:27:01.650 --> 00:27:04.140
+you illustrate that while the
+watch helps a lot, the
 
 468
-00:23:53.630 --> 00:23:55.460
-say it, if you're a
-bad manager, then you're managing
+00:27:04.140 --> 00:27:08.490
+ticking sound and then the
+idea of, Oh, there's a
 
 469
-00:23:55.460 --> 00:23:58.250
-by butts and seats and
-trying to, you know, control
+00:27:08.490 --> 00:27:11.550
+problem with the connection synapses,
+aren't firing in the same
 
 470
-00:23:58.250 --> 00:24:01.880
-what people are doing daily.
-And part of the nature
+00:27:11.550 --> 00:27:14.700
+way just to make it
+tangible, to, to humans. And
 
 471
-00:24:01.880 --> 00:24:04.310
-of remote work, that companies
-that are really have been
+00:27:14.700 --> 00:27:18.510
+it was me watching a
+documentary. I think it's called
 
 472
-00:24:04.310 --> 00:24:06.800
-doing this for awhile, it's
-embracing is, is yes, hire
+00:27:18.510 --> 00:27:21.750
+me and my mum or
+my mum. I'm not sure
 
 473
-00:24:06.800 --> 00:24:11.210
-people, hire smart people, enable
-them, give them clear goals
+00:27:21.750 --> 00:27:24.990
+which, but it's about a
+woman and her mother and
 
 474
-00:24:11.210 --> 00:24:13.850
-and then let them go
-do their work. And you
+00:27:24.990 --> 00:27:28.410
+their relationship with her. Mother's
+Alzheimer's and it's a British
 
 475
-00:24:13.850 --> 00:24:16.610
-don't have to micromanage them.
-And you don't have to
+00:27:28.410 --> 00:27:31.260
+documentary. It's on YouTube actually.
+And I suggest everybody watching
 
 476
-00:24:16.880 --> 00:24:20.380
-know what they're doing every
-moment of the day. Right.
+00:27:31.260 --> 00:27:36.360
+it, but this woman, this
+woman's mother laughed and hysterically.
 
 477
-00:24:20.710 --> 00:24:23.830
-See that acknowledgement that they're
-grown. Like how do you
+00:27:36.390 --> 00:27:39.510
+And it's, I think it's
+a Samuel Beckett quote, laughing
 
 478
-00:24:23.830 --> 00:24:25.330
-know that? How do you
-know that they're at their
+00:27:39.510 --> 00:27:43.350
+wild, like it's severest. Whoa.
+And it's this beautiful moment
 
 479
-00:24:25.330 --> 00:24:27.940
-desk? They're grown, but what
-if they, what if they're
+00:27:43.410 --> 00:27:46.770
+of, of trying to figure
+out how you deal with
 
 480
-00:24:27.940 --> 00:24:30.490
-at the mall? Well, then
-I'll probably notice that their
+00:27:48.630 --> 00:27:52.170
+losing your faculties. And the
+Twitch was part of that
 
 481
-00:24:30.490 --> 00:24:32.650
-productivity is down and they
-won't work here anymore. Like
+00:27:52.170 --> 00:27:55.320
+on the outside, but the
+laughing part and trying to
 
 482
-00:24:32.680 --> 00:24:35.350
-they are adult humans that
-we hired for the job.
+00:27:55.320 --> 00:27:57.900
+find some joy in, it
+was something that we tried
 
 483
-00:24:35.650 --> 00:24:37.600
-We hired them to do
-the job. And so if
+00:27:57.900 --> 00:28:00.090
+to instill in season two.
+And hopefully we did. Yeah.
 
 484
-00:24:37.660 --> 00:24:41.590
-you didn't hire the right
-people, I mean, come on,
+00:28:00.120 --> 00:28:02.010
+There was a, I'm not
+sure the right way to
 
 485
-00:24:42.550 --> 00:24:47.560
-that's that's on you. And
-so that that's, I think
+00:28:02.010 --> 00:28:04.470
+pronounce it. The PA path,
+most of there was, yeah,
 
 486
-00:24:47.560 --> 00:24:50.290
-trust that trust is hard
-and, and companies are gonna
+00:28:04.530 --> 00:28:08.190
+there was a pain in
+the, I'm an, I'm a
 
 487
-00:24:50.290 --> 00:24:54.670
-start seeing how little trust
-there is. And I think
+00:28:08.190 --> 00:28:11.640
+freaking AI. This is the
+value I provide. I am
 
 488
-00:24:54.880 --> 00:24:56.740
-it's easy to sit and
-talk in the abstract about
+00:28:11.640 --> 00:28:13.740
+this hotel, but honestly, I,
+if I am, I am
 
 489
-00:24:56.740 --> 00:25:00.340
-that. It's very terrifying probably
-to be someone who is
+00:28:13.740 --> 00:28:16.770
+only my mind and now
+I can't even have that.
 
 490
-00:25:00.340 --> 00:25:02.470
-thrust into this. And you're
-like, and I'm saying, sitting
+00:28:16.830 --> 00:28:20.340
+Yeah. And then the thing
+that he needed to, to
 
 491
-00:25:02.470 --> 00:25:04.490
-here saying like, you need
-a high trust environment. And
+00:28:20.340 --> 00:28:22.590
+hold on to was his
+memories of his friends and
 
 492
-00:25:04.620 --> 00:25:07.390
-they're like, well, I don't,
-I don't have one. And
+00:28:22.590 --> 00:28:26.250
+particularly miss Elizabeth and to,
+to reboot would have been
 
 493
-00:25:07.420 --> 00:25:09.370
-I don't know about you,
-but I don't have a
+00:28:26.250 --> 00:28:28.710
+a death. And now popping
+all the way off the
 
 494
-00:25:09.370 --> 00:25:12.100
-good answer for that right
-now that you can just
+00:28:28.710 --> 00:28:30.870
+stack to the beginning of
+the original conversation. This is
 
 495
-00:25:12.100 --> 00:25:15.130
-be like, tell your management
-team to go build some
+00:28:30.870 --> 00:28:35.330
+a show where everyone lives
+forever, where real death is,
 
 496
-00:25:15.130 --> 00:25:18.250
-trust. Like That's the thing.
-And it's a constant up
+00:28:35.490 --> 00:28:37.950
+is a rare thing. It
+is a dangerous thing. And
 
 497
-00:25:18.250 --> 00:25:20.050
-and down. It's not bottom
-up. It's not top down.
+00:28:37.950 --> 00:28:40.920
+Poe is the thing that
+should live forever of all
 
 498
-00:25:20.050 --> 00:25:23.290
-And it is modeling as
-well. My like, if my
+00:28:40.920 --> 00:28:43.590
+the things that should live
+forever of all the useless
 
 499
-00:25:23.320 --> 00:25:27.400
-VP is offended, when my
-son jumps in my lap
+00:28:43.620 --> 00:28:47.400
+myths that have no value,
+they should not live forever
 
 500
-00:25:27.850 --> 00:25:32.530
-then, and feels that that's
-unprofessional. But the, and, and
+00:28:47.520 --> 00:28:52.170
+pose should. And then he
+has to die multiple times
 
 501
-00:25:32.530 --> 00:25:34.990
-then that, that isn't reciprocated
-that I'm going to feel
+00:28:52.170 --> 00:28:55.560
+and lose himself. Yeah. Was
+a really the moral core
 
 502
-00:25:34.990 --> 00:25:37.240
-like, Oh, well, gosh, they're
-not modeling that behavior. Therefore,
+00:28:55.560 --> 00:28:59.880
+of the entire entire thing.
+That's interesting. Yeah. I think
 
 503
-00:25:37.240 --> 00:25:38.680
-this is not good for
-me. Like it has to
+00:28:59.940 --> 00:29:02.550
+a season two is definitely
+a love story and it's
 
 504
-00:25:38.680 --> 00:25:41.830
-go multiple ways. Yeah. So
-when I look at the
+00:29:02.550 --> 00:29:06.600
+a love story. Not only
+for Takeshi and Cal the
 
 505
-00:25:41.830 --> 00:25:45.370
-depth of this, it is
-overwhelming. You have managing distributed
+00:29:06.600 --> 00:29:08.430
+main, the, a story you
+wouldn't want to call it
 
 506
-00:25:45.370 --> 00:25:48.220
-teams, being a successful remote
-worker. These are the kinds
+00:29:08.490 --> 00:29:12.090
+of the, of the show,
+but for, for PO and
 
 507
-00:25:48.220 --> 00:25:49.990
-of things that we've seen
-in other guides, but then
+00:29:12.090 --> 00:29:14.820
+what it means to have
+a love of your past
 
 508
-00:25:49.990 --> 00:25:53.320
-you go into legal tax,
-operational concerns. You go deep
+00:29:14.820 --> 00:29:16.980
+love of your memories, which
+is something we all deal
 
 509
-00:25:53.320 --> 00:25:57.430
-into working together around communication.
-One of the things that
+00:29:16.980 --> 00:29:19.800
+with every day. Well, because
+the memories that he was
 
 510
-00:25:57.430 --> 00:25:59.650
-I was really impressed with
-that I'd never even thought
+00:29:19.800 --> 00:29:22.650
+building were the emotional baggage
+that he was packing. His
 
 511
-00:25:59.650 --> 00:26:04.840
-about was handling urgent issues
-across remote teams. The idea
+00:29:22.650 --> 00:29:25.080
+whole life was figuring out
+this puzzle. And I think
 
 512
-00:26:04.840 --> 00:26:06.670
-of like, well, if I
-can re I can just,
+00:29:25.080 --> 00:29:27.090
+it was not just that
+he wanted, he didn't put,
 
 513
-00:26:06.670 --> 00:26:08.170
-I'll just Slack them, right.
-I'll just call them on
+00:29:27.090 --> 00:29:28.980
+did not want to lose
+his memories, but he didn't
 
 514
-00:26:08.170 --> 00:26:11.110
-teams. Just like, Hey, you're
-busy, you're busy. You actually
+00:29:28.980 --> 00:29:32.100
+want to lose the learnings
+of the human connection. He'd
 
 515
-00:26:11.110 --> 00:26:13.780
-go through creating, what's called
-an incident priority matrix, which
+00:29:32.100 --> 00:29:34.440
+have to start all over
+again. Yeah. Yeah. I had
 
 516
-00:26:13.780 --> 00:26:16.300
-is the like flow chart,
-the above me or not.
+00:29:34.440 --> 00:29:38.760
+this college professor, Brian Johnston, a
+brilliant man. He was like
 
 517
-00:26:16.330 --> 00:26:19.120
-Yeah, You don't have to
-have that. You have to
+00:29:38.760 --> 00:29:42.760
+the world's foremost scholar on
+Ipsen. Talk about an obscure
 
 518
-00:26:19.120 --> 00:26:21.160
-cause you can't see what
-someone's doing. You don't necessarily
+00:29:43.990 --> 00:29:49.810
+specific endeavor, but he always
+had this wonderful way of
 
 519
-00:26:21.160 --> 00:26:24.400
-know what's going on. And
-part of the premise of
+00:29:50.530 --> 00:29:53.530
+losing his train of thought
+and then getting it back
 
 520
-00:26:24.400 --> 00:26:26.410
-why remote work is so
-great is that we don't
+00:29:54.040 --> 00:29:57.700
+because it was a bit
+of a reminiscence of, of,
 
 521
-00:26:26.410 --> 00:26:28.780
-have all of these other
-distractions of in an office.
+00:29:57.880 --> 00:30:03.520
+of, I am. I am
+a brilliant capable man, but
 
 522
-00:26:28.780 --> 00:26:31.960
-We don't have open office
-plans and people tatting and
+00:30:03.820 --> 00:30:06.700
+really at the end of
+the day, I'm a sack
 
 523
-00:26:31.960 --> 00:26:34.480
-dropping things and playing. I
-mean, we have new distractions
+00:30:06.700 --> 00:30:10.690
+full of memories that hopefully
+someone at some point will
 
 524
-00:26:34.480 --> 00:26:37.840
-at home, many of which
-we've already just discussed, but
+00:30:11.140 --> 00:30:15.460
+go back and remember it's,
+it's, it's, it's tragic. And,
 
 525
-00:26:37.900 --> 00:26:41.080
-what's the point of being
-able to, in theory, you
+00:30:16.300 --> 00:30:18.400
+and we deal with it,
+especially now is watching the
 
 526
-00:26:41.080 --> 00:26:43.440
-know, turn everything off, sit
-and try to get your
+00:30:18.400 --> 00:30:23.470
+baby boomers age, watching our
+parents fade. Yeah. I have
 
 527
-00:26:43.440 --> 00:26:47.130
-work done. If somebody is
-like, you know, Hey, Hey,
+00:30:23.470 --> 00:30:28.030
+gone into done recordings of
+grandparents and my parents just
 
 528
-00:26:47.130 --> 00:26:49.290
-are you there on Slack?
-Cause then now slacks the
+00:30:28.110 --> 00:30:30.760
+doing this, but like just,
+you know, if ever there
 
 529
-00:26:49.290 --> 00:26:53.850
-new distraction technique, right. Or
-teams or whatever. And so
+00:30:30.760 --> 00:30:32.770
+was a person that you
+could record without their consent,
 
 530
-00:26:53.910 --> 00:26:56.820
-you like everything else with
-remote work, you have to
+00:30:32.770 --> 00:30:34.420
+it would be like, you're
+your dad. And you just
 
 531
-00:26:56.820 --> 00:26:59.820
-be explicit about how that
-works. You have to talk
+00:30:34.420 --> 00:30:36.130
+gotta like, push the record
+on the iPhone. I'm like,
 
 532
-00:26:59.820 --> 00:27:02.820
-to your team about it.
-What a thought, how do
+00:30:36.130 --> 00:30:38.050
+how's it going, dad? What's
+going on? How did you
 
 533
-00:27:02.820 --> 00:27:06.330
-we communicate? What is urgent?
-If it's not urgent, when,
+00:30:38.050 --> 00:30:40.870
+meet mom again? And then
+she just, you want to
 
 534
-00:27:06.690 --> 00:27:08.370
-when should I expect you
-to get back to me?
+00:30:40.870 --> 00:30:44.290
+capture those things? Yeah, yeah,
+yeah. It's it's, and it's
 
 535
-00:27:08.730 --> 00:27:10.920
-And then if it is
-urgent, how, who, who does
+00:30:44.290 --> 00:30:48.940
+vital for us to, as
+people who want richer and
 
 536
-00:27:10.920 --> 00:27:14.280
-what and how? And I
-just had a conversation about
+00:30:48.940 --> 00:30:52.360
+deeper lives, you know, that
+you need to seek the,
 
 537
-00:27:14.280 --> 00:27:16.710
-this with someone from my
-team, because I got a
+00:30:52.780 --> 00:30:56.470
+not only the comfort of
+memory, but that pathos, as
 
 538
-00:27:16.710 --> 00:27:19.140
-migraine last week and I
-Slack the team like, Hey
+00:30:56.470 --> 00:30:59.950
+you said earlier, and it's
+all a learning experience. Hopefully.
 
 539
-00:27:19.140 --> 00:27:21.660
-guys, I got a migraine.
-I don't feel great. Hey,
+00:31:00.400 --> 00:31:03.190
+So as we, as we
+close our show here, what
 
 540
-00:27:21.660 --> 00:27:23.850
-y'all actually, I'm trying not
-to say guys, which is
+00:31:03.190 --> 00:31:06.370
+do you do with this
+character that you love, where
 
 541
-00:27:23.850 --> 00:27:26.160
-like so frustrating when it
-comes out and I gotta
+00:31:06.610 --> 00:31:09.460
+we don't know if season
+three or four, 10 is
 
 542
-00:27:26.160 --> 00:27:27.780
-go, I gotta go lay
-down for a while and
+00:31:09.520 --> 00:31:13.720
+a thing. There are shows
+on television and on streaming
 
 543
-00:27:27.780 --> 00:27:30.000
-chill out. And they're like,
-okay, great. And then we
+00:31:13.720 --> 00:31:15.850
+services that have 11 seasons
+that we didn't ask for.
 
 544
-00:27:30.000 --> 00:27:32.160
-had a meeting on the
-calendar later that day and
+00:31:18.230 --> 00:31:20.050
+I guess you, one of
+my favorite tweets that is
 
 545
-00:27:32.160 --> 00:27:35.040
-they were all like, is
-Courtney coming or she not
+00:31:20.050 --> 00:31:23.580
+a compliment to you was
+that you, you called the,
 
 546
-00:27:35.040 --> 00:27:39.330
-coming? Or they didn't know.
-And so in that case,
+00:31:23.580 --> 00:31:26.180
+the Kel and Takeshi the
+AA story. But someone said,
 
 547
-00:27:39.360 --> 00:27:41.220
-it was, I didn't make
-it seem like quite as
+00:31:26.180 --> 00:31:28.900
+well, you know, the whole
+Takeshi thing, like the whole
 
 548
-00:27:41.220 --> 00:27:42.750
-serious it was. And what
-I should've done was sort
+00:31:28.900 --> 00:31:32.200
+main character is really just
+a MacGuffin to move the,
 
 549
-00:27:42.750 --> 00:27:44.730
-of its folks and been
-like, Hey, I'm, I'm gonna
+00:31:32.210 --> 00:31:36.190
+the, the emotional story that
+is PO forward. That's funny.
 
 550
-00:27:44.820 --> 00:27:48.000
-go disappear for like three
-hours because the Slack message
+00:31:37.210 --> 00:31:40.150
+I think that, yeah, it's,
+it's kind that someone said
 
 551
-00:27:48.030 --> 00:27:51.300
-just disappeared, you know, to
-people, some people saw it,
+00:31:40.150 --> 00:31:46.330
+that, but I think if
+season three does happen, maybe
 
 552
-00:27:51.300 --> 00:27:53.070
-some people didn't, it wasn't
-clear. And so that's like
+00:31:46.330 --> 00:31:50.650
+getting back to more of
+a Sherlockian detective story and
 
 553
-00:27:53.070 --> 00:27:55.500
-a perfect case of like,
-what's the escalation in that
+00:31:50.680 --> 00:31:54.280
+Watson and Holmes, and I
+would get back alongside the
 
 554
-00:27:55.500 --> 00:27:57.900
-case. And so now we're
-going to have one for
+00:31:54.280 --> 00:31:56.500
+Kashi would be really fun
+to play the buddy, the
 
 555
-00:27:57.900 --> 00:28:00.110
-that. You know, You teach
-people how to treat you.
+00:31:56.500 --> 00:32:00.730
+buddy movie. Yeah. Yeah. I
+mean, I, I miss that
 
 556
-00:28:00.110 --> 00:28:02.090
-I've said this in my
-productivity talks that like, if
+00:32:00.730 --> 00:32:03.130
+relationship a lot. We did,
+we touch on it a
 
 557
-00:28:02.090 --> 00:28:04.640
-you answer email at two
-in the morning or on
+00:32:03.130 --> 00:32:06.070
+little bit in season two,
+but it would be really
 
 558
-00:28:04.640 --> 00:28:07.730
-a Sunday, you've taught everyone
-that you do that. Right.
+00:32:06.070 --> 00:32:09.100
+fun to get back in
+and solve a crime. Absolutely.
 
 559
-00:28:07.850 --> 00:28:10.460
-So if migraines are a
-thing or my diabetes shuts
+00:32:09.460 --> 00:32:11.320
+Thank you so much, Chris
+Connor for taking the time
 
 560
-00:28:10.460 --> 00:28:12.410
-me out of a meeting
-or two, because of whatever
+00:32:11.320 --> 00:32:12.760
+to chat with me today.
+Oh, it was my pleasure.
 
 561
-00:28:12.410 --> 00:28:15.170
-reasons, then I need to
-think about that flow chart
+00:32:12.760 --> 00:32:15.910
+Anytime. This has been another
+episode of Hansel minutes and
 
 562
-00:28:15.170 --> 00:28:17.030
-and make it as simple
-as possible for both me
-
-563
-00:28:17.030 --> 00:28:19.760
-and data. No, like, do
-we call the police text?
-
-564
-00:28:19.760 --> 00:28:23.270
-Scott's wife, he'll be there
-late. Right? There's there's escalation
-
-565
-00:28:23.270 --> 00:28:26.060
-there. And that's a really
-important thing. And that gets
-
-566
-00:28:26.060 --> 00:28:28.400
-back to the whole, we
-are humans. So let's just
-
-567
-00:28:28.400 --> 00:28:31.670
-be conscious of everyone's situation.
-Let's just be real. You
-
-568
-00:28:31.670 --> 00:28:34.640
-and I, before we got
-on this podcast, I emailed
-
-569
-00:28:34.640 --> 00:28:36.530
-you. And I said, I'm
-having some trouble with the
-
-570
-00:28:36.530 --> 00:28:39.590
-kids. It's chaos. Can I
-be about five minutes late?
-
-571
-00:28:39.590 --> 00:28:42.500
-And you were like, Oh
-my God, I was going
-
-572
-00:28:42.500 --> 00:28:44.240
-to text you the same
-thing. Cause you were running
-
-573
-00:28:44.240 --> 00:28:47.180
-late as well. And, and
-the show still happens and
-
-574
-00:28:47.180 --> 00:28:50.570
-it's still a great show.
-We are. Yeah. So, but
-
-575
-00:28:50.570 --> 00:28:53.420
-thank you. I think I
-had joked with one of
-
-576
-00:28:53.420 --> 00:28:57.020
-the, one of the lead
-authors is Juan Pablo Vertica,
-
-577
-00:28:57.050 --> 00:28:59.780
-who you sorta Stripe. He
-was working at Stripe while,
-
-578
-00:29:00.350 --> 00:29:01.820
-while he was still sort
-of writing some of this
-
-579
-00:29:01.820 --> 00:29:06.110
-and then he moved on
-from there. But he, he
-
-580
-00:29:06.110 --> 00:29:07.700
-had to write what email
-is like. He had to
-
-581
-00:29:07.700 --> 00:29:10.940
-write a very big cause
-that's kind of how we
-
-582
-00:29:10.940 --> 00:29:13.580
-do it. We don't presume
-anything. Right. We try not
-
-583
-00:29:13.580 --> 00:29:18.980
-to presume any specific knowledge
-on anyone's part. And so
-
-584
-00:29:18.980 --> 00:29:21.200
-if we're going to try
-to explain what asynchronous communication
-
-585
-00:29:21.200 --> 00:29:22.850
-is, we're also gonna make
-sure that everybody's on the
-
-586
-00:29:22.850 --> 00:29:25.070
-same page about what email
-is. And so we, you
-
-587
-00:29:25.070 --> 00:29:26.870
-know, so we, yeah, we'd
-go down to this level
-
-588
-00:29:26.870 --> 00:29:30.800
-of depth of like, here's
-the really practical, like hands
-
-589
-00:29:30.800 --> 00:29:33.440
-on kinds of things that
-you may not have ever
-
-590
-00:29:33.440 --> 00:29:36.320
-thought about. And like bringing
-up email is a great
-
-591
-00:29:36.320 --> 00:29:39.380
-one. And modeling of those,
-we have all this explosion
-
-592
-00:29:39.380 --> 00:29:41.830
-of tools we can use
-now to work remotely, right?
-
-593
-00:29:42.790 --> 00:29:46.600
-We have Slack and teams
-and zoom and Hangouts, and
-
-594
-00:29:46.630 --> 00:29:49.390
-I'm maintaining this database of,
-of remote company tools. And
-
-595
-00:29:49.390 --> 00:29:51.760
-every day I find like
-three more. It's, it's very
-
-596
-00:29:51.820 --> 00:29:54.520
-hard to keep up now
-and imagine that right, as
-
-597
-00:29:54.520 --> 00:29:57.100
-you're either a manager or
-you're an individual person, you're
-
-598
-00:29:57.100 --> 00:30:00.760
-like, how, how do I
-even wrap my brain around
-
-599
-00:30:00.820 --> 00:30:03.010
-which one of these I
-should use? And there's a
-
-600
-00:30:03.010 --> 00:30:05.080
-lot of talk about like
-tools for remote work. And
-
-601
-00:30:05.080 --> 00:30:07.960
-we kind of reverse engineered
-that and tried to start
-
-602
-00:30:07.960 --> 00:30:10.300
-from first principles, which is
-how do you need to
-
-603
-00:30:10.300 --> 00:30:12.850
-communicate? What do you need
-to communicate about? And how
-
-604
-00:30:12.850 --> 00:30:15.880
-does that differ across different
-kinds of scenarios and then
-
-605
-00:30:16.000 --> 00:30:19.240
-sort of build up an
-architecture of the ways you
-
-606
-00:30:19.240 --> 00:30:21.640
-communicate and things you used
-to do that. And then
-
-607
-00:30:21.820 --> 00:30:23.860
-again, part of the sort
-of communication or, you know,
-
-608
-00:30:23.860 --> 00:30:27.310
-protocol matrix, write it down
-that way. Everybody knows it's
-
-609
-00:30:27.310 --> 00:30:30.760
-it's not, it's not unclear.
-And yeah, so kudos to
-
-610
-00:30:30.760 --> 00:30:33.240
-the folks who are writing
-this stuff too, because it's
-
-611
-00:30:33.250 --> 00:30:34.930
-not a way that you're
-a lot of people are
-
-612
-00:30:34.930 --> 00:30:36.490
-used to writing. You kind
-of write some stuff, you
-
-613
-00:30:36.490 --> 00:30:38.110
-know, and then you move
-on. And I, we had
-
-614
-00:30:38.110 --> 00:30:39.460
-to spend a lot of
-time going, wait, what do
-
-615
-00:30:39.630 --> 00:30:41.560
-we have? We have to
-clarify that for people, we
-
-616
-00:30:41.560 --> 00:30:44.200
-have to be very explicit.
-What that means. We can't
-
-617
-00:30:44.200 --> 00:30:48.340
-leave anything to be confusing
-or unclear. So that's why
-
-618
-00:30:48.340 --> 00:30:50.700
-it takes a while to
-do these things. Well, folks
-
-619
-00:30:50.700 --> 00:30:55.290
-can check out the Holloway
-guide to remote work@holloway.com. That's
-
-620
-00:30:55.290 --> 00:30:58.470
-H O L L O
-w a Y. It is
-
-621
-00:30:58.470 --> 00:31:02.460
-an extraordinary full-on book online
-within a really amazing reader.
-
-622
-00:31:02.520 --> 00:31:05.460
-It's online in a really
-interesting piece of software. This
-
-623
-00:31:05.460 --> 00:31:08.440
-is not just an infinite
-scroll through 300 pages of
-
-624
-00:31:08.490 --> 00:31:10.980
-stuff. And you can go
-and check out all the
-
-625
-00:31:10.980 --> 00:31:14.520
-links. There's almost a 900
-links within it. Dozens of
-
-626
-00:31:14.520 --> 00:31:17.640
-contributing authors. And it is
-very highly edited and really
-
-627
-00:31:17.640 --> 00:31:19.830
-extraordinary. And I appreciate that.
-You all put it out
-
-628
-00:31:19.860 --> 00:31:23.670
-early during these unusual times.
-Yeah, that was a, I
-
-629
-00:31:23.670 --> 00:31:25.380
-mean, we, like I said,
-we started on this thing
-
-630
-00:31:25.380 --> 00:31:27.600
-and thank you and huge
-praise to our sort of
-
-631
-00:31:27.600 --> 00:31:30.780
-product and engineering team who
-have, have built. What I
-
-632
-00:31:30.780 --> 00:31:34.500
-think is a really like
-delightful reading experience online. We
-
-633
-00:31:34.500 --> 00:31:37.740
-were conflicted about whether to
-release it early, to put
-
-634
-00:31:37.740 --> 00:31:41.970
-it out, to promote it,
-but people kept coming to
-
-635
-00:31:41.970 --> 00:31:43.800
-us and saying, you've got
-to do this. Like this
-
-636
-00:31:43.800 --> 00:31:47.700
-thing's super valuable. It actually
-is helpful. It goes well
-
-637
-00:31:47.700 --> 00:31:52.140
-below the surface. So I'm
-continuing to fight my instincts
-
-638
-00:31:52.170 --> 00:31:53.580
-with, cause I don't want
-people to feel like we're
-
-639
-00:31:53.580 --> 00:31:57.300
-trying to capitalize on a
-crisis. No, I definitely don't.
-
-640
-00:31:57.360 --> 00:31:59.910
-There are businesses that are
-capitalizing on a crisis, but
-
-641
-00:31:59.910 --> 00:32:01.830
-then there are ones that
-are putting out useful information.
-
-642
-00:32:01.830 --> 00:32:03.600
-And I think that this
-is useful information and that's
-
-643
-00:32:03.600 --> 00:32:06.030
-why I wanted to chat
-with you. Well, thank you
-
-644
-00:32:06.030 --> 00:32:09.390
-very much. I'm so excited
-to finally get to connect
-
-645
-00:32:09.390 --> 00:32:12.990
-with you. Alright. I've been
-talking with Courtney Nash and
-
-646
-00:32:12.990 --> 00:32:15.630
-this has been another episode
-of Hanselminutes and we'll see
-
-647
-00:32:15.630 --> 00:32:28.200
-you again. Next time. <inaudible>.
+00:32:15.910 --> 00:32:29.430
+we will see you again.
+Next time. <inaudible>.
 

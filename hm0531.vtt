@@ -1,2842 +1,3286 @@
 WEBVTT FILE
 
 1
-00:00:00.300 --> 00:00:03.450
+00:00:00.420 --> 00:00:03.540
 Hi, this is Scott. I
 really appreciate our sponsors because
 
 2
-00:00:03.450 --> 00:00:06.420
+00:00:03.540 --> 00:00:06.870
 they make the show possible.
 Today's show is sponsored by
 
 3
-00:00:06.420 --> 00:00:10.590
-developer express, become a UI
-superhero with dev express controls
+00:00:06.870 --> 00:00:11.160
+Tellerik create compelling app experiences
+across any screen with the
 
 4
-00:00:10.590 --> 00:00:15.120
-and libraries. Deliver elegant.net solutions
-that address customer needs today
+00:00:11.160 --> 00:00:15.990
+Tellerik platform Telerx end to
+end platform. Uniquely combines industry
 
 5
-00:00:15.510 --> 00:00:19.590
-by leveraging your existing knowledge,
-you can build next generation
+00:00:15.990 --> 00:00:19.680
+leading UI tools with cloud
+services to simplify the entire
 
 6
-00:00:19.620 --> 00:00:23.700
-touch enabled solutions for tomorrow,
-you can download your free
+00:00:19.680 --> 00:00:24.180
+app development cycle Tellerik offers
+everything.net developers need to build
 
 7
-00:00:23.790 --> 00:00:49.040
-30 day trial@dxdothanselminutes.com. That's dx.hanselminutes.com
-From hanselminutes.com it's Hanselminutes all
+00:00:24.180 --> 00:00:33.600
+quality apps faster. Try it
+free at tellerik.com/platform that's tellerik.com/platform
 
 8
-00:00:49.040 --> 00:00:53.780
-weekly discussion with web developer
-and technologists. Scott Hanselman. This
+00:00:46.860 --> 00:00:52.800
+from hanselminutes.com. It's Hansel minutes,
+our weekly discussion with web
 
 9
-00:00:53.780 --> 00:00:59.240
-is Lawrence Ryan announcing show number
-535. In this episode, Scott
+00:00:52.800 --> 00:00:57.930
+developer and technologist Scott Hanselman.
+This is Lawrence Ryan announcing show
 
 10
-00:00:59.240 --> 00:01:07.640
-talks with Andy kitchen about
-machine learning with TensorFlow. Hi,
+00:00:57.930 --> 00:01:02.730
+number 531. In this episode,
+Scott talks with Gina Marie
 
 11
-00:01:07.640 --> 00:01:09.800
-this is Scott Hanselman. This
-is another episode of Hansel
+00:01:02.730 --> 00:01:10.380
+Miami about functional programming with
+O'Connell. Hi, this is Scott
 
 12
-00:01:09.800 --> 00:01:13.580
-minutes. And today we're talking
-with Andy kitchen about TensorFlow.
+00:01:10.380 --> 00:01:13.020
+Hanselman. This is another episode
+of Hansel minutes today. I'm
 
 13
-00:01:13.670 --> 00:01:16.160
-How's it going? Yeah. Hey
-Scott, thanks for having me.
+00:01:13.020 --> 00:01:16.770
+talking with Gina Marie Miami,
+who is a functional programmer
 
 14
-00:01:16.310 --> 00:01:18.380
-This is, I'm really excited
-to talk to you about
+00:01:17.130 --> 00:01:18.960
+and not just a functional
+program with probably the most
 
 15
-00:01:18.380 --> 00:01:21.080
-this, actually. Yeah, this is
-great. So we met at
+00:01:18.960 --> 00:01:21.960
+passionate functional program I've ever
+met. I met you at
 
 16
-00:01:21.080 --> 00:01:23.390
-Oz con the open source
-conference. And what, what were
+00:01:21.960 --> 00:01:27.130
+Oz con and you were
+overflowing with functional programming. I
 
 17
-00:01:23.390 --> 00:01:26.480
-you speaking on there? I
-was also speaking about machine
+00:01:27.200 --> 00:01:30.890
+think that's a common narrative
+of anyone who does functional
 
 18
-00:01:26.480 --> 00:01:31.040
-learning and the talk itself
-is made to be really
+00:01:30.890 --> 00:01:34.340
+programming for any nontrivial amount
+of time, is that you
 
 19
-00:01:31.040 --> 00:01:35.270
-accessible. So I try and
-explain machine learning, deep learning
+00:01:34.340 --> 00:01:37.190
+just have to share the
+love Really. I mean, is
 
 20
-00:01:35.570 --> 00:01:39.050
-to everyone without a lot
-of mathematics and a lot
+00:01:37.460 --> 00:01:39.980
+what maybe I've been doing
+it wrong for the last
 
 21
-00:01:39.050 --> 00:01:41.600
-of jargon. And of course
-that's important if you want
+00:01:39.980 --> 00:01:43.610
+20 years. I mean, you
+were like, like, you know,
 
 22
-00:01:41.600 --> 00:01:44.810
-to do research, but if
-you want to find out
+00:01:43.610 --> 00:01:46.520
+have you heard the news,
+have you accepted Oak camel
 
 23
-00:01:44.810 --> 00:01:47.600
-more, get excited, get your
-hands dirty. I don't think
+00:01:46.580 --> 00:01:53.330
+as your personal programming language?
+I I'm very evangelical. Let's
 
 24
-00:01:47.600 --> 00:01:52.670
-that's necessarily what you need
-right away. Machine learning is
+00:01:53.330 --> 00:01:55.640
+put it that way. I
+I'm a born again. Okay.
 
 25
-00:01:52.670 --> 00:01:54.980
-like the buzz word right
-now. Like I can't open
+00:01:55.640 --> 00:02:02.690
+I'm I, I did Java
+script development for probably too
 
 26
-00:01:54.980 --> 00:01:57.470
-up. I can't open up
-the verge or ARS Technica
+00:02:02.750 --> 00:02:05.990
+long, which I guess was,
+you know, three years or
 
 27
-00:01:57.860 --> 00:02:01.610
-without something about machine learning.
-There's IBM's Watson. And everyone
+00:02:05.990 --> 00:02:11.060
+whatever. And, you know, just,
+just felt like things were
 
 28
-00:02:01.610 --> 00:02:04.130
-always says that Siri and
-Google, like everyone is doing
+00:02:11.060 --> 00:02:13.970
+too hard. I couldn't reason
+about all the state in
 
 29
-00:02:04.130 --> 00:02:06.980
-machine learning. Microsoft is taking
-over the world machine learning
+00:02:13.970 --> 00:02:17.150
+my program. I couldn't, I
+couldn't know where bugs would
 
 30
-00:02:07.310 --> 00:02:09.470
-and I'm think that most
-of us who are listening
+00:02:17.150 --> 00:02:21.220
+be. I wrote unit tests,
+unit tests didn't do anything
 
 31
-00:02:09.470 --> 00:02:13.220
-and myself included, we only
-know how to say machine
+00:02:21.220 --> 00:02:25.550
+good. And I just decided
+one day that I was
 
 32
-00:02:13.220 --> 00:02:15.680
-learning. And that's about as
-far as it goes. I
+00:02:25.550 --> 00:02:28.730
+going to do something different
+and saw someone using a
 
 33
-00:02:15.680 --> 00:02:19.610
-think that luckily our intuition
-is actually strong when we
+00:02:28.740 --> 00:02:33.200
+camel and decided this looked
+reasonable, this looked like something
 
 34
-00:02:19.610 --> 00:02:21.950
-talk about machine learning. And
-I think that's why we're
+00:02:33.200 --> 00:02:36.290
+I could do. And I
+had tried, you know, Haskell
 
 35
-00:02:21.950 --> 00:02:26.060
-happy to say the words.
-So ultimately machine learning is
+00:02:36.290 --> 00:02:40.400
+I think is probably the
+most common hacker news trendy,
 
 36
-00:02:26.060 --> 00:02:29.480
-the idea or the paradigm
-of getting a computer to
+00:02:40.400 --> 00:02:43.970
+functional language. I tried Haskell
+and kind of felt like
 
 37
-00:02:29.480 --> 00:02:32.870
-become better at solving a
-problem as it gets more
+00:02:43.970 --> 00:02:47.270
+I wasn't was missing a
+punchline maybe. I mean, it
 
 38
-00:02:32.870 --> 00:02:38.000
-experience. And so it's a
-kind of artificial intelligence. It's
+00:02:47.270 --> 00:02:49.370
+seemed a little bit too
+hard. It seemed like for
 
 39
-00:02:38.000 --> 00:02:41.090
-a kind of AI and
-most people think that to
+00:02:49.370 --> 00:02:52.580
+someone who didn't have a
+computer science background, you know,
 
 40
-00:02:41.090 --> 00:02:44.060
-make AI really happen, to
-kind of make something that
+00:02:52.880 --> 00:02:55.970
+all of these higher kind
+of types, you know, monads
 
 41
-00:02:44.060 --> 00:02:47.030
-was smart, like a person,
-a big part of that
+00:02:55.970 --> 00:03:00.070
+galore, you know, I was
+really, really lost. So Campbell
 
 42
-00:02:47.090 --> 00:02:50.390
-would be having it learn.
-Is that okay? So as
+00:03:00.070 --> 00:03:04.210
+was a really good balance
+pragmatism and you know, really
 
 43
-00:02:50.390 --> 00:02:52.160
-soon as we said, machine
-learning, I started thinking to
+00:03:04.210 --> 00:03:07.330
+beautiful abstraction. So I guess
+it's, you know, it's a,
 
 44
-00:02:52.160 --> 00:02:55.610
-myself, is that the same
-as artificial intelligence or is
+00:03:07.360 --> 00:03:11.190
+it's a, it's a pragmatic
+language. Do you, you know,
 
 45
-00:02:55.610 --> 00:02:57.980
-it a step or a
-component on the way to
+00:03:11.190 --> 00:03:13.830
+some people say that they
+look for the programming language
 
 46
-00:02:57.980 --> 00:03:01.750
-artificial intelligence machine learning is
-definitely a component of artificial
+00:03:13.830 --> 00:03:16.290
+of their soul and you
+know, they find it and
 
 47
-00:03:01.750 --> 00:03:05.350
-intelligence. So I would say
-that almost all work on
+00:03:16.290 --> 00:03:18.240
+it's just like, ah, this
+is what I'm supposed to
 
 48
-00:03:05.350 --> 00:03:09.280
-machine learning could be seen
-as artificial working towards artificial
+00:03:18.240 --> 00:03:21.450
+be programming in. Do you
+think you came pre-wired this
 
 49
-00:03:09.280 --> 00:03:12.790
-intelligence, but there is artificial
-intelligence work, which isn't focusing
+00:03:21.450 --> 00:03:24.090
+way? Did you come out
+immediately wired for O'Connell and
 
 50
-00:03:12.790 --> 00:03:15.190
-on the learning part. So
-it might be focusing on,
+00:03:24.090 --> 00:03:27.540
+didn't know it? Or did
+you wire yourself into O'Connell
 
 51
-00:03:15.190 --> 00:03:20.430
-for example, a reasoning, Okay,
-but we're afraid of artificial
+00:03:29.970 --> 00:03:35.370
+People who have, that's a
+good question. You know, I
 
 52
-00:03:20.430 --> 00:03:23.760
-intelligence because Skynet will kill
-us all. Should we be
+00:03:35.370 --> 00:03:37.980
+had, I hadn't heard that
+before, but I like that
 
 53
-00:03:23.760 --> 00:03:25.830
-afraid of machine learning or
-is it, is it like
+00:03:37.980 --> 00:03:40.920
+metaphor of your soul being,
+you know, I don't know.
 
 54
-00:03:25.830 --> 00:03:30.300
-the safe part of artificial
-intelligence? I think that in
+00:03:41.550 --> 00:03:45.390
+I think if I was
+a programming language, I don't
 
 55
-00:03:30.300 --> 00:03:33.840
-the future artificial intelligence machine
-learning will have a big
+00:03:45.390 --> 00:03:48.210
+know, maybe I would be
+like COBOL or something like,
 
 56
-00:03:33.870 --> 00:03:36.600
-impact on our society. I
-think all commentators do. There's
+00:03:48.900 --> 00:03:53.640
+you know, imperative and, and
+I don't know closeted in
 
 57
-00:03:36.600 --> 00:03:41.040
-a huge amount that people
-are saying, thinking about whether
+00:03:53.640 --> 00:03:57.030
+some way. I don't know,
+but okay. Will seems unlike
 
 58
-00:03:41.850 --> 00:03:46.020
-artificial intelligence will be good,
-would be bad. I think
+00:03:57.030 --> 00:04:00.530
+myself, it's a better self,
+you know, it's a, Oh,
 
 59
-00:03:46.020 --> 00:03:52.650
-that me personally, with these
-movements, for example, with open
+00:04:00.630 --> 00:04:03.750
+camel lets you be your
+best self. Maybe that's what
 
 60
-00:03:52.650 --> 00:03:58.290
-AI, the idea is to
-make these things open, make
+00:04:03.750 --> 00:04:07.680
+it is. It does everything
+I could ever want it
 
 61
-00:03:58.320 --> 00:04:01.470
-artificial intelligence open. And so
-I believe that more openness
+00:04:07.680 --> 00:04:13.110
+to do. It's got like
+it's multi paradigm. It compiles
 
 62
-00:04:01.800 --> 00:04:04.410
-will mean that it'll be
-more safe. So I think
+00:04:13.110 --> 00:04:16.110
+to byte code a compiles
+and native code. It plays
 
 63
-00:04:04.410 --> 00:04:08.520
-that we should all get
-involved and have a go
+00:04:16.110 --> 00:04:20.640
+nice with C people even
+have it running on arm,
 
 64
-00:04:08.520 --> 00:04:10.530
-because the more people that
-are around the world who
+00:04:20.670 --> 00:04:22.770
+you know? I mean, it's,
+it's all over the place
 
 65
-00:04:10.530 --> 00:04:13.770
-understand it, I believe the
-less dangerous it could could
+00:04:23.220 --> 00:04:27.930
+and, and somehow, yeah, it's
+like an academic language, but
 
 66
-00:04:13.770 --> 00:04:17.160
-be if there is any
-risk at all. Okay. So
+00:04:27.960 --> 00:04:31.680
+you know, it favors performance.
+And as I've said, repeatedly
 
 67
-00:04:17.160 --> 00:04:19.560
-that makes sense, because you
-wanted the title of this
+00:04:31.710 --> 00:04:35.220
+pragmatism. So, so it's unlike
+myself. I would say that
 
 68
-00:04:19.590 --> 00:04:23.310
-episode to be TensorFlow for
-everyone, you know, or for
+00:04:35.220 --> 00:04:39.090
+I, I am not like,
+okay, So tell me if
 
 69
-00:04:23.310 --> 00:04:25.920
-all. So this isn't one
-of those secret things that
+00:04:39.090 --> 00:04:41.700
+this is right and walk
+me through this for people
 
 70
-00:04:25.920 --> 00:04:28.320
-you need a PhD to
-do. That's correct. And I
+00:04:41.700 --> 00:04:44.940
+who are, maybe can say
+functional programming, but don't really
 
 71
-00:04:28.320 --> 00:04:31.050
-think that's the really exciting
-part. Now we're just moving
+00:04:44.940 --> 00:04:48.120
+know like what it is.
+Is it true that if
 
 72
-00:04:31.050 --> 00:04:35.880
-into a time where if
-you can access the internet
+00:04:48.120 --> 00:04:51.060
+you take something like C
+or C sharp or Java
 
 73
-00:04:35.910 --> 00:04:38.460
-and you can do a
-bit of Python, there are
+00:04:51.870 --> 00:04:54.960
+and you problem that you
+want to solve, it's basically
 
 74
-00:04:38.490 --> 00:04:42.270
-great libraries, great tools, great
-tutorials that can get you
+00:04:54.960 --> 00:04:58.380
+okay, computer, here are the
+things you need to do
 
 75
-00:04:42.270 --> 00:04:47.940
-going in an afternoon. But
-now machine learning is related
+00:04:58.860 --> 00:05:01.980
+in order to get the
+answer for a problem. But
 
 76
-00:04:47.940 --> 00:04:51.030
-to her in the family
-of the much more threatening
+00:05:01.980 --> 00:05:04.950
+with your functional programming language,
+it's just more like, kind
 
 77
-00:04:51.030 --> 00:04:55.260
-sounding name, computational statistics, machine
-learning is easy to say
+00:05:04.950 --> 00:05:07.920
+of like, what is the
+essence of the problem mathematically
 
 78
-00:04:55.410 --> 00:04:59.160
-computational statistics sounds like it
-requires a PhD. Why is
+00:05:07.920 --> 00:05:11.460
+and you figure it out
+the computer. Yeah. That's, that's
 
 79
-00:04:59.160 --> 00:05:02.280
-it that machine learning is
-for everyone? Well, I think
+00:05:11.460 --> 00:05:13.680
+a good, I mean, you
+know, I don't know what
 
 80
-00:05:02.280 --> 00:05:05.340
-just involving the word, statistics
-makes people cringe and think
+00:05:13.680 --> 00:05:17.100
+the official definition of functional
+programming is. I'm only interested
 
 81
-00:05:05.340 --> 00:05:11.640
-of like precalculus. So essentially
-I think that there is
+00:05:17.100 --> 00:05:20.460
+in yours because I want
+the practitioner's perspective. Just, just
 
 82
-00:05:11.640 --> 00:05:16.590
-a big difference between statistics
-and machine learning, which is
+00:05:20.460 --> 00:05:23.280
+as a user, you know,
+I've read like, I think
 
 83
-00:05:16.590 --> 00:05:19.050
-a bit subtle, but I'll
-try and explain it as
+00:05:23.280 --> 00:05:26.430
+I did functional JavaScript, JavaScript
+dollar and J you know,
 
 84
-00:05:19.050 --> 00:05:25.170
-best I can, which is
-that statistics deals with noise.
+00:05:26.430 --> 00:05:29.160
+I've read all these like,
+you know, functional JavaScript books.
 
 85
-00:05:25.290 --> 00:05:30.360
-So you can kind of
-imagine or uncertainty. So you're
+00:05:30.060 --> 00:05:32.250
+But now that I work
+in a functional language, I
 
 86
-00:05:30.360 --> 00:05:36.000
-trying to measure some particular
-number, but you get lots
+00:05:32.250 --> 00:05:37.170
+guess I have some, some
+more, how can I say
 
 87
-00:05:36.000 --> 00:05:37.560
-of readings of it. And
-they're all a little bit
+00:05:37.170 --> 00:05:43.020
+this zealous opinions, I suppose
+functional programming is thinking of
 
 88
-00:05:37.560 --> 00:05:40.770
-different in a, in a
-particular way with the machine
+00:05:43.830 --> 00:05:47.370
+data transformation. I guess that
+would be, I just think
 
 89
-00:05:40.770 --> 00:05:45.030
-learning. One is much, much
-more interested in what I
+00:05:47.370 --> 00:05:52.200
+about my programs differently. Almost
+like, you know, it's yeah,
 
 90
-00:05:45.030 --> 00:05:49.200
-would call structure in patterns.
-So to make that example
+00:05:52.200 --> 00:05:54.660
+it's very declarative. It's what
+you, it's what you just
 
 91
-00:05:49.200 --> 00:05:52.140
-concrete, if you were trying
-to look at a picture
+00:05:54.660 --> 00:05:57.680
+said, Scott. It's like, you,
+you think about what should
 
 92
-00:05:52.140 --> 00:05:55.560
-of a cat, it's not
-that there's so much snow
+00:05:57.680 --> 00:06:00.110
+this do at a high
+level? I often find myself
 
 93
-00:05:55.590 --> 00:05:58.280
-in the picture or so
-much film, grain that you
+00:06:00.140 --> 00:06:03.770
+thinking about before I start
+writing a program, what did
 
 94
-00:05:58.280 --> 00:06:01.510
-can't see, it's a cat.
-The reason why computers having
+00:06:03.770 --> 00:06:05.660
+it do? What do I
+want this to do at
 
 95
-00:06:01.510 --> 00:06:03.650
-a hard time telling the
-difference between a dog and
+00:06:05.660 --> 00:06:08.660
+the end of the day?
+What it, what is, what
 
 96
-00:06:03.650 --> 00:06:06.800
-a cat is that the
-complex patterns which make up
+00:06:08.660 --> 00:06:12.170
+am I talking about? And
+whatever I'm talking about, those
 
 97
-00:06:06.800 --> 00:06:11.060
-their whiskers and ears are
-actually give this kind of
+00:06:12.170 --> 00:06:18.320
+just become types. And then
+I just transform things and
 
 98
-00:06:11.060 --> 00:06:14.330
-texture to the pixels, which
-until now was hard to
+00:06:18.320 --> 00:06:21.920
+value some, some data. And
+that's basically what my program
 
 99
-00:06:14.330 --> 00:06:17.980
-pick up using computer programs.
-So the, the human brain
+00:06:21.920 --> 00:06:24.050
+ends up being, which sounds
+like I don't even know
 
 100
-00:06:17.980 --> 00:06:21.520
-is really good. If I
-understand correctly at pattern matching
+00:06:24.050 --> 00:06:26.900
+what I just said, but
+that's, that's sort of, that's
 
 101
-00:06:21.520 --> 00:06:24.760
-and like looking at a
-picture and seeing a cat
+00:06:26.900 --> 00:06:30.050
+sort of what happens. It's
+very different than do this,
 
 102
-00:06:25.030 --> 00:06:27.610
-or even looking at a
-shadow, or even if you
+00:06:31.610 --> 00:06:35.120
+you know, manipulate this and
+then you almost find your
 
 103
-00:06:27.610 --> 00:06:31.750
-had like a television tuned
-to analog static, and part
+00:06:35.120 --> 00:06:38.330
+eye kind of going back
+up in your program to
 
 104
-00:06:31.750 --> 00:06:34.540
-of the static was in
-a cat shape, we would
+00:06:38.330 --> 00:06:41.720
+like manipulate some previous thing.
+Okay. Well, programs don't look
 
 105
-00:06:34.540 --> 00:06:37.030
-be extremely good at picking
-that up. Not in minutes,
+00:06:41.720 --> 00:06:44.690
+like that. There are flow.
+They, they really are just
 
 106
-00:06:37.030 --> 00:06:41.320
-but in milliseconds. Right? Absolutely
-correct. So if we're looking
+00:06:44.960 --> 00:06:48.470
+here's the world. Here's what
+happens in this world. And
 
 107
-00:06:41.320 --> 00:06:44.350
-at even a child can
-tell the difference between a
+00:06:48.470 --> 00:06:52.460
+then this is the result
+and that's, I dunno, it's,
 
 108
-00:06:44.350 --> 00:06:47.350
-cat and a dog can
-look at something and recognize
+00:06:52.460 --> 00:06:55.250
+it's it's it tends to
+mirror human thought a little
 
 109
-00:06:47.350 --> 00:06:51.460
-it that it's a shoe
-or a face. And the
+00:06:55.250 --> 00:06:58.150
+bit better. I think functional
+programming, Right? You're building kind
 
 110
-00:06:51.460 --> 00:06:55.240
-developments in deep learning have
-allowed computers to be much,
+00:06:58.150 --> 00:07:01.840
+of a pipeline as you
+move shapes and structures and
 
 111
-00:06:55.270 --> 00:07:03.160
-much better at recognizing and
-processing information in that context
+00:07:01.840 --> 00:07:05.770
+data structures from one form
+to another, without concern for
 
 112
-00:07:03.160 --> 00:07:07.510
-where the noise isn't high,
-but the structure, the kind
+00:07:05.770 --> 00:07:09.820
+a state and a state
+changing randomly. Cause it doesn't
 
 113
-00:07:07.510 --> 00:07:10.510
-of the patterns that we're
-looking for are complicated. And
+00:07:09.850 --> 00:07:16.480
+count. Yeah, exactly. State doesn't
+change randomly. Although Campbell is
 
 114
-00:07:10.510 --> 00:07:13.390
-that's where I think the
-real power of machine learning
+00:07:16.480 --> 00:07:18.760
+different than Haskell in the
+way that it doesn't necessarily
 
 115
-00:07:13.390 --> 00:07:17.740
-and deep learning. When is
-machine learning a good idea,
+00:07:18.760 --> 00:07:21.910
+track States. So for example,
+you could write a function
 
 116
-00:07:17.770 --> 00:07:19.960
-versus I've heard some people
-say that maybe we shouldn't
+00:07:22.460 --> 00:07:24.310
+and in the middle of
+it, throw a print statement
 
 117
-00:07:19.960 --> 00:07:22.150
-do that. We should do
-like mechanical Turks. And we
+00:07:24.310 --> 00:07:28.030
+in there and you know,
+that won't be nothing. That's
 
 118
-00:07:22.150 --> 00:07:24.610
-just need the power of
-a, of a whole bunch
+00:07:28.030 --> 00:07:31.300
+fine. You know, that's that's,
+you can do that, which
 
 119
-00:07:24.610 --> 00:07:27.070
-of people to solve these
-problems. And then we chop
+00:07:31.330 --> 00:07:36.460
+again, you know, is, is
+a more pragmatic approach because,
 
 120
-00:07:27.070 --> 00:07:31.480
-the problems up into small,
-small human type operations. When
+00:07:36.460 --> 00:07:38.560
+you know, I enjoy being
+able to put a random
 
 121
-00:07:31.480 --> 00:07:33.670
-do computers just completely blow
-them out of the water?
+00:07:38.560 --> 00:07:42.550
+print statement in, in my
+life, but, you know, I
 
 122
-00:07:33.670 --> 00:07:38.080
-Because they're just so much
-faster. I think that overall,
+00:07:42.550 --> 00:07:44.320
+don't have, That would be
+shocked if I would like
 
 123
-00:07:38.650 --> 00:07:40.900
-it will really depend on
-the situation. It's a hard
+00:07:44.350 --> 00:07:46.360
+who would, who would be
+against that? That seems like
 
 124
-00:07:40.900 --> 00:07:43.120
-question to answer, but I
-think that there are, there
+00:07:46.360 --> 00:07:49.300
+a very noncontroversial thing to
+want to do. Well, then
 
 125
-00:07:43.120 --> 00:07:48.040
-are some interesting parts to
-that. So part number one
+00:07:49.330 --> 00:07:51.730
+you're printing to the outside
+world. I mean, that's a
 
 126
-00:07:48.070 --> 00:07:53.980
-would be that we may
-want to go through amounts
+00:07:51.730 --> 00:07:54.340
+trivial example, but you know,
+you could do any sort
 
 127
-00:07:53.980 --> 00:07:58.210
-of data and content that
-no, even with mechanical Turk,
+00:07:54.340 --> 00:07:58.270
+of side effect in the
+middle of your function that
 
 128
-00:07:58.210 --> 00:08:00.820
-you just simply could not
-afford. So the amount of
+00:07:58.270 --> 00:08:01.120
+takes an in and returns
+an end. And you know,
 
 129
-00:08:00.820 --> 00:08:03.580
-YouTube, if we wanted to
-have an algorithm look and
+00:08:01.480 --> 00:08:03.400
+the type system wouldn't know
+any better. I mean, in,
 
 130
-00:08:03.580 --> 00:08:07.210
-categorize it, every YouTube video,
-every photo that's ever taken
+00:08:03.400 --> 00:08:05.940
+in, in terms of the
+signature of the function, it's,
 
 131
-00:08:07.210 --> 00:08:10.420
-on every smartphone, the volume
-is simply so high that
+00:08:05.940 --> 00:08:09.520
+it's unchanged. So that's, that's
+a little bit, a little
 
 132
-00:08:10.540 --> 00:08:14.380
-having people do, it isn't
-even a possibility. There you
+00:08:09.520 --> 00:08:11.530
+bit different. You couldn't quite
+do that in Haskell. So
 
 133
-00:08:14.380 --> 00:08:18.100
-go. I would say one
-of the areas that I'm
+00:08:11.530 --> 00:08:14.260
+it isn't exactly. I mean,
+you still have to wear
 
 134
-00:08:18.100 --> 00:08:20.770
-working on at the moment,
-which is incredibly exciting is
+00:08:14.260 --> 00:08:18.100
+your, your conscious programmer hat,
+but at the cost of,
 
 135
-00:08:20.830 --> 00:08:26.320
-automatically diagnosing problems in x-ray
-images. So what we do
+00:08:18.970 --> 00:08:22.450
+you know, I don't know,
+it's convenient. I so far,
 
 136
-00:08:26.320 --> 00:08:29.650
-is we take some x-ray
-images, which have been looked
+00:08:22.450 --> 00:08:26.800
+I haven't really been burned
+badly with that, but, you
 
 137
-00:08:29.650 --> 00:08:32.320
-at by doctors and doctors
-have said, these ones have
+00:08:26.800 --> 00:08:30.100
+know, I suppose one could
+be, So one of the
 
 138
-00:08:32.320 --> 00:08:35.530
-problems. These other ones don't,
-then we'll feed them into
+00:08:30.100 --> 00:08:33.760
+things that makes things like
+Ocala and functional programming languages
 
 139
-00:08:35.530 --> 00:08:38.800
-our algorithm and it will
-learn what the difference between
+00:08:33.760 --> 00:08:37.090
+like, Oh, camel safer and
+correct me if I'm wrong
 
 140
-00:08:38.800 --> 00:08:41.140
-an X Ray that's healthy
-and an X Ray that
+00:08:37.090 --> 00:08:39.160
+because I'm just learning here.
+Is it because it's a
 
 141
-00:08:41.140 --> 00:08:43.810
-is unhealthy is so then
-when it's shown a new
+00:08:39.160 --> 00:08:44.890
+pass by value, functional programming
+language Pass by value. I
 
 142
-00:08:43.810 --> 00:08:46.270
-x-ray that it's never seen
-before, it can make a
+00:08:44.890 --> 00:08:46.930
+don't really know what that
+means. Like as opposed to
 
 143
-00:08:46.270 --> 00:08:49.840
-new diagnosis without a person.
-And so in that sense,
+00:08:46.930 --> 00:08:49.090
+pass by reference, I can't
+give you a reference to
 
 144
-00:08:49.840 --> 00:08:53.320
-you can't hire people on
-mechanical Turk who have a
+00:08:49.090 --> 00:08:51.850
+an integer and have you
+mess with it. Mm. Actually
 
 145
-00:08:53.740 --> 00:08:58.350
-medical degrees. So if those
-systems can become accurate enough.
+00:08:51.850 --> 00:08:54.820
+you can and no camel.
+So there's actually a keyword.
 
 146
-00:08:58.620 --> 00:09:03.090
-So for example, our system
-has the accuracy of just
+00:08:54.820 --> 00:08:56.850
+Well, not a keyword. It's
+actually just a function called
 
 147
-00:09:03.090 --> 00:09:06.330
-shy of a junior doctor,
-which is actually very encouraging.
+00:08:56.850 --> 00:09:01.650
+ref, which makes something that
+has a mutable value to
 
 148
-00:09:06.720 --> 00:09:08.880
-Doctors do get a lot
-better, luckily with years of
+00:09:01.650 --> 00:09:03.330
+it. So you could say,
+you know, you could have
 
 149
-00:09:08.880 --> 00:09:12.430
-experience, but it is kind
-of in a way, the,
+00:09:03.330 --> 00:09:06.720
+a counter that is mutable,
+so Campbell again, another, another
 
 150
-00:09:12.430 --> 00:09:14.550
-the first steps. And so
-I see that as a
+00:09:06.720 --> 00:09:09.390
+trade off here, anytime you
+want to make immutable data
 
 151
-00:09:14.550 --> 00:09:17.910
-way to, for example, provide
-cheap medical care kind of
+00:09:09.390 --> 00:09:13.080
+structure or something, something mutable
+you can with explicitly with
 
 152
-00:09:17.910 --> 00:09:23.450
-expert oncology, even to people
-in developing countries. Interesting. So
+00:09:13.080 --> 00:09:15.750
+a keyword. So it's kind
+of like, okay, you're the
 
 153
-00:09:23.450 --> 00:09:26.570
-is this where this is
-the learning aspect of machine
+00:09:15.750 --> 00:09:18.240
+boss. If you want to
+make this mutable, that's great.
 
 154
-00:09:26.570 --> 00:09:28.760
-learning, right? The general idea
-is that you give it
+00:09:18.240 --> 00:09:20.340
+We're just going to represent
+this in the type system
 
 155
-00:09:28.760 --> 00:09:32.780
-this, this Corpus, this pile
-of data of which it
+00:09:20.430 --> 00:09:24.540
+and we're going to know
+about it. So actually it's
 
 156
-00:09:32.780 --> 00:09:35.660
-has no context. And then
-you provide it with a
+00:09:24.540 --> 00:09:26.670
+like when there is a
+bug, you know exactly where
 
 157
-00:09:35.660 --> 00:09:38.990
-bunch of context and then
-it starts to say, Oh,
+00:09:26.670 --> 00:09:28.940
+to look, Oh, I was
+going to ask you like,
 
 158
-00:09:39.260 --> 00:09:41.900
-I'm starting to notice a
-pattern here. And then it
+00:09:28.940 --> 00:09:30.770
+wait a second. I thought
+we were talking about the
 
 159
-00:09:41.900 --> 00:09:45.620
-can for lack of a
-better word, guess what you
+00:09:30.770 --> 00:09:33.320
+magic of not having state
+and side effects. And here
 
 160
-00:09:45.620 --> 00:09:48.590
-would want it to think
-about that once you've given
+00:09:33.320 --> 00:09:37.280
+you just said, well, there's
+a, like, don't eat pork.
 
 161
-00:09:48.590 --> 00:09:51.140
-it enough source material and
-enough context on the source
+00:09:37.940 --> 00:09:41.390
+If you do, here are
+some great recipes. Well look,
 
 162
-00:09:51.140 --> 00:09:54.920
-material? That's absolutely correct. So
-just in the same way
+00:09:41.390 --> 00:09:45.650
+I think, you know, sometimes
+an imperative solution makes sense.
 
 163
-00:09:54.920 --> 00:09:57.680
-that you would teach a
-medical student, for example, what
+00:09:45.680 --> 00:09:47.840
+You know, so Kamal has
+four loops. It has wild
 
 164
-00:09:57.680 --> 00:10:00.980
-some kind of condition looked
-like, you would get your
+00:09:47.840 --> 00:09:52.520
+loops. It has mutable stuff.
+You can have, you know,
 
 165
-00:10:00.980 --> 00:10:06.530
-algorithm and essentially in code,
-you would say, look at
+00:09:53.060 --> 00:09:56.570
+variable length arrays. I think.
+So. I mean, you can,
 
 166
-00:10:06.530 --> 00:10:08.840
-this, x-ray now tell me
-what you think. And I
+00:09:56.570 --> 00:09:59.660
+you can have these mutable
+things. It's just a, it's
 
 167
-00:10:08.840 --> 00:10:12.140
-might say, Oh, I think
-that's healthy. And then you
+00:09:59.660 --> 00:10:02.090
+just, you gotta wear your
+big kid hat and know
 
 168
-00:10:12.140 --> 00:10:13.820
-would compare it to what
-the doctor said, and if
+00:10:02.090 --> 00:10:05.180
+when to use them. So
+sometimes, sometimes a four loop
 
 169
-00:10:13.820 --> 00:10:15.710
-it was right, you would
-give it a little bit
+00:10:05.210 --> 00:10:07.940
+is a good solution. There's,
+you know, no, one's, you
 
 170
-00:10:15.710 --> 00:10:18.770
-of encouragement. You'd say, yes,
-you got that. Right. And
+00:10:07.940 --> 00:10:10.370
+know, you don't have to
+use a, you know, some
 
 171
-00:10:18.770 --> 00:10:22.940
-you'd adjust the kind of
-in, in, let's just say
+00:10:10.370 --> 00:10:15.140
+sort of recursive, you know,
+looping through a list for
 
 172
-00:10:23.240 --> 00:10:25.940
-we're training using this thing
-called a neural network. And
+00:10:15.140 --> 00:10:17.600
+everything. You know, sometimes you
+want a sorting algorithm that's
 
 173
-00:10:25.940 --> 00:10:28.220
-I think we should talk
-a bit more about that,
+00:10:17.600 --> 00:10:21.080
+going to mutate, what would
+you give it? But I
 
 174
-00:10:28.220 --> 00:10:31.580
-but we take the algorithm,
-we change it. So it's
+00:10:21.080 --> 00:10:23.750
+rarely reach for those things.
+It's interesting. Okay. Well also
 
 175
-00:10:31.580 --> 00:10:34.610
-more likely to detect those
-patterns, more likely to say
+00:10:23.750 --> 00:10:27.960
+has an object system. That's
+very great. And you know,
 
 176
-00:10:34.670 --> 00:10:37.730
-healthy in that situation and
-agree with the doctor, or
+00:10:27.960 --> 00:10:32.630
+I'd never use it. And
+actually it's funny, there was
 
 177
-00:10:37.730 --> 00:10:40.310
-if it disagreed with a
-doctor, then we'll say, no,
+00:10:32.630 --> 00:10:35.060
+a stack overflow question the
+other day about when should
 
 178
-00:10:40.460 --> 00:10:42.830
-you did it wrong. You
-should do it differently next
+00:10:35.060 --> 00:10:38.750
+I use object oriented Stefano,
+camel. And the answer was
 
 179
-00:10:42.830 --> 00:10:46.460
-time. And that concept is
-called supervised learning, where we
+00:10:38.750 --> 00:10:41.900
+well, it's never really worth
+it. And I think that's
 
 180
-00:10:46.460 --> 00:10:48.950
-have the input and we
-have the output, for example,
+00:10:41.900 --> 00:10:44.690
+funny, it's like, you know,
+this added complexity of objects
 
 181
-00:10:48.950 --> 00:10:50.810
-a doctor's given it to
-us. And then we're going
+00:10:44.720 --> 00:10:48.110
+just isn't worth it. And
+that seems to be the
 
 182
-00:10:50.810 --> 00:10:56.660
-to slowly IX sort of
-expose the computer to that
+00:10:48.110 --> 00:10:51.230
+viewpoint I've seen mainly in
+my limited time in the
 
 183
-00:10:56.660 --> 00:10:59.660
-data and using the right
-algorithms. It will become better
+00:10:51.230 --> 00:10:56.900
+Oklahoma community. But, but yeah,
+people do use objects, but
 
 184
-00:11:00.020 --> 00:11:04.370
-at solving that problem. Okay.
-So machine learning is the
+00:10:57.290 --> 00:11:01.040
+again, rarely reach for them.
+Same thing with mutable mutability.
 
 185
-00:11:04.370 --> 00:11:09.410
-family, and there are dozens
-and dozens of algorithms that
+00:11:01.070 --> 00:11:03.740
+I mean, it's there, but
+you rarely reach for it.
 
 186
-00:11:09.410 --> 00:11:13.790
-you can apply to it
-that lean from supervised unsupervised.
+00:11:04.430 --> 00:11:06.530
+Interesting. Cause what I'm trying
+to get a sense of
 
 187
-00:11:13.790 --> 00:11:17.510
-Semi-supervised, it's kind of like
-a slider bar of how,
+00:11:06.530 --> 00:11:09.950
+is that every language has
+its own. You know, you
 
 188
-00:11:17.540 --> 00:11:19.700
-how much hand holding do
-you want to give this
+00:11:09.950 --> 00:11:12.380
+talk about religion or picking
+religion and how you're very
 
 189
-00:11:19.760 --> 00:11:23.120
-machine in order to figure
-out how to think? Absolutely.
+00:11:13.370 --> 00:11:17.390
+enthusiastic evangelist of this thing.
+You know, how intense of
 
 190
-00:11:23.120 --> 00:11:29.720
-So in machine learning, there
-are three big problems with
+00:11:17.390 --> 00:11:19.010
+a religion is it? You
+know what I mean? Like
 
 191
-00:11:29.750 --> 00:11:34.190
-many, many different possible techniques,
-but the three big problems
+00:11:19.010 --> 00:11:21.620
+is it that will shout,
+not use objects when I
 
 192
-00:11:34.190 --> 00:11:38.600
-that people are interested in,
-unsupervised learning, supervised learning and
+00:11:21.620 --> 00:11:22.980
+don't hear some objects, you
+can use it, but you
 
 193
-00:11:38.600 --> 00:11:43.400
-reinforcement learning. So unsupervised learning
-is, I don't know the
+00:11:22.980 --> 00:11:25.400
+really probably shouldn't, you know
+what I mean? It, it
 
 194
-00:11:43.400 --> 00:11:46.700
-question, but I know there's
-structure there's patterns in my
+00:11:25.440 --> 00:11:27.740
+is a bit that is
+kind of a paradox, right?
 
 195
-00:11:46.700 --> 00:11:49.940
-data. And so this is
-hard to get, right. But
+00:11:27.740 --> 00:11:30.860
+Cause it's like functional programming
+is life, but also here's
 
 196
-00:11:49.940 --> 00:11:52.400
-when you do get it
-right, it's incredibly powerful because
+00:11:30.860 --> 00:11:34.340
+some objects, but I guess,
+you know, the thing is
 
 197
-00:11:52.550 --> 00:11:54.970
-you might even, you might
-not even know the question
+00:11:34.340 --> 00:11:39.290
+they represent objects in, in
+a coherent way in the
 
 198
-00:11:54.970 --> 00:11:58.150
-you're asking, but you could,
-for example, feeding your customer
+00:11:39.290 --> 00:11:42.530
+type system. I think they
+do a pretty good job
 
 199
-00:11:58.150 --> 00:12:00.310
-data and it might tell
-you something new, you didn't
+00:11:42.530 --> 00:11:48.980
+of that. But you know,
+really the only religious, I
 
 200
-00:12:00.310 --> 00:12:05.290
-know about your customers. That
-for example, a certain demographic
+00:11:48.980 --> 00:11:53.170
+would say quality of Oak
+camel is all hail the
 
 201
-00:12:05.290 --> 00:12:07.450
-of customer was much more
-likely to buy kind of
+00:11:53.170 --> 00:11:58.690
+ML type system, all hail
+pragmatism and you know, all
 
 202
-00:12:07.450 --> 00:12:10.200
-product, which you hadn't realized
-before. When in the, in
+00:11:58.690 --> 00:12:02.230
+hail performance. Okay. Well, you
+know, has, because of just
 
 203
-00:12:10.200 --> 00:12:12.210
-the movies, when they're trying
-to find the bad guy
+00:12:02.380 --> 00:12:05.440
+how great the type inferences
+and how sound the type
 
 204
-00:12:12.510 --> 00:12:15.000
-and they asked the computer
-to look for patterns going
+00:12:05.440 --> 00:12:08.380
+system is, you can do
+all of these static checks
 
 205
-00:12:15.000 --> 00:12:16.950
-over the last 30 years
-across the city, and then
+00:12:08.900 --> 00:12:11.950
+and then basically for performance,
+you erase most of the
 
 206
-00:12:16.950 --> 00:12:20.160
-the computer figures out where
-the bad guy is. Absolutely.
+00:12:11.950 --> 00:12:15.550
+type stuff at runtime. So
+you get really blazing, fast
 
 207
-00:12:20.160 --> 00:12:22.860
-And you see lots of
-green text and flashing patterns
+00:12:15.550 --> 00:12:20.620
+performance with a really sound
+type system. And that's pretty
 
 208
-00:12:22.890 --> 00:12:26.430
-like flushing association. I'm sure
-that's exactly what it's like
+00:12:20.620 --> 00:12:24.460
+great. And it's also, you
+know, yeah, it's just, it's,
 
 209
-00:12:26.430 --> 00:12:29.700
-in your mind. Yeah. Yeah.
-It is that entertaining and
+00:12:24.540 --> 00:12:26.860
+it's like a great general
+purpose language. So like for
 
 210
-00:12:29.700 --> 00:12:34.440
-it takes that little guy.
-So then there is a
+00:12:26.860 --> 00:12:29.140
+pretty much anything you could
+ever want to do, you
 
 211
-00:12:34.440 --> 00:12:37.680
-supervised learning and in supervised
-learning, we know the right
+00:12:29.140 --> 00:12:32.860
+know, whether it's systems coding,
+whether, you know, I was,
 
 212
-00:12:37.680 --> 00:12:39.540
-answer, but we want to
-get it. And you might
+00:12:32.980 --> 00:12:35.380
+I was talking to, to,
+you know, our mutual friend,
 
 213
-00:12:39.540 --> 00:12:41.190
-say, well, if we know
-the right answer, we know
+00:12:35.380 --> 00:12:38.020
+Rachel at jet and they
+use F sharp, which is,
 
 214
-00:12:41.190 --> 00:12:42.990
-how to get the right
-answer. Why would we even
+00:12:38.320 --> 00:12:42.190
+you know, a basic copy
+of <inaudible> and you know,
 
 215
-00:12:42.990 --> 00:12:45.210
-bother? Well, the answer is
-because we want to do
+00:12:42.190 --> 00:12:45.820
+they use F sharp for
+various end points for, you
 
 216
-00:12:45.210 --> 00:12:48.300
-it more quickly or more
-cheaply, or because it hasn't
+00:12:45.820 --> 00:12:51.490
+know, just like funneling glue
+in between different services, you
 
 217
-00:12:48.300 --> 00:12:51.090
-happened yet. What I mean
-by that is if we
+00:12:51.490 --> 00:12:54.010
+know, so you can use
+it for anything and it
 
 218
-00:12:51.090 --> 00:12:53.940
-want to predict what happens
-tomorrow, we can just wait
+00:12:54.040 --> 00:12:57.190
+pretty much works great. So
+yeah, it's, you know, you
 
 219
-00:12:53.940 --> 00:12:56.490
-towards it's tomorrow and train
-an algorithm to make those
+00:12:57.190 --> 00:12:59.770
+can use mutability, you can
+use objects, all that stuff.
 
 220
-00:12:56.490 --> 00:13:00.240
-predictions. So in supervised learning,
-we know the right answer,
+00:13:00.610 --> 00:13:02.320
+And I will say whenever
+I have a bug, I
 
 221
-00:13:00.420 --> 00:13:03.420
-and we're going to show
-the computer, the input and
+00:13:02.320 --> 00:13:05.670
+always know where to look.
+Okay. So you threw a,
 
 222
-00:13:03.420 --> 00:13:07.620
-the output that we want,
-and we're gonna then train
+00:13:05.760 --> 00:13:07.920
+when people talk about subjects
+that they're really familiar with,
 
 223
-00:13:07.620 --> 00:13:10.800
-it to produce those outputs,
-even for inputs. It had
+00:13:08.640 --> 00:13:11.700
+they throw out acronyms and
+terms that people aren't necessarily
 
 224
-00:13:10.800 --> 00:13:13.380
-never seen before. So to
-detect kind of what the
+00:13:11.700 --> 00:13:14.820
+familiar with. So you just
+threw out the, you said
 
 225
-00:13:13.410 --> 00:13:19.770
-relationship between the input and
-the output is. So Why
+00:13:14.820 --> 00:13:18.630
+all hail the ML type
+system and ML was a
 
 226
-00:13:19.770 --> 00:13:21.660
-isn't, this is a little
-bit of a tangent, but
+00:13:18.630 --> 00:13:21.390
+functional programming language. That's as
+old as I am that
 
 227
-00:13:21.660 --> 00:13:23.700
-it's making me realize that
-there's so many problems that
+00:13:21.390 --> 00:13:24.120
+Robyn Milner made in the
+seventies. What is the ML
 
 228
-00:13:23.700 --> 00:13:26.610
-we could be solving with
-this. There are probably people
+00:13:24.120 --> 00:13:28.230
+type system? What does that
+mean to camel? That ML
 
 229
-00:13:26.610 --> 00:13:30.690
-listening right now who are
-solving problems at their work
+00:13:28.230 --> 00:13:32.340
+type system to Oko means?
+Yeah, that's, that's a good
 
 230
-00:13:30.930 --> 00:13:34.680
-in a moderately inaccurate way,
-with simple foreloops and hash
+00:13:32.340 --> 00:13:37.500
+question. The Henry Milner algorithm
+for type stuff, you know,
 
 231
-00:13:34.680 --> 00:13:38.370
-tables and machine learning would
-revolutionize their business if only
+00:13:37.500 --> 00:13:39.810
+I'm not a, I know
+nothing about type theory, but
 
 232
-00:13:38.370 --> 00:13:41.670
-they do about it. I
-think that's absolutely true. So
+00:13:40.020 --> 00:13:42.600
+we have a, we have
+like higher kind of types.
 
 233
-00:13:41.670 --> 00:13:47.520
-I think that there's a,
-sometimes I feel like machine
+00:13:42.600 --> 00:13:46.320
+So we have, you know,
+let's see when I met
 
 234
-00:13:47.520 --> 00:13:50.490
-learning has the chance to
-become very soon a new
+00:13:46.320 --> 00:13:48.150
+you at the conference, I
+went to a type theory,
 
 235
-00:13:50.490 --> 00:13:53.790
-paradigm of programming. So people
-will talk about object oriented,
+00:13:48.150 --> 00:13:51.330
+one Oh one class. Right.
+So they were talking about,
 
 236
-00:13:53.790 --> 00:13:58.080
-programming, functional programming, and then
-machine learning, because it will
+00:13:51.930 --> 00:13:55.830
+you know, stuff I had
+heard before monads monitors and
 
 237
-00:13:58.080 --> 00:14:02.640
-be such an indispensable part
-of solving problems. I think
+00:13:55.830 --> 00:13:58.920
+Funkster's right. I mean all
+that stuff. So Kamal has
 
 238
-00:14:02.640 --> 00:14:05.280
-that now we expect so
-much of our products. We
+00:13:58.920 --> 00:14:03.420
+Funkster's yeah. This is the
+kind of thing where people
 
 239
-00:14:05.280 --> 00:14:09.330
-expect them to learn our
-habits, to make great recommendations,
+00:14:03.420 --> 00:14:06.930
+say the Lambda calculus casually
+over lunch. Yeah. It's like
 
 240
-00:14:09.570 --> 00:14:13.410
-to gently notify us, but
-not in on datas and
+00:14:07.080 --> 00:14:11.220
+modules, parameterized over modules. So,
+you know, we, so funders
 
 241
-00:14:13.410 --> 00:14:16.200
-all those situations where you
-want to interact, say with
+00:14:11.220 --> 00:14:14.430
+or something I literally never
+use, but they're there and
 
 242
-00:14:16.200 --> 00:14:20.160
-a customer or a client,
-but provide them experience, which
+00:14:14.430 --> 00:14:17.880
+there's actually great ways to
+use them. The unikernel project
 
 243
-00:14:20.160 --> 00:14:24.840
-is customized, which is relevant.
-You're going to need to
+00:14:17.880 --> 00:14:21.960
+I work on uses Funkster's
+galore, there's even a library
 
 244
-00:14:24.840 --> 00:14:28.560
-use machine learning. Interesting. So
-you feel that we're at
+00:14:21.960 --> 00:14:25.460
+called funk Toria to make
+your funders better. So it's
 
 245
-00:14:28.560 --> 00:14:32.220
-the beginning of the, the,
-the hockey stick. This is
+00:14:25.980 --> 00:14:30.180
+turtles all the way down,
+you know? And so yeah,
 
 246
-00:14:32.220 --> 00:14:37.350
-going to be huge. I
-definitely think that it will
+00:14:30.180 --> 00:14:33.360
+we have all these, you
+know, there's, there's, there's even
 
 247
-00:14:37.350 --> 00:14:44.970
-become very, very, very broadly
-applied. Just like computers became,
+00:14:33.360 --> 00:14:37.470
+polymorphic types, which are types
+where, you know, you can,
 
 248
-00:14:45.000 --> 00:14:47.730
-went from a niche thing,
-which a few businesses might
+00:14:37.470 --> 00:14:39.720
+you don't necessarily have to
+specify what type they will
 
 249
-00:14:47.730 --> 00:14:50.820
-have to every single part
-of commerce now involves a,
+00:14:39.720 --> 00:14:43.020
+be. And as the program
+goes along, you can sort
 
 250
-00:14:51.230 --> 00:14:53.660
-in some way, I see
-that when we hit that
+00:14:43.020 --> 00:14:46.980
+of add to that type
+with different types. So it
 
 251
-00:14:53.660 --> 00:15:00.200
-hockey stick, simply every single
-product application that people interact
+00:14:46.980 --> 00:14:49.200
+gives you sort of a
+dynamic typing type of thing.
 
 252
-00:15:00.200 --> 00:15:04.550
-with will include machine learning
-in some way. And if
+00:14:49.210 --> 00:14:52.010
+So there's open types and
+all of these different types
 
 253
-00:15:04.550 --> 00:15:07.460
-you will think about the
-amount of machine learning that
+00:14:52.010 --> 00:14:57.470
+of types that allow you
+to do dynamic ish type
 
 254
-00:15:07.460 --> 00:15:12.770
-goes on, when you use
-to provide the newsfeed in
+00:14:57.470 --> 00:15:03.590
+things. And yeah. So, but
+basically what that means on
 
 255
-00:15:12.770 --> 00:15:17.690
-Facebook, to provide your Google
-search, to provide your response
+00:15:03.590 --> 00:15:06.560
+a day to day basis
+for me is that when
 
 256
-00:15:17.840 --> 00:15:20.570
-suggestions in Gmail, you realize
-that there are very few
+00:15:06.560 --> 00:15:11.330
+I write a function that
+takes something and uses another
 
 257
-00:15:20.570 --> 00:15:22.940
-products that you interact with
-today, which don't have a
+00:15:11.330 --> 00:15:13.760
+function. Like for example, let's
+say I wanted to make
 
 258
-00:15:22.940 --> 00:15:28.930
-machine learning component. So, so
-why, Why is it suddenly
+00:15:13.760 --> 00:15:16.730
+my, you know, genus some
+that's like, let's say, let
 
 259
-00:15:28.930 --> 00:15:32.020
-this, if it's got to
-be popular, why is it
+00:15:16.730 --> 00:15:20.630
+Gina some take I and
+J right. And then I'm
 
 260
-00:15:32.020 --> 00:15:35.590
-also now becoming accessible? And
-was it not accessible before
+00:15:20.630 --> 00:15:24.440
+going to, I plus J
+there's only one thing that
 
 261
-00:15:35.740 --> 00:15:37.960
-some of these more recent
-tools have come out? I
+00:15:24.440 --> 00:15:26.270
+these I and J could
+ever be. And that's an
 
 262
-00:15:37.960 --> 00:15:41.560
-know that like Microsoft Azure
-has machine learning stuff. Google
+00:15:26.270 --> 00:15:30.600
+integer. Why? Because I'm using
+a plus. So it's, it's
 
 263
-00:15:41.560 --> 00:15:44.740
-has machine learning libraries. We're
-going to talk about TensorFlow,
+00:15:30.650 --> 00:15:35.210
+going to only unify with
+one type. And that unification
 
 264
-00:15:44.740 --> 00:15:48.160
-which is an open source
-library for machine learning. Is
+00:15:35.210 --> 00:15:38.330
+is done by some very
+fancy type thing that I
 
 265
-00:15:48.160 --> 00:15:51.940
-it these open libraries that
-are now allowing the beginning
+00:15:38.330 --> 00:15:40.850
+really know nothing about nor
+do I really need to
 
 266
-00:15:51.940 --> 00:15:56.560
-of that, that up until
-the right graph? I absolutely
+00:15:40.850 --> 00:15:43.390
+know anything about it. So
+that's some kind of type
 
 267
-00:15:56.560 --> 00:16:03.160
-think that like with all
-huge economic changes, that sort
+00:15:43.390 --> 00:15:46.300
+inference that is happening. And
+it's like, okay, I see
 
 268
-00:16:03.160 --> 00:16:06.220
-of broad based economic changes,
-it's coming from a number
+00:15:46.300 --> 00:15:48.190
+the two ans going in,
+there's an incoming coming out.
 
 269
-00:16:06.220 --> 00:16:10.270
-of different sources. So I
-would say that the content,
+00:15:48.190 --> 00:15:51.040
+And that's, that's the end
+of it. Exactly. And this
 
 270
-00:16:10.900 --> 00:16:16.300
-the, the educational material is
-free online over an extremely
+00:15:51.040 --> 00:15:52.930
+can be kind of a
+hurdle for people who are
 
 271
-00:16:16.300 --> 00:16:22.420
-high quality, the tools, as
-you just mentioned, TensorFlow being
+00:15:52.930 --> 00:15:55.390
+just starting. I think, because,
+you know, if you're coming
 
 272
-00:16:22.420 --> 00:16:26.410
-the one we'll talk about
-and also offerings from Microsoft
+00:15:55.390 --> 00:15:58.720
+from something like Ruby or
+Python or JavaScript, you might
 
 273
-00:16:26.410 --> 00:16:31.750
-and Amazon, just to name
-a few, these tools are
+00:15:58.720 --> 00:16:04.090
+not realize what it means
+to have a fully coherent
 
 274
-00:16:31.780 --> 00:16:35.980
-really, really good, and that
-they simply didn't exist sort
+00:16:04.780 --> 00:16:08.290
+constraint system. So for example,
+you might be using a
 
 275
-00:16:35.980 --> 00:16:40.960
-of 10 years ago. So
-the educational material, the tools,
+00:16:08.290 --> 00:16:10.450
+variable in a certain way
+and sort of a more
 
 276
-00:16:40.960 --> 00:16:44.830
-and then the incentives. So
-there were points where a
+00:16:10.450 --> 00:16:14.260
+dynamic style and then unaware
+that, you know, you've actually
 
 277
-00:16:44.830 --> 00:16:47.950
-company is just wouldn't have
-even collected the data to
+00:16:14.260 --> 00:16:17.500
+created a pretty incomplete system.
+It saves you from bugs,
 
 278
-00:16:48.040 --> 00:16:52.870
-enable machine learning. But now
-all companies are amassing huge
+00:16:17.890 --> 00:16:20.170
+for sure. But in the
+beginning you might be like,
 
 279
-00:16:52.870 --> 00:16:55.600
-amounts of data because they
-record every interaction they have
+00:16:20.170 --> 00:16:22.690
+why can't I just do
+this? Why, why is it
 
 280
-00:16:55.600 --> 00:16:59.710
-with their customer. And they're
-looking at ways to improve
+00:16:22.690 --> 00:16:24.790
+yelling at me? Why am
+I getting these warnings from
 
 281
-00:16:59.710 --> 00:17:03.820
-their business, using that data
-to bring value. And there's
+00:16:24.790 --> 00:16:27.400
+the compiler? Why is it,
+why is it, why is
 
 282
-00:17:03.820 --> 00:17:07.420
-only so much manual analysis
-that can happen. And the
+00:16:27.400 --> 00:16:29.920
+it not a, I don't
+know why isn't it giving
 
 283
-00:17:07.420 --> 00:17:10.510
-other part of the, the,
-the only alternative then is
+00:16:29.920 --> 00:16:31.930
+me the head on this
+list while you've you have
 
 284
-00:17:10.510 --> 00:17:13.120
-to get computers, to do
-it for you. Would they
+00:16:31.930 --> 00:16:34.330
+a nested list and you
+didn't realize it, or you've
 
 285
-00:17:13.120 --> 00:17:15.280
-give it away if it's,
-if it's such magic, if
+00:16:34.330 --> 00:16:38.200
+used it away where this
+function was expecting a string,
 
 286
-00:17:15.280 --> 00:17:17.650
-it's like the, if this
-is the greatest thing since
+00:16:38.200 --> 00:16:40.540
+but you gave it a
+list. And even though it
 
 287
-00:17:17.650 --> 00:17:21.550
-sliced bread, why would they
-open source it? I think
+00:16:40.540 --> 00:16:43.360
+might've worked in something like
+Python, it won't work in
 
 288
-00:17:21.550 --> 00:17:24.430
-that there's a number of
-reasons for it. I would
+00:16:43.360 --> 00:16:46.120
+Ocala because the type system
+makes sure that everything is
 
 289
-00:17:24.430 --> 00:17:31.360
-say obviously with Google, there's
-always one part of it
+00:16:46.120 --> 00:16:53.140
+formally correct. Camel was made
+for formal verification. This episode
 
 290
-00:17:31.360 --> 00:17:34.630
-is self-interest. And other part
-of it is their general
+00:16:53.140 --> 00:16:55.300
+of Hansel minutes is brought
+to you by brain tree
 
 291
-00:17:35.380 --> 00:17:37.030
-trying to make the world
-a better place. So the
+00:16:55.300 --> 00:16:58.270
+payments. By next year, maybe
+even next week, there could
 
 292
-00:17:37.030 --> 00:17:43.600
-self-interested part is simply that
-machine learning right now doesn't
+00:16:58.270 --> 00:16:59.950
+be a whole new way
+to pay. Maybe it will
 
 293
-00:17:43.600 --> 00:17:46.720
-run itself. You still need
-smart people to think about
+00:16:59.950 --> 00:17:02.170
+be the next Bitcoin or
+the next Apple pay. Maybe
 
 294
-00:17:46.720 --> 00:17:49.830
-the problem to apply the
-tools. So in a way,
+00:17:02.170 --> 00:17:06.220
+even both fortunately brain tree's
+full stack payment platform is
 
 295
-00:17:50.010 --> 00:17:52.740
-TensorFlow is a, is a
-raw material. So the more
+00:17:06.220 --> 00:17:08.770
+easily adaptable to whatever the
+future holds. So you can
 
 296
-00:17:52.740 --> 00:17:55.980
-people out there in the
-world who are great at
+00:17:08.770 --> 00:17:12.220
+adapt easily to, you can
+accept everything from pounds to
 
 297
-00:17:55.980 --> 00:18:01.800
-TensorFlow who improve TensorFlow, that
-is great for Google in
+00:17:12.220 --> 00:17:15.100
+PayPal, to that next big
+innovation from any device with
 
 298
-00:18:01.800 --> 00:18:04.350
-terms of, in terms of
-recruitment, in terms of Mindshare,
+00:17:15.100 --> 00:17:18.430
+one integration. And when that
+new payment method comes out,
 
 299
-00:18:05.280 --> 00:18:07.050
-in terms of making the
-world a better place. I
+00:17:18.670 --> 00:17:20.140
+all you have to do
+is update a few lines
 
 300
-00:18:07.050 --> 00:18:10.230
-think that we're seeing now
-with the open AI project,
+00:17:20.140 --> 00:17:24.340
+of code no late nights,
+no complicated recoding, no stress
 
 301
-00:18:10.560 --> 00:18:13.620
-a lot of money going
-into trying to make sure
+00:17:24.340 --> 00:17:26.770
+about staying ahead of the
+curve. Braintree payments is here
 
 302
-00:18:13.620 --> 00:18:18.360
-that the raw material of
-artificial intelligence, the source code,
+00:17:26.770 --> 00:17:33.370
+to help. You can learn
+more@braintreepayments.com slash Hanselman that's Braintree
 
 303
-00:18:18.360 --> 00:18:21.420
-the knowhow is open source
-and freely available. So it
+00:17:33.370 --> 00:17:40.240
+payments.com/hanselman. The SDK is available
+in lots of languages, including.net
 
 304
-00:18:21.420 --> 00:18:25.590
-can't be controlled by sort
-of a select few or
+00:17:40.240 --> 00:17:46.450
+node, Java, Perl, and Python,
+Ruby, check it out. So
 
 305
-00:18:25.590 --> 00:18:28.860
-nefarious for nefarious means. So
-I think there is a
+00:17:46.450 --> 00:17:49.830
+backing up and kind of
+paraphrasing. So this type system,
 
 306
-00:18:28.860 --> 00:18:31.590
-part where Google sees this
-as a contribution to making
+00:17:49.830 --> 00:17:52.950
+the, the ML type system
+or the, the Hindley Miller
 
 307
-00:18:31.590 --> 00:18:36.590
-the world a better. Okay.
-So let's talk about TensorFlow
+00:17:52.950 --> 00:17:55.590
+type system was this kind
+of classical system that was
 
 308
-00:18:36.620 --> 00:18:38.780
-it's open source and you
-can get it at tensor,
+00:17:55.590 --> 00:17:58.530
+discovered and then described, and
+someone got a PhD over
 
 309
-00:18:38.810 --> 00:18:42.980
-T E N S O
-R flow.org. And it's pretty
+00:17:58.530 --> 00:18:01.110
+it. And then you can
+make like monotypes and poly
 
 310
-00:18:42.980 --> 00:18:46.310
-portable. It runs on GPS
-at Raven runs using graphics
+00:18:01.110 --> 00:18:02.850
+types and free types and
+do all this kind of
 
 311
-00:18:46.310 --> 00:18:53.180
-cards. It runs everywhere. That's
-absolutely right. So TensorFlow is
+00:18:02.850 --> 00:18:06.330
+stuff. But Oak camel has
+the static type system. And
 
 312
-00:18:53.690 --> 00:18:57.680
-a very, very well polished
-product that came out of
+00:18:06.330 --> 00:18:10.320
+then also does inference and
+gives you less rope with
 
 313
-00:18:58.490 --> 00:19:02.000
-Google research and the Google
-brain team. And in fact,
+00:18:10.320 --> 00:18:13.350
+which to hang yourself. So
+while in other languages, you
 
 314
-00:19:02.890 --> 00:19:06.530
-the Google really put their
-big guns on it. Jeff
+00:18:13.350 --> 00:18:15.870
+can cast a string to
+an int and let the,
 
 315
-00:19:06.530 --> 00:19:08.960
-Dean's was working on it
-for a long time. So
+00:18:16.200 --> 00:18:19.920
+let the grenade start flying.
+You're you're more constrained in
 
 316
-00:19:08.960 --> 00:19:13.070
-it really shows it's really
-well thought through. It's very
+00:18:19.920 --> 00:18:21.900
+a language like this, cause
+it has to be correct.
 
 317
-00:19:13.070 --> 00:19:17.540
-easy to install if you
-on Linux or on a
+00:18:22.020 --> 00:18:24.650
+Is that fair to say?
+Totally fair to say, but,
 
 318
-00:19:17.540 --> 00:19:21.500
-Mac, and if you on
-windows, then you can install
+00:18:24.710 --> 00:18:28.190
+but want to denim, even
+though it is statically typed,
 
 319
-00:19:21.500 --> 00:19:26.810
-it using instructions from Scott's
-blog, in fact, and I'm
+00:18:28.190 --> 00:18:30.080
+it's not the same, you
+know, some people listening might
 
 320
-00:19:26.810 --> 00:19:30.140
-funny. So Yeah, there isn't
-a, there isn't a way
+00:18:30.080 --> 00:18:33.050
+be thinking, Oh, like Java,
+not like Java in the
 
 321
-00:19:30.140 --> 00:19:31.580
-to put it on windows,
-but it turns out if
+00:18:33.050 --> 00:18:36.500
+sense that you have to
+explicitly state types. You don't,
 
 322
-00:19:31.580 --> 00:19:33.920
-you have a bash on
-windows, you can, you can
+00:18:36.500 --> 00:18:39.290
+I never have to say
+into I and J I
 
 323
-00:19:33.920 --> 00:19:39.380
-use it As well. And
-so being well-packaged easy to
+00:18:39.290 --> 00:18:42.770
+can it's I can totally
+do that in some, in
 
 324
-00:19:39.380 --> 00:19:43.250
-install good API APIs with
-good documentation. The fact was
+00:18:42.770 --> 00:18:45.800
+some cases where maybe you've
+I know now maybe it's
 
 325
-00:19:43.250 --> 00:19:48.410
-that there were tools before
-TensorFlow, and there was a
+00:18:45.800 --> 00:18:48.620
+something, there are some cases
+where you have to explicitly
 
 326
-00:19:48.410 --> 00:19:51.260
-great effort on the part
-of many, many, many dedicated
+00:18:48.620 --> 00:18:50.780
+give the compiler a little
+help. You might find that
 
 327
-00:19:51.260 --> 00:19:58.910
-individuals, PhD students, enthusiasts to
-make them good, but they,
+00:18:50.780 --> 00:18:53.360
+every now and then, but
+you won't. And just the
 
 328
-00:19:59.480 --> 00:20:02.090
-they never really reached that
-same level of Polish. So
+00:18:53.360 --> 00:18:56.090
+way that you use it,
+it will only unify with,
 
 329
-00:20:02.090 --> 00:20:04.130
-I think the one thing
-I think about TensorFlow is
+00:18:56.090 --> 00:18:59.540
+with one type. And sometimes
+that's any type, but, you
 
 330
-00:20:04.130 --> 00:20:06.770
-a machine learning tool. It's
-very polished and it's very
+00:18:59.540 --> 00:19:02.300
+know, or like, you know,
+you'll see those in, in
 
 331
-00:20:06.770 --> 00:20:10.700
-easy to get started with
-because the documentation and tutorials
+00:19:02.360 --> 00:19:05.840
+type signatures, alpha beta, right.
+You know, like let's say,
 
 332
-00:20:10.700 --> 00:20:14.000
-are of a very high
-quality. Yeah. There's a bunch
+00:19:06.020 --> 00:19:08.360
+you know, the type signature
+of map, right. It takes
 
 333
-00:20:14.000 --> 00:20:20.450
-of tutorials. I know that
-there's one@learningtensorflow.com. That'll walk you
+00:19:08.360 --> 00:19:10.820
+a let's see, it takes
+a function that takes a
 
 334
-00:20:20.450 --> 00:20:23.390
-through how to set this
-up. It took me 15,
+00:19:10.820 --> 00:19:13.520
+to B it takes a
+list of a, and gives
 
 335
-00:20:23.390 --> 00:20:26.690
-20 minutes to get started.
-It was not, you know,
+00:19:13.520 --> 00:19:15.620
+you a list of B,
+right? So that those are
 
 336
-00:20:26.720 --> 00:20:28.220
-of course, it's one of
-those things. It's like the
+00:19:15.620 --> 00:19:20.660
+like generic types. But, but
+most of the time it'll,
 
 337
-00:20:28.220 --> 00:20:30.110
-game of go, right? It's
-a minute to learn a
+00:19:20.690 --> 00:19:23.240
+it'll unify correctly for you.
+You don't have to explicitly
 
 338
-00:20:30.110 --> 00:20:33.890
-lifetime to master as far
-as setup. It's certainly not.
+00:19:23.240 --> 00:19:27.080
+state any type. Okay. I
+got ya. Now, one of
 
 339
-00:20:34.130 --> 00:20:36.380
-It's, it's certainly easier than
-SharePoint. I'll tell you that.
+00:19:27.080 --> 00:19:29.300
+the cool features of O'Connell
+and other languages have this,
 
 340
-00:20:36.710 --> 00:20:39.350
-Absolutely. So who is TensorFlow
-for? And I think it's
+00:19:29.300 --> 00:19:32.000
+but we're talking about Oak
+camel is this concept of
 
 341
-00:20:39.350 --> 00:20:43.190
-for everyone. I think everyone
-can get started. Clearly. Some
+00:19:32.000 --> 00:19:35.930
+an, of an FFI or
+a foreign function interface. Have
 
 342
-00:20:43.190 --> 00:20:45.920
-of the smartest people in
-the world, the great thing
+00:19:35.940 --> 00:19:38.690
+you used those? I haven't
+really, but I know that
 
 343
-00:20:45.920 --> 00:20:48.550
-is that some of the
-smartest people, the world at
+00:19:38.690 --> 00:19:41.450
+it makes talking to see
+really great. So if I
 
 344
-00:20:48.550 --> 00:20:51.790
-Google at deep mine are
-using TensorFlow to do their
+00:19:41.450 --> 00:19:43.370
+understand correctly, not only does
+it mean that you can
 
 345
-00:20:51.790 --> 00:20:55.330
-research and you can use
-the same thing, but when
+00:19:43.370 --> 00:19:46.340
+call C, but you can
+also even make a library,
 
 346
-00:20:55.870 --> 00:20:59.140
-you use it, you'll be
-able to get started using
+00:19:46.340 --> 00:19:48.620
+you know, camel and then
+expose it as C. So
 
 347
-00:20:59.140 --> 00:21:02.890
-tutorials, then go and try
-and solve harder problems yourself.
+00:19:48.620 --> 00:19:51.560
+a C programmer would actually
+not even know that it
 
 348
-00:21:03.100 --> 00:21:06.850
-Find out the limitations of
-the information, the tutorials learn
+00:19:51.560 --> 00:19:55.310
+was old camel. Yeah. I've,
+I've heard this before an
 
 349
-00:21:06.850 --> 00:21:10.150
-more. But I really do
-feel like there's a gradient
+00:19:55.310 --> 00:19:59.090
+IRC. There's also a great
+library called C types. I've
 
 350
-00:21:10.240 --> 00:21:13.150
-that I'm right now, if
-you want to train a
+00:19:59.090 --> 00:20:02.090
+never used it, but, but
+that's a thing and people
 
 351
-00:21:13.150 --> 00:21:19.480
-simple machine learning model to,
-for example, look at images,
+00:20:02.090 --> 00:20:05.030
+love doing it. That's a
+thing. And people love doing
 
 352
-00:21:19.480 --> 00:21:22.210
-for example, tell the difference
-between cats and dogs. That
+00:20:05.030 --> 00:20:07.010
+it. I think what's cool
+about that though. Is it
 
 353
-00:21:22.210 --> 00:21:25.840
-is really something that is
-a weekend project, which before
+00:20:07.010 --> 00:20:09.860
+reminds me that old camel
+isn't an Island. It's not
 
 354
-00:21:26.380 --> 00:21:29.590
-literally 10 years ago would
-have been a massive university
+00:20:09.860 --> 00:20:11.930
+like, Oh, you must be
+this way. And you must
 
 355
-00:21:29.590 --> 00:21:32.440
-research project is now something
-you can do in your
+00:20:11.930 --> 00:20:14.480
+live in our world. You
+know, that's a recognition that,
 
 356
-00:21:32.440 --> 00:21:36.660
-home, on your laptop in
-a weekend. Wow. Yeah, there's
+00:20:14.500 --> 00:20:17.600
+that you do have to
+interrupt at some point. Yeah,
 
 357
-00:21:36.660 --> 00:21:40.200
-a, an, a great example
-by a guy named Elliot
+00:20:17.630 --> 00:20:20.870
+no, it's, it's very much
+about interoperability. Like the project
 
 358
-00:21:40.230 --> 00:21:43.920
-Polak. Sukin who's got a
-whole section on TensorFlow tutorials
+00:20:20.870 --> 00:20:23.690
+I'm working on right now.
+So I write in Oak
 
 359
-00:21:44.190 --> 00:21:47.010
-where he changed my perspective
-on it because I assume
+00:20:23.690 --> 00:20:27.230
+camel, I compile the old
+camel bytecode. Then I take
 
 360
-00:21:47.020 --> 00:21:51.090
-that machine learning and learning
-TensorFlow meant huge datasets. And
+00:20:27.230 --> 00:20:29.660
+that bite code and I
+use a program called JS
 
 361
-00:21:51.090 --> 00:21:52.680
-if I didn't have a
-huge data set, then what
+00:20:29.830 --> 00:20:33.500
+camel, which makes JavaScript. And
+then I run this Java
 
 362
-00:21:52.680 --> 00:21:55.350
-was the point? And in
-his example, he just goes
+00:20:33.500 --> 00:20:37.070
+script in the node run
+time. So I'm actually writing
 
 363
-00:21:55.350 --> 00:21:57.870
-through about a thousand people
-who were on the Titanic,
+00:20:37.070 --> 00:20:40.460
+a camel and I have
+an electron app. So it's
 
 364
-00:21:58.110 --> 00:22:01.140
-just a CSV file and
-does all sorts of analysis
+00:20:40.460 --> 00:20:43.250
+like kind of like some,
+a lot of song and
 
 365
-00:22:01.140 --> 00:22:03.480
-on it. And that made
-me realize that, you know,
+00:20:43.250 --> 00:20:45.980
+dance, a lot of witchcraft,
+but it's a really nice
 
 366
-00:22:03.480 --> 00:22:05.730
-I could have a small
-Excel sheet that had a
+00:20:45.980 --> 00:20:49.420
+development flow. And I'm, that's
+possible because people wrote these
 
 367
-00:22:05.730 --> 00:22:07.830
-couple of hundred or a
-couple of thousand records, and
+00:20:49.420 --> 00:20:53.170
+amazing bindings to know JS
+and bindings to, you know,
 
 368
-00:22:07.830 --> 00:22:11.490
-I may have insight into
-that or the, or machine
+00:20:53.170 --> 00:20:56.320
+express and all these JavaScript
+libraries. So they did all
 
 369
-00:22:11.490 --> 00:22:13.590
-learning and algorithms may have
-insight into that, that I
+00:20:56.320 --> 00:20:58.660
+the type work ahead of
+time for me to use
 
 370
-00:22:13.590 --> 00:22:15.810
-would never have known if
-I had assumed that it
+00:20:58.660 --> 00:21:01.540
+this stuff. And, and that's,
+that's really great. The whole
 
 371
-00:22:15.810 --> 00:22:18.120
-was only a big Data
-thing. I think that's really
+00:21:01.540 --> 00:21:04.930
+camel community is really, really
+great. I can't stress that
 
 372
-00:22:18.120 --> 00:22:20.910
-exciting. And I think that
-a great way, if you
+00:21:04.930 --> 00:21:09.210
+enough. And you said this
+was called J S of,
 
 373
-00:22:20.910 --> 00:22:22.860
-go in and get started
-with TensorFlow, a great thing
+00:21:09.360 --> 00:21:12.960
+okay. Yes. I believe this
+came out of the, the
 
 374
-00:22:22.860 --> 00:22:25.200
-to do is as soon
-as you finished your tutorial,
+00:21:12.960 --> 00:21:17.190
+oxygen project, which had a
+couple of different, really interesting
 
 375
-00:22:25.200 --> 00:22:30.210
-try and apply those same
-ideas to an interesting problem
+00:21:17.190 --> 00:21:20.100
+things. It was, it was
+a web project. They had
 
 376
-00:22:30.210 --> 00:22:32.490
-or data set that you
-have. And I think that
+00:21:20.100 --> 00:21:23.730
+like LWT, which is a
+cooperative threading library, which is,
 
 377
-00:22:32.490 --> 00:22:38.160
-that'll give you a really
-funny, interesting experience. The, one
+00:21:24.000 --> 00:21:27.810
+you know, really bread and
+butter in O'Connell it's used
 
 378
-00:22:38.160 --> 00:22:40.110
-of the great things that
-is making a lot of
+00:21:27.810 --> 00:21:30.960
+in pretty much everything. There's
+a lot of cool stuff
 
 379
-00:22:40.110 --> 00:22:43.860
-this do, making this very
-quick and easy to do
+00:21:30.960 --> 00:21:34.410
+that came out of that
+project. Thai XML is another
 
 380
-00:22:44.160 --> 00:22:47.910
-is this thing called transfer
-learning. And this is really
+00:21:34.410 --> 00:21:37.260
+one that's, that's pretty popular.
+So they have a lot
 
 381
-00:22:48.270 --> 00:22:51.570
-was it's. It's so amazing
-how fast things are moving
+00:21:37.260 --> 00:21:39.300
+of different frameworks that came
+out of that, that I
 
 382
-00:22:51.570 --> 00:22:54.570
-in machine learning. So transfer
-learning was state of the
+00:21:39.300 --> 00:21:43.260
+think are potentially more popular
+than, than the rest of
 
 383
-00:22:54.570 --> 00:23:00.870
-art literally three years ago,
-and now you can download
+00:21:43.260 --> 00:21:45.150
+the project. But I, you
+know, I, I don't really
 
 384
-00:23:00.870 --> 00:23:03.930
-TensorFlow, clone it from GitHub,
-and there is code for
+00:21:45.150 --> 00:21:49.320
+know. And the, the, now
+of course the resulting JavaScript,
 
 385
-00:23:03.930 --> 00:23:07.950
-doing transfer learning there. But
-what is it? Google has
+00:21:49.350 --> 00:21:52.080
+can't be really recognizable. I
+assume it looks just like
 
 386
-00:23:07.980 --> 00:23:13.140
-created really, really large neural
-networks. So their brain simulations
+00:21:52.350 --> 00:21:55.530
+magic, you know, VAR one,
+VAR zero. I mean, you
 
 387
-00:23:13.380 --> 00:23:17.820
-and trained it on many,
-many gigabytes, many, many millions
+00:21:55.530 --> 00:21:57.600
+don't really think about it
+like that. You're using JavaScript
 
 388
-00:23:18.030 --> 00:23:22.350
-of images, and then condensed
-all that experience into something
+00:21:57.900 --> 00:22:00.450
+as its own runtime. Aren't
+you like a virtual machine
 
 389
-00:23:22.350 --> 00:23:25.800
-you can download. So when
-you train that, for example,
+00:22:00.450 --> 00:22:06.750
+of its own, Actually Bloomberg
+made John Campbell to JavaScript a
 
 390
-00:23:25.800 --> 00:23:28.170
-that tell the difference between
-cats and dogs. It doesn't
+00:22:06.750 --> 00:22:12.270
+tool and that actually produces
+readable JavaScript. So it's possible
 
 391
-00:23:28.170 --> 00:23:31.950
-need to relearn everything. It
-can just learn the little
+00:22:12.270 --> 00:22:14.940
+that JSO came well, might
+make that a thing. I
 
 392
-00:23:31.950 --> 00:23:34.080
-bit that specific to your
-problem. It doesn't have to
+00:22:14.940 --> 00:22:18.060
+don't know if it is
+a thing I don't usually
 
 393
-00:23:34.080 --> 00:23:36.840
-learn what is a picture,
-what is a foreground? What
+00:22:18.090 --> 00:22:20.520
+need it. I've never had
+like, usually if there's a
 
 394
-00:23:36.840 --> 00:23:39.240
-is a background it's kind
-of being already taught that
+00:22:20.520 --> 00:22:22.350
+serious bug, I can kind
+of figure out what it
 
 395
-00:23:39.240 --> 00:23:41.700
-by Google. So now it
-can just learn a bit
+00:22:22.350 --> 00:22:25.050
+is without needing to even
+read the Java script. But
 
 396
-00:23:41.700 --> 00:23:44.460
-specific to your problem. That's
-called transfer learning. Cause it's
+00:22:26.640 --> 00:22:30.210
+also because I am familiar
+with web, but, but yeah,
 
 397
-00:23:44.460 --> 00:23:48.020
-transferred experience that Google has
-given it into your problem
+00:22:30.210 --> 00:22:33.180
+that's, that's a feature in,
+in other tools. So that's
 
 398
-00:23:48.670 --> 00:23:52.450
-And drawing parallels between things.
-I know that there's a
+00:22:33.180 --> 00:22:35.400
+interesting. Did you know about
+this? Like you said, you
 
 399
-00:23:52.450 --> 00:23:57.070
-website, that's image, hyphen net.org,
-and they'll put up a
+00:22:35.400 --> 00:22:38.460
+were in node and JavaScript,
+you are a web person,
 
 400
-00:23:57.070 --> 00:23:59.140
-bunch of random pictures and
-they'll say, what are these
+00:22:38.460 --> 00:22:40.680
+you didn't really feel it.
+You found Oak camel, and
 
 401
-00:23:59.140 --> 00:24:01.900
-images find, you know, have
-in common. And it's not
+00:22:40.680 --> 00:22:43.770
+then here you are back
+compiling it into JavaScript again.
 
 402
-00:24:01.900 --> 00:24:04.600
-something obvious that you can
-look at as a, as
+00:22:44.700 --> 00:22:47.160
+Yeah. Well, I can't, I
+mean, the node ecosystem is
 
 403
-00:24:04.600 --> 00:24:05.950
-a human and you might
-say, Oh, well they're all
+00:22:47.160 --> 00:22:50.430
+amazing and I definitely think
+a lot of functional communities
 
 404
-00:24:05.950 --> 00:24:08.560
-fish or whatever. And then
-you click on it and
+00:22:50.430 --> 00:22:54.300
+can learn from JavaScript tools
+in the sense that people
 
 405
-00:24:08.560 --> 00:24:12.250
-it'll give you like 14
-or 15 things about exactly
+00:22:54.300 --> 00:22:57.390
+who, who write stuff in
+JavaScript tend to make things
 
 406
-00:24:12.250 --> 00:24:15.160
-what these images have in
-common from they're all in
+00:22:57.390 --> 00:23:01.860
+that are usable very quickly.
+They make great tools, even
 
 407
-00:24:15.190 --> 00:24:19.180
-vertebrates or they're all mutants
-or they're all zooplankton or
+00:23:01.860 --> 00:23:07.120
+though, you know, NPM like
+the left pad. So, you
 
 408
-00:24:19.270 --> 00:24:22.180
-whatever. And it's just like,
-Oh my goodness, you realize
+00:23:07.120 --> 00:23:09.780
+know, I, there was a
+lot of discussion. We have
 
 409
-00:24:22.180 --> 00:24:25.300
-how we may be good
-at pattern matching. But the
+00:23:09.780 --> 00:23:13.410
+a package manager called OPM
+and it's really great. It's
 
 410
-00:24:25.300 --> 00:24:29.200
-idea of drawing parallels and
-coming up with, you know,
+00:23:13.410 --> 00:23:16.530
+like the best package manager
+I've ever used. I will
 
 411
-00:24:29.200 --> 00:24:31.990
-what's similar between large datasets
-is something where a computer
+00:23:16.530 --> 00:23:19.620
+say if you're starting a
+camel, Oh, Pam get really
 
 412
-00:24:31.990 --> 00:24:36.430
-Excel. Absolutely. And I think
-that some of the really
+00:23:19.620 --> 00:23:25.500
+comfortable with it. It's fabulous.
+I brought this up for
 
 413
-00:24:36.430 --> 00:24:39.520
-exciting work that Geoffrey Hinton
-who's now working at Google
+00:23:25.500 --> 00:23:28.170
+a reason. What was the
+reason? Yeah. So left pad.
 
 414
-00:24:39.520 --> 00:24:44.410
-was doing was trying to
-train these models, not on
+00:23:28.200 --> 00:23:30.480
+So, you know, after that
+whole, you know, that guy
 
 415
-00:24:44.410 --> 00:24:50.710
-very fine, very coarse grain
-things like restaurant, dog, cat
+00:23:30.480 --> 00:23:33.510
+took off that really important
+package and, you know, then
 
 416
-00:24:50.830 --> 00:24:54.880
-bond, but very, very fine
-grain things. So for example,
+00:23:33.780 --> 00:23:37.410
+package disappeared. Yeah. And of
+course there was a discussion,
 
 417
-00:24:54.880 --> 00:25:00.280
-very specific kinds of plants,
-very specific breeds of dogs,
+00:23:37.410 --> 00:23:40.320
+you know, like a little
+bit of, well, Oh, Pam
 
 418
-00:25:00.280 --> 00:25:03.280
-very specific kinds of mushrooms.
-And I think that's where
+00:23:40.320 --> 00:23:42.570
+has been criticized a bit
+for being slow, you know,
 
 419
-00:25:03.280 --> 00:25:05.800
-it gets really exciting. And
-back to medical care is
+00:23:42.570 --> 00:23:47.360
+there's like a review process
+and that of thing. And
 
 420
-00:25:05.800 --> 00:25:09.550
-another example where we can
-condense the knowledge of experts.
+00:23:47.480 --> 00:23:48.890
+you know, it was kind
+of like, well, which is
 
 421
-00:25:09.610 --> 00:25:11.950
-There might be only a
-few people in the world
+00:23:48.890 --> 00:23:50.420
+better. I mean, you know,
+it's like you have a
 
 422
-00:25:11.950 --> 00:25:17.350
-who can reliably identify the
-10,000 different common mushrooms you
+00:23:50.420 --> 00:23:54.230
+sea of garbage or like
+a tiny collection of treasures,
 
 423
-00:25:17.350 --> 00:25:19.630
-would see around your house
-and saying which one of
+00:23:54.230 --> 00:23:59.300
+right. It's like, which is
+better. Something like unmaintainable or
 
 424
-00:25:19.630 --> 00:25:23.080
-them is edible or not,
-but you could condense all
+00:23:59.300 --> 00:24:02.060
+something that's like overly maintained.
+I don't know what the
 
 425
-00:25:23.080 --> 00:25:25.810
-that expertise into an algorithm
-and then make it available
+00:24:02.060 --> 00:24:04.940
+right answer is, but it's
+interesting, like the difference in
 
 426
-00:25:25.810 --> 00:25:29.550
-to everyone in the world
-on their smartphone immediately. And
+00:24:04.940 --> 00:24:07.370
+those communities and kind of
+making tools that sort of
 
 427
-00:25:29.550 --> 00:25:32.710
-I think that's really exciting,
-the condensing of expert knowledge.
+00:24:07.370 --> 00:24:12.290
+bridge those communities, Facebook just
+released reason, which is so,
 
 428
-00:25:34.000 --> 00:25:36.340
-Yeah. That's really interesting. It
-makes you realize that there's
+00:24:12.290 --> 00:24:15.890
+so very hot. The syntax
+looks like JavaScript, but it
 
 429
-00:25:36.340 --> 00:25:40.420
-a class of question that
-we ask our computer now,
+00:24:15.890 --> 00:24:18.590
+is Ocampo under the hood.
+And they even have tools
 
 430
-00:25:40.540 --> 00:25:43.390
-like, you know, taking to
-the nearest Starbucks or is
+00:24:18.590 --> 00:24:21.230
+that turn your old camel
+project into a reason project.
 
 431
-00:25:43.390 --> 00:25:46.690
-the library closed, but there's
-a class of questions that
+00:24:22.010 --> 00:24:24.470
+So lots of cool stuff
+there, and I'm sure they
 
 432
-00:25:46.960 --> 00:25:50.080
-we can't really ask that
-we, we could, if what
+00:24:24.470 --> 00:24:28.700
+will continue to dump talent
+into that. So, you know,
 
 433
-00:25:50.080 --> 00:25:53.140
-you're describing as possible, we
-could say, you know, there's
+00:24:28.730 --> 00:24:31.280
+if you're listening to this
+and you're wondering, Oh, well,
 
 434
-00:25:53.180 --> 00:25:55.870
-a special kind of mushroom
-that we think might be
+00:24:31.310 --> 00:24:33.410
+this is great, but this
+has nothing to do with
 
 435
-00:25:55.870 --> 00:25:59.920
-extinct. Can you scan every
-publicly available photograph in the
+00:24:33.410 --> 00:24:36.500
+my life or the things
+I build. Definitely check out
 
 436
-00:25:59.920 --> 00:26:03.310
-world that is geotagged and
-find anyone who may have
+00:24:36.500 --> 00:24:41.050
+reason. Those people are really
+smart. Interesting, backing up a
 
 437
-00:26:03.310 --> 00:26:05.980
-accidentally taken a picture of
-this mushroom and tell us
+00:24:41.050 --> 00:24:43.330
+little bit to give people
+a little bit of context.
 
 438
-00:26:05.980 --> 00:26:09.340
-where it's located. That's absolutely
-right. And that idea is
+00:24:43.330 --> 00:24:49.810
+You've got 1,213 packages in
+OPM. Oh, Pam, the old
 
 439
-00:26:09.340 --> 00:26:12.790
-incredibly exciting that we could
-take expert knowledge and then
+00:24:49.810 --> 00:24:52.390
+camel package manager, you've got
+over a quarter of a
 
 440
-00:26:12.790 --> 00:26:17.200
-stamp it out kind of
-a replicated thousands and thousands
+00:24:52.390 --> 00:24:55.150
+million in NPM. So that
+definitely gives you the sense
 
 441
-00:26:17.200 --> 00:26:20.380
-of times, I'm kind of,
-you know, into every smart
+00:24:55.150 --> 00:24:58.570
+of what's, you know, do
+you, do you want a
 
 442
-00:26:20.380 --> 00:26:24.580
-phone or into huge banks
-of servers at Google. And
+00:24:58.570 --> 00:25:01.750
+highly curated and exclusive library
+where everything is guaranteed to
 
 443
-00:26:24.580 --> 00:26:28.060
-I think that the exciting
-thing now is, as we
+00:25:01.750 --> 00:25:04.600
+work, you know, or do
+you want 15 copies of
 
 444
-00:26:28.060 --> 00:26:32.230
-are talking about is these
-reasonably and what I call
+00:25:04.630 --> 00:25:07.480
+pad lift each one of
+which is possibly guaranteed to
 
 445
-00:26:33.700 --> 00:26:38.410
-non experiential problems. So in
-that sense, you look at
+00:25:07.480 --> 00:25:10.960
+work? You know, I, you
+know, I think these are
 
 446
-00:26:38.440 --> 00:26:44.250
-a, a medical scan and
-you give a, a diagnosis
+00:25:10.960 --> 00:25:14.320
+unanswerable questions. They are great
+on it as with all
 
 447
-00:26:44.310 --> 00:26:46.440
-and then you look at
-the next scan and you
+00:25:14.320 --> 00:25:17.080
+good religions. They are the
+great financial questions. So I'm
 
 448
-00:26:46.440 --> 00:26:49.410
-don't really have a, there's
-no dynamic environment, things aren't
+00:25:17.080 --> 00:25:18.880
+teasing, I'm teasing a little
+bit. I'm going to get
 
 449
-00:26:49.410 --> 00:26:51.780
-moving or changing. You're just
-looking at one scan after
+00:25:18.880 --> 00:25:21.760
+emails from angry note people
+now. Oh no, I love
 
 450
-00:26:51.780 --> 00:26:56.070
-the other. Well, the algorithm
-is what DeepMind is working
+00:25:21.760 --> 00:25:25.570
+node. Yeah. I love the
+ecosystem. I love, you know,
 
 451
-00:26:56.070 --> 00:26:58.980
-on right now, which is
-now a Google owned company.
+00:25:25.750 --> 00:25:28.420
+I love working and, and
+the no JS bindings, it's
 
 452
-00:26:59.340 --> 00:27:03.030
-And a lot of other
-very intelligent researchers is this
+00:25:28.420 --> 00:25:31.690
+its own camel, but it's
+still node, you know, it's,
 
 453
-00:27:03.300 --> 00:27:08.280
-reinforcement learning problem. And the
-concept of that is there
+00:25:31.720 --> 00:25:35.020
+it's still streams. It's still
+all that good stuff. It's
 
 454
-00:27:08.280 --> 00:27:12.510
-is a dynamic environment. The
-agent we call it, which
+00:25:35.020 --> 00:25:37.330
+still like, you know, still
+all the stuff you want
 
 455
-00:27:12.510 --> 00:27:16.470
-is the computer can act
-and sense. So each time
+00:25:37.330 --> 00:25:39.970
+to note. So, So let's
+talk, talk to me a
 
 456
-00:27:16.470 --> 00:27:19.020
-they act, the world will
-change and they'll send something
+00:25:39.970 --> 00:25:42.160
+little bit more about this
+reason, reason for a second.
 
 457
-00:27:19.020 --> 00:27:21.300
-you just like a person
-does when they open a
+00:25:42.160 --> 00:25:43.600
+I've read up a little
+bit about it. You didn't
 
 458
-00:27:21.300 --> 00:27:23.100
-door, they will then see
-what's on the other side
+00:25:43.600 --> 00:25:48.880
+see it at facebook.github.io/reason. And
+by the way, if this
 
 459
-00:27:23.100 --> 00:27:27.510
-of that door and there's
-a reward. So for example,
+00:25:48.880 --> 00:25:50.770
+is not proof that we've
+officially run out of things,
 
 460
-00:27:27.750 --> 00:27:31.860
-I might get a reward
-when I go for a
+00:25:50.770 --> 00:25:54.670
+to call things a try,
+try Googling for reason and
 
 461
-00:27:31.860 --> 00:27:35.700
-run and I feel fit
-and healthy, or I might
+00:25:54.670 --> 00:25:57.670
+finding the programming language called
+reason and not be literally
 
 462
-00:27:35.700 --> 00:27:37.500
-get a reward when I
-write a piece of code
+00:25:57.670 --> 00:26:00.790
+everything else in the planet
+called reason, but it's an
 
 463
-00:27:37.500 --> 00:27:40.800
-that I'm really proud of.
-So what we want to
+00:26:00.790 --> 00:26:03.190
+interface to Oak camel, right?
+It's a dialect kind of
 
 464
-00:27:40.800 --> 00:27:44.220
-do is give the computer
-rewards when it does something
+00:26:03.190 --> 00:26:07.420
+ML language, but is this
+another, what is this? This
 
 465
-00:27:44.220 --> 00:27:46.980
-good. For example, getting me
-to where I needed to
+00:26:07.430 --> 00:26:10.690
+is another old camel. That's
+a good question. I think
 
 466
-00:27:46.980 --> 00:27:49.620
-go on time or making
-the recommendation, which I liked.
+00:26:10.690 --> 00:26:13.120
+it's a lot of it
+is to be determined. It's
 
 467
-00:27:50.220 --> 00:27:53.460
-And we want to train
-it in this way to
+00:26:13.330 --> 00:26:16.180
+a new language I think
+is how it's being marketed,
 
 468
-00:27:53.460 --> 00:27:57.240
-act and sense in a
-way that will maximize it's
+00:26:17.380 --> 00:26:21.250
+which is Oak Hamill. So
+it's, you know, it's got
 
 469
-00:27:57.240 --> 00:28:00.480
-reward. And if that reward
-is ultimately good for people
+00:26:21.250 --> 00:26:25.210
+the type system it's got
+all that. Goodness. But the
 
 470
-00:28:00.480 --> 00:28:02.820
-like making them happy or
-taking care of them, then
+00:26:25.210 --> 00:26:28.630
+syntax is really just all
+it's changed, which a lot
 
 471
-00:28:03.210 --> 00:28:06.750
-in a wide sense, if
-these machines are sophisticated enough,
+00:26:28.630 --> 00:26:33.040
+of people have been bemoaning
+a bit in the <inaudible>
 
 472
-00:28:06.780 --> 00:28:10.140
-they will learn to help
-us. I think that's a
+00:26:33.060 --> 00:26:36.670
+community. I mean, there are
+warts in Okemos syntax, but
 
 473
-00:28:10.140 --> 00:28:14.390
-really exciting idea. There is
-some talk about the idea
+00:26:36.820 --> 00:26:40.060
+I wouldn't say that the
+syntax is the most painful
 
 474
-00:28:14.450 --> 00:28:18.170
-of there's some ethics concerns
-around when we teach these
+00:26:40.060 --> 00:26:42.220
+part of a camel, like
+far from it, in my
 
 475
-00:28:18.170 --> 00:28:23.360
-things, how, how the world
-works, that sometimes the ugly
+00:26:42.220 --> 00:26:45.300
+opinion. But I'm, I do
+think it's a noble task
 
 476
-00:28:23.360 --> 00:28:26.030
-parts of the world can,
-can come out. Have you
+00:26:45.300 --> 00:26:47.910
+to try to draw more
+people into a camel and
 
 477
-00:28:26.030 --> 00:28:29.150
-heard about these issues? Absolutely.
-And, and I think that
+00:26:47.910 --> 00:26:52.080
+remove any boundaries to getting
+started. So if that's what
 
 478
-00:28:30.560 --> 00:28:34.610
-we, there, there is an
-obvious possibility to use these
+00:26:52.080 --> 00:26:55.130
+the goal is, then like
+I'm all for it. Yeah.
 
 479
-00:28:34.610 --> 00:28:41.900
-systems in military applications in
-very, I would say unscrupulous
+00:26:55.160 --> 00:26:57.860
+It's interesting. You know, this
+may be completely ignorant thing
 
 480
-00:28:42.560 --> 00:28:49.220
-profiteering applications. And ultimately I
-think that there are many,
+00:26:57.860 --> 00:26:59.330
+to say. And I hope
+that people who are listening
 
 481
-00:28:49.220 --> 00:28:51.920
-many people who have talked
-about it in more detail
+00:26:59.330 --> 00:27:01.760
+will email me and say,
+you're ignorant, not you me,
 
 482
-00:28:51.920 --> 00:28:55.640
-and said it better. But
-ultimately I think that we,
+00:27:02.900 --> 00:27:07.040
+but, Well also email me
+if I'm accurate, I will
 
 483
-00:28:55.700 --> 00:29:01.370
-as a society, have to
-decide how to use these
+00:27:07.040 --> 00:27:10.250
+forward all of my emails
+to you. So, you know,
 
 484
-00:29:01.370 --> 00:29:04.010
-things. And I think that's
-why it's very important that
+00:27:10.310 --> 00:27:14.240
+people like JavaScript, but JavaScript
+has some problems. So then
 
 485
-00:29:04.280 --> 00:29:07.340
-the power to use technology
-like this doesn't end up
+00:27:14.240 --> 00:27:16.850
+someone goes and makes, you
+know, coffee script or even
 
 486
-00:29:07.340 --> 00:29:10.040
-in the hands of the
-very few, the very greedy
+00:27:16.850 --> 00:27:20.630
+more dramatically TypeScript. And then
+you say, Oh, well you
 
 487
-00:29:10.070 --> 00:29:12.530
-or the very belligerent. It
-should end up in the
+00:27:20.630 --> 00:27:23.930
+can have, you know, JavaScript
+files are TypeScript. And also
 
 488
-00:29:12.530 --> 00:29:16.610
-hands of, in some sense,
-the average citizen, the average
+00:27:23.930 --> 00:27:27.470
+you can have TypeScript files.
+It seems like reason is
 
 489
-00:29:16.640 --> 00:29:22.490
-programmer, the average, even a
-high school student, so that
+00:27:27.470 --> 00:27:28.940
+like a way of saying,
+well, here's another way of
 
 490
-00:29:22.880 --> 00:29:26.420
-they can make sure that
-we're accountable, that they understand
+00:27:28.940 --> 00:27:31.850
+thinking about, Oh, camel and
+the old camel build, you
 
 491
-00:29:26.420 --> 00:29:28.610
-these things and that they
-continue to question how they're
+00:27:31.850 --> 00:27:34.310
+know, we're going to replace
+that. Okay. Mobility gets replaced
 
 492
-00:29:28.610 --> 00:29:30.860
-being used. And I think
-that's how we prevent them
+00:27:34.310 --> 00:27:36.770
+with this thing called rebuild.
+So now you can build
 
 493
-00:29:30.860 --> 00:29:34.190
-from being used in negative
-ways in society. Yeah. There
+00:27:36.770 --> 00:27:39.650
+reason files and Oak Hamill
+files. So it seems like
 
 494
-00:29:34.190 --> 00:29:38.300
-was a really interesting Google
-image search recently when people
+00:27:39.650 --> 00:27:42.590
+to me, ignorantly, you know,
+TypeScript is to JavaScript as
 
 495
-00:29:38.300 --> 00:29:43.060
-searched for three black teenagers
-on under images and what
+00:27:42.590 --> 00:27:44.840
+reason as to Oak camel.
+It's almost like a rapper,
 
 496
-00:29:43.060 --> 00:29:46.870
-they ended up getting was
-mugshots mostly of young black
+00:27:45.080 --> 00:27:47.960
+but it's compatible and it's
+friendly. And let's just see
 
 497
-00:29:47.320 --> 00:29:49.900
-men. But if you searched
-for three white teenagers, you
+00:27:47.960 --> 00:27:51.200
+where this takes us. Well,
+I think replacing old camel
 
 498
-00:29:49.900 --> 00:29:54.220
-would get happy clip art
-people. And the question then
+00:27:51.200 --> 00:27:54.530
+build is very noble. The
+building of camel is a
 
 499
-00:29:54.220 --> 00:29:59.020
-is, is, is Google racist?
-Is society racist? Is this
+00:27:54.530 --> 00:27:58.340
+hundred percent the worst part
+of Oak camel, no question.
 
 500
-00:29:59.020 --> 00:30:04.060
-representative of factual issues or
-is this representative of, you
+00:27:58.850 --> 00:28:04.280
+It's very difficult. And I'm
+constantly searching man pages, documentation.
 
 501
-00:30:04.060 --> 00:30:07.600
-know, institutional racism that has
-been identified by the machine
+00:28:04.550 --> 00:28:06.470
+I mean, pretty much every
+project I have to keep
 
 502
-00:30:07.600 --> 00:30:11.140
-learning system? And it's been
-discovered through looking at, you
+00:28:06.470 --> 00:28:08.600
+it open. It's something that's
+still really hard for me.
 
 503
-00:30:11.140 --> 00:30:15.280
-know, news articles and how
-do we create a reflect
+00:28:09.740 --> 00:28:12.110
+Yeah. Why is it just
+like install old camel and
 
 504
-00:30:15.280 --> 00:30:19.670
-reality without reflecting the nasty
-parts of reality? It's, it's
+00:28:12.110 --> 00:28:16.190
+type do it, and then
+it works. It's confusing. Like
 
 505
-00:30:19.870 --> 00:30:22.500
-funny, you had mentioned that.
-And I think that when
+00:28:16.190 --> 00:28:18.500
+how you set up your
+interface, files, how you like
 
 506
-00:30:22.500 --> 00:30:26.010
-you were explaining that situation
-to me, which is just
+00:28:18.500 --> 00:28:22.340
+link with like shared libraries,
+how you make libraries very
 
 507
-00:30:26.010 --> 00:30:29.220
-awful, I something that popped
-into my head and I
+00:28:22.340 --> 00:28:25.430
+complicated. There's a couple tools
+that make it better. The
 
 508
-00:30:29.230 --> 00:30:32.100
-I'm a technologist. And so
-I obviously think all the
+00:28:25.430 --> 00:28:28.130
+other, the other thing that's
+difficult is there's the state
 
 509
-00:30:32.100 --> 00:30:36.030
-solutions in the world through
-technology, but ultimately I think
+00:28:28.130 --> 00:28:31.280
+of the build tools is
+extremely fragmented. You know, there's
 
 510
-00:30:36.030 --> 00:30:38.640
-this is an example of
-not enough machine learning. Google
+00:28:31.280 --> 00:28:34.220
+like 20 and there's no
+consensus on what's the best
 
 511
-00:30:38.640 --> 00:30:42.060
-does use machine learning to
-decide what search results should
+00:28:34.220 --> 00:28:37.820
+one at least, you know,
+in my limited view, I'm
 
 512
-00:30:42.060 --> 00:30:45.360
-show you. And clearly based
-on the statistical patterns and
+00:28:37.820 --> 00:28:41.240
+sure I can already, like,
+I can feel the Twitter
 
 513
-00:30:45.360 --> 00:30:48.210
-the limited amount of daughter,
-it has, that's the response
+00:28:41.240 --> 00:28:44.960
+DMS. Like I can feel
+them coming, but yeah, there's
 
 514
-00:30:48.210 --> 00:30:52.530
-it's returned, but ultimately you
-could imagine every time, or
+00:28:44.990 --> 00:28:47.420
+a, yeah. I mean, there's
+no real consensus. I would
 
 515
-00:30:52.530 --> 00:30:54.420
-if you did see that
-in the Google web page,
+00:28:47.420 --> 00:28:50.030
+say that another tip to
+people who are just beginning
 
 516
-00:30:54.630 --> 00:30:57.420
-you could then open up
-a text box and chat
+00:28:50.420 --> 00:28:53.780
+really look at Utah, which
+is the top level interpreter
 
 517
-00:30:57.420 --> 00:30:59.730
-to Google, just like you
-would chat to Siri or
+00:28:54.050 --> 00:29:00.350
+just in the beginning, just
+yes, you top and do
 
 518
-00:30:59.730 --> 00:31:03.840
-Cortana or Google now and
-say, Hey, you know, I
+00:29:00.350 --> 00:29:06.260
+that because it'll make your
+life a lot better. And,
 
 519
-00:31:03.840 --> 00:31:07.050
-really don't think that these
-research results are appropriate. And
+00:29:06.440 --> 00:29:08.540
+and then look at a
+waste, a waste. This is
 
 520
-00:31:07.050 --> 00:31:10.920
-here's why, because you know,
-it is a prejudiced and
+00:29:08.540 --> 00:29:12.110
+a, basically it generates a,
+you know, cross platform make
 
 521
-00:31:11.160 --> 00:31:13.320
-that would then feed back
-into the system and it
+00:29:12.110 --> 00:29:15.500
+files, I believe. And anyway,
+that's got a quick start
 
 522
-00:31:13.320 --> 00:31:16.680
-could learn from that as
-well. So ultimately I think
+00:29:15.500 --> 00:29:17.960
+functionality, if you just want
+to set up a project
 
 523
-00:31:16.680 --> 00:31:19.590
-that I see a lot
-of exciting avenues to try
+00:29:17.960 --> 00:29:21.080
+and just get it to
+work, you know, I embarrassingly
 
 524
-00:31:19.590 --> 00:31:24.210
-and control the negative impacts
-of technology by making it
+00:29:21.080 --> 00:29:24.830
+use make files. I mean,
+there's probably, I'm sure I'm
 
 525
-00:31:24.780 --> 00:31:29.550
-more empathetic, more sophisticated, more
-able to understand and learn
+00:29:24.830 --> 00:29:26.810
+going to get again. I
+can feel the DMS. I'm
 
 526
-00:31:29.550 --> 00:31:32.820
-from our intentions and our
-needs. And it's very interesting
+00:29:26.810 --> 00:29:30.050
+sure. I'm sure there's something
+better, but that's what I'm
 
 527
-00:31:32.820 --> 00:31:37.050
-also that the search results
-have changed since the reporting
+00:29:30.050 --> 00:29:33.980
+using right now to build
+my projects. Interesting. I would,
 
 528
-00:31:37.050 --> 00:31:40.770
-of this story and have
-actually reported kind of changed
+00:29:34.160 --> 00:29:35.990
+somehow I would have expected
+it just to be this
 
 529
-00:31:41.100 --> 00:31:44.670
-for the worse, because there
-are so many news reports
+00:29:35.990 --> 00:29:38.900
+like joy. Like I've heard
+everything about the programming language
 
 530
-00:31:44.670 --> 00:31:47.130
-about this, which now has
-increased the number of pictures
+00:29:38.900 --> 00:29:41.950
+and the environment to be
+joyous. And then it's like,
 
 531
-00:31:47.130 --> 00:31:49.950
-and screenshots. So we find
-that the kind of the
+00:29:41.950 --> 00:29:43.720
+and then you got to
+build a thing and it
 
 532
-00:31:49.950 --> 00:31:53.850
-zeitgeists changes from month to
-month, you know, just as
+00:29:43.720 --> 00:29:46.240
+sounds like, you know, eventually
+you hit, you know, the
 
 533
-00:31:53.850 --> 00:31:57.690
-you've been able to fool
-Google into returning search results,
+00:29:46.240 --> 00:29:49.540
+abstraction isn't perfect anymore. And
+then reality hits in and
 
 534
-00:31:57.690 --> 00:32:00.750
-by having people link to
-it, machine learning algorithms can
+00:29:49.540 --> 00:29:52.410
+building stuff, You know, I'm
+sure there are people like,
 
 535
-00:32:00.750 --> 00:32:05.400
-be prejudiced in multiple ways,
-depending on the, for lack
+00:29:52.440 --> 00:29:55.200
+I remember, I don't know,
+camel meetup, some guy who
 
 536
-00:32:05.400 --> 00:32:07.770
-of a better word, the
-ambient prejudice of the society
+00:29:55.200 --> 00:29:57.300
+had been doing dev ops
+for like, you know, 30
 
 537
-00:32:07.770 --> 00:32:12.150
-around it. Hmm. So I
-would say that to try
+00:29:57.300 --> 00:30:00.990
+years, I don't know before
+the internet, before anybody like
 
 538
-00:32:12.150 --> 00:32:17.760
-and tie these threads together.
-I think that I see
+00:30:01.020 --> 00:30:07.530
+before. And he was like,
+well, you know, I don't
 
 539
-00:32:17.760 --> 00:32:23.040
-huge potential in machine learning
-in medical care because computers
+00:30:07.530 --> 00:30:10.170
+really know what you guys
+are expecting. You know, this
 
 540
-00:32:23.040 --> 00:32:25.770
-can learn how to provide
-us with more accurate diagnosis
+00:30:10.170 --> 00:30:12.660
+is not really that bad,
+blah, blah, blah, blah, blah.
 
 541
-00:32:26.160 --> 00:32:30.870
-or diagnoses, I should say,
-in education because we can
+00:30:12.840 --> 00:30:16.230
+But inevitably, I mean, I've
+just, just peripherally on the
 
 542
-00:32:30.870 --> 00:32:35.010
-use algorithms to choose the
-questions that we ask to
+00:30:16.230 --> 00:30:18.900
+old camel channel. And Freenode,
+that's like the question of
 
 543
-00:32:35.010 --> 00:32:39.060
-optimize the level of learning
-to, to optimize for engagement.
+00:30:18.900 --> 00:30:20.580
+the day. I mean, there
+must be at least five
 
 544
-00:32:39.380 --> 00:32:42.320
-We can provide better services
-by making them more personalized,
+00:30:20.580 --> 00:30:22.830
+questions a day about how
+to build a camel. So
 
 545
-00:32:42.320 --> 00:32:46.480
-more accurate. And ultimately I
-would say the interface and
+00:30:23.490 --> 00:30:25.740
+yeah. So I think it's,
+you know, I think it's
 
 546
-00:32:46.480 --> 00:32:50.810
-the user interface fundamentally changing
-into the future as the
+00:30:25.740 --> 00:30:28.170
+going to, so that's why
+I'm also excited for reason
 
 547
-00:32:50.840 --> 00:32:53.960
-Cortana and Siri and Google
-now become really the main
+00:30:28.170 --> 00:30:32.220
+is I just want easier
+ways to do that. So,
 
 548
-00:32:53.960 --> 00:32:59.030
-way we interact with our
-computer. So I would say
+00:30:32.430 --> 00:30:35.340
+you know, that doesn't have
+me combing documentation, but I
 
 549
-00:32:59.030 --> 00:33:01.880
-that it's a really a
-really, a great time to
+00:30:35.340 --> 00:30:37.020
+think one day you just
+wake up and you know,
 
 550
-00:33:01.880 --> 00:33:04.790
-get started. It feels like
-we're on the ground floor
+00:30:37.020 --> 00:30:38.940
+all the things and then
+this is no longer a
 
 551
-00:33:04.790 --> 00:33:08.090
-of something and there was
-a real energy to make
+00:30:38.940 --> 00:30:42.150
+problem. So once I get
+there, maybe the, but that
 
 552
-00:33:08.090 --> 00:33:10.940
-it open and to make
-it accessible. So I think
+00:30:42.150 --> 00:30:44.490
+really is the only ugly
+part for me. I mean,
 
 553
-00:33:10.940 --> 00:33:14.420
-that we're in a surprising
-situation where something has gone
+00:30:44.490 --> 00:30:51.960
+everything else is fabulous. It's
+just that really? Yeah. So
 
 554
-00:33:15.590 --> 00:33:21.260
-sort of fast tracked from
-being totally academic, totally esoteric
+00:30:51.960 --> 00:30:54.120
+are you, what do you
+run it on? I'm looking
 
 555
-00:33:21.560 --> 00:33:26.060
-to download it and play
-with it in an afternoon.
+00:30:54.120 --> 00:30:56.910
+on their website and I
+see all kinds of Linux
 
 556
-00:33:26.060 --> 00:33:28.520
-And that I think is
-incredibly exciting. And that's been
+00:30:56.910 --> 00:31:01.320
+flavors mentioned. I see, you
+know, Mac mentioned, but I
 
 557
-00:33:28.520 --> 00:33:33.920
-enabled by TensorFlow. It's been
-enabled by Theano. It's been
+00:31:01.320 --> 00:31:04.650
+also see a windows gets
+kind of a yeah. And
 
 558
-00:33:33.920 --> 00:33:37.910
-able to buy these amazing
-free books and tutorials out
+00:31:04.650 --> 00:31:08.550
+also windows, a bit of
+a comment and there's different
 
 559
-00:33:37.910 --> 00:33:41.150
-there. And that makes me
-incredibly excited. And I want
+00:31:08.760 --> 00:31:12.150
+ports and kind of, it
+doesn't seem like it's like
 
 560
-00:33:41.150 --> 00:33:43.900
-you to go out and
-do some machine learning. That's
+00:31:12.150 --> 00:31:14.760
+super Epic on windows. What's,
+what's the, what's the story.
 
 561
-00:33:43.900 --> 00:33:45.940
-really, that's really important to
-remember the idea that we
+00:31:14.760 --> 00:31:16.920
+And what's the best, the
+best operating system to try
 
 562
-00:33:45.940 --> 00:33:48.100
-can do this, as you
-said in an afternoon or
+00:31:16.920 --> 00:31:19.560
+this on. You know, I
+don't know. I mean, Mac
 
 563
-00:33:48.100 --> 00:33:50.590
-on a weekend. So I
-would encourage people who are
+00:31:19.560 --> 00:31:23.310
+worked really great for me
+OSX, but I use fedora.
 
 564
-00:33:50.590 --> 00:33:54.820
-listening to go and explore
-and learn about TensorFlow and
+00:31:23.370 --> 00:31:27.750
+So I'm the red link
+Caesar, but you know, anything
 
 565
-00:33:54.820 --> 00:33:58.330
-other machine learning offerings that
-are open and available. And
+00:31:27.750 --> 00:31:31.350
+Unix is going to be
+great windows. I know the
 
 566
-00:33:58.330 --> 00:34:00.520
-thanks so much, Andy kitchen
-for chatting with me today.
+00:31:31.350 --> 00:31:34.320
+situation is a bit precarious.
+I'm not, I'm not really
 
 567
-00:34:00.910 --> 00:34:04.000
-Thank you, Scott. This has
-been another episode of Hanselminutes
+00:31:34.320 --> 00:31:39.000
+sure. I've never tried to
+run on windows. So I
 
 568
-00:34:04.000 --> 00:34:05.350
-and we'll see you again
-next week.
+00:31:39.000 --> 00:31:42.750
+don't know the answer. Well,
+I am, as we are
+
+569
+00:31:42.750 --> 00:31:46.320
+sitting here talking, installing it,
+using a wound to on
+
+570
+00:31:46.320 --> 00:31:48.930
+windows and see if that
+will work. So I will
+
+571
+00:31:48.930 --> 00:31:51.570
+have a wound to running
+on windows and see if
+
+572
+00:31:51.570 --> 00:31:53.760
+I can get something to
+go on. It's very interesting
+
+573
+00:31:53.760 --> 00:31:56.340
+though. There seem to be
+also some different ways to
+
+574
+00:31:56.340 --> 00:31:59.100
+do it. It looks like
+it does run. Yeah. So
+
+575
+00:31:59.100 --> 00:32:04.260
+I just ran, Oh, Pam
+config, ENV, and what's where
+
+576
+00:32:04.260 --> 00:32:05.820
+are some places I would
+go and learn about this?
+
+577
+00:32:05.820 --> 00:32:08.580
+What's some good code examples
+to play with. That's great.
+
+578
+00:32:08.580 --> 00:32:11.460
+So I've got some stuff
+on my GitHub. Let's see.
+
+579
+00:32:11.460 --> 00:32:15.570
+I've got some, I think
+there's a repository on my
+
+580
+00:32:15.570 --> 00:32:19.410
+GitHub called example, camel example,
+dash of camels. So that's
+
+581
+00:32:21.720 --> 00:32:28.980
+yeah. So it's good hub.com/wired
+sister. That's wired as in
+
+582
+00:32:29.490 --> 00:32:33.690
+cables and then sister as
+in your sister and Fugler
+
+583
+00:32:34.260 --> 00:32:38.970
+example, camel. So that's D
+so slash example, dash camel,
+
+584
+00:32:39.560 --> 00:32:42.560
+you get a raw pository
+that me and this other
+
+585
+00:32:42.560 --> 00:32:47.240
+guy, FX factorial used to
+do presentations. If you click
+
+586
+00:32:47.240 --> 00:32:52.850
+the examples directory, maybe click
+the, some odds.ml file. Here's
+
+587
+00:32:52.850 --> 00:32:55.850
+something functions for just summing
+odds. And this is kind
+
+588
+00:32:55.850 --> 00:32:59.060
+of interesting. Cause you can
+see in the bottom I
+
+589
+00:32:59.060 --> 00:33:01.460
+have an imperative solution. So
+that might be, remember we
+
+590
+00:33:01.460 --> 00:33:04.460
+were talking about mutability. So
+here you see that rep
+
+591
+00:33:04.460 --> 00:33:09.740
+zero as the counter, right.
+And then that bang counter
+
+592
+00:33:09.740 --> 00:33:13.210
+is sort of D referencing
+that type of idea. So
+
+593
+00:33:13.210 --> 00:33:15.310
+I would say that old
+camel is probably of all
+
+594
+00:33:15.310 --> 00:33:17.260
+the languages, the one that
+is least likely to be
+
+595
+00:33:17.260 --> 00:33:21.520
+explained syntactically on a podcast,
+but you know what I
+
+596
+00:33:21.520 --> 00:33:26.650
+mean? Totally, totally valid. Yeah.
+I'm like, you know, list
+
+597
+00:33:26.680 --> 00:33:28.690
+like list dot fold, right.
+And I'm like, Oh, that's
+
+598
+00:33:28.690 --> 00:33:30.520
+an Roe thingy. What do
+we call that? You know,
+
+599
+00:33:31.030 --> 00:33:33.160
+I'm sure that there's like
+a, you know, what do
+
+600
+00:33:33.160 --> 00:33:36.520
+you call it? Hash rocket
+or super bang or I'm,
+
+601
+00:33:36.550 --> 00:33:41.020
+I'm pretty primitive. I just
+say arrow there's no other
+
+602
+00:33:41.680 --> 00:33:45.340
+arrows. I mean, there's, there's
+a left arrow for any
+
+603
+00:33:45.340 --> 00:33:47.890
+way that doesn't it. I
+know I'm going to put
+
+604
+00:33:47.890 --> 00:33:49.630
+a link to this though
+in the show notes. So
+
+605
+00:33:49.630 --> 00:33:54.070
+then people can, can see
+that. So, and then once
+
+606
+00:33:54.070 --> 00:33:55.780
+I've got this down, like,
+do I just say, Oh,
+
+607
+00:33:55.780 --> 00:33:57.280
+camel, and the name of
+the file that it's in
+
+608
+00:33:57.280 --> 00:33:59.080
+or how do you run
+these things? Yeah. So it's
+
+609
+00:33:59.080 --> 00:34:02.020
+just a, you can use,
+okay, we'll see. Or Kamal
+
+610
+00:34:02.020 --> 00:34:04.720
+off. So that's the native
+code is opt and then
+
+611
+00:34:04.720 --> 00:34:09.610
+the bike code is C
+so yeah, just let's see.
+
+612
+00:34:10.330 --> 00:34:14.710
+Okay. I'm, we'll see, you
+know, and then just your
+
+613
+00:34:14.710 --> 00:34:17.410
+program and it should go,
+I think just as standard
+
+614
+00:34:17.410 --> 00:34:20.560
+out, but let's see. But
+the other thing you can
+
+615
+00:34:20.560 --> 00:34:23.440
+do, which I think is
+better for people just starting,
+
+616
+00:34:23.860 --> 00:34:26.860
+it is Utah and then
+paste in Utah and then
+
+617
+00:34:26.860 --> 00:34:29.500
+you use two semi-colons and
+hit enter, and then it'll
+
+618
+00:34:29.500 --> 00:34:32.400
+evaluate whatever you drop in.
+And that's kind of, I
+
+619
+00:34:32.410 --> 00:34:35.830
+don't know. I prefer redeveloped
+print loops for, Okay. So
+
+620
+00:34:35.830 --> 00:34:37.870
+Utah is the rebel and
+that's where I spend my
+
+621
+00:34:37.870 --> 00:34:40.360
+time. Yeah. And you can
+just open them, install that.
+
+622
+00:34:41.560 --> 00:34:43.540
+Okay. Very cool. And actually,
+you know, I'm going to
+
+623
+00:34:43.540 --> 00:34:45.340
+just while we're sitting here
+for a second, I just
+
+624
+00:34:45.340 --> 00:34:51.700
+say, Oh, Pam install. UCAB
+that says, Oh, just make
+
+625
+00:34:51.700 --> 00:34:54.790
+sure that you specify opium
+in it. Oh, Pam Annette.
+
+626
+00:34:54.850 --> 00:34:59.290
+Yes. Yes, sir. It, it,
+it gives you great help.
+
+627
+00:34:59.350 --> 00:35:01.600
+It really does. Well. Yeah.
+It seems to be very,
+
+628
+00:35:01.630 --> 00:35:03.940
+very clear on, on what
+it's doing. And it tells
+
+629
+00:35:03.940 --> 00:35:06.130
+me it's giving me nice
+instructions and stuff. And then,
+
+630
+00:35:07.180 --> 00:35:09.730
+and then I'm often doing
+it. Cool. Well, this has
+
+631
+00:35:09.730 --> 00:35:12.400
+been super educational and we
+can learn about this, of
+
+632
+00:35:12.400 --> 00:35:16.270
+course, at Oak camel.org. And
+then on your get hub,
+
+633
+00:35:16.450 --> 00:35:18.790
+your get hub name is
+wired sister, and I want
+
+634
+00:35:18.790 --> 00:35:23.260
+to include your example, Oak
+camel stuff up there. And
+
+635
+00:35:23.260 --> 00:35:26.800
+then the other thing was
+J S underscore of underscore
+
+636
+00:35:26.800 --> 00:35:29.800
+Ocala, JSO, camel. And then
+the other thing we talked
+
+637
+00:35:29.800 --> 00:35:33.130
+about was reason from Facebook
+would sound super interesting And,
+
+638
+00:35:33.150 --> 00:35:37.030
+and last, last, but not
+least if you're using an
+
+639
+00:35:37.140 --> 00:35:40.290
+a, you know, Emacs or
+them or whatever your setup
+
+640
+00:35:40.290 --> 00:35:44.400
+is, look into Merlin, which
+is a plugin that'll help
+
+641
+00:35:44.400 --> 00:35:48.390
+you get a lot of
+really cool type checking stuff.
+
+642
+00:35:48.750 --> 00:35:52.410
+And that has made my
+life incredibly easy. So that's
+
+643
+00:35:52.410 --> 00:35:55.410
+just one other tool I
+would throw out there is
+
+644
+00:35:55.410 --> 00:35:58.760
+Merlin. Okay, cool. I will
+send all of that in
+
+645
+00:35:58.760 --> 00:36:01.670
+the show notes and I
+really appreciate your time. Yeah,
+
+646
+00:36:01.670 --> 00:36:04.700
+absolutely. You know, take everything
+I say with a grain
+
+647
+00:36:04.700 --> 00:36:08.720
+of salt, I'm still still
+learning, but okay. What org
+
+648
+00:36:08.720 --> 00:36:12.470
+has great stuff. Please feel
+free to ask people on
+
+649
+00:36:12.470 --> 00:36:17.120
+IRC. They're so nice. They're
+they're not like those, I
+
+650
+00:36:17.120 --> 00:36:21.050
+don't know these stereotypical mean
+functional programmers. They're very nice.
+
+651
+00:36:22.250 --> 00:36:24.350
+I know what the stereotype
+would be. Maybe like ranger
+
+652
+00:36:24.350 --> 00:36:28.310
+hats and like, you know,
+those strappy sandals or something.
+
+653
+00:36:28.340 --> 00:36:31.040
+I don't know, but they're
+not that they're very nice.
+
+654
+00:36:31.820 --> 00:36:34.100
+Very cool. Well, thank you
+so much, Gina Marie Miami
+
+655
+00:36:34.400 --> 00:36:37.640
+for your time today. Yeah,
+no problem. This has been
+
+656
+00:36:37.640 --> 00:36:40.340
+another episode of Hanselminutes and
+we'll see you again next
+
+657
+00:36:40.340 --> 00:36:40.640
+week.
 

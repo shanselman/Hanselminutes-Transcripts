@@ -1,3251 +1,2901 @@
 WEBVTT FILE
 
 1
-00:00:00.480 --> 00:00:04.230
-Hey folks. Today's episode was
-sponsored by Datadog it's. A
+00:00:00.180 --> 00:00:02.040
+Hey friends, this is Scott.
+I want you to know
 
 2
-00:00:04.230 --> 00:00:08.460
-cloud scale monitoring and analytics
-platform. Datadog was built to
+00:00:02.040 --> 00:00:04.470
+how much I appreciate you
+as listeners. And I hope
 
 3
-00:00:08.460 --> 00:00:12.510
-bring clarity to complex dynamic
-applications in the cloud, on
+00:00:04.470 --> 00:00:07.710
+you appreciate my sponsors because
+they make the show possible.
 
 4
-00:00:12.510 --> 00:00:16.890
-premises in containers or wherever
-they run with beautiful dashboards,
+00:00:08.400 --> 00:00:12.360
+Raygun provides full stack error,
+crash, and performance monitoring for
 
 5
-00:00:16.980 --> 00:00:21.360
-distributed, tracing, and seamless integrations
-with more than 200 technologies,
+00:00:12.360 --> 00:00:15.660
+tech teams. Whether you're a
+software engineer looking to diagnose
 
 6
-00:00:21.780 --> 00:00:26.190
-including Azure and Docker and
-PagerDuty Datadog provides deep end
+00:00:15.660 --> 00:00:18.480
+and resolve issues with greater
+speed and accuracy or a
 
 7
-00:00:26.190 --> 00:00:28.860
-to end visibility into the
-health and performance of modern
+00:00:18.480 --> 00:00:21.000
+product manager drowning in bug
+reports, or maybe you're just
 
 8
-00:00:28.860 --> 00:00:33.300
-apps. Visualize key metrics, set
-alerts to identify anomalies and
+00:00:21.000 --> 00:00:25.470
+concerned. You're losing customers to
+poor quality online experiences. Raygun
 
 9
-00:00:33.300 --> 00:00:36.570
-collaborate with your team to
-troubleshoot and fix issues fast.
+00:00:25.470 --> 00:00:28.410
+can provide you with the
+answers. Get full stack error
 
 10
-00:00:37.110 --> 00:00:39.330
-I'd like you to try
-it yourself by starting a
+00:00:28.410 --> 00:00:31.410
+and performance monitoring in one
+place. The next time you're
 
 11
-00:00:39.330 --> 00:00:43.290
-free 14 day trial today,
-listeners of this podcast will
+00:00:31.410 --> 00:00:34.020
+struggling to replicate errors and
+performance issues in your code
 
 12
-00:00:43.290 --> 00:00:49.530
-also get a free Datadog
-t-shirt get started at bitly.com/data
+00:00:34.020 --> 00:00:38.190
+base. Think Raygun head over
+to reagan.com. That's our a
 
 13
-00:00:49.530 --> 00:01:08.670
-dog shirt. That's bitly.com/datadog shirt.
-Hi, this is Scott Hanselman.
+00:00:38.190 --> 00:00:41.460
+Y G U n.com and
+get up and running within
 
 14
-00:01:08.670 --> 00:01:11.400
-This is another episode of
-Hanselminutes today. I'm talking with
+00:00:41.460 --> 00:00:44.670
+minutes and dramatically improve your
+online experiences of your users.
 
 15
-00:01:11.490 --> 00:01:14.220
-April Wensel. He's a founder
-of compassionate coding, and you
+00:00:58.110 --> 00:01:00.180
+Hi, this is Scott Hanselman.
+This is another episode of
 
 16
-00:01:14.220 --> 00:01:16.410
-can check her out at
-April Wensel, w E N
+00:01:00.180 --> 00:01:03.270
+Hansel minutes today. I'm talking
+with Kristen Lee. She's a
 
 17
-00:01:16.410 --> 00:01:20.480
-S E l.com. Thanks for
-chatting with me. Hello. Hi,
+00:01:03.270 --> 00:01:06.030
+UX research, right? Empowered and
+a YouTuber. How are you?
 
 18
-00:01:20.480 --> 00:01:23.270
-happy to be here. I'm
-looking at your website. I've
+00:01:06.380 --> 00:01:09.770
+Hey, I'm great, Scott. Thanks
+for having me. Thanks for
 
 19
-00:01:23.270 --> 00:01:27.050
-seen you online and you
-give lots of talks about
+00:01:09.770 --> 00:01:12.110
+coming on the show. I
+found you while I was
 
 20
-00:01:27.320 --> 00:01:32.210
-this concept of, of compassionate
-coding. And I, I, when
+00:01:12.650 --> 00:01:16.790
+frankly, Googling around and learning
+about bootcamps because I'm interested
 
 21
-00:01:32.210 --> 00:01:34.730
-I was talking to you
-earlier, I, I said, well,
+00:01:16.790 --> 00:01:20.480
+in how people find their
+way into tech. And it
 
 22
-00:01:34.730 --> 00:01:38.030
-is this like soft skills
-or squishy sales skills? And
+00:01:20.480 --> 00:01:24.860
+looks like you already had
+a well-established YouTube channel. So
 
 23
-00:01:38.030 --> 00:01:41.000
-you checked me and, and
-I appreciated the check. Why,
+00:01:24.860 --> 00:01:26.900
+were you a techie before
+you went to a boot
 
 24
-00:01:41.030 --> 00:01:44.090
-why is that a wrong
-word to use? Yeah. So
+00:01:26.900 --> 00:01:30.200
+camp? Not at all. Well,
+I would say a little
 
 25
-00:01:44.090 --> 00:01:47.720
-when we use terms like
-soft or squishy, that doesn't
+00:01:30.200 --> 00:01:33.950
+bit from school. I have
+a, I have a master's
 
 26
-00:01:47.720 --> 00:01:49.850
-sound like something that people
-would care about, right? I
+00:01:33.950 --> 00:01:37.910
+in journalism from San Jose
+state. So being in Silicon
 
 27
-00:01:49.850 --> 00:01:53.960
-mean, especially because the connotations
-with soft, our weakness, we
+00:01:37.910 --> 00:01:43.730
+Valley, the journalism program incorporated
+some app development and we
 
 28
-00:01:53.960 --> 00:01:59.210
-say things like he's gone
-soft and it's also associated,
+00:01:43.730 --> 00:01:47.660
+did some videography. So I
+dabbled in that. But for
 
 29
-00:01:59.210 --> 00:02:01.970
-I think, to a certain
-extent with women. And to
+00:01:47.660 --> 00:01:49.700
+the most part, no, I
+did not have a, a
 
 30
-00:02:01.970 --> 00:02:03.890
-be honest, not that there's
-anything wrong with being associated
+00:01:49.700 --> 00:01:53.540
+solid foundation. It does kind
+of raise the question though.
 
 31
-00:02:03.890 --> 00:02:07.400
-with women, but soft quote,
-soft skills are important for
+00:01:53.540 --> 00:01:56.180
+What is a techie? Like,
+is it someone who can
 
 32
-00:02:07.400 --> 00:02:10.250
-everyone to develop, not just
-women. And so I think
+00:01:56.180 --> 00:01:58.430
+find a file on the
+disc? Cause I constantly, I'm
 
 33
-00:02:10.250 --> 00:02:14.360
-that this association is, is
-harmful because it keeps people
+00:01:58.430 --> 00:02:02.630
+always having nontechnical family members
+say I've lost this file
 
 34
-00:02:14.360 --> 00:02:17.960
-from giving these skills, the
-importance that, that they really
+00:02:02.630 --> 00:02:04.310
+and it's like, Oh, well
+they put it in documents
 
 35
-00:02:17.960 --> 00:02:20.540
-should have. And on top
-of that, I mean, what
+00:02:04.310 --> 00:02:06.710
+instead of download or it's
+on the desktop. And then
 
 36
-00:02:20.540 --> 00:02:24.320
-we're talking about here are
-a complex kind of psychological
+00:02:06.800 --> 00:02:09.500
+they're amazed if I find
+the file and then I
 
 37
-00:02:24.830 --> 00:02:28.940
-phenomenon that really aren't really
-soft, even in that, you
+00:02:09.500 --> 00:02:11.690
+go, you're a techie. You
+found that file. Like, what
 
 38
-00:02:28.940 --> 00:02:33.140
-know, area they're very complicated,
-there's science behind it. So
+00:02:11.690 --> 00:02:14.180
+is the, what is the
+base like how technical is
 
 39
-00:02:33.440 --> 00:02:36.560
-in that sense too, there
-are definitely hard in terms
+00:02:14.180 --> 00:02:17.150
+technical? Yeah, That's true. It
+seems like a buzz word
 
 40
-00:02:36.560 --> 00:02:41.210
-of difficulty and complexity as
-well. Yeah. You've also talked
+00:02:17.150 --> 00:02:22.190
+today for anyone who knows
+anything that is electronic bass
 
 41
-00:02:41.210 --> 00:02:44.720
-a lot online about the
-idea of emotional intelligence and
+00:02:23.620 --> 00:02:26.090
+Is configuring your own router,
+like going to, going to
 
 42
-00:02:44.720 --> 00:02:47.960
-I've always heard, you know,
-IQ and E Q and
+00:02:26.090 --> 00:02:27.920
+best buy buying a router
+or setting it up. Is
 
 43
-00:02:48.170 --> 00:02:50.630
-it seems like we, we
-really promote this idea that
+00:02:27.920 --> 00:02:32.180
+that techie or is that
+just following instructions? Well, And
 
 44
-00:02:50.630 --> 00:02:53.330
-people should be smart and
-IQ is so important, but
+00:02:32.180 --> 00:02:35.270
+I think there's also like
+a, a point where there's
 
 45
-00:02:53.420 --> 00:02:56.570
-I've never taken a class
-on EPQ or learning about
+00:02:35.270 --> 00:02:38.090
+a certain amount of nerdiness
+within the techie, you know,
 
 46
-00:02:56.600 --> 00:02:59.980
-emotional intimacy. Yeah. Which is,
-I feel like that's the
+00:02:38.150 --> 00:02:40.910
+there's like the hip techie
+people and then more people
 
 47
-00:02:59.980 --> 00:03:02.710
-case for most people, we
-are starting to see some
+00:02:40.910 --> 00:02:43.700
+who nerd out more. I
+don't know. Yeah. Well, and
 
 48
-00:03:03.310 --> 00:03:08.380
-social, emotional learning happening in,
-in school curriculum. But I
+00:02:43.700 --> 00:02:45.380
+then there's like you were
+saying that you've done like
 
 49
-00:03:08.380 --> 00:03:10.450
-think right now, only out
-in California and places like
+00:02:45.380 --> 00:02:48.710
+media creation, like there's the
+Adobe creative cloud level of
 
 50
-00:03:10.450 --> 00:03:12.940
-that, and not, not kind
-of in the mainstream, but,
+00:02:48.800 --> 00:02:53.180
+techie, right? Yeah. Asset management
+and rendering. And then there's
 
 51
-00:03:13.240 --> 00:03:16.300
-but empathy, you know, that's
-one, one aspect of emotional
+00:02:53.180 --> 00:02:58.070
+the like coding techie. Definitely.
+So you had a master's
 
 52
-00:03:16.300 --> 00:03:19.120
-intelligence. Like it's definitely a
-skill that can be learned.
+00:02:58.070 --> 00:03:01.360
+degree already. That's an advanced
+degree. That's a graduate degree.
 
 53
-00:03:19.120 --> 00:03:21.130
-It's not just something you're
-either born with or not
+00:03:01.360 --> 00:03:04.000
+That's more than a lot
+of people. Were you not
 
 54
-00:03:21.280 --> 00:03:24.570
-born with. You know, That's
-very interesting. Why is it
+00:03:04.000 --> 00:03:07.120
+interested in being a journalist?
+Why go to a bootcamp
 
 55
-00:03:24.570 --> 00:03:26.790
-that we seem to think
-that people are born smart
+00:03:07.240 --> 00:03:10.980
+and not do a master's
+in computer science? I didn't
 
 56
-00:03:26.790 --> 00:03:29.850
-or not smart, or they're
-born with an emotional, you
+00:03:10.980 --> 00:03:13.350
+know. I wanted to work
+in tech to be honest.
 
 57
-00:03:29.850 --> 00:03:32.640
-know, core emotional intelligence. It
-seems like everything can be
+00:03:13.380 --> 00:03:16.560
+I, I kind of did
+what I don't recommend those
 
 58
-00:03:32.640 --> 00:03:36.150
-learned and we should be
-promoting that. Yeah, definitely. I'm
+00:03:16.560 --> 00:03:19.470
+people doing and which is
+going back to school when
 
 59
-00:03:36.150 --> 00:03:39.240
-a big fan of Carol
-Dweck work on growth mindset,
+00:03:19.470 --> 00:03:20.940
+you're still trying to figure
+out what you want to
 
 60
-00:03:39.270 --> 00:03:42.360
-which is this idea just
-like you said, that whatever
+00:03:20.940 --> 00:03:24.360
+do. Cause that does not
+solve the answer at all.
 
 61
-00:03:42.360 --> 00:03:44.520
-skill it is that we
-want to develop, it doesn't
+00:03:25.050 --> 00:03:30.600
+But that's pretty much what
+I did after, after changing
 
 62
-00:03:44.520 --> 00:03:46.680
-matter where we're starting from.
-We can get better. We
+00:03:30.600 --> 00:03:36.120
+my career path from physical
+therapy, I decided to just
 
 63
-00:03:46.680 --> 00:03:50.610
-may not, you know, there
-may be an eventual limit
+00:03:36.120 --> 00:03:39.840
+go for journalism. Cause it
+seemed to just be something
 
 64
-00:03:50.610 --> 00:03:52.380
-that we hit or, you
-know, it may take us
+00:03:39.840 --> 00:03:43.590
+that you can apply to
+any industry, which I guess
 
 65
-00:03:52.380 --> 00:03:55.140
-longer than other people, but
-all of us are capable
+00:03:43.590 --> 00:03:46.140
+is partially true for my
+experience. But that's pretty much
 
 66
-00:03:55.140 --> 00:03:58.740
-of growing whatever skills we
-decide to. Yeah. That's interesting
+00:03:46.140 --> 00:03:49.020
+the reason why I got
+the masters and I don't
 
 67
-00:03:58.740 --> 00:04:01.500
-that you bring up the
-growth growth mindset, because I'm
+00:03:49.020 --> 00:03:51.870
+really need it. I, I
+think if you go through
 
 68
-00:04:01.500 --> 00:04:04.650
-thinking about my two kids
-while I just made an
+00:03:51.870 --> 00:03:57.090
+coding bootcamp, especially nowadays, since
+it's more common, that's absolutely
 
 69
-00:04:04.650 --> 00:04:08.220
-assertion that they're not learning
-about emotional intelligence. In fact,
+00:03:57.090 --> 00:04:00.570
+fine. Really? Cause that brings
+up an interesting question about
 
 70
-00:04:08.220 --> 00:04:10.320
-the growth mindset has been
-a part of the curriculum
+00:04:00.570 --> 00:04:03.900
+how to position these things.
+Because you know, currently as
 
 71
-00:04:10.320 --> 00:04:12.750
-at their school. So that's
-cool that you brought up
+00:04:03.900 --> 00:04:06.780
+of the time of this
+recording, the U S is
 
 72
-00:04:12.750 --> 00:04:15.000
-Carol Dweck. Yeah. Yeah. I'm
-a big fan of hers
+00:04:06.780 --> 00:04:10.650
+at about 4% unemployment and
+people would like to say,
 
 73
-00:04:15.170 --> 00:04:17.040
-and her work. And, you
-know, cause I think there's
+00:04:11.040 --> 00:04:13.170
+yeah, anyone with any tech
+ability at all can just,
 
 74
-00:04:17.040 --> 00:04:21.390
-this idea in tech, especially
-that, you know, you're either
+00:04:13.200 --> 00:04:15.030
+you know, throw a rock
+and get a, get a
 
 75
-00:04:21.390 --> 00:04:24.270
-born to be a coder
-or, or not, you know,
+00:04:15.030 --> 00:04:18.510
+job as a techie. Do
+you think that having bootcamp
 
 76
-00:04:24.270 --> 00:04:27.420
-and that either I think
-Jeff Atwood, hadn't this blog
+00:04:18.570 --> 00:04:21.840
+on your resume is more
+important than having master's degree
 
 77
-00:04:27.420 --> 00:04:29.370
-post where you said that
-the computers chose him or
+00:04:22.350 --> 00:04:28.170
+on your resume? I think
+it depends on the type
 
 78
-00:04:29.370 --> 00:04:31.410
-something like that. And it's
-like, you know, for some
+00:04:28.200 --> 00:04:32.790
+of job position that you
+want to have. And I
 
 79
-00:04:31.410 --> 00:04:33.630
-people that's the case, that's
-their origin story. You know,
+00:04:32.790 --> 00:04:36.420
+often tell people that getting
+a job after bootcamp is
 
 80
-00:04:33.630 --> 00:04:35.430
-that's, that's how they feel.
-That's how they frame it.
+00:04:36.420 --> 00:04:40.470
+a lot different than actually
+the studying and going through
 
 81
-00:04:35.700 --> 00:04:38.850
-But that's not the case
-for everyone. Some people, you
+00:04:40.470 --> 00:04:45.150
+coding. And Buki, they're both
+like two huge different journeys.
 
 82
-00:04:38.850 --> 00:04:41.280
-know, were interested in what
-they could build, interested in
+00:04:45.990 --> 00:04:48.450
+Well, let's break down the,
+the why a boot camp
 
 83
-00:04:41.280 --> 00:04:43.500
-solving a specific problem. And
-so they learn to code,
+00:04:48.480 --> 00:04:50.400
+and the going through the
+process. And then we'll, we'll
 
 84
-00:04:43.770 --> 00:04:45.630
-or we have a lot
-of people coming to coding
+00:04:50.400 --> 00:04:52.470
+follow up with how we
+go and get a job
 
 85
-00:04:45.630 --> 00:04:48.540
-now later in life, you
-know, taking bootcamps or being
+00:04:52.500 --> 00:04:54.990
+after boot camp. So you
+went and got a, you
 
 86
-00:04:48.540 --> 00:04:51.650
-self-taught or whatever. And those
-people are, you know, I
+00:04:54.990 --> 00:04:57.000
+went, got a, went to
+a boot camp. How did
 
 87
-00:04:51.690 --> 00:04:53.820
-believe that we should welcome
-them just as much as
+00:04:57.000 --> 00:04:59.550
+you pick that boot camp?
+And how did you know
 
 88
-00:04:53.820 --> 00:04:56.820
-we would welcome anybody who
-thinks that they were born,
+00:04:59.550 --> 00:05:01.410
+that they were going to
+succeed in teaching you what
 
 89
-00:04:56.850 --> 00:04:59.400
-you know, to be a
-coder. Yeah. That's a really,
+00:05:01.410 --> 00:05:07.440
+you wanted to learn? So
+for picking the bootcamp, it
 
 90
-00:04:59.400 --> 00:05:01.080
-I really liked the way
-you phrased that this idea
+00:05:07.440 --> 00:05:10.860
+was overwhelming. Like many people.
+I did a Google search.
 
 91
-00:05:01.080 --> 00:05:05.670
-of the programmers origin story
-really resonates with me because
+00:05:10.890 --> 00:05:13.590
+I looked at reviews, which
+don't help you at all.
 
 92
-00:05:06.060 --> 00:05:09.120
-you know, there are tropes
-in the superhero origin story.
+00:05:13.590 --> 00:05:16.020
+Cause you always hear the
+good and the bad and
 
 93
-00:05:09.120 --> 00:05:11.190
-As somebody gets bit by
-a radioactive spider or they'd
+00:05:16.080 --> 00:05:20.490
+typically it's more bad than
+good. And I ended up
 
 94
-00:05:11.190 --> 00:05:14.580
-fall into a VAT of
-whatever. And there's the origin
+00:05:20.520 --> 00:05:24.330
+narrowing down what I wanted
+to do. So I thought
 
 95
-00:05:14.580 --> 00:05:16.680
-story of, I was given
-an Apple two at age
+00:05:24.330 --> 00:05:27.570
+I wanted to do more
+front end development. So I
 
 96
-00:05:16.710 --> 00:05:20.370
-12, but why is that
-any more interesting or more
+00:05:27.570 --> 00:05:32.160
+focused on the bootcamps that
+do that. And today there's
 
 97
-00:05:20.370 --> 00:05:22.740
-valuable than I was a
-teacher for 20 years? And
+00:05:32.610 --> 00:05:36.960
+a bazillion types of boot
+camps. There's big data. There's
 
 98
-00:05:22.740 --> 00:05:24.150
-I decided I want to
-get into tech and I
+00:05:36.960 --> 00:05:41.310
+dev ops. Now there's design
+bootcamp. So that's number, one
 
 99
-00:05:24.150 --> 00:05:26.130
-quit my job. And at
-45 decided to become a
+00:05:41.310 --> 00:05:44.700
+thing you need to do
+first is decide where w
 
 100
-00:05:26.130 --> 00:05:28.710
-programmer. That's a pretty cool
-origin story too, isn't it?
+00:05:44.730 --> 00:05:49.320
+decide what you want to
+do after bootcamp. And we're
 
 101
-00:05:28.950 --> 00:05:32.520
-Yeah. It really is. You
-did an interview with a
+00:05:49.320 --> 00:05:56.430
+choosing, I chose tech talent
+South they're local. I I'm
 
 102
-00:05:32.580 --> 00:05:36.120
-building programmers and I liked
-that idea that the programmers
+00:05:56.430 --> 00:05:59.330
+trying to go back. So
+I was trying to decide
 
 103
-00:05:36.120 --> 00:05:40.560
-are built. They're not, they're
-not, they're not born. Yeah.
+00:05:59.330 --> 00:06:05.390
+between tech talent, South, another
+local boot camp and an
 
 104
-00:05:40.620 --> 00:05:43.870
-I think that's really, that's
-really true. So when, when
+00:06:05.420 --> 00:06:09.200
+online boot camp, because it
+just seemed convenient to still
 
 105
-00:05:43.870 --> 00:05:46.380
-we talk about these terms
-and, and now I'm not
+00:06:09.260 --> 00:06:13.160
+do my full time job
+and go to school. But
 
 106
-00:05:46.380 --> 00:05:49.140
-going to use terms like
-soft and squishy, what should
+00:06:13.880 --> 00:06:18.080
+I nixed that idea because
+knowing myself and how I
 
 107
-00:05:49.140 --> 00:05:51.480
-I say? Cause I want
-to make a compassionate environment.
+00:06:18.080 --> 00:06:22.760
+learn, I need to be
+in a classroom setting. And
 
 108
-00:05:51.480 --> 00:05:55.230
-I want everyone to feel
-that they are they're valued,
+00:06:22.760 --> 00:06:25.060
+if I just go ahead,
+I'm sorry. I was going
 
 109
-00:05:55.230 --> 00:05:57.800
-but you know, they say
-in programming, naming is hard,
+00:06:25.060 --> 00:06:27.520
+to say, it seems like
+if you are a person
 
 110
-00:05:57.890 --> 00:06:00.760
-right? So here we are
-looking to name stuff. Yeah.
+00:06:27.520 --> 00:06:29.650
+who is trying to get
+into tech and someone says,
 
 111
-00:06:00.790 --> 00:06:03.310
-The, the, the interesting thing
-about that is one of
+00:06:29.650 --> 00:06:32.800
+do an online bootcamp, the
+assumption is you're already what
 
 112
-00:06:03.310 --> 00:06:05.500
-the reasons the naming is
-hard is that naming actually
+00:06:32.800 --> 00:06:35.800
+they call a digital native,
+right? You're already super comfortable
 
 113
-00:06:05.500 --> 00:06:08.810
-requires a great deal of
-empathy because naming, and that
+00:06:35.800 --> 00:06:39.070
+online. But to the point
+about before you could get
 
 114
-00:06:08.830 --> 00:06:11.410
-includes the naming variables because
-the idea is you're not
+00:06:39.130 --> 00:06:41.560
+stuck and then you're all
+alone, you're online and you
 
 115
-00:06:11.410 --> 00:06:13.300
-naming them for the machine.
-The machine doesn't care what
+00:06:41.560 --> 00:06:44.140
+are stuck on an exercise
+and now you have to
 
 116
-00:06:13.300 --> 00:06:15.520
-you call the variables and
-there's no right or wrong.
+00:06:44.140 --> 00:06:45.550
+go. And the only way
+you can get help is
 
 117
-00:06:15.550 --> 00:06:19.480
-There's no perfect name in
-terms of, you know, actual
+00:06:45.550 --> 00:06:49.750
+email somebody. Yeah, definitely. And
+they have mentors. I know
 
 118
-00:06:19.810 --> 00:06:23.770
-correctness naming is really about
-who it's for and who
+00:06:49.750 --> 00:06:54.670
+some have they do a
+like Skype with your mentor
 
 119
-00:06:23.770 --> 00:06:26.110
-it's going to help. So
-in the case of variables,
+00:06:54.670 --> 00:06:59.260
+once a week or something.
+But I having my teacher
 
 120
-00:06:26.110 --> 00:06:28.360
-you're really naming based on,
-who's going to be reading
+00:06:59.260 --> 00:07:01.930
+in person and then being
+able to work with my
 
 121
-00:06:28.360 --> 00:06:31.360
-the code, including yourself, your
-future self, and also any
+00:07:01.930 --> 00:07:07.090
+classmates after class, like we
+would get together and work
 
 122
-00:06:31.420 --> 00:06:35.050
-of your collaborators. And so
-in this case for skills,
+00:07:07.090 --> 00:07:09.520
+on our projects over dinner.
+We just call her or
 
 123
-00:06:36.160 --> 00:06:37.450
-I mean, one thing is
-just to refer to them
+00:07:09.520 --> 00:07:11.800
+text each other. When we
+got stuck on homework, having
 
 124
-00:06:37.450 --> 00:06:40.180
-more specifically, like, are you
-talking about communication skills or
+00:07:11.800 --> 00:07:17.050
+that community around me made
+it much more bearable. Cause
 
 125
-00:06:40.180 --> 00:06:43.720
-are you talking about self-awareness
-introspection just be more specific
+00:07:17.050 --> 00:07:19.540
+it is stressful. It's not
+easy at all to go
 
 126
-00:06:43.720 --> 00:06:46.900
-instead of kind of lumping
-them together. Another option is,
+00:07:19.540 --> 00:07:22.720
+through boot camp. So it
+just made it easier to
 
 127
-00:06:47.230 --> 00:06:49.990
-you know, we talked about
-emotional intelligence, emotional intelligence skills
+00:07:22.750 --> 00:07:28.510
+learn and to commiserate and
+everything. Now, when people go
 
 128
-00:06:50.020 --> 00:06:53.500
-would also be good. Some
-people use something like professional
+00:07:28.510 --> 00:07:30.370
+to college, we know that
+like right now in the
 
 129
-00:06:53.500 --> 00:06:55.630
-skills, but again, that's kind
-of vague and it's hard
+00:07:30.370 --> 00:07:34.210
+United States, like top tier private
+universities are super expensive. Even
 
 130
-00:06:55.630 --> 00:06:58.540
-for people to know exactly
-what that means. I gave
+00:07:34.210 --> 00:07:36.520
+a public university is going
+to cost you many, many
 
 131
-00:06:58.540 --> 00:07:01.000
-a talk and I talked
-about, well, it's a talk
+00:07:36.520 --> 00:07:39.400
+tens of thousands of dollars,
+but a bootcamp isn't cheap
 
 132
-00:07:01.000 --> 00:07:02.800
-that I do frequently. And
-I, I refer to them
+00:07:39.460 --> 00:07:42.310
+either. Like people could spend
+eight to 12 weeks and
 
 133
-00:07:02.800 --> 00:07:05.740
-as catalytic skills. It's a
-term I borrowed from Daniel
+00:07:42.310 --> 00:07:48.490
+they could spend $10,000 for
+this unaccredited, unknown, unregulated thing.
 
 134
-00:07:05.740 --> 00:07:08.290
-Goldman, who is pretty big
-in the emotional intelligence world.
+00:07:49.300 --> 00:07:51.220
+Yeah. That's the scary thing
+about it. And that's why
 
 135
-00:07:08.740 --> 00:07:12.340
-And this idea of catalytic
-skills is that they help
+00:07:51.220 --> 00:07:56.350
+you have to do your
+research. I recommend talking to
 
 136
-00:07:12.340 --> 00:07:15.850
-you catalyze your other skills.
-So for example, they may
+00:07:56.350 --> 00:07:59.680
+the teachers and just going
+in and just seeing where
 
 137
-00:07:15.850 --> 00:07:19.540
-help you learn new technical
-skills. They may help you
+00:07:59.980 --> 00:08:03.420
+the school takes place and
+just meeting everyone who, who
 
 138
-00:07:19.540 --> 00:07:22.750
-decide which technical skills to
-use, you know, which coding,
+00:08:03.430 --> 00:08:08.290
+works there and also talking
+to former students and seeing
 
 139
-00:07:22.780 --> 00:07:25.150
-which coding framework to use
-or what, not that that
+00:08:08.290 --> 00:08:12.610
+where they are today. Because
+there, there are some scammy
 
 140
-00:07:25.150 --> 00:07:29.200
-requires certain amount of problem
-solving ability. That's not actually
+00:08:12.610 --> 00:08:16.570
+bootcamps. I can't say as
+far as today, since you
 
 141
-00:07:29.200 --> 00:07:32.530
-directly a coding skill. It's
-more sort of a meta
+00:08:16.570 --> 00:08:20.050
+know, I've been out for
+two years now, but you
 
 142
-00:07:32.530 --> 00:07:35.290
-skill, so to speak. So
-there's just a whole range
+00:08:20.050 --> 00:08:23.110
+definitely need to, you know,
+dig in and make sure
 
 143
-00:07:35.290 --> 00:07:37.630
-of things you could call
-them other than soft skills.
+00:08:23.110 --> 00:08:26.980
+it's, you know, it's actually
+a company that wants to
 
 144
-00:07:37.630 --> 00:07:40.300
-And I think it depends
-on your audience. Really. Yeah.
+00:08:26.980 --> 00:08:29.770
+help you. You know? And
+that's, that's why I loved
 
 145
-00:07:40.540 --> 00:07:42.550
-I think my initial reaction
-is that it might be
+00:08:29.770 --> 00:08:33.850
+my, my community so much.
+They say that compared to
 
 146
-00:07:42.550 --> 00:07:45.640
-hard to sell a more
-complicated word, but what the
+00:08:33.850 --> 00:08:36.160
+self study that a bootcamp,
+you know, it gives you
 
 147
-00:07:45.640 --> 00:07:48.970
-great thing about catalytic or
-catalyst is is that it
+00:08:36.160 --> 00:08:38.740
+that motivation. Like you said,
+you have a community of
 
 148
-00:07:49.090 --> 00:07:51.940
-is, it's more precise. It
-says exactly like this is
+00:08:38.740 --> 00:08:42.640
+people around you, but you're
+effectively investing this $10,000 or
 
 149
-00:07:51.940 --> 00:07:54.370
-a thing that precipitates a
-thing and it, it, it
+00:08:42.890 --> 00:08:45.820
+some huge amount of money.
+And I assume this isn't
 
 150
-00:07:54.370 --> 00:07:56.770
-causes it a better thing
-to happen. It's like it
+00:08:45.820 --> 00:08:47.320
+a 40 hour a week
+thing. You don't just show
 
 151
-00:07:56.780 --> 00:07:59.470
-evokes the sense of change
-and chemical reaction in the
+00:08:47.320 --> 00:08:50.080
+up at nine and leave
+at five. You're basically, you
 
 152
-00:07:59.470 --> 00:08:02.410
-body. Yeah. That's, that's what
-I like about it too.
+00:08:50.080 --> 00:08:53.470
+know, not sleeping for 10
+weeks as you immerse yourself
 
 153
-00:08:02.920 --> 00:08:06.610
-It's more, it's more yeah.
-Precise as you said. Yeah.
+00:08:53.500 --> 00:08:57.840
+in the bootcamp, you needed
+to try Not to not
 
 154
-00:08:06.630 --> 00:08:09.730
-That's interesting. I like that.
-So as we try to
+00:08:57.840 --> 00:09:01.890
+sleep. Cause I, I quickly
+learned that getting three, four
 
 155
-00:08:09.730 --> 00:08:11.770
-promote these kinds of things,
-how do we push back
+00:09:01.890 --> 00:09:06.630
+hours of sleep a night,
+it, it definitely hurts you
 
 156
-00:08:11.770 --> 00:08:13.660
-on people that are like,
-Oh yeah, that's just a
+00:09:06.630 --> 00:09:09.990
+to next day when you're
+trying to, trying to follow
 
 157
-00:08:13.660 --> 00:08:15.310
-word. It's not, it's not
-that big of a deal
+00:09:09.990 --> 00:09:15.570
+the teacher because they go
+so freaking fast and it
 
 158
-00:08:15.310 --> 00:08:18.760
-who cares? Yeah, yeah, no,
-I hear that a lot.
+00:09:15.570 --> 00:09:17.610
+doesn't matter how many cups
+of coffee you drink. If
 
 159
-00:08:18.830 --> 00:08:22.480
-And it's the power of
-language is, is surprising. I
+00:09:17.610 --> 00:09:20.520
+you don't have the rest
+is going to be hard
 
 160
-00:08:22.480 --> 00:08:23.980
-mean, it's, it does sound
-like, Oh, what does it
+00:09:20.520 --> 00:09:25.100
+to follow and retain everything.
+That's interesting because people are
 
 161
-00:08:23.980 --> 00:08:25.660
-matter? What we call it?
-But the thing is that
+00:09:25.100 --> 00:09:28.820
+saying that boot camps could
+be a way to get
 
 162
-00:08:26.770 --> 00:08:29.530
-we have so many associations
-in our head with different
+00:09:28.820 --> 00:09:32.120
+more women and more people
+of color into, into the
 
 163
-00:08:29.530 --> 00:08:32.830
-words, you know? Like, and,
-and so that can have
+00:09:32.120 --> 00:09:35.270
+kind of the pipeline and
+encourage people that maybe are
 
 164
-00:08:32.830 --> 00:08:35.260
-a huge impact on how
-we actually think about things.
+00:09:35.270 --> 00:09:38.120
+high school, only a high
+school educated person or older
 
 165
-00:08:35.260 --> 00:08:38.800
-I mean, I think that
-that's just, that's just undeniable.
+00:09:38.120 --> 00:09:40.850
+people or former teachers. Like
+it's a way to get,
 
 166
-00:08:38.800 --> 00:08:40.450
-I mean, cause if you
-think about the word soft,
+00:09:41.130 --> 00:09:44.990
+they call nontraditional folks into
+this. But now you're saying
 
 167
-00:08:40.450 --> 00:08:42.220
-I mean, what comes to
-mind? Like I think of
+00:09:45.020 --> 00:09:47.600
+it goes really fast. Doesn't
+that mean that people are
 
 168
-00:08:42.220 --> 00:08:45.250
-like pillows, I think of
-Sears had these commercials in
+00:09:47.600 --> 00:09:50.900
+gonna get left behind if
+they can't keep up. It
 
 169
-00:08:45.250 --> 00:08:48.160
-the nineties, the softer side
-of Sears. Like I think
+00:09:50.900 --> 00:09:55.460
+depends on the program and
+how advanced it is, but
 
 170
-00:08:48.160 --> 00:08:50.230
-of all these things that
-just, you know, are nothing
+00:09:55.460 --> 00:09:58.160
+you are completely right. It
+does help people. One of
 
 171
-00:08:50.230 --> 00:08:54.340
-that sound, you know, important
-or like something that I
+00:09:58.160 --> 00:10:00.980
+my friends, my close friends
+from boot camp only has
 
 172
-00:08:54.340 --> 00:08:57.300
-would need in the, whereas,
-you know, I hear catalytic
+00:10:00.980 --> 00:10:04.310
+a high school diploma. And
+now he has an awesome
 
 173
-00:08:57.300 --> 00:09:00.570
-and I think, you know,
-science and chemical reactions like
+00:10:04.310 --> 00:10:08.360
+jobs doing dev ops. Oh
+wow. Okay. But did he,
 
 174
-00:09:00.570 --> 00:09:03.180
-you were talking about, I
-think of, you know, making
+00:10:08.360 --> 00:10:10.520
+was he set up for
+success in that he knew
 
 175
-00:09:03.180 --> 00:09:05.520
-things more efficient, faster, all
-that stuff. And so it
+00:10:10.520 --> 00:10:13.880
+something already. Like I'm realizing
+that my 10 and 12
 
 176
-00:09:05.520 --> 00:09:07.050
-sounds, you know what I
-mean? So I think if
+00:10:13.880 --> 00:10:18.050
+year old boys, my sons
+are getting a 10 year
 
 177
-00:09:07.050 --> 00:09:08.970
-we look at the associations
-we have in our head,
+00:10:18.050 --> 00:10:21.590
+head start because they have
+iPads and they have laptops.
 
 178
-00:09:09.720 --> 00:09:12.050
-that's how we can see
-the power of language. That's
+00:10:22.010 --> 00:10:25.130
+Well, someone who maybe comes
+in from a, you know,
 
 179
-00:09:12.050 --> 00:09:13.880
-a really good point. And
-if, if someone were trying
+00:10:25.130 --> 00:10:27.230
+like a farming environment or
+rural environment, they may not
 
 180
-00:09:13.880 --> 00:09:16.160
-to do a soft skills
-workshop and sell it to
+00:10:27.230 --> 00:10:29.510
+actually have got their first
+computer until they're there. They're
 
 181
-00:09:16.160 --> 00:09:19.790
-like GE or some giant
-corporation, that might be challenging,
+00:10:29.570 --> 00:10:34.310
+20. Is that 10 years
+of, of being around computers,
 
 182
-00:09:19.790 --> 00:09:22.610
-but if you put together
-a catalytic skills workshop, you
+00:10:34.370 --> 00:10:38.690
+a I'm giving my kids
+a leg up against someone
 
 183
-00:09:22.610 --> 00:09:24.770
-know, there's a certain personality
-type at a giant company
+00:10:38.690 --> 00:10:43.070
+else. That's a good point.
+I, yeah, I think that
 
 184
-00:09:24.770 --> 00:09:26.390
-that might be like, yeah,
-that's exactly what we need
+00:10:43.070 --> 00:10:45.560
+could definitely have something to
+do with it. Yeah. Were
 
 185
-00:09:26.390 --> 00:09:30.440
-here. Yeah, exactly. I'm doing
-a workshop at node summit
+00:10:45.560 --> 00:10:50.150
+you always around computers growing
+up? Yes. Yes. I, I
 
 186
-00:09:30.440 --> 00:09:32.990
-coming up in the summer
-and I called it working
+00:10:50.180 --> 00:10:53.330
+remember being in middle school
+and being one of the
 
 187
-00:09:32.990 --> 00:09:35.660
-with humans and that's really
-cause that's what it's about
+00:10:53.330 --> 00:10:59.000
+few people who actually used
+AOL. Let's see. So you,
 
 188
-00:09:35.660 --> 00:09:37.340
-is like how to, how
-to work well with humans
+00:10:59.000 --> 00:11:01.670
+as interesting. So you were
+not only kind of, you're
 
 189
-00:09:37.370 --> 00:09:40.100
-as a human. And so
-that's kind of how I
+00:11:01.670 --> 00:11:03.380
+a digital native as they
+like to say, right. You
 
 190
-00:09:40.100 --> 00:09:43.370
-described it there. That is
-funny though, we are working
+00:11:03.380 --> 00:11:08.090
+were online before everybody else
+did. What do you think
 
 191
-00:09:43.370 --> 00:09:46.190
-with computers that are supposed
-to be deterministic and they
+00:11:08.090 --> 00:11:09.950
+that, that made you go
+into a bootcamp saying, Oh,
 
 192
-00:09:46.190 --> 00:09:49.310
-follow instructions really well. And
-then of course the exact
+00:11:09.950 --> 00:11:12.110
+well this is just something
+I need to learn. Like
 
 193
-00:09:49.310 --> 00:09:52.520
-opposite of that are people
-which are don't follow instructions
+00:11:12.110 --> 00:11:15.410
+it's knowable as opposed to
+that sense that you get,
 
 194
-00:09:52.520 --> 00:09:55.460
-particularly well and are hard
-to understand sometimes, but it
+00:11:15.410 --> 00:11:17.240
+you know, I'm sure you
+have this when you're hanging
 
 195
-00:09:55.460 --> 00:09:58.160
-is the, the, the, the
-coming together of those two
+00:11:17.240 --> 00:11:20.180
+out with nontechnical family members
+at Christmas or it's like,
 
 196
-00:09:58.160 --> 00:10:01.610
-things that we're we're software
-happens. Right. Exactly. Yeah. And
+00:11:20.210 --> 00:11:22.880
+Oh yeah. Kristen said techie,
+you know, but that's not
 
 197
-00:10:01.610 --> 00:10:03.920
-I think for too long,
-we've sort of been neglecting
+00:11:22.880 --> 00:11:25.850
+for me. I don't know
+anything about first thing To
 
 198
-00:10:03.950 --> 00:10:05.870
-the human side of things.
-And I think you see
+00:11:25.850 --> 00:11:28.640
+me. I thought of it
+as noble, but that's because,
 
 199
-00:10:05.870 --> 00:10:08.990
-this in the fact that,
-you know, most software projects
+00:11:28.700 --> 00:11:32.210
+and grad school, I had
+a, I think it was
 
 200
-00:10:09.050 --> 00:10:11.750
-are not failing because of
-technical reasons really they're, they're
+00:11:32.210 --> 00:11:36.560
+a project management class and
+our teacher pretty much just
 
 201
-00:10:11.750 --> 00:10:15.890
-failing for human reasons. It's,
-you know, people not communicating
+00:11:36.590 --> 00:11:39.470
+had his teacher selves, how
+to code, how to, how
 
 202
-00:10:15.890 --> 00:10:18.980
-requirements, they're not prioritizing them
-well or not designing for
+00:11:39.470 --> 00:11:42.710
+to use WordPress and go
+in on the backend and
 
 203
-00:10:18.980 --> 00:10:21.050
-the customer with the customers
-in mind and things like
+00:11:43.190 --> 00:11:45.680
+to make some changes. So
+I thought, well, I had
 
 204
-00:10:21.050 --> 00:10:24.740
-that. So I think this
-gap, this, you know, empathy
+00:11:45.680 --> 00:11:48.290
+to watch all of these
+Linda videos. I can just
 
 205
-00:10:24.740 --> 00:10:28.280
-gap and just emotional intelligence
-gap in general, that's been
+00:11:49.400 --> 00:11:53.950
+go to codeacademy.com and to
+make sure that even liked
 
 206
-00:10:28.280 --> 00:10:32.600
-in tech for, you know,
-forever has really been, we
+00:11:53.950 --> 00:11:56.680
+this stuff. And then when
+I realized I did I
 
 207
-00:10:32.600 --> 00:10:34.520
-can see the evidence of
-it in, in what the
+00:11:56.680 --> 00:11:58.870
+enrolled in coding, boot camps,
+like, Oh, well, I like
 
 208
-00:10:34.520 --> 00:10:37.070
-technology that's been produced. So
-I think it's not just,
+00:11:58.870 --> 00:12:02.790
+it. And I can learn
+myself. So why not? So
 
 209
-00:10:37.070 --> 00:10:39.020
-you know, Oh, let's just,
-you know, be nice to
+00:12:02.790 --> 00:12:05.550
+it wasn't threatening, I guess
+is what I'm saying. No,
 
 210
-00:10:39.020 --> 00:10:40.820
-each other or whatever. It's
-more like, no, let's be
+00:12:05.550 --> 00:12:08.370
+it wasn't threatening. Yeah. I
+mean, not to say I
 
 211
-00:10:40.820 --> 00:10:44.120
-more efficient and build better
-products by building empathy for
+00:12:08.370 --> 00:12:12.870
+wasn't nervous about the bootcamp.
+Yeah. I'm trying to get
 
 212
-00:10:44.120 --> 00:10:46.760
-each other. And the people
-we're building for, That's a
+00:12:12.870 --> 00:12:16.710
+a sense or to understand
+like what separates people that
 
 213
-00:10:46.760 --> 00:10:50.780
-really like actionable thing that
-you just said, like, you're
+00:12:16.740 --> 00:12:19.110
+want to like, and I've
+talked about this before on
 
 214
-00:10:50.780 --> 00:10:53.780
-not out promoting, come on
-everyone. Let's be nice. Let's
+00:12:19.110 --> 00:12:21.360
+the show who wants to
+take apart the toaster when
 
 215
-00:10:53.780 --> 00:10:55.700
-all get along. Like, Hey,
-listen, if we want this
+00:12:21.360 --> 00:12:23.790
+it's broken versus who's like,
+and forget it. I'm just
 
 216
-00:10:55.700 --> 00:10:58.970
-to be a successful project,
-you working effectively with the
+00:12:23.790 --> 00:12:24.960
+going to buy a new
+toaster. I don't know why
 
 217
-00:10:58.980 --> 00:11:01.430
-human next to you or
-the cube over from you
+00:12:24.960 --> 00:12:29.970
+it doesn't work. That is
+a good question there. I
 
 218
-00:11:01.790 --> 00:11:05.780
-is as important as your
-code compiling. Yeah, absolutely. And
+00:12:29.970 --> 00:12:33.990
+will say they were people
+maybe let's see. No, there
 
 219
-00:11:05.780 --> 00:11:08.510
-you've said before that, when
-people, when you tell people
+00:12:33.990 --> 00:12:37.380
+was only one person who
+dropped out of my, my
 
 220
-00:11:08.510 --> 00:11:11.180
-that your company is compassionate
-coding, they think that's like
+00:12:37.380 --> 00:12:40.800
+cohort when I went through.
+So it's definitely not for
 
 221
-00:11:11.180 --> 00:11:14.090
-an oxymoron. You can't have
-one with the other. Yeah,
+00:12:40.800 --> 00:12:44.910
+everybody. I think it's yeah.
+Depending on people's expectations, I
 
 222
-00:11:14.120 --> 00:11:17.380
-they definitely, they do, but
-I've gotten that feedback. And,
+00:12:44.910 --> 00:12:47.400
+know some people just are
+doing it for the money.
 
 223
-00:11:17.380 --> 00:11:19.100
-and I've said that in
-what I would like is
+00:12:47.760 --> 00:12:49.140
+I think they can just
+learn it all in the
 
 224
-00:11:19.100 --> 00:11:20.990
-for people to think it's
-redundant. Like I would like
+00:12:49.140 --> 00:12:51.420
+bootcamp, but you're right. You
+need to have some type
 
 225
-00:11:20.990 --> 00:11:23.510
-it to be the norm
-that, you know, people in
+00:12:51.420 --> 00:12:54.930
+of background or at least
+study on your own before
 
 226
-00:11:23.510 --> 00:11:27.170
-software are known to be
-empathetic, that they have this
+00:12:54.930 --> 00:12:58.470
+enrolling to ensure that, you
+know, you have success in
 
 227
-00:11:27.170 --> 00:11:30.470
-versatile ability to work both
-on machines and with human
+00:12:58.470 --> 00:13:01.320
+this. So you were on
+AOL before you had a
 
 228
-00:11:30.470 --> 00:11:32.570
-beings, you know? Cause I
-think that's where the real
+00:13:01.320 --> 00:13:03.950
+computer before she had, like,
+it was in your life.
 
 229
-00:11:32.570 --> 00:11:36.200
-potential lies. That would be
-amazing if we could make
+00:13:04.030 --> 00:13:07.680
+You were familiar with computers,
+but how far down the
 
 230
-00:11:36.200 --> 00:11:40.580
-it. So that, that tech
-felt like people knew like,
+00:13:07.680 --> 00:13:11.340
+stack did you go? I
+have a, a young woman
 
 231
-00:11:40.610 --> 00:11:44.030
-Oh yeah, computer person, that's,
-that's so great. Like this
+00:13:11.340 --> 00:13:13.080
+on my team and I
+was trying to teach her
 
 232
-00:11:44.030 --> 00:11:46.040
-person that, you know, they're,
-they're a great person. They're
+00:13:13.080 --> 00:13:16.080
+something low level because when
+I grew up in the
 
 233
-00:11:46.040 --> 00:11:48.890
-a kind person, they're a
-computer person. Right. Wouldn't that
+00:13:16.080 --> 00:13:19.620
+computer world, I learned like
+assembler. And we would say,
 
 234
-00:11:48.890 --> 00:11:51.560
-be fantastic. That'd be great.
-But right now I just
+00:13:19.650 --> 00:13:22.980
+I went from the metal
+up, like from the processor
 
 235
-00:11:51.560 --> 00:11:53.770
-feel like, ah, I don't
-want to fix my dad's
+00:13:23.070 --> 00:13:25.680
+up. But she said, when
+she learned, she went from
 
 236
-00:11:53.770 --> 00:11:55.990
-computer. You know, I think
-we're all just going to
+00:13:25.680 --> 00:13:29.070
+like the screen or the
+glass of the monitor back,
 
 237
-00:11:55.990 --> 00:11:58.750
-burned out and we are
-having enough trouble being compassionate
+00:13:29.430 --> 00:13:31.950
+they learned in like F
+12 tools in Chrome. And
 
 238
-00:11:58.750 --> 00:12:01.780
-with ourselves and our family.
-It's difficult sometimes to be
+00:13:31.950 --> 00:13:35.070
+JavaScript is the new metal.
+When you're in a bootcamp.
 
 239
-00:12:01.780 --> 00:12:04.140
-patient and kind at work.
-Well, that's a really good
+00:13:35.100 --> 00:13:37.800
+Are they talking about computer
+science, tech techniques, like virtual
 
 240
-00:12:04.140 --> 00:12:07.020
-point too, which is that
-the self compassion is just
+00:13:37.800 --> 00:13:40.470
+memory and memory allocation, all
+kind of stuff, or are
 
 241
-00:12:07.020 --> 00:12:09.570
-as important. I mean, everything
-really starts with self compassion.
+00:13:40.470 --> 00:13:43.440
+they really talking about web
+development and what, and is
 
 242
-00:12:09.570 --> 00:12:11.430
-I mean, I don't think
-I could be doing the
+00:13:43.440 --> 00:13:48.810
+Chrome the computer During my
+program, we focused on web
 
 243
-00:12:11.430 --> 00:12:13.560
-work that I'm doing. If
-I didn't take enough time
+00:13:48.810 --> 00:13:53.940
+development. We did a lot
+of web apps. So we,
 
 244
-00:12:13.560 --> 00:12:15.240
-to take care of myself,
-take care of my own
+00:13:53.940 --> 00:13:56.490
+we did, we did a
+little bit of the foundation,
 
 245
-00:12:15.240 --> 00:12:18.510
-health, do the things that
-make me happy outside of
+00:13:56.490 --> 00:14:00.660
+HTML, CSS, and then foundational
+JavaScript. And then we started
 
 246
-00:12:18.510 --> 00:12:22.590
-work. And I think that's
-actually, it's hard to be
+00:14:00.660 --> 00:14:05.820
+focusing more on, on NBC
+and making things with Ruby
 
 247
-00:12:22.590 --> 00:12:24.630
-empathetic to other people. It's
-hard to be compassionate with
+00:14:05.820 --> 00:14:08.610
+on rails. Do you, what
+do you, what do you,
 
 248
-00:12:24.630 --> 00:12:26.940
-other people if you're, if
-you're not taking care of
+00:14:08.610 --> 00:14:10.620
+what do you feel about
+that? It's almost like when
 
 249
-00:12:26.940 --> 00:12:28.920
-yourself in these ways. So
-that's actually a really important
+00:14:10.620 --> 00:14:12.570
+you learn to drive a
+car, do you learn an
 
 250
-00:12:28.920 --> 00:12:32.340
-point. Yeah. We hear a
-lot online about self care
+00:14:12.570 --> 00:14:15.180
+automatic or do you learn
+a stick shift Automatic? For
 
 251
-00:12:32.340 --> 00:12:34.680
-and I really like communities
-where we're telling each other
+00:14:15.180 --> 00:14:19.290
+sure. So that's really cool
+though, because I think that's
 
 252
-00:12:34.680 --> 00:12:36.570
-and helping each other say
-like, Hey, listen, take, they
+00:14:19.290 --> 00:14:22.470
+interesting. And that's, I think
+teaching people who are maybe
 
 253
-00:12:36.570 --> 00:12:38.700
-take the time. If you
-need a, you know, a
+00:14:22.530 --> 00:14:26.820
+over 40, that, you know,
+you don't need to know
 
 254
-00:12:38.730 --> 00:12:40.950
-break, you need a mental
-health afternoon. You know, if
+00:14:26.820 --> 00:14:29.070
+a stick shift to be
+an effective driver. Do you
 
 255
-00:12:40.950 --> 00:12:42.990
-you're, if, if it's just
-not working for you today,
+00:14:29.220 --> 00:14:30.990
+like, you know what I
+mean? Like, it's cool that
 
 256
-00:12:42.990 --> 00:12:45.840
-if you can take the
-time for yourself because you're
+00:14:30.990 --> 00:14:32.850
+you could, if you were
+interested in that, but it's
 
 257
-00:12:45.840 --> 00:12:49.530
-no good to us stressed
-out. Definitely. Yeah. I think
+00:14:32.850 --> 00:14:36.210
+not required, we're just making
+websites here. Do you think
 
 258
-00:12:49.530 --> 00:12:51.990
-that's really important. And I
-would also say that, you
+00:14:36.210 --> 00:14:38.790
+that there's a reason to
+go any deeper or are
 
 259
-00:12:51.990 --> 00:12:55.010
-know, this idea of, of,
-you know, with the, the
+00:14:38.790 --> 00:14:41.760
+people being elitist when they
+say, well, you really need
 
 260
-00:12:55.110 --> 00:12:58.080
-programmers being kind to people
-it's not so far fetched,
+00:14:41.760 --> 00:14:43.020
+to learn how to drive
+a stick shift if you're
 
 261
-00:12:58.080 --> 00:13:00.840
-because if you think about
-it, we're problem solvers, right?
+00:14:43.020 --> 00:14:47.430
+going to be an effective
+driver. That's interesting. I, I,
 
 262
-00:13:00.840 --> 00:13:03.870
-So we look for pain
-points and we solve them.
+00:14:48.050 --> 00:14:50.910
+I honestly, I can't say,
+but I always hear people
 
 263
-00:13:03.870 --> 00:13:06.360
-And that's really what compassion
-is about is about alleviating
+00:14:51.350 --> 00:14:54.290
+newbies say that they want
+to learn how to build
 
 264
-00:13:06.360 --> 00:13:09.150
-suffering. Right? So reducing these
-pain points. So to a
+00:14:54.290 --> 00:15:00.530
+things from scratch. And I
+just think, I just, I
 
 265
-00:13:09.150 --> 00:13:12.090
-certain extent, technologists are kind
-of like primed to do
+00:15:00.530 --> 00:15:03.830
+personally don't think it's necessary.
+I mean, as someone who
 
 266
-00:13:12.090 --> 00:13:14.760
-this. I mean, we, although
-you're right. Sometimes we're, we're
+00:15:04.010 --> 00:15:09.500
+did freelance web design and
+my current company, never has
 
 267
-00:13:14.760 --> 00:13:18.750
-burnt out. Understandably. So I
-really do think that, you
+00:15:09.500 --> 00:15:12.710
+anyone done things from scratch
+because it's just not efficient,
 
 268
-00:13:18.750 --> 00:13:20.790
-know, when you see things
-to like open source, like,
+00:15:12.710 --> 00:15:16.430
+you know, and see why
+they think that because of
 
 269
-00:13:20.790 --> 00:13:25.020
-and people who kindly contribute
-on stack overflow, that's a
+00:15:17.420 --> 00:15:22.790
+trying to learn everything. But
+what developer really knows everything
 
 270
-00:13:25.020 --> 00:13:27.420
-certain subset, hopefully a large
-subset, but it is a
+00:15:22.820 --> 00:15:25.790
+like starting off, you know,
+and the first couple years
 
 271
-00:13:27.420 --> 00:13:31.860
-subset. Those people are generous,
-right? That's generosity. They're not
+00:15:25.790 --> 00:15:29.570
+of learning, that's a good
+point dying themselves up for
 
 272
-00:13:31.860 --> 00:13:34.530
-getting paid for this and
-you know, some of them
+00:15:29.570 --> 00:15:34.000
+disappointment. Yeah. And also, I
+think as, as someone who
 
 273
-00:13:34.590 --> 00:13:38.010
-and at least it opensource.
-And so, you know, I
+00:15:34.030 --> 00:15:36.640
+myself, who wants to bring
+more people into tech, if
 
 274
-00:13:38.010 --> 00:13:40.530
-think that that's important too,
-is that we have these
+00:15:36.640 --> 00:15:38.710
+I'm trying to go and
+shove 20 or 30 years
 
 275
-00:13:40.530 --> 00:13:43.020
-seeds of compassion already in
-tech. And that's why I
+00:15:38.710 --> 00:15:42.430
+of computer science into someone's
+head in a month, that's
 
 276
-00:13:43.020 --> 00:13:45.420
-really have faith that we
-can help those grow and
+00:15:42.430 --> 00:15:46.060
+just going to push them
+away from tech entirely. Definitely.
 
 277
-00:13:45.420 --> 00:13:49.320
-blossom into beautiful completion flowers.
-Yeah, indeed. I like the
+00:15:46.570 --> 00:15:50.440
+Yeah. So your focus is
+on getting stuff done. And
 
 278
-00:13:49.320 --> 00:13:53.880
-idea of direct of, of
-directly tying compassion and empathy
+00:15:50.440 --> 00:15:51.700
+if w what do you
+do then if you're at
 
 279
-00:13:53.880 --> 00:13:56.670
-and, and working well as
-a team to, to code
+00:15:51.700 --> 00:15:54.130
+a bootcamp and you hit
+some low level thing, like,
 
 280
-00:13:56.670 --> 00:14:00.810
-quality that we're, you're not
-just saying your customers, your
+00:15:54.580 --> 00:15:56.980
+you know, I mean, I'm
+just brainstorming here, you know,
 
 281
-00:14:00.810 --> 00:14:04.740
-employees, your users will feel
-better. Your, you know, your
+00:15:56.980 --> 00:16:00.850
+an SSL certificate expires, or
+there's a cookie that somehow
 
 282
-00:14:04.740 --> 00:14:06.990
-employees might not quit or
-whatever. You're literally saying the
+00:16:00.910 --> 00:16:04.150
+being truncated by something, you
+know, these are like, now
 
 283
-00:14:06.990 --> 00:14:10.020
-code will be higher quality.
-And the shipping product will
+00:16:04.150 --> 00:16:06.250
+you're into F 12 tools
+and you're learning what's going
 
 284
-00:14:10.020 --> 00:14:13.230
-be better if, if everyone
-is, is focused on empathy
+00:16:06.250 --> 00:16:09.670
+on at the, at the
+TCP and the HTTP level.
 
 285
-00:14:13.230 --> 00:14:17.100
-and compassion. Yeah, absolutely. Because
-really for me, I've looked
+00:16:10.150 --> 00:16:12.070
+Do they, is that just
+like, well, ask somebody and
 
 286
-00:14:17.100 --> 00:14:19.290
-at compassion as an optimization
-problem where you're trying to
+00:16:12.070 --> 00:16:15.460
+get help, or do you
+then dive into how, you
 
 287
-00:14:19.290 --> 00:14:22.500
-minimize suffering. And so when
-you're talking about, you know,
+00:16:15.460 --> 00:16:20.230
+know, let's talk about how
+the internet itself works. Definitely
 
 288
-00:14:22.500 --> 00:14:25.260
-should we, should we test
-the code? Like, should we,
+00:16:20.290 --> 00:16:24.220
+in bootcamp, you asked someone
+and which is really hard
 
 289
-00:14:25.260 --> 00:14:27.840
-you know, how, how should
-we build this being compassionate
+00:16:24.220 --> 00:16:27.370
+to do, because we all
+don't want to admit that
 
 290
-00:14:27.840 --> 00:14:29.910
-towards yourself and the people
-you're working with and the
+00:16:27.370 --> 00:16:31.450
+we can't solve something ourselves.
+And so we ended up
 
 291
-00:14:29.910 --> 00:14:32.370
-customer, right? All of these,
-if you take those into
+00:16:31.480 --> 00:16:34.240
+not be able to move
+forward, because like I said,
 
 292
-00:14:32.370 --> 00:14:33.720
-account, I mean, that's how
-you're going to get the
+00:16:34.240 --> 00:16:36.730
+the program goes by so
+quickly, you don't want to
 
 293
-00:14:33.720 --> 00:14:36.480
-best code, right? This might
-be a bit of a
+00:16:36.730 --> 00:16:40.600
+be stuck for two days
+on something. So the idea
 
 294
-00:14:36.480 --> 00:14:39.180
-stretch of an analogy. But
-I remember when I took
+00:16:40.600 --> 00:16:43.570
+that you're trying to figure
+out what the right level
 
 295
-00:14:39.210 --> 00:14:42.570
-my very first driving course
-when I was 16 and
+00:16:43.570 --> 00:16:47.230
+to learn is, and what's
+too low, what's too high.
 
 296
-00:14:42.570 --> 00:14:44.550
-they did this thing where
-they were like, two people
+00:16:47.290 --> 00:16:48.970
+And then if you do
+ask though, you're going to
 
 297
-00:14:44.550 --> 00:14:46.800
-are going to drive in
-this simulator, one's going to
+00:16:48.970 --> 00:16:52.510
+feel sad that, Oh, gosh,
+if I have, I let
 
 298
-00:14:46.800 --> 00:14:49.350
-drive as aggressively and as
-fast as possible. And see
+00:16:52.510 --> 00:16:54.340
+out, have I let on
+that? I don't belong here.
 
 299
-00:14:49.350 --> 00:14:51.650
-if they get there first
-and the one will simply
+00:16:55.210 --> 00:16:58.150
+Yeah. And everyone feels that
+way when you're in boot
 
 300
-00:14:51.650 --> 00:14:53.930
-follow the rules and stop
-and, you know, be a
+00:16:58.150 --> 00:17:00.730
+camp, you think you're the
+dumbest person in class, but,
 
 301
-00:14:53.930 --> 00:14:57.110
-good driver. And you drive
-for like 15, 20 minutes.
+00:17:01.090 --> 00:17:04.660
+but everyone's just as lost.
+Interesting. So it was not
 
 302
-00:14:57.110 --> 00:14:59.600
-And the person who drives
-aggressively and cuts people off
+00:17:04.660 --> 00:17:06.460
+lonely. It was a, there
+was a good community because
 
 303
-00:14:59.840 --> 00:15:04.310
-ends up getting there about
-90 seconds, early 90 seconds,
+00:17:06.460 --> 00:17:09.520
+we're all clueless together. Oh
+my gosh. Yes. But in
 
 304
-00:15:04.430 --> 00:15:07.370
-you know, out of 20
-minutes. Now, certainly if they
+00:17:09.520 --> 00:17:12.040
+the, in the beginning, no
+one, no one knows that.
 
 305
-00:15:07.370 --> 00:15:09.260
-were trying to get to
-the hospital, maybe that's necessary,
+00:17:12.220 --> 00:17:14.260
+So you're sitting there on
+day one, just looking around,
 
 306
-00:15:09.290 --> 00:15:12.020
-but they were trying to
-make the point that this
+00:17:14.260 --> 00:17:18.880
+going, what have I done?
+That was me. And we
 
 307
-00:15:12.020 --> 00:15:17.030
-person burned a half dozen
-bridges was extraordinarily unsafe, pissed
+00:17:18.880 --> 00:17:22.540
+had a, I think, I
+think his title as community
 
 308
-00:15:17.030 --> 00:15:20.150
-off half the road and
-made it there with 15%
+00:17:22.540 --> 00:17:27.220
+organizer, who would do check
+ins with us every few
 
 309
-00:15:20.150 --> 00:15:25.580
-more speed. So applying that
-to, to code reviews, to
+00:17:27.220 --> 00:17:31.420
+weeks. And so we would
+vent to him and let
 
 310
-00:15:25.580 --> 00:15:30.170
-an experience at work, minimal
-effort of being kind, being
+00:17:31.420 --> 00:17:33.580
+as to how we're doing.
+And that's how I found
 
 311
-00:15:30.170 --> 00:15:34.040
-pleasant would, would cost you
-little if nothing, if not
+00:17:33.580 --> 00:17:36.880
+out that I wasn't the
+dumbest person in class. It's
 
 312
-00:15:34.040 --> 00:15:38.020
-make, maybe make things better.
-Yeah. Actually, I actually love
+00:17:36.880 --> 00:17:40.540
+not that we're keeping score
+to be clear, respect to
 
 313
-00:15:38.020 --> 00:15:41.230
-that analogy because really while
-driving is one of the
+00:17:40.540 --> 00:17:45.550
+the other people of varying
+levels of dumbness. Yeah. I
 
 314
-00:15:41.230 --> 00:15:44.830
-best times to practice empathy
-and compassion is, you know,
+00:17:45.550 --> 00:17:49.830
+remember we had a meeting
+and he said, Kristin, the
 
 315
-00:15:44.830 --> 00:15:48.190
-when you're stuck behind somebody
-or somebody cuts you off
+00:17:49.830 --> 00:17:53.370
+person I just met with
+30 minutes ago literally said
 
 316
-00:15:48.190 --> 00:15:50.740
-or whatever it is, instead
-of just, you know, having
+00:17:53.370 --> 00:17:56.190
+the same thing and feels
+the same way you do
 
 317
-00:15:50.740 --> 00:15:53.590
-a knee jerk, really angry
-reaction, but just taking a
+00:17:56.760 --> 00:18:01.650
+right now. And so just
+knowing that I wasn't alone
 
 318
-00:15:53.590 --> 00:15:56.050
-minute, like just taking a
-breath and thinking, you know,
+00:18:01.650 --> 00:18:04.140
+and that kind of also
+puts your guard down as
 
 319
-00:15:56.110 --> 00:15:57.880
-I don't know what that
-person's going through. You know,
+00:18:04.140 --> 00:18:07.590
+well. And I think that
+helps with the community feeling.
 
 320
-00:15:57.880 --> 00:15:59.620
-what, what might be going
-on in their life. That's
+00:18:07.910 --> 00:18:10.850
+It is really hard though,
+to express that you don't
 
 321
-00:15:59.620 --> 00:16:01.330
-making them act this way.
-And that's like a great
+00:18:10.850 --> 00:18:13.940
+know something. And then when
+you're told that, well, you
 
 322
-00:16:01.330 --> 00:16:03.820
-thing that all of us
-who drive or commute in
+00:18:13.940 --> 00:18:16.190
+should be blogging and you
+should maybe consider speaking at
 
 323
-00:16:03.820 --> 00:16:06.580
-any way really have the
-option to do is just
+00:18:16.190 --> 00:18:19.700
+conferences. You should get your
+name out there. That's asking
 
 324
-00:16:06.580 --> 00:16:10.300
-to, to really, to think
-about in practice, you know,
+00:18:19.700 --> 00:18:22.640
+a lot of anyone to
+go and talk about doing
 
 325
-00:16:10.300 --> 00:16:13.840
-that, that concern for other
-people, Hey folks, I want
+00:18:22.640 --> 00:18:25.400
+something, because at any moment,
+some random internet person could
 
 326
-00:16:13.840 --> 00:16:16.210
-to take a moment to
-thank our sponsors and remind
+00:18:25.400 --> 00:18:27.650
+go and say, you have
+no idea what you're talking
 
 327
-00:16:16.210 --> 00:16:19.270
-you that when you support
-them, you're supporting Hansel minutes
+00:18:27.650 --> 00:18:30.020
+about. And look, here's a
+link to your blog where
 
 328
-00:16:19.270 --> 00:16:23.710
-because they make this show
-possible. Innovative developers help improve
+00:18:30.020 --> 00:18:31.700
+I know for a fact,
+you have no idea what
 
 329
-00:16:23.710 --> 00:16:26.530
-the lives of millions, of
-small businesses and accountants that
+00:18:31.700 --> 00:18:33.710
+you're talking about. Look right
+there, see what you wrote.
 
 330
-00:16:26.530 --> 00:16:30.190
-use QuickBooks worldwide. Your app
-could make the difference that
+00:18:34.130 --> 00:18:38.120
+That was dumb. I actually
+get scared about that. About
 
 331
-00:16:30.190 --> 00:16:33.220
-helps them work smarter and
-put more money in their
+00:18:38.120 --> 00:18:45.230
+my YouTube channel sometimes. Yeah.
+Yeah. Cause I mean, you
 
 332
-00:16:33.220 --> 00:16:37.630
-pocket, enter into it. Developer
-from tech tools to growing
+00:18:45.230 --> 00:18:48.650
+hear so many different opinions
+about things online and everyone
 
 333
-00:16:37.630 --> 00:16:41.350
-your customer base, to helping
-you get funding. Intuit developer
+00:18:48.650 --> 00:18:54.020
+has an opinion, so it's,
+it's kind of hard it's
 
 334
-00:16:41.350 --> 00:16:44.980
-helps your app go from
-concept to company, find out
+00:18:54.110 --> 00:18:58.640
+yeah. Yeah. Literally before I
+got on the call with
 
 335
-00:16:44.980 --> 00:16:53.740
-more at intuit.me/code that's I
-N T U I t.me/code.
+00:18:58.640 --> 00:19:02.480
+you here, I went and
+wrote a blog post. That's
 
 336
-00:16:54.370 --> 00:16:58.120
-It makes me wonder when
-did things get so, so
+00:19:02.480 --> 00:19:05.210
+actually a followup to another
+blog post. I wrote this
 
 337
-00:16:58.120 --> 00:17:00.790
-angry and so selfish? When
-did the idea of compassion
+00:19:05.210 --> 00:19:08.720
+blog post all about caching
+and caching and web applications.
 
 338
-00:17:00.790 --> 00:17:05.290
-or empathy become synonymous with
-some kind of weakness? Yeah,
+00:19:09.110 --> 00:19:12.530
+And like the first comment
+was like, this is a
 
 339
-00:17:05.320 --> 00:17:07.510
-there's an interesting history there
-and I don't know all
+00:19:12.530 --> 00:19:16.250
+bad idea. You know, I
+was like, Oh no, I'm
 
 340
-00:17:07.510 --> 00:17:10.960
-of it. There's a great
-book called on kindness. And
+00:19:16.250 --> 00:19:17.900
+reading this. I'm like, I'm
+looking at this comment right
 
 341
-00:17:10.990 --> 00:17:14.320
-it's about it kind of
-charts the history over time,
+00:19:17.900 --> 00:19:19.730
+now. It's like, you may
+get away with it if
 
 342
-00:17:14.320 --> 00:17:17.500
-because there was a time,
-you know, especially cause there's,
+00:19:19.760 --> 00:19:22.370
+you know, but in, you
+know, basically it's like this
 
 343
-00:17:17.500 --> 00:17:19.360
-you know, it ties into
-religion in some ways. I
+00:19:22.370 --> 00:19:25.640
+works, but it's, it's working
+because you're lucky and it's
 
 344
-00:17:19.360 --> 00:17:21.730
-mean, not for me personally,
-but there's definitely a history
+00:19:25.640 --> 00:19:28.010
+a bad practice and you
+basically suck, you know, and
 
 345
-00:17:21.730 --> 00:17:24.580
-there of when religion was
-bigger in society, like certain
+00:19:28.010 --> 00:19:29.510
+he was super nice about
+it, but I was just
 
 346
-00:17:24.580 --> 00:17:27.910
-types of kindness were more
-popular and then, you know,
+00:19:29.510 --> 00:19:32.660
+like, Oh, well, do I
+delete the blog posts now?
 
 347
-00:17:27.910 --> 00:17:31.270
-this industrialization happened too. And
-then it's like, you know,
+00:19:32.660 --> 00:19:35.660
+Or do I just, what
+do I do? Like, how
 
 348
-00:17:31.360 --> 00:17:34.390
-than it is all about
-efficiency. But the thing is
+00:19:35.660 --> 00:19:38.270
+do I, where do I
+emotionally put that information that
 
 349
-00:17:34.390 --> 00:17:37.450
-that kindness really is compatible
-with efficiency, which is how
+00:19:38.270 --> 00:19:41.000
+this sucks. So it kind
+of messed me up for
 
 350
-00:17:37.450 --> 00:17:40.030
-I think this new kind
-of resurgence of kindness is
+00:19:41.000 --> 00:19:44.390
+a day. And then I
+ended up doing the research
 
 351
-00:17:40.030 --> 00:17:42.250
-going to happen is that
-it's when you speak with
+00:19:44.420 --> 00:19:48.050
+and I wrote a followup
+blog post linked the first
 
 352
-00:17:42.250 --> 00:17:44.980
-emotional intelligence, when you're speaking
-to somebody, they are more
+00:19:48.050 --> 00:19:51.380
+one to the followup and
+then said, yeah, this is
 
 353
-00:17:44.980 --> 00:17:49.740
-likely to receive the feedback
-or suggestions you're giving because
+00:19:51.380 --> 00:19:53.630
+wrong. And here's why, and
+I kind of like, it
 
 354
-00:17:50.160 --> 00:17:52.050
-they're not, it's not going
-to trigger their threat response.
+00:19:53.630 --> 00:19:56.150
+seems obvious in hindsight, but
+this is good. And thank
 
 355
-00:17:52.080 --> 00:17:53.940
-So if you come at
-somebody and you're like yelling
+00:19:56.150 --> 00:19:58.190
+you so much for the
+comment. You know, it wasn't
 
 356
-00:17:53.940 --> 00:17:57.120
-at them, or just even
-just being direct with them,
+00:19:58.190 --> 00:20:00.440
+a troll, it was like
+a genuinely nice person trying
 
 357
-00:17:57.570 --> 00:18:01.140
-overly direct, they're gonna, they're,
-it's going to trigger their
+00:20:00.440 --> 00:20:04.040
+to help out. But that
+takes a lot of emotional
 
 358
-00:18:01.140 --> 00:18:03.930
-threat response, their fight or
-flight. And so they're not
+00:20:04.040 --> 00:20:07.490
+fortitude to be able to
+go through like the whole
 
 359
-00:18:03.930 --> 00:18:06.320
-really going to listen to
-your message. Right? Right. And
+00:20:07.490 --> 00:20:12.290
+process there. Oh definitely. And
+as I I've shared my
 
 360
-00:18:06.320 --> 00:18:09.980
-as a manager of people,
-a manager of developers, if
+00:20:12.320 --> 00:20:16.190
+coding journey and just getting
+an attack journey on YouTube,
 
 361
-00:18:09.980 --> 00:18:13.670
-I can express an issue,
-a concern, whatever, whether it
+00:20:16.930 --> 00:20:20.420
+that's definitely happened to me
+a number of times. And
 
 362
-00:18:13.670 --> 00:18:15.710
-be a code review or
-a managerial issue with someone
+00:20:21.260 --> 00:20:24.200
+I've learned that. I mean,
+yeah, sometimes I am wrong,
 
 363
-00:18:16.070 --> 00:18:19.250
-in a way that doesn't
-trigger their, their, their threat
+00:20:24.200 --> 00:20:28.280
+but also there are many
+times when you can have
 
 364
-00:18:19.250 --> 00:18:21.080
-response or that they know
-it is coming from a
+00:20:28.280 --> 00:20:34.760
+the same result by doing
+something different. Did, do you
 
 365
-00:18:21.080 --> 00:18:23.930
-place of helpfulness. Even if
-I make a mistake or
+00:20:34.760 --> 00:20:37.490
+find YouTube to be a
+friendly or not friendly environment?
 
 366
-00:18:23.930 --> 00:18:28.130
-say something incorrectly, they won't
-necessarily flip the bid on
+00:20:37.490 --> 00:20:40.010
+Like, are you, you, you
+go and talk about going
 
 367
-00:18:28.130 --> 00:18:30.830
-me and assume that I
-had no malice of forethought.
+00:20:40.010 --> 00:20:41.900
+through a boot camp and
+then do the trolls show
 
 368
-00:18:31.010 --> 00:18:34.430
-Yeah, exactly. Now Jonathan salt
-is someone that you have
+00:20:41.900 --> 00:20:46.130
+up or are people pretty
+positive? People have been pretty
 
 369
-00:18:34.640 --> 00:18:37.070
-tweeted about before, and he's
-got a book out now
+00:20:46.130 --> 00:20:53.400
+positive. I've I've gotten a
+few marriage proposals. I have
 
 370
-00:18:37.070 --> 00:18:40.280
-called a new reality human
-evolution for a sustainable future.
+00:20:53.400 --> 00:20:56.520
+not. I wonder why you
+have received marriage proposals and
 
 371
-00:18:40.280 --> 00:18:43.160
-And you pulled out a
-quote, a pull quote out
+00:20:56.520 --> 00:21:00.150
+I have not. Do you
+find that being a woman
 
 372
-00:18:43.160 --> 00:18:46.070
-of his book where you
-said that salt believes that
+00:21:00.150 --> 00:21:02.970
+in tech is just half
+marriage proposals and have people
 
 373
-00:18:46.460 --> 00:18:48.710
-we as a society are
-kind of transitioning from a
+00:21:02.970 --> 00:21:06.690
+telling you that you're dumb?
+No, no. I think there's
 
 374
-00:18:48.710 --> 00:18:52.610
-time of competition and independence
-with wind lose strategies to
+00:21:06.690 --> 00:21:10.920
+a lot of people rooting
+for me. And a lot
 
 375
-00:18:52.610 --> 00:18:55.790
-a focus on cooperation and
-interdependence. Sometimes it doesn't feel
+00:21:10.920 --> 00:21:15.510
+of people who, who view
+me as, you know, an
 
 376
-00:18:55.790 --> 00:18:58.730
-like that. D D do
-you believe that? I do
+00:21:15.510 --> 00:21:17.730
+example that look, she does
+it so I can do
 
 377
-00:18:58.730 --> 00:19:01.490
-believe that. And like part
-of what the book is
+00:21:17.730 --> 00:21:21.450
+it too, which is why
+I kept going with my
 
 378
-00:19:01.490 --> 00:19:03.980
-about is the fact that
-we are in this transition
+00:21:21.450 --> 00:21:25.080
+YouTube channel. That's good. It's,
+it's important for all of
 
 379
-00:19:03.980 --> 00:19:07.400
-and that's why there's so
-much conflict. There's, you know,
+00:21:25.080 --> 00:21:27.690
+us to do that. I
+mean, even though I'm 18,
 
 380
-00:19:07.400 --> 00:19:10.970
-whenever you're going through a
-transition there's conflict in the
+00:21:27.690 --> 00:21:30.570
+20 years ahead of you
+in my career, I, I
 
 381
-00:19:10.970 --> 00:19:13.160
-new age world, people talk
-about a healing crisis where
+00:21:30.570 --> 00:21:33.180
+hope when I write a
+blog post where I say,
 
 382
-00:19:13.160 --> 00:19:15.440
-when you're, when you're healing,
-like sometimes things get worse
+00:21:33.180 --> 00:21:36.030
+yeah, I was totally wrong.
+That was a mistake. And
 
 383
-00:19:15.440 --> 00:19:17.660
-before they get better. And
-so I think sometimes it
+00:21:36.030 --> 00:21:38.430
+I'm cool about it and
+pleasant about it. Makes it
 
 384
-00:19:17.660 --> 00:19:19.970
-seems like things are getting
-worse now and, and everybody,
+00:21:38.430 --> 00:21:43.140
+clear that it's about, it's
+about the journey and it's
 
 385
-00:19:19.970 --> 00:19:21.890
-you know, but I think
-really what's happening is we're
+00:21:43.140 --> 00:21:46.320
+not about some theoretical and
+were like, yes. And now
 
 386
-00:19:21.890 --> 00:19:24.410
-talking about these things and,
-and we're, we're trying to
+00:21:46.320 --> 00:21:49.680
+I know everything. Thank you.
+I've made it. Yeah, That
 
 387
-00:19:24.410 --> 00:19:27.020
-make, to make changes and
-to make progress. And, and
+00:21:49.680 --> 00:21:52.800
+would, that would not be
+very exciting. And you know,
 
 388
-00:19:27.020 --> 00:19:29.480
-it's inevitable that in that
-time there's going to be
+00:21:52.800 --> 00:21:56.070
+you kind of just reminded
+me of this graph. I
 
 389
-00:19:29.480 --> 00:19:31.130
-resistance. There's going to be
-the people who want to
+00:21:56.070 --> 00:22:00.750
+saw about, you know, when
+you first start learning code
 
 390
-00:19:31.130 --> 00:19:33.140
-protect the status quo. Like
-I encounter that all the
+00:22:00.750 --> 00:22:03.450
+and how you just, you
+feel like you don't know
 
 391
-00:19:33.140 --> 00:19:35.210
-time and trying to push
-for compassion and tech. It's
+00:22:03.450 --> 00:22:06.960
+anything. And then there's a
+phase where you feel like
 
 392
-00:19:35.210 --> 00:19:37.520
-like the people who have
-been getting by without being
+00:22:06.960 --> 00:22:09.450
+a God, he know everything
+and it's something else happens
 
 393
-00:19:37.520 --> 00:19:40.610
-compassionate in tech, like really
-don't want to be compassionate
+00:22:09.450 --> 00:22:11.910
+and it's just back and
+forth. And it just keeps
 
 394
-00:19:40.610 --> 00:19:43.910
-because it's, you know, it
-does take effort and they're,
+00:22:11.910 --> 00:22:15.600
+going. Like even after 20
+years, that graph says, like,
 
 395
-00:19:43.910 --> 00:19:47.390
-you know, doing fine. They
-have, you know, cushy jobs
+00:22:15.600 --> 00:22:18.450
+you still have that there's
+moments where you don't feel
 
 396
-00:19:47.390 --> 00:19:49.100
-that they, you know, they're
-allowed to be a jerk
+00:22:18.450 --> 00:22:21.600
+like, you know, everything That
+I love that you said
 
 397
-00:19:49.100 --> 00:19:50.720
-to their, you know, if
-the people on their team,
+00:22:21.600 --> 00:22:23.850
+that because you literally nailed
+like my last three blog
 
 398
-00:19:50.720 --> 00:19:53.600
-because, you know, they're the
-programmer, you know, so there's
+00:22:23.880 --> 00:22:26.220
+posts, like the first one,
+I'm like, I'm learning all
 
 399
-00:19:53.600 --> 00:19:56.210
-a lot of resistance there,
-but at the same time,
+00:22:26.220 --> 00:22:28.320
+about caching and how to
+do things correctly. And like,
 
 400
-00:19:56.630 --> 00:19:58.490
-the fact that we're even
-talking about this, right. I
+00:22:28.470 --> 00:22:31.110
+look at this code. It's
+the most elegant 12 lines
 
 401
-00:19:58.490 --> 00:20:00.290
-mean, that's progress. And so
-I think we see that
+00:22:31.170 --> 00:22:34.110
+ever. And then, and then
+of course the you're doing
 
 402
-00:20:00.290 --> 00:20:02.330
-on a global scale as
-well, that, you know, we're
+00:22:34.110 --> 00:22:36.420
+it entirely wrong comment and
+happened. And then I was
 
 403
-00:20:02.330 --> 00:20:04.760
-talking about, you know, when
-you look at, to like
+00:22:36.420 --> 00:22:38.490
+like, okay. And I learned,
+I learned like, Oh my
 
 404
-00:20:04.760 --> 00:20:07.820
-the resources, just everything that's,
-you know, being depleted, like
+00:22:38.490 --> 00:22:40.980
+God, what was I thinking?
+That was the worst 12
 
 405
-00:20:07.880 --> 00:20:10.280
-we have to change how
-we live, because what we're
+00:22:40.980 --> 00:22:43.800
+lines. And then 12 became
+three lines, you know? And
 
 406
-00:20:10.280 --> 00:20:13.010
-doing is just not sustainable.
-<inaudible> I think that we're
+00:22:43.800 --> 00:22:44.820
+now I'm thinking I might
+be able to get it
 
 407
-00:20:13.010 --> 00:20:15.080
-all kind of hoping for
-the star Trek, the next
+00:22:44.820 --> 00:22:48.480
+down to two, you know?
+Yeah. And I, that's something
 
 408
-00:20:15.080 --> 00:20:19.820
-generation world that we're promised,
-you know, food for all.
+00:22:48.840 --> 00:22:51.570
+we don't realize when you,
+when you come into this
 
 409
-00:20:19.820 --> 00:20:21.440
-And, and we would all
-just kind of be, you
+00:22:51.570 --> 00:22:56.100
+industry that you're constantly learning
+and you still have your
 
 410
-00:20:21.440 --> 00:20:23.780
-know, everyone in star Trek,
-no one has a, I
+00:22:56.100 --> 00:23:00.390
+bad days, Isn't it funny
+how they tell you that,
 
 411
-00:20:23.780 --> 00:20:25.670
-don't really think about how
-John Luke Picard gets a
+00:23:00.690 --> 00:23:03.150
+but you still don't really
+internalize it. Like you don't
 
 412
-00:20:25.670 --> 00:20:28.580
-W2. Like, and he's not
-really getting a paycheck. He
+00:23:03.150 --> 00:23:06.990
+really get like, Oh yeah.
+You're always learning. No, you're
 
 413
-00:20:28.580 --> 00:20:31.160
-just like there's food at
-the wall. And he does
+00:23:06.990 --> 00:23:09.540
+really like really seriously. You're
+always learning. Like, what do
 
 414
-00:20:31.190 --> 00:20:32.990
-art when he has spare
-time. Really all they get
+00:23:09.540 --> 00:23:11.160
+you, what's it going to
+take? If you understand that
 
 415
-00:20:32.990 --> 00:20:36.200
-to worry about is their
-time and their, their intellectual
+00:23:11.220 --> 00:23:14.550
+you will be learning like
+your degree. It means nothing.
 
 416
-00:20:36.200 --> 00:20:39.110
-pursuits. That would be the
-ideal. Yeah, for sure. And
+00:23:14.820 --> 00:23:17.430
+Like I went to school
+in the late nineties. It
 
 417
-00:20:39.110 --> 00:20:40.370
-I mean, I think we
-can get there, you know,
+00:23:17.430 --> 00:23:23.100
+means nothing. It's all changed.
+The whole Internet's different. Hey
 
 418
-00:20:40.370 --> 00:20:41.690
-I mean, I think some
-people will think, Oh, that's,
+00:23:23.100 --> 00:23:24.930
+friends, this is Scott. I
+want you to know how
 
 419
-00:20:41.690 --> 00:20:44.180
-you know, unrealistic, utopia, whatever,
-but I don't think so.
+00:23:24.930 --> 00:23:27.360
+much I appreciate you as
+listeners. And I hope you
 
 420
-00:20:44.180 --> 00:20:45.830
-Cause I think, you know,
-we can all make small
+00:23:27.360 --> 00:23:31.800
+appreciate my sponsors because they
+make the show possible. Raygun
 
 421
-00:20:45.830 --> 00:20:48.850
-changes every day to work
-towards this, you know, brighter
+00:23:31.830 --> 00:23:35.370
+provides full stack error, crash,
+and performance monitoring for tech
 
 422
-00:20:48.850 --> 00:20:51.730
-vision of the future. Just,
-you know, we're more collaborative
+00:23:35.370 --> 00:23:38.490
+teams, whether you're a software
+engineer looking to diagnose and
 
 423
-00:20:51.730 --> 00:20:54.490
-and we're cooperative and just
-really taking care of each
+00:23:38.490 --> 00:23:41.640
+resolve issues with greater speed
+and accuracy or a product
 
 424
-00:20:54.490 --> 00:20:57.820
-other more. And even if
-you do it, even if,
+00:23:41.640 --> 00:23:44.250
+manager drowning in bug reports,
+or maybe you're just concerned.
 
 425
-00:20:57.820 --> 00:20:59.590
-like I said, even if,
-just when you're in traffic,
+00:23:44.250 --> 00:23:48.380
+You're losing customers to poor
+quality online experiences. Raygun can
 
 426
-00:20:59.590 --> 00:21:01.690
-if you think about it,
-I mean, you're still helping
+00:23:48.380 --> 00:23:51.320
+provide you with the answers,
+get full stack error and
 
 427
-00:21:01.690 --> 00:21:04.480
-raise the global kindness level.
-You know? So I think
+00:23:51.320 --> 00:23:54.590
+performance monitoring in one place.
+The next time you're struggling
 
 428
-00:21:04.600 --> 00:21:08.130
-whatever small steps we can
-take are definitely worthwhile. I
+00:23:54.590 --> 00:23:57.200
+to replicate errors and performance
+issues and your code base
 
 429
-00:21:08.130 --> 00:21:11.280
-want to dig a little
-bit more into the idea
+00:23:57.260 --> 00:24:01.310
+think Raygun head over to
+raygun.com. That's R a Y
 
 430
-00:21:11.280 --> 00:21:16.020
-that you have is that
-minimizing suffering, because compassionate is
+00:24:01.340 --> 00:24:04.640
+G U n.com and get
+up and running within minutes
 
 431
-00:21:16.020 --> 00:21:18.580
-a, is a word that
-has certain connotations. And in,
+00:24:04.700 --> 00:24:08.200
+and dramatically improve your online
+experiences of your users. That
 
 432
-00:21:18.580 --> 00:21:21.090
-in, in trying different words
-out in my mouth and
+00:24:08.200 --> 00:24:10.840
+kind of reminds me of
+imposter syndrome as well. Cause
 
 433
-00:21:21.090 --> 00:21:22.650
-in my brain to try
-to get an understanding of
+00:24:10.840 --> 00:24:13.960
+I had many people warn
+me that once I start
 
 434
-00:21:22.650 --> 00:21:26.250
-your perspective, the idea of
-minimizing suffering a suffering is
+00:24:13.960 --> 00:24:16.630
+working full time, I'm going
+to get imposter syndrome after
 
 435
-00:21:26.250 --> 00:21:29.010
-like a really bad word.
-Like that's bad. We definitely
+00:24:16.630 --> 00:24:21.850
+boot camp. And it wasn't
+until I was venting to
 
 436
-00:21:29.010 --> 00:21:32.610
-don't want more of that.
-You're saying compassion is the
+00:24:22.300 --> 00:24:25.150
+a more senior friend who,
+when he pointed out that
 
 437
-00:21:32.610 --> 00:21:35.850
-key to minimizing suffering for
-yourself, for your users, for
+00:24:25.150 --> 00:24:27.700
+that was imposter syndrome, I
+was like, this is ed.
 
 438
-00:21:35.850 --> 00:21:41.760
-your team, for the Deb's
-for everybody. Yeah, definitely. So
+00:24:27.910 --> 00:24:31.300
+This feeling depressed and being
+afraid of my boss is
 
 439
-00:21:41.880 --> 00:21:45.090
-there's, you know, there's different
-definitions of compassion, but there's
+00:24:31.300 --> 00:24:36.400
+going to fire me Well.
+And, and that brings up
 
 440
-00:21:45.090 --> 00:21:47.460
-one that I read from
-the greater good science center
+00:24:36.400 --> 00:24:39.370
+these issues of privilege that
+I've talked about before on
 
 441
-00:21:47.460 --> 00:21:50.940
-at UC Berkeley. And they
-had this idea that compassion
+00:24:39.370 --> 00:24:43.060
+the show, which is, who
+has the ability to have
 
 442
-00:21:50.940 --> 00:21:52.860
-is kind of a more
-active version of empathy. Cause
+00:24:43.060 --> 00:24:47.320
+imposter syndrome publicly and who
+just sneaks home and notices?
 
 443
-00:21:52.860 --> 00:21:54.510
-with empathy, you know, you
-can feel what the other
+00:24:47.320 --> 00:24:49.300
+No one, like maybe no
+one will notice that I'm
 
 444
-00:21:54.510 --> 00:21:57.120
-person's feeling and there's different
-types of empathy, but that's,
+00:24:49.300 --> 00:24:52.720
+an imposter. And definitely as
+someone who's older and had
 
 445
-00:21:57.120 --> 00:21:59.940
-you know, what it essentially
-boils down to, whereas compassion,
+00:24:52.720 --> 00:24:55.150
+been in tech, I can
+go in a con in
 
 446
-00:22:00.060 --> 00:22:02.550
-you not only can feel
-how other people are feeling,
+00:24:55.150 --> 00:24:57.760
+a, in a, in a
+meeting and I can say,
 
 447
-00:22:02.550 --> 00:22:07.260
-but you actively desire to
-make them feel better, right?
+00:24:57.790 --> 00:25:01.870
+what does that acronym mean?
+And people probably won't flip
 
 448
-00:22:07.260 --> 00:22:09.750
-So you want to reduce
-their suffering. And so that's
+00:25:01.870 --> 00:25:04.930
+the bozo bit on me
+and go, Oh man, Hanselman.
 
 449
-00:22:09.750 --> 00:22:12.780
-why I choose compassion. When
-I talk about this, as
+00:25:05.350 --> 00:25:07.300
+He has no idea what
+he's talking about, but if
 
 450
-00:22:12.780 --> 00:22:14.910
-often as I can, of
-course, I also use empathy
+00:25:07.300 --> 00:25:09.520
+you've only been at the
+company two weeks and you're
 
 451
-00:22:14.910 --> 00:22:17.400
-because, you know, that's, that's
-become the buzz word that
+00:25:09.520 --> 00:25:12.220
+like, what does this mean?
+Maybe people will be like,
 
 452
-00:22:17.400 --> 00:22:20.850
-people understand a bit more,
-but really I think the
+00:25:12.220 --> 00:25:18.100
+wow. Christian should know that.
+Yeah. I've definitely felt that.
 
 453
-00:22:20.850 --> 00:22:23.940
-next level is really compassion
-because it's just more active
+00:25:19.960 --> 00:25:22.780
+So how instrumental was having
+done this code camp to
 
 454
-00:22:23.940 --> 00:22:27.480
-you and it's also potentially
-more rational because you don't
+00:25:22.780 --> 00:25:25.750
+getting your job? Like, did
+you have, is there any
 
 455
-00:22:27.480 --> 00:22:30.120
-necessarily even have to be
-very emotional at the time
+00:25:25.750 --> 00:25:30.370
+stigma attached to having bootcamp
+on, on your resume? I
 
 456
-00:22:30.120 --> 00:22:33.150
-to, to make a compassionate
-decision because you really can
+00:25:30.400 --> 00:25:35.110
+did not experience that or
+at least I identity since
 
 457
-00:22:33.150 --> 00:22:35.280
-look at it logically and
-think, okay, given all the
+00:25:35.260 --> 00:25:40.420
+any stigmatism for that coding
+boot camp definitely is the
 
 458
-00:22:35.280 --> 00:22:40.080
-parties involved, which step forward
-will involve the least suffering.
+00:25:40.420 --> 00:25:44.950
+reason why I got my
+amazing job. Trying to go
 
 459
-00:22:40.110 --> 00:22:42.720
-Right. Or, or the most
-pleasure. But let's be honest.
+00:25:44.950 --> 00:25:47.590
+back to think about stigmas,
+but no, I can't think
 
 460
-00:22:42.720 --> 00:22:44.580
-Like a lot of times
-it's just about minimizing suffering.
+00:25:47.590 --> 00:25:50.470
+of any. Do you think,
+did you, let me ask
 
 461
-00:22:45.510 --> 00:22:47.280
-So yeah. That's why I
-prefer that kind of way
+00:25:50.470 --> 00:25:53.140
+you this, did your tech
+resume that the resume, you
 
 462
-00:22:47.280 --> 00:22:49.710
-of looking at it. Yeah.
-Yeah. Talk to me a
+00:25:53.140 --> 00:25:56.380
+hand it around say master's
+degree on it. And do
 
 463
-00:22:49.710 --> 00:22:52.350
-little bit more about that
-empathy versus compassion. So empathy
+00:25:56.380 --> 00:25:59.710
+you think that people cared
+like, Oh wow. Master suite?
 
 464
-00:22:52.350 --> 00:22:54.690
-is feeling what the other,
-you know, the other people
+00:25:59.710 --> 00:26:00.970
+Cause I always like, I
+didn't, I don't have a
 
 465
-00:22:54.690 --> 00:22:56.880
-are thinking, but compassion is
-kind of on the way
+00:26:00.970 --> 00:26:04.720
+master's degree, so I'm always
+like, Ooh, graduate school. When
 
 466
-00:22:56.880 --> 00:23:00.870
-true to altruism, but not
-quite there. Yeah. Compassion is
+00:26:04.720 --> 00:26:07.510
+I see a resume that
+has graduate school on No,
 
 467
-00:23:00.870 --> 00:23:03.290
-more, it's just more active.
-So it's like you, you
+00:26:07.510 --> 00:26:13.450
+actually I got more, I
+got a bigger response about
 
 468
-00:23:03.300 --> 00:23:05.130
-could, instead of you, you
-can cause you could be
+00:26:13.960 --> 00:26:17.680
+doing freelance web design after
+boot camp. Not many people
 
 469
-00:23:05.130 --> 00:23:07.650
-empathetic. You could feel what
-someone's feeling. It just not
+00:26:17.680 --> 00:26:21.460
+acknowledge my master's degree. Interesting.
+Is it at the bottom
 
 470
-00:23:07.650 --> 00:23:09.330
-care. Right. So you can
-feel what they're feeling and
+00:26:21.460 --> 00:26:25.030
+of the resume or is
+on page two? I think
 
 471
-00:23:09.330 --> 00:23:11.790
-just move on with your
-life. Compassion is more, you
+00:26:25.030 --> 00:26:27.550
+it's at the bottom. I've
+rearranged it recently right now.
 
 472
-00:23:11.790 --> 00:23:14.310
-feel what they're feeling and
-you're like, Oh, they're suffering.
+00:26:27.550 --> 00:26:29.170
+It's at the bottom. So
+I mean, that could be
 
 473
-00:23:14.310 --> 00:23:16.500
-I want to make them
-feel better. So yeah, it
+00:26:29.170 --> 00:26:32.830
+it, but my bootcamps at
+the bottom as well. Yeah.
 
 474
-00:23:16.500 --> 00:23:19.350
-takes that active step. So
-you actually commit to wanting
+00:26:33.160 --> 00:26:35.200
+Our bootcamps given a grade.
+Do you have any idea
 
 475
-00:23:19.350 --> 00:23:22.500
-to do better. And that's
-what makes compassion different. And
+00:26:35.200 --> 00:26:36.730
+who came out at the
+top of the class or
 
 476
-00:23:22.500 --> 00:23:25.740
-yet altruism is another they
-and closely related of course.
+00:26:36.730 --> 00:26:38.800
+who really did well or
+is it about the portfolio
 
 477
-00:23:26.250 --> 00:23:29.670
-And you know, it can
-be differentiated in different ways,
+00:26:38.800 --> 00:26:41.350
+that you're building while you're
+doing the bootcamp? It's definitely
 
 478
-00:23:29.670 --> 00:23:32.190
-but you know, there, I
-think the difference is pretty
+00:26:41.360 --> 00:26:47.400
+portfolio portfolio driven. We didn't
+grade anything. Honestly, we would,
 
 479
-00:23:32.190 --> 00:23:35.820
-subtle in terms of altruism,
-but they're, they're all, they're
+00:26:49.260 --> 00:26:52.620
+we would come back to
+class with our assignment and
 
 480
-00:23:35.820 --> 00:23:38.010
-all different, but related concepts
-is how I look at
+00:26:52.620 --> 00:26:57.780
+go over them and, you
+know, discuss any problems everyone
 
 481
-00:23:38.010 --> 00:23:40.290
-it. It's a really interesting
-spectrum. I mean, like we
+00:26:57.780 --> 00:27:00.480
+had with it. But no,
+we didn't grade and it
 
 482
-00:23:40.290 --> 00:23:42.840
-said, naming things is hard,
-but once you get the,
+00:27:00.480 --> 00:27:05.000
+wasn't certificate either. You have
+a video that I'll link
 
 483
-00:23:43.200 --> 00:23:46.850
-once you get the taxonomy
-down, it's pretty powerful. There's
+00:27:05.000 --> 00:27:06.890
+to in the show notes.
+And that's again, how I
 
 484
-00:23:46.850 --> 00:23:49.430
-a really cool infographic that
-I'll put in the show
+00:27:06.890 --> 00:27:08.780
+found you, which is, you
+know, how to get a
 
 485
-00:23:49.430 --> 00:23:53.090
-notes by Robert Shelton, who's a
-psychologist, it talks about pity.
+00:27:08.780 --> 00:27:11.000
+job after it, after a
+boot camp and how it
 
 486
-00:23:53.630 --> 00:23:57.230
-Hey, I acknowledge that you're
-suffering sympathy. I care about
+00:27:11.000 --> 00:27:14.210
+went. And you basically call
+out three things that you
 
 487
-00:23:57.230 --> 00:24:00.440
-your suffering empathy. Like you
-said, I feel your suffering
+00:27:14.210 --> 00:27:16.820
+think people need to focus
+on when they are coming
 
 488
-00:24:00.440 --> 00:24:02.930
-for myself and compassion. You
-know, I want to believe
+00:27:16.820 --> 00:27:19.160
+out of a bootcamp to
+get a job. Oh yeah,
 
 489
-00:24:02.930 --> 00:24:05.190
-it let's work together to
-relieve your suffering. It's a
+00:27:19.190 --> 00:27:24.620
+definitely. So, especially in my
+experience and about everyone in
 
 490
-00:24:05.300 --> 00:24:09.430
-spectrum as you, as you
-head in one direction. Yeah,
+00:27:24.620 --> 00:27:30.260
+my cohort, my cohort was
+about 12 people. We landed
 
 491
-00:24:09.460 --> 00:24:11.680
-for sure. And, and again,
-it's like, you know, many
+00:27:30.260 --> 00:27:35.210
+jobs through networking. Oh my
+gosh. And speaking of which
 
 492
-00:24:11.680 --> 00:24:14.860
-concepts where different different schools
-of thought have, you know,
+00:27:35.480 --> 00:27:39.170
+one of my friends has
+now accepted her second job
 
 493
-00:24:14.860 --> 00:24:17.050
-different lines that they draw
-and whatnot. So I think
+00:27:39.200 --> 00:27:42.800
+after bootcamp at Microsoft. And
+she made that connection and
 
 494
-00:24:17.260 --> 00:24:19.930
-it's important just that whenever
-people talk about it, so
+00:27:42.800 --> 00:27:46.370
+a meetup group Really interesting.
+All right. Well I will
 
 495
-00:24:19.930 --> 00:24:22.270
-yeah, just get on the
-same page, you know, it's,
+00:27:46.370 --> 00:27:50.930
+have to say hi. Yeah.
+So I always talk highly
 
 496
-00:24:22.330 --> 00:24:24.760
-you know, there's this tendency
-I think in tech, especially
+00:27:50.930 --> 00:27:56.360
+of meetup groups and just
+not just being upfront and
 
 497
-00:24:24.970 --> 00:24:27.040
-for there to be like
-a right or wrong answer,
+00:27:56.360 --> 00:27:59.870
+saying, Oh, I just got
+a bootcamp. I'm looking for
 
 498
-00:24:27.040 --> 00:24:28.660
-like, you know, it's either
-this way or that way.
+00:27:59.870 --> 00:28:03.200
+a job. Are you hiring?
+But just, just getting to
 
 499
-00:24:28.960 --> 00:24:32.110
-And I think in general,
-even when it comes to
+00:28:03.200 --> 00:28:06.590
+know that person and what
+they do and yeah. Just
 
 500
-00:24:32.110 --> 00:24:34.600
-like technical terms, it's more
-just how you define it
+00:28:06.590 --> 00:28:09.770
+getting to know them and
+maybe viewing them as more
 
 501
-00:24:34.600 --> 00:24:36.460
-and how we agree that
-we're going to define it
+00:28:09.770 --> 00:28:12.650
+of a mentor in the
+future, not showed up saying
 
 502
-00:24:36.460 --> 00:24:38.950
-and move forward in the
-conversation versus like, this is
+00:28:12.680 --> 00:28:17.060
+we'd be my mentor, but
+just staying connected, adding them
 
 503
-00:24:38.950 --> 00:24:41.140
-the absolute right definition. You
-know what I mean? Hmm.
+00:28:17.060 --> 00:28:20.450
+on LinkedIn and following up
+a week or two later.
 
 504
-00:24:41.140 --> 00:24:44.080
-That's a really good point.
-So ultimately it just matters
+00:28:21.680 --> 00:28:23.870
+Yeah. What is that quote?
+That luck is what happens
 
 505
-00:24:44.080 --> 00:24:46.810
-if my, my team and
-we all agree on, on
+00:28:23.870 --> 00:28:28.010
+when preparation meets opportunity. It
+seems like meetups are really
 
 506
-00:24:46.810 --> 00:24:48.490
-how we're going to treat
-each other and the right
+00:28:28.010 --> 00:28:30.740
+an opportunity for you to
+make opportunity. Like you, you
 
 507
-00:24:48.490 --> 00:24:49.960
-thing that we're going to
-do and what compassion or
+00:28:30.740 --> 00:28:33.110
+show up and if you
+go to beat, you know,
 
 508
-00:24:49.960 --> 00:24:52.240
-empathy means to us. It
-doesn't matter that the universe
+00:28:33.470 --> 00:28:35.120
+two or three, if you
+can, if you can go
 
 509
-00:24:52.270 --> 00:24:55.780
-agree on the exact definitions.
-Exactly. And is that the
+00:28:35.120 --> 00:28:37.970
+to a couple of meetups
+a week and be visible,
 
 510
-00:24:55.780 --> 00:24:57.310
-kind of thing that one
-would learn in a work
+00:28:38.150 --> 00:28:40.070
+people will start saying, Oh,
+there's a new person in
 
 511
-00:24:57.340 --> 00:24:59.200
-in a work group or
-a workshop rather, or if
+00:28:40.070 --> 00:28:43.580
+the community. I liked that.
+You said be visible because
 
 512
-00:24:59.200 --> 00:25:01.300
-we watched some of your
-videos online on the topic?
+00:28:43.610 --> 00:28:45.500
+going to a meet up,
+not talking to someone and
 
 513
-00:25:02.200 --> 00:25:04.780
-Yeah. That's, that's one of
-the things they have. So
+00:28:45.500 --> 00:28:49.970
+going home, that's not going
+to benefit you at all.
 
 514
-00:25:04.780 --> 00:25:09.010
-really the workshops, they break
-down emotional intelligence in terms
+00:28:49.970 --> 00:28:53.690
+You need to at least
+raise your hand, ask a
 
 515
-00:25:09.010 --> 00:25:14.170
-of the self and then
-social interactions. And then I
+00:28:53.690 --> 00:28:57.350
+question or two. Or if
+you don't like the idea
 
 516
-00:25:14.170 --> 00:25:16.360
-always talk about continuous improvement.
-So it was always have
+00:28:57.350 --> 00:29:01.640
+of so many people seeing
+or hearing you speak, go
 
 517
-00:25:16.360 --> 00:25:19.000
-an action plan at the
-end to kind of how
+00:29:01.640 --> 00:29:05.480
+up to the speaker afterwards
+and introduce yourself and just
 
 518
-00:25:19.000 --> 00:25:22.150
-you're going to keep improving.
-And so self awareness and
+00:29:05.480 --> 00:29:08.480
+say you liked their presentation.
+You know, that's, that's a
 
 519
-00:25:22.150 --> 00:25:24.190
-self management is really about
-being aware of your own
+00:29:08.480 --> 00:29:11.960
+great start. <inaudible> so it
+sounds like, like, did they
 
 520
-00:25:24.190 --> 00:25:26.650
-emotions and deciding, you know,
-how to, how to manage
+00:29:11.960 --> 00:29:14.210
+teach you to go to
+meetups? Like does the boot
 
 521
-00:25:26.650 --> 00:25:29.650
-them, how to understand what
-your emotions really mean. And
+00:29:14.210 --> 00:29:16.250
+camp say, okay, good job,
+good job. See ya. And
 
 522
-00:25:29.650 --> 00:25:32.230
-then the social interaction component
-we talk about, you know,
+00:29:16.250 --> 00:29:18.140
+then they kick you out
+the door or do you
 
 523
-00:25:32.230 --> 00:25:35.650
-how to communicate with empathy,
-how to imagine what other
+00:29:18.200 --> 00:29:19.820
+do they say all right
+now it's time to learn
 
 524
-00:25:35.650 --> 00:25:38.590
-people are thinking and feeling
-and, and asking them and
+00:29:19.820 --> 00:29:22.280
+about how to network and
+how to be confident and
 
 525
-00:25:38.590 --> 00:25:43.090
-discussing it directly, caring about
-that and then effective communication
+00:29:22.280 --> 00:29:23.930
+how to shake hands and
+look people in the eye.
 
 526
-00:25:43.090 --> 00:25:45.850
-styles, things like that. And
-then continuous improvement is really
+00:29:24.950 --> 00:29:28.370
+They did recommend meetups a
+lot, but no one really
 
 527
-00:25:45.850 --> 00:25:48.040
-where I take the idea
-of the agile retrospective from
+00:29:28.370 --> 00:29:35.660
+explained networking and how to
+do it properly. And that
 
 528
-00:25:48.040 --> 00:25:50.650
-agile software development. And I
-apply it at a personal
+00:29:35.660 --> 00:29:37.940
+is something I wish they
+would touch on more as
 
 529
-00:25:50.650 --> 00:25:53.650
-level and it's something that's
-really helped me a lot
+00:29:37.940 --> 00:29:44.010
+to confidence because that's probably
+the thing after bootcamp. Yeah.
 
 530
-00:25:53.770 --> 00:25:56.380
-to make improvement in my
-own life using this personal
+00:29:44.040 --> 00:29:47.610
+Being a techie, being a
+coder is really more about
 
 531
-00:25:56.380 --> 00:25:59.140
-retrospective. And so I always
-share that in the workshops
+00:29:47.610 --> 00:29:50.700
+communication than anyone ever realized.
+Like, you can be by
 
 532
-00:25:59.140 --> 00:26:01.540
-too, because you know, this
-is an ongoing process. It's
+00:29:50.700 --> 00:29:53.880
+yourself, you can get the
+job in via email. You
 
 533
-00:26:01.540 --> 00:26:03.430
-not just like you do
-a workshop or you read
+00:29:53.880 --> 00:29:56.160
+can do the job and
+then send them the code
 
 534
-00:26:03.430 --> 00:26:05.830
-a book and then, okay,
-I'm emotionally intelligent. Now it's
+00:29:56.160 --> 00:29:59.940
+via email, but being an
+effective team member, you know,
 
 535
-00:26:05.830 --> 00:26:09.040
-more like it's a continuous
-process. Yeah. Somehow I was
+00:29:59.940 --> 00:30:02.550
+being a is about networking.
+It's about being good in
 
 536
-00:26:09.040 --> 00:26:10.720
-hoping I would go through
-this process and I'd be
+00:30:02.550 --> 00:30:05.040
+your group. It's about white
+boarding. It's about explaining yourself
 
 537
-00:26:10.720 --> 00:26:12.160
-able to put this on
-my LinkedIn. I'd be like,
+00:30:05.070 --> 00:30:09.960
+about advocating for yourself. It's
+hard. Definitely. So let me
 
 538
-00:26:13.630 --> 00:26:17.020
-yeah, exactly. April says you're
-compassionate. So it's okay now.
+00:30:09.960 --> 00:30:11.520
+ask you this. As we,
+as we get towards the
 
 539
-00:26:17.500 --> 00:26:19.840
-Yeah, exactly. It really is
-a process. You never, you're
+00:30:11.520 --> 00:30:14.280
+end here, like where do
+you see techie ending and
 
 540
-00:26:19.840 --> 00:26:21.490
-never all the way there
-and you're certainly gonna fall
+00:30:14.280 --> 00:30:19.500
+coder or programmer starting and
+on that gradient, as we
 
 541
-00:26:21.490 --> 00:26:22.930
-backwards. You're going to say
-the wrong thing in a
+00:30:19.500 --> 00:30:21.900
+were talking about, when do
+you, when do you say
 
 542
-00:26:22.930 --> 00:26:26.860
-meeting, you're going to insult
-someone accidentally or upset someone.
+00:30:21.900 --> 00:30:23.580
+all right, you know, I
+could actually write an app.
 
 543
-00:26:26.860 --> 00:26:28.900
-And then you just say,
-Hey, I, I hear you.
+00:30:23.610 --> 00:30:25.770
+I'm I'm, I'm a coder
+now. Like I'm, I'm a
 
 544
-00:26:29.110 --> 00:26:32.080
-I hear what you said.
-Yeah. And that's where self-compassion
+00:30:25.770 --> 00:30:29.520
+member of the community. So
+you're asking when someone can
 
 545
-00:26:32.080 --> 00:26:34.960
-comes in handy because, you
-know, for sure, like the
+00:30:29.730 --> 00:30:32.070
+say whether or not they're
+a coder versus being a
 
 546
-00:26:34.960 --> 00:26:38.620
-other day, like I tweeted
-something sarcastic and I realized
+00:30:32.070 --> 00:30:35.250
+techie. Yeah. Or, or is
+that even an inappropriate a
 
 547
-00:26:38.620 --> 00:26:40.270
-that that's not really how
-I want to be in
+00:30:35.280 --> 00:30:39.000
+label? I don't know. Okay.
+First I was thinking, you
 
 548
-00:26:40.270 --> 00:26:42.430
-the world and it's not
-consistent with my values, but
+00:30:39.000 --> 00:30:41.490
+could call yourself a coder
+when you're doing it professionally,
 
 549
-00:26:42.430 --> 00:26:44.130
-instead of beating myself up
-like, Oh my gosh, I'm
+00:30:41.490 --> 00:30:45.330
+but I know so many
+great developers who do it
 
 550
-00:26:44.130 --> 00:26:47.370
-a horrible person again. I
-thought, well, you know, I
+00:30:45.420 --> 00:30:48.600
+in their free time for
+fun, That are not doing
 
 551
-00:26:47.370 --> 00:26:49.860
-was feeling this and that,
-whatever it doesn't excuse what
+00:30:48.600 --> 00:30:52.920
+it in their jobs. Like
+for, for my Correct. They're
 
 552
-00:26:49.860 --> 00:26:51.450
-I did, but it's more
-like, I understand why I
+00:30:53.160 --> 00:30:56.310
+doing their jobs. That's a
+good question because no one
 
 553
-00:26:51.450 --> 00:26:53.370
-did that. And so, you
-know, I have compassion for
+00:30:56.310 --> 00:30:57.840
+says like, no one has
+said that this is a
 
 554
-00:26:53.370 --> 00:26:55.080
-myself and I'm going to
-do better in the future.
+00:30:57.840 --> 00:31:01.500
+requirement that you have to
+get paid. If you did
 
 555
-00:26:55.080 --> 00:26:58.610
-And that's, that's really all
-it takes. There was another
+00:31:01.500 --> 00:31:03.780
+your church's website or you
+did your kid's little league.
 
 556
-00:26:58.610 --> 00:27:00.170
-interesting thing I want to
-kind of end on, on,
+00:31:04.530 --> 00:31:09.090
+<inaudible> definitely. And then I
+also wonder about skill level
 
 557
-00:27:00.410 --> 00:27:03.980
-on Twitter, which isn't really
-a compassionate place, but I
+00:31:09.090 --> 00:31:12.060
+too. Cause when I hear
+a techie, I'm not really
 
 558
-00:27:03.980 --> 00:27:05.720
-see you a lot there
-and I'm there a lot.
+00:31:12.810 --> 00:31:15.390
+like, that could be beginner.
+That could, I don't know.
 
 559
-00:27:05.750 --> 00:27:08.870
-So somehow we are trying
-to find the balance between
+00:31:15.660 --> 00:31:18.090
+That could be anything. Well,
+this gets down to like,
 
 560
-00:27:08.870 --> 00:27:11.420
-being empathetic and compassionate people
-and going to kind of
+00:31:18.090 --> 00:31:21.600
+what do we tell our
+family members at Thanksgiving? You
 
 561
-00:27:11.420 --> 00:27:15.470
-the least compassionate place online.
-But there was a discussion
+00:31:21.600 --> 00:31:23.850
+know, I just say like,
+computer person seems to be
 
 562
-00:27:15.470 --> 00:27:19.550
-around an individuals hosted what
-they thought was an innocuous
+00:31:23.850 --> 00:31:26.850
+like the generic. I'm not
+going to fix your computer,
 
 563
-00:27:19.550 --> 00:27:22.220
-tweet saying, Hey, you know,
-if you switch jobs every
+00:31:26.850 --> 00:31:28.650
+but yes, I know how
+to, if I needed to.
 
 564
-00:27:22.220 --> 00:27:25.130
-year, we're probably not the
-right fit for you. And
+00:31:29.970 --> 00:31:31.740
+And ultimately I'm going to
+end up fixing your computer.
 
 565
-00:27:25.160 --> 00:27:29.540
-they didn't think that that
-was particularly controversial and Twitter
+00:31:31.740 --> 00:31:37.860
+Anyway. The funny thing is,
+even though I know some
 
 566
-00:27:29.540 --> 00:27:33.710
-disagreed indicating that not everybody
-has the privilege to stick
+00:31:37.860 --> 00:31:42.990
+front end and WordPress and
+now UX people ask me
 
 567
-00:27:33.710 --> 00:27:38.210
-around at a crappy poisonous
-job for, for a, for
+00:31:42.990 --> 00:31:48.030
+questions about servers and other
+things that go way over
 
 568
-00:27:38.210 --> 00:27:39.710
-a year. And you were
-kind of involved in that.
+00:31:48.030 --> 00:31:51.990
+my head. I'm like, okay,
+just because I can design
 
 569
-00:27:39.740 --> 00:27:42.050
-And I noticed that at
-the end of it, the
+00:31:51.990 --> 00:31:55.350
+a website doesn't mean I
+know what to do when
 
 570
-00:27:42.050 --> 00:27:44.870
-individual wrote a whole post
-about it. That was very
+00:31:55.350 --> 00:31:59.370
+the wifi isn't. Yeah. Well,
+but fortunately you do know
 
 571
-00:27:45.380 --> 00:27:48.770
-empathetic. How, how did, were
-you involved at all directly
+00:31:59.370 --> 00:32:00.990
+how to learn now and
+you know how to learn
 
 572
-00:27:48.770 --> 00:27:51.650
-to get someone to go
-through? Like the, I believe
+00:32:00.990 --> 00:32:03.660
+texts. So if you chose
+to be a server person,
 
 573
-00:27:51.650 --> 00:27:53.630
-something know, I really, really
-believe it. I'm going to
+00:32:03.690 --> 00:32:07.050
+you know what to do,
+that is true. Very cool.
 
 574
-00:27:53.630 --> 00:27:56.660
-double down unbelieving this to
-the well you changed my
+00:32:07.380 --> 00:32:10.020
+Well, thanks so much for
+chatting with me today. Yeah.
 
 575
-00:27:56.660 --> 00:28:00.620
-perspective. Yeah, no, I, I
-definitely can't take credit for
+00:32:10.050 --> 00:32:12.330
+Thanks for having me. This
+was fun. Make sure that
 
 576
-00:28:00.620 --> 00:28:03.560
-that because I think that
-that individual got a lot
+00:32:12.330 --> 00:32:13.800
+you check out the show
+notes. I'm going to have
 
 577
-00:28:03.560 --> 00:28:08.780
-of tweets about that, about
-his tweet. But I was
+00:32:13.800 --> 00:32:18.450
+links to Kristen's a YouTube
+channel and the coding boot
 
 578
-00:28:08.780 --> 00:28:12.020
-really touched by the fact
-that he took a step
+00:32:18.450 --> 00:32:21.330
+camp video that got me
+in touch with her. This
 
 579
-00:28:12.020 --> 00:28:14.120
-back cause people were, people
-were kind of jumping on
+00:32:21.330 --> 00:32:23.790
+has been another episode of
+Hansel minutes and we'll see
 
 580
-00:28:14.120 --> 00:28:16.430
-him too for not replying
-right away. And I was
-
-581
-00:28:16.430 --> 00:28:18.740
-thinking, and I actually did
-tweet this. And I included
-
-582
-00:28:18.740 --> 00:28:20.180
-him in that, which is
-that I hope he's just
-
-583
-00:28:20.180 --> 00:28:22.460
-taking a step back and
-thinking about this because you
-
-584
-00:28:22.460 --> 00:28:24.620
-know, I think that there's
-this idea that, Oh, you
-
-585
-00:28:24.620 --> 00:28:26.600
-have to respond immediately. But
-the problem is when people
-
-586
-00:28:26.600 --> 00:28:29.630
-respond immediately, it's usually coming
-from that, you know, MIG
-
-587
-00:28:29.630 --> 00:28:32.090
-Dilla and the brains coming
-from that fight or flight
-
-588
-00:28:32.090 --> 00:28:35.240
-defense that really defensive kind
-of viewpoint. And so you're
-
-589
-00:28:35.240 --> 00:28:37.520
-going to be, you're going
-to defend yourself. You're gonna
-
-590
-00:28:37.530 --> 00:28:39.740
-attack other people just because
-you know, that part of
-
-591
-00:28:39.740 --> 00:28:43.340
-that lizard brain that's still
-with us is, you know,
-
-592
-00:28:43.340 --> 00:28:45.380
-it's going to come out
-and that's like, what most
-
-593
-00:28:45.380 --> 00:28:46.970
-of Twitter is. Right. So
-I actually thought it was
-
-594
-00:28:46.970 --> 00:28:48.440
-great that he took a
-step back. He got a
-
-595
-00:28:48.440 --> 00:28:50.870
-lot of different perspectives to
-gather a lot of perspectives.
-
-596
-00:28:51.230 --> 00:28:53.300
-And then, yeah, like, like
-you said, his, his blog
-
-597
-00:28:53.330 --> 00:28:56.600
-post was really empathetic, really
-thoughtful. And I think that
-
-598
-00:28:56.600 --> 00:28:58.700
-that's the value of these
-like, you know, longer form
-
-599
-00:28:58.700 --> 00:29:00.300
-posts. I mean, you know,
-I do tweet a lot,
-
-600
-00:29:00.420 --> 00:29:02.480
-you know, I know you
-tweet a lot too. And
-
-601
-00:29:02.480 --> 00:29:04.700
-I try to be thoughtful
-in my tweets, but you
-
-602
-00:29:04.700 --> 00:29:06.560
-know, people can misconstrue them
-and then it leads to
-
-603
-00:29:06.560 --> 00:29:10.550
-misunderstandings and all that sort
-of stuff. And blog posts
-
-604
-00:29:10.550 --> 00:29:12.320
-are a little bit safer
-in that regards. Cause you
-
-605
-00:29:12.320 --> 00:29:16.220
-can explore things in more
-depth, but yeah. I mean,
-
-606
-00:29:16.220 --> 00:29:18.560
-I still, I don't know,
-Twitter is an interesting place.
-
-607
-00:29:19.310 --> 00:29:22.880
-Sometimes empathy happens there sometimes
-not. Yeah. I think it's
-
-608
-00:29:23.090 --> 00:29:25.280
-Twitter is actually a lot
-like work. Sometimes I find
-
-609
-00:29:25.610 --> 00:29:28.010
-joy and it feeds my
-spirit and I love going
-
-610
-00:29:28.010 --> 00:29:30.020
-to Twitter and other days
-and just like, I really
-
-611
-00:29:30.020 --> 00:29:33.860
-can't do this today. That
-sounds about right. So are
-
-612
-00:29:33.860 --> 00:29:36.020
-there particular video that you
-would recommend that someone would
-
-613
-00:29:36.020 --> 00:29:37.280
-explore if they were going
-to go and take a
-
-614
-00:29:37.280 --> 00:29:39.710
-look at your site and
-like what's your, what's the
-
-615
-00:29:39.710 --> 00:29:44.830
-best introduction to compassionate coding?
-Yeah. So on compassionate coding.com.
-
-616
-00:29:44.860 --> 00:29:47.680
-I have a site like
-a media page and I
-
-617
-00:29:47.680 --> 00:29:50.440
-think the one that gives
-the best kind of overview
-
-618
-00:29:50.860 --> 00:29:53.830
-is emotional intelligence for engineers.
-The talk that I gave
-
-619
-00:29:53.830 --> 00:29:57.640
-it in G Atlanta and
-yeah. So I think that,
-
-620
-00:29:57.640 --> 00:29:59.820
-that, one's probably the best
-one to start with. Okay.
-
-621
-00:29:59.820 --> 00:30:01.920
-Very cool. Yeah. We were
-actually at the same at
-
-622
-00:30:01.920 --> 00:30:03.570
-the same conference at the
-same time I was at
-
-623
-00:30:03.570 --> 00:30:07.170
-NJ Atlanta as well. Yes,
-I believe that's true. Yeah.
-
-624
-00:30:07.380 --> 00:30:09.340
-And that was a great
-talk that you gave and
-
-625
-00:30:09.340 --> 00:30:11.400
-then the video online is
-really great. It's about 20
-
-626
-00:30:11.400 --> 00:30:13.230
-minutes long, so it's not
-going to be like, you
-
-627
-00:30:13.230 --> 00:30:15.290
-know, 90 minutes of your
-time and it's definitely worth
-
-628
-00:30:15.300 --> 00:30:18.750
-taking the, taking the moment.
-It's interesting. Of course that
-
-629
-00:30:18.750 --> 00:30:22.020
-it's on YouTube. Hopefully the
-comments will become the compliment.
-
-630
-00:30:24.120 --> 00:30:27.060
-Yeah. There were some interesting
-comments there, but I think
-
-631
-00:30:27.060 --> 00:30:28.350
-they, I don't know if
-they have, I don't, I
-
-632
-00:30:28.350 --> 00:30:30.690
-don't have control over the
-comments there, but I think
-
-633
-00:30:30.690 --> 00:30:32.970
-the, the organizers there have
-been pretty good about at
-
-634
-00:30:32.970 --> 00:30:35.790
-least hiding the, the word
-I've always felt like the
-
-635
-00:30:35.790 --> 00:30:37.920
-thing that's wrong, that YouTube
-is the down arrow, like
-
-636
-00:30:37.920 --> 00:30:39.780
-who needs to down arrow
-or something. And he just
-
-637
-00:30:39.790 --> 00:30:42.570
-needs to have an up
-arrow or no arrow. Like,
-
-638
-00:30:42.600 --> 00:30:44.580
-you know, like I don't
-want to thumbs down anything.
-
-639
-00:30:44.580 --> 00:30:46.890
-I would just be nice
-or say nothing, you know?
-
-640
-00:30:47.160 --> 00:30:49.440
-Yeah. Thankfully it hasn't, it's
-what's funny is it hasn't
-
-641
-00:30:49.440 --> 00:30:51.960
-gotten too many downers, but
-somebody posted on fortune of
-
-642
-00:30:51.960 --> 00:30:56.100
-all places and that attracted
-some interesting comments. So if
-
-643
-00:30:56.100 --> 00:30:58.140
-you look at the hidden
-comments you'll eat, I don't
-
-644
-00:30:58.140 --> 00:31:00.270
-recommend looking at hidden comments.
-How about that to everybody?
-
-645
-00:31:00.630 --> 00:31:02.010
-I'm going to go ahead
-and not do that because
-
-646
-00:31:02.010 --> 00:31:05.070
-I decided to become a
-compassionate coder. Yeah. There you
-
-647
-00:31:05.070 --> 00:31:07.980
-go. Perfect. Thanks so much
-for chatting with me today.
-
-648
-00:31:08.610 --> 00:31:10.980
-Yeah. Thanks for having me.
-This is super fun. This
-
-649
-00:31:10.980 --> 00:31:13.440
-has been another episode of
-Hanselminutes and we'll see you
-
-650
-00:31:13.440 --> 00:31:14.280
-again next week.
+00:32:23.790 --> 00:32:24.660
+you again next week.
 

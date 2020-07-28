@@ -1,3232 +1,3037 @@
 WEBVTT FILE
 
 1
-00:00:00.030 --> 00:00:04.080
+00:00:00.210 --> 00:00:04.260
 I'd like to welcome our
 new sponsor. Couchbase Couchbase is
 
 2
-00:00:04.080 --> 00:00:07.080
+00:00:04.260 --> 00:00:07.260
 an open source, no SQL
 document and key value store
 
 3
-00:00:07.080 --> 00:00:11.940
+00:00:07.260 --> 00:00:12.120
 database requires no external cash
-support CQL and analytical queries
+supports CQL and analytical queries
 
 4
-00:00:11.940 --> 00:00:17.820
+00:00:12.120 --> 00:00:18.270
 for Jason data Couchbase supports
-technologies like Kubernetes, java.net, Java
+technologies like Kubernetes, java.net, JavaScript,
 
 5
-00:00:17.820 --> 00:00:21.210
-script, go and Python. Download
-it, give it a try
+00:00:18.300 --> 00:00:21.750
+go and Python. Download it,
+give it a try at
 
 6
-00:00:21.270 --> 00:00:29.730
-at couchbase.com/hansel minutes. That's couchbase.com/hansel
-minutes. And I'll remind you
+00:00:21.810 --> 00:00:30.060
+couchbase.com/hansel minutes. That's couchbase.com/hansel minutes.
+And I'll remind you that
 
 7
-00:00:29.730 --> 00:00:32.640
-that when you support our
-sponsors, you support this show.
+00:00:30.060 --> 00:00:46.370
+when you support our sponsors,
+you support this show. Hi,
 
 8
-00:00:46.160 --> 00:00:48.200
-Hi, this is Scott Hanselman.
-This is another episode of
+00:00:46.370 --> 00:00:49.370
+this is Scott Hanselman. This
+is Hansel minutes. And today
 
 9
-00:00:48.200 --> 00:00:51.710
-Hansel minutes. Today. I'm talking
-with Edward Thompson, product manager, GitHub
+00:00:49.370 --> 00:00:51.890
+I'm talking with Ralph Campbell. He's
+a senior manager of the
 
 10
-00:00:51.740 --> 00:00:55.070
-calling in from the UK.
-How are you, sir? Well,
+00:00:51.890 --> 00:00:55.010
+electronics department of the Lego
+group. How are you, sir?
 
 11
-00:00:55.190 --> 00:00:57.890
-I'm doing as well as
-can be expected, Scott. Indeed.
+00:00:55.310 --> 00:00:57.560
+I'm doing great. Scott. Good
+to meet you. The Legos
 
 12
-00:00:58.130 --> 00:00:59.780
-This is one of those
-questions. When you say, how
+00:00:57.560 --> 00:00:59.630
+in the house era, just
+for the kids, you can't
 
 13
-00:00:59.780 --> 00:01:04.010
-are you? And you're like,
-okay. I mean, some people
+00:00:59.630 --> 00:01:02.570
+judge me. I'm just storing
+them for the children. Of
 
 14
-00:01:04.010 --> 00:01:07.520
-say that it's nice to
-discover that your lifestyle was
+00:01:02.570 --> 00:01:04.580
+course, of course. Then they
+have full access to it
 
 15
-00:01:07.520 --> 00:01:10.760
-actually called quarantine. We didn't
-know that that was how
+00:01:04.580 --> 00:01:07.190
+and they never come into
+your room and there's some
 
 16
-00:01:10.760 --> 00:01:13.520
-we live. Apparently for some
-people, nothing changed. They just
+00:01:07.190 --> 00:01:09.110
+paperwork they have to fill
+out. I check them out
 
 17
-00:01:13.520 --> 00:01:15.710
-never went out and now
-they don't go out anyway.
+00:01:09.110 --> 00:01:13.130
+like a librarian, you know,
+just because it's their education.
 
 18
-00:01:16.040 --> 00:01:18.230
-Yeah. As an introvert, I
-just go to the grocery
+00:01:13.130 --> 00:01:15.440
+It's the future of the
+value of their education, right?
 
 19
-00:01:18.230 --> 00:01:22.010
-store less frequently. Yeah. But
-for, for us, my wife
+00:01:15.440 --> 00:01:17.870
+It's an investment. Really? Yeah.
+You need to safeguard that
 
 20
-00:01:22.010 --> 00:01:24.740
-is a nurse and she's
-going to the hospital and
+00:01:18.260 --> 00:01:21.230
+you can't really do. So
+you are an electronics and
 
 21
-00:01:24.740 --> 00:01:26.540
-my brothers are firefighters. So
-I'm getting all of the,
+00:01:21.230 --> 00:01:23.600
+firmware engineer. You've been one
+for, for many years. Are
 
 22
-00:01:26.540 --> 00:01:30.890
-like the war stories. It's
-definitely not fun. Hopefully when
+00:01:23.600 --> 00:01:26.720
+you primarily embedded systems in
+your career? Yeah, it's pretty
 
 23
-00:01:31.250 --> 00:01:34.670
-all of this is over,
-we will all be safe
+00:01:26.720 --> 00:01:29.330
+much straight ahead. Embedded systems.
+If it's a, if it's
 
 24
-00:01:34.700 --> 00:01:38.420
-and, and warm. And we'll
-maybe, maybe the year will
+00:01:29.330 --> 00:01:31.640
+not on, on the metal,
+I'm not that I'm not
 
 25
-00:01:38.420 --> 00:01:40.580
-give us back our summer.
-That would be nice to
+00:01:31.640 --> 00:01:33.740
+interested, but it's just something
+that I don't need to,
 
 26
-00:01:40.580 --> 00:01:43.640
-get a group Cron or
-something. Yeah. Well, I am
+00:01:34.100 --> 00:01:36.140
+I don't need to worry
+about. So you've been doing
 
 27
-00:01:43.640 --> 00:01:45.560
-spending a lot of time
-on my computer because I
+00:01:36.140 --> 00:01:41.120
+that for almost 30 years.
+And has it been forgive
 
 28
-00:01:45.560 --> 00:01:49.280
-am at home here and
-in the process, I'm tidying
+00:01:41.120 --> 00:01:43.100
+my ignorance? I'm going to
+ask ignorant questions cause that's
 
 29
-00:01:49.280 --> 00:01:51.860
-up all my repositories and
-setting up all of my
+00:01:43.100 --> 00:01:47.180
+my superpower. Is it been
+basically C code for 30
 
 30
-00:01:52.190 --> 00:01:55.820
-CIC D and I understand
-that you work on a,
+00:01:47.180 --> 00:01:50.570
+years talking to the metal
+of these systems? Well, yeah,
 
 31
-00:01:55.880 --> 00:01:58.580
-get hub and work on,
-get hub actions. I do.
+00:01:50.570 --> 00:01:52.340
+I guess it's a, if
+I look at the full
 
 32
-00:01:59.240 --> 00:02:02.120
-So when get up actions
-came out, I first saw
+00:01:52.340 --> 00:01:54.710
+span, it's been almost 40
+years. I'm ashamed to say,
 
 33
-00:02:02.120 --> 00:02:04.640
-it and I thought to
-myself, this is like, if
+00:01:54.710 --> 00:01:57.770
+but a, it started out
+in assembler language. Actually I
 
 34
-00:02:04.640 --> 00:02:07.370
-this, then that, like, you
-know, the or Zapier or
+00:01:57.770 --> 00:02:01.330
+learned to program on an
+HP 41 CV calculator. So
 
 35
-00:02:07.400 --> 00:02:11.270
-flow, it's like a workflow
-engine. And I see some
+00:02:01.340 --> 00:02:04.670
+that's, that's how far back
+though? That goes. Yeah. So
 
 36
-00:02:11.270 --> 00:02:13.550
-people, people refer to it
-differently. Like when you talk
+00:02:04.670 --> 00:02:07.160
+you start started in assembler,
+but really for the last
 
 37
-00:02:13.550 --> 00:02:14.900
-to people in the public,
-they're like, Oh yeah, it's
+00:02:07.160 --> 00:02:10.100
+30, 35 years, it's been
+in C and embedded C.
 
 38
-00:02:14.900 --> 00:02:16.430
-like a workflow. And that'd
-be like, no, it's a
+00:02:11.150 --> 00:02:13.880
+And when we look at
+the, the upleveling of the
 
 39
-00:02:16.440 --> 00:02:19.460
-CACD. And it's like, when
-two people argue about, you
+00:02:13.880 --> 00:02:16.460
+technology that is available to
+children, the idea that a
 
 40
-00:02:19.460 --> 00:02:22.040
-know, I like my peanut
-butter and I like my
+00:02:16.460 --> 00:02:20.390
+child could have a Lego
+system that is itself a
 
 41
-00:02:22.040 --> 00:02:23.810
-chocolate. I was like, well,
-no, you can have both.
+00:02:20.390 --> 00:02:23.300
+computer, what is the thing
+that has happened over the
 
 42
-00:02:24.200 --> 00:02:26.960
-That's exactly what is, what
-is the thing? It is,
+00:02:23.300 --> 00:02:25.340
+last 40 years that has
+enabled that? Is it just
 
 43
-00:02:26.960 --> 00:02:29.420
-it is both of those
-things. So if I look
+00:02:25.340 --> 00:02:28.310
+chips get faster, things, get
+smaller. Why is it possible
 
 44
-00:02:29.420 --> 00:02:31.700
-back at good have actions,
-if you, if you rewind,
+00:02:28.310 --> 00:02:31.010
+that like the PC that
+you learned on, it's probably
 
 45
-00:02:31.910 --> 00:02:35.540
-we announced it in November, 2018.
-And when we did, we
+00:02:31.010 --> 00:02:33.440
+less powerful than one of
+the new Lego elements that
 
 46
-00:02:35.540 --> 00:02:37.910
-really thought of it as
-a way to extend the
+00:02:33.440 --> 00:02:36.020
+you're working on? I, yeah,
+I think that's a fair
 
 47
-00:02:37.910 --> 00:02:40.040
-ghetto platform or way that
-you could extend get hub.
+00:02:36.020 --> 00:02:39.800
+statement. So Lego Mindstorms has
+gone. We've got pretty much
 
 48
-00:02:40.460 --> 00:02:44.570
-And so it was a
-very workflow engineer idea way
+00:02:39.800 --> 00:02:41.660
+a 20 year history and
+I've been involved since the
 
 49
-00:02:44.570 --> 00:02:47.540
-back, you know, as, as
-long as I can remember
+00:02:41.660 --> 00:02:44.060
+beginning on that one. So
+if you remember the yellow
 
 50
-00:02:47.540 --> 00:02:49.250
-using get hub, we've had
-web hooks and we've had
+00:02:44.060 --> 00:02:47.480
+RCX device that was running
+on, I think, well, I
 
 51
-00:02:49.250 --> 00:02:52.790
-a rest API, have actions
-was a way to take
+00:02:47.480 --> 00:02:49.790
+can't remember the speed exactly,
+but it was a dumb
 
 52
-00:02:52.790 --> 00:02:56.600
-those two things and use,
-get hubs, compute, get hubs
+00:02:49.790 --> 00:02:55.040
+little eight, eight, eight bit
+microprocessor than the NXT, which
 
 53
-00:02:56.600 --> 00:03:01.360
-infrastructure to actually automate tasks.
-So Let's say when somebody
+00:02:55.040 --> 00:02:58.940
+was the second generation. That
+was a, basically an arm
 
 54
-00:03:01.360 --> 00:03:03.880
-opens an issue in your
-repository, you can run a
+00:02:58.960 --> 00:03:02.290
+seven. So up to 32
+Bit the <inaudible>, which, which
 
 55
-00:03:03.880 --> 00:03:06.730
-workflow and it can, I
-don't know, add a label
+00:03:02.620 --> 00:03:06.670
+I founded <inaudible> dev, which
+is a full Linux distribution
 
 56
-00:03:06.730 --> 00:03:10.510
-to that issue, things like
-that. And so we launched
+00:03:06.670 --> 00:03:09.580
+that runs on the <inaudible>.
+That's a, that's a full
 
 57
-00:03:10.510 --> 00:03:13.390
-that as a beta again,
-and I think it was
+00:03:09.580 --> 00:03:12.310
+arm nine and it's actually
+rocking pretty hard that one.
 
 58
-00:03:13.390 --> 00:03:16.990
-November, 2018 at get hub universe.
-And people looked at that
+00:03:13.030 --> 00:03:15.370
+And now we've got a
+spike prime that we just
 
 59
-00:03:17.200 --> 00:03:20.200
-and the first thing that
-they wanted to do, and
+00:03:15.370 --> 00:03:18.490
+released this January and we're
+back down to an arm
 
 60
-00:03:20.200 --> 00:03:22.540
-this should have been really
-obvious to us, but they
+00:03:18.520 --> 00:03:21.610
+on that one. But the
+cool thing is that we've
 
 61
-00:03:22.540 --> 00:03:27.760
-wanted to build their repositories.
-And you could for like
+00:03:21.610 --> 00:03:24.490
+got a micro pipe and
+I think that's one of
 
 62
-00:03:27.760 --> 00:03:30.340
-a limited value of build,
-you know, if you had,
+00:03:24.490 --> 00:03:27.880
+the, one of the most
+amazing thing that's happened in
 
 63
-00:03:30.370 --> 00:03:33.340
-you know, a TypeScript project
-and you wanted to compile
+00:03:27.880 --> 00:03:31.000
+the last five years is
+the, the amount of effort
 
 64
-00:03:33.340 --> 00:03:36.400
-it to JavaScript, give them
-actions could do that. But
+00:03:31.000 --> 00:03:33.730
+that's gone to, to put
+micro Pythen on a mic
 
 65
-00:03:36.940 --> 00:03:39.640
-if you had a, I
-dunno, a Swift application and
+00:03:33.760 --> 00:03:36.640
+on a microprocessor. So you,
+you can get, you know,
 
 66
-00:03:39.640 --> 00:03:42.400
-you wanted to build an
-iOS app, not so much
+00:03:36.670 --> 00:03:39.250
+pie boards, ADA fruit has
+a bunch of different boards,
 
 67
-00:03:42.430 --> 00:03:45.550
-like the architecture just wasn't
-geared up for that. So
+00:03:39.280 --> 00:03:42.490
+and I'm, I'm really glad
+to say that Lego mines
 
 68
-00:03:45.580 --> 00:03:49.630
-we actually hit pause on
-the beta and we kind
+00:03:42.520 --> 00:03:47.910
+or Lego, sorry, Lego spike
+prime has micro Pythen as
 
 69
-00:03:49.630 --> 00:03:52.150
-of revisited what get hub
-actions meant, and we added
+00:03:47.980 --> 00:03:51.700
+kind of a core, core
+way of doing things. So
 
 70
-00:03:52.150 --> 00:03:55.720
-CICB capabilities. So now you
-can, you can do that
+00:03:51.700 --> 00:03:54.430
+you can, you can actually
+program it a plug, plug
 
 71
-00:03:55.720 --> 00:03:59.500
-build whether it's macro S
-or Linux or, or windows,
+00:03:54.430 --> 00:03:56.290
+it in over USB, and
+it looks like a serial
 
 72
-00:03:59.500 --> 00:04:02.710
-we've got those machines for
-you in our cloud. And
+00:03:56.290 --> 00:03:59.350
+terminal and you can just
+click away and, and put
 
 73
-00:04:02.710 --> 00:04:05.650
-so now we have CICB
-capabilities as well. So it's
+00:03:59.350 --> 00:04:02.370
+Python code right on there.
+Traditionally, when I've seen embedded
 
 74
-00:04:05.650 --> 00:04:08.940
-really both When I, when
-I think of get hub,
+00:04:02.370 --> 00:04:05.400
+systems in toys, I have
+found in the past that
 
 75
-00:04:09.210 --> 00:04:11.820
-I think of like massive
-amounts of storage, I think
+00:04:06.190 --> 00:04:09.210
+the companies tend to put
+a friendly face on it.
 
 76
-00:04:11.820 --> 00:04:14.490
-about like all the world's
-source code in this just
+00:04:09.210 --> 00:04:11.640
+It's like, here's our thing.
+Here's our toy. Like, here's
 
 77
-00:04:15.060 --> 00:04:18.390
-massive, massive get repository. I
-know it's like billions of
+00:04:11.640 --> 00:04:15.090
+an <inaudible> for example, which
+has a wonderful Lego kit
 
 78
-00:04:18.390 --> 00:04:20.790
-given positories, but I just
-imagine one giant one. So
+00:04:15.090 --> 00:04:17.250
+that you can still get
+today. And then here is
 
 79
-00:04:20.790 --> 00:04:23.160
-I think storage, I don't
-think compute. So when I
+00:04:17.250 --> 00:04:21.210
+our, our IDE right, our
+integrated development environment for children.
 
 80
-00:04:23.160 --> 00:04:25.230
-think of the problems that
-I would, I would guess
+00:04:21.630 --> 00:04:24.060
+Do you think that there's
+a movement towards being able
 
 81
-00:04:25.230 --> 00:04:27.900
-as a lay person, what
-get hub would deal with
+00:04:24.060 --> 00:04:25.920
+to say, all right, here's
+a text file. Here's a
 
 82
-00:04:27.900 --> 00:04:29.640
-would be, well, they have
-a lot of storage problems,
+00:04:25.920 --> 00:04:30.240
+USB drive. Just start, start
+coding. And when does one
 
 83
-00:04:29.970 --> 00:04:32.550
-but now you've decided not
-only did have storage problems,
+00:04:30.240 --> 00:04:32.970
+start stop? And when is
+one end? Yeah, that's a
 
 84
-00:04:32.550 --> 00:04:37.920
-but also compute problems that
-in themselves have combinatorics because
+00:04:32.970 --> 00:04:36.480
+really good question. I think
+putting, putting a friendly face
 
 85
-00:04:37.920 --> 00:04:40.680
-you build your, your main
-branch and your pillagers sub
+00:04:36.480 --> 00:04:40.260
+on, on programming is something
+that Lego has always been
 
 86
-00:04:40.680 --> 00:04:42.840
-branches and all your PRS
-need to be built suddenly
+00:04:40.290 --> 00:04:43.920
+really interested in doing. You
+can see that if it's,
 
 87
-00:04:42.840 --> 00:04:45.540
-by getting into the CIC
-D business, you have two
+00:04:44.010 --> 00:04:46.020
+if it's drag and drop,
+if there's a gooey, that
 
 88
-00:04:45.540 --> 00:04:50.790
-problems or times probably compute
-time storage problems. Yeah. That's,
+00:04:46.350 --> 00:04:50.610
+must mean it's kid friendly,
+right? And that, that bar
 
 89
-00:04:50.790 --> 00:04:52.770
-that's, that's exactly right. And
-it's funny, you mentioned that
+00:04:50.610 --> 00:04:54.360
+was really raised for me
+when I watched some young
 
 90
-00:04:52.770 --> 00:04:55.980
-because I actually started out
-at GitHub on the team
+00:04:54.360 --> 00:04:57.450
+kids, the session brothers who
+are really big <inaudible> fans
 
 91
-00:04:55.980 --> 00:05:00.330
-that stores your get repositories.
-So yeah. And so then
+00:04:57.450 --> 00:05:00.360
+and now spike prime fans
+as well. They're really quite
 
 92
-00:05:00.330 --> 00:05:04.440
-I pivoted to this problem
-instead, and that, but what
+00:05:00.360 --> 00:05:03.270
+famous in the FLL world.
+These little guys picked up
 
 93
-00:05:04.440 --> 00:05:06.720
-you say is exactly right.
-You know, we, we have
+00:05:03.330 --> 00:05:07.080
+a Python programming just like
+that. So it's really not
 
 94
-00:05:06.720 --> 00:05:10.440
-to maintain this, this fleet
-of servers to do your
+00:05:07.080 --> 00:05:11.040
+just for kids, graphical programming.
+So we're seeing a lot
 
 95
-00:05:10.440 --> 00:05:13.920
-bills. And, you know, macro
-S is particularly challenging. Cause
+00:05:11.040 --> 00:05:14.340
+more of a, of a
+drive towards text-based programming as
 
 96
-00:05:13.920 --> 00:05:15.750
-it ends up being that
-we have to, you know,
+00:05:14.340 --> 00:05:17.940
+well. But at the same
+time we do spike prime
 
 97
-00:05:15.750 --> 00:05:20.130
-take trash cans and fit
-them into racks, somehow Trash
+00:05:17.940 --> 00:05:21.840
+does support scratch programming. So
+you've got a nice scratchy
 
 98
-00:05:20.130 --> 00:05:23.100
-cans, referring to the lovely
-shape of the Mac pros.
+00:05:21.840 --> 00:05:25.590
+interface on the, on your
+gooey. And then if you
 
 99
-00:05:23.160 --> 00:05:25.410
-Oh, it's delightful. Isn't it?
-It fits really well in
+00:05:25.590 --> 00:05:28.110
+really want to, you can
+lift the lid and a
 
 100
-00:05:25.410 --> 00:05:28.520
-a 19 Interac. Yeah. They
-stack so well. Yeah, But
+00:05:28.170 --> 00:05:31.680
+programming. Micropipets I think that
+that's really, really significant. I
 
 101
-00:05:28.520 --> 00:05:30.150
-you can't just run a
-Mac in a container. Like
+00:05:31.680 --> 00:05:37.920
+mean, spike prime is a
+very accessible environment where a
 
 102
-00:05:30.150 --> 00:05:32.460
-you would think that they're
-so into containers and Linux
+00:05:37.920 --> 00:05:40.350
+young kid at a nine,
+10, 11 year old can
 
 103
-00:05:32.460 --> 00:05:34.020
-that they would you're on
-a Mac. I mean, why,
+00:05:40.350 --> 00:05:41.850
+look at it and go,
+Oh, I know this, this
 
 104
-00:05:34.350 --> 00:05:35.940
-why can't I just run
-a Mac in a container
+00:05:41.850 --> 00:05:43.440
+is Lego. And then I
+can start adding in the
 
 105
-00:05:35.940 --> 00:05:38.940
-and do my build there?
-Wouldn't it be nice. You,
+00:05:43.440 --> 00:05:48.150
+more interactive elements, but was
+there a conscious decision to
 
 106
-00:05:39.540 --> 00:05:43.230
-you run into licensing requirements.
-If you want to run
+00:05:48.150 --> 00:05:50.760
+say, you know, if someone
+wants to pop the hood
 
 107
-00:05:43.230 --> 00:05:44.700
-a build on a Mac,
-you have to have physical
+00:05:51.300 --> 00:05:54.510
+and look at the engine
+and really, you know, move
 
 108
-00:05:44.700 --> 00:05:47.640
-hardware and you can virtualize
-it a little bit like
+00:05:54.510 --> 00:05:56.760
+fast and break things, we
+are going to allow that
 
 109
-00:05:47.640 --> 00:05:49.950
-that. Apple let you do
-that, but you do need
+00:05:56.760 --> 00:05:59.120
+as to maybe in the
+past, not at Lego, but
 
 110
-00:05:49.950 --> 00:05:56.250
-a physical Apple device. Wow.
-That is unfortunate. But you
+00:05:59.120 --> 00:06:02.570
+at other companies where it's
+don't hack are things you're
 
 111
-00:05:56.250 --> 00:05:58.880
-do have runners for Lennox,
-for Mac, for windows, even
+00:06:02.570 --> 00:06:04.880
+really encouraging that you're allowing
+people to pop the hood
 
 112
-00:05:58.880 --> 00:06:02.260
-arm, Even arm. Yeah. We
-don't actually offer arm in
+00:06:04.880 --> 00:06:08.080
+and start playing at the
+low. Yep. I think that's,
 
 113
-00:06:02.260 --> 00:06:05.410
-our cloud, but you can,
-if you want to, you
+00:06:08.710 --> 00:06:10.570
+I'm not so sure it
+was a conscious decision. That's
 
 114
-00:06:05.410 --> 00:06:07.930
-know, bring a raspberry PI,
-you can plug it in,
+00:06:10.570 --> 00:06:14.020
+kind of a happy accident.
+I've I've been involved with,
 
 115
-00:06:08.050 --> 00:06:09.580
-you can put our runner
-on it and then you
+00:06:14.350 --> 00:06:17.920
+with Lego Mindstorms components or
+elements for the last 20
 
 116
-00:06:09.580 --> 00:06:12.820
-can run your workloads right
-there. And that's something that
+00:06:17.920 --> 00:06:20.080
+years, not officially with Lego,
+but as a, as an
 
 117
-00:06:12.820 --> 00:06:14.680
-I actually do from time
-to time just to make
+00:06:20.080 --> 00:06:22.690
+a fall, that's a adult
+fan of Lego. And it's
 
 118
-00:06:14.680 --> 00:06:17.170
-sure that arm works. Okay.
-Hang on a second. So
+00:06:22.690 --> 00:06:25.150
+a term that you've obviously
+heard from other people as
 
 119
-00:06:17.170 --> 00:06:19.780
-you can do a, you
-can do a local, like
+00:06:25.150 --> 00:06:29.110
+well. What, what I've always
+wanted to do. And what
 
 120
-00:06:19.780 --> 00:06:22.240
-you can add yourself to
-the ghetto cloud effectively for
+00:06:29.110 --> 00:06:31.660
+I have been done doing
+in the past is putting
 
 121
-00:06:22.240 --> 00:06:25.000
-your own use. And then
-the actions run in the
+00:06:31.660 --> 00:06:35.350
+a text based language on
+every <inaudible> or sorry, every
 
 122
-00:06:25.000 --> 00:06:27.100
-cloud until they run down
-on who your runner and
+00:06:35.350 --> 00:06:39.220
+Mindstorms brick that's been released.
+So for RCX I developed
 
 123
-00:06:27.100 --> 00:06:29.200
-then run on your raspberry
-PI and then run back
+00:06:39.220 --> 00:06:41.560
+PB Lua, which was a,
+sorry, PB fourth, which is
 
 124
-00:06:29.200 --> 00:06:31.840
-up. Yeah. That's, that's exactly
-right. You, you basically get
+00:06:41.560 --> 00:06:44.620
+a fourth based programming language
+for the NXT. I made
 
 125
-00:06:31.840 --> 00:06:34.900
-to specify what platform you
-run on. And, and again,
+00:06:44.620 --> 00:06:48.430
+PB Lua, which is a
+Lua interface for the NXT
 
 126
-00:06:34.900 --> 00:06:36.580
-it could be windows, it
-could be Linux, it could
+00:06:49.120 --> 00:06:52.090
+for <inaudible> of course we
+pushed the whole, you know,
 
 127
-00:06:36.580 --> 00:06:38.320
-be macro S and those
-are things that we have,
+00:06:52.090 --> 00:06:55.780
+real, all singing, all dancing,
+Debbie and Linux on that.
 
 128
-00:06:38.530 --> 00:06:39.910
-but it could be your
-own hardware in your own
+00:06:56.110 --> 00:06:59.140
+And here the, again, the
+happy accident of being able
 
 129
-00:06:39.910 --> 00:06:43.900
-data center. Or, you know,
-when I say data center,
+00:06:59.140 --> 00:07:02.230
+to put micro Pythen on
+a brick was just too
 
 130
-00:06:43.900 --> 00:06:47.110
-you know, I'm looking around
-under the desk, there's a
+00:07:02.230 --> 00:07:04.210
+good of a too good
+of a match to pass
 
 131
-00:06:47.110 --> 00:06:51.220
-raspberry PI sitting there and
-yeah, that'll that'll work. That
+00:07:04.210 --> 00:07:09.370
+up. And, and I've always
+been an advocate of, of
 
 132
-00:06:51.220 --> 00:06:54.520
-is pretty cool. Okay. So
-one of the things that
+00:07:09.370 --> 00:07:11.980
+people being able to kind
+of open things up and
 
 133
-00:06:54.520 --> 00:06:57.430
-is the most powerful about
-it is the marketplace and
+00:07:12.010 --> 00:07:15.160
+hack things if you want
+to. And what we've done
 
 134
-00:06:57.430 --> 00:06:59.350
-the number of actions, because,
-you know, you kick off
+00:07:15.160 --> 00:07:19.180
+here with spike prime is
+given adults or kids, but
 
 135
-00:06:59.350 --> 00:07:01.060
-a thing like this, and
-you don't know if anyone's
+00:07:19.180 --> 00:07:24.370
+hopefully kids, the ability to
+get familiar with gain confidence.
 
 136
-00:07:01.060 --> 00:07:03.550
-going to care, but if
-you go to the GitHub
+00:07:24.370 --> 00:07:26.860
+That's one of our main
+goals here is to make
 
 137
-00:07:03.550 --> 00:07:09.040
-marketplace, there's over 3000 actions,
-which is just a stupid
+00:07:26.860 --> 00:07:31.270
+spike primarily accessible and confidence
+building tool for kids to
 
 138
-00:07:09.040 --> 00:07:12.100
-amount of, of stuff, literally,
-anything you can think of,
+00:07:31.270 --> 00:07:34.630
+learn coding. Once you're happy
+with the S with what
 
 139
-00:07:12.940 --> 00:07:15.100
-how did you know that
-you would get 3000 or
+00:07:34.630 --> 00:07:36.760
+you can do with scratch,
+if you choose to, you
 
 140
-00:07:15.100 --> 00:07:21.340
-more like thousands of actions,
-someone, It just worked out.
+00:07:36.760 --> 00:07:39.550
+can lift the lid and
+really go full steam ahead
 
 141
-00:07:21.760 --> 00:07:25.180
-I'm glad it did. Oh,
-there must be. It must
+00:07:39.550 --> 00:07:42.010
+with Python. So it's kind
+of interesting that you were
 
 142
-00:07:25.180 --> 00:07:27.130
-be easy to make them
-otherwise. They wouldn't be 3000.
+00:07:42.010 --> 00:07:44.410
+an adult fan of Lego.
+You were messing around with
 
 143
-00:07:27.460 --> 00:07:29.230
-It is easy to make.
-And it's, it's actually a
+00:07:44.410 --> 00:07:47.620
+this stuff. You were doing
+things with <inaudible> PB Lewa,
 
 144
-00:07:29.230 --> 00:07:34.090
-really powerful way to, to
-extend workflows. So, so get
+00:07:48.010 --> 00:07:51.520
+bringing a full Linux distribution
+to the <inaudible>. You would
 
 145
-00:07:34.090 --> 00:07:37.690
-home actions is, is the
-platform that runs, runs your
+00:07:51.520 --> 00:07:53.380
+think that in the past
+a company would not say,
 
 146
-00:07:37.690 --> 00:07:39.940
-workflows. And then you can
-actually use, what's called an
+00:07:53.410 --> 00:07:55.930
+Oh, you should work here.
+They would probably send you
 
 147
-00:07:39.970 --> 00:07:42.640
-action. And I, I regret
-the name a little bit,
+00:07:55.930 --> 00:07:57.820
+a cease and desist and
+say, Hey, knock that off.
 
 148
-00:07:43.030 --> 00:07:46.450
-but an action itself is
-a reusable component that you
+00:07:58.480 --> 00:08:00.700
+Yeah. And that's a, that
+history goes all the way
 
 149
-00:07:46.450 --> 00:07:49.270
-can use in your workflows.
-And they are exactly right.
+00:08:00.700 --> 00:08:05.230
+back to the RCX myself
+and a few other fans
 
 150
-00:07:49.420 --> 00:07:51.880
-Super easy to build. So
-you can either build them
+00:08:05.230 --> 00:08:07.150
+that were kind of a
+little more intense than most
 
 151
-00:07:51.880 --> 00:07:54.490
-in a, you know, as
-a JavaScript app or a
+00:08:07.150 --> 00:08:10.240
+fans. I guess I hacked
+hack the RCX. We were
 
 152
-00:07:54.490 --> 00:07:57.970
-TypeScript app, or you can
-bring a Docker container. And
+00:08:10.300 --> 00:08:14.170
+completely reverse engineered the, the,
+the code for that. And
 
 153
-00:07:58.060 --> 00:08:01.210
-what it'll do is just,
-you know, take some code,
+00:08:14.440 --> 00:08:17.360
+I met some of the
+original designers of the RCX
 
 154
-00:08:02.140 --> 00:08:04.330
-run it, and then spit
-something out the other side.
+00:08:17.360 --> 00:08:20.890
+set, the one of the
+first MIT mind fests. And
 
 155
-00:08:04.480 --> 00:08:06.010
-Let me give you an
-example. I have one that
+00:08:21.910 --> 00:08:23.950
+when we showed them the
+source code that we had
 
 156
-00:08:06.010 --> 00:08:10.420
-will send a tweet so
-I can write a get
+00:08:23.950 --> 00:08:26.350
+in reverse engineered, it was
+one of those, Oh, this
 
 157
-00:08:10.420 --> 00:08:13.750
-hub workflow that will run
-any time. I add an
+00:08:26.350 --> 00:08:29.740
+is actually almost nicer than
+ours. It was a one
 
 158
-00:08:13.750 --> 00:08:19.030
-issue to my repository, and
-then I can use my
+00:08:29.740 --> 00:08:32.170
+for one disassembly, but with
+all the comments and everything
 
 159
-00:08:19.030 --> 00:08:22.120
-action to send that issue
-as a tweet. And so
+00:08:32.170 --> 00:08:34.420
+that we'd put in, it
+was, it was pretty much
 
 160
-00:08:22.660 --> 00:08:24.460
-one of the things that
-I'm looking at doing is
+00:08:34.420 --> 00:08:37.240
+a one for one. So
+at the time, I don't
 
 161
-00:08:24.460 --> 00:08:28.630
-actually automating the Twitter account
-for one of my open
+00:08:37.240 --> 00:08:41.410
+think Lego really was, how
+do you want to say
 
 162
-00:08:28.630 --> 00:08:33.070
-source projects, so that any
-maintainer can just create an
+00:08:41.890 --> 00:08:44.920
+in a cease and desist
+mode, they were, they were
 
 163
-00:08:33.070 --> 00:08:36.160
-issue that has an announcement,
-you know, Hey, we just
+00:08:44.920 --> 00:08:47.140
+kind of happy to see
+fans getting so much energy.
 
 164
-00:08:36.160 --> 00:08:38.710
-released 1.0, isn't that great.
-Go here to download it.
+00:08:47.350 --> 00:08:49.690
+And when they realized the
+positive buzz that the fan
 
 165
-00:08:39.670 --> 00:08:42.580
-And then we can actually
-send that tweet out. That
+00:08:49.690 --> 00:08:53.440
+community was, was delivering, they
+just said, you know what,
 
 166
-00:08:42.790 --> 00:08:45.100
-means that nobody has to
-worry about credentials. Nobody has
+00:08:53.440 --> 00:08:55.800
+go nuts, do what you
+can just don't use the
 
 167
-00:08:45.100 --> 00:08:48.220
-to think about, you know,
-logging into twitter.com. We can
+00:08:55.800 --> 00:08:59.040
+Lego name and whatever a
+replacement for him or you,
 
 168
-00:08:48.220 --> 00:08:50.740
-just manage our Twitter account
-from the same place that
+00:08:59.050 --> 00:09:01.700
+you, you produce, I don't
+really think that that's, that's
 
 169
-00:08:50.740 --> 00:08:54.310
-we manage the rest of
-our open source project. Okay.
+00:09:01.700 --> 00:09:04.460
+great. And I love that
+Lego is that kind of
 
 170
-00:08:54.310 --> 00:08:56.370
-So let's, let's dig into
-that for a second. So
+00:09:04.460 --> 00:09:07.310
+progressive. And that forward-looking because
+they understand that this isn't
 
 171
-00:08:56.370 --> 00:08:59.940
-you said you have an
-action, a singular and get
+00:09:07.310 --> 00:09:10.520
+hacking to break things. This
+is hacking to make things
 
 172
-00:08:59.940 --> 00:09:02.580
-hub actions is, is not
-just a collection of actions,
+00:09:10.520 --> 00:09:13.130
+better. And then when you
+have the, like you said,
 
 173
-00:09:02.580 --> 00:09:05.430
-but it's the entire product
-name. I am looking now
+00:09:13.130 --> 00:09:15.080
+the happy accidents, if you
+start bringing these higher level
 
 174
-00:09:05.430 --> 00:09:11.340
-at github.com/e Thompson sent tweet
-action. Your action. It looks
+00:09:15.080 --> 00:09:18.800
+languages to these, these systems,
+now you've got micro Python
 
 175
-00:09:11.340 --> 00:09:13.470
-like it's just to get
-hub repository and inside there's
+00:09:18.830 --> 00:09:22.610
+on a spike prime, and
+you're really encouraging people to
 
 176
-00:09:13.470 --> 00:09:17.520
-an action dot Yammel file.
-So an action is itself
+00:09:22.640 --> 00:09:24.380
+pop the hood. You say,
+if you want to use
 
 177
-00:09:17.910 --> 00:09:22.460
-a repositor That's right. It's
-just a repository. It's got
+00:09:24.380 --> 00:09:26.660
+our regular tools, that's great.
+Otherwise plug it in. It
 
 178
-00:09:22.460 --> 00:09:26.060
-some code in, it Runs
-using node. 12 can get
+00:09:26.660 --> 00:09:29.360
+looks like a USB drive
+and micro Python just lets
 
 179
-00:09:26.060 --> 00:09:27.860
-how actions run on anything
-or what could do, are
+00:09:29.360 --> 00:09:31.520
+you save a text file
+into a folder. And suddenly
 
 180
-00:09:27.860 --> 00:09:31.700
-they all node? So, yeah,
-so you've got, you've got
+00:09:31.640 --> 00:09:34.310
+you feel at least like
+you're The low level. Yep.
 
 181
-00:09:31.700 --> 00:09:34.850
-your choice. When you're building
-an action, you can either
+00:09:34.610 --> 00:09:36.950
+Actually just a quick correction.
+We took away the, the
 
 182
-00:09:35.510 --> 00:09:38.540
-build it as a no
-JS app and either TypeScript
+00:09:36.950 --> 00:09:39.410
+USB drive. It just looks
+like a serial port. So
 
 183
-00:09:38.540 --> 00:09:41.810
-or JavaScript, or you can
-bring a Docker container. And
+00:09:39.410 --> 00:09:41.270
+you just get a terminal
+as a Chrome port. Yep.
 
 184
-00:09:41.810 --> 00:09:43.340
-so if you bring a
-Docker container, you can write
+00:09:41.990 --> 00:09:44.660
+I know the regular PI
+board has the, has the
 
 185
-00:09:43.340 --> 00:09:47.960
-your action in, you know,
-really anything at all. I
+00:09:44.660 --> 00:09:47.990
+USB file system on it.
+But for us, that was
 
 186
-00:09:47.960 --> 00:09:51.230
-could write a.net action, a
-little.net, core, little, little, tiny,
+00:09:47.990 --> 00:09:50.060
+a little bit too risky
+in terms of, if you
 
 187
-00:09:51.740 --> 00:09:54.500
-little kind of container That's
-right. You can, you can
+00:09:50.060 --> 00:09:53.150
+unplugged it at the wrong
+time, you couldn't work the
 
 188
-00:09:54.500 --> 00:09:57.410
-bring that, you know, the.net
-core base image, build your
+00:09:53.150 --> 00:09:56.510
+file system. So we've got
+little Fs, which is another
 
 189
-00:09:57.410 --> 00:09:58.850
-app on top of it,
-package it up as a
+00:09:56.510 --> 00:09:59.630
+open source file system. That's
+that's used and that's pretty
 
 190
-00:09:58.850 --> 00:10:02.330
-container, put that in a
-get hub repository. So we'll,
+00:09:59.630 --> 00:10:03.110
+much power safe and redundant
+Martin. We should actually juxtapose
 
 191
-00:10:02.330 --> 00:10:05.150
-we'll take that Docker file.
-We'll build that, that re
+00:10:03.140 --> 00:10:06.560
+juxtapose those things because in
+micro Python and in circuit
 
 192
-00:10:05.180 --> 00:10:07.340
-repo for you into a,
-into a container. And then
+00:10:06.560 --> 00:10:09.620
+Python, you plug in these
+machines and they look like
 
 193
-00:10:07.340 --> 00:10:10.040
-we'll run that. And is
-it kind of like, you
+00:10:09.620 --> 00:10:12.830
+a file system, but you're
+right. If you surprise, release
 
 194
-00:10:10.040 --> 00:10:12.410
-know, how you, when, when,
-when are we learning Unix?
+00:10:12.830 --> 00:10:15.830
+or surprise remove, you could
+potentially get into trouble. But
 
 195
-00:10:12.410 --> 00:10:15.500
-People always say that the
-power of Unix is small,
+00:10:15.830 --> 00:10:17.360
+with something like spike prime,
+you really want it to
 
 196
-00:10:15.710 --> 00:10:18.980
-you know, single responsibility executable
-that are chained together with
+00:10:17.360 --> 00:10:19.700
+be reliable for the kids
+at all times. They shouldn't
 
 197
-00:10:19.010 --> 00:10:21.380
-pipes and redirects and things
-like that. It seems like
+00:10:19.700 --> 00:10:22.610
+be able to brick they're
+brick they're brick. Right, right.
 
 198
-00:10:21.380 --> 00:10:24.710
-actions does a similar thing.
-What context do you flow
+00:10:22.730 --> 00:10:24.590
+Yeah. And that's, and we,
+we do have a, there's
 
 199
-00:10:24.710 --> 00:10:27.110
-into your action and what
-context flows out of it?
+00:10:24.590 --> 00:10:27.110
+a always a fail safe,
+so you can't actually break
 
 200
-00:10:27.500 --> 00:10:31.400
-Right. So I think that
-that's a really astute observation.
+00:10:27.110 --> 00:10:29.390
+it. So that's, so that's
+a good news. You can
 
 201
-00:10:31.430 --> 00:10:35.690
-That's definitely the way we
-thought about GitHub actions, you
+00:10:29.390 --> 00:10:31.280
+replace firmware. And if it's
+a bad image, you can
 
 202
-00:10:35.690 --> 00:10:38.270
-know, in the first place,
-you know, as a workflow
+00:10:31.280 --> 00:10:34.340
+always get back to the,
+to the default. What is
 
 203
-00:10:38.270 --> 00:10:40.550
-engine, that's how we, that's
-really how we thought about
+00:10:34.340 --> 00:10:36.860
+the, are there any kinds
+of ways to inter-operate like
 
 204
-00:10:40.550 --> 00:10:44.870
-it. The CIC D aspects,
-a lot of people just
+00:10:36.950 --> 00:10:39.170
+we have a bunch of
+<inaudible> stuff. We have a
 
 205
-00:10:44.870 --> 00:10:46.940
-want to run a script
-that that is their build
+00:10:39.170 --> 00:10:42.950
+bunch of existing elements and
+NXTs, I realized that we
 
 206
-00:10:46.940 --> 00:10:51.290
-script, but sure. But the
-repository automation actions, yeah. It's
+00:10:42.950 --> 00:10:45.440
+probably can't interact from a
+software perspective, but is there
 
 207
-00:10:51.290 --> 00:10:55.250
-basically designed. So you have
-inputs, your action, your action
+00:10:45.440 --> 00:10:48.320
+any thought about like reusing
+motors or bringing any motors
 
 208
-00:10:55.250 --> 00:10:57.020
-takes, and it will do
-some work and then we'll
+00:10:48.410 --> 00:10:52.880
+Forward? Yeah, that's a, that's
+a great question. So Evie
 
 209
-00:10:57.020 --> 00:10:59.390
-set outputs. So you can
-just chain these things together,
+00:10:52.880 --> 00:10:55.910
+three and NXT use a
+kind of a modified RJ
 
 210
-00:10:59.420 --> 00:11:01.970
-taking the output from one
-and feeding it into the
+00:10:55.910 --> 00:11:00.500
+11 Jack for, for their
+motor and sensor connections and
 
 211
-00:11:01.970 --> 00:11:04.940
-input of another. Interesting, okay.
-But if I'm doing, let's
+00:11:00.500 --> 00:11:03.050
+with a spike prime we're
+now on what's called the
 
 212
-00:11:04.940 --> 00:11:06.920
-say I have a, my
-little.net, one that I wrote
+00:11:03.050 --> 00:11:06.590
+powered up connector platform. So
+that means that all of
 
 213
-00:11:06.920 --> 00:11:09.350
-in as a Docker container,
-and I wrote my action
+00:11:06.590 --> 00:11:10.520
+the recent Lego components or
+Lego elements such as the,
 
 214
-00:11:09.350 --> 00:11:13.820
-dot Yammel and then I
-mind flows context forward into
+00:11:11.150 --> 00:11:13.700
+the train motor and the,
+you know, the LEDs and
 
 215
-00:11:13.820 --> 00:11:17.330
-send tweet. Is that context
-adjacent bundle? Is it a
+00:11:13.700 --> 00:11:16.760
+the, the motors that are
+available from the, the newer
 
 216
-00:11:18.710 --> 00:11:21.500
-dictionary of some kind, what
-would name value pairs are
+00:11:16.760 --> 00:11:19.280
+technic kits, those all will
+fit in with your spike
 
 217
-00:11:21.500 --> 00:11:24.170
-being passed around? Basically just
-a, yeah. A key value
+00:11:19.640 --> 00:11:24.110
+spike. That's fantastic. So it
+is awesome. It is amazing.
 
 218
-00:11:24.200 --> 00:11:28.070
-list, a dictionary of strings.
-You can put files on
+00:11:24.200 --> 00:11:26.420
+Wow. Because I want to
+be, I mean, I want
 
 219
-00:11:28.070 --> 00:11:29.750
-disk if you want it
-to and communicate that way,
+00:11:26.420 --> 00:11:27.920
+to be able to, you
+know, deal with my existing
 
 220
-00:11:29.750 --> 00:11:33.890
-but at its simplest form
-strings. Okay. So what's interesting
+00:11:27.920 --> 00:11:29.780
+investment, but I also want
+the children to be thinking
 
 221
-00:11:33.890 --> 00:11:36.260
-is that when I showed
-up at this IE Thompson
+00:11:29.780 --> 00:11:33.890
+about other things, like, what
+is the thing beyond spike?
 
 222
-00:11:36.260 --> 00:11:38.450
-slash send tweet action and
-I'll have links to everything
+00:11:33.920 --> 00:11:37.190
+Is it, is it something
+that is a Lego product
 
 223
-00:11:38.450 --> 00:11:41.090
-in the show notes, I'm
-I note that, you know,
+00:11:37.190 --> 00:11:39.170
+or is it something that's
+more traditional, you know, traditional
 
 224
-00:11:41.090 --> 00:11:42.350
-you show up and you
-go, look, it's just a
+00:11:39.170 --> 00:11:44.720
+motors and microprocessors a raspberry
+pie. Yeah. Well, so just
 
 225
-00:11:42.740 --> 00:11:45.470
-get hub repository, but at
-the top, it literally just
+00:11:44.720 --> 00:11:47.840
+to be clear, the <inaudible>
+and NXT motors and sensors
 
 226
-00:11:45.470 --> 00:11:48.500
-says, use this, get hub
-action with your project. So
+00:11:47.840 --> 00:11:50.240
+will not work with spike
+prime. Right, right, right. That's
 
 227
-00:11:48.860 --> 00:11:51.380
-you have identified that it
-is an action. I can
+00:11:50.240 --> 00:11:53.500
+nice. But, but any of
+the existing Lego components that
 
 228
-00:11:51.380 --> 00:11:54.460
-click view on marketplace, and
-then I get a different
+00:11:53.500 --> 00:11:57.390
+use the powered up connector
+do, Then the ones that
 
 229
-00:11:54.460 --> 00:11:58.270
-view. So instead of seeing
-send tweet action, the pile
+00:11:57.390 --> 00:12:00.510
+use the newer powered up
+connector yep. That are not
 
 230
-00:11:58.270 --> 00:12:02.200
-of files and get hub,
-I see your, that your
+00:12:00.510 --> 00:12:04.770
+spike prime specific they're Lego
+motorized elements. Yeah. They're just
 
 231
-00:12:02.200 --> 00:12:04.870
-CIC CD for your send
-tweet action is in fact
+00:12:04.770 --> 00:12:07.740
+a, that's the new that
+if you see that connector,
 
 232
-00:12:04.870 --> 00:12:07.360
-passing. I see the contributor,
-I can star it. It's
+00:12:07.740 --> 00:12:10.020
+we just, Right. Yes. You
+see, okay. I see. Power
 
 233
-00:12:07.360 --> 00:12:11.470
-now a marketplace. It's instantly
-turned your, a read me
+00:12:10.020 --> 00:12:13.590
+it up. Okay. Now appreciate
+that. I was curious, actually
 
 234
-00:12:11.470 --> 00:12:16.170
-and your repository into a
-marketplace item. That's right. And
+00:12:13.590 --> 00:12:15.780
+I wanted to back up
+a little bit, the Eve
 
 235
-00:12:16.170 --> 00:12:18.180
-in fact, you can, you
-can see all this from
+00:12:15.810 --> 00:12:18.750
+three dev project that you
+founded, I think is significant
 
 236
-00:12:18.180 --> 00:12:21.870
-the get hub actions, workflow
-editor. So if you're on
+00:12:19.530 --> 00:12:22.620
+because it is, it's really
+a two full Linux distribution
 
 237
-00:12:21.870 --> 00:12:24.480
-get hub and in your
-repository and you want to
+00:12:22.650 --> 00:12:26.880
+for an <inaudible>. Yeah. It's
+a completely, it basically full
 
 238
-00:12:24.480 --> 00:12:26.610
-use this, the easiest way
-to do that is actually
+00:12:26.890 --> 00:12:33.330
+Debbie and distribution. So you
+can do internet. Well, it's
 
 239
-00:12:26.610 --> 00:12:30.600
-to click the actions tab,
-and then you can create
+00:12:33.330 --> 00:12:35.520
+a, it's an arm nine
+there's 64 megs of Ram,
 
 240
-00:12:30.600 --> 00:12:33.420
-a new workflow. And that
-will basically bring you into
+00:12:35.520 --> 00:12:37.020
+which is a, which is
+a lot when you think
 
 241
-00:12:33.420 --> 00:12:36.660
-our Yammel editor. And I
-don't know how you feel
+00:12:37.020 --> 00:12:39.600
+about it compared to compared
+to some things there's maybe
 
 242
-00:12:36.660 --> 00:12:41.280
-about Yammer. I feel generally
-medium about camel, but I
+00:12:39.600 --> 00:12:42.990
+not much anymore, it's probably
+a router has more and
 
 243
-00:12:41.280 --> 00:12:43.350
-feel some kind of way.
-I feel, yeah, I feel
+00:12:42.990 --> 00:12:45.780
+more Ram in it than
+that, but it's enough to
 
 244
-00:12:43.350 --> 00:12:47.070
-feelings about Yammel, but like
-our editor actually has syntax
+00:12:45.780 --> 00:12:49.140
+actually get things going. We've
+got a full Python image
 
 245
-00:12:47.070 --> 00:12:51.420
-highlighting and tab completion, which
-really helps the AML experience.
+00:12:49.140 --> 00:12:52.980
+processing. You can hook up
+an old USB Lego camera
 
 246
-00:12:51.440 --> 00:12:53.430
-I got to tell you,
-but the other thing it
+00:12:53.280 --> 00:12:56.430
+to the <inaudible> and take
+screen grabs, or actually take
 
 247
-00:12:53.430 --> 00:12:56.490
-has over on the right
-hand side is a tab
+00:12:56.430 --> 00:12:58.680
+selfies with that. There's people
+that have done that. There's,
 
 248
-00:12:56.490 --> 00:12:59.190
-that will let you browse
-the marketplace. So you can
+00:12:58.710 --> 00:13:03.780
+there's been projects for radio
+streaming, like from the internet,
 
 249
-00:12:59.610 --> 00:13:03.180
-add actions from the marketplace
-right there from within the
+00:13:04.500 --> 00:13:07.710
+there's all kinds of IOT
+applications for it. It's really,
 
 250
-00:13:03.180 --> 00:13:06.780
-editor. Hmm. I just went
-as an experiment to one
+00:13:07.860 --> 00:13:10.980
+really awesome. And I think
+there was a competition recently
 
 251
-00:13:06.780 --> 00:13:09.480
-of my very old repositories
-that I did with Kent
+00:13:10.980 --> 00:13:15.000
+with integrating the V3 with
+it with Alexa. So it's,
 
 252
-00:13:09.480 --> 00:13:13.800
-Dodds called first timers only.
-And it's, I see issues,
+00:13:15.000 --> 00:13:17.820
+it's a pretty awesome system.
+And what's really exciting about
 
 253
-00:13:13.800 --> 00:13:16.650
-poll requests, actions. I click
-on actions and then it
+00:13:17.820 --> 00:13:19.950
+that for folks that maybe
+are thinking about getting a
 
 254
-00:13:16.650 --> 00:13:20.100
-says, build and test your
-CSS repository. So it actually
+00:13:19.950 --> 00:13:23.580
+spike prime, but they've already
+got <inaudible> it's not actually
 
 255
-00:13:20.100 --> 00:13:22.050
-figured out what kind of
-stuff I have in this
+00:13:23.580 --> 00:13:26.070
+firmware. Right. You can put
+an SD card in you
 
 256
-00:13:22.050 --> 00:13:24.630
-folder. And it took a
-guess, it says, Oh, this
+00:13:26.070 --> 00:13:30.000
+basically dual boot, you try
+out your, the, the <inaudible>
 
 257
-00:13:24.630 --> 00:13:27.630
-looks like it's got some
-CSS there. And then at
+00:13:30.000 --> 00:13:31.380
+dev and then if you
+don't like it, you pull
 
 258
-00:13:27.630 --> 00:13:31.740
-the bottom it says already
-a popular workflows. It knows
+00:13:31.380 --> 00:13:34.050
+out the micro SD card.
+There's no flashing of that.
 
 259
-00:13:31.740 --> 00:13:34.020
-about Azure. It knows about
-Amazon. It knows about Google.
+00:13:34.290 --> 00:13:38.640
+That <inaudible> that's correct. Yeah.
+Yeah. That's really significant. So
 
 260
-00:13:35.280 --> 00:13:38.490
-I can probably get this
-running in an hour. Maybe
+00:13:38.640 --> 00:13:41.040
+w in the, in the
+spike prime space, is this
 
 261
-00:13:38.490 --> 00:13:41.100
-less, maybe minutes. I hope
-so. Yeah. That's, that's the
+00:13:41.040 --> 00:13:44.940
+meant to be the next
+generation of motorized and computerized
 
 262
-00:13:41.100 --> 00:13:43.740
-goal. So we, we look
-at, we use what's called
+00:13:44.940 --> 00:13:47.250
+Lego things? Or is it
+a, is it a shoot
 
 263
-00:13:43.740 --> 00:13:46.230
-linguist. It's a, it's a
-package, it's an opensource project
+00:13:47.250 --> 00:13:49.350
+off? How do you think
+about the generations of, of
 
 264
-00:13:46.230 --> 00:13:48.930
-that get hub created. And
-what linguists does is it
+00:13:49.380 --> 00:13:52.320
+those things? Sure. Well, spike
+prime is a, is part
 
 265
-00:13:48.930 --> 00:13:52.500
-looks at your repository and
-tries to figure out what's
+00:13:52.320 --> 00:13:55.620
+of the Lego learning system.
+So that's a, that's part
 
 266
-00:13:52.500 --> 00:13:56.520
-in it, whether there's C
-or C sharp or rust,
+00:13:55.620 --> 00:13:58.620
+of Lego education, which is
+separate from the retail retail
 
 267
-00:13:57.240 --> 00:13:59.550
-and it will basically analyze
-each file and give you
+00:13:58.620 --> 00:14:02.190
+side of the business. But
+again, that's, it's completely compatible
 
 268
-00:13:59.550 --> 00:14:01.680
-a percentage. And so we
-look at the percentage, the
+00:14:02.190 --> 00:14:05.190
+with any of the retail,
+retail elements. We're all sequestered
 
 269
-00:14:01.680 --> 00:14:04.710
-biggest percentage, we, we are
-going to suggest those workloads
+00:14:05.190 --> 00:14:06.990
+at home right now. And
+I've got kids. You might
 
 270
-00:14:04.710 --> 00:14:07.050
-for you. So if you
-have a Russ project and
+00:14:06.990 --> 00:14:09.390
+be able to hear them
+causing trouble outside right now,
 
 271
-00:14:07.050 --> 00:14:09.900
-go to that page, you'll
-see started workloads for rust.
+00:14:10.110 --> 00:14:12.810
+the, the Lego spike prime
+set, it's really focused on
 
 272
-00:14:10.620 --> 00:14:13.500
-Hmm. When you need to
-focus on building, do you
+00:14:12.810 --> 00:14:15.930
+education, even though we're homeschooling
+at this point, I can
 
 273
-00:14:13.500 --> 00:14:16.260
-want to get bogged down
-by your database? Mongo DB
+00:14:15.930 --> 00:14:20.490
+go and buy this@education.lego.com. Absolutely.
+You can. Yeah. And I
 
 274
-00:14:16.260 --> 00:14:19.140
-is an intuitive, flexible document
-database that lets you get
+00:14:20.490 --> 00:14:23.850
+think that's a, it's kind
+of a happy coincidence. Well,
 
 275
-00:14:19.140 --> 00:14:22.770
-to building Mongo. DBS document
-model is a natural way
+00:14:23.850 --> 00:14:25.530
+maybe it's not a happy
+coincidence that we're in the
 
 276
-00:14:22.770 --> 00:14:25.170
-to represent data so you
-can focus on what matters.
+00:14:25.530 --> 00:14:28.230
+middle of this kind of
+lockdown, both in the States
 
 277
-00:14:25.740 --> 00:14:28.440
-Mongo DB Atlas is the
-best way to use Mongo
+00:14:28.230 --> 00:14:30.570
+and here in Denmark, but
+it's, I think it's a
 
 278
-00:14:28.440 --> 00:14:31.590
-DB. It's a global cloud
-database service that gives you
+00:14:30.570 --> 00:14:33.690
+great opportunity to reconnect with,
+with your kids and their
 
 279
-00:14:31.590 --> 00:14:34.710
-all of the developer productivity
-of Mongo DB. Plus the
+00:14:33.720 --> 00:14:37.020
+kind of day to day
+life and a, an opportunity
 
 280
-00:14:34.710 --> 00:14:38.370
-added simplicity of a fully
-managed database service. You can
+00:14:37.020 --> 00:14:40.380
+to, for everybody, I think,
+to kind of learn deeply
 
 281
-00:14:38.370 --> 00:14:46.380
-get started free with Mongo
-DB atlas@mongodb.com slash Atlas. So
+00:14:40.380 --> 00:14:42.450
+if you, if you've had
+a thing that you've not
 
 282
-00:14:46.470 --> 00:14:48.270
-I'm going to ask a
-question though, that is kind
+00:14:42.450 --> 00:14:44.100
+been able to do, because
+you've got a lack of
 
 283
-00:14:48.270 --> 00:14:51.140
-of the elephant in the
-room. I, I have some
+00:14:44.100 --> 00:14:47.580
+time, this is a great
+time to actually dig deep
 
 284
-00:14:51.140 --> 00:14:53.600
-familiarity with the animal, but
-I, my familiarity is with
+00:14:47.580 --> 00:14:49.740
+a little bit and, and
+do some learning and do
 
 285
-00:14:53.630 --> 00:14:56.870
-Azure dev ops. So I've
-got a lot of different
+00:14:49.740 --> 00:14:52.100
+some developing. And I'm trying
+to keep them off screens
 
 286
-00:14:56.870 --> 00:15:00.920
-repositories with small sites. And
-I recently set up two
+00:14:52.130 --> 00:14:53.780
+And how they'll be on
+an iPad and they'll be
 
 287
-00:15:00.920 --> 00:15:02.450
-or three of them in
-dev ops, which I ended
+00:14:53.780 --> 00:14:55.820
+working with the spike prime,
+but they won't be at
 
 288
-00:15:02.450 --> 00:15:05.300
-up using the animal for
-as well. And they're not
+00:14:55.820 --> 00:14:59.590
+least playing fortnight. So that
+makes me happy. Yeah. Well,
 
 289
-00:15:05.300 --> 00:15:07.610
-complicated. They just, they build
-the thing and they deploy
+00:14:59.650 --> 00:15:02.200
+you know, that's the other
+part about, about Lego is
 
 290
-00:15:07.640 --> 00:15:10.340
-the thing. I did it
-because it was free and
+00:15:02.200 --> 00:15:04.840
+a, it's a fantastic building
+system and it's extremely well
 
 291
-00:15:10.340 --> 00:15:12.560
-it's easy. It looks like
-get hub actions is free
+00:15:04.840 --> 00:15:07.780
+thought out. So you'll find
+that the construction that you
 
 292
-00:15:12.560 --> 00:15:15.590
-and easy. When would I
-pick one versus the other?
+00:15:07.780 --> 00:15:10.840
+can do with spike prime,
+it is super easy to
 
 293
-00:15:15.590 --> 00:15:18.200
-And should I, should I
-move from one to the
+00:15:10.840 --> 00:15:13.300
+put together a two wheel
+bot and start moving, moving
 
 294
-00:15:18.200 --> 00:15:20.710
-other If you're happy with
-what you have? No, I
+00:15:13.300 --> 00:15:15.550
+around. But if you want
+to add a, you know,
 
 295
-00:15:20.710 --> 00:15:23.500
-don't. I don't think you
-should move, but you know,
+00:15:15.580 --> 00:15:18.430
+extra actions like a ball
+thrower or something like that,
 
 296
-00:15:23.500 --> 00:15:27.130
-when I look at sort
-of a Greenfield CICT system,
+00:15:18.430 --> 00:15:20.770
+you can, and there's all
+kinds of resources on the
 
 297
-00:15:27.220 --> 00:15:29.710
-if I don't have any
-CIC on my project and
+00:15:20.770 --> 00:15:24.430
+web that you can find
+that, that help you kind
 
 298
-00:15:29.710 --> 00:15:32.650
-I want to decide which
-one to use, the first
+00:15:24.430 --> 00:15:27.400
+of explore and give you
+inspiration for building new things.
 
 299
-00:15:32.650 --> 00:15:35.320
-question is, is it on
-ghetto? If the answer is,
+00:15:27.820 --> 00:15:31.420
+The main thing that, that
+spike prime gives kids, I
 
 300
-00:15:35.320 --> 00:15:38.530
-yes, I'm probably going to
-start looking at GitHub actions
+00:15:31.420 --> 00:15:34.240
+think, and, and parents too
+is, is it's kind of,
 
 301
-00:15:38.530 --> 00:15:42.190
-cause it's really tightly integrated.
-I really like that. My
+00:15:34.270 --> 00:15:39.220
+it's an approachable, discoverable confidence
+building system. It doesn't look
 
 302
-00:15:42.460 --> 00:15:45.910
-builds are in the same
-place as my source code.
+00:15:39.220 --> 00:15:42.610
+scary. There's three buttons. Plus
+the plus the connect button
 
 303
-00:15:46.210 --> 00:15:48.670
-I think that makes it
-really easy. If the answer
+00:15:42.610 --> 00:15:46.330
+on the top. There's no
+menus, there's no fancy screens
 
 304
-00:15:48.670 --> 00:15:51.940
-is no good have actions
-isn't going to work as
+00:15:46.330 --> 00:15:48.760
+or anything to look through.
+It's basically you hit the
 
 305
-00:15:51.940 --> 00:15:54.430
-well for you. It's not
-like we have some easy
+00:15:48.760 --> 00:15:51.820
+left and right button to
+select a swipe left and
 
 306
-00:15:54.430 --> 00:15:57.460
-way to pull from, you
-know, get lab or Bitbucket
+00:15:51.820 --> 00:15:55.000
+swipe, right. To pick which
+program number, press the big
 
 307
-00:15:57.460 --> 00:16:00.820
-or, or, you know, a
-server under your desk. And
+00:15:55.240 --> 00:15:56.940
+white button in the middle.
+And that go, it's a
 
 308
-00:16:00.820 --> 00:16:03.100
-so Azure pipelines can do
-that. The other thing that
+00:15:56.940 --> 00:15:59.350
+go And kids already know
+how to use their iPad.
 
 309
-00:16:03.100 --> 00:16:05.710
-Azure pipelines can do that
-get, have actions can't do
+00:15:59.350 --> 00:16:02.350
+So they're basically moving around,
+scratch like elements on an
 
 310
-00:16:06.790 --> 00:16:10.960
-is TFTC and subversion and
-you know, different types of
+00:16:02.350 --> 00:16:05.050
+iPad or on a tablet
+or PC and there in
 
 311
-00:16:10.960 --> 00:16:13.900
-repositories, you know, get home
-actions is very focused on
+00:16:05.050 --> 00:16:07.570
+order to interact with it
+from a, unless they choose
 
 312
-00:16:13.930 --> 00:16:17.980
-building a get repository that's
-in get hub. Azure pipelines
+00:16:07.570 --> 00:16:09.850
+to do it in a
+textual mode. Right. Yeah. But
 
 313
-00:16:18.280 --> 00:16:22.090
-is much more generic about
-where the code comes from.
+00:16:09.850 --> 00:16:12.970
+it is, it is scratch.
+It is scratch. Scratch. Scratch
 
 314
-00:16:22.930 --> 00:16:24.610
-The only thing that agile
-pipelines is really good at
+00:16:13.090 --> 00:16:16.630
+MIT scratch. Oh yeah. It's
+MIT scratch. Okay. So what
 
 315
-00:16:24.610 --> 00:16:28.660
-is like Azure workflows. You
-know, you mentioned that GitHub
+00:16:16.630 --> 00:16:20.230
+does that relationship between a
+micro Python and scratch? Is
 
 316
-00:16:28.660 --> 00:16:32.710
-actions, you saw the starter
-workflows and you saw Azure,
+00:16:20.230 --> 00:16:21.850
+it a, is it a
+mode? Is it a switch?
 
 317
-00:16:32.710 --> 00:16:36.640
-AWS and Google Azure pipelines
-on the other hand is,
+00:16:22.840 --> 00:16:26.680
+That's a, that's a great
+question. So underneath we actually
 
 318
-00:16:36.820 --> 00:16:40.150
-is a lot more focused
-on building your code and
+00:16:27.520 --> 00:16:33.130
+trans compiler trans trans pile.
+If you start making portmanteaus,
 
 319
-00:16:40.150 --> 00:16:44.020
-getting it into Azure as
-a deployment platform. And so,
+00:16:33.700 --> 00:16:38.110
+you can, transpile the, whatever
+the scratch scratch blocks are
 
 320
-00:16:45.040 --> 00:16:47.260
-you know, that's, that's certainly
-one difference to bear in
+00:16:38.140 --> 00:16:41.770
+translated into actual, pretty dense
+and hard to read Python.
 
 321
-00:16:47.260 --> 00:16:50.830
-mind as well. Interesting. That's
-actually the best explanation that
+00:16:41.770 --> 00:16:43.720
+You wouldn't, if you were
+to program the robot and
 
 322
-00:16:50.830 --> 00:16:53.530
-I've heard so far from
-anyone inside or outside of
+00:16:43.720 --> 00:16:46.240
+Python, you wouldn't do it
+that way, but it gives
 
 323
-00:16:53.530 --> 00:16:57.190
-GitHub or Microsoft that I
-actually feel like I finally
+00:16:46.240 --> 00:16:48.190
+a, it gives the app
+a way to, you know,
 
 324
-00:16:57.190 --> 00:17:02.500
-get it because I've got
-some very ashery things and
+00:16:48.190 --> 00:16:50.890
+manage feedback from the motors.
+And so your screen gets
 
 325
-00:17:02.500 --> 00:17:07.060
-some very complex tied into
-Azure stuff. They're very sophisticated
+00:16:50.890 --> 00:16:54.220
+updates and all that, but
+yeah, it translates the scratch
 
 326
-00:17:07.240 --> 00:17:11.890
-builds and very sophisticated specifically
-deployments. And it makes sense
+00:16:54.220 --> 00:16:57.700
+blocks into Python code. Ah,
+interesting. So it, you just
 
 327
-00:17:11.890 --> 00:17:14.800
-because they're so generic to
-use Azure dev ops, they
+00:16:57.700 --> 00:16:59.470
+said something, you just kinda
+threw it out there casually,
 
 328
-00:17:14.800 --> 00:17:17.230
-run in Azure, they do
-Azure stuff, but at the
+00:16:59.470 --> 00:17:00.640
+but you said it gives
+the app a way to
 
 329
-00:17:17.230 --> 00:17:19.990
-same time, I've got a
-lot of stuff in GitHub
+00:17:00.640 --> 00:17:02.680
+like, you know, update the
+screen. You're you're actually doing
 
 330
-00:17:20.470 --> 00:17:24.160
-that where Azure, the Azure
-would be an implementation detail.
+00:17:02.680 --> 00:17:05.260
+kind of aspect oriented programming
+where like the person expresses
 
 331
-00:17:24.190 --> 00:17:27.040
-Like I could deploy it
-anywhere. So I could see
+00:17:05.260 --> 00:17:08.950
+their intent, move the motor,
+but you're injecting other lines
 
 332
-00:17:27.040 --> 00:17:30.790
-myself using actions for, you
-know, 60, 70% of my
+00:17:08.950 --> 00:17:12.070
+of code around it so
+that it might update itself
 
 333
-00:17:30.790 --> 00:17:33.700
-things. And then for the
-very Azure focused stuff that
+00:17:12.100 --> 00:17:15.310
+before and after events. So
+that it's completely instrumented code.
 
 334
-00:17:33.700 --> 00:17:37.000
-is on the, on the
-niche, on the edge, I
+00:17:16.030 --> 00:17:19.990
+Yes, it is interesting. It's
+pretty cool. I mean, when
 
 335
-00:17:37.000 --> 00:17:40.060
-would go and use a
-DevOps that, that actually makes
+00:17:19.990 --> 00:17:21.640
+you get a chance to
+play with it with your
 
 336
-00:17:40.060 --> 00:17:42.100
-sense. I can, I literally
-out in front of me
+00:17:21.640 --> 00:17:24.430
+kids, I think will be
+a arm wrestling for it
 
 337
-00:17:42.100 --> 00:17:45.910
-now can think about a
-future for my repositories and
+00:17:24.430 --> 00:17:26.050
+for the rest of the
+day. I'm looking forward to
 
 338
-00:17:45.910 --> 00:17:48.010
-not feel bad about using
-either one of those things.
+00:17:26.050 --> 00:17:30.310
+it. No one wants to
+manage databases. If they can
 
 339
-00:17:48.340 --> 00:17:51.180
-I don't think you should
-bad now. And To the,
+00:17:30.310 --> 00:17:35.020
+avoid it. That's why Mongo
+DB made Mongo DB Atlas,
 
 340
-00:17:51.180 --> 00:17:54.300
-to the Azure teams credit,
-they're also building get hub
+00:17:35.380 --> 00:17:39.460
+a global cloud database service
+that runs on AWS, GCP
 
 341
-00:17:54.300 --> 00:17:57.210
-actions so that they're making
-it easier to deploy to
+00:17:39.460 --> 00:17:43.210
+and Azure. You can deploy
+a fully managed Mongo DB
 
 342
-00:17:57.210 --> 00:18:01.200
-Azure with good actions. But,
-but yeah, I don't think
+00:17:43.210 --> 00:17:46.270
+database in minutes with just
+a few clicks or a
 
 343
-00:18:01.200 --> 00:18:03.830
-you should feel bad about
-either of your choices. Okay.
+00:17:46.270 --> 00:17:51.540
+few API calls, Mongo DB,
+Atlas, automates deployment, automates updates,
 
 344
-00:18:03.860 --> 00:18:06.770
-That makes a lot of
-sense. So why would get
+00:17:51.570 --> 00:17:54.330
+handles scaling, and more so
+that you can focus on
 
 345
-00:18:06.770 --> 00:18:09.470
-hub get into the dev
-ops space? Like, is this
+00:17:54.330 --> 00:17:58.140
+your application instead of taking
+care of your database, you
 
 346
-00:18:09.470 --> 00:18:11.660
-an entering a marketplace kind
-of a thing because they
+00:17:58.140 --> 00:18:04.200
+can get started free@mongodb.com slash
+Atlas. Now, if you're already
 
 347
-00:18:11.660 --> 00:18:14.000
-could, they could have just
-done nothing and just held
+00:18:04.200 --> 00:18:07.860
+managing a Mongo DB deployment,
+Atlas has a live migration
 
 348
-00:18:14.000 --> 00:18:18.480
-the source code and let
-it go. Sure. But I
+00:18:07.860 --> 00:18:11.490
+service, so you can migrate
+it easily with minimal downtime
 
 349
-00:18:18.590 --> 00:18:21.170
-really think that there's a
-lot of value in tying
+00:18:11.490 --> 00:18:14.040
+and then get back to
+what matters. Stop managing your
 
 350
-00:18:21.170 --> 00:18:25.520
-these experiences together. Like I
-said, I, I really like
+00:18:14.040 --> 00:18:18.600
+database and start using Mongo
+DB Atlas. I'm curious, also
 
 351
-00:18:25.820 --> 00:18:28.970
-that my code and my
-CICT are in the same
+00:18:18.600 --> 00:18:20.820
+there are add on. So
+if you get to the
 
 352
-00:18:28.970 --> 00:18:31.820
-place. I don't have to
-tab back and forth to
+00:18:20.880 --> 00:18:23.070
+idea that your classroom or
+your kids may be somehow
 
 353
-00:18:31.820 --> 00:18:34.100
-different experiences. I don't have
-to log in a couple
+00:18:23.100 --> 00:18:28.170
+outgrowing it, there's this Lego
+technic large hub for spike
 
 354
-00:18:34.100 --> 00:18:36.900
-of different times and we're
-able to give you, you
+00:18:28.170 --> 00:18:31.410
+prime. So it's a way
+to extend it even more.
 
 355
-00:18:36.920 --> 00:18:41.090
-know, better integrations into get
-hub itself if you're using
+00:18:31.950 --> 00:18:34.620
+You add this brick and
+you get important output supports
 
 356
-00:18:41.090 --> 00:18:44.810
-actions. So that's, that's one
-aspect of it. The other
+00:18:34.710 --> 00:18:37.760
+for even more Stuff. Oh
+no. The Lego technic large
 
 357
-00:18:44.810 --> 00:18:48.530
-place that we're extending out
-is into get hub packages.
+00:18:37.760 --> 00:18:40.730
+hub is the standalone. That's
+just a standalone component that
 
 358
-00:18:48.860 --> 00:18:52.340
-And I think that these
-are like a natural combination,
+00:18:40.730 --> 00:18:44.090
+you can order that comes
+in the original kit. Oh,
 
 359
-00:18:52.670 --> 00:18:55.220
-so I can take my
-code. I can build my
+00:18:44.090 --> 00:18:47.540
+interesting. Okay. Well, hang on
+a second. So the hub
 
 360
-00:18:55.220 --> 00:18:57.590
-code and I can deploy
-my code. And if it's
+00:18:48.020 --> 00:18:50.030
+is that that's the brain,
+that's the heart of it,
 
 361
-00:18:57.590 --> 00:19:02.150
-so happens that what deploying
-my code means is creating
+00:18:50.030 --> 00:18:53.000
+right? That's the left right
+buttons. You've got your light
 
 362
-00:19:02.150 --> 00:19:06.200
-a new get package or
-an NPM package. Then I
+00:18:53.000 --> 00:18:55.850
+matrix five by five graphics.
+You've got Bluetooth, you've got
 
 363
-00:19:06.200 --> 00:19:11.000
-need somewhere to put that.
-And, you know, from one
+00:18:55.850 --> 00:18:58.640
+your gyro and you've got
+your USB support. And it
 
 364
-00:19:11.000 --> 00:19:14.690
-of my opensource projects, that
-place ultimately is new get.org
+00:18:58.640 --> 00:19:01.100
+says you can use that
+with the technic elements that
 
 365
-00:19:14.720 --> 00:19:17.930
-because I want people to
-use that package. I want
+00:19:01.100 --> 00:19:04.040
+you mentioned before. So I
+see. So that's the heart,
 
 366
-00:19:17.930 --> 00:19:20.540
-people to discover that package,
-you know, and so it's
+00:19:04.190 --> 00:19:05.480
+if you wanted to buy
+that. And then if you
 
 367
-00:19:20.540 --> 00:19:24.770
-gotta go on to new,
-get.org, but while I'm doing
+00:19:05.480 --> 00:19:08.780
+wanted more, you would buy
+the expansion kit to the
 
 368
-00:19:24.770 --> 00:19:27.740
-development, I need a way
-to install that package and
+00:19:08.780 --> 00:19:12.410
+spike price. Yeah. So the,
+the spike prime a box,
 
 369
-00:19:27.740 --> 00:19:30.950
-test it locally. And so
-I probably don't want it
+00:19:12.410 --> 00:19:14.840
+as you see, it also
+comes with two media motors,
 
 370
-00:19:30.950 --> 00:19:33.470
-to go to new, get.org
-as I'm doing testing, but
+00:19:14.840 --> 00:19:17.720
+one large motor, a color
+sensor, a really awesome color
 
 371
-00:19:33.860 --> 00:19:36.230
-it might make sense to
-push it to some other
+00:19:17.720 --> 00:19:22.250
+sensor, actually that gives you
+everything from a standard Lego
 
 372
-00:19:36.230 --> 00:19:38.360
-package registry so that I
-can still install it easily.
+00:19:22.250 --> 00:19:24.080
+colors, or you can put
+it in a, a mode
 
 373
-00:19:39.290 --> 00:19:42.740
-And so that's a really
-good use for a private
+00:19:24.080 --> 00:19:27.500
+called HSV, which gives you
+a saturation and value. That's
 
 374
-00:19:42.740 --> 00:19:46.310
-package registry or a, you
-know, a package registry that
+00:19:27.500 --> 00:19:30.530
+pretty cool. We've got an
+ultrasonic range finder and there's
 
 375
-00:19:46.310 --> 00:19:49.790
-isn't open to the public.
-Like, Hey, look at these,
+00:19:30.530 --> 00:19:33.890
+a force sensor that measures
+from a zero to 10
 
 376
-00:19:49.940 --> 00:19:53.540
-this is a released product
-sort of version and get
+00:19:33.890 --> 00:19:36.890
+Newtons of force. And then
+the expansion kit that you're
 
 377
-00:19:53.540 --> 00:19:57.170
-hub packages really shines there.
-So they are peas and
+00:19:36.890 --> 00:19:39.080
+seeing there is really for
+kids that are going into
 
 378
-00:19:57.170 --> 00:20:00.230
-carrots. They're always together get
-hub actions can have packages.
+00:19:39.080 --> 00:19:41.990
+FLL type competition. So it
+gives them an extra motor,
 
 379
-00:20:00.230 --> 00:20:02.540
-If you do anything sophisticated,
-you'll find yourself using them
+00:19:42.560 --> 00:19:45.230
+some bigger, bigger wheels, better,
+bigger gears, that kind of
 
 380
-00:20:02.540 --> 00:20:07.880
-together. Think so. You know,
-I, I don't want to
+00:19:45.230 --> 00:19:49.010
+thing. Okay. You know, actually
+speaking of the color sensor
 
 381
-00:20:07.880 --> 00:20:10.970
-say always, always, always because
-some of your deployments might
+00:19:49.010 --> 00:19:51.020
+stuff, one of the most
+fun things, and I think
 
 382
-00:20:10.970 --> 00:20:13.610
-not be something that gets
-packaged, you know, you might
+00:19:51.020 --> 00:19:56.000
+the, the, the, the culmination
+of our <inaudible> experience of
 
 383
-00:20:13.610 --> 00:20:15.710
-actually just build any ECC
-and push it up to
+00:19:56.000 --> 00:19:58.640
+course, as, as, as with
+everyone, is to create a,
 
 384
-00:20:15.710 --> 00:20:19.430
-a certain simple. Yeah. Yeah.
-But ultimately, you know, I
+00:20:00.080 --> 00:20:03.980
+a Rubik's cube solver. Yep.
+Right. I'm sure you've made
 
 385
-00:20:19.430 --> 00:20:21.890
-see a lot of people
-building Docker containers and I
+00:20:03.980 --> 00:20:06.470
+those before. And, you know,
+being able to actually put
 
 386
-00:20:21.890 --> 00:20:24.050
-think packages makes a lot
-of sense as a place
+00:20:06.470 --> 00:20:09.080
+a, it blows minds, like
+it's absolutely amazing to go
 
 387
-00:20:24.050 --> 00:20:27.410
-to store those, even if
-just as an intermediate storage
+00:20:09.080 --> 00:20:13.250
+and put a Rubik's cube
+into an <inaudible> harness and
 
 388
-00:20:27.410 --> 00:20:31.670
-location before it ends up
-landing on your servers For,
+00:20:13.250 --> 00:20:16.010
+have it solve the, the
+roots. Yeah. Yeah. That's, I
 
 389
-00:20:31.670 --> 00:20:34.070
-for anything that is a
-team that is building an
+00:20:16.010 --> 00:20:18.860
+mean, that's a, that's pretty
+amazing. I think the Rubik's
 
 390
-00:20:34.070 --> 00:20:36.530
-intermediate step on the way
-to something else, or anytime
+00:20:18.860 --> 00:20:22.310
+cube algorithm actually runs on
+a PC, but all the
 
 391
-00:20:36.530 --> 00:20:40.790
-you have someone building an
-internal package for use downstream,
+00:20:22.310 --> 00:20:24.830
+moves and everything are executed
+on the <inaudible> or no,
 
 392
-00:20:41.540 --> 00:20:46.610
-I just love having a
-separate private package registry. Like
+00:20:24.830 --> 00:20:27.170
+this one, I'm sorry. The
+one you've got is the
 
 393
-00:20:46.640 --> 00:20:49.180
-when went years ago, when
-new gate was very first
+00:20:27.170 --> 00:20:30.320
+solver 50 page PDF, and
+it took us a week
 
 394
-00:20:49.180 --> 00:20:51.490
-coming out and I'm a.net
-person. So when I say
+00:20:30.320 --> 00:20:33.110
+to do it. And it's
+really slow. Like it works
 
 395
-00:20:51.490 --> 00:20:55.210
-new, get the audience can
-certainly replace that with Ruby
+00:20:33.110 --> 00:20:35.780
+hard cause it's a big,
+you know, your trap deepen
 
 396
-00:20:55.210 --> 00:20:58.360
-jams or Maven or Docker
-NPM. But it was, it
+00:20:35.840 --> 00:20:38.750
+double four loops. It's quite
+amazing. It's written entirely in
 
 397
-00:20:58.360 --> 00:21:01.300
-was the height of sophistication
-at our company that, that
+00:20:38.750 --> 00:20:41.840
+the <inaudible> language, which just,
+which gets me to my
 
 398
-00:21:01.300 --> 00:21:04.180
-my organization would create a
-new get package, a library,
+00:20:41.840 --> 00:20:44.120
+actual, my actual question there,
+which is what is the
 
 399
-00:21:04.480 --> 00:21:06.550
-put it into a private
-registry and then anyone else
+00:20:44.330 --> 00:20:47.500
+most impossible thing you saw
+that someone built with spike
 
 400
-00:21:06.550 --> 00:21:09.520
-in the company could pull
-from there. And that package
+00:20:47.500 --> 00:20:50.080
+prime where you said, I
+did not think this would
 
 401
-00:21:09.520 --> 00:21:12.070
-had no business being on
-the public new, get.org. Cause
+00:20:50.080 --> 00:20:52.500
+be a thing. The name
+of it. Well, spike prime
 
 402
-00:21:12.070 --> 00:21:14.890
-it was a private thing,
-but we allowed our package
+00:20:52.500 --> 00:20:55.350
+has only been out since
+January. So Except for internally,
 
 403
-00:21:14.890 --> 00:21:19.330
-registry to represent the org
-chart. Right. Ordinarily you don't
+00:20:55.350 --> 00:20:57.000
+like you're all hacking on
+it. You're all playing with
 
 404
-00:21:19.330 --> 00:21:21.130
-want to ship the org
-chart, but having a private
+00:20:57.000 --> 00:21:01.260
+it. Right. Is there a
+robot walking around in the
 
 405
-00:21:21.130 --> 00:21:24.370
-package registry really opens up
-how one organization inside a
+00:21:01.260 --> 00:21:07.080
+hallways there at Lego that
+we No comment, but no,
 
 406
-00:21:24.370 --> 00:21:28.480
-company can interact with others
-within the company. It formalizes
+00:21:07.080 --> 00:21:08.900
+when we do have a,
+we do have some internal
 
 407
-00:21:28.480 --> 00:21:33.210
-it from everything from versioning
-two releases. Yeah. I think
+00:21:08.970 --> 00:21:11.970
+build competitions, but honestly it's
+been such a frantic race
 
 408
-00:21:33.210 --> 00:21:36.120
-that it's really healthy to
-go that route. Cause otherwise
+00:21:11.970 --> 00:21:14.640
+to get this thing out
+the door that we, we
 
 409
-00:21:36.120 --> 00:21:39.030
-you're just like sticking packages
-on a file share somewhere.
+00:21:14.640 --> 00:21:16.350
+do play with it. But
+there's, I mean, there's a
 
 410
-00:21:39.030 --> 00:21:43.020
-And that's, you know, that
-feels very, I don't know,
+00:21:16.350 --> 00:21:19.290
+couple of things like a
+balancers, like segway kind of
 
 411
-00:21:43.080 --> 00:21:46.560
-1997 to me. Well, you
-know, someone is listening to
+00:21:19.290 --> 00:21:21.420
+robots. We've seen those, I
+guess you could do a
 
 412
-00:21:46.560 --> 00:21:50.220
-this, this podcast and they're
-saying, I resemble that. Oh
+00:21:21.420 --> 00:21:24.630
+segway, couldn't you? Yeah, sure.
+There's there's color sorters. There's,
 
 413
-00:21:50.310 --> 00:21:54.660
-yeah, you're right. I, I
-think that it, you know,
+00:21:24.870 --> 00:21:27.840
+you know, robots that can
+sort your bricks by color
 
 414
-00:21:54.750 --> 00:21:57.480
-instead of taking offense, maybe
-you should look at that
+00:21:27.840 --> 00:21:31.320
+and I kind of thing.
+So there's, I'm, I'm really
 
 415
-00:21:57.480 --> 00:22:01.320
-as an opportunity to adopt
-some more better practices within
+00:21:31.320 --> 00:21:33.330
+excited to see what the
+fans come up with over,
 
 416
-00:22:01.320 --> 00:22:04.770
-your organization. Take a good
-hard look at yourself, dr.
+00:21:33.330 --> 00:21:36.270
+over the next few years.
+We've got a, if you
 
 417
-00:22:04.770 --> 00:22:06.870
-Lecter. Yeah. See, this is
-where I put my foot
+00:21:36.270 --> 00:21:38.850
+look at the <inaudible>, some
+of the models that fans
 
 418
-00:22:06.870 --> 00:22:09.320
-in my mouth again. No,
-because it's true though. And
+00:21:38.850 --> 00:21:41.430
+have built, there are just
+mind blowing. We've got a
 
 419
-00:22:09.320 --> 00:22:11.730
-here's the thing when I,
-we're not trying to shame
+00:21:41.430 --> 00:21:44.400
+ones that one that's actually
+the most impressive one I've
 
 420
-00:22:11.730 --> 00:22:13.470
-anybody, but I have to,
-it, we all have, we
+00:21:44.400 --> 00:21:48.300
+seen as two pixie cams
+attached to the <inaudible>. So
 
 421
-00:22:13.470 --> 00:22:15.240
-all have been there. Right.
-I'm sure that you have
+00:21:48.300 --> 00:21:51.150
+it's getting a stereo image
+crab, and it's estimating where
 
 422
-00:22:15.240 --> 00:22:19.200
-projects right now in GitHub.
-You even product manager at
+00:21:51.150 --> 00:21:54.060
+a ball is in three
+space and you can actually
 
 423
-00:22:19.200 --> 00:22:21.990
-GitHub have projects that haven't
-got an action yet because
+00:21:54.060 --> 00:21:56.190
+throw a ball at it
+and it'll move and catch
 
 424
-00:22:21.990 --> 00:22:23.400
-you just haven't got around
-to it. You've got like,
+00:21:56.190 --> 00:21:59.520
+the ball. It's completely mind
+blowing. Wow. Yeah. And you
 
 425
-00:22:23.430 --> 00:22:25.500
-Oh, this hobbyist thing or
-this kid, I had this
+00:21:59.520 --> 00:22:01.830
+know, it's interesting, those things
+take a while to kind
 
 426
-00:22:25.500 --> 00:22:27.540
-thing I did with my
-kid. It's I, you know,
+00:22:01.830 --> 00:22:04.500
+of marinate in the community.
+Like they put a thing
 
 427
-00:22:27.540 --> 00:22:29.730
-I should probably make a
-CIC D we're at a
+00:22:04.500 --> 00:22:07.020
+out and someone achieves something
+and you go, wow, that's
 
 428
-00:22:29.730 --> 00:22:31.830
-time now I think in
-2020, where it's fair to
+00:22:07.020 --> 00:22:09.840
+it it's like the Rubik's
+cube sorter was the pinnacle.
 
 429
-00:22:31.830 --> 00:22:34.410
-say that if, if you
-can build it, then you
+00:22:10.140 --> 00:22:11.790
+And then a year goes
+by and someone says, well,
 
 430
-00:22:34.410 --> 00:22:36.840
-should automate that build and
-you should have a formal
+00:22:11.790 --> 00:22:15.420
+what if we did? And
+then the stereoscopic vision thing
 
 431
-00:22:36.840 --> 00:22:39.660
-CIC to you. Shouldn't have
-it building under, you know,
+00:22:15.420 --> 00:22:17.460
+goes, and you know what,
+I'm sure no one ever
 
 432
-00:22:39.720 --> 00:22:42.570
-on a computer under Anna's
-desk. That's not how you
+00:22:17.460 --> 00:22:20.520
+conceived that there would be
+like a three space capable
 
 433
-00:22:42.570 --> 00:22:46.530
-release software today. And it's
-so easy. There's no excuse.
+00:22:20.640 --> 00:22:23.880
+Lego elements. Well, yeah. And
+that's the, that's the coolest
 
 434
-00:22:46.530 --> 00:22:47.880
-So I would encourage people
-who are listening to the
+00:22:23.880 --> 00:22:27.360
+part about being able to
+inspire one of, one of
 
 435
-00:22:47.880 --> 00:22:50.910
-show to not take offense,
-but rather to take a
+00:22:27.360 --> 00:22:29.460
+our missions or our statements
+is that we want to
 
 436
-00:22:50.910 --> 00:22:53.880
-sense of empowerment. And when
-you're done with this show,
+00:22:29.460 --> 00:22:33.450
+inspire and develop the builders
+of tomorrow. And we love
 
 437
-00:22:53.970 --> 00:22:56.850
-go out and take that
-thing that you've never made
+00:22:33.450 --> 00:22:37.020
+it when, when kids and
+adults used our elements in
 
 438
-00:22:56.850 --> 00:23:00.600
-build a, in a CIC
-environment and make it happen.
+00:22:37.020 --> 00:22:41.520
+ways that are completely unanticipated,
+that's kind of where innovation
 
 439
-00:23:01.320 --> 00:23:03.480
-I think that's exactly right.
-You know, my friend Damian
+00:22:41.520 --> 00:22:45.080
+is, right. It's combining known
+objects and known materials in,
 
 440
-00:23:03.810 --> 00:23:06.750
-says that friends don't let
-friends right. Click deploy. And
+00:22:45.080 --> 00:22:49.830
+in unexpected ways. And when,
+when fans, you know, when
 
 441
-00:23:07.410 --> 00:23:11.310
-there's a certain amount of
-truth to that. I, Yeah,
+00:22:49.830 --> 00:22:53.760
+they do fancy, fancy mocks
+or my own creations for
 
 442
-00:23:11.340 --> 00:23:14.520
-Damien's great. Damon Brady I've
-actually said, if you happen
+00:22:53.790 --> 00:22:57.510
+people that aren't familiar with,
+the acronyms, they combine elements
 
 443
-00:23:14.520 --> 00:23:17.490
-to have to open up
-two finder windows to deploy,
+00:22:57.510 --> 00:22:59.790
+in ways that we have
+no idea would ever be
 
 444
-00:23:17.670 --> 00:23:21.240
-you're probably doing it wrong.
-Wait, I shouldn't just drag
+00:22:59.790 --> 00:23:03.180
+used. And we really love
+seeing that with technology elements
 
 445
-00:23:21.240 --> 00:23:25.590
-and drop. Yeah. So, so
-how are the updates since
+00:23:03.180 --> 00:23:08.250
+too. When you say late,
+you said Lego Mach Yes.
 
 446
-00:23:25.590 --> 00:23:28.260
-launch? We talked about how
-there are thousands of items
+00:23:08.700 --> 00:23:12.180
+MOC my own creation. Mine,
+I own creation. So we've
 
 447
-00:23:28.260 --> 00:23:30.810
-in the marketplace are people
-are using it. Are you
+00:23:12.180 --> 00:23:16.800
+got adult fans of Lego.
+Yeah. AFL we've got my
 
 448
-00:23:30.810 --> 00:23:33.600
-running out of compute? How's
-that going? People are using
+00:23:16.800 --> 00:23:19.920
+own creation. And then the
+Lego ideas has been another
 
 449
-00:23:33.600 --> 00:23:36.240
-it, thankfully we're, we're not
-yet running out of compute.
+00:23:19.920 --> 00:23:21.720
+interesting thing where a lot
+of innovation, it was such
 
 450
-00:23:36.240 --> 00:23:39.240
-We're keeping up with demand.
-It does require us to,
+00:23:21.720 --> 00:23:23.760
+a progressive thing for Lego
+to do, to say, all
 
 451
-00:23:39.390 --> 00:23:42.600
-you know, to, to provision
-new machines once in awhile.
+00:23:23.760 --> 00:23:26.700
+right, you all want this
+to make these vote, put
 
 452
-00:23:42.810 --> 00:23:47.030
-But yeah, I I'm really
-overwhelmed by, by how people
+00:23:26.700 --> 00:23:28.230
+your mouth, you know, put
+your vote where your mouth
 
 453
-00:23:47.030 --> 00:23:49.910
-are using it. I'm really
-thrilled. It's it seems like
+00:23:28.230 --> 00:23:31.050
+is. Yeah, no, I think
+that's been a really fantastic
 
 454
-00:23:49.910 --> 00:23:53.600
-people are using it mostly
-happy. Obviously, you know, there's
+00:23:31.050 --> 00:23:33.390
+program. That's been some great
+models that have come out
 
 455
-00:23:53.600 --> 00:23:55.940
-some rough edges here and
-there and we get feedback
+00:23:33.390 --> 00:23:36.210
+of that and everything from
+the space station, the Saturn
 
 456
-00:23:55.940 --> 00:23:59.060
-and we're working on, on
-taking those rough edges down.
+00:23:36.210 --> 00:23:39.960
+five rocket, I've got the
+women of NASA right over
 
 457
-00:23:59.360 --> 00:24:03.380
-You know, since, since launch,
-we've added, you know, dependency
+00:23:39.960 --> 00:23:42.690
+here. Correct. I've got the
+women of NASA too. And
 
 458
-00:24:03.380 --> 00:24:06.500
-and artifact caching, we've added
-the self hosted runner feature
+00:23:42.690 --> 00:23:46.250
+I've actually got mine signed.
+I buy two of the
 
 459
-00:24:06.500 --> 00:24:10.520
-that I think maybe that
-happened. Like we announced that
+00:23:46.250 --> 00:23:49.930
+ladies. Yeah. Margaret Hamilton. I've got
+Margaret Hamill. You have Margaret Hamilton.
 
 460
-00:24:10.520 --> 00:24:14.420
-the day of GA or
-if not shortly after we
+00:23:50.630 --> 00:23:53.390
+I have mine. Yeah. I
+know it's a, it, you
 
 461
-00:24:14.420 --> 00:24:16.580
-just added an API so
-that you can interact with
+00:23:53.390 --> 00:23:55.400
+know, that photo actually, it's
+funny. We talked about a
 
 462
-00:24:16.580 --> 00:24:19.990
-it more programmatically. One of
-the things that we get
+00:23:55.400 --> 00:23:58.430
+little earlier about people that
+have inspired us. And for
 
 463
-00:24:19.990 --> 00:24:21.790
-to me, like super geeked,
-like if I have to
+00:23:58.430 --> 00:24:01.280
+me, as a, as a
+young engineer, that picture of
 
 464
-00:24:21.790 --> 00:24:25.570
-convince someone, Hey, you should
-probably take that build and
+00:24:01.280 --> 00:24:04.880
+Margaret Hamilton standing next to this
+giant stack of printouts, that
 
 465
-00:24:25.570 --> 00:24:28.510
-automate it. That's not exciting,
-right? Like if I see
+00:24:04.880 --> 00:24:06.860
+was for me, was like,
+wow, that is pretty cool.
 
 466
-00:24:28.510 --> 00:24:30.910
-a friend like, Hey, have
-you, have you got your
+00:24:06.860 --> 00:24:09.320
+There's a lot of neat
+stuff happening on, on, on
 
 467
-00:24:30.910 --> 00:24:34.180
-CIC running at anything? But
-then I show them the
+00:24:09.320 --> 00:24:14.480
+rockets and lunar excursion module.
+Yeah. So that's actually kind
 
 468
-00:24:34.240 --> 00:24:38.470
-pull requests for my sites.
-So I run this podcast.
+00:24:14.480 --> 00:24:17.720
+of interesting, the, the original
+yellow RCX by Lego, it
 
 469
-00:24:38.500 --> 00:24:41.440
-And for example, this podcast
-is on, on get hub.
+00:24:17.720 --> 00:24:21.050
+actually had more compute power
+than the computer that was
 
 470
-00:24:41.860 --> 00:24:45.490
-I'm one person, but I
-have a global CDN. I
+00:24:21.050 --> 00:24:25.420
+on the limb, which is
+mindblowing. Right. So Let's just
 
 471
-00:24:45.490 --> 00:24:47.590
-have Azure. I have the
-power of the cloud, right?
+00:24:25.420 --> 00:24:27.400
+drink that in for a
+second, because that really tells
 
 472
-00:24:47.590 --> 00:24:50.680
-It looks like a million
-bucks because the cloud allows
+00:24:27.400 --> 00:24:30.070
+us how things have been
+moving forward. Like RCX was
 
 473
-00:24:50.680 --> 00:24:51.970
-me to look like a
-million bucks, but I'm still
+00:24:30.130 --> 00:24:33.100
+How long ago? Just over
+20 years ago now. Okay.
 
 474
-00:24:51.970 --> 00:24:54.970
-only one development team, but
-I show people my poll
+00:24:33.130 --> 00:24:35.860
+Okay. So 20 years ago
+there were Lego elements that
 
 475
-00:24:54.970 --> 00:24:57.850
-request right now, I'm looking
-at my Hansel minutes, pull
+00:24:35.860 --> 00:24:37.780
+we could use to teach
+children how to code that
 
 476
-00:24:57.850 --> 00:25:00.730
-requests. And this is my
-most favorite thing. Maybe you
+00:24:37.780 --> 00:24:39.670
+had more power than the
+machine that took us to
 
 477
-00:25:00.730 --> 00:25:03.460
-can help me understand how
-this works. I have 11
+00:24:39.670 --> 00:24:44.170
+the moon. Yup. And that's
+completely mind blowing when you
 
 478
-00:25:03.460 --> 00:25:06.100
-poll requests, but it's a
-private repository. And I'm one
+00:24:44.170 --> 00:24:48.310
+think about it. A little
+known fact, the memory in
 
 479
-00:25:06.100 --> 00:25:09.460
-person who are these coming
-from. I just clicked on
+00:24:48.310 --> 00:24:51.370
+the, in the limbs was
+rope core memory, magnetic rope,
 
 480
-00:25:09.460 --> 00:25:14.830
-one and dependable. It has
-seen that a nougat package
+00:24:51.370 --> 00:24:55.540
+core memory. And they actually
+hired ladies that were knitters
 
 481
-00:25:14.860 --> 00:25:19.270
-got an update, sucked out
-the release notes from the
+00:24:55.570 --> 00:24:59.620
+and Sowers and crochet heirs
+to thread the thread, the
 
 482
-00:25:19.750 --> 00:25:22.150
-previous update up to like
-they did a diff of
+00:24:59.620 --> 00:25:02.590
+magnets into the, into the
+magnetic core memory. So reprogramming,
 
 483
-00:25:22.150 --> 00:25:23.650
-the release notes. They didn't
-just dump them, but they
+00:25:02.590 --> 00:25:05.860
+it actually meant, you know,
+knitting effectively a new memory
 
 484
-00:25:23.650 --> 00:25:27.280
-like have a bulleted list
-of what's changed. The commits
+00:25:05.860 --> 00:25:09.280
+space for, for that. It
+was it's completely mind blowing
 
 485
-00:25:27.280 --> 00:25:30.160
-have been rolled up a
-change log and it went
+00:25:09.280 --> 00:25:12.430
+when you look at the
+technology and all done in
 
 486
-00:25:30.160 --> 00:25:31.990
-and built a thing and
-is telling me I can
+00:25:12.490 --> 00:25:16.030
+what, 10 years crazy While
+we're, while we're geeking out
 
 487
-00:25:31.990 --> 00:25:35.860
-merge the pull request. It's
-like having a vendor that
+00:25:16.030 --> 00:25:19.630
+about being old, I was
+at Bletchley park and I
 
 488
-00:25:35.860 --> 00:25:39.180
-works for you, but it's
-not a human It's dependable.
+00:25:19.630 --> 00:25:22.570
+went there on a random
+Tuesday with my buddy. And
 
 489
-00:25:39.190 --> 00:25:42.640
-Wonderful. Yeah. It's like having
-your own security team. It's
+00:25:22.570 --> 00:25:24.370
+there was nobody there. It
+was just a Tuesday at
 
 490
-00:25:42.640 --> 00:25:44.680
-crazy. And you can talk
-to it. The part that
+00:25:24.370 --> 00:25:26.890
+one o'clock and it was
+quiet. And I happened to
 
 491
-00:25:44.680 --> 00:25:46.480
-blew me away, and this
-is where I get everyone
+00:25:26.890 --> 00:25:29.380
+be there when some of
+the, the, the, the veterans
 
 492
-00:25:46.480 --> 00:25:49.510
-converted is you can then
-tell it stuff you can
+00:25:29.380 --> 00:25:30.940
+and some of the older
+folks, I think there were
 
 493
-00:25:49.510 --> 00:25:52.750
-say, Oh, well, okay, well
-use this milestone and squash
+00:25:30.940 --> 00:25:34.240
+probably upwards of 90 years
+old sitting there with an
 
 494
-00:25:52.750 --> 00:25:56.110
-that and it will do
-it. Like it's a person,
+00:25:34.240 --> 00:25:38.110
+enigma machine and the Bomba
+behind them. And they didn't
 
 495
-00:25:56.110 --> 00:25:57.340
-but you don't have to
-pay them cause it's a
+00:25:38.110 --> 00:25:41.260
+have anything to do. Right.
+He's 90, he's volunteering. And
 
 496
-00:25:57.340 --> 00:26:01.120
-bond. Right. So yeah. So
-the idea behind dependent bot
+00:25:41.260 --> 00:25:43.090
+he's like, Hey, you know,
+you want to see something.
 
 497
-00:26:01.120 --> 00:26:04.850
-is that it has this
-database of every it's it's
+00:25:43.120 --> 00:25:44.560
+And we sat there and
+we talked to this guy
 
 498
-00:26:04.930 --> 00:26:08.050
-called a CVE. I think
-CVE stands for common vulnerability
+00:25:44.560 --> 00:25:47.290
+for two and a half
+hours. He did a complete
 
 499
-00:26:08.050 --> 00:26:11.560
-and exposure, right? So every
-security bug on every package
+00:25:47.560 --> 00:25:50.620
+encryption run, showed us how
+the enigma worked, did it,
 
 500
-00:26:11.800 --> 00:26:13.780
-that's ever been released and
-it can look at your
+00:25:50.950 --> 00:25:52.930
+cracked it on the Bomba.
+And we sat there and
 
 501
-00:26:13.780 --> 00:26:16.120
-project and see what new
-get packages you're using and
+00:25:52.930 --> 00:25:55.570
+we did like, hello world
+on an enigma with an
 
 502
-00:26:16.420 --> 00:26:18.760
-figure out if there's a
-security vulnerability. And if there
+00:25:55.570 --> 00:25:59.230
+actual, you know, a person
+who knew every, every bit,
 
 503
-00:26:18.760 --> 00:26:22.660
-is, it knows what package
-version doesn't have that security
+00:25:59.230 --> 00:26:03.040
+every button, every wire, it
+was absolutely extreme. That's amazing.
 
 504
-00:26:22.660 --> 00:26:25.570
-vulnerability, and it can update
-you. And so it'll open
+00:26:03.100 --> 00:26:05.170
+That is absolutely amazing. Yeah.
+Yeah. I really hope that
 
 505
-00:26:25.570 --> 00:26:29.050
-that pull request automatically. And
-I think that is really,
+00:26:05.170 --> 00:26:07.180
+the kids, my kids, particularly,
+I have a 12 year
 
 506
-00:26:29.050 --> 00:26:34.720
-really cool, but here's another
-example of why I think
+00:26:07.180 --> 00:26:10.360
+old and 14 year old
+as they have been exposed
 
 507
-00:26:34.720 --> 00:26:38.950
-having your source code and
-your dependent bot integrated with
+00:26:10.360 --> 00:26:14.260
+and, and marinaded effectively in
+Lego for their entire life
 
 508
-00:26:38.980 --> 00:26:42.850
-actions is a great thing
-because now you're going to
+00:26:14.530 --> 00:26:16.660
+will be able to take
+these kinds of things and
 
 509
-00:26:42.850 --> 00:26:46.950
-run build every time your
-you're depending on opens a
+00:26:16.660 --> 00:26:19.900
+realize that these are really
+embedded systems. Like this is
 
 510
-00:26:46.960 --> 00:26:50.700
-pull request, right? And that
-build will hopefully pass if
+00:26:19.900 --> 00:26:21.880
+a full on legitimate medicine.
+Like the ones you worked
 
 511
-00:26:50.700 --> 00:26:54.510
-dependent bot did a good
-job. And I usually see
+00:26:21.880 --> 00:26:25.480
+on at GE. Yeah. You
+know what, that's one of
 
 512
-00:26:54.510 --> 00:26:57.030
-that it does right every
-time, but depending on opens
+00:26:25.480 --> 00:26:28.000
+the really amazing parts for
+me is, is when I
 
 513
-00:26:57.030 --> 00:26:59.340
-up, pull requests for me,
-I get a green build,
+00:26:28.000 --> 00:26:31.720
+see a kids, whether they're
+programming and scratch or Python,
 
 514
-00:26:59.430 --> 00:27:02.130
-all my tests pass. And
-so I actually actually have
+00:26:32.110 --> 00:26:34.180
+that the minute you get
+a kid to write a
 
 515
-00:27:02.130 --> 00:27:04.830
-a pretty high degree of
-confidence that things are going
+00:26:34.180 --> 00:26:36.940
+program that turns on a
+motor, I mean, turning on
 
 516
-00:27:04.830 --> 00:27:08.730
-to work. What if GitHub
-actions could then just merge
+00:26:36.940 --> 00:26:39.580
+lights and setting pixels, that's
+pretty cool. But when you
 
 517
-00:27:08.730 --> 00:27:11.940
-that flow request? It knows
-that who opened the full
+00:26:39.580 --> 00:26:42.010
+can turn on a motor,
+drive your robot where you
 
 518
-00:27:11.940 --> 00:27:14.610
-request. It trusts, depended bot.
-It knows that the test
+00:26:42.010 --> 00:26:44.400
+want to go and set
+a con, you know, then
 
 519
-00:27:14.610 --> 00:27:17.310
-is passed. So I actually
-have a workflow set up
+00:26:44.400 --> 00:26:46.230
+the next step is okay,
+well, I'd like to make
 
 520
-00:27:17.640 --> 00:27:20.280
-to go ahead and auto
-merge. Anything that depends about
+00:26:46.230 --> 00:26:48.060
+it stop on a, on
+a black line. So you
 
 521
-00:27:20.790 --> 00:27:25.590
-who spends, if I I'm
-pretty comfortable with my test
+00:26:48.060 --> 00:26:50.280
+put a line of black
+tape on your table, you
 
 522
-00:27:25.590 --> 00:27:29.280
-suite. Oh my goodness. You
-have to be pretty uncomfortable.
+00:26:50.280 --> 00:26:52.080
+run it forward and you
+write a little loop that
 
 523
-00:27:29.810 --> 00:27:32.330
-That's the thing, right? That's
-what that's so interesting because
+00:26:52.170 --> 00:26:55.320
+constantly looks at your light
+sensor. And yeah, I want
 
 524
-00:27:32.750 --> 00:27:35.150
-I'm like, Oh, I don't
-know. But at the same
+00:26:55.320 --> 00:26:57.120
+to stop when it gets
+to black. When I see
 
 525
-00:27:35.150 --> 00:27:37.220
-time you do. I mean,
-and you can try it
+00:26:57.120 --> 00:26:59.700
+black and they're like, Oh,
+wow, that's really cool. What
 
 526
-00:27:37.220 --> 00:27:39.260
-and if it doesn't work
-for you, you can, you
+00:26:59.700 --> 00:27:02.550
+can I do next? So
+they are automatically kind of
 
 527
-00:27:39.260 --> 00:27:42.020
-can not do it. But
-that would be to have
+00:27:02.550 --> 00:27:05.070
+drawn into, you know, what
+can I do next? Or
 
 528
-00:27:42.020 --> 00:27:43.850
-that level of test coverage
-to have that sense of
+00:27:05.070 --> 00:27:07.110
+if I can stop on
+a line, can I follow
 
 529
-00:27:43.850 --> 00:27:46.340
-confidence. If you think about
-how people who are listening
+00:27:07.110 --> 00:27:10.260
+a line? Right. So it's,
+it's a, it's a, it's
 
 530
-00:27:46.340 --> 00:27:48.650
-might feel about their code,
-we've all had that code
+00:27:10.260 --> 00:27:14.580
+a really, it kind of
+never ends, right. It really
 
 531
-00:27:48.650 --> 00:27:52.220
-base that we are afraid
-of. Like, I don't want
+00:27:14.580 --> 00:27:16.440
+never ends where you can
+go. And I know you
 
 532
-00:27:52.220 --> 00:27:54.290
-to piss it off. I
-don't want to anger the
+00:27:16.440 --> 00:27:20.580
+talk a lot about where
+in computer education, where do
 
 533
-00:27:54.290 --> 00:27:57.860
-code. Right. Just like it
-works. Don't anger it. Right.
+00:27:20.580 --> 00:27:22.380
+I need to draw the
+line? How far down do
 
 534
-00:27:58.130 --> 00:28:00.800
-And you're saying that you
-literally have this bot putting
+00:27:22.380 --> 00:27:24.060
+I need to go? And
+I'm guessing that's one of
 
 535
-00:28:00.800 --> 00:28:03.590
-things into production because you
-trust it. I'll pack the
+00:27:24.060 --> 00:27:26.240
+your next questions. Well, cause
+that's the thing that I
 
 536
-00:28:03.590 --> 00:28:07.130
-staging, opening the staging. Okay.
-I'll give you that pretty,
+00:27:26.240 --> 00:27:29.300
+find so fascinating is that
+there is value, I think
 
 537
-00:28:07.130 --> 00:28:10.550
-that's pretty close. That's pretty
-good. I'm just going to
+00:27:29.300 --> 00:27:32.030
+in knowing how to drive
+a stick shift, but there's
 
 538
-00:28:10.550 --> 00:28:12.740
-start merging these things in
-just Willy nilly right now,
+00:27:32.030 --> 00:27:34.130
+also value in accepting the
+fact that yeah, the Uber
 
 539
-00:28:12.740 --> 00:28:15.830
-because why not? What could
-go wrong? You go, well,
+00:27:34.130 --> 00:27:36.860
+driver knows how to handle
+this car, but I still
 
 540
-00:28:15.830 --> 00:28:20.900
-yeah, the w the podcast
-would stop abruptly. Mmm. Pretty
+00:27:36.860 --> 00:27:39.740
+enjoy taking it apart and
+understanding what's going on. So
 
 541
-00:28:20.910 --> 00:28:23.990
-I get about 71%, 72%
-code coverage. So I don't
+00:27:39.740 --> 00:27:41.750
+I think there's different kinds
+of programmers. There's ones who
 
 542
-00:28:24.000 --> 00:28:27.260
-okay. But I love that.
-So the, you said there's
+00:27:41.750 --> 00:27:44.630
+want Lego elements and they
+will build amazing things with
 
 543
-00:28:27.260 --> 00:28:30.080
-the security aspect of things,
-but then there's also whether
+00:27:44.630 --> 00:27:46.010
+them. And then there are
+those who want to know,
 
 544
-00:28:30.080 --> 00:28:32.510
-or not dependent on just
-notices that a, a minor
+00:27:46.230 --> 00:27:48.230
+wait a second, how did
+you make the Lego element?
 
 545
-00:28:32.510 --> 00:28:35.450
-release has happened. You can
-tell it like, Oh, this
+00:27:48.230 --> 00:27:51.110
+What's the plastic made up?
+What's the metal inside of
 
 546
-00:28:35.450 --> 00:28:37.880
-thing, this thing, wasn't a
-security update. It was just
+00:27:51.110 --> 00:27:53.600
+this device. We have a
+couple of ways of thinking
 
 547
-00:28:37.880 --> 00:28:41.090
-a change. Right. It, it
-manages all dependencies, not just
+00:27:53.600 --> 00:27:55.100
+about that at Lego. And
+one of the ones that
 
 548
-00:28:41.090 --> 00:28:44.600
-security. That's true. I, yeah.
-I mostly think about it
+00:27:55.100 --> 00:27:59.090
+I find most accessible is
+a low floor high ceiling.
 
 549
-00:28:44.600 --> 00:28:47.330
-from a dependence, from a
-security point of view, but
+00:27:59.570 --> 00:28:02.090
+So what that means is
+that for, for kids and
 
 550
-00:28:47.330 --> 00:28:49.940
-you're absolutely right. It can
-tell you anytime something changes.
+00:28:02.090 --> 00:28:04.730
+adults that want to get
+involved with, with spike prime
 
 551
-00:28:50.750 --> 00:28:53.750
-So that's Example of a
-bot, what other bots could
+00:28:04.760 --> 00:28:09.170
+or any Lego technology components,
+the floor should be low.
 
 552
-00:28:53.750 --> 00:28:55.790
-I have creeping amount? My
-code that make me look
+00:28:09.170 --> 00:28:11.330
+You should have a very
+low step to get in,
 
 553
-00:28:55.790 --> 00:28:59.780
-like more than one person.
-So one bot that I've
+00:28:11.330 --> 00:28:13.970
+to get started. But once
+you're in the room, the
 
 554
-00:28:59.780 --> 00:29:03.500
-seen used periodically is something
-like a CLA bot where
+00:28:13.970 --> 00:28:16.280
+ceiling should be super high
+so that you, no matter
 
 555
-00:29:03.500 --> 00:29:06.650
-an open source project might
-have a CLA or contributor
+00:28:16.280 --> 00:28:18.170
+how far you want to
+go with it, you can
 
 556
-00:29:06.650 --> 00:29:09.980
-license agreement. And so somebody
-who opens a poll request
+00:28:18.170 --> 00:28:21.380
+take it there. And that's
+why I like the kind
 
 557
-00:29:09.980 --> 00:29:14.210
-might need to actually, you
-know, sign some piece of,
+00:28:21.380 --> 00:28:23.810
+of layers that we have.
+We've got, we've got spike,
 
 558
-00:29:14.390 --> 00:29:17.090
-you know, legal Lees sort
-of paperwork saying that they
+00:28:23.840 --> 00:28:27.170
+which is accessible and you
+can usually get 95% of
 
 559
-00:29:17.300 --> 00:29:19.940
-assign their rights for example,
-or that they accept all
+00:28:27.170 --> 00:28:28.760
+the things you want done.
+You can get that done
 
 560
-00:29:19.940 --> 00:29:24.470
-the terms that an open
-source project has. And you
+00:28:28.770 --> 00:28:32.300
+in, in, in scratch. If
+you want to then take
 
 561
-00:29:24.470 --> 00:29:26.600
-don't want to deal with
-that as an open source
+00:28:32.300 --> 00:28:34.730
+the lid off and, and
+programming Python, you can, you
 
 562
-00:29:26.600 --> 00:29:29.480
-maintainer. I certainly don't like
-I've got enough on my
+00:28:34.730 --> 00:28:38.210
+can do that too. So
+it's a, again, a system
 
 563
-00:29:29.480 --> 00:29:32.960
-plate. When it comes to
-dealing with the project, I
+00:28:38.210 --> 00:28:40.730
+that can build confidence because
+not because it's hard to
 
 564
-00:29:32.960 --> 00:29:35.150
-try to write code. I
-try to get releases out
+00:28:40.730 --> 00:28:44.990
+fail, but because it's, it's,
+it's pretty easy to write
 
 565
-00:29:35.150 --> 00:29:36.980
-the door, those sorts of
-things. I don't want to
+00:28:44.990 --> 00:28:47.420
+programs that don't work right.
+Or they don't perform as
 
 566
-00:29:36.980 --> 00:29:39.620
-have to be like a
-lawyer in my spare time
+00:28:47.420 --> 00:28:50.330
+expected. What the nice part
+of it scratches. It it's,
 
 567
-00:29:39.620 --> 00:29:42.220
-as well. So like, you
-can have a bot set
+00:28:50.390 --> 00:28:54.680
+it's the programs don't crash.
+So it, it, it may
 
 568
-00:29:42.220 --> 00:29:45.910
-up that will see anytime
-somebody opens a poll request.
+00:28:54.680 --> 00:28:56.210
+not do what you wanted
+it to do, but you
 
 569
-00:29:46.090 --> 00:29:48.190
-If they're a new contributor,
-if they've never signed a
+00:28:56.210 --> 00:28:58.340
+can usually reason if you
+build it up from small
 
 570
-00:29:48.190 --> 00:29:51.010
-CLA the CLA bot can
-actually pop in and say,
+00:28:58.340 --> 00:29:01.790
+enough pieces and systems. I
+know it's another thing that
 
 571
-00:29:51.010 --> 00:29:53.950
-Hey, go to this. You
-know, I don't know, DocuSign
+00:29:01.790 --> 00:29:05.360
+you're really in favor of
+is systems thinking is don't
 
 572
-00:29:53.950 --> 00:29:58.420
-URL, maybe a, some other
-link, you know, however you
+00:29:05.360 --> 00:29:07.040
+try to build the whole
+robot at once. If you've
 
 573
-00:29:58.420 --> 00:30:01.270
-have it set up for
-your, for your project and
+00:29:07.040 --> 00:29:10.010
+never built a robot, right.
+You want to, first of
 
 574
-00:30:01.270 --> 00:30:05.440
-its governance. It can enforce
-that. I think the.net foundation,
+00:29:10.010 --> 00:29:12.650
+all, can I turn on
+one motor? Can I control
 
 575
-00:30:05.470 --> 00:30:08.080
-this is where I've seen
-that the most is they've
+00:29:12.650 --> 00:29:14.780
+the speed? Can I move
+it forward and backwards? Awesome.
 
 576
-00:30:08.080 --> 00:30:10.240
-got one called like.net bot
-that does this. And I
+00:29:14.930 --> 00:29:16.580
+Now, can I do that
+with two motors? How do
 
 577
-00:30:10.240 --> 00:30:12.520
-think other things too, and
-it's, you should see its
+00:29:16.580 --> 00:29:18.200
+I make the robot spin?
+How do I make it
 
 578
-00:30:12.520 --> 00:30:16.930
-contribution graph. You know, it's
-that GitHub block, that calendar
+00:29:18.200 --> 00:29:20.600
+move forward and backwards? Okay.
+Now I need to add
 
 579
-00:30:16.930 --> 00:30:19.690
-it's just green all across.
-That is a, that is
+00:29:20.600 --> 00:29:22.610
+a light sensor. Now I
+can add a touch. So
 
 580
-00:30:19.690 --> 00:30:23.820
-a glorious contribution graph at
-that point. There's something to
+00:29:22.610 --> 00:29:26.720
+just start building up your
+capacity or capabilities and also
 
 581
-00:30:23.820 --> 00:30:27.510
-be said for just really
-well run. Well, well, bonded,
+00:29:26.720 --> 00:29:30.260
+build your confidence. And that
+to me is the really
 
 582
-00:30:27.540 --> 00:30:30.930
-I guess, was that the
-word open source projects, one
+00:29:30.260 --> 00:29:33.830
+big thing about spike prime
+is it's, it's just accessible
 
 583
-00:30:30.930 --> 00:30:33.030
-of the, my favorite open
-source project, you should check
+00:29:33.860 --> 00:29:37.460
+buildable and a really good
+confidence builder for young people.
 
 584
-00:30:33.030 --> 00:30:36.540
-out just because they have
-a, it's called an OctoPrint,
+00:29:37.490 --> 00:29:40.820
+Yeah. That confidence, that sense
+of confidence. I know it's
 
 585
-00:30:37.230 --> 00:30:39.960
-it's a web interface for
-your three D printed printer.
+00:29:40.820 --> 00:29:44.020
+a cliche word, but I
+always talk about empowerment. The
 
 586
-00:30:40.680 --> 00:30:45.210
-And it is the most
-organized, most thoughtful, most well-run
+00:29:44.020 --> 00:29:46.480
+idea that I can influence
+the world around me, that
 
 587
-00:30:45.210 --> 00:30:47.850
-project that I have seen
-in a long time, it's
+00:29:46.480 --> 00:29:49.960
+I am not just a
+kid. You know, I'm a
 
 588
-00:30:47.850 --> 00:30:50.280
-run by, and I'm not
-sure how to pronounce her
+00:29:49.960 --> 00:29:52.150
+maker, I'm an engineer. I
+D I did that. I
 
 589
-00:30:50.280 --> 00:30:52.620
-name. It's chairman. She's been
-on the podcast, Gina Hausa.
+00:29:52.150 --> 00:29:54.160
+told it, I commanded it,
+what to do. And it
 
 590
-00:30:53.610 --> 00:30:58.530
-And basically she's got bots
-and issue managers and all
+00:29:54.160 --> 00:29:56.680
+did that thing. Now, what
+else can I do? Right.
 
 591
-00:30:58.530 --> 00:31:01.770
-kinds of tagging. And when
-you go to her issues,
+00:29:56.800 --> 00:29:59.140
+And, and I built it,
+right. I, I, I took
 
 592
-00:31:02.160 --> 00:31:04.110
-there's, you know, if, if
-you, if you, if you're
+00:29:59.620 --> 00:30:02.170
+familiar Lego elements and I
+combined them in, in the
 
 593
-00:31:04.110 --> 00:31:06.120
-just a person who just
-rolls in with a complaint,
+00:30:02.170 --> 00:30:04.450
+ways that I had control
+of. And then I made
 
 594
-00:31:06.570 --> 00:31:09.090
-like, it'll go and say,
-sorry, there's not enough information
+00:30:04.450 --> 00:30:06.280
+it, I made a robot
+do what I wanted it
 
 595
-00:31:09.090 --> 00:31:11.310
-here. Like it could be
-a bug, but she'll Mark
+00:30:06.280 --> 00:30:08.920
+to do, what my 12
+year old is already trying
 
 596
-00:31:11.310 --> 00:31:14.490
-it as status, awaiting information,
-potential bug. But if you
+00:30:08.920 --> 00:30:10.450
+to figure out how to
+make an alarm. So if
 
 597
-00:31:14.490 --> 00:31:16.770
-don't fill out the form,
-right, it's basically like the
+00:30:10.450 --> 00:30:12.520
+the 14 year old comes
+into his room, that they'll
 
 598
-00:31:16.770 --> 00:31:19.620
-soup Nazi. And I mean
-that in the nicest possible
+00:30:12.520 --> 00:30:15.400
+somehow he'll be notified. So
+he wants a burglar alarm.
 
 599
-00:31:19.620 --> 00:31:23.310
-way, like welcome, add a
-new issue, Oh, you didn't
+00:30:15.760 --> 00:30:19.660
+Well, he's going to love
+the ultrasonic sensor then. Fantastic.
 
 600
-00:31:23.310 --> 00:31:25.560
-fill out the information. We
-will wait for you to
+00:30:19.990 --> 00:30:23.170
+So the spike prime is
+a primarily for kids six
 
 601
-00:31:25.560 --> 00:31:27.270
-fill out the information and
-then we will close the
+00:30:23.170 --> 00:30:25.960
+to eight, but really any
+age is appropriate. And it
 
 602
-00:31:27.270 --> 00:31:30.720
-thing when, when you are,
-you know, unless you give
+00:30:25.960 --> 00:30:29.020
+is again, compatible with Lego
+boost, Lego technic sets some
 
 603
-00:31:30.720 --> 00:31:33.570
-us what you need to
-get, you can organize an
+00:30:29.020 --> 00:30:30.940
+of the classic Lego pieces,
+and you can go and
 
 604
-00:31:33.630 --> 00:31:36.900
-and, and automate things. So
-that it's a garden. It's
+00:30:30.940 --> 00:30:36.040
+check it out is shipping
+now@education.lego.com. I really appreciate you
 
 605
-00:31:36.900 --> 00:31:39.930
-almost like animal crossing. You
-make your space, your space
+00:30:36.040 --> 00:30:38.560
+chatting with me today, sir.
+Hey, that's been great. Thanks
 
 606
-00:31:40.440 --> 00:31:43.950
-and get hub then becomes
-your nesting ground for all
+00:30:38.560 --> 00:30:41.080
+very much. Scott. We've been
+talking with Ralph Hemphill from
 
 607
-00:31:43.950 --> 00:31:46.230
-of the things you can
-make a healthy community with
-
-608
-00:31:46.230 --> 00:31:49.380
-a series of actions and
-bots and, and management. It's
-
-609
-00:31:49.380 --> 00:31:52.770
-just wonderful. I think that's
-great. I think that for
-
-610
-00:31:52.770 --> 00:31:56.010
-new contributors coming in and
-actually having an expectation and
-
-611
-00:31:56.010 --> 00:31:59.100
-understanding what the process is,
-is really, really valuable. That's
-
-612
-00:31:59.100 --> 00:32:01.410
-actually probably a place where
-I fall down as a
-
-613
-00:32:01.410 --> 00:32:04.830
-maintainer is not, you know,
-maybe living up to that
-
-614
-00:32:04.830 --> 00:32:08.910
-standard. Hmm. So as we
-get towards the end here,
-
-615
-00:32:08.910 --> 00:32:12.690
-what is coming next for
-actions on get hub? So
-
-616
-00:32:12.810 --> 00:32:15.180
-the big thing that the
-team is working on now
-
-617
-00:32:15.210 --> 00:32:19.320
-that we're really excited about
-is bringing actions to get
-
-618
-00:32:19.320 --> 00:32:23.520
-hub enterprise server. So when
-we launched actions, we jaded
-
-619
-00:32:23.880 --> 00:32:27.780
-last November and it was
-available in github.com and in,
-
-620
-00:32:28.410 --> 00:32:31.590
-you know, the GitHub enterprise
-in our cloud hosted version,
-
-621
-00:32:31.680 --> 00:32:36.090
-but not everybody wants a
-cloud hosted, you know, place
-
-622
-00:32:36.090 --> 00:32:39.620
-for, for their code. Even
-in 2020, lot of people
-
-623
-00:32:39.620 --> 00:32:44.000
-still want to have their,
-their source code, their issues,
-
-624
-00:32:44.000 --> 00:32:48.020
-everything within their data center
-and, you know, behind their
-
-625
-00:32:48.020 --> 00:32:51.290
-firewall. And so GitHub enterprise
-server is that product it's
-
-626
-00:32:51.290 --> 00:32:55.580
-get hub behind your firewall.
-And so we're bringing actions
-
-627
-00:32:55.580 --> 00:32:57.770
-into that. So you'll be
-able to spin up compute
-
-628
-00:32:57.770 --> 00:33:00.620
-within your data center and
-talk to your, you know,
-
-629
-00:33:00.650 --> 00:33:05.140
-private get hub enterprise server
-instance. And so that's, that's
-
-630
-00:33:05.150 --> 00:33:08.090
-really the, the thing that
-we're really focused on right
-
-631
-00:33:08.090 --> 00:33:11.000
-now. So get up actions
-and get unpackages packages as
-
-632
-00:33:11.000 --> 00:33:15.530
-well. We're going to be
-moving into, into GHGs. The
-
-633
-00:33:15.530 --> 00:33:17.660
-other thing that we're looking
-at is some, some more
-
-634
-00:33:17.660 --> 00:33:21.470
-organization level workflows. So right
-now you build actions in
-
-635
-00:33:21.470 --> 00:33:25.730
-a repository. What if you
-wanted actions, especially like the
-
-636
-00:33:25.730 --> 00:33:29.540
-automation type of actions for
-an organization instead of just
-
-637
-00:33:29.540 --> 00:33:32.840
-a single repository. So that's,
-that's another thing that we're
-
-638
-00:33:32.840 --> 00:33:35.060
-taking a look at right
-now. Very cool. And people
-
-639
-00:33:35.060 --> 00:33:37.790
-can go into course Google
-out there for Google, with
-
-640
-00:33:37.790 --> 00:33:41.240
-being, as I like to
-say, forget hub actions, get
-
-641
-00:33:41.240 --> 00:33:44.540
-hub packages and wander around
-the get hub marketplace. And
-
-642
-00:33:44.540 --> 00:33:46.910
-you can get into dev
-ops in a, probably in
-
-643
-00:33:46.910 --> 00:33:49.070
-your lunch hour and show
-your boss. You can get
-
-644
-00:33:49.070 --> 00:33:53.390
-stuff building very, very quickly.
-Yeah, absolutely. Fantastic. I've been
-
-645
-00:33:53.390 --> 00:33:57.290
-talking with Edward Thompson from GitHub.
-This has been another episode
-
-646
-00:33:57.290 --> 00:34:11.320
-of Hanselminutes and we'll see
-you again next week. <inaudible>.
+00:30:41.080 --> 00:30:55.180
+Lego systems. This has been
+another episode of <inaudible>.
 

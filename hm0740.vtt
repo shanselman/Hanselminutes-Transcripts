@@ -1,3371 +1,2921 @@
 WEBVTT FILE
 
 1
-00:00:00.060 --> 00:00:02.040
-When you need to focus
-on building, do you want
+00:00:00.030 --> 00:00:03.960
+Today's sponsor is Datadog a
+monitoring and analytics platform for
 
 2
-00:00:02.040 --> 00:00:04.770
-to get bogged down by
-your database? Mongo DB is
+00:00:03.960 --> 00:00:08.760
+cloud scale infrastructure and applications.
+Datadog provides seamless integrations with
 
 3
-00:00:04.770 --> 00:00:07.590
-an intuitive, flexible document database
-that lets you get to
+00:00:08.760 --> 00:00:13.680
+more than 400 technologies, including
+AWS Postgres sequel, my sequel
 
 4
-00:00:07.590 --> 00:00:11.250
-building Mongo. DBS document model
-is a natural way to
+00:00:14.190 --> 00:00:17.490
+Docker. So you can start
+collecting and visualizing performance metrics,
 
 5
-00:00:11.250 --> 00:00:14.430
-represent data so you can
-focus on what matters. Mongo
+00:00:17.490 --> 00:00:20.970
+quickly distributed, tracing, and APM.
+Give you end to end
 
 6
-00:00:14.430 --> 00:00:17.220
-DB Atlas is the best
-way to use Mongo DB.
+00:00:20.970 --> 00:00:24.720
+visibility into requests wherever they
+go across hosts across containers,
 
 7
-00:00:17.520 --> 00:00:20.160
-It's a global cloud database
-service that gives you all
+00:00:24.720 --> 00:00:29.790
+across service boundaries. With rich
+dashboards, algorithmic alerts and collaboration
 
 8
-00:00:20.160 --> 00:00:23.370
-of the developer productivity of
-Mongo DB. Plus the added
+00:00:29.790 --> 00:00:33.060
+tools. Datadog will give your
+team the tools they need
 
 9
-00:00:23.370 --> 00:00:26.850
-simplicity of a fully managed
-database service. You can get
+00:00:33.090 --> 00:00:37.260
+to quickly troubleshoot and optimize
+modern applications. See for yourself.
 
 10
-00:00:26.850 --> 00:00:46.760
-started free with Mongo DB
-atlas@mongodb.com slash Atlas. Hi, this
+00:00:37.350 --> 00:00:41.370
+Start a 14 day free
+trial today by visiting Datadog
 
 11
-00:00:46.760 --> 00:00:49.250
-is Scott Hanselman. This is
-another episode of Hansel minutes
+00:00:41.400 --> 00:00:46.050
+hq.com/hansel minutes. And they'll send
+you a free tee shirt.
 
 12
-00:00:49.670 --> 00:00:53.510
-today and breaking with my
-no Scott's rule. I've got
+00:00:46.590 --> 00:01:05.150
+That's Datadog hq.com/hansel minutes. Alright,
+This is Scott Hanselman. This
 
 13
-00:00:53.510 --> 00:00:56.810
-Scott Bergen on the show
-author of now his eighth
+00:01:05.150 --> 00:01:07.220
+is another episode of Hansel
+minutes today. I'm talking to
 
 14
-00:00:56.810 --> 00:00:59.600
-book. How design makes the
-world? How are you, sir?
+00:01:07.220 --> 00:01:10.550
+Lauren Gray. Who's on the Azure
+red team at Microsoft. How
 
 15
-00:00:59.900 --> 00:01:01.880
-I am good. I am
-happy to be a rule
+00:01:10.550 --> 00:01:14.030
+are you, sir? I'm doing
+all right. Yeah. Doing pretty
 
 16
-00:01:01.880 --> 00:01:04.820
-breaker right off the bat.
-That makes me excited too
+00:01:14.030 --> 00:01:19.730
+well. So red team, what
+is that? So the red
 
 17
-00:01:04.820 --> 00:01:08.150
-many Scots, too many Scotts,
-but you know, I've got,
+00:01:19.730 --> 00:01:22.790
+team is, or a red
+team in general is a
 
 18
-00:01:08.390 --> 00:01:10.940
-gosh, I think five or
-six of your books and
+00:01:22.790 --> 00:01:26.780
+team that performs a adversary
+emulation. So our job is
 
 19
-00:01:10.940 --> 00:01:12.680
-three of them behind me
-on the shelves just right
+00:01:26.840 --> 00:01:29.750
+to pretend to be the
+bad guys and tackle all
 
 20
-00:01:12.680 --> 00:01:16.970
-here. Wow. You went and
-became a bestselling author. I
+00:01:29.750 --> 00:01:35.450
+your stuff Seriously, like adversary
+emulation. That is a pretty
 
 21
-00:01:16.970 --> 00:01:21.650
-did. And that is pretty
-fantastic. How many books are
+00:01:35.450 --> 00:01:38.270
+awesome way to phrase it.
+That's that's the, like the
 
 22
-00:01:21.650 --> 00:01:23.210
-you doing? You doing a
-book a year? What's your
+00:01:38.270 --> 00:01:43.070
+official, like a formal terminology
+for it. People were just
 
 23
-00:01:23.210 --> 00:01:28.340
-schedule? No. Well, I think
-I've averaged a book every
+00:01:43.070 --> 00:01:45.260
+like, Oh yeah, you're hackers.
+And they kind of just
 
 24
-00:01:28.340 --> 00:01:30.950
-two years. Cause I quit
-to try to equip Microsoft
+00:01:45.260 --> 00:01:48.770
+put everybody in the same,
+the same bubble red teaming
 
 25
-00:01:30.950 --> 00:01:33.770
-to try to become a
-writer in 2003. It's now
+00:01:48.770 --> 00:01:51.950
+is like a very specific
+form of it, right? So
 
 26
-00:01:33.770 --> 00:01:41.360
-20, 2017 years close, close.
-Are they all hard? Cause
+00:01:51.950 --> 00:01:53.960
+you have like pen testers
+and you have red teamers
 
 27
-00:01:41.360 --> 00:01:43.420
-the books that I've written
-are technical books and at
+00:01:53.960 --> 00:01:58.250
+and vulnerability assessment assessors, and
+everyone does a really different
 
 28
-00:01:43.420 --> 00:01:45.440
-the beginning of the process
-of writing the book, I'm
+00:01:58.250 --> 00:02:01.610
+job. But our job is
+to pretend to be act
 
 29
-00:01:45.440 --> 00:01:47.030
-like, eh, you know, I'll
-just bang this book out.
+00:02:01.700 --> 00:02:04.670
+or act as real attackers.
+Is there a blue team
 
 30
-00:01:47.030 --> 00:01:49.250
-It's it's gonna be great.
-And then halfway through I'm
+00:02:04.670 --> 00:02:06.530
+I've heard that term as
+well? Yeah. So the blue
 
 31
-00:01:49.250 --> 00:01:53.360
-like, what have I done?
-You know, it's just fun,
+00:02:06.530 --> 00:02:11.150
+team, our counterparts and they're
+the ones defending, right? So
 
 32
-00:01:53.360 --> 00:01:56.600
-starting a project, right? Because
-your ambition is really big
+00:02:11.360 --> 00:02:15.890
+their job is to being
+able to detect and evict
 
 33
-00:01:56.600 --> 00:01:58.370
-and it's all in your
-head and the vision is
+00:02:16.700 --> 00:02:21.650
+red teamers or even sometimes
+real attackers. Okay. So hang
 
 34
-00:01:58.400 --> 00:02:02.510
-grand and then the work
-is always the work, no
+00:02:21.650 --> 00:02:24.680
+on. You're the adversary emulator.
+You are pretending to be
 
 35
-00:02:02.510 --> 00:02:04.850
-matter how great your vision
-is. And you're passionate at
+00:02:24.680 --> 00:02:28.940
+evil. You're the red team,
+the blue team is like
 
 36
-00:02:04.850 --> 00:02:08.570
-the beginning, it's, that's just
-the nature of creative projects
+00:02:28.970 --> 00:02:30.830
+maybe he's sitting in the
+same building and they're on
 
 37
-00:02:08.570 --> 00:02:12.260
-I think. But writing is
-hard. It's just, you're taking
+00:02:30.830 --> 00:02:33.620
+the other side trying to
+keep you out. Figuratively speaking,
 
 38
-00:02:12.260 --> 00:02:15.920
-on a lot of, you're
-trying to take on these
+00:02:34.400 --> 00:02:36.680
+figuratively speaking, everything we're saying
+is fairly speaking. I don't
 
 39
-00:02:16.250 --> 00:02:19.880
-huge burdens of covering a
-subject that you know, really
+00:02:36.680 --> 00:02:39.710
+mean there, like legitimately in
+the next cubicle over, but
 
 40
-00:02:19.880 --> 00:02:22.670
-well and try to distill
-it down in a way
+00:02:39.890 --> 00:02:43.460
+like from a boxes and
+lines perspective, do you all
 
 41
-00:02:22.670 --> 00:02:25.430
-that people can benefit from
-in a fraction of the
+00:02:43.460 --> 00:02:45.260
+have lunch together? Do you
+even know who they are?
 
 42
-00:02:25.430 --> 00:02:27.500
-time that it took you
-to learn all that stuff.
+00:02:45.260 --> 00:02:47.240
+Like the teams are, they
+separated and hidden from each
 
 43
-00:02:27.500 --> 00:02:30.920
-That's just a cognitively, an
-enormous challenge to do at
+00:02:47.240 --> 00:02:51.050
+other? So at Microsoft there's
+a bunch of red teams
 
 44
-00:02:30.920 --> 00:02:33.590
-all. And yeah. How do
-you decide on the length
+00:02:51.050 --> 00:02:53.810
+and there's a bunch of
+blue teams. And not everybody
 
 45
-00:02:33.590 --> 00:02:37.250
-of your books? This book
-is a comfortable, roughly 200
+00:02:53.840 --> 00:02:56.060
+who you may not know
+who everybody is, right. So
 
 46
-00:02:37.250 --> 00:02:41.060
-pages. It's not a book
-that is, that is weighty.
+00:02:56.060 --> 00:02:59.710
+if we're performing an operation
+against one service, right, they
 
 47
-00:02:41.060 --> 00:02:43.820
-That is, that is, has
-a lot of emotional weight
+00:02:59.710 --> 00:03:01.450
+may have a specific blue
+team that they need to
 
 48
-00:02:43.820 --> 00:02:45.680
-where like, Oh, I'm going
-to slog through this book.
+00:03:01.450 --> 00:03:04.360
+go to in order to
+resolve issues. It may not
 
 49
-00:02:46.250 --> 00:02:48.650
-One of your other great
-books the year without pants
+00:03:04.360 --> 00:03:07.180
+be the same blue team
+as another service from a
 
 50
-00:02:48.950 --> 00:02:52.040
-also, it's, it's a good
-clean read on a fast
+00:03:07.180 --> 00:03:10.750
+different organization. So like they
+have to know who their
 
 51
-00:02:52.040 --> 00:02:53.870
-read. There's a lot of
-depth and a lot of
+00:03:10.750 --> 00:03:14.080
+blue teams are, but we,
+as the Azure red team
 
 52
-00:02:53.870 --> 00:02:56.870
-density, but it's not 800
-pages that you would hit
+00:03:14.320 --> 00:03:18.550
+have like this oversight or
+scope rather than like all
 
 53
-00:02:56.870 --> 00:02:59.000
-someone over the head with.
-How do you decide you
+00:03:19.300 --> 00:03:23.140
+of, all of Azure. So
+we come across different blue
 
 54
-00:02:59.170 --> 00:03:03.450
-have made this book 10
-times longer? Well, I don't
+00:03:23.140 --> 00:03:25.650
+teams. So if I were
+going to make a thing,
 
 55
-00:03:03.450 --> 00:03:07.590
-know that I could anymore.
-I think, I think, but
+00:03:25.650 --> 00:03:27.720
+let's say I was going
+to make a new service.
 
 56
-00:03:07.620 --> 00:03:09.840
-the, the, I think of
-everything. That's what the book
+00:03:27.720 --> 00:03:30.150
+Like, I don't know Scott
+as a service and it's
 
 57
-00:03:09.840 --> 00:03:11.700
-is about. And even talking
-about the book reveal some
+00:03:30.150 --> 00:03:31.890
+going to be an, I
+proposed to the bosses and
 
 58
-00:03:11.700 --> 00:03:13.830
-of the same topics that
-are in the book, is
+00:03:31.890 --> 00:03:33.060
+I've done all this kind
+of stuff and we've done
 
 59
-00:03:13.830 --> 00:03:15.780
-it a book as a
-design thing and you have
+00:03:33.060 --> 00:03:34.440
+the work and we're going
+to put it live in
 
 60
-00:03:15.780 --> 00:03:18.870
-to be thinking about well,
-who you're designing for and
+00:03:34.440 --> 00:03:36.270
+Azure. And we're going to
+start doing that. I assume
 
 61
-00:03:19.080 --> 00:03:20.820
-who you're trying to reach.
-And for this book I
+00:03:36.270 --> 00:03:39.150
+that there's a series of
+security checkpoints. That one has
 
 62
-00:03:20.820 --> 00:03:22.470
-wanted to reach everybody. I
-want it to be a
+00:03:39.150 --> 00:03:44.170
+to go through and surviving
+regular, multiple red team attacks.
 
 63
-00:03:22.470 --> 00:03:25.080
-book that someone could read
-on an airplane, on a
+00:03:44.180 --> 00:03:45.570
+Seems like a thing that
+I would put on my
 
 64
-00:03:25.080 --> 00:03:27.480
-car, on a short flight,
-which we don't really have
+00:03:45.570 --> 00:03:49.860
+checklist. Yeah, for sure. There's
+definitely a, like a security
 
 65
-00:03:27.480 --> 00:03:30.770
-at the moment, but someday
-we'll fly again and wanted
+00:03:49.860 --> 00:03:56.940
+assurance kind of deal that
+happens. I'm not really knowledgeable
 
 66
-00:03:30.770 --> 00:03:33.390
-it to be a two
-hour read that required. No,
+00:03:56.940 --> 00:04:00.120
+about that aspect of it.
+Sure. But your job is
 
 67
-00:03:33.960 --> 00:03:38.550
-no, no, no preconditions, no
-pre qualifiers that you don't
+00:04:00.120 --> 00:04:03.630
+to basically, when I suppose
+is this is the red
 
 68
-00:03:38.550 --> 00:03:42.060
-need any knowledge of design
-or engineering or anything to
+00:04:03.630 --> 00:04:05.580
+team's job to say, Hey,
+we tried as hard as
 
 69
-00:03:42.060 --> 00:03:44.010
-be able to get into
-the book. And so that
+00:04:05.580 --> 00:04:07.350
+we could and we couldn't
+get in. Or is it
 
 70
-00:03:44.010 --> 00:03:47.340
-was the goal. And two
-hour, a 200 page book
+00:04:07.350 --> 00:04:09.510
+more successful to say, Hey,
+we got in and here's
 
 71
-00:03:47.340 --> 00:03:50.190
-is probably about a three
-hour read for most people,
+00:04:09.510 --> 00:04:12.210
+how we mitigate that Either
+is fine. Right? So a
 
 72
-00:03:50.460 --> 00:03:53.070
-two, three hour read. That
-was, that was my frame.
+00:04:12.210 --> 00:04:15.870
+red team is, or offensive
+security in general, the point
 
 73
-00:03:53.100 --> 00:03:55.200
-When I sat down to
-start working on the project,
+00:04:15.870 --> 00:04:18.300
+isn't to like be successful
+all the time. Like be
 
 74
-00:03:56.040 --> 00:03:58.260
-That's a really good thing.
-Like you're thinking about not
+00:04:18.390 --> 00:04:21.930
+social feels good, but the
+whole point is to assess
 
 75
-00:03:58.260 --> 00:04:01.920
-just audience, but also context,
-which is really significant because
+00:04:21.930 --> 00:04:25.220
+the security posture. So if
+we can't get in and
 
 76
-00:04:01.920 --> 00:04:05.490
-every example in the entire
-book is about context because
+00:04:25.230 --> 00:04:28.050
+you like, we are being
+stopped and blocked completely, it's
 
 77
-00:04:05.490 --> 00:04:08.940
-design only exists within context.
-For sure. Yeah. I think
+00:04:28.050 --> 00:04:30.990
+a good thing overall for
+security, it may hurt our
 
 78
-00:04:08.940 --> 00:04:10.710
-that's one of the lessons
-of the book is people
+00:04:30.990 --> 00:04:34.350
+feelings, but like our feelings
+don't matter in the overall
 
 79
-00:04:10.710 --> 00:04:13.410
-think how design makes the
-world like design is like
+00:04:34.380 --> 00:04:38.550
+scheme of, of making sure
+things are secure. And is
 
 80
-00:04:13.410 --> 00:04:17.100
-fashion and like interior design,
-like isn't it a bit
+00:04:38.550 --> 00:04:41.640
+it, you said operations, that
+term operations is interesting because
 
 81
-00:04:17.100 --> 00:04:20.430
-pretentious to claim that design
-makes the world or design
+00:04:41.640 --> 00:04:44.280
+it implies like kind of
+a finite, like you're not
 
 82
-00:04:20.430 --> 00:04:22.890
-makes a nation or anything
-like that. And that's what
+00:04:44.280 --> 00:04:46.590
+just sitting around thinking of
+crazy stuff that you can
 
 83
-00:04:22.890 --> 00:04:24.840
-I try to do with
-the book is that that
+00:04:46.590 --> 00:04:48.780
+do to break into a
+system. You'll be, you might
 
 84
-00:04:24.840 --> 00:04:28.950
-word design, it's a verb
-that applies to everything. Our
+00:04:48.780 --> 00:04:50.670
+be saying, Hey, we're going
+to focus on, you know,
 
 85
-00:04:28.950 --> 00:04:33.420
-public transportation systems are designed
-our policies for healthcare and
+00:04:50.790 --> 00:04:53.700
+service a or, or project
+B right now. And for
 
 86
-00:04:33.420 --> 00:04:37.890
-for a criminal law, those
-things are designed borders between
+00:04:53.700 --> 00:04:56.400
+the next month, we're going
+to go through this list
 
 87
-00:04:37.890 --> 00:04:41.280
-nations are designed when you
-really let it get its
+00:04:56.430 --> 00:04:58.110
+to try to deal with
+this. You are kind of
 
 88
-00:04:41.280 --> 00:04:44.700
-legs out. There is about
-everything and the things that
+00:04:58.110 --> 00:05:02.630
+like hired as mercenaries effectively
+digital mercenaries to, to, to
 
 89
-00:04:44.700 --> 00:04:47.520
-frustrate us or the disappoint
-us, they make us angry.
+00:05:03.180 --> 00:05:05.040
+like, like in the movies
+when someone says, Hey, can
 
 90
-00:04:47.940 --> 00:04:51.390
-They have those affection by
-design because someone created it
+00:05:05.040 --> 00:05:07.680
+you break into my safe
+here? You know, here's the
 
 91
-00:04:51.390 --> 00:04:55.020
-and they are failing us.
-And so I'm a Jajuan
+00:05:07.680 --> 00:05:09.330
+parameters you have three days
+to get into my safe.
 
 92
-00:04:55.080 --> 00:04:57.180
-I want to try to
-cover it as broadly and
+00:05:10.070 --> 00:05:12.810
+It's kind of, it's kind
+of both like, we'll, we'll
 
 93
-00:04:57.180 --> 00:05:01.590
-as intimately as I could
-possibly do. No, the, the
+00:05:12.810 --> 00:05:16.260
+do like our regular operations
+against a specific service. And
 
 94
-00:05:01.920 --> 00:05:04.830
-kind of ultimate example are
-the, the, the, the off
+00:05:16.260 --> 00:05:18.360
+that's how, that's how our
+operations are broken out into,
 
 95
-00:05:04.830 --> 00:05:07.980
-to cited design book would
-be the design of everyday
+00:05:19.920 --> 00:05:21.390
+at the same time. We're
+always trying to come up
 
 96
-00:05:07.980 --> 00:05:10.980
-things by Norman, who you
-evoke within just a few
+00:05:21.390 --> 00:05:24.090
+with new techniques for things,
+right. To try something that
 
 97
-00:05:10.980 --> 00:05:14.490
-pages, because you, you share
-the Norman door, maybe you
+00:05:24.480 --> 00:05:27.870
+we may have, we may
+not have seen before, but
 
 98
-00:05:14.490 --> 00:05:16.920
-could tell us what the
-Norman door is. And then
+00:05:28.110 --> 00:05:30.720
+we kind of assume that,
+and the general assumption is
 
 99
-00:05:16.920 --> 00:05:18.810
-I have a question about
-it. Sure. Yeah. The Norman
+00:05:30.720 --> 00:05:32.460
+that if you can do
+it, then somebody else can
 
 100
-00:05:18.810 --> 00:05:21.660
-door is his classic example
-for anyone who works on
+00:05:32.460 --> 00:05:35.220
+do it. Whereas somebody else
+might have thought of it
 
 101
-00:05:21.660 --> 00:05:24.660
-product design, if any kind
-and it's in his book.
+00:05:35.220 --> 00:05:38.430
+first, if you have that
+mindset, then anything like any
 
 102
-00:05:24.660 --> 00:05:27.990
-And he talks about affordances
-and affordance means how a
+00:05:38.430 --> 00:05:41.940
+new technique that we create,
+we just assume that somebody
 
 103
-00:05:27.990 --> 00:05:30.540
-design presents itself to you
-and what it suggests its
+00:05:41.940 --> 00:05:44.730
+else has done it before.
+And we go to verify
 
 104
-00:05:30.540 --> 00:05:33.360
-behavior is. And so a
-door handle, if it has
+00:05:44.940 --> 00:05:46.980
+that it's not like a
+systemic issue and that no
 
 105
-00:05:33.360 --> 00:05:36.150
-a handle, like a handle
-on an umbrella, a rounded
+00:05:46.980 --> 00:05:49.980
+one else has been affected
+by this. So it's kind
 
 106
-00:05:36.150 --> 00:05:39.210
-handle that implies to any
-human being who lives in
+00:05:49.980 --> 00:05:51.240
+of, it's kind of both
+like, we will do a
 
 107
-00:05:39.210 --> 00:05:42.150
-the modern world, that it
-should be polled a Norman
+00:05:51.240 --> 00:05:53.430
+normal operations against the service,
+but at the same time,
 
 108
-00:05:42.150 --> 00:05:45.150
-doors, any door that has
-an affordance like that, but
+00:05:53.610 --> 00:05:58.550
+we're trying to find new
+tactics that our team may
 
 109
-00:05:45.150 --> 00:05:47.100
-as a message on it
-that says the opposite, like
+00:05:58.550 --> 00:06:01.400
+not have seen, or may
+have not, may not have
 
 110
-00:05:47.130 --> 00:05:49.920
-push. So you can find
-these all over the place
+00:06:01.400 --> 00:06:06.470
+been, you know, detected by
+the blue teams or, you
 
 111
-00:05:49.950 --> 00:05:53.100
-doors that have confusing messages
-about how you interact with
+00:06:06.470 --> 00:06:11.570
+know, the security operation centers
+and say, Nope, has this
 
 112
-00:05:53.100 --> 00:05:56.040
-them. And it's used as
-a canonical example for anyone
+00:06:11.570 --> 00:06:14.710
+been done before? So I
+understand that there's all kinds
 
 113
-00:05:56.040 --> 00:05:59.360
-interested in usability or good
-product design of any kind
+00:06:14.710 --> 00:06:17.500
+of kits that one can
+download. Like I might have
 
 114
-00:05:59.780 --> 00:06:03.380
-as a fundamental mistake that
-designers often make or engineers
+00:06:17.500 --> 00:06:20.050
+a WordPress site or a
+blog or whatever, some custom
 
 115
-00:06:03.380 --> 00:06:05.900
-often make when they're making
-UI for things of not
+00:06:20.650 --> 00:06:25.570
+CMS, there's all kinds of
+like Swiss army knife, security,
 
 116
-00:06:05.900 --> 00:06:08.810
-thinking through the mental models
-that people have and how
+00:06:25.570 --> 00:06:27.610
+things that I can say,
+Hey, go attack that. And
 
 117
-00:06:08.810 --> 00:06:12.470
-to interact with them. And
-in writing this book, the
+00:06:27.610 --> 00:06:31.750
+it kind of runs through
+the obvious stuff. Those are
 
 118
-00:06:12.470 --> 00:06:14.870
-burden I was taking on
-is really ambitious, a book
+00:06:31.750 --> 00:06:34.000
+those tools that you use.
+Do you use the obvious
 
 119
-00:06:14.870 --> 00:06:18.260
-that will explain good design
-to everybody. And I couldn't
+00:06:34.000 --> 00:06:36.850
+things just to make sure
+nothing's regressed or gone backwards?
 
 120
-00:06:18.260 --> 00:06:21.290
-think of doing that without
-making some nod to the
+00:06:37.870 --> 00:06:40.210
+So our team was a
+little bit different. Yeah. So
 
 121
-00:06:21.290 --> 00:06:23.240
-books that have done that
-before, try to do something
+00:06:40.240 --> 00:06:42.550
+in general, like for red
+teaming, there are a lot
 
 122
-00:06:23.240 --> 00:06:25.940
-like that before. And when
-I did the research for
+00:06:42.550 --> 00:06:45.400
+of tools that you can
+use a lot of C
 
 123
-00:06:25.940 --> 00:06:28.460
-this book, I asked everyone
-who I knew had an
+00:06:45.400 --> 00:06:47.380
+two systems, which is like
+a, you know, you have
 
 124
-00:06:28.460 --> 00:06:30.680
-opinion about design, well, what,
-what's the first book you
+00:06:47.380 --> 00:06:49.720
+a server and then you
+have like an agent on
 
 125
-00:06:30.690 --> 00:06:34.340
-give to an executive or
-manager or a client when
+00:06:49.720 --> 00:06:53.110
+someone's computer and then you're
+interacting with their computer that,
 
 126
-00:06:34.340 --> 00:06:36.500
-you're trying to explain good
-design to them and designed
+00:06:53.110 --> 00:06:57.160
+you know, that you've hacked.
+But our team's a little
 
 127
-00:06:36.500 --> 00:06:38.150
-a very things was one
-of the ones that came
+00:06:57.160 --> 00:07:01.780
+bit different in Azure and
+that's because a significant portion
 
 128
-00:06:38.150 --> 00:06:40.730
-with the most. So I'd
-read it before I went
+00:07:01.840 --> 00:07:07.000
+of, of enterprises or, or
+even like security professionals are
 
 129
-00:06:40.730 --> 00:06:43.310
-back and read it again.
-And I felt like, well,
+00:07:07.000 --> 00:07:09.400
+just learning Azure and for
+the last year or so,
 
 130
-00:06:43.520 --> 00:06:45.440
-this book has done a
-great deal, a great deal
+00:07:09.460 --> 00:07:13.930
+as it comes more relevant
+and more prevalent rather like
 
 131
-00:06:45.440 --> 00:06:47.600
-of service to the whole
-community of trying to make
+00:07:13.930 --> 00:07:17.140
+in the field. So there
+aren't a lot of Azure
 
 132
-00:06:47.600 --> 00:06:50.960
-things suck less for sure.
-But the book itself is
+00:07:17.140 --> 00:07:21.220
+tools that are public. I
+think within the last six
 
 133
-00:06:50.960 --> 00:06:54.590
-not really designed to solve
-that problem. It goes far
+00:07:21.220 --> 00:07:26.020
+months, I can name three
+that are pretty prominent and
 
 134
-00:06:54.590 --> 00:06:58.010
-too deep into cognitive psychology
-and how our memory works.
+00:07:26.020 --> 00:07:30.280
+sure, like we can, we
+can run those and check
 
 135
-00:06:58.280 --> 00:06:59.930
-It's really more of a
-guide for someone who's really
+00:07:30.280 --> 00:07:33.160
+them out. But our perspective
+is different because we are
 
 136
-00:06:59.930 --> 00:07:02.030
-going to spend a lot
-of time designing UI. So
+00:07:33.160 --> 00:07:36.520
+internal as opposed to someone
+who is externally trying to
 
 137
-00:07:02.030 --> 00:07:05.300
-I included that example for
-two reasons, one as a
+00:07:36.990 --> 00:07:40.300
+attack. So we always go
+with a, like an assumed
 
 138
-00:07:05.300 --> 00:07:08.090
-sort of homage to Don
-Norman and the work that
+00:07:40.300 --> 00:07:44.110
+breach methodology and it's in
+breached means that, okay, we
 
 139
-00:07:08.090 --> 00:07:11.300
-he has done, but also
-to help everyone who knows
+00:07:44.110 --> 00:07:46.570
+are an attacker who was
+in the environment already, what
 
 140
-00:07:11.300 --> 00:07:14.120
-that example get past it.
-So I introduce it, explain
+00:07:46.570 --> 00:07:51.160
+can we do from that
+perspective? I want to dig
 
 141
-00:07:14.120 --> 00:07:16.790
-how this is an example
-of bad design, but if
+00:07:51.160 --> 00:07:53.230
+into that. But before we
+do, you made the comment
 
 142
-00:07:16.790 --> 00:07:18.980
-you go on Twitter, you'll
-find people who call out
+00:07:53.260 --> 00:07:55.870
+a C to the letter
+C the number two command
 
 143
-00:07:18.980 --> 00:07:21.140
-Norman, door's all over the
-place with outrage. How could
+00:07:55.870 --> 00:07:57.400
+and control. Maybe you could
+just say a little bit
 
 144
-00:07:21.140 --> 00:07:23.960
-there be another Norman door?
-How could there be another
+00:07:57.400 --> 00:07:59.620
+about that for folks who
+aren't familiar with that acronym.
 
 145
-00:07:23.960 --> 00:07:26.870
-parking lot meter that's hard
-to figure out. And there
+00:08:00.280 --> 00:08:03.520
+So C two systems are,
+or is it sort of
 
 146
-00:07:26.870 --> 00:07:29.210
-are really good reasons why
-there's so much bad design
+00:08:03.520 --> 00:08:05.830
+a, a tool that an
+attacker will use in order
 
 147
-00:07:29.210 --> 00:07:30.950
-in the world. And so
-the next chapter, the second
+00:08:05.830 --> 00:08:09.640
+to control a remote system?
+Right. So if I make
 
 148
-00:07:30.950 --> 00:07:34.130
-chapter starts to unpack those
-reasons. Some of the reasons
+00:08:09.640 --> 00:08:12.760
+you ask you to download
+this executable and you click
 
 149
-00:07:34.130 --> 00:07:37.370
-why Norman doors exist are
-about aesthetics, that the choices
+00:08:12.760 --> 00:08:15.340
+it, right, or you open
+up this word document, right.
 
 150
-00:07:37.370 --> 00:07:40.310
-that people who do interior
-design or architecture make, they're
+00:08:15.460 --> 00:08:18.940
+I may install a <inaudible>
+on your device, right. To
 
 151
-00:07:40.310 --> 00:07:42.710
-trying to make a door
-that looks good or fits
+00:08:18.940 --> 00:08:21.490
+be able to control it
+remotely. Okay. So then at
 
 152
-00:07:42.710 --> 00:07:45.710
-into the overall design of
-the building, or they'll make
+00:08:21.490 --> 00:08:25.360
+that point, your own, your
+poned, and you, that's the
 
 153
-00:07:45.710 --> 00:07:47.540
-them that, or make design,
-they'll choose doors that are
+00:08:25.360 --> 00:08:28.120
+assumption that you should just
+act as, as everything that
 
 154
-00:07:47.540 --> 00:07:51.410
-glass with metal bars, which
-are more confusing, but it
+00:08:28.120 --> 00:08:30.610
+you're doing is on a
+machine that is already compromised,
 
 155
-00:07:51.410 --> 00:07:55.070
-allows natural light into places.
-So there's actual trade offs
+00:08:31.150 --> 00:08:33.730
+Right? So we'll, we'll still
+do all that initial free
 
 156
-00:07:55.100 --> 00:07:57.380
-that are involved. That explains
-why some of these things
+00:08:33.730 --> 00:08:35.800
+con phase for a lot
+of our operations where we
 
 157
-00:07:57.740 --> 00:07:59.420
-exists. And that's where I
-wanted to go with the
+00:08:35.800 --> 00:08:39.490
+know maybe we go find
+the credential, but because we
 
 158
-00:07:59.420 --> 00:08:02.960
-book to explain why bad
-design happens. Cause that's really,
+00:08:39.490 --> 00:08:43.390
+do mostly internal or all,
+I should say, mostly all
 
 159
-00:08:03.530 --> 00:08:05.390
-if we want more good
-design, it's not just the,
+00:08:43.390 --> 00:08:47.440
+of our operations are internal
+assessments with Microsoft teams. We
 
 160
-00:08:05.630 --> 00:08:07.490
-it's not just like someone's
-being an idiot and designing
+00:08:47.440 --> 00:08:51.580
+are already inside Microsoft from
+most angles. Whereas an attacker
 
 161
-00:08:07.490 --> 00:08:10.790
-a bad doorknob. There are
-structural and organizational reasons that
+00:08:51.580 --> 00:08:53.080
+has to figure out a
+way how to get in
 
 162
-00:08:10.790 --> 00:08:15.040
-lead. And in the middle
-of that, you called out
+00:08:53.080 --> 00:08:57.000
+first. We just assume that
+they've already gotten in and
 
 163
-00:08:15.040 --> 00:08:17.260
-something important, which was the
-Mexican to be my next
+00:08:57.510 --> 00:09:00.300
+we have some level of
+access from that service that
 
 164
-00:08:17.260 --> 00:08:19.930
-question. But you answered it
-for me, which is, is
+00:09:00.300 --> 00:09:03.200
+we're operating against in order
+to do things. Is that
 
 165
-00:08:19.930 --> 00:08:24.070
-it hard to write a
-book when a book is
+00:09:03.200 --> 00:09:06.620
+really important to just assume
+that you're owned already? Like,
 
 166
-00:08:24.070 --> 00:08:28.270
-considered? That's the book, right?
-The Norman book is considered
+00:09:06.800 --> 00:09:08.690
+you know, the call is
+coming from inside the house.
 
 167
-00:08:28.270 --> 00:08:29.980
-the book, but you're calling
-out that this is not
+00:09:08.990 --> 00:09:11.420
+I hear that more and
+more in the last, maybe
 
 168
-00:08:29.980 --> 00:08:33.250
-that book. That book got
-really deep into, you know,
+00:09:11.420 --> 00:09:14.810
+10 years of, of computer
+science, you just assume that
 
 169
-00:08:33.250 --> 00:08:36.460
-the cognitive psychology of it.
-This book I would have
+00:09:14.840 --> 00:09:17.240
+they're already on a compromised
+system. And then the question
 
 170
-00:08:36.460 --> 00:08:38.380
-to say is more accessible.
-I found it to be
+00:09:17.240 --> 00:09:19.740
+is, once they're in, can
+you keep them in the
 
 171
-00:08:38.380 --> 00:08:40.270
-an easier read. There's a
-lot of density in that,
+00:09:19.760 --> 00:09:22.070
+<inaudible> affair effectively? Or can
+you keep them in the
 
 172
-00:08:40.510 --> 00:08:44.230
-that Norman book. Was it
-intimidating to go in and
+00:09:22.070 --> 00:09:24.710
+man cage at the front
+of the house they've breached
 
 173
-00:08:44.230 --> 00:08:48.220
-tackle this space when everyone
-for right or wrong thinks
+00:09:24.710 --> 00:09:27.200
+the front door. But once
+they're in, in the old
 
 174
-00:08:48.220 --> 00:08:51.100
-that the book has been
-written? I, well, I think,
+00:09:27.200 --> 00:09:28.850
+days, we would assume that
+they just, they have the
 
 175
-00:08:53.440 --> 00:08:57.780
-I think there's always, we
-all believe in progress and
+00:09:28.850 --> 00:09:30.950
+keys to the castle and
+they can do everything. But
 
 176
-00:08:57.780 --> 00:09:00.540
-progress happens when people are
-willing to take on the
+00:09:30.950 --> 00:09:32.780
+in the, in the modern
+times, it's like, well, they
 
 177
-00:09:00.540 --> 00:09:02.790
-standard and say, you know
-what? There's a better way,
+00:09:32.840 --> 00:09:34.370
+got into the mode, but
+they can't get out of
 
 178
-00:09:03.330 --> 00:09:05.790
-or at least a different
-way that can be accessible
+00:09:34.370 --> 00:09:36.770
+the mode. And that's okay.
+So the reason why I
 
 179
-00:09:05.790 --> 00:09:07.800
-to a different group of
-people or solve a different
+00:09:36.770 --> 00:09:42.140
+assume breach is such a
+common methodology is because you
 
 180
-00:09:07.800 --> 00:09:11.340
-problem. One of my earlier
-books, a confessions of a
+00:09:42.140 --> 00:09:46.280
+can always assume that phishing
+is going to work, right?
 
 181
-00:09:11.340 --> 00:09:13.800
-public speaker, I did the
-same thing where I was
+00:09:46.280 --> 00:09:48.770
+So that whole act of,
+of getting initial access is
 
 182
-00:09:13.800 --> 00:09:15.840
-told, you know what, there's
-already a hundred books on
+00:09:48.770 --> 00:09:51.950
+generally more of a, just
+a time consuming manner, because
 
 183
-00:09:15.840 --> 00:09:18.600
-public speaking. Why should there
-be another one? And like,
+00:09:52.100 --> 00:09:54.320
+it's eventually going to work.
+Someone's going to open something
 
 184
-00:09:19.050 --> 00:09:22.380
-that's just, that's the basis
-for creativity is people who
+00:09:54.710 --> 00:09:58.070
+or click something that they're
+not supposed to, and an
 
 185
-00:09:22.380 --> 00:09:25.770
-think a different approach to
-take. And so I have
+00:09:58.070 --> 00:10:02.180
+attacker will have access. And
+so that's generally the mindset
 
 186
-00:09:25.770 --> 00:09:27.960
-a lot of respect for
-Don Norman. He is truly
+00:10:02.180 --> 00:10:03.860
+behind it is that you
+are going to get initial
 
 187
-00:09:27.960 --> 00:09:30.870
-a luminary and hero in
-the field, but that book
+00:10:03.860 --> 00:10:10.460
+access. Somehow it's going to
+happen regardless of, of, of
 
 188
-00:09:30.870 --> 00:09:34.140
-is 20 years old and
-it takes a certain approach
+00:10:10.460 --> 00:10:12.860
+how, how much, how many
+systems you try to have
 
 189
-00:09:34.170 --> 00:09:36.180
-by how it was, how
-he chose to design that
+00:10:12.860 --> 00:10:17.270
+in place to, you know,
+prevent it. But we, when
 
 190
-00:09:36.180 --> 00:09:39.030
-book. And I'm going after
-a different, I'm trying to
+00:10:17.270 --> 00:10:20.630
+we go that route, we
+can just say, instead of
 
 191
-00:09:39.030 --> 00:09:41.370
-solve a different problem. I
-want to invite everybody in
+00:10:20.630 --> 00:10:22.670
+having to waste our time,
+Oh, not really invest the
 
 192
-00:09:41.370 --> 00:09:45.290
-to be thinking more clearly
-about good design. Yeah. And
+00:10:22.670 --> 00:10:27.830
+time into getting that initial
+access is it's, it's more
 
 193
-00:09:45.290 --> 00:09:46.640
-I really feel like you
-did that. And I would
+00:10:27.830 --> 00:10:31.250
+logical to assume that the
+access already exists. Right. And
 
 194
-00:09:46.640 --> 00:09:48.410
-even go so far as
-to say that I've shared
+00:10:31.250 --> 00:10:33.800
+then I understand that the
+access that they have should
 
 195
-00:09:48.410 --> 00:09:51.530
-this book with my 14
-year old, it is a
+00:10:33.800 --> 00:10:35.300
+be limited, right? This is
+why we don't want to
 
 196
-00:09:51.530 --> 00:09:53.690
-very accessible book. And one
-of the things that I
+00:10:35.300 --> 00:10:37.670
+have super users. You have
+role based access security. It's
 
 197
-00:09:53.690 --> 00:09:56.150
-really appreciate about all your
-books, this one in particular
+00:10:37.670 --> 00:10:40.040
+like, well, they got in,
+but they have read access
 
 198
-00:09:56.480 --> 00:10:00.920
-is you really give a
-sense of historical context. I
+00:10:40.040 --> 00:10:42.860
+to data that is limited
+in scope, as opposed to
 
 199
-00:10:00.920 --> 00:10:03.020
-wonder if you do that
-consciously, you always kind of
+00:10:42.860 --> 00:10:46.280
+the old days of they
+have the essay password. Right?
 
 200
-00:10:03.020 --> 00:10:06.410
-call back to here's. Here's
-the thing that I've identified.
+00:10:46.280 --> 00:10:48.560
+So like in traditional red
+teaming, w w what you
 
 201
-00:10:06.410 --> 00:10:08.510
-Here's the thing that I've
-researched. Here's some people who
+00:10:48.560 --> 00:10:51.800
+might normally get is like
+a user level account, right?
 
 202
-00:10:08.510 --> 00:10:10.070
-thought about that, and then
-you put it into a
+00:10:52.940 --> 00:10:57.470
+And a lot of companies
+will ask or give a
 
 203
-00:10:10.070 --> 00:10:14.900
-context kind of temporarily. You're
-always going forward and backwards
+00:10:57.470 --> 00:11:00.620
+lot of consulting. Companies will
+give like their, their organizations,
 
 204
-00:10:14.900 --> 00:10:17.900
-in the 20th century throughout
-this book, thinking about why
+00:11:00.620 --> 00:11:04.580
+target organizations, a computer or
+laptop or something, and just
 
 205
-00:10:17.900 --> 00:10:20.600
-this design happened, what the
-thinking behind it and what
+00:11:04.580 --> 00:11:07.700
+say, put this in your,
+your network, and then give
 
 206
-00:10:20.600 --> 00:10:23.150
-was going on in the
-world when this, when this
+00:11:07.700 --> 00:11:10.460
+us a, the credentials for
+a, a user, just a
 
 207
-00:10:23.150 --> 00:10:25.700
-thing happened, I'm glad that
-you noticed that. Cause it
+00:11:10.460 --> 00:11:13.790
+normal user. And we'll see
+what we can do for
 
 208
-00:10:26.000 --> 00:10:30.590
-takes a lot of work
-to pull that off. I
+00:11:13.790 --> 00:11:17.300
+Azure. It's a little bit
+different because, or at least
 
 209
-00:10:30.590 --> 00:10:33.590
-think that, I think that
-it's grounding. I think that
+00:11:17.300 --> 00:11:22.670
+internally, because we don't, we,
+we already work at Microsoft.
 
 210
-00:10:33.980 --> 00:10:38.300
-we're so fond of believing
-that it's a term Tom
+00:11:23.300 --> 00:11:26.390
+We were not trying to
+pretend to be, you know,
 
 211
-00:10:38.300 --> 00:10:40.840
-Standage who writes for the
-economist uses called the Kronos
+00:11:26.540 --> 00:11:28.880
+we don't need that level
+of access. So our assumed
 
 212
-00:10:40.840 --> 00:10:44.000
-centric that everything is new.
-And we're the first, we're
+00:11:28.880 --> 00:11:34.100
+breaches is always from our
+perspective. Oh, no, it is
 
 213
-00:10:44.000 --> 00:10:46.810
-the first group of people
-ever to face design problems,
+00:11:34.100 --> 00:11:37.670
+generally from our perspective as
+employees of Microsoft. Interesting. So
 
 214
-00:10:46.880 --> 00:10:49.910
-engineering problems. And that's just
-patently untrue. It just, it's
+00:11:37.670 --> 00:11:39.920
+that was my next question.
+So it's like, I'm imagining
 
 215
-00:10:49.910 --> 00:10:52.670
-a shallow understanding of the
-history of your own field.
+00:11:39.950 --> 00:11:42.200
+my job. I'm imagining I
+work on the red team
 
 216
-00:10:52.670 --> 00:10:54.950
-If you tend to think
-that way. And I think
+00:11:42.470 --> 00:11:45.410
+and I'm thinking to myself,
+how does this work? Do
 
 217
-00:10:54.950 --> 00:10:59.480
-there's a power to stories
-when they come from further
+00:11:45.410 --> 00:11:47.720
+I pretend that I don't
+work for the company? Do
 
 218
-00:10:59.480 --> 00:11:02.840
-back in history, there are
-also more stable stories. If
+00:11:47.720 --> 00:11:49.490
+I pretend that I work
+with the company? And I'm
 
 219
-00:11:02.840 --> 00:11:05.180
-I were to write this
-book and all my examples
+00:11:49.490 --> 00:11:53.650
+just evil, you know, who,
+what's my role that playing
 
 220
-00:11:05.180 --> 00:11:08.510
-are about the latest, the
-latest iPhone or the latest
+00:11:53.650 --> 00:11:56.650
+for the particular operation that
+I'm about to do. And
 
 221
-00:11:08.990 --> 00:11:12.770
-laptop in a year, those
-stories are going to be
+00:11:56.650 --> 00:11:59.640
+sometimes it changes. So you
+may have different operations with
 
 222
-00:11:12.770 --> 00:11:14.750
-out of date. They're not
-going to have any power
+00:11:59.640 --> 00:12:02.520
+different perspectives and requests that
+are asked of us. And
 
 223
-00:11:14.750 --> 00:11:18.740
-relevance anymore, but by carefully
-choosing interesting stories from the
+00:12:02.520 --> 00:12:06.840
+so the question may be
+can an external person get
 
 224
-00:11:18.740 --> 00:11:21.800
-past that have power, that
-those are stories that I
+00:12:06.840 --> 00:12:10.200
+directly to this resource? And
+we have to sometimes answer
 
 225
-00:11:21.800 --> 00:11:24.860
-hope and think will stay
-with people longer and be
+00:12:10.200 --> 00:12:14.220
+that question, but generally speaking,
+we're coming from we're. We
 
 226
-00:11:24.860 --> 00:11:27.470
-more applicable because there'll be
-able to refer back to
+00:12:14.220 --> 00:12:18.120
+are coming from the inside.
+And we are assuming that
 
 227
-00:11:27.470 --> 00:11:31.970
-something that comes from a
-deeper, a deeper place. How
+00:12:18.120 --> 00:12:21.720
+if a user had, or
+if an attacker had somehow
 
 228
-00:11:31.970 --> 00:11:36.230
-did you decide about the
-story arc your, your chapters
+00:12:21.750 --> 00:12:25.680
+compromised corporate credentials, right, what
+could they do with this?
 
 229
-00:11:36.230 --> 00:11:39.560
-in this book? You've got
-about 20 chapters and there's
+00:12:25.740 --> 00:12:29.040
+From the perspective of that
+particular service team? Now, you
 
 230
-00:11:39.560 --> 00:11:41.300
-a bit of a bell
-curve there and the kind
+00:12:29.400 --> 00:12:31.950
+you're, you have a background
+in cyber operations. This has
 
 231
-00:11:41.300 --> 00:11:43.880
-of the, the, some, some
-discussion around design as a
+00:12:31.950 --> 00:12:34.620
+been your whole thing for
+a very long time. And
 
 232
-00:11:43.880 --> 00:11:46.550
-verb and a great chapter
-called the pass in your
+00:12:34.620 --> 00:12:36.330
+I noticed that one of
+the things that you did
 
 233
-00:11:46.550 --> 00:11:48.080
-pocket. I want to talk
-about in a little bit,
+00:12:36.330 --> 00:12:38.670
+was you worked on penetration
+testing and you get a
 
 234
-00:11:48.530 --> 00:11:50.900
-how did you figure out
-how to end? How did
+00:12:38.670 --> 00:12:41.790
+certificate in ethical hacking. Why
+is that word ethical so
 
 235
-00:11:50.900 --> 00:11:53.590
-you slide down the other
-side of the story arc?
+00:12:41.790 --> 00:12:45.690
+important in front of hacking?
+What is ethical hacking? Depends
 
 236
-00:11:54.220 --> 00:11:58.510
-Well, that is mostly about,
-I always have a rough
+00:12:45.690 --> 00:12:48.300
+who you ask. So I'm
+asking you, and that's why
 
 237
-00:11:58.510 --> 00:12:01.390
-outline. I have, you know,
-I usually have, as I'm
+00:12:48.300 --> 00:12:51.930
+I want to understand. All
+right. So that, that particular
 
 238
-00:12:01.390 --> 00:12:03.430
-thinking of the early draft
-of the book is usually
+00:12:51.930 --> 00:12:57.240
+certificate ch has, which is
+what is most commonly known
 
 239
-00:12:03.430 --> 00:12:08.170
-ideas from 2030, 40 chapters.
-I do the same. We're
+00:12:57.240 --> 00:13:02.520
+as to be one of
+the most baseline certificates you
 
 240
-00:12:08.170 --> 00:12:11.680
-going to project management technique.
-Any smart person would use,
+00:13:02.520 --> 00:13:06.210
+can get. And it, they,
+they try to stress it
 
 241
-00:12:11.680 --> 00:12:13.390
-you make a big list
-and you start refining it,
+00:13:06.780 --> 00:13:10.410
+ethical it's because the word
+hacker has been thrown around
 
 242
-00:12:13.390 --> 00:12:16.120
-prioritizing it. And then you
-write the first draft. And
+00:13:10.410 --> 00:13:14.970
+as a negative thing for
+so long. They'll put ethical
 
 243
-00:12:16.120 --> 00:12:18.430
-then in writing the first
-draft, you realize, all right,
+00:13:14.970 --> 00:13:17.240
+in front of it in
+order to say, no, this
 
 244
-00:12:18.430 --> 00:12:20.050
-chapter seven, I thought it
-was going to be great.
+00:13:17.310 --> 00:13:21.360
+we're not teaching people how
+to do bad things for
 
 245
-00:12:20.080 --> 00:12:22.690
-And it sucks. I'll rip
-that one out. And then
+00:13:21.360 --> 00:13:23.760
+the purpose of doing bad
+things. We're teaching people, the
 
 246
-00:12:23.020 --> 00:12:24.850
-chapter nine and 10, you
-realize, you know what, they're
+00:13:23.760 --> 00:13:26.490
+techniques and the tools that
+are used to bad thing
 
 247
-00:12:24.850 --> 00:12:27.610
-separate now really should be
-merged. Like you discover all
+00:13:26.550 --> 00:13:29.910
+to do bad things in
+order to help your security
 
 248
-00:12:27.610 --> 00:12:29.830
-these things to the iterative
-process of making stuff. So
+00:13:30.780 --> 00:13:34.110
+team. So a lot of
+things will get advertised as
 
 249
-00:12:29.830 --> 00:12:33.340
-I do that a lot,
-but I don't know what,
+00:13:34.110 --> 00:13:37.650
+ethical hacking just from the
+mindset of knowing that the
 
 250
-00:12:33.600 --> 00:12:35.560
-what the, what the anchoring
-stores are going to be
+00:13:37.650 --> 00:13:40.680
+average person is when they
+hear hacker, always thinks like,
 
 251
-00:12:35.560 --> 00:12:39.460
-yet. I'll have guesses, but
-it's only through the writing
+00:13:40.710 --> 00:13:45.300
+you know, anonymous or, or
+some bad entity doing something.
 
 252
-00:12:39.460 --> 00:12:41.380
-a whole draft and then
-reading it and giving it
+00:13:45.780 --> 00:13:47.580
+Okay. And this is just
+where they hear that term
 
 253
-00:12:41.380 --> 00:12:43.150
-to beta readers. I start
-to get a feel for
+00:13:47.580 --> 00:13:51.120
+white hat versus black, Right?
+So like a lot of
 
 254
-00:12:43.150 --> 00:12:45.190
-it. That story just doesn't
-work here. So I do
+00:13:51.120 --> 00:13:53.760
+people aren't familiar with that,
+right? So white hat, black
 
 255
-00:12:45.190 --> 00:12:46.960
-need to replace that story
-with a better one or
+00:13:53.760 --> 00:13:56.310
+hat, gray hat. There's like
+what? There's a gray hat.
 
 256
-00:12:46.960 --> 00:12:49.450
-rip out that part of
-the chapter. And so I
+00:13:56.580 --> 00:13:58.980
+Tell me about the hats.
+All right. So now white
 
 257
-00:12:49.450 --> 00:12:53.800
-think the book ends, you'll
-ask you about the tail
+00:13:58.980 --> 00:14:03.300
+hats are, are people who
+considered to do hacking for
 
 258
-00:12:53.800 --> 00:12:55.360
-end of the bell curve.
-The book ends with the
+00:14:03.690 --> 00:14:06.360
+legitimate purposes, right there. They
+may work on a security
 
 259
-00:12:55.360 --> 00:13:01.870
-story, a chapter that talks
-about how solutions become problems,
+00:14:06.360 --> 00:14:10.680
+team or some assessment team,
+and they are hacking something,
 
 260
-00:13:01.870 --> 00:13:05.530
-the designs that succeed because
-there's generate problems. And all
+00:14:10.780 --> 00:14:13.050
+an organization because they have
+been authorized to do it.
 
 261
-00:13:05.530 --> 00:13:07.540
-the first part of that
-chapter is about the medical
+00:14:13.650 --> 00:14:17.970
+And they're trying to improve
+that security posture, black hats
 
 262
-00:13:07.540 --> 00:13:10.000
-community. And what goes on
-in a hospital room with
+00:14:17.970 --> 00:14:20.820
+are the people who do
+things for profit, right? For,
 
 263
-00:13:10.000 --> 00:13:11.740
-all the alarms and the
-bells that compete with each
+00:14:21.270 --> 00:14:24.030
+cause they, they want to
+hack things because through cool
 
 264
-00:13:11.740 --> 00:13:14.410
-other. I didn't come to
-that as being the anchor
+00:14:24.030 --> 00:14:29.970
+or whatever, and they have
+malicious intent generally. And then
 
 265
-00:13:14.410 --> 00:13:16.930
-for setting up the last
-chapter until it was a
+00:14:29.970 --> 00:14:33.930
+there's great hats who are
+somewhere in the middle and
 
 266
-00:13:16.930 --> 00:13:19.960
-late draft. It's probably draft
-four or three or four.
+00:14:34.230 --> 00:14:38.370
+they may, let's say they
+may hack something for, because
 
 267
-00:13:20.590 --> 00:13:23.350
-And as I'm working, doing
-research, I make a huge
+00:14:38.370 --> 00:14:39.870
+they want to, you know,
+they're just curious about it.
 
 268
-00:13:23.350 --> 00:13:25.660
-document. It's got all these
-cool stories in it, just
+00:14:40.200 --> 00:14:42.300
+But then they say, Hey,
+you know, if you want
 
 269
-00:13:25.660 --> 00:13:28.180
-reference from all the things
-I've been reading. And as
+00:14:42.300 --> 00:14:45.930
+the, they'll tell an organization
+we've hacked this, but no,
 
 270
-00:13:28.180 --> 00:13:31.210
-I'm doing revisions, I Mark
-each of the stories in
+00:14:45.930 --> 00:14:48.510
+we'll fix it for you.
+Quote or, or we'll tell
 
 271
-00:13:31.210 --> 00:13:34.210
-that big document is marked
-with notes for where it
+00:14:48.510 --> 00:14:50.070
+you how it was done.
+If you pay us or
 
 272
-00:13:34.210 --> 00:13:36.700
-might, what chapter it might
-work in. So as I
+00:14:50.070 --> 00:14:56.240
+something like that is there's
+a pretty thin line with
 
 273
-00:13:36.700 --> 00:13:39.160
-am writing, if I get
-stuck and realize this story
+00:14:56.240 --> 00:14:59.900
+what is known as gray
+hat hacking. Generally speaking, the
 
 274
-00:13:39.160 --> 00:13:41.650
-sucks, or the fact I
-thought was true, I did
+00:14:59.900 --> 00:15:03.320
+majority of people will fall
+into white or black hat
 
 275
-00:13:41.650 --> 00:13:44.170
-more research and I'm totally
-wrong. It's not true. So
+00:15:03.320 --> 00:15:07.930
+hacking. No one wants to
+manage databases. If they can
 
 276
-00:13:44.170 --> 00:13:46.630
-it doesn't work. I can
-go back to my notes
+00:15:07.930 --> 00:15:12.640
+avoid it. That's why Mongo
+DB made Mongo DB Atlas,
 
 277
-00:13:46.630 --> 00:13:48.700
-and go, what else did
-I have that could tell
+00:15:12.970 --> 00:15:17.080
+a global cloud database service
+that runs on AWS, GCP
 
 278
-00:13:48.700 --> 00:13:53.710
-the story of exclusion and
-you know, gender bias in
+00:15:17.080 --> 00:15:20.830
+and Azure. You can deploy
+a fully managed Mongo DB
 
 279
-00:13:53.710 --> 00:13:56.080
-design? Oh, I can go
-back to that section and
+00:15:20.830 --> 00:15:23.890
+database in minutes with just
+a few clicks or a
 
 280
-00:13:56.080 --> 00:13:57.520
-see if I have another
-story and I can put
+00:15:23.890 --> 00:15:29.140
+few API calls, Mongo DB,
+Atlas, automates deployment, automates updates,
 
 281
-00:13:57.520 --> 00:14:00.540
-it back in and see
-if it works. And you
+00:15:29.170 --> 00:15:31.930
+handles scaling, and more so
+that you can focus on
 
 282
-00:14:00.540 --> 00:14:03.000
-get into, I think that's
-chapter 19, when you say
+00:15:31.930 --> 00:15:35.740
+your application instead of taking
+care of your database, you
 
 283
-00:14:03.000 --> 00:14:05.400
-solutions create problems. But then
-what I like about the
+00:15:35.740 --> 00:15:41.830
+can get started free@mongodb.com slash
+Atlas. Now, if you're already
 
 284
-00:14:05.400 --> 00:14:08.460
-book is when you think
-you're at the end, there's
+00:15:41.830 --> 00:15:45.490
+managing a Mongo DB deployment,
+Atlas has a live migration
 
 285
-00:14:08.460 --> 00:14:11.910
-basically 20 pages of notes
-of references of other books
+00:15:45.490 --> 00:15:49.120
+service, so you can migrate
+it easily with minimal downtime
 
 286
-00:14:11.910 --> 00:14:14.700
-to read. You share your
-entire process here, and you
+00:15:49.120 --> 00:15:51.670
+and then get back to
+what matters. Stop managing your
 
 287
-00:14:14.700 --> 00:14:18.120
-actually have a call to
-action to improve the design
+00:15:51.670 --> 00:15:57.940
+database and start using Mongo
+DB Atlas. When then forgive
 
 288
-00:14:18.120 --> 00:14:20.040
-of the world. I love
-this one particular line that
+00:15:57.940 --> 00:15:59.980
+me for asking ignorant questions.
+That's kind of my super
 
 289
-00:14:20.040 --> 00:14:22.500
-I highlighted. You said, it's
-a big world. And then
+00:15:59.980 --> 00:16:03.820
+power is asking dumb questions,
+but as a developer who
 
 290
-00:14:22.570 --> 00:14:25.470
-this is a small book.
-You actually give a list
+00:16:03.820 --> 00:16:06.220
+has a good understanding of
+programming, a good understanding of
 
 291
-00:14:25.920 --> 00:14:28.230
-of the things that we
-can do to kind of
+00:16:06.220 --> 00:16:11.680
+computer architecture, somewhat good understanding
+of networking. My, but I'm
 
 292
-00:14:28.260 --> 00:14:30.840
-ask. And I liked the
-way you phrased this. What
+00:16:11.680 --> 00:16:13.870
+not a surely I'm not
+a hacker. I'm not a
 
 293
-00:14:30.840 --> 00:14:34.110
-can you ask of the
-things that you see around
+00:16:13.870 --> 00:16:16.720
+cyber cybersecurity expert. I have
+only the basic understandings of
 
 294
-00:14:34.110 --> 00:14:36.930
-you when you see a
-thing that is designed that
+00:16:16.720 --> 00:16:20.440
+like, yeah, you know, ports
+and the TCP IP and
 
 295
-00:14:36.930 --> 00:14:39.450
-doesn't meet your needs or
-that you feel some kind
+00:16:20.440 --> 00:16:25.540
+blah, blah, blah, are our
+most, you know, cyber professionals
 
 296
-00:14:39.450 --> 00:14:42.780
-of way about what do
-you ask of that object?
+00:16:25.540 --> 00:16:29.290
+more, most, you know, hackers
+or red team penetration, testers
 
 297
-00:14:43.650 --> 00:14:48.390
-Yeah. I wanted to make
-it actionable. I think it's
+00:16:29.290 --> 00:16:32.320
+like yourself. Are you a
+super set? Are you all
 
 298
-00:14:48.390 --> 00:14:50.610
-a, I think I'm good
-at storytelling. I think I'm
+00:16:32.710 --> 00:16:35.470
+really great developers that can
+write really great code and
 
 299
-00:14:50.610 --> 00:14:54.440
-good at structuring a narrative
-experience. People will hopefully say
+00:16:35.470 --> 00:16:38.170
+Python and C and C
+plus plus, or are there
 
 300
-00:14:54.440 --> 00:14:57.470
-it's a good read, but
-I really have the ambition
+00:16:38.170 --> 00:16:41.110
+different levels? What's the skill
+set? Cause I'm imagining that
 
 301
-00:14:57.470 --> 00:14:59.810
-of, I want a better
-design world. That's all that
+00:16:41.110 --> 00:16:43.540
+someone is listening to this
+and wondering what your job
 
 302
-00:14:59.810 --> 00:15:03.590
-stuff that doesn't work well,
-that should, and the people
+00:16:43.570 --> 00:16:46.240
+is. Do you do everything
+that a developer does? Plus
 
 303
-00:15:03.590 --> 00:15:06.320
-who make stuff. And I
-know you from your career
+00:16:46.240 --> 00:16:50.200
+you have deep knowledge of
+security and network architecture. Like
 
 304
-00:15:07.070 --> 00:15:09.290
-were around a lot of
-people who make stuff, developers
+00:16:50.200 --> 00:16:51.490
+it seems like you have
+to be really good at
 
 305
-00:15:09.290 --> 00:15:12.650
-and designers and entrepreneurs, everyone
-who I know who wants
+00:16:51.490 --> 00:16:53.590
+a lot of stuff to
+be able to do this
 
 306
-00:15:12.650 --> 00:15:15.560
-to make stuff wants to
-make something good. So there's
+00:16:53.590 --> 00:16:56.590
+job. So that's a sensitive
+question for a lot of
 
 307
-00:15:15.560 --> 00:15:17.780
-a gap there in their
-knowledge about it. And so
+00:16:56.590 --> 00:17:00.310
+people in the community. A
+lot of people will tell
 
 308
-00:15:17.780 --> 00:15:19.550
-I want anyone who makes
-two goods to get through
+00:17:00.310 --> 00:17:02.920
+you that you don't need
+to understand programming at all
 
 309
-00:15:19.550 --> 00:15:21.560
-the book and feels, ah,
-I think I see the
+00:17:03.130 --> 00:17:06.430
+right. In order to be
+accurate, or I should say,
 
 310
-00:15:21.560 --> 00:15:24.200
-world better. Well, I want
-them to be, have some
+00:17:06.910 --> 00:17:09.310
+Through a penetration test or
+security professional. Yeah. A lot
 
 311
-00:15:24.200 --> 00:15:27.200
-tools for how they can
-apply that knowledge and ask
+00:17:09.310 --> 00:17:12.580
+of people will say that,
+but it's generally accepted that
 
 312
-00:15:27.200 --> 00:15:30.320
-better questions when they're in
-meetings or when they write
+00:17:12.640 --> 00:17:14.500
+you should have some programming
+knowledge. You should be able
 
 313
-00:15:30.320 --> 00:15:32.510
-a product review, think about
-it in a more critical
+00:17:14.500 --> 00:17:16.870
+to read something, right. You
+should know if you're using
 
 314
-00:15:32.510 --> 00:15:35.990
-way, or I wanted to
-make it an, I wanted
+00:17:16.870 --> 00:17:19.060
+the tool, what that tool
+does, and you should read
 
 315
-00:15:35.990 --> 00:15:37.790
-to make what they get
-out of it, something that's
+00:17:19.090 --> 00:17:21.790
+the code of that tool
+and say, yup, I can
 
 316
-00:15:38.300 --> 00:15:41.530
-active and help them help
-them on their way. One
+00:17:21.790 --> 00:17:24.400
+modify this. If I, if
+I need to do something,
 
 317
-00:15:41.530 --> 00:15:44.020
-of the best questions that
-you ask that you mentioned
+00:17:25.210 --> 00:17:29.200
+it's a beneficial skill to
+have. A lot of people
 
 318
-00:15:44.020 --> 00:15:46.180
-a little bit at the
-beginning of our conversation is
+00:17:29.200 --> 00:17:32.020
+will say, it's not required
+because, because you know, pen
 
 319
-00:15:46.480 --> 00:15:51.430
-what hidden constraints can explain
-this things. Weaknesses. I think
+00:17:32.020 --> 00:17:34.720
+testing and red teaming covers
+such a variety of fields
 
 320
-00:15:51.430 --> 00:15:54.340
-a lot of us just
-assume that, well, the only
+00:17:35.170 --> 00:17:38.290
+that not every fields needs
+to, to know how to
 
 321
-00:15:54.340 --> 00:15:57.310
-explanation for why this is
-this way is because the
+00:17:38.290 --> 00:17:41.890
+do something like that. Right?
+So for example, the ICS
 
 322
-00:15:57.310 --> 00:16:00.880
-people who made it are
-idiots, but there are other
+00:17:41.890 --> 00:17:44.970
+industry may have a different
+set of expectations for this
 
 323
-00:16:00.880 --> 00:16:03.940
-kids in constraints. Okay. Yeah.
-There, there is. Although, you
+00:17:44.970 --> 00:17:48.670
+skill sets might be then,
+you know, the traditional on
 
 324
-00:16:03.940 --> 00:16:05.710
-know, I don't want to,
-I don't want to defend
+00:17:48.670 --> 00:17:52.410
+premises, red teaming or pen
+testing. And even that skill
 
 325
-00:16:05.710 --> 00:16:10.810
-a, I don't want it
-to be clear. I see
+00:17:52.410 --> 00:17:54.780
+set may be different from
+a lot of the cloud
 
 326
-00:16:10.810 --> 00:16:13.960
-as a problem, but yeah,
-we all kind of know
+00:17:55.050 --> 00:17:59.670
+pen testing. So I wouldn't
+say that everyone's a subset
 
 327
-00:16:13.960 --> 00:16:17.800
-it in our own lives,
-that when we work on
+00:17:59.730 --> 00:18:03.090
+of development or everyone has
+the skills that a developer
 
 328
-00:16:17.800 --> 00:16:21.550
-projects, we know that we
-didn't get enough budget and
+00:18:03.090 --> 00:18:06.500
+has. Like I can't write
+front end frameworks, like from
 
 329
-00:16:21.550 --> 00:16:23.560
-that's why it's not that
-great. Or there was a
+00:18:06.500 --> 00:18:09.120
+my life. Right. I'm terrible
+at it. If you ask
 
 330
-00:16:23.560 --> 00:16:27.580
-political fight between one department
-head and another, or a
+00:18:09.120 --> 00:18:12.900
+me to look@somethingand.net, I'll be
+like, okay, I guess like,
 
 331
-00:16:27.580 --> 00:16:31.480
-team or teammates weren't useful
-or PR we know at
+00:18:12.900 --> 00:18:14.430
+I know what I'm looking
+at because I'm familiar with
 
 332
-00:16:31.480 --> 00:16:34.960
-work for ourselves. How many
-of the constraints that limit
+00:18:14.430 --> 00:18:19.890
+like object oriented code, but
+generally speaking, there's no real
 
 333
-00:16:35.140 --> 00:16:36.940
-the quality of the work
-that we can make on
+00:18:19.890 --> 00:18:23.130
+requirement to be able to
+understand that that level of,
 
 334
-00:16:36.940 --> 00:16:39.610
-projects is really about all
-these tough things that are
+00:18:23.190 --> 00:18:27.810
+of developer life cycle kind
+of deal and the majority
 
 335
-00:16:39.610 --> 00:16:42.430
-hard. But when you are
-in the world as a,
+00:18:27.810 --> 00:18:30.810
+of things that they think,
+you know, but it's, it's
 
 336
-00:16:42.560 --> 00:16:46.120
-as a, as a person
-using things, we're not really
+00:18:30.810 --> 00:18:34.100
+highly recommended skill to have.
+Right. And I assume that
 
 337
-00:16:46.120 --> 00:16:49.060
-interested in being generous to
-these teams, we don't know
+00:18:34.100 --> 00:18:36.350
+there's different kinds of folks.
+I mean, there's network penetration
 
 338
-00:16:49.060 --> 00:16:52.270
-about. So we take it
-at face value when there's
+00:18:36.350 --> 00:18:39.320
+testing. There's working on, you
+know, various cloud, whether it
 
 339
-00:16:52.270 --> 00:16:55.000
-a confusing intersection that we
-drive through or, or we
+00:18:39.320 --> 00:18:42.050
+be the Azure cloud or
+other, other third party clouds,
 
 340
-00:16:55.000 --> 00:16:58.150
-miss an exit because the
-sign wasn't clear, you know,
+00:18:42.230 --> 00:18:45.230
+which is different work than,
+than like local fuzz testing
 
 341
-00:16:58.150 --> 00:17:01.450
-we're rightfully mad because we're
-living in the world with
+00:18:45.230 --> 00:18:48.500
+or trying to break out
+of a security sandbox within
 
 342
-00:17:01.450 --> 00:17:04.840
-that experience. But that anger
-about a stupid design. You
+00:18:48.500 --> 00:18:50.750
+the context of an operating
+system, which are all different
 
 343
-00:17:04.840 --> 00:17:07.840
-don't learn anything from just
-assuming the team was stupid.
+00:18:50.750 --> 00:18:53.630
+skills that may or may
+not require different levels of
 
 344
-00:17:08.350 --> 00:17:10.600
-There's far more lessons to
-be discovered as you go,
+00:18:53.630 --> 00:18:57.650
+expertise. For sure. So like
+you would expect that, and
 
 345
-00:17:10.600 --> 00:17:14.530
-wait a second, let me
-find out why that sign
+00:18:57.650 --> 00:19:00.470
+maybe this is just from
+my experience saying this, but
 
 346
-00:17:14.530 --> 00:17:17.200
-was made that way. Like,
-what's the story behind this
+00:19:00.470 --> 00:19:02.900
+like a web app pen
+tester is going to have
 
 347
-00:17:17.200 --> 00:17:20.290
-design failure. That's really where
-you start to learn just
+00:19:02.900 --> 00:19:05.810
+a completely different skillset than
+a network pen tester. And
 
 348
-00:17:20.590 --> 00:17:24.610
-flippantly saying something is terrible
-or flippantly, flippantly saying something
+00:19:05.840 --> 00:19:08.870
+the web app pen tester
+may have, may need to
 
 349
-00:17:24.610 --> 00:17:27.460
-was great without starting to
-ask questions, you don't want
+00:19:08.870 --> 00:19:14.240
+have a better knowledge of,
+of web technologies, PHP, asp.net
 
 350
-00:17:27.460 --> 00:17:29.680
-to learn anything. And I
-really wanted this to be
+00:19:14.240 --> 00:19:16.760
+core or whatever it's called.
+See, I don't remember. Yeah.
 
 351
-00:17:29.680 --> 00:17:33.190
-a book that people even
-just one chapter on its
+00:19:16.760 --> 00:19:18.410
+But it's, you don't need
+to because that's not the
 
 352
-00:17:33.220 --> 00:17:36.370
-own, people will go, Oh,
-now I can see why
+00:19:18.410 --> 00:19:23.240
+point. Right? Exactly. So everyone
+will have their, there's some
 
 353
-00:17:36.370 --> 00:17:38.710
-maybe this thing I experienced
-last month or a year
+00:19:23.240 --> 00:19:28.190
+level of quote development skillset
+as it pertains to their
 
 354
-00:17:38.710 --> 00:17:41.500
-ago, or think this thing
-that frustrates me now, I'm
+00:19:28.190 --> 00:19:31.250
+job. But there's no overall
+thing that says you need
 
 355
-00:17:41.500 --> 00:17:44.800
-starting to get some insight
-into what's really going on.
+00:19:31.280 --> 00:19:34.070
+to have this, but you
+should be able to read
 
 356
-00:17:45.310 --> 00:17:47.710
-You know, a really great
-example of exactly what you
+00:19:34.160 --> 00:19:37.310
+stuff at a minimum. They
+can write something in a
 
 357
-00:17:47.710 --> 00:17:51.240
-just said is chapter 12,
-you talk about an airplane
+00:19:37.310 --> 00:19:38.990
+language. That's cool. I can't
+write in Java, but I
 
 358
-00:17:51.330 --> 00:17:55.200
-boarding pass and you show
-kind of the classic Delta,
+00:19:38.990 --> 00:19:41.630
+can read through Java. Well,
+that's interesting. So if you
 
 359
-00:17:55.680 --> 00:17:59.070
-you know, airplane boarding pass.
-And it's, it's not really
+00:19:41.630 --> 00:19:45.620
+joined the asp.net core team,
+you've got the, the base
 
 360
-00:17:59.070 --> 00:18:01.980
-interesting or useful. It's just
-a boarding pass, right? And
+00:19:45.620 --> 00:19:47.990
+of the pyramid of the
+stuff that you need to
 
 361
-00:18:01.980 --> 00:18:05.130
-then you call out an
-example of a very talented
+00:19:47.990 --> 00:19:50.360
+know. Right. And then it
+would be expected that you
 
 362
-00:18:05.130 --> 00:18:08.740
-designer who went through and
-redesigned it. And then you
+00:19:50.360 --> 00:19:52.310
+would then apply the things
+that you already know and
 
 363
-00:18:08.760 --> 00:18:13.830
-show the, the, the more
-readable, more attractive boarding pass.
+00:19:52.310 --> 00:19:55.970
+the professional skills that you
+have with an internal knowledge
 
 364
-00:18:13.840 --> 00:18:15.180
-And you look at, and
-you go, Oh my God,
+00:19:55.970 --> 00:19:59.510
+of, of asp.net, just as,
+when you joined the Azure
 
 365
-00:18:15.180 --> 00:18:18.480
-this is gorgeous. Like we
-should, this is amazing. We
+00:19:59.510 --> 00:20:01.490
+web team, I assume you,
+weren't an Azure expert, you
 
 366
-00:18:18.480 --> 00:18:20.880
-all need this boarding pass,
-but then you look at
+00:20:01.490 --> 00:20:04.070
+were a pen testing expert,
+and then you gain that
 
 367
-00:18:20.880 --> 00:18:23.580
-it and you're like, wow,
-it's a lot less readable.
+00:20:04.070 --> 00:20:06.860
+knowledge. Right? So like when
+I, when I got this
 
 368
-00:18:23.580 --> 00:18:26.970
-It's kind of like a
-star Trek. You know, Ella
+00:20:06.860 --> 00:20:10.310
+shot by little to no
+knowledge of Azure, like someone
 
 369
-00:18:26.970 --> 00:18:29.580
-car's kind of interface. I
-don't really like, where am
+00:20:10.310 --> 00:20:12.020
+mentioned blob storage to me,
+I was like, what's that
 
 370
-00:18:29.580 --> 00:18:30.780
-I sitting in? Cause I
-don't even know where the
+00:20:12.440 --> 00:20:16.430
+right? But my experience with
+the network side of things
 
 371
-00:18:30.780 --> 00:18:36.150
-seat is. It's, it's initially
-gorgeous. But what is the
+00:20:16.430 --> 00:20:19.730
+and like on premises stuff,
+kind of put me in
 
 372
-00:18:36.150 --> 00:18:40.630
-word for these kinds of
-redesigns Drive by redesign? All
+00:20:19.730 --> 00:20:23.210
+a position where I can
+easily adjust to the things
 
 373
-00:18:40.630 --> 00:18:43.460
-right. He jumped in the
-whole team, did a bunch
+00:20:23.210 --> 00:20:27.980
+that were required for Azure
+or red teaming. Hmm. That
 
 374
-00:18:43.460 --> 00:18:46.550
-of research. He applied his
-is excellent. I it's a
+00:20:27.980 --> 00:20:29.120
+makes sense. And if I
+were going to go and
 
 375
-00:18:46.550 --> 00:18:51.890
-gorgeous thing, but it's, it's
-not better. Yeah. Well the,
+00:20:29.120 --> 00:20:30.980
+work for WordPress and to
+your job, then I would
 
 376
-00:18:52.110 --> 00:18:55.890
-the chapter gets into why
-it's just impossible. Like the,
+00:20:30.980 --> 00:20:35.270
+be expected to become a
+WordPress expert, I think a
 
 377
-00:18:56.180 --> 00:18:58.670
-the, the, the dry by
-design thing, I think is
+00:20:35.590 --> 00:20:39.080
+fairly good understanding. Right. So
+in your, your example that
 
 378
-00:18:58.670 --> 00:19:03.890
-a phenomenon of any creator
-on Twitter or Facebook where
+00:20:39.080 --> 00:20:41.420
+you just gave with asp.net
+core, right. If you were
 
 379
-00:19:03.890 --> 00:19:07.280
-they, they use something and
-they see a terrible logo,
+00:20:41.420 --> 00:20:44.030
+a developer who worked on
+that and you wanted to
 
 380
-00:19:07.550 --> 00:19:09.560
-or as a software developer,
-they use something that just
+00:20:44.030 --> 00:20:47.440
+move in the security portion,
+well, maybe you, well, you
 
 381
-00:19:09.560 --> 00:19:12.500
-is very slow and buggy.
-And then on Twitter there's
+00:20:47.440 --> 00:20:51.100
+should have an understanding of
+like the do's and don'ts
 
 382
-00:19:12.500 --> 00:19:13.970
-so I can design it
-better when I could do
+00:20:51.160 --> 00:20:54.610
+of, of programming in that
+language. Right. Right. And being
 
 383
-00:19:13.970 --> 00:19:16.040
-a better one and they
-just start typing what they
+00:20:54.610 --> 00:20:57.580
+able to understand that if
+you do certain things, or
 
 384
-00:19:16.040 --> 00:19:18.020
-would do. That would be
-so much, it's so obvious
+00:20:57.580 --> 00:21:00.160
+if you configure things certain
+way, here's how we're gonna
 
 385
-00:19:18.290 --> 00:19:21.560
-from the outside. And so
-this example, the boarding pass
+00:21:00.160 --> 00:21:03.300
+attack it. Maybe able to
+get to it. So if
 
 386
-00:19:21.560 --> 00:19:23.930
-is a great one because
-that we do this all
+00:21:03.300 --> 00:21:06.900
+someone wants to get to
+get your job and work
 
 387
-00:19:23.930 --> 00:19:25.790
-the time and just, we
-redesigned things on our own,
+00:21:06.900 --> 00:21:08.760
+in this space that you're
+working in, I noticed that
 
 388
-00:19:25.790 --> 00:19:28.370
-or we like, we watched
-the last star Wars movie
+00:21:08.760 --> 00:21:12.120
+you spent over a decade
+in the Navy. Did that
 
 389
-00:19:28.370 --> 00:19:29.510
-and we're like, Oh, I
-could have written a better
+00:21:12.150 --> 00:21:14.370
+set you up for success
+in this kind of work?
 
 390
-00:19:29.510 --> 00:19:32.960
-script. And we just presume
-that it's all, it's all
+00:21:14.370 --> 00:21:15.810
+Or is that a coincidence
+or is it just that
 
 391
-00:19:32.960 --> 00:19:35.780
-superficial and obvious in the
-case of the boarding pass
+00:21:15.810 --> 00:21:18.780
+the Navy has a very
+strong cryptology community? I would
 
 392
-00:19:35.780 --> 00:19:39.140
-design, the real constraint of
-why boarding passes look the
+00:21:18.780 --> 00:21:21.690
+definitely say that I would
+not be here if it
 
 393
-00:19:39.140 --> 00:19:41.570
-way they do. And this
-is true also for like,
+00:21:21.690 --> 00:21:23.760
+were not for that time
+that I spent in the
 
 394
-00:19:41.960 --> 00:19:44.540
-if you fill out a
-medical form or an insurance
+00:21:23.760 --> 00:21:26.550
+Navy, before I joined the
+Navy, I was gonna do
 
 395
-00:19:44.540 --> 00:19:47.960
-form, it's confusing, there's often
-constraints that have to do
+00:21:26.550 --> 00:21:28.830
+like a, I want it
+to be like a video
 
 396
-00:19:47.960 --> 00:19:51.410
-with how they're printed, what
-printing services are available at
+00:21:28.830 --> 00:21:32.670
+game composer, you know, that
+was my goal. Right. That
 
 397
-00:19:51.410 --> 00:19:54.410
-that scale. And so it
-turns out that in most
+00:21:32.670 --> 00:21:34.530
+is a different job than
+you have right now. Yeah.
 
 398
-00:19:54.440 --> 00:19:58.460
-airports, there's a limited set
-of printers that were installed
+00:21:34.530 --> 00:21:37.440
+I still do both though,
+I guess. Yeah, I could,
 
 399
-00:19:58.580 --> 00:20:02.840
-in the late eighties. Mostly
-that have limited abilities. They're
+00:21:38.130 --> 00:21:42.180
+but it's it like that,
+that was my high school,
 
 400
-00:20:02.840 --> 00:20:06.110
-not dot matrix printers, but
-they can't do multicolor there's
+00:21:42.180 --> 00:21:44.910
+my goal coming out of
+high school. Right. I didn't
 
 401
-00:20:06.200 --> 00:20:09.260
-there's limits on the sizing
-options that they have. And
+00:21:44.910 --> 00:21:47.190
+really have good grades, so
+I couldn't really go to
 
 402
-00:20:09.260 --> 00:20:13.220
-so the constraints are purely
-physical. They're about, they're about
+00:21:47.190 --> 00:21:50.790
+college that easy. So I
+joined the Navy and then
 
 403
-00:20:13.220 --> 00:20:16.550
-bits and they're about atoms.
-And that's why those boarding
+00:21:50.790 --> 00:21:54.090
+I was doing electronics and
+I was like, I was
 
 404
-00:20:16.550 --> 00:20:19.940
-passes are designed the way
-that they are, because the
+00:21:54.090 --> 00:21:56.220
+going to get out at
+my six year Mark. I
 
 405
-00:20:19.940 --> 00:20:23.150
-costs of putting a new
-printers in every gate in
+00:21:56.220 --> 00:21:58.110
+was going to go to
+college and get like a
 
 406
-00:20:23.150 --> 00:20:27.950
-every airport would be astronomical.
-And this is where designers
+00:21:58.110 --> 00:22:02.730
+degree in, in biometric engineering
+and something like that. And
 
 407
-00:20:27.950 --> 00:20:30.860
-and engineers. You start thinking
-through constraints now that yes,
+00:22:02.730 --> 00:22:05.190
+I was like, this opportunity
+came up to like move
 
 408
-00:20:30.860 --> 00:20:34.070
-maybe you could design something
-that was better in one
+00:22:05.190 --> 00:22:07.860
+to like the cryptologic field.
+And I was like, all
 
 409
-00:20:34.070 --> 00:20:37.490
-way, but the expense of
-it to actually achieve that,
+00:22:07.860 --> 00:22:11.610
+right, well, I'll give it
+a chance. And then if
 
 410
-00:20:37.490 --> 00:20:41.210
-given all the logistics required
-would be, make it ridiculously
+00:22:11.610 --> 00:22:14.070
+I don't like it, or
+if some other thing comes
 
 411
-00:20:41.240 --> 00:20:44.870
-unaffordable. And so what's what
-is design then is design.
+00:22:14.070 --> 00:22:15.420
+up, then I'll just get
+out. And my 10 year
 
 412
-00:20:44.870 --> 00:20:49.390
-Then this abstract commentary that
-we're, we offer things, or
+00:22:15.420 --> 00:22:18.420
+Mark, and that's what I
+did. So I moved over
 
 413
-00:20:49.390 --> 00:20:52.030
-are we in the real
-world where to really make
+00:22:18.420 --> 00:22:22.800
+to cryptologic field for four
+years and then I got
 
 414
-00:20:52.030 --> 00:20:54.130
-a better boarding pass, you
-have to deal with the
+00:22:22.800 --> 00:22:25.890
+out and I was like,
+I really want to be
 
 415
-00:20:54.130 --> 00:20:59.260
-real constraints. And it's often
-way more fun to skip
+00:22:25.890 --> 00:22:29.100
+a pen tester or a
+teamer. It took me that
 
 416
-00:20:59.260 --> 00:21:02.080
-over the real constraints and
-just pretend like, well, I
+00:22:29.100 --> 00:22:30.660
+long to figure out what
+I really wanted to do,
 
 417
-00:21:02.080 --> 00:21:03.730
-could do a better job.
-I'm going to make fun
+00:22:30.660 --> 00:22:35.190
+but for sure, I am
+glad that I am here
 
 418
-00:21:03.730 --> 00:21:06.490
-of this, this thing I
-just saw on social media.
+00:22:36.750 --> 00:22:39.360
+When someone wants to get
+started. I see a lot
 
 419
-00:21:07.470 --> 00:21:09.510
-We see that a lot.
-When we see people go
+00:22:39.360 --> 00:22:41.400
+of certificates. Right? You said
+that there's like one of
 
 420
-00:21:09.510 --> 00:21:12.000
-and redesign Mac or redesigned
-windows, or they say, why
+00:22:41.400 --> 00:22:43.170
+the certificates that I pointed
+out was a very basic
 
 421
-00:21:12.000 --> 00:21:14.940
-doesn't the start menu look
-like this? And I'm usually,
+00:22:43.170 --> 00:22:45.810
+certificate. It's like the base
+of the pyramid should show
 
 422
-00:21:14.940 --> 00:21:17.010
-even though I work at
-Microsoft right now, I go
+00:22:45.870 --> 00:22:48.720
+people who are interested in
+security as a professional career,
 
 423
-00:21:17.010 --> 00:21:18.750
-and say, Oh my God,
-we need to stop everything.
+00:22:48.720 --> 00:22:51.120
+collect all their certificates. Or
+is there one that is
 
 424
-00:21:18.750 --> 00:21:21.090
-And we need to redesign
-the start menu to look
+00:22:51.120 --> 00:22:54.060
+more important than another or
+one degree or one background?
 
 425
-00:21:21.090 --> 00:21:23.940
-like that. Yeah. But again,
-it doesn't think about the
+00:22:54.270 --> 00:22:56.040
+Like how does one prove
+themselves and put it on
 
 426
-00:21:23.940 --> 00:21:27.810
-billion people using the thing,
-the, and the usability, the
+00:22:56.040 --> 00:22:58.680
+a resume other than saying,
+I'm the one that broke
 
 427
-00:21:27.870 --> 00:21:31.740
-usability, the inclusion, the accessibility
-constraints. There are a ton
+00:22:58.680 --> 00:23:02.640
+into whatever, you know, That
+is also a matter of
 
 428
-00:21:31.740 --> 00:21:34.350
-of hidden constraints that designers
-face. And I think, as
+00:23:02.640 --> 00:23:07.410
+perspective. I really like controversial
+topic. Some people will say
 
 429
-00:21:34.350 --> 00:21:37.500
-you said before, we just
-tend to go, well, that's
+00:23:07.530 --> 00:23:09.810
+you don't need any certs
+at all. And they'll talk
 
 430
-00:21:37.500 --> 00:21:39.840
-just, it should just be
-like this. And it should
+00:23:09.810 --> 00:23:12.510
+about their experience coming out
+of high school and now
 
 431
-00:21:39.840 --> 00:21:42.720
-just be like that. It's
-very, very human to minimize
+00:23:12.510 --> 00:23:17.370
+being a prominent individual in
+the community with no degree
 
 432
-00:21:42.780 --> 00:21:45.390
-the complexity of a, of
-a thing. Yeah. Especially when
+00:23:17.670 --> 00:23:22.740
+and no certs, but everyone
+experiences varies. I know that
 
 433
-00:21:45.390 --> 00:21:47.400
-you don't actually have to
-do the work, you're just
+00:23:22.740 --> 00:23:24.840
+I had a difficult time
+getting a job when I
 
 434
-00:21:47.400 --> 00:21:51.270
-driving by for five minutes,
-you're going to rail against
+00:23:24.840 --> 00:23:27.480
+was getting out, even with
+all, all those certs listed.
 
 435
-00:21:51.270 --> 00:21:55.290
-how stupid the people at
-Microsoft or Google, how dumb
+00:23:27.930 --> 00:23:30.690
+And it was a combination
+of things really, but everyone's
 
 436
-00:21:55.290 --> 00:21:56.910
-they are. They designed it
-this way. And then you
+00:23:30.900 --> 00:23:34.560
+experience is different. So I
+would say that, sir, certainly
 
 437
-00:21:56.910 --> 00:21:58.410
-move on in your life
-and you never have to
+00:23:34.560 --> 00:23:37.230
+generally seen, as you might
+have the knowledge to do
 
 438
-00:21:58.740 --> 00:22:02.550
-actually discover how much harder
-it is to do these
+00:23:37.230 --> 00:23:41.430
+something, you might, but you
+have the potential to learn.
 
 439
-00:22:02.550 --> 00:22:07.530
-things. Then it seems from
-the outside, Hey, friends, I
+00:23:42.120 --> 00:23:45.770
+So I, I would never
+like say don't get, and
 
 440
-00:22:07.530 --> 00:22:09.870
-want to thank one of
-our sponsors. The company text
+00:23:45.770 --> 00:23:48.290
+I think everyone should have
+certs, particularly if you're trying
 
 441
-00:22:09.870 --> 00:22:12.990
-control. They're the creator of
-TXT tax control. It's a
+00:23:48.290 --> 00:23:51.560
+to be like marketable, but
+a lot of people out
 
 442
-00:22:13.500 --> 00:22:17.370
-Microsoft word, inspired document editor
-library. It's basically a document
+00:23:51.560 --> 00:23:54.350
+there will say that none
+are required and more power
 
 443
-00:22:17.370 --> 00:22:20.880
-processing engine for your web
-applications. They've got libraries for
+00:23:54.350 --> 00:23:57.260
+to them. If I were
+looking for a job now,
 
 444
-00:22:20.880 --> 00:22:24.240
-asp.net, MVC for angular, for
-no JS. And they just
+00:23:57.290 --> 00:24:00.140
+I'd, I'd probably try to
+find certs that were relevant
 
 445
-00:22:24.240 --> 00:22:28.050
-released a.net core version. It
-lets you basically integrate a
+00:24:00.200 --> 00:24:03.640
+to that position just to
+make them okay. So it
 
 446
-00:22:28.050 --> 00:22:31.800
-Wiziwig document editor into your
-web applications. You can edit
+00:24:03.640 --> 00:24:05.500
+sounds like search, aren't the
+magic thing that one needs
 
 447
-00:22:31.800 --> 00:22:35.130
-docs, you can do merge
-templates. You can include data.
+00:24:05.500 --> 00:24:07.060
+to get where it's like,
+Oh yeah, well, you know,
 
 448
-00:22:35.370 --> 00:22:38.490
-You can even create Adobe
-PDF documents. It's a fully
+00:24:07.070 --> 00:24:09.760
+he's got the cert, so
+we'll hire this person. It's,
 
 449
-00:22:38.490 --> 00:22:41.520
-featured API. It's really pretty
-amazing. You can try it
+00:24:09.790 --> 00:24:11.170
+it's not, it's not like
+that. Any of the cert
 
 450
-00:22:41.520 --> 00:22:44.010
-free. And I encourage you
-to check out the live
+00:24:11.590 --> 00:24:13.450
+it's something to study for
+it, something to focus on.
 
 451
-00:22:44.010 --> 00:22:52.260
-demos@textcontrol.com slash demos, text control.com/demos.
-It's really pretty amazing piece
+00:24:13.450 --> 00:24:15.100
+It's a goal. It might
+be a hurdle that they
 
 452
-00:22:52.260 --> 00:22:56.190
-of work. Do you think
-that the close door button
+00:24:15.100 --> 00:24:17.610
+want you to get, but
+it's not the a, the
 
 453
-00:22:56.490 --> 00:22:58.650
-in an elevator does anything
-or has you done the
+00:24:17.680 --> 00:24:20.560
+necessarily of the stamp book
+to fill. Yeah. The biggest
 
 454
-00:22:58.650 --> 00:23:01.500
-research and confirm that it
-in fact does not. I
+00:24:20.560 --> 00:24:22.900
+problem is, is that like
+HR departments will put out,
 
 455
-00:23:01.500 --> 00:23:06.120
-did all the research. So
-I confirmed that the, it
+00:24:23.020 --> 00:24:25.390
+we want these particular circuits.
+And even if you are
 
 456
-00:23:06.120 --> 00:23:09.390
-really depends, but in most
-cases they don't do anything
+00:24:25.390 --> 00:24:28.450
+qualified without those certs, it
+may be difficult to get
 
 457
-00:23:09.780 --> 00:23:14.730
-in the United States. The reason
-is in part because of
+00:24:28.450 --> 00:24:32.920
+past that HR wall. But
+if you were to network
 
 458
-00:23:14.730 --> 00:23:19.050
-the American disabilities act and
-that required that doors stay
+00:24:33.430 --> 00:24:36.580
+with people directly and talk
+to people, then you probably
 
 459
-00:23:19.050 --> 00:23:22.760
-open long enough that someone
-with on a wheelchair or
+00:24:36.580 --> 00:24:39.400
+have a better chance getting
+a position by networking with
 
 460
-00:23:22.760 --> 00:23:25.980
-on crutches, or who's just
-older and a little slow,
+00:24:39.400 --> 00:24:42.340
+people than you would just
+having a certificate and trying
 
 461
-00:23:26.070 --> 00:23:29.340
-has time to get to
-the door up until then.
+00:24:42.340 --> 00:24:47.380
+to send me your resume.
+Interesting. Is there a, a
 
 462
-00:23:29.340 --> 00:23:33.480
-They probably worked more often.
-But in general, these things
+00:24:47.380 --> 00:24:50.560
+degree or a, a badge
+or a thing that one
 
 463
-00:23:33.480 --> 00:23:37.320
-are what are called placebo
-buttons that like a placebo
+00:24:50.560 --> 00:24:52.780
+gets where you go, Oh
+wow. This person means business.
 
 464
-00:23:38.990 --> 00:23:42.810
-your mind, or your mind
-may think that it's actually
+00:24:52.780 --> 00:24:54.430
+They work for the Navy
+or they got that cert
 
 465
-00:23:42.810 --> 00:23:45.710
-doing something which can have
-an actual beneficial effect on
+00:24:54.430 --> 00:24:56.380
+or they got that degree,
+or this is the school,
 
 466
-00:23:45.710 --> 00:23:49.370
-your experience. But in reality,
-the button doesn't do anything.
+00:24:56.830 --> 00:24:59.380
+or is it really just
+a very diverse community with
 
 467
-00:23:49.370 --> 00:23:53.150
-So crosswalk buttons at intersections
-are another common example. The
+00:24:59.410 --> 00:25:02.800
+lots of different things that
+one could potentially do? I
 
 468
-00:23:53.150 --> 00:23:56.900
-wiring to maintain those is
-expensive. And also the traffic
+00:25:02.800 --> 00:25:05.680
+would like to say that
+there isn't, but typically what
 
 469
-00:23:56.900 --> 00:23:59.990
-systems in many cities are
-controlled based on time of
+00:25:05.680 --> 00:25:09.610
+you find is that people
+value OCP to a degree,
 
 470
-00:23:59.990 --> 00:24:03.680
-day and other factors. And
-if they incorporated individual user
+00:25:10.990 --> 00:25:15.340
+the offensive security certified professional.
+I remember when Scott There's
 
 471
-00:24:03.830 --> 00:24:07.310
-commands into that system, it
-would just be untenable and
+00:25:15.340 --> 00:25:17.800
+like, Oh, C O S
+C O S C P
 
 472
-00:24:07.310 --> 00:24:09.910
-it wouldn't work. And then,
-But it would feel weird.
+00:25:17.800 --> 00:25:19.660
+and O S WP. There's
+a bunch of those, but
 
 473
-00:24:09.910 --> 00:24:11.650
-It wouldn't match my mental
-model. If there was only
+00:25:19.660 --> 00:25:23.980
+they're all offensive security, something,
+something, Right. And some, and
 
 474
-00:24:11.650 --> 00:24:14.020
-an open button, because you
-need two sides, you need
+00:25:23.980 --> 00:25:26.650
+people will take that as
+a indication of, you know,
 
 475
-00:24:14.020 --> 00:24:16.390
-to open it up. Yeah.
-And some again, though, it's
+00:25:26.650 --> 00:25:29.530
+OCP is really hard. If
+you were able to pass
 
 476
-00:24:16.420 --> 00:24:19.660
-people complain, why isn't there
-a closed door button? So
+00:25:29.530 --> 00:25:31.840
+it, then it shows that
+you have a certain aptitude
 
 477
-00:24:19.660 --> 00:24:21.490
-what are you going to
-do if you're the person
+00:25:32.590 --> 00:25:35.560
+level and the ability to
+study for yourself and, and
 
 478
-00:24:21.490 --> 00:24:23.890
-that you're the superintendent of
-the building you're putting in
+00:25:35.560 --> 00:25:39.130
+all that stuff. And so
+like, that's generally how that
 
 479
-00:24:23.890 --> 00:24:25.870
-a closed door button and
-now people are happier because
+00:25:39.130 --> 00:25:42.790
+certificate is viewed. But honestly,
+the other side of that
 
 480
-00:24:25.870 --> 00:24:28.270
-it lights up. Even though
-it doesn't do anything, that's
+00:25:42.790 --> 00:25:46.030
+is that OCP is also
+sort of viewed as a
 
 481
-00:24:28.330 --> 00:24:31.690
-way cheaper. It solves the
-problem. But it's way cheaper
+00:25:46.600 --> 00:25:49.120
+beginner pen tester cert, right.
+Or be in a red
 
 482
-00:24:31.690 --> 00:24:34.540
-than actually having to do
-engineering and wiring. It. Actually
+00:25:49.120 --> 00:25:51.580
+team or insert because there's
+so much that it doesn't
 
 483
-00:24:34.540 --> 00:24:37.390
-elevator control systems are fascinating
-in a way, because they're
+00:25:51.580 --> 00:25:56.140
+cover. That's modern now where
+a lot of companies like
 
 484
-00:24:37.390 --> 00:24:40.630
-not controlled by the elevator.
-They're controlled in some cases
+00:25:56.140 --> 00:25:58.900
+moving to cloud environments, for
+example, right. That is uncovered.
 
 485
-00:24:40.630 --> 00:24:43.960
-by the whole master system
-that links together how, which,
+00:25:59.230 --> 00:26:03.550
+And so like while OCP
+may be that, that thing
 
 486
-00:24:43.980 --> 00:24:46.870
-which the elevators are gonna
-go, where elevators are talking
+00:26:03.550 --> 00:26:05.230
+that people are like, yeah,
+I'm going to get that
 
 487
-00:24:46.870 --> 00:24:50.890
-about constraints. Elevator design has
-way more complications than, than
+00:26:05.230 --> 00:26:07.990
+and put that on my
+resume. It's not really indication
 
 488
-00:24:50.890 --> 00:24:54.610
-most people think that they
-do. The, the point that
+00:26:07.990 --> 00:26:10.720
+of skill, but more of
+indication of you were able
 
 489
-00:24:54.610 --> 00:24:57.940
-you made about complaints and
-how people complain. There was
+00:26:10.720 --> 00:26:13.480
+to accomplish something by putting
+the time into it. That's
 
 490
-00:24:57.940 --> 00:25:00.370
-another great story. When we're
-thinking about mental models and
+00:26:13.480 --> 00:26:15.670
+how I view it. I
+know people would disagree with
 
 491
-00:25:00.370 --> 00:25:03.910
-people were complaining. So the
-design change was to move
+00:26:15.670 --> 00:26:17.020
+me. I can think of
+names off the top of
 
 492
-00:25:04.390 --> 00:25:05.860
-when someone lands and they
-want to go get their
+00:26:17.020 --> 00:26:20.200
+my head. People would have
+issue with me saying that,
 
 493
-00:25:05.860 --> 00:25:09.550
-bags of the baggage system
-to move the carousel far
+00:26:20.200 --> 00:26:24.460
+but that's how I view.
+So it's like that. Well,
 
 494
-00:25:09.550 --> 00:25:12.640
-away, because people were complaining
-that they'd show up and
+00:26:24.460 --> 00:26:27.220
+it seems reasonable. I think
+certs certs are definitely a,
 
 495
-00:25:12.640 --> 00:25:15.280
-they'd wear my bags. Why
-is moving it from our
+00:26:27.460 --> 00:26:29.890
+a, a point of contention
+because they can be used
 
 496
-00:25:15.280 --> 00:25:18.130
-way, fix it. This is
-a fascinating story. And it's
+00:26:29.900 --> 00:26:33.670
+to really mean something and
+really say something. But, and
 
 497
-00:25:18.130 --> 00:25:21.250
-a fascinating story in part,
-because it's not, it's probably
+00:26:34.000 --> 00:26:35.920
+to others, they just seem
+like an arbitrary hurdle that
 
 498
-00:25:21.250 --> 00:25:24.160
-not entirely true. Now, when
-I do research, I try
+00:26:35.920 --> 00:26:37.960
+someone puts in front of
+someone in order to, you
 
 499
-00:25:24.160 --> 00:25:25.270
-to be, I wrote a
-book on the midst of
+00:26:37.960 --> 00:26:39.550
+know, say this is a
+thing we value, here's a
 
 500
-00:25:25.270 --> 00:25:28.180
-innovation, which is all about
-showing all these things we
+00:26:39.550 --> 00:26:43.090
+gatekeeping bit of motion that
+we're doing, but it sounds
 
 501
-00:25:28.180 --> 00:25:31.390
-think we commonly know about
-creativity and innovation, that many
+00:26:43.110 --> 00:26:45.030
+like there is a lot
+of value in some of
 
 502
-00:25:31.390 --> 00:25:34.240
-of those stories are terribly
-mistold and unfounded and not
+00:26:45.030 --> 00:26:47.250
+them and they are the
+standards. So they certainly can't
 
 503
-00:25:34.240 --> 00:25:37.270
-really based on actual evidence
-for things like Newton's. Apple
+00:26:47.250 --> 00:26:50.060
+hurt to have a surgeon.
+Right. Yeah, exactly. So if
 
 504
-00:25:37.270 --> 00:25:39.790
-is a very contentious story
-when it comes to history
+00:26:50.060 --> 00:26:53.450
+you have the ability or
+the money to get one,
 
 505
-00:25:39.790 --> 00:25:41.770
-and how all that stuff
-gets told. So I try
+00:26:53.510 --> 00:26:56.390
+I would for sure get
+one, there are some really
 
 506
-00:25:41.770 --> 00:25:43.780
-to keep a really high
-bar for anything. I include
+00:26:56.390 --> 00:26:59.120
+expensive certs out there, but
+That's a good point too.
 
 507
-00:25:44.080 --> 00:25:46.390
-that story was written in
-the New York times in the
+00:26:59.120 --> 00:27:02.500
+Sometimes they're a racket because
+they cost so much. Yeah.
 
 508
-00:25:46.390 --> 00:25:50.950
-early 1990s about an airport
-in Dallas, or then they
+00:27:02.510 --> 00:27:05.870
+I, I, I would say
+that there are definitely some
 
 509
-00:25:50.950 --> 00:25:53.950
-never say which specific airport,
-which is usually a problem.
+00:27:05.870 --> 00:27:09.830
+certs that have training that
+could be provided at alternatively
 
 510
-00:25:54.220 --> 00:25:56.200
-But as the story goes,
-I'll tell, I'll tell it.
+00:27:10.790 --> 00:27:12.740
+and, and a lot of
+those are seen as, you
 
 511
-00:25:56.200 --> 00:25:58.900
-As it's usually told, they
-were having complaints about how
+00:27:12.740 --> 00:27:17.330
+know, major, major certifications, but
+you can definitely get the
 
 512
-00:25:58.900 --> 00:26:02.140
-long people had to wait.
-And what they had tried
+00:27:17.330 --> 00:27:20.480
+knowledge for those certs at
+a cheaper price without, but
 
 513
-00:26:02.140 --> 00:26:04.630
-at first were different options
-for like speeding up baggage
+00:27:20.480 --> 00:27:23.000
+you probably wouldn't get the
+recognition from like HR, for
 
 514
-00:26:04.630 --> 00:26:07.660
-handling and automating the system.
-They tried all the logical
+00:27:23.000 --> 00:27:25.700
+example. Okay. All right. So
+let me pivot a little
 
 515
-00:26:08.080 --> 00:26:11.260
-rational approaches, but it didn't
-help enough. People were still
+00:27:25.700 --> 00:27:27.260
+bit and ask a dumb
+question that I've always wanted
 
 516
-00:26:11.260 --> 00:26:14.260
-complaining. So as the story
-is told, what they did
+00:27:27.260 --> 00:27:30.350
+to ask somebody when you're
+watching, you know, how as
 
 517
-00:26:14.260 --> 00:26:17.950
-instead was something that seems,
-it seems, it seems irrational.
+00:27:30.350 --> 00:27:32.180
+a programmer, when I watch
+a TV show and they
 
 518
-00:26:18.340 --> 00:26:20.020
-What they did instead was
-they made it that the
+00:27:32.180 --> 00:27:35.660
+do something super dumb where
+it's like four people on
 
 519
-00:26:20.020 --> 00:26:23.170
-walk to get, when you
-get from the gate, the
+00:27:35.660 --> 00:27:38.930
+one keyboard, or like the
+person's got like a nine
 
 520
-00:26:23.170 --> 00:26:25.600
-walk from your gate to
-where your bags are was
+00:27:39.410 --> 00:27:42.050
+on a grid of nine
+monitors and he's like, you
 
 521
-00:26:25.600 --> 00:26:29.050
-longer. And by making it
-longer, it made it so
+00:27:42.050 --> 00:27:46.580
+know, minority report or whatever,
+have you ever watched a
 
 522
-00:26:29.050 --> 00:26:31.330
-that there was more time
-for your bags to arrive.
+00:27:46.580 --> 00:27:49.610
+show and seen a real
+security moment and gone like,
 
 523
-00:26:31.570 --> 00:26:33.730
-So the percentage of time,
-when you got to where
+00:27:49.640 --> 00:27:51.890
+Oh yeah. I felt like
+that once. That was exactly
 
 524
-00:26:33.730 --> 00:26:37.720
-the bag is, where the
-baggage claim area, number five,
+00:27:51.890 --> 00:27:56.210
+when I broke into whatever,
+I can't say that I've
 
 525
-00:26:37.960 --> 00:26:41.530
-the bags were there and
-people stopped complaining. Even though
+00:27:56.210 --> 00:27:58.790
+seen, like, I haven't fully
+watched dr. Robot, for example,
 
 526
-00:26:41.530 --> 00:26:45.000
-it took longer, there's something
-about our mental models for
+00:27:59.720 --> 00:28:02.390
+mr. Robot, Oh, you missed
+the robot yet. I saw
 
 527
-00:26:45.000 --> 00:26:47.520
-how time passes. When we
-wait for things, we get
+00:28:02.390 --> 00:28:05.570
+the first season and I
+haven't watched the other seasons.
 
 528
-00:26:47.520 --> 00:26:50.460
-irritated. But if we are
-walking to a place and
+00:28:06.140 --> 00:28:09.440
+Generally. What I'll see are
+things like don't make sense.
 
 529
-00:26:50.460 --> 00:26:53.610
-the stuff is there, we
-feel good. And this was
+00:28:09.770 --> 00:28:12.170
+And I think that that's
+just the nature of people
 
 530
-00:26:53.610 --> 00:26:57.840
-in the chapter, just reflect
-that engineers and people who
+00:28:12.560 --> 00:28:14.240
+or whatever job you work.
+When you see something on
 
 531
-00:26:57.840 --> 00:27:00.630
-are very smart and rational.
-We try to solve problems
+00:28:14.240 --> 00:28:16.670
+TV, that's not right. Or
+it's not consistent with what
 
 532
-00:27:00.630 --> 00:27:03.150
-rationally. We want to really
-solve the problem, but our
+00:28:16.670 --> 00:28:18.680
+you do. Like, you kind
+of put that out more
 
 533
-00:27:03.150 --> 00:27:06.180
-brains don't work that way
-all the time. People who
+00:28:18.680 --> 00:28:21.830
+than, Oh, man, this is
+actually like the legitimate, a
 
 534
-00:27:06.180 --> 00:27:10.740
-are users and consumers and
-customers, their relationship to rationale,
+00:28:21.830 --> 00:28:24.440
+legitimate thing that you can
+do. So when it comes
 
 535
-00:27:10.780 --> 00:27:14.580
-we're more emotional creatures. And
-our perceptions of time are
+00:28:24.440 --> 00:28:26.960
+to it, security stuff, most
+people get it wrong. And
 
 536
-00:27:14.580 --> 00:27:18.470
-not as rigorous as engineers
-tend to think. So the
+00:28:26.960 --> 00:28:28.520
+that's because they want to
+keep things at such like
 
 537
-00:27:18.510 --> 00:27:21.210
-lesson from that story, even
-if it's not entirely true,
+00:28:28.530 --> 00:28:32.930
+a, either a dramatic feel
+or like a layman's terms
 
 538
-00:27:21.630 --> 00:27:25.380
-is that by understanding human
-psychology, you need to understand
+00:28:32.960 --> 00:28:36.230
+that, you know, the, the
+ACARS don't know theirs. They're
 
 539
-00:27:25.380 --> 00:27:28.560
-human psychology better in order
-to design and engineer things
+00:28:36.230 --> 00:28:39.530
+saying they're just repeating words.
+And they're like, they may
 
 540
-00:27:28.560 --> 00:27:30.690
-better for people. If you're
-not doing that, you're going
+00:28:39.530 --> 00:28:42.170
+sound somewhere. Yeah. It's like
+my wife's a nurse. And
 
 541
-00:27:30.690 --> 00:27:33.120
-to make the mistake of
-trying to solve the problem.
+00:28:42.170 --> 00:28:44.540
+she's just like, somebody like
+give me a CBC chem
 
 542
-00:27:33.120 --> 00:27:35.820
-One way, when there's a
-much easier approach, that's just
+00:28:44.540 --> 00:28:46.130
+seven and dip a urine
+stat. And she's like, what
 
 543
-00:27:35.820 --> 00:27:37.770
-as good. That requires a
-lot less effort and a
+00:28:46.130 --> 00:28:50.810
+are they? Even thing it
+is memorize that. And always,
 
 544
-00:27:37.770 --> 00:27:40.790
-lot less work. And there's
-a ton of people out
+00:28:51.020 --> 00:28:53.000
+somebody always ends up stabbing
+somebody in the neck with
 
 545
-00:27:40.790 --> 00:27:45.350
-there who think about waiting
-like time and temporal management,
+00:28:53.000 --> 00:28:55.280
+a pen to do something.
+I don't know why they're
 
 546
-00:27:46.010 --> 00:27:48.590
-how people think and how
-people experience time. That's a
+00:28:55.280 --> 00:28:57.380
+choking or they can't breathe.
+Stab them in the neck
 
 547
-00:27:48.590 --> 00:27:52.340
-whole world of psychology. Like
-that's designing so that we
+00:28:57.380 --> 00:28:59.900
+with a pen. I'm always
+ready to do that at
 
 548
-00:27:52.340 --> 00:27:54.530
-don't get irritated. Whether it
-be waiting in line at
+00:28:59.900 --> 00:29:05.030
+any moment. If anybody needs
+pen next step, make sure
 
 549
-00:27:54.530 --> 00:27:58.100
-Disney Disneyland or on an
-elevator or at the DMV,
+00:29:05.030 --> 00:29:07.550
+to stay far away, watch
+out for me. Have you
 
 550
-00:27:58.100 --> 00:28:01.670
-all of those things you
-want to basically reduce the
+00:29:07.550 --> 00:29:09.980
+ever, well, let me ask
+you this. Have you ever
 
 551
-00:28:01.670 --> 00:28:03.980
-anxiety of the people waiting
-in line. Yeah. And so
+00:29:09.980 --> 00:29:13.190
+had a moment where you
+did succeed, where you broke
 
 552
-00:28:03.980 --> 00:28:07.340
-that's a Disney, world's a
-fantastic example because people don't
+00:29:13.190 --> 00:29:14.960
+in, where you did something
+you're just at the command
 
 553
-00:28:07.340 --> 00:28:09.560
-think of it this way.
-And Disney Disney would never
+00:29:14.960 --> 00:29:18.380
+line it's whatever. And you'd
+like, just put your hands
 
 554
-00:28:09.560 --> 00:28:12.260
-advertise their amusement parks this
-way, but they're really not
+00:29:18.380 --> 00:29:20.030
+up in the air. You're
+like, I got it. I
 
 555
-00:28:12.260 --> 00:28:14.510
-amusing parks. They're more like
-waiting in line parks. You
+00:29:20.030 --> 00:29:21.680
+did it. I had that.
+You had that moment. I
 
 556
-00:28:14.510 --> 00:28:17.900
-spend most of your time
-waiting in line. And, and,
+00:29:21.690 --> 00:29:23.900
+may not necessarily be cinematic,
+but it was a hands
 
 557
-00:28:18.200 --> 00:28:20.990
-but they've made a whole
-bunch of very big investments
+00:29:23.900 --> 00:29:26.450
+up in the air pen
+testing moment. Oh yeah, that
 
 558
-00:28:20.990 --> 00:28:24.080
-to make that entertaining and
-pleasant and as fun as
+00:29:26.450 --> 00:29:29.810
+happened yesterday. Real. Okay. Give
+me that. That's our, that's
 
 559
-00:28:24.090 --> 00:28:26.840
-interactive things along the way
-you get food, they also
+00:29:29.810 --> 00:29:31.880
+our closing moment for the
+podcast. Tell me about that.
 
 560
-00:28:26.840 --> 00:28:29.750
-give you estimated wait times,
-which is a smart thing
+00:29:32.000 --> 00:29:35.660
+In generic terms, I spent
+the last week doing things
 
 561
-00:28:29.750 --> 00:28:32.420
-to do. And the estimated
-wait times are always inflated,
+00:29:35.660 --> 00:29:39.440
+that I've never done before.
+Nice. And trying out a
 
 562
-00:28:32.960 --> 00:28:35.900
-but as much as possible.
-So even though you waited
+00:29:39.440 --> 00:29:45.970
+different approach to gaining access.
+And when it worked, I
 
 563
-00:28:35.900 --> 00:28:38.750
-45, you thought you were
-gonna wait 45 minutes. If
+00:29:45.970 --> 00:29:47.560
+just kind of sat there,
+like I got out of
 
 564
-00:28:38.750 --> 00:28:40.400
-you only wait 30 minutes,
-do you feel like you
+00:29:47.560 --> 00:29:49.240
+my seat and like, I,
+nobody else is in my
 
 565
-00:28:40.410 --> 00:28:43.430
-got a good deal? And
-that's again about anchoring a
+00:29:49.240 --> 00:29:54.640
+apartment. Right. Yeah. I have
+totally done that. I have
 
 566
-00:28:43.430 --> 00:28:46.760
-principle about psycho psychology, that
-when you anchor something, it
+00:29:54.640 --> 00:29:57.850
+literally like stood up, turned
+around and be like, and
 
 567
-00:28:46.760 --> 00:28:48.530
-could be the price of
-the most expensive food item
+00:29:57.850 --> 00:30:00.100
+then like, no one else
+is around me. And like,
 
 568
-00:28:48.530 --> 00:28:51.380
-on a menu. It sets
-your perspective for what good,
+00:30:00.130 --> 00:30:03.160
+no one cares that I
+did that. There's absolutely those,
 
 569
-00:28:51.380 --> 00:28:55.940
-bad, and great are. And
-so that's another technique that
+00:30:03.190 --> 00:30:05.110
+especially when you've been working
+at it, like all day
 
 570
-00:28:56.270 --> 00:28:58.340
-you couldn't, they could have
-spent all this time trying
+00:30:05.110 --> 00:30:07.150
+and trying to figure things
+out there, there's always that
 
 571
-00:28:58.340 --> 00:29:02.090
-to really figure out. Maybe
-we can have five rollercoasters
+00:30:07.150 --> 00:30:11.290
+moment of yes. And then
+either the immediate reaction is,
 
 572
-00:29:02.090 --> 00:29:04.340
-go at the same time,
-one after another. And we
+00:30:11.980 --> 00:30:13.960
+all right, let me keep
+going. Or let me go,
 
 573
-00:29:04.340 --> 00:29:07.100
-can up the speed of
-the, and the engineering capacity
+00:30:14.230 --> 00:30:18.850
+go take a nap. I'm
+imagining, I want to see
 
 574
-00:29:07.100 --> 00:29:10.610
-of the system or Wallace
-let's, let's focus on psychology,
+00:30:18.850 --> 00:30:21.490
+the movie that about your
+life, where you like jump
 
 575
-00:29:10.640 --> 00:29:13.520
-let's design for psychology and
-make it better. So I
+00:30:21.490 --> 00:30:22.990
+up in the middle of
+the night in your apartment.
 
 576
-00:29:13.520 --> 00:29:16.760
-think the door opened or
-closed button. You might not
+00:30:22.990 --> 00:30:25.330
+And you're like, all right.
+And now for snacks, you
 
 577
-00:29:16.760 --> 00:29:19.190
-need that. If it said
-closing and five seconds, four
+00:30:25.330 --> 00:30:27.310
+know, I've just broken into
+the thing and now I'm
 
 578
-00:29:19.190 --> 00:29:21.710
-seconds, three, if it actually
-gave you a time estimate,
+00:30:27.310 --> 00:30:29.740
+going to take a nap
+and that's on the price
 
 579
-00:29:22.640 --> 00:29:24.920
-also when you're waiting for
-an elevator, same thing, you
+00:30:29.740 --> 00:30:34.360
+of turnips. Literally what happens
+right afterwards? That was my
 
 580
-00:29:24.920 --> 00:29:27.050
-push that button and then
-it lights up and then
+00:30:34.360 --> 00:30:37.810
+fantastic, well, thank you so
+much for chatting with me
 
 581
-00:29:27.050 --> 00:29:28.520
-we all push it again.
-And we push it again,
+00:30:37.810 --> 00:30:40.900
+today, for sure. I appreciate
+you having me. I've been
 
 582
-00:29:28.780 --> 00:29:32.420
-push it again. Like it's
-entirely irrational. The button is
+00:30:40.900 --> 00:30:43.540
+chatting with Lauren Gray from the
+Azure red team at Microsoft.
 
 583
-00:29:32.420 --> 00:29:34.910
-lit. Like we know the
-system knows that we want
+00:30:43.840 --> 00:30:46.450
+And this has been another
+episode of Hansel minutes. We'll
 
 584
-00:29:34.910 --> 00:29:37.730
-it, but yet we still
-feel like if we don't
-
-585
-00:29:37.730 --> 00:29:40.640
-do something because we don't
-know. But if it said
-
-586
-00:29:40.640 --> 00:29:43.810
-estimated for next car, you
-know, two and a half
-
-587
-00:29:43.810 --> 00:29:46.540
-minutes, all right, I'll just
-read an article on my
-
-588
-00:29:46.540 --> 00:29:49.440
-phone. We know that we're
-being taken care of. I
-
-589
-00:29:49.440 --> 00:29:52.080
-feel like we need to
-go and fix the windows
-
-590
-00:29:52.080 --> 00:29:55.590
-Explorer file copy dialogue. Because
-when they estimate the time
-
-591
-00:29:55.620 --> 00:29:57.090
-that's going to be like
-this final copy is going
-
-592
-00:29:57.090 --> 00:29:58.980
-to take a month. You
-know, I don't feel like
-
-593
-00:29:58.980 --> 00:30:01.380
-I'm winning when it only
-takes five minutes and there's
-
-594
-00:30:01.380 --> 00:30:04.410
-no button, there's no placebo
-button. The, I really mean
-
-595
-00:30:04.410 --> 00:30:07.890
-it. You know? No, I
-really want a copy that
-
-596
-00:30:07.890 --> 00:30:10.260
-I need that. One of
-the last things I want
-
-597
-00:30:10.260 --> 00:30:11.910
-to ask you about is
-that you call that some
-
-598
-00:30:11.910 --> 00:30:16.050
-broken organizational problems that need
-to be overcome designed by
-
-599
-00:30:16.050 --> 00:30:20.100
-dysfunction, designed by committee and
-designed by regulation. If you
-
-600
-00:30:20.100 --> 00:30:22.740
-could share those problems and
-why solving them is so
-
-601
-00:30:22.740 --> 00:30:25.710
-important. Well, I think that
-gets back to constraints that
-
-602
-00:30:25.710 --> 00:30:28.470
-when we use something that
-frustrates us, we have in
-
-603
-00:30:28.470 --> 00:30:31.140
-our head, that there was
-just one overlord in the
-
-604
-00:30:31.140 --> 00:30:33.720
-project that controlled every decision
-that was made. And the
-
-605
-00:30:33.720 --> 00:30:36.300
-reason why the thing is
-bad is because that person
-
-606
-00:30:36.300 --> 00:30:39.960
-was an idiot yet in
-our own world, our own
-
-607
-00:30:39.960 --> 00:30:43.320
-working world, we know there's
-a head of engineering. There's
-
-608
-00:30:43.320 --> 00:30:45.840
-a head of project management
-for every, for every product
-
-609
-00:30:45.840 --> 00:30:47.610
-team, right? There's a head
-of engineering is a head
-
-610
-00:30:47.610 --> 00:30:50.040
-of program management. There's a
-head of testing. If you
-
-611
-00:30:50.040 --> 00:30:52.920
-have quality assurance as a
-head of marketing, and if
-
-612
-00:30:52.920 --> 00:30:55.140
-the head of engineering and
-the head of the design
-
-613
-00:30:55.140 --> 00:30:57.630
-team or the head of
-the project management team hate
-
-614
-00:30:57.630 --> 00:31:00.810
-each other, that's going to
-ripple down through the organization
-
-615
-00:31:00.810 --> 00:31:03.210
-in all kinds of dysfunctional
-ways is not going to
-
-616
-00:31:03.210 --> 00:31:06.450
-be respect for the contributions
-of different roles and different
-
-617
-00:31:06.450 --> 00:31:08.970
-people with different knowledge. Have
-there's not going to be
-
-618
-00:31:09.240 --> 00:31:12.060
-a healthy schedule process because
-it's going to be fighting
-
-619
-00:31:12.060 --> 00:31:15.030
-and in fighting over which
-things get prioritized. If the
-
-620
-00:31:15.030 --> 00:31:20.280
-goals aren't clear. So I
-think that usually it's possibly
-
-621
-00:31:20.280 --> 00:31:23.220
-the primary reason why so
-much of the world is
-
-622
-00:31:23.730 --> 00:31:27.030
-so many things that were
-poorly designed. This most organizations
-
-623
-00:31:27.120 --> 00:31:29.670
-don't work very well. They're
-there, there are, they are
-
-624
-00:31:29.670 --> 00:31:33.270
-dysfunctional. People don't communicate well
-or decisions are not made
-
-625
-00:31:33.270 --> 00:31:36.660
-clearly, or there isn't a
-good vision, or there's a
-
-626
-00:31:36.660 --> 00:31:39.510
-thousand things that have to
-be done well to make
-
-627
-00:31:39.510 --> 00:31:42.000
-an organization a healthy place.
-And it's hard to do,
-
-628
-00:31:42.390 --> 00:31:44.850
-but even though it's hard
-to do, you can't expect
-
-629
-00:31:44.850 --> 00:31:49.290
-an organization that's just bad
-at making good decisions to
-
-630
-00:31:49.290 --> 00:31:53.370
-make good design decisions. That's
-just improbable. Design is one
-
-631
-00:31:53.370 --> 00:31:56.340
-of many kinds of decisions
-that an organization has to
-
-632
-00:31:56.340 --> 00:31:58.800
-make. And I think one
-of my critiques of many
-
-633
-00:31:58.800 --> 00:32:02.580
-books on design, including a
-design of everyday things and
-
-634
-00:32:02.580 --> 00:32:05.730
-Steve Krug's don't make me
-think there are many great
-
-635
-00:32:05.730 --> 00:32:08.880
-books about design. They rarely
-go to these places that
-
-636
-00:32:08.880 --> 00:32:12.990
-are the fundamental reasons why
-things end up as in
-
-637
-00:32:12.990 --> 00:32:15.390
-the product as not working
-well. It's about how, how
-
-638
-00:32:15.390 --> 00:32:18.120
-the project team has led,
-how it's managed, how, where
-
-639
-00:32:18.120 --> 00:32:20.910
-the, where does the budget
-come from? You can't really
-
-640
-00:32:20.910 --> 00:32:24.960
-worry about your, does your
-design or usability experts, ability
-
-641
-00:32:24.960 --> 00:32:27.810
-to contribute if there's no
-budget for it. And if,
-
-642
-00:32:27.870 --> 00:32:29.280
-or if the schedule is
-a mess and there's no
-
-643
-00:32:29.280 --> 00:32:32.490
-time for it. So there's
-a fundamentalist of just projects
-
-644
-00:32:32.490 --> 00:32:36.720
-that are integral to thinking
-about how good design of
-
-645
-00:32:36.720 --> 00:32:41.930
-any kind happens. So dysfunctional
-teams don't work design by
-
-646
-00:32:41.930 --> 00:32:46.430
-committee basically means designed by
-consensus people, just trying to
-
-647
-00:32:46.640 --> 00:32:50.480
-come up with the least
-awesome hospital solution. And then
-
-648
-00:32:50.480 --> 00:32:53.630
-of course, designed by regulation
-can almost suck the life
-
-649
-00:32:53.660 --> 00:32:57.710
-out of design completely. For
-sure. Yeah. And that's anything
-
-650
-00:32:57.710 --> 00:33:01.610
-that we see it's in
-the public like traffic, traffic,
-
-651
-00:33:01.880 --> 00:33:05.480
-traffic design, a traffic sign
-design, like the highway signs,
-
-652
-00:33:05.480 --> 00:33:09.260
-you see public transportation systems
-and where, whether you have
-
-653
-00:33:09.830 --> 00:33:11.690
-there's a bus stop, a
-block from your house or
-
-654
-00:33:11.930 --> 00:33:15.650
-50 blocks from your house.
-There's a lot of regulation
-
-655
-00:33:15.650 --> 00:33:18.260
-and public process that goes
-into making any kind of
-
-656
-00:33:18.260 --> 00:33:22.160
-design change. We're getting design
-approvals. And we like to
-
-657
-00:33:22.160 --> 00:33:24.710
-make fun of some people
-like to make fun work
-
-658
-00:33:24.710 --> 00:33:28.760
-in the private sector, how
-clumsy and foolhardy government projects
-
-659
-00:33:28.760 --> 00:33:30.890
-can be. But part of
-the, part of it is
-
-660
-00:33:30.890 --> 00:33:34.370
-the challenge of those constraints.
-Many of which were created
-
-661
-00:33:34.370 --> 00:33:37.760
-for a good reason, but
-managing those constraints effectively now
-
-662
-00:33:37.760 --> 00:33:41.240
-becomes as big a challenge
-as coming up with the
-
-663
-00:33:41.240 --> 00:33:45.800
-ideas and developing them is
-as well. Yeah. You've got
-
-664
-00:33:45.800 --> 00:33:48.560
-to, actually, one of my
-particular favorite chapter is the
-
-665
-00:33:48.560 --> 00:33:50.660
-one on design as it
-flows with regards to how
-
-666
-00:33:50.660 --> 00:33:55.670
-people move through space, how
-people move through airports, garages,
-
-667
-00:33:56.000 --> 00:34:01.520
-transportation as a whole design
-issue as well. Yeah. Well,
-
-668
-00:34:01.550 --> 00:34:03.380
-thank you so much, Scott Burke,
-and for chatting with me
-
-669
-00:34:03.380 --> 00:34:06.200
-today about your book, how
-design makes the world, I,
-
-670
-00:34:06.240 --> 00:34:08.240
-I really enjoyed it very
-much and I appreciate the
-
-671
-00:34:08.240 --> 00:34:10.100
-opportunity to chat with you.
-Thanks for having me on
-
-672
-00:34:10.100 --> 00:34:12.800
-it was a great conversation.
-It was a pleasure. This
-
-673
-00:34:12.800 --> 00:34:15.440
-has been another episode of
-Hanselminutes and we'll see you
-
-674
-00:34:15.440 --> 00:34:28.060
-again next week. <inaudible>.
+00:30:46.450 --> 00:30:47.650
+see you again next week.
 

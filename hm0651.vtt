@@ -1,2771 +1,2952 @@
 WEBVTT FILE
 
 1
-00:00:00.090 --> 00:00:02.580
-Hey folks, Intel is a
-sponsor this week and I
+00:00:00.480 --> 00:00:04.230
+Hey folks. Today's episode was
+sponsored by Datadog it's. A
 
 2
-00:00:02.580 --> 00:00:06.450
-welcome them because they're bringing
-some high performance developer tools
+00:00:04.230 --> 00:00:08.460
+cloud scale monitoring and analytics
+platform. Datadog was built to
 
 3
-00:00:06.450 --> 00:00:10.350
-for all of us. Check
-out Intel's parallel studio X,
+00:00:08.460 --> 00:00:12.510
+bring clarity to complex dynamic
+applications in the cloud, on
 
 4
-00:00:10.380 --> 00:00:13.470
-E I've talked about parallelism
-before on the show and
+00:00:12.510 --> 00:00:16.920
+premises in containers or wherever
+they run with beautiful dashboards,
 
 5
-00:00:13.470 --> 00:00:17.070
-the importance of using the
-complete instruction set, unlocking the
+00:00:16.980 --> 00:00:21.360
+distributed tracing, and seamless integrations
+with more than 200 technologies,
 
 6
-00:00:17.070 --> 00:00:19.140
-power of the process or
-that your code is running
+00:00:21.810 --> 00:00:26.190
+including Azure and Docker and
+PagerDuty Datadog provides deep end
 
 7
-00:00:19.140 --> 00:00:21.870
-on. Now, you all might
-be writing C or C
+00:00:26.190 --> 00:00:28.860
+to end visibility into the
+health and performance of modern
 
 8
-00:00:21.870 --> 00:00:25.350
-plus plus Python or even
-Fortran, but as your code
+00:00:28.860 --> 00:00:33.300
+apps. Visualize key metrics, set
+alerts to identify anomalies and
 
 9
-00:00:25.380 --> 00:00:27.360
-building in such a way
-and written in such a
+00:00:33.300 --> 00:00:36.570
+collaborate with your team to
+troubleshoot and fix issues fast.
 
 10
-00:00:27.360 --> 00:00:32.220
-way that it uses the
-latest techniques for vectorization multithreading
+00:00:37.110 --> 00:00:39.330
+I'd like you to try
+it yourself by starting a
 
 11
-00:00:32.220 --> 00:00:37.860
-multi-node parallelization or memory optimization.
-Intel parallel studio XE has
+00:00:39.330 --> 00:00:43.290
+free 14 day trial today,
+listeners of this podcast will
 
 12
-00:00:37.860 --> 00:00:40.350
-a lot of new stuff
-for 2018 across all these
+00:00:43.290 --> 00:00:49.530
+also get a free Datadog
+t-shirt get started at bitly.com/data
 
 13
-00:00:40.350 --> 00:00:44.940
-languages. Get a free download
-at <inaudible> dot com slash
+00:00:49.530 --> 00:01:08.720
+dog shirt. That's bitly.com/datadog shirt.
+<inaudible>. Hi, this is Scott
 
 14
-00:00:45.030 --> 00:00:48.630
-parallels studio X, Z, or
-certainly go and Google or
+00:01:08.720 --> 00:01:11.420
+Hanselman. This is another episode
+of Hanselminutes today. I'm talking
 
 15
-00:00:48.630 --> 00:00:52.230
-Google with being for Intel
-parallel studio XE and get
+00:01:11.420 --> 00:01:14.120
+with Heather Terenzio, she's the
+co founder and CEO of
 
 16
-00:00:52.230 --> 00:00:56.160
-started. Boosting your apps performance
-with smart parallel code with
+00:01:14.120 --> 00:01:18.560
+tectonic group. How are you?
+I'm great. Thanks. Scott tectonic
 
 17
-00:00:56.160 --> 00:01:02.250
-a lot less effort. Check
-them out. bitly.com/parallel studio X
+00:01:18.560 --> 00:01:21.710
+group has a great web
+presence. That explains what you
 
 18
-00:01:02.280 --> 00:01:18.170
-E. Hi, this is Scott
-Hanselman. This is another episode
+00:01:21.710 --> 00:01:24.320
+do, but I dug into
+the Academy part of it.
 
 19
-00:01:18.380 --> 00:01:21.830
-Hansel minutes today. I'm talking
-with John Alexander. He's a gamer
+00:01:24.320 --> 00:01:26.600
+Can you explain the difference
+between the group and the
 
 20
-00:01:21.830 --> 00:01:24.230
-and a content developer, and
-we're talking to him about
+00:01:26.600 --> 00:01:31.940
+Academy? Sure. About five years
+ago, we were having problems
 
 21
-00:01:24.230 --> 00:01:27.620
-the Xbox adaptive controller. How
-are you, sir? Wonderful, sir.
+00:01:31.940 --> 00:01:36.230
+finding our own talent, and
+we decided we wanted to
 
 22
-00:01:27.650 --> 00:01:29.330
-Thanks for taking the time
-to talk to me about
+00:01:36.560 --> 00:01:39.530
+find talent in all different
+kinds of places and train
 
 23
-00:01:29.330 --> 00:01:32.390
-this. Yeah, so this is
-out now. I can go
+00:01:39.530 --> 00:01:42.800
+them ourselves to write code
+the way that we thought
 
 24
-00:01:32.390 --> 00:01:36.410
-and buy the Xbox adaptive
-controller for, for 99 bucks
+00:01:42.800 --> 00:01:47.030
+was best. And what we
+did was we created tectonic
 
 25
-00:01:36.410 --> 00:01:39.320
-or a hundred bucks, U
-S a in stores or
+00:01:47.030 --> 00:01:50.600
+Academy and what we do
+is we go out and
 
 26
-00:01:39.320 --> 00:01:43.580
-Microsoft stores. Yes, somehow I
-thought it would be more
+00:01:50.600 --> 00:01:53.600
+we look for talent and
+all kinds of unexpected places
 
 27
-00:01:43.580 --> 00:01:46.010
-expensive. Like I thought it
-would be like a thing.
+00:01:53.600 --> 00:01:57.830
+like baristas bus boys, you
+name it. They've, we've actually
 
 28
-00:01:46.190 --> 00:01:48.260
-Like it would be hundreds
-of dollars. It would be
+00:01:57.830 --> 00:02:01.130
+had folks out of the
+foster care system, the jail
 
 29
-00:01:48.260 --> 00:01:51.170
-X-Box priced, but that seems
-like a very reasonable price
+00:02:01.130 --> 00:02:05.060
+system, and then all the
+way up to people who
 
 30
-00:01:51.170 --> 00:01:53.120
-for something that's gonna open
-up gaming for a lot
+00:02:05.060 --> 00:02:09.080
+have graduated from college with
+mechanical engineering degrees. But now
 
 31
-00:01:53.120 --> 00:01:56.720
-of people. Oh yes. One
-of the things when the
+00:02:09.110 --> 00:02:11.120
+these are people who just
+are passionate and really want
 
 32
-00:01:57.050 --> 00:02:00.590
-X-Box adaptive controller had been
-announced, it was still in
+00:02:11.120 --> 00:02:13.610
+to get into software development.
+And so we bring them
 
 33
-00:02:00.590 --> 00:02:05.030
-development when they actually announced
-the price. It blew everyone's
+00:02:13.610 --> 00:02:17.480
+into our Academy. It's actually
+really selective to get into
 
 34
-00:02:05.030 --> 00:02:10.670
-mind because normally when you
-have accessibility issues and you
+00:02:17.990 --> 00:02:20.450
+and through the Academy, we
+train them in about a
 
 35
-00:02:10.670 --> 00:02:13.190
-need to get special equipment
-for that, that can run
+00:02:20.450 --> 00:02:23.930
+12 week program. And after
+the program, they start pair
 
 36
-00:02:13.190 --> 00:02:17.060
-in the hundreds and hundreds
-of dollars, very easily for
+00:02:23.930 --> 00:02:28.610
+programming with our software developers
+and eventually start working on
 
 37
-00:02:17.060 --> 00:02:22.370
-some of the modified controllers.
-And so with the accessible
+00:02:28.610 --> 00:02:32.060
+real life projects. And actually
+the way our model works
 
 38
-00:02:22.370 --> 00:02:27.440
-controller, it allows you to
-get what you need for
+00:02:32.060 --> 00:02:34.280
+now is that a client
+can hire us to write
 
 39
-00:02:27.440 --> 00:02:31.910
-a very small price. Yeah.
-It's, it's, it's amazing. So
+00:02:34.280 --> 00:02:36.290
+their software. And we'll do
+that with our real senior
 
 40
-00:02:31.910 --> 00:02:34.790
-what is your mobility issue?
-So my mobility issue is
+00:02:36.290 --> 00:02:39.830
+level development team, but we'll
+also be training up apprentices
 
 41
-00:02:34.790 --> 00:02:38.660
-what they call hemiplegia. And
-what that means is that
+00:02:39.830 --> 00:02:42.890
+at the same time and
+our clients can actually hire
 
 42
-00:02:38.960 --> 00:02:45.380
-your entire one side of
-your body is affected. So
+00:02:42.890 --> 00:02:46.220
+those apprentices as full time
+employees after working with us
 
 43
-00:02:45.380 --> 00:02:49.550
-all the systems on my
-right side, actually, and you
+00:02:46.220 --> 00:02:49.430
+for about six months. Oh,
+interesting. I worked as a
 
 44
-00:02:49.550 --> 00:02:51.590
-may be able to tell
-I have a slight list,
+00:02:49.430 --> 00:02:52.370
+consultant for many years and
+we always had a situation
 
 45
-00:02:51.620 --> 00:02:54.920
-but because it even affects
-the side of my tongue
+00:02:52.370 --> 00:02:54.950
+where the client would really
+enjoy working with someone and
 
 46
-00:02:54.920 --> 00:03:00.250
-a little bit, everything on
-my right side is affected,
+00:02:54.950 --> 00:02:57.620
+then they try to hire
+them and we discourage that.
 
 47
-00:03:00.640 --> 00:03:04.150
-Including I have, I wear
-a size seven and a
+00:02:57.620 --> 00:03:00.040
+But in fact, you're doing
+the opposite. Yeah. You know,
 
 48
-00:03:04.150 --> 00:03:06.040
-half shoe on my right
-and a nine and a
+00:03:00.040 --> 00:03:02.680
+it's been an interesting pivot
+for us in terms of
 
 49
-00:03:06.040 --> 00:03:11.670
-half on my left. And,
-And there's a hemiplegia. It
+00:03:02.680 --> 00:03:06.520
+our business model, because what
+we're finding is actually millennials
 
 50
-00:03:11.670 --> 00:03:17.910
-means like hemisphere Hemp, like
-quadriplegia or hemiplegia, it means
+00:03:06.700 --> 00:03:10.270
+change jobs about every two
+years anyway, and our clients
 
 51
-00:03:17.910 --> 00:03:22.200
-that the hemisphere, the entire
-hemisphere, or how am I
+00:03:10.270 --> 00:03:12.640
+are looking for talent. And
+so we figured we would
 
 52
-00:03:22.620 --> 00:03:27.270
-sighed, I guess never really
-thought about that, but is,
+00:03:12.640 --> 00:03:15.970
+find a way to kind
+of smooth that transition from
 
 53
-00:03:27.270 --> 00:03:30.780
-is totally affected. So I
-have really no fine control
+00:03:15.970 --> 00:03:18.430
+working for us and getting
+them trained up on client
 
 54
-00:03:30.810 --> 00:03:33.630
-on my right side, on
-my right hand at all.
+00:03:18.430 --> 00:03:21.100
+projects and then working for
+our clients. So we've now
 
 55
-00:03:33.630 --> 00:03:35.910
-So I type with one
-hand and do pretty much
+00:03:21.100 --> 00:03:23.860
+become this company that writes
+software, but also creates a
 
 56
-00:03:35.910 --> 00:03:39.510
-everything with one hand. But
-when you're playing Xbox games,
+00:03:23.860 --> 00:03:28.080
+talent pipeline for our clients,
+Not to put too fine
 
 57
-00:03:40.260 --> 00:03:45.450
-typically you need two hands.
-There's two triggers. There's two,
+00:03:28.080 --> 00:03:31.590
+a point on it, but
+your, you have an advanced
 
 58
-00:03:47.040 --> 00:03:50.610
-two joysticks. There's the deep
-head there's buttons. There's, you
+00:03:31.590 --> 00:03:34.770
+degree. You went to Cornell,
+you have civil engineering degree,
 
 59
-00:03:50.610 --> 00:03:54.570
-know, upper triggers, there's lower
-triggers. And it can be
+00:03:34.770 --> 00:03:37.260
+you have an environmental engineering
+degree, but now you're talking
 
 60
-00:03:54.570 --> 00:04:00.720
-frustrating for people with mobility
-issues or, you know, sensory
+00:03:37.260 --> 00:03:41.010
+about creating software engineers from,
+and again, no disrespect to
 
 61
-00:04:00.720 --> 00:04:04.750
-issues or, you know, vision
-or something like that. And
+00:03:41.010 --> 00:03:45.000
+hard work from baristas. Where
+does someone with a formal
 
 62
-00:04:04.770 --> 00:04:08.550
-they can't really play. So
-using the accessibility controller allows
+00:03:45.000 --> 00:03:47.670
+engineering background, where do you
+fall on whether or not
 
 63
-00:04:08.550 --> 00:04:13.020
-you to plug in all
-sorts of external controllers so
+00:03:47.670 --> 00:03:51.060
+college is necessary to be
+an engineer? Well, what's really
 
 64
-00:04:13.020 --> 00:04:16.110
-that you can use. So
-for example, I use to,
+00:03:51.060 --> 00:03:54.630
+interesting. It's because of my
+background that, and I actually
 
 65
-00:04:16.110 --> 00:04:22.320
-X-Box not X-Box to rock
-band drum pedals for my
+00:03:54.630 --> 00:03:56.670
+didn't learn how to code
+until I was on the
 
 66
-00:04:22.320 --> 00:04:26.970
-triggers. You haven't really Okay.
-So I have rock band
+00:03:56.670 --> 00:04:00.840
+job. And so, and everybody
+in, in technology has a
 
 67
-00:04:27.030 --> 00:04:31.140
-and the, the rock band,
-orange drum pedal, it's like
+00:04:00.840 --> 00:04:04.410
+story around the best software
+that developer that they ever
 
 68
-00:04:31.150 --> 00:04:35.670
-the, the, you know, controller
-it's orange and I got
+00:04:04.410 --> 00:04:07.620
+met didn't necessarily have a
+college degree. We've if you're
 
 69
-00:04:35.670 --> 00:04:39.150
-it at Goodwill and it
-has a 3.5 millimeter. It
+00:04:07.620 --> 00:04:10.020
+been in this industry long
+enough, you know, some English
 
 70
-00:04:39.150 --> 00:04:41.400
-looks like a headphone Jack
-on the end of it.
+00:04:10.050 --> 00:04:14.700
+major or self-taught coder, who's
+been teaching themselves to code.
 
 71
-00:04:41.700 --> 00:04:44.640
-Right? And so you can
-plug in on the back
+00:04:15.120 --> 00:04:17.280
+And so as a part
+of my degree, I took
 
 72
-00:04:44.640 --> 00:04:52.710
-of the controller itself, there
-are 3.5 millimeter controllers for
+00:04:17.280 --> 00:04:20.430
+some software development classes, but
+I didn't actually learn how
 
 73
-00:04:52.710 --> 00:04:58.020
-jacks for the controllers, and
-pretty much any button, any
+00:04:20.430 --> 00:04:22.770
+to code until I was
+on the job. And it
 
 74
-00:04:58.020 --> 00:05:02.430
-trigger has a spot along
-the back that you can
+00:04:22.770 --> 00:04:26.400
+was that experience that gave
+me the aha idea that,
 
 75
-00:05:02.430 --> 00:05:04.740
-plug in. And the reason
-they did that, it's all
+00:04:27.270 --> 00:04:29.070
+you know, Hey, this isn't
+stuff I learned in college,
 
 76
-00:05:04.740 --> 00:05:07.860
-in a line so that
-people with mobility issues or
+00:04:29.070 --> 00:04:31.020
+this is stuff I learned
+actually on the job. And
 
 77
-00:05:07.860 --> 00:05:11.760
-dexterity issues, it's not, you
-know, they're not like a
+00:04:31.020 --> 00:04:32.910
+there's probably a lot of
+people out there who can
 
 78
-00:05:11.790 --> 00:05:14.340
-stacked one on top of
-the other, anything. They worked
+00:04:32.910 --> 00:04:36.930
+do the same without a
+college degree. That's interesting now,
 
 79
-00:05:14.340 --> 00:05:21.750
-a long time with different
-agencies, different charities to really
+00:04:36.960 --> 00:04:39.870
+but your degrees are in
+civil engineering and environmental engineering.
 
 80
-00:05:21.840 --> 00:05:25.350
-work out the design on
-this. And it was one
+00:04:39.870 --> 00:04:41.610
+Does that mean that someone
+could go and become one
 
 81
-00:05:25.350 --> 00:05:29.790
-of the, the, the things
-out of the inclusive technology
+00:04:41.610 --> 00:04:43.920
+of those kinds of engineers,
+not a software engineer, but
 
 82
-00:05:29.790 --> 00:05:32.190
-lab. And I don't know
-Scott, if you've ever been
+00:04:43.920 --> 00:04:47.610
+one of those without a
+degree, I would say not
 
 83
-00:05:32.190 --> 00:05:36.450
-there, but it's an amazing,
-amazing place that, that they,
+00:04:47.610 --> 00:04:51.720
+necessarily, because there's a lot
+more that goes into it.
 
 84
-00:05:36.510 --> 00:05:38.850
-that they do the designs
-for, for things like the
+00:04:52.260 --> 00:04:55.530
+And there's actually accreditations that
+have to happen to be
 
 85
-00:05:38.850 --> 00:05:43.200
-accessible controller. And I know
-that several other companies and
+00:04:55.620 --> 00:04:58.200
+a civil engineer. And I
+think that would be hard
 
 86
-00:05:43.200 --> 00:05:49.620
-organizations have used the expertise
-now of the inclusive technologies
+00:04:58.200 --> 00:05:00.690
+to get on your own,
+but with software development, it
 
 87
-00:05:49.620 --> 00:05:56.790
-lab for different, for different
-offerings. Well, well, before we
+00:05:00.690 --> 00:05:04.950
+truly is a skill that
+can be learned. And, you
 
 88
-00:05:56.790 --> 00:05:59.120
-get the, like the techie
-Parts of how it works
+00:05:04.950 --> 00:05:09.180
+know, with a foundation, a
+little ambition and desire, you
 
 89
-00:05:59.120 --> 00:06:00.890
-and what it does, let
-me back up a second.
+00:05:09.180 --> 00:05:11.730
+can actually teach yourself how
+to be a software developer.
 
 90
-00:06:01.040 --> 00:06:02.780
-You've been a gamer for
-years though. I mean, I've
+00:05:11.730 --> 00:05:14.190
+Whereas, you know, there's a
+lot, obviously there's a lot
 
 91
-00:06:02.780 --> 00:06:05.810
-known, I've known you for,
-I don't know, 15 years,
+00:05:14.190 --> 00:05:17.250
+more at stake with civil
+engineering, right? You're building bridges
 
 92
-00:06:06.770 --> 00:06:09.430
-how were you playing Xbox
-before? I was usually the
+00:05:17.250 --> 00:05:21.420
+and roads. And you know,
+there's a long history of
 
 93
-00:06:09.430 --> 00:06:14.110
-standard meat, meat target for
-my kids inhaler, you know,
+00:05:21.420 --> 00:05:24.810
+academics that come into being
+good civil engineers and mechanical
 
 94
-00:06:14.110 --> 00:06:16.240
-I was the practice dummy.
-So I would, you know,
+00:05:24.810 --> 00:05:28.680
+engineers. But with software development,
+it's, you know, it's something
 
 95
-00:06:16.240 --> 00:06:18.370
-like for example, if you're
-trying to play something that,
+00:05:28.680 --> 00:05:31.260
+that can be taught and
+it's something you mostly learn
 
 96
-00:06:18.490 --> 00:06:23.650
-that needs both joysticks, I
-would typically, you know, either
+00:05:31.260 --> 00:05:33.990
+on the job. And I
+think most college grads in
 
 97
-00:06:23.650 --> 00:06:26.140
-turn the controller around sometimes
-or put it on the
+00:05:33.990 --> 00:05:36.960
+computer science would tell you
+that they got a great
 
 98
-00:06:26.140 --> 00:06:29.530
-side and then hit it
-with one part, you know,
+00:05:36.960 --> 00:05:39.720
+foundation in college, but they
+didn't really learn how to
 
 99
-00:06:29.530 --> 00:06:31.690
-and then try to move
-a little bit with the
+00:05:39.720 --> 00:05:43.050
+do software engineering until they
+were on the job. Yeah.
 
 100
-00:06:31.690 --> 00:06:34.330
-other. So, like, for example,
-in the first person shooter
+00:05:43.230 --> 00:05:45.480
+We talk a lot about
+that foundation on the show
 
 101
-00:06:34.330 --> 00:06:39.160
-games, you have the navigation
-where you're running around with
+00:05:45.480 --> 00:05:49.560
+here. And sometimes I use
+the term historical context about
 
 102
-00:06:39.160 --> 00:06:41.080
-your feet, but then you
-twist at the waist with
+00:05:49.560 --> 00:05:53.460
+whether or not someone needs
+to understand the historical context
 
 103
-00:06:41.080 --> 00:06:43.270
-the other one. And that's
-where I would usually have
+00:05:53.460 --> 00:05:55.560
+of the internet in order
+to write good HTML or
 
 104
-00:06:43.270 --> 00:06:45.700
-the problem. I'd have to
-move and then quickly twists
+00:05:55.560 --> 00:05:58.220
+good JavaScript and people seem
+to be split on the,
 
 105
-00:06:45.700 --> 00:06:47.830
-with their waist. And by
-that point, you know, I'm
+00:05:58.520 --> 00:06:00.880
+on that subject. Well, I
+think there's, there's always going
 
 106
-00:06:48.250 --> 00:06:52.330
-spawning again. So, so for
-the most part, for quite
+00:06:00.880 --> 00:06:04.000
+to be different levels of
+engineers and there's people who
 
 107
-00:06:52.330 --> 00:06:55.180
-a while, I haven't played
-console based games. I've just
+00:06:04.000 --> 00:06:07.090
+we need to write code.
+And then there's people who
 
 108
-00:06:55.180 --> 00:07:00.190
-played PC based games. And,
-And then how did you
+00:06:07.090 --> 00:06:10.150
+need to take a much,
+you know, the 50,000 foot
 
 109
-00:07:00.190 --> 00:07:01.780
-do that? Was it because
-the PC you've got the
+00:06:10.150 --> 00:06:12.550
+view of what you're building
+and how the product's going
 
 110
-00:07:01.780 --> 00:07:04.660
-keyboard and the mouse and
-you can rearrange things, maybe
+00:06:12.550 --> 00:06:15.490
+to be built and see
+the bigger picture. And so
 
 111
-00:07:04.660 --> 00:07:06.760
-move the mouse to the
-right side, but you're still
+00:06:15.490 --> 00:06:17.920
+there's, you know, there's definitely
+a need for both, right?
 
 112
-00:07:06.760 --> 00:07:08.890
-only trying to do all
-of this with just right,
+00:06:17.920 --> 00:06:20.110
+There's need for people who
+can write code and get
 
 113
-00:07:09.190 --> 00:07:11.380
-Right. And you're still doing
-it with basically one hand.
+00:06:20.110 --> 00:06:22.750
+the application to do exactly
+what you want it to
 
 114
-00:07:11.590 --> 00:07:13.810
-You can use the, you
-can use some of the,
+00:06:22.750 --> 00:06:24.370
+do. And then there's people
+who have to look at
 
 115
-00:07:14.080 --> 00:07:17.800
-like on the keyboard, the
-arrow controllers, or, you know,
+00:06:24.370 --> 00:06:27.430
+the big picture and understand
+from a business standpoint, an
 
 116
-00:07:17.800 --> 00:07:21.700
-WASD or something like that
-with your other hand somewhat,
+00:06:27.430 --> 00:06:31.810
+engineering standpoint and architectural standpoint,
+what this application is going
 
 117
-00:07:21.700 --> 00:07:23.680
-and then move the mouse
-or whatever you need to,
+00:06:31.810 --> 00:06:34.180
+to look like. And so
+both those people can work
 
 118
-00:07:23.680 --> 00:07:27.430
-but still, it's a, it's
-kind of frustrating sometimes. And
+00:06:34.210 --> 00:06:38.560
+very closely together to build
+great software products. Yeah. Yeah.
 
 119
-00:07:29.260 --> 00:07:32.560
-so being able to do
-that, you know, you kind
+00:06:38.560 --> 00:06:40.840
+That's a good point. I
+think that it's really easy
 
 120
-00:07:32.560 --> 00:07:34.060
-of pick and choose the
-games you want to play.
+00:06:40.840 --> 00:06:42.610
+to say, Oh, I'm a
+coder or, Oh, I'm a
 
 121
-00:07:34.060 --> 00:07:35.860
-So I've been, you know,
-for a long time and
+00:06:42.610 --> 00:06:46.840
+programmer, but there are there's
+intersectionality within programming. There's not
 
 122
-00:07:35.860 --> 00:07:38.290
-playing things like Civ and,
-and those sorts of things,
+00:06:46.840 --> 00:06:51.580
+just junior, senior architect, et
+cetera, but there's, there's testing,
 
 123
-00:07:38.290 --> 00:07:41.950
-which aren't as much of
-a Twitch game as, as
+00:06:51.580 --> 00:06:54.850
+there's automation, there's build engineers.
+There's all kinds of flavors
 
 124
-00:07:41.950 --> 00:07:47.080
-other things. So there's a
-huge gaming community though, out
+00:06:54.850 --> 00:06:57.340
+of engineer that one could
+be and they don't all
 
 125
-00:07:47.080 --> 00:07:50.710
-there before the Xbox, at
-draft of controller, that would
+00:06:57.340 --> 00:07:02.500
+need formal education. Absolutely. So
+this is very exclusive. I
 
 126
-00:07:50.860 --> 00:07:54.490
-just basically say, we're going
-to solve this now. Whether,
+00:07:02.500 --> 00:07:05.560
+understand that there was one,
+one time you had 400
 
 127
-00:07:54.490 --> 00:07:56.740
-whether we have support from
-a company or not, right.
+00:07:05.560 --> 00:07:10.330
+folks show up for five
+spots. Yeah, it is. Well,
 
 128
-00:07:56.740 --> 00:08:00.460
-There's like the able gamers
-charity and there's special effect.
+00:07:10.360 --> 00:07:12.850
+the great thing about what
+we do is we pay
 
 129
-00:08:00.460 --> 00:08:05.920
-And there's cerebral palsy foundation.
-People were building solutions. I've
+00:07:12.850 --> 00:07:15.400
+people on day one to
+be a member of our
 
 130
-00:08:05.920 --> 00:08:08.530
-seen out of wood and
-tape and wires that they
+00:07:15.400 --> 00:07:18.880
+apprenticeship program. And that's because
+we're a department of labor
 
 131
-00:08:08.530 --> 00:08:12.370
-made themselves. And, and this
-was a, a very DIY
+00:07:18.880 --> 00:07:23.140
+approved apprenticeship program as part
+of the DOL regulations are
 
 132
-00:08:12.400 --> 00:08:15.730
-community. Like they, they were
-gonna, they were in a
+00:07:23.140 --> 00:07:25.870
+that you pay people on
+day one. So think about
 
 133
-00:08:15.730 --> 00:08:17.980
-game and no one's going
-to let them, no, one's
+00:07:25.870 --> 00:07:28.840
+your options in terms of
+choosing a bootcamp or choosing
 
 134
-00:08:17.980 --> 00:08:21.220
-going to stop them. Right.
-Right. In fact, that's a
+00:07:28.930 --> 00:07:31.600
+us at a bootcamp, you'll
+have to take six months
 
 135
-00:08:21.220 --> 00:08:24.340
-good point. Back in the
-early eighties, when I had
+00:07:31.600 --> 00:07:36.160
+off of work and pay
+20, sometimes $30,000. And with
 
 136
-00:08:24.340 --> 00:08:27.580
-my Atari, there was a,
-an article in an Atari
+00:07:36.160 --> 00:07:40.000
+us, you're actually getting paid
+on day one. So it's
 
 137
-00:08:27.580 --> 00:08:31.660
-age at the time that
-showed you how to unscrew
+00:07:40.000 --> 00:07:44.770
+become very competitive to get
+in. And we've actually had
 
 138
-00:08:31.660 --> 00:08:36.100
-it and then rear rewire
-the circuit board. So you
+00:07:44.770 --> 00:07:49.240
+to modify our entrance criteria
+and the work it takes
 
 139
-00:08:36.100 --> 00:08:39.550
-could make it a left
-handed controller. Wow. So I
+00:07:49.240 --> 00:07:51.730
+to actually get in. But
+we really feel like we're
 
 140
-00:08:39.550 --> 00:08:42.580
-did that so that I
-could use the fire button
+00:07:51.730 --> 00:07:55.210
+producing an amazing software developer
+at the end of our
 
 141
-00:08:42.670 --> 00:08:46.720
-on the left hand side.
-But yeah, there were so
+00:07:55.210 --> 00:07:57.910
+program. Can you talk a
+little bit about what that
 
 142
-00:08:46.720 --> 00:08:50.710
-many, there have been so
-many charities and people just
+00:07:57.910 --> 00:08:00.610
+means to be an a
+department of labor approved apprenticeship
 
 143
-00:08:50.710 --> 00:08:54.010
-spending their own time as
-bankers to help other people
+00:08:00.610 --> 00:08:03.220
+program? Because you've mentioned that
+before in interviews, and I
 
 144
-00:08:55.290 --> 00:09:00.120
-modify different controllers or hook
-them up to a, maybe
+00:08:03.220 --> 00:08:05.710
+wonder, is that a hard
+thing? Is that more paperwork?
 
 145
-00:09:00.120 --> 00:09:03.210
-a breath like a straw.
-So you could use that
+00:08:05.710 --> 00:08:08.380
+What does that, what does
+that stamp of approval? It's
 
 146
-00:09:03.210 --> 00:09:05.550
-for the fire button or
-something like that to allow
+00:08:08.380 --> 00:08:11.590
+hard paperwork. So it takes
+a lot of paperwork to
 
 147
-00:09:05.580 --> 00:09:10.110
-people to escape the prison,
-if you will, or the,
+00:08:11.590 --> 00:08:14.740
+get through it, but when
+we actually, well, the story
 
 148
-00:09:10.530 --> 00:09:13.620
-the frustration of having a
-body that a mind that's
+00:08:14.740 --> 00:08:17.710
+behind it is that we
+started calling ourselves an apprenticeship
 
 149
-00:09:13.860 --> 00:09:18.860
-trapped inside that's mobility limited,
-limited body <inaudible>. Yeah. And
+00:08:17.710 --> 00:08:20.770
+program fairly early on because
+that's what we were doing.
 
 150
-00:09:18.860 --> 00:09:21.290
-I understand that a couple
-of a couple of years
+00:08:20.770 --> 00:08:22.720
+We were bringing people in
+and we were training them
 
 151
-00:09:21.290 --> 00:09:26.390
-ago, the kind of famous
-modern Ben heck B E
+00:08:22.720 --> 00:08:25.870
+side by side with more
+senior level folks, exactly like
 
 152
-00:09:26.390 --> 00:09:30.140
-N H E C K
-created X-Box one single handed
+00:08:26.170 --> 00:08:29.890
+a plumber or an electrician
+might learn their trade. And
 
 153
-00:09:30.140 --> 00:09:33.680
-controllers, which solves problem for
-a single handed person. But
+00:08:30.100 --> 00:08:33.730
+we soon learned that it
+was an actual federal designation
 
 154
-00:09:33.860 --> 00:09:37.820
-there's a, there's a diversity
-of limited mobility issues, right.
+00:08:33.730 --> 00:08:36.220
+to be an apprenticeship program.
+And so kind of tongue
 
 155
-00:09:37.820 --> 00:09:40.820
-Someone might not simply have
-only one arm, you know,
+00:08:36.220 --> 00:08:39.430
+in cheek, we thought we
+were being clever and we
 
 156
-00:09:40.850 --> 00:09:42.950
-like you, you can use
-your other hand to do
+00:08:39.430 --> 00:08:43.930
+applied to become an official
+apprenticeship program. And it was
 
 157
-00:09:42.950 --> 00:09:45.170
-some stuff. Like it could
-be a trigger hand. Right,
+00:08:43.930 --> 00:08:46.690
+a lot of paperwork, but
+actually no software development company
 
 158
-00:09:45.530 --> 00:09:48.110
-Right. It's a, I can
-use it to grasp, I
+00:08:46.690 --> 00:08:49.870
+had ever applied for this
+before. So it was actually
 
 159
-00:09:48.110 --> 00:09:52.100
-can use it on anything,
-you know, of course, a
+00:08:49.870 --> 00:08:53.290
+written for plumbers and electricians,
+and we had to rewrite
 
 160
-00:09:52.110 --> 00:09:55.820
-course ability, not finally I
-can grasp so I can,
+00:08:53.290 --> 00:08:59.100
+the entire documentation to a
+software development career. And we
 
 161
-00:09:55.850 --> 00:09:58.640
-you know, use it for
-a, for a trigger it's
+00:08:59.100 --> 00:09:01.560
+did all that. We worked
+very closely with the DOL.
 
 162
-00:09:58.640 --> 00:10:02.960
-just harder to do, especially
-with the, the way that
+00:09:01.740 --> 00:09:03.840
+It took us about 18
+months to get through the
 
 163
-00:10:02.960 --> 00:10:06.950
-the is molded. But it's
-really interesting because the way
+00:09:03.840 --> 00:09:07.980
+whole process. And we were
+the first DOL approved software
 
 164
-00:10:06.950 --> 00:10:11.660
-that the, the adaptive controller
-came about was in 2014.
+00:09:07.980 --> 00:09:12.240
+development apprenticeship program in the
+country. There's a couple today.
 
 165
-00:10:12.140 --> 00:10:14.510
-And I don't remember who
-it was that was scrolling
+00:09:12.240 --> 00:09:15.480
+There's a handful out there
+and it's actually, I believe
 
 166
-00:10:14.510 --> 00:10:17.750
-through Twitter, but they were,
-they saw a tweet by
+00:09:15.480 --> 00:09:18.540
+it's much easier today because
+we laid a lot of
 
 167
-00:10:17.750 --> 00:10:22.640
-warfighter engaged. Who's a nonprofit
-organization that provides gaming devices
+00:09:18.540 --> 00:09:23.150
+that groundwork early on How
+long is a registered apprentice
 
 168
-00:10:22.640 --> 00:10:25.520
-to wounded vets. And so
-they saw that saw this
+00:09:23.180 --> 00:09:26.540
+program. I understand that a
+plumber might spend 32 months
 
 169
-00:10:25.520 --> 00:10:31.040
-photo and they reached out
-to that two warfighter and
+00:09:26.820 --> 00:09:29.300
+learning to be a plumber
+before they move on. Ours
 
 170
-00:10:31.040 --> 00:10:34.430
-started learning how difficult it
-was. And, and so there
+00:09:29.300 --> 00:09:34.070
+is a purely competency-based and,
+and skills based. So it's
 
 171
-00:10:34.430 --> 00:10:37.730
-was a hackathon at the
-2015 ability summit, and a
+00:09:34.070 --> 00:09:37.580
+not time restricted. And with
+plumbers and electricians, I believe
 
 172
-00:10:37.730 --> 00:10:40.670
-group of employees decided to
-put together a team to
+00:09:37.580 --> 00:09:39.650
+most of them are time
+restricted. And it does take
 
 173
-00:10:40.670 --> 00:10:44.930
-develop a solution for accessible
-gaming. And so they worked
+00:09:39.650 --> 00:09:41.270
+a certain amount of time
+that you have to put
 
 174
-00:10:44.930 --> 00:10:49.760
-with Ken Jones, who's the,
-the leader of warfighter engaged.
+00:09:41.270 --> 00:09:44.390
+in. But with us, it's
+a minimum of six months,
 
 175
-00:10:50.810 --> 00:10:53.270
-And they developed at that
-point, a gaming device that
+00:09:44.420 --> 00:09:46.880
+but it's actually taken people
+longer just to get all
 
 176
-00:10:53.270 --> 00:10:58.130
-used connect to track a
-gamer's movements and translated translate
+00:09:46.880 --> 00:09:50.990
+their competencies signed off on.
+So at a minimum six
 
 177
-00:10:58.130 --> 00:11:01.700
-them as if they were
-inputs from a traditional wireless
+00:09:50.990 --> 00:09:55.070
+months, but sometimes a little
+bit longer. And then there's
 
 178
-00:11:01.700 --> 00:11:06.020
-controller. Wow. And it does
-make you wonder though why
+00:09:55.070 --> 00:09:57.890
+usually a competency model or
+a way to go and
 
 179
-00:11:06.020 --> 00:11:08.300
-it took so long. Like
-if you were hacking your
+00:09:57.890 --> 00:10:02.000
+determine someone's competency. How do
+you determine that someone is,
 
 180
-00:11:08.300 --> 00:11:11.460
-Atari in the eighties, doesn't
-it feel like this, this
+00:10:02.140 --> 00:10:04.430
+is ready to be a
+junior engineer and move? Do
 
 181
-00:11:11.500 --> 00:11:14.960
-should have been a thing
-a long time ago? Yeah.
+00:10:04.430 --> 00:10:08.030
+they move from intern to,
+or rather apprentice to journeyman
 
 182
-00:11:14.960 --> 00:11:17.420
-I think part of it
-is, is that, you know,
+00:10:08.030 --> 00:10:10.910
+or journey person to junior
+engineer? Yeah. Which approximates the
 
 183
-00:11:17.510 --> 00:11:20.090
-sometimes people are just going
-about their lives and they
+00:10:10.910 --> 00:10:14.900
+progress. We've moved from apprentice
+to a full time junior
 
 184
-00:11:20.090 --> 00:11:22.940
-just, they don't see it.
-And, you know, it's, it's
+00:10:14.900 --> 00:10:19.220
+engineer. And that's a, that's
+part of our process And
 
 185
-00:11:22.940 --> 00:11:25.160
-not that it's good or
-bad or anything. They just
+00:10:19.520 --> 00:10:21.770
+it does someone need to
+have a GED or a
 
 186
-00:11:25.160 --> 00:11:29.390
-don't see it. I think
-a really, a lot of
+00:10:21.770 --> 00:10:24.080
+high school, you know, what's
+the, what's the spread of
 
 187
-00:11:29.390 --> 00:11:34.010
-companies now for whatever reason
-are really trying to focus
+00:10:24.110 --> 00:10:26.360
+education that people come into
+this with. Yeah. We've had
 
 188
-00:11:34.010 --> 00:11:37.940
-on accessibility. I mean, if
-you look at Tommy Hilfiger
+00:10:26.360 --> 00:10:29.690
+folks with GDS and you
+know, who just had been
 
 189
-00:11:37.940 --> 00:11:42.080
-now has a line of
-Tommy accessible clothing. And so
+00:10:29.690 --> 00:10:33.590
+teaching themselves to code for
+years. And then we've had
 
 190
-00:11:42.320 --> 00:11:47.510
-they have magnetic clasps for
-your buttons for your shirt.
+00:10:33.590 --> 00:10:37.340
+people with advanced degrees in
+other fields who now decided
 
 191
-00:11:47.520 --> 00:11:49.430
-So it still looks like
-buttons on a, on a
+00:10:37.340 --> 00:10:39.770
+they want to get into
+software development. And I think
 
 192
-00:11:49.430 --> 00:11:54.220
-dress shirt, but it's actually
-a magnetic class. And Nike,
+00:10:39.770 --> 00:10:43.670
+actually we've been really successful
+in attracting women to these
 
 193
-00:11:54.670 --> 00:11:56.350
-I tried these on and
-they didn't work for me,
+00:10:43.670 --> 00:10:46.760
+fields. I think a lot
+of women go into college
 
 194
-00:11:56.620 --> 00:11:59.650
-but they have as part
-of their flies, their fly
+00:10:46.760 --> 00:10:50.330
+and start out as English
+majors or philosophy sociology, kind
 
 195
-00:11:59.650 --> 00:12:03.970
-line, a high top that
-zips all the way around
+00:10:50.330 --> 00:10:54.110
+of the softer sciences, and
+then decide they want to
 
 196
-00:12:03.970 --> 00:12:08.980
-with Velcro. See that you
-can basically, instead of using
+00:10:54.110 --> 00:10:56.750
+get into a tech career,
+but can't necessarily afford to
 
 197
-00:12:09.460 --> 00:12:12.400
-shoestrings, you can zip all
-the way around it and
+00:10:56.750 --> 00:10:59.420
+start from the beginning again.
+But we give them an
 
 198
-00:12:12.400 --> 00:12:14.740
-close it, it kind of
-opens it. It kind of
+00:10:59.420 --> 00:11:04.700
+opportunity to cost-effectively launch their
+careers in tech. And so
 
 199
-00:12:14.740 --> 00:12:16.450
-opens the shoe up and
-then kind of zips it
+00:11:05.240 --> 00:11:08.840
+are actually, our next class
+was over 50% women. And
 
 200
-00:12:16.510 --> 00:12:21.630
-around there. So Small, small,
-and clever design things that
+00:11:08.870 --> 00:11:11.510
+a lot of them have
+those kinds of backgrounds who,
 
 201
-00:12:21.630 --> 00:12:24.780
-can fundamentally change how someone
-is able to just move
+00:11:11.570 --> 00:11:15.020
+you know, have a college
+degree, but in something else
 
 202
-00:12:24.780 --> 00:12:28.650
-through their, their everyday life.
-Like this is absolutely, this
+00:11:15.050 --> 00:11:18.950
+and now want to get
+into technology. Yeah. It really
 
 203
-00:12:28.650 --> 00:12:31.350
-is just a, it's the
-organizational willpower to do it.
+00:11:18.950 --> 00:11:21.050
+resonated with me when you
+said that everyone has that
 
 204
-00:12:33.030 --> 00:12:35.130
-And that's why, you know,
-one of the reasons why
+00:11:21.050 --> 00:11:24.020
+story of that person with
+a non tech degree, who
 
 205
-00:12:36.060 --> 00:12:41.190
-I love Microsoft because they,
-they decided to do this.
+00:11:24.020 --> 00:11:26.000
+is the best program where
+they ever met the best
 
 206
-00:12:41.190 --> 00:12:43.770
-They put, you know, they
-put their money where their
+00:11:26.000 --> 00:11:28.700
+one I ever met had
+a masters in music. Yeah.
 
 207
-00:12:43.770 --> 00:12:46.950
-mouth was and created something
-that's very affordable and very,
+00:11:28.730 --> 00:11:33.770
+Actually music majors are really
+great software developers. There's something
 
 208
-00:12:46.950 --> 00:12:50.700
-very flexible. You can use
-it on both the piece
+00:11:33.770 --> 00:11:36.020
+with the mindset of a
+music major that makes you
 
 209
-00:12:50.790 --> 00:12:54.930
-on both windows 10 and
-on the Xbox itself. And
+00:11:36.020 --> 00:11:38.600
+a really great software developer.
+And we've had actually several
 
 210
-00:12:54.930 --> 00:12:57.840
-so you can configure it
-however you need to. In
+00:11:38.600 --> 00:11:43.520
+really talented musicians come into
+our program. You mentioned also
 
 211
-00:12:57.840 --> 00:13:01.770
-fact, it has oversized buttons
-to oversized buttons, and I've
+00:11:43.520 --> 00:11:46.790
+that you're pulling from kind
+of nontraditional places. You said
 
 212
-00:13:01.770 --> 00:13:05.430
-got two other oversized buttons.
-So I just took a
+00:11:46.820 --> 00:11:49.640
+millennials, but you also mentioned
+the foster care system. But
 
 213
-00:13:05.430 --> 00:13:07.920
-picture of a regular Xbox
-controller with the X, Y
+00:11:49.640 --> 00:11:52.970
+I understand also that you
+have had a convicted felons,
 
 214
-00:13:07.920 --> 00:13:10.890
-AB blew it up and
-then put it on the
+00:11:53.020 --> 00:11:56.260
+which are folks who very
+often feel like construction or
 
 215
-00:13:10.890 --> 00:13:17.040
-buttons and created that diamond,
-that diamond configuration and use
+00:11:56.260 --> 00:11:58.810
+food service is all that
+they're able to define from
 
 216
-00:13:17.040 --> 00:13:19.380
-it, use the button. So
-that way with my right
+00:11:58.810 --> 00:12:02.520
+a jobs perspective. Yeah. I
+mean, you know, companies are
 
 217
-00:13:19.380 --> 00:13:23.130
-hand. Interesting. So we're on
-a podcast, of course. So
+00:12:02.720 --> 00:12:06.870
+much more open to, you
+know, look overlooking people's backgrounds.
 
 218
-00:13:23.130 --> 00:13:25.410
-people will have to go
-and link and go and
+00:12:06.900 --> 00:12:10.140
+But the story we have
+with a felon was that
 
 219
-00:13:25.410 --> 00:13:27.420
-search for images for this,
-but let's describe it. It
+00:12:10.560 --> 00:12:13.050
+we were in our office
+one day and this young
 
 220
-00:13:27.420 --> 00:13:30.990
-looks like it looks like
-a DJ turntable. It's, it's
+00:12:13.050 --> 00:12:15.930
+man walked in and said,
+I read an article about
 
 221
-00:13:30.990 --> 00:13:35.010
-a white rectangle. It's a
-very attractive controller. It matches
+00:12:15.930 --> 00:12:19.140
+Heather and Forbes when I
+was in jail. And I've
 
 222
-00:13:35.010 --> 00:13:38.670
-the Xbox style with two
-big black buttons on it
+00:12:19.140 --> 00:12:21.540
+been teaching myself to code
+for the past 10 years.
 
 223
-00:13:38.700 --> 00:13:41.850
-that are several inches wide
-that looked like they could
+00:12:21.540 --> 00:12:24.150
+And I'd love to work
+here. And we said, great,
 
 224
-00:13:41.850 --> 00:13:45.300
-be turntables, but they're actually
-buttons. There's a, a small
+00:12:24.150 --> 00:12:25.800
+you know, leave us a
+resume. We'll take a look
 
 225
-00:13:45.300 --> 00:13:50.850
-D pad, presumably for setup
-starting start and select buttons,
+00:12:25.800 --> 00:12:27.540
+at it. And he said,
+I don't want to put
 
 226
-00:13:51.180 --> 00:13:55.290
-but it's rather, it's rather
-Spartan, but if you flip
+00:12:27.540 --> 00:12:29.670
+my resume on a stack
+of resumes. I want to,
 
 227
-00:13:55.290 --> 00:14:00.750
-it around on the backside,
-there's 19 3.5 millimeter jacks
+00:12:29.760 --> 00:12:31.950
+I really want to work
+here. And so we asked
 
 228
-00:14:00.780 --> 00:14:05.250
-and multiple USB ports. This
-is not a controller as
+00:12:31.950 --> 00:12:34.080
+them to volunteer for a
+couple of weeks, for two
 
 229
-00:14:05.250 --> 00:14:09.240
-it is a controller toolkit.
-Right. Right. And that's the
+00:12:34.080 --> 00:12:36.630
+weeks to see what he
+had. And it turned out
 
 230
-00:14:09.270 --> 00:14:12.570
-main thing is that it's
-not necessarily the controller itself,
+00:12:36.630 --> 00:12:39.960
+he was a very, very
+talented developer and he'd spent
 
 231
-00:14:12.570 --> 00:14:13.620
-but it's almost, I don't
-want to say it's a
+00:12:39.960 --> 00:12:42.630
+a lot of time learning
+to code and he made
 
 232
-00:14:13.620 --> 00:14:17.700
-framework, but it's a platform.
-It's an ecosystem. Right. Right.
+00:12:42.630 --> 00:12:45.540
+some mistakes early. He was
+a fairly young guy. He
 
 233
-00:14:17.940 --> 00:14:21.840
-And the interesting thing about
-it is on the controller
+00:12:45.540 --> 00:12:47.880
+was only 20 years old,
+but when he was 18,
 
 234
-00:14:21.840 --> 00:14:23.580
-itself. Yes. It has a
-deep pad and you can
+00:12:47.880 --> 00:12:51.420
+he was selling drugs and
+you know, wasn't a bad
 
 235
-00:14:23.580 --> 00:14:27.000
-map the Xbox controller deep
-pad to that, right. The
+00:12:51.420 --> 00:12:55.050
+guy. He wasn't violent and
+he needed a second chance
 
 236
-00:14:27.000 --> 00:14:33.240
-pad, You can also then
-using a technology also that
+00:12:55.050 --> 00:12:57.360
+and we gave that to
+him. And she's now a
 
 237
-00:14:33.240 --> 00:14:35.610
-came out, I think in
-like 2014 or 2015 called
+00:12:57.360 --> 00:13:01.770
+really successful software developer. Does
+that seem like something that
 
 238
-00:14:35.760 --> 00:14:42.930
-copilot and copilot is an
-Xbox technology that allows two
+00:13:01.770 --> 00:13:05.160
+could be scalable? I wonder
+with 400 folks for five
 
 239
-00:14:42.930 --> 00:14:46.830
-controllers to work as one.
-Right. And that's a software
+00:13:05.160 --> 00:13:07.860
+spots, how do you scale
+something like this? Well, our
 
 240
-00:14:46.830 --> 00:14:49.230
-based thing. I've actually done
-that with my kids before
+00:13:07.860 --> 00:13:11.310
+next class is actually 20
+people and we're working with
 
 241
-00:14:49.230 --> 00:14:53.480
-they, right before they became
-able to really play, you
+00:13:11.310 --> 00:13:16.230
+some really large national companies
+to create a larger talent
 
 242
-00:14:53.480 --> 00:14:55.760
-know, I could move the
-head of the character and
+00:13:16.230 --> 00:13:20.100
+strategy for them. So kind
+of having them leverage our
 
 243
-00:14:55.760 --> 00:14:58.510
-they could move the body
-kind of thing. Right. And
+00:13:20.100 --> 00:13:24.360
+apprenticeship program to streamline people
+who are specifically trained in
 
 244
-00:14:58.660 --> 00:15:02.770
-in the same way, the
-accessible controller takes advantage of
+00:13:24.360 --> 00:13:27.750
+their technologies to go work
+for their companies. And so
 
 245
-00:15:02.770 --> 00:15:05.800
-using copilot. You can, you
-can use it with a
+00:13:27.750 --> 00:13:30.960
+we'd see, 'em, we'd probably
+be in three different cities
 
 246
-00:15:05.800 --> 00:15:11.650
-regular controller and then map
-from that controller onto. So
+00:13:30.960 --> 00:13:33.930
+in the next couple of
+years. And, you know, I
 
 247
-00:15:11.650 --> 00:15:13.960
-if you want to use,
-you know, in one hand
+00:13:33.930 --> 00:13:36.570
+could see us building out
+our Boulder Denver presence quite
 
 248
-00:15:13.960 --> 00:15:15.430
-you want to use the
-controller and then the big
+00:13:36.570 --> 00:13:39.360
+a bit in the next
+few years as well. I've
 
 249
-00:15:15.460 --> 00:15:18.280
-buttons of the accessible controller,
-you can absolutely do that.
+00:13:39.360 --> 00:13:43.020
+heard interns at big companies,
+the Microsofts and the Googles
 
 250
-00:15:18.670 --> 00:15:22.330
-And there's a little button
-on the X on the
+00:13:43.020 --> 00:13:45.960
+and the Facebooks say that
+they felt that the pace
 
 251
-00:15:22.330 --> 00:15:26.200
-accessible controller with three lights
-next to it. And those
+00:13:45.960 --> 00:13:48.240
+was too much and that
+the engineers that were working
 
 252
-00:15:26.200 --> 00:15:29.170
-are for the mapping profiles
-that you use. So you
+00:13:48.240 --> 00:13:50.910
+there, I didn't have time
+to sit with them. And
 
 253
-00:15:29.170 --> 00:15:32.020
-get into the Xbox and
-you turn on copilot and
+00:13:50.910 --> 00:13:53.400
+to really spend that time.
+How do you build that
 
 254
-00:15:32.020 --> 00:15:34.210
-it says, okay, do you
-want to map these things?
+00:13:53.400 --> 00:13:56.880
+into something as, as, as
+competitive as, as you know,
 
 255
-00:15:34.210 --> 00:15:37.900
-And so like, for example,
-I've mapped the right joystick
+00:13:56.880 --> 00:13:59.640
+software for hire? Yeah. Well,
+it's interesting in our field
 
 256
-00:15:37.960 --> 00:15:42.520
-to the D pad on
-the accessible controller. So you
+00:13:59.640 --> 00:14:02.820
+too, is when people like
+Microsoft or Google talk about
 
 257
-00:15:42.520 --> 00:15:46.540
-can map anything to anything,
-right. And on the back
+00:14:02.820 --> 00:14:05.520
+an entry level software developer,
+they're really talking about somebody
 
 258
-00:15:46.540 --> 00:15:49.270
-of these, these 3.5 millimeter
-devices, this is basically a
+00:14:05.520 --> 00:14:08.430
+with three to five years
+of experience and you can't
 
 259
-00:15:49.270 --> 00:15:53.200
-headphone Jack, but it's, it's
-not for headphones. If you
+00:14:08.430 --> 00:14:10.920
+get three to five years
+of experience. If nobody will
 
 260
-00:15:53.200 --> 00:15:56.680
-we've all looked at these,
-these, these plugs before they
+00:14:10.920 --> 00:14:13.710
+take a junior level person
+with less than that. So
 
 261
-00:15:56.680 --> 00:15:59.740
-usually have stripes, there's either
-like a, a mano or
+00:14:13.710 --> 00:14:16.710
+it was kind of this
+interesting catch 22, but that's
 
 262
-00:15:59.740 --> 00:16:03.280
-a digital input, there's a
-stereo or three stripes. And
+00:14:16.710 --> 00:14:19.050
+really where we come in
+to bridge that gap. And
 
 263
-00:16:03.460 --> 00:16:06.400
-you can use those for,
-for digital, like a button
+00:14:19.050 --> 00:14:23.340
+we are taking people and
+giving them that initial entree
 
 264
-00:16:06.430 --> 00:16:09.670
-pushing it on and off,
-or for analog things like
+00:14:23.370 --> 00:14:26.430
+into this field. I mean,
+if you think about somebody
 
 265
-00:16:09.700 --> 00:16:13.540
-joysticks and it'll support all
-of these different things where
+00:14:26.430 --> 00:14:29.670
+coming through a bootcamp and
+you look on their resume
 
 266
-00:16:13.540 --> 00:16:16.480
-switches or buttons totally up
-to you. So you can
+00:14:29.670 --> 00:14:33.240
+and it says Starbucks bootcamp,
+and now I want a
 
 267
-00:16:16.480 --> 00:16:20.530
-do remapping and software and
-physical mapping in hardware. Yes.
+00:14:33.240 --> 00:14:37.290
+job as opposed to somebody
+who comes from Starbucks, then
 
 268
-00:16:20.770 --> 00:16:23.440
-So that means that like
-this, this button that you
+00:14:37.380 --> 00:14:41.670
+apprenticeship program. Then I was
+an employee at tectonic, and
 
 269
-00:16:23.440 --> 00:16:27.160
-have, the, the, the one
-from rock band, is that
+00:14:41.670 --> 00:14:43.770
+now I'm looking for a
+job. That second person is
 
 270
-00:16:27.160 --> 00:16:28.990
-an on, off, or is
-that a trigger where you
+00:14:43.770 --> 00:14:46.110
+going to be a lot
+more attractive because they have
 
 271
-00:16:28.990 --> 00:16:31.720
-could push it slightly? And
-it's like an analog We're
+00:14:46.110 --> 00:14:50.070
+on the job experience and
+much higher percentage of getting
 
 272
-00:16:31.720 --> 00:16:34.150
-going to put a, you
-can push it slightly. It's
+00:14:50.070 --> 00:14:53.540
+placed at a great company.
+So it's that bootcamp doesn't
 
 273
-00:16:34.510 --> 00:16:38.080
-when you plug the pedal
-into the back of the
+00:14:53.540 --> 00:14:56.840
+necessarily give you the launch.
+You need, you really need
 
 274
-00:16:38.170 --> 00:16:42.190
-controller for, it has a
-little symbol for right trigger.
+00:14:56.840 --> 00:14:59.990
+that job experience. And that's
+the stop gap that we
 
 275
-00:16:42.640 --> 00:16:44.200
-You can plug that, you
-plug that right in there.
+00:14:59.990 --> 00:15:04.420
+provide. How much context do
+you think people need in
 
 276
-00:16:44.230 --> 00:16:48.130
-And yeah, it's, it is,
-I believe it's an, it's
+00:15:04.420 --> 00:15:07.630
+just using a computer I've
+met? Well, we were joking
 
 277
-00:16:48.130 --> 00:16:51.940
-gotta be analog because it,
-it totally handles the pressure.
+00:15:07.630 --> 00:15:12.760
+about something recently on Twitter.
+Jack Ryan is on Amazon right
 
 278
-00:16:51.940 --> 00:16:55.420
-Just, just, That's amazing. It's
-just a big foot trigger.
+00:15:12.760 --> 00:15:15.580
+now and he has a
+PhD in economics and he
 
 279
-00:16:55.780 --> 00:16:58.360
-And if I'm putting all
-of this in the show
+00:15:15.580 --> 00:15:20.140
+made a comment about using
+SQL queries, you know, and
 
 280
-00:16:58.360 --> 00:17:00.400
-notes, because I want people
-to see these, if they
+00:15:20.140 --> 00:15:22.810
+everyone's talking about that. And
+one of the people, someone
 
 281
-00:17:00.400 --> 00:17:04.000
-can, it's pretty amazing. It's,
-it's an ecosystem because it's
+00:15:22.810 --> 00:15:24.730
+from academia came in and
+said, well, he has a
 
 282
-00:17:04.000 --> 00:17:06.610
-open and it's not being
-prescriptive. And I think this
+00:15:24.730 --> 00:15:27.760
+PhD in economics. Like don't
+expect him to talk like
 
 283
-00:17:06.610 --> 00:17:11.230
-is important. The adaptive controller
-is not saying use it
+00:15:27.760 --> 00:15:30.010
+a software engineer. And I
+thought that was a really
 
 284
-00:17:11.440 --> 00:17:15.430
-like this. It's just a,
-it's a series of ports
+00:15:30.010 --> 00:15:33.010
+interesting comment because just because
+someone has an advanced degree
 
 285
-00:17:15.430 --> 00:17:17.920
-and possibilities. And if you
-go on the show notes
+00:15:33.370 --> 00:15:36.490
+in anything engineering or otherwise,
+it doesn't mean that they're
 
 286
-00:17:17.920 --> 00:17:21.220
-and look at our, under
-a system, these are the
+00:15:36.490 --> 00:15:40.540
+an expert computer user, which
+brings me to the question
 
 287
-00:17:21.220 --> 00:17:23.410
-accessories you can get. Like
-you can Mount it to
+00:15:40.540 --> 00:15:42.850
+I'm noticing as I teach
+my 10 and 12 year
 
 288
-00:17:23.410 --> 00:17:26.840
-your leg. You can Mount
-it to your wheelchair, wheelchair,
+00:15:42.850 --> 00:15:46.120
+olds that they get lost
+in the computer a lot,
 
 289
-00:17:26.860 --> 00:17:31.300
-arm, mounts for the controller
-itself, or, you know, mounting
+00:15:46.150 --> 00:15:48.790
+they can browse, but if
+they could lose a file,
 
 290
-00:17:31.300 --> 00:17:32.440
-it in any way that
-you want. So there's a
+00:15:48.820 --> 00:15:51.700
+it might end up on
+C colon temp instead of
 
 291
-00:17:32.440 --> 00:17:34.750
-whole ecosystem around it. One
-of these ones that's really
+00:15:51.700 --> 00:15:54.610
+their desktop. And then they
+go hunting for it. I
 
 292
-00:17:34.750 --> 00:17:37.660
-interesting is called the quad
-stick. So it's a sip
+00:15:54.610 --> 00:15:56.830
+could see the same things
+happening with someone starting out
 
 293
-00:17:37.660 --> 00:17:40.780
-and puff mouth stick that
-can be used, right. To,
+00:15:56.830 --> 00:16:00.310
+as an engineer, getting confused
+as they move around the
 
 294
-00:17:40.780 --> 00:17:43.720
-to map directly to the
-Xbox controller. If you want
+00:16:00.310 --> 00:16:03.100
+machine itself. Well, most of
+the people that come to
 
 295
-00:17:43.720 --> 00:17:46.300
-to fire with your mouth,
-you can do that. I
+00:16:03.100 --> 00:16:05.740
+us kind of already know
+they want to get into
 
 296
-00:17:46.300 --> 00:17:49.950
-believe there's also, somebody makes
-a tracking device that you
+00:16:05.740 --> 00:16:09.670
+this career and have really
+started dabbling in, you know,
 
 297
-00:17:49.950 --> 00:17:53.100
-can use. So you, so
-you can use that to
+00:16:09.670 --> 00:16:13.480
+computers and building code and
+writing applications. And most of
 
 298
-00:17:53.100 --> 00:17:56.540
-move. There's all sorts of
-things. Oh, wow. Oh. And
+00:16:13.480 --> 00:16:16.360
+them have written something on
+their own or at least
 
 299
-00:17:56.540 --> 00:17:58.730
-it would actually map directly
-to the joystick. So it's
+00:16:16.360 --> 00:16:19.720
+gone onto code Academy and
+taken a few classes. But
 
 300
-00:17:58.730 --> 00:18:01.340
-a head tracker, but it's
-the Xbox doesn't know it
+00:16:19.750 --> 00:16:22.060
+you know, in this day
+and age, like everybody should
 
 301
-00:18:01.340 --> 00:18:04.880
-is. It just thinks it's
-a joystick. Right. And you
+00:16:22.060 --> 00:16:25.270
+know what SQL Curry is,
+right. Everybody should have some
 
 302
-00:18:04.880 --> 00:18:09.050
-talked about the wheelchair Mount
-and there, the way that
+00:16:25.270 --> 00:16:28.330
+kind of foundation in what
+it takes to make a
 
 303
-00:18:09.050 --> 00:18:11.060
-that happens is if you
-flip the coin, if you
+00:16:28.330 --> 00:16:31.840
+computer are, do what you
+want it to do. And,
 
 304
-00:18:11.060 --> 00:18:15.440
-flip it over, there are
-several screw mounts in there
+00:16:31.900 --> 00:16:35.200
+you know, maybe instead of
+teaching Shakespeare going forward, you
 
 305
-00:18:15.440 --> 00:18:20.180
-of different sizes that match
-a lot of medical, what
+00:16:35.200 --> 00:16:38.290
+know, we should be teaching,
+you know, the basics of
 
 306
-00:18:20.180 --> 00:18:22.940
-medical devices he would use.
-So it matches right. To
+00:16:38.290 --> 00:16:43.180
+software development. And so that,
+yeah, absolutely not nothing against
 
 307
-00:18:23.360 --> 00:18:26.660
-like a wheelchair Mount. Oh.
-So if I understand correctly,
+00:16:43.180 --> 00:16:46.720
+Shakespeare. Yeah, of course. My
+10 year old recently took
 
 308
-00:18:26.660 --> 00:18:29.720
-you know how, when you,
-like, I've bought a cameras
+00:16:46.720 --> 00:16:49.660
+a class that was called
+tech skills for middle school
 
 309
-00:18:29.720 --> 00:18:32.120
-and there's a standard for
-how the camera attaches to
+00:16:49.660 --> 00:16:53.020
+success. And it was literally,
+you know, copying files from
 
 310
-00:18:32.120 --> 00:18:35.180
-the tripod, and then maybe
-you'll look at another device
+00:16:53.020 --> 00:16:55.150
+here to there opening word
+and doing those kinds of
 
 311
-00:18:35.180 --> 00:18:37.280
-that you purchase and you
-go, Oh, this fits on
+00:16:55.150 --> 00:16:56.710
+things. I think a lot
+of stuff that people take
 
 312
-00:18:37.280 --> 00:18:39.680
-top of the tripod because
-it uses the same screw
+00:16:57.100 --> 00:17:00.370
+to people take for granted
+a big thank you to
 
 313
-00:18:40.100 --> 00:18:43.310
-style and size. So you're
-saying that there are standards
+00:17:00.370 --> 00:17:02.860
+our sponsors because they make
+this show possible. And I
 
 314
-00:18:43.310 --> 00:18:46.340
-for mounts. So all of
-these things just, just physically
+00:17:02.860 --> 00:17:05.440
+hope that you support them
+the way they support us
 
 315
-00:18:46.340 --> 00:18:50.300
-work together. Right. And so
-it's, it's, it's really neat.
+00:17:06.190 --> 00:17:09.160
+progress. Software is the creator
+of the most comprehensive developer
 
 316
-00:18:50.390 --> 00:18:54.290
-The amount of thought that
-has gone into this, and
+00:17:09.160 --> 00:17:12.700
+toolkit for building modern apps
+on the market. Today Tellerik
 
 317
-00:18:54.350 --> 00:18:56.690
-yeah, both one of the
-things I'm looking at a
+00:17:12.760 --> 00:17:16.900
+dev craft with more than
+1100 tellerik.net and Kendo, UI
 
 318
-00:18:56.690 --> 00:18:59.180
-picture of this right now,
-and on the backside of
+00:17:16.900 --> 00:17:21.010
+JavaScript components and controls. You
+can easily build modern high-performance
 
 319
-00:18:59.180 --> 00:19:02.450
-the controller with all those
-three and a half a
+00:17:21.010 --> 00:17:24.550
+web mobile and desktop apps,
+as well as chatbots. The
 
 320
-00:19:02.450 --> 00:19:06.830
-millimeter jacks, there are symbols
-on the top. So you
+00:17:24.550 --> 00:17:28.450
+tool set also includes reporting
+solutions, automated testing, and productivity
 
 321
-00:19:06.830 --> 00:19:09.050
-can look down and see
-which ones you're, you're needing
+00:17:28.450 --> 00:17:31.870
+tools, and come to the
+range of support options. New
 
 322
-00:19:09.050 --> 00:19:12.470
-to. But then also on
-the back in high contrast
+00:17:31.870 --> 00:17:34.570
+this year is a free
+online training program for all
 
 323
-00:19:12.470 --> 00:19:17.570
-and black, larger, there are
-symbols right underneath each one
+00:17:34.570 --> 00:17:38.260
+license holders, with this alongside
+thousands of demos and source
 
 324
-00:19:17.570 --> 00:19:23.120
-of those as well. So
-they've really thought about the
+00:17:38.260 --> 00:17:41.830
+code available, comprehensive documentation and
+a full assortment of visual
 
 325
-00:19:23.120 --> 00:19:26.870
-nuances that you might need.
-I was involved in the,
+00:17:41.830 --> 00:17:44.530
+studio templates, you'll be up
+and running with the progress
 
 326
-00:19:26.870 --> 00:19:30.020
-in the beta program of
-this, and even between the
+00:17:44.530 --> 00:17:48.160
+Tellerik and Kendo UI controls
+in no time download a
 
 327
-00:19:30.020 --> 00:19:34.550
-last beta of the hardware
-and the release, they put
+00:17:48.160 --> 00:17:54.480
+free 30 day trial today
+At tellerik.com/hanselman that's T L
 
 328
-00:19:34.550 --> 00:19:39.410
-a very subtle curve in
-the top so that you,
+00:17:54.720 --> 00:18:01.320
+E R I k.com/hanselman. So
+when people come into your,
 
 329
-00:19:39.430 --> 00:19:43.340
-it, it would be a
-little bit better ergonomically. Interesting.
+00:18:01.550 --> 00:18:05.040
+your program, now they are
+given that the title apprentice,
 
 330
-00:19:43.340 --> 00:19:45.050
-And the other thing I
-think is worth pointing out
+00:18:05.070 --> 00:18:08.190
+then junior engineer, what kind
+of money can they can
 
 331
-00:19:45.050 --> 00:19:47.960
-is while it's trying not
-to be prescriptive, it's allowing
+00:18:08.190 --> 00:18:11.400
+someone make? And if they
+started as a junior engineer,
 
 332
-00:19:47.960 --> 00:19:54.050
-for accessory makers to themselves
-be, be prescriptive, depending on
+00:18:11.400 --> 00:18:14.760
+do, does it help or
+hinder their long term earning
 
 333
-00:19:54.050 --> 00:19:56.980
-what you need. For example,
-I figured, Oh, well, and
+00:18:14.760 --> 00:18:18.000
+potential? Well, when we, when
+you first come into our
 
 334
-00:19:57.220 --> 00:20:00.080
-this is speaking from a
-relatively able-bodied perspective. I figured,
+00:18:18.000 --> 00:18:21.660
+apprenticeship program, you'll make $15
+an hour to start. And
 
 335
-00:20:00.110 --> 00:20:02.540
-Oh, well, maybe they'll just
-make big buttons, like big,
+00:18:21.660 --> 00:18:25.560
+that actually starts stepping up
+and junior engineers really, depending
 
 336
-00:20:02.570 --> 00:20:06.380
-giant buttons. Right. Which is
-a very simplistic way for
+00:18:25.560 --> 00:18:27.480
+on the level that you
+finish up at and the
 
 337
-00:20:06.380 --> 00:20:08.270
-me to think. Right. But
-I go, and I look
+00:18:27.480 --> 00:18:30.450
+kinds of responsibility that you're
+taking on, I mean, you
 
 338
-00:20:08.270 --> 00:20:12.170
-at these accessories from a
-company called AbleNet. They have
+00:18:30.450 --> 00:18:33.810
+can make anywhere from 50
+to 75,000 a year, and
 
 339
-00:20:12.380 --> 00:20:15.890
-big switches, which makes sense,
-but they also have micro
+00:18:33.810 --> 00:18:37.740
+we've had people start all
+within those ranges. And then,
 
 340
-00:20:15.890 --> 00:20:18.860
-light switches, switches that will
-click with just the slightest
+00:18:37.740 --> 00:18:41.580
+you know, as it actually
+scales up very quickly from
 
 341
-00:20:18.860 --> 00:20:23.480
-amount of touch or switches,
-like a button that happens
+00:18:41.580 --> 00:18:46.050
+there. So within three years
+you can be making $90,000
 
 342
-00:20:23.480 --> 00:20:25.610
-when you grab it or
-grasp it, or pull it
+00:18:46.050 --> 00:18:50.190
+a year. It's a, it's
+a really fast career path.
 
 343
-00:20:25.610 --> 00:20:29.930
-to one side, or they've
-got a jelly bean switch,
+00:18:50.220 --> 00:18:52.980
+And the unemployment rate in
+at least in Colorado is
 
 344
-00:20:29.930 --> 00:20:33.230
-which is squishy, but in
-not going to hurt you,
+00:18:52.980 --> 00:18:56.040
+less than 2% for software
+developers. So you can really,
 
 345
-00:20:33.230 --> 00:20:35.030
-if you, if you, if
-you pound on it, like
+00:18:56.790 --> 00:19:00.270
+you know, bounce around and
+look for higher and higher
 
 346
-00:20:35.030 --> 00:20:39.140
-these are all different ways
-to send binary information. But
+00:19:00.270 --> 00:19:02.460
+salaries, or you can look
+for more and more meaningful
 
 347
-00:20:39.410 --> 00:20:42.230
-each one for, you know,
-it doesn't look like a
+00:19:02.460 --> 00:19:06.240
+work whatever's important to you.
+But yeah, the pay is
 
 348
-00:20:42.230 --> 00:20:44.060
-switch in the, in the,
-in the, in the simplistic
+00:19:06.240 --> 00:19:08.850
+definitely there. And I mean,
+really what we're doing is
 
 349
-00:20:44.060 --> 00:20:45.710
-way. I was going to
-think that it would look
+00:19:08.850 --> 00:19:11.610
+we're providing a great pathway
+to a middle class career
 
 350
-00:20:45.710 --> 00:20:48.490
-like right. And that's a
-neat thing. I'm glad you
+00:19:11.910 --> 00:19:14.850
+without having to incur any
+of that college debt. If
 
 351
-00:20:48.490 --> 00:20:52.000
-brought up AbleNet because they've
-done a wonderful amount for
+00:19:14.850 --> 00:19:18.030
+that's the route you're taking
+with us. And I shop
 
 352
-00:20:52.000 --> 00:20:54.700
-a lot of people. And
-if you go out to
+00:19:18.060 --> 00:19:21.000
+somewhere, if I, if I'm,
+if I remember correctly that
 
 353
-00:20:54.700 --> 00:20:56.570
-Abel net, one of the
-things you'll see on, on
+00:19:21.000 --> 00:19:24.570
+you had something like a
+95% placement rate. Yeah. Because
 
 354
-00:20:56.620 --> 00:20:59.410
-some of the pictures is
-it looks like there's almost
+00:19:24.570 --> 00:19:26.430
+I mean, if you make
+it, our, first of all,
 
 355
-00:20:59.410 --> 00:21:03.280
-a coding over the button.
-And the reason, like almost
+00:19:26.430 --> 00:19:28.920
+our selection process is really
+hard to get through. And
 
 356
-00:21:03.280 --> 00:21:06.610
-a plastic transparent coating over
-the button. The reason that
+00:19:28.920 --> 00:19:31.440
+then once you get through
+the class and then you're
 
 357
-00:21:06.610 --> 00:21:10.870
-is, is for people that
-have issues controlling their mouth.
+00:19:31.440 --> 00:19:33.450
+on the floor with us
+for awhile. So there's a
 
 358
-00:21:11.350 --> 00:21:14.860
-I know of, of a
-young man who had, has
+00:19:33.450 --> 00:19:37.080
+lot of hoops to get
+through. And, you know, if
 
 359
-00:21:16.030 --> 00:21:20.500
-wasted several controllers because as
-he gets excited through roll
+00:19:37.080 --> 00:19:38.850
+you can make it through
+all that, you will be
 
 360
-00:21:20.500 --> 00:21:22.690
-comes out, a lot of
-drool comes out and it,
+00:19:38.850 --> 00:19:42.570
+successful in this field. And
+really the people, the 5%
 
 361
-00:21:22.900 --> 00:21:26.620
-it destroys the controller. So
-they even take those sorts
+00:19:42.600 --> 00:19:46.140
+who are not included, or
+just decided to, you know,
 
 362
-00:21:26.620 --> 00:21:30.070
-of things into account. And
-so it's amazing the small
+00:19:46.170 --> 00:19:49.860
+go back to school or
+stay at home with kids
 
 363
-00:21:30.070 --> 00:21:33.040
-details that they really look
-at to be able to
+00:19:49.860 --> 00:19:53.850
+kind of things. But yeah,
+it's, it's a great career
 
 364
-00:21:33.040 --> 00:21:37.680
-make sure that it's the
-best experience possible, A big
+00:19:53.850 --> 00:19:57.930
+path. I understand that inclusion
+is a big part of
 
 365
-00:21:37.710 --> 00:21:39.780
-thank you to our sponsors
-because they make the show
+00:19:57.930 --> 00:20:00.180
+this. You're bringing in women,
+you're bringing in people of
 
 366
-00:21:39.780 --> 00:21:42.180
-possible. And I hope that
-you support them the way
+00:20:00.180 --> 00:20:04.410
+color veterans at risk youth.
+Everyone has a different communication
 
 367
-00:21:42.180 --> 00:21:45.660
-they support us progress. Software
-is the creator of the
+00:20:04.410 --> 00:20:10.200
+style and you're describing a
+very, very, you know, intense
 
 368
-00:21:45.660 --> 00:21:48.840
-most comprehensive developer toolkit for
-building modern apps on the
+00:20:10.380 --> 00:20:13.470
+onboarding process and vetting process.
+How do you make sure
 
 369
-00:21:48.840 --> 00:21:53.850
-market. Today Tellerik dev craft
-with more than 1100 tellerik.net
+00:20:13.470 --> 00:20:17.160
+that you're not losing a
+potential talent because you might
 
 370
-00:21:53.850 --> 00:21:57.330
-and Kendo, UI JavaScript components
-and controls. You can easily
+00:20:17.160 --> 00:20:21.180
+be thinking culture fit and
+how people communicate everyone's different.
 
 371
-00:21:57.330 --> 00:22:00.810
-build modern high-performance web mobile
-and desktop apps, as well
+00:20:21.180 --> 00:20:23.430
+You know, actually something I
+write about quite a bit
 
 372
-00:22:00.810 --> 00:22:05.100
-as chatbots. The tool set
-also includes reporting solutions, automated
+00:20:23.430 --> 00:20:26.220
+is that I, I can't
+stand the term culture fit.
 
 373
-00:22:05.100 --> 00:22:07.980
-testing, and productivity tools, and
-come to the range of
+00:20:26.460 --> 00:20:31.080
+I apologize. I think too
+many companies have grabbed onto
 
 374
-00:22:07.980 --> 00:22:11.490
-support options. New this year
-is a free online training
+00:20:31.080 --> 00:20:34.710
+that. And it, to me
+it's become code for, you
 
 375
-00:22:11.490 --> 00:22:15.180
-program for all license holders,
-with this alongside thousands of
+00:20:34.710 --> 00:20:36.930
+know, we hire people who
+look like us, act like
 
 376
-00:22:15.180 --> 00:22:18.930
-demos and source code available,
-comprehensive documentation, and a full
+00:20:36.930 --> 00:20:39.210
+us at the same background
+as us and cause that's
 
 377
-00:22:18.930 --> 00:22:21.600
-assortment of visual studio templates,
-you'll be up and running
+00:20:39.210 --> 00:20:42.300
+our culture. And so what
+we have said is, you
 
 378
-00:22:21.600 --> 00:22:24.510
-with the progress Tellerik and
-Kendo UI controls in no
+00:20:42.300 --> 00:20:44.820
+know, we don't hire for
+cultural fit. What we hire
 
 379
-00:22:24.510 --> 00:22:30.870
-time, download a free 30
-day trial today at tellerik.com/hanselman
+00:20:44.820 --> 00:20:47.950
+for is skills. And we
+hire for people who can
 
 380
-00:22:31.200 --> 00:22:37.650
-that's T E L E
-R I k.com/hanselman. And this
+00:20:47.950 --> 00:20:51.100
+communicate effectively with us. And
+we actually like that people
 
 381
-00:22:37.890 --> 00:22:41.370
-device has, has software to
-support it. And it's firmware
+00:20:51.100 --> 00:20:53.530
+are all different kinds of
+backgrounds and all different kinds
 
 382
-00:22:41.370 --> 00:22:44.790
-updatable, and I, and it
-uploads into windows. So you
+00:20:53.530 --> 00:20:57.070
+of cultures and say, we,
+you know, we write better
 
 383
-00:22:44.790 --> 00:22:46.440
-program it, you get it
-all set up, and then
+00:20:57.070 --> 00:20:59.140
+software because of it. Because
+when we come at a
 
 384
-00:22:46.440 --> 00:22:48.960
-you can gain both on
-Xbox and on in your
+00:20:59.140 --> 00:21:02.440
+problem, we have six people
+sitting around the table who
 
 385
-00:22:48.960 --> 00:22:52.110
-windows game And your steam
-games. Yes. And then you
+00:21:02.440 --> 00:21:05.920
+are coming at it from
+very different backgrounds and viewpoints.
 
 386
-00:22:52.110 --> 00:22:54.000
-just have to map it
-however you want. And I
+00:21:06.340 --> 00:21:10.240
+And ultimately we're able to
+build better software because of
 
 387
-00:22:54.000 --> 00:22:56.310
-noticed that there's also a
-one handed joystick. It was
+00:21:10.240 --> 00:21:12.940
+it because we have people
+who aren't all of the
 
 388
-00:22:56.310 --> 00:22:59.550
-kind of like a wee
-nunchuck. Have you tried that
+00:21:12.940 --> 00:21:17.670
+same, you know, culture. Right.
+I appreciate that. And I
 
 389
-00:22:59.550 --> 00:23:02.190
-as a one handed a
-user? I haven't, I've tried.
+00:21:17.670 --> 00:21:19.890
+think people who are listening
+will appreciate that as well.
 
 390
-00:23:02.460 --> 00:23:04.740
-I've used the weed nunchuck
-several times, but I haven't
+00:21:20.160 --> 00:21:23.190
+I understand also that you
+received a grant from the
 
 391
-00:23:04.740 --> 00:23:08.310
-actually used that one yet.
-The next one I'm actually
+00:21:23.190 --> 00:21:26.040
+Colorado department of labor too,
+to grow this forward. How
 
 392
-00:23:08.310 --> 00:23:11.520
-getting is called a 3d
-control. I don't remember the
+00:21:26.040 --> 00:21:27.870
+do you get visibility at
+the government level on an
 
 393
-00:23:11.520 --> 00:23:13.770
-name of it, but it
-allows you to move things
+00:21:27.870 --> 00:21:31.530
+apprenticeship? Well, because we're a
+DOL certified apprenticeship program. It
 
 394
-00:23:13.770 --> 00:23:16.890
-with your, basically with your
-feet completely with your feet.
+00:21:31.530 --> 00:21:35.370
+actually qualifies us for grants.
+You know, most people think
 
 395
-00:23:16.890 --> 00:23:20.880
-It's almost like a balance,
-a balance board that you
+00:21:35.370 --> 00:21:39.630
+of grants going to only
+nonprofits, but apprenticeship programs also
 
 396
-00:23:20.880 --> 00:23:23.490
-might use, like when you're
-doing a Pilates or something.
+00:21:39.630 --> 00:21:43.440
+do qualify for grants. And
+there's not a ton of
 
 397
-00:23:23.910 --> 00:23:26.840
-Oh, right. There's the 3d
-rudder foot controller. Yes. Yes.
+00:21:43.440 --> 00:21:46.020
+them. There's a few each
+year, but Colorado has been
 
 398
-00:23:27.090 --> 00:23:29.610
-It's the 3d rudder. And
-so I've got that actually
+00:21:46.020 --> 00:21:49.110
+an amazing state to grow
+this program because they are
 
 399
-00:23:29.610 --> 00:23:33.330
-on an order to play
-with to see how I
+00:21:49.110 --> 00:21:54.000
+very interested in this apprenticeship
+concept and creating talent and
 
 400
-00:23:33.330 --> 00:23:34.830
-can use that. And one
-of the things I want
+00:21:54.000 --> 00:21:56.430
+helping to solve the skills
+gap that we have here
 
 401
-00:23:34.830 --> 00:23:40.590
-to potentially do with that
-is help people with accessibility
+00:21:56.430 --> 00:22:00.000
+in Colorado. And so we
+work really closely with our
 
 402
-00:23:40.590 --> 00:23:45.230
-issues have a better experience
-programming. And so maybe the
+00:22:00.000 --> 00:22:05.040
+local workforce centers, with CDLE
+con Colorado department of labor
 
 403
-00:23:45.230 --> 00:23:47.690
-3d rudder, they can move
-the mouse a little bit
+00:22:05.040 --> 00:22:08.640
+and employment to, to help
+grow this. And they've really
 
 404
-00:23:47.690 --> 00:23:50.300
-better, or find a way
-to create some macros for
+00:22:08.640 --> 00:22:13.350
+been instrumental partners in this
+entire process for us. And
 
 405
-00:23:50.300 --> 00:23:53.000
-it. When they're using something
-like visual studio code or
+00:22:13.350 --> 00:22:15.540
+you've been appointed to a
+board by the governor to
 
 406
-00:23:53.000 --> 00:23:55.610
-visual studio or whatever, to
-be able to help that
+00:22:15.540 --> 00:22:17.580
+work on things like that.
+Yeah. I'm on the Colorado
 
 407
-00:23:55.610 --> 00:23:58.990
-a little bit more. Now,
-I think I know the
+00:22:17.580 --> 00:22:22.050
+workforce development board. And actually
+I'm just getting started. I've
 
 408
-00:23:58.990 --> 00:24:02.530
-answer to this, to this
-question, but I've watched my
+00:22:22.050 --> 00:22:24.810
+only attended two meetings thus
+far, but it's actually been
 
 409
-00:24:02.530 --> 00:24:04.030
-10 year old, my 12
-year old kind of like
+00:22:24.810 --> 00:22:30.060
+really interesting digging in from
+policy level into these workforce
 
 410
-00:24:04.030 --> 00:24:06.550
-develop their skills to be
-able to like me, you
+00:22:30.060 --> 00:22:33.690
+solutions because you know, if
+companies can't find the right
 
 411
-00:24:06.550 --> 00:24:09.160
-know, when you first start
-like a first person shooter,
+00:22:33.690 --> 00:22:37.410
+talent, they can't grow. And
+you know, obviously in Colorado,
 
 412
-00:24:10.070 --> 00:24:12.340
-you're walking around and you
-can't quite figure out that
+00:22:37.410 --> 00:22:42.450
+the politicians are very interested
+in keeping us growing Last
 
 413
-00:24:12.340 --> 00:24:14.350
-the right thumb is your
-head and the left thumb
+00:22:42.450 --> 00:22:45.930
+year about December-ish the U
+S rate unemployment rate was
 
 414
-00:24:14.350 --> 00:24:15.910
-is your body. And you
-end up looking up at
+00:22:45.930 --> 00:22:50.550
+about four, 4.1, but Colorado
+has a, almost 3% or
 
 415
-00:24:15.910 --> 00:24:19.720
-the sky or looking down.
-And eventually that becomes, you
+00:22:50.550 --> 00:22:52.110
+a little bit less than
+3%. So you've got a
 
 416
-00:24:19.720 --> 00:24:24.100
-know, second nature, right after
-you set this controller up
+00:22:52.110 --> 00:22:54.600
+really low unemployment rate, but
+then you commented that there
 
 417
-00:24:24.130 --> 00:24:27.280
-and your custom accessories, the
-way you want it, whether
+00:22:54.600 --> 00:22:58.020
+was a skills gap. So
+you've got low unemployment, but
 
 418
-00:24:27.280 --> 00:24:29.290
-it be on a Mount
-of your own or a
+00:22:58.020 --> 00:23:00.090
+maybe you can't find the
+people you with the skills
 
 419
-00:24:29.290 --> 00:24:32.350
-table, or however, you've set
-yourself up, how long does
+00:23:00.090 --> 00:23:03.450
+you need. Yeah. And that's,
+that's why our, The program
 
 420
-00:24:32.350 --> 00:24:34.210
-it take and what does
-it like? Does it become
+00:23:03.450 --> 00:23:06.360
+has been getting so much
+attention as because we're able
 
 421
-00:24:34.210 --> 00:24:37.900
-intuitive where you just immediately
-know that moving your knee
+00:23:06.360 --> 00:23:13.110
+to convert retail workers, baristas
+into software developers. So even
 
 422
-00:24:37.900 --> 00:24:39.880
-to the right is the
-right trigger and moving into
+00:23:13.110 --> 00:23:16.560
+though the Colorado economy is
+doing amazing and lots of
 
 423
-00:24:39.880 --> 00:24:41.410
-the left is the left
-trigger, or however you set
+00:23:16.560 --> 00:23:18.990
+people are doing really well.
+There's a lot of people
 
 424
-00:24:41.410 --> 00:24:44.680
-it up, does it become
-natural? Yes. It's just a,
+00:23:18.990 --> 00:23:21.960
+who are left behind and
+they're in these minimum wage
 
 425
-00:24:44.950 --> 00:24:47.470
-it becomes a habit just
-like with any, anything else.
+00:23:21.990 --> 00:23:24.150
+jobs and they can't afford
+to go to a bootcamp
 
 426
-00:24:47.470 --> 00:24:50.380
-At least it has in
-my case. And the neat
+00:23:24.150 --> 00:23:26.310
+and they can't afford to
+get into these kinds of
 
 427
-00:24:50.380 --> 00:24:53.440
-thing is, is that if
-you have multiple people that
+00:23:26.310 --> 00:23:29.130
+careers. And what this has
+really done for those kinds
 
 428
-00:24:53.440 --> 00:24:56.890
-want to use this, you
-can have multiple profiles set
+00:23:29.130 --> 00:23:33.330
+of people is provided that
+bridge from barista to software
 
 429
-00:24:56.890 --> 00:24:59.740
-up or maybe something works
-a little bit better. Another
+00:23:33.330 --> 00:23:38.070
+developer or even English major
+into software developer. Interesting. I'm
 
 430
-00:24:59.740 --> 00:25:03.760
-configuration works better for a
-driving game versus a first
+00:23:38.070 --> 00:23:40.500
+curious why you use <inaudible>
+seems to be like a
 
 431
-00:25:03.760 --> 00:25:07.930
-person shooter game. You could
-have another mapping and change
+00:23:40.500 --> 00:23:43.320
+good go-to kind of archetype
+though, but I think we
 
 432
-00:25:07.960 --> 00:25:11.200
-the change, the controls around
-to what makes sense for
+00:23:43.320 --> 00:23:46.070
+all, we all know that
+person that's on way somewhere.
 
 433
-00:25:11.200 --> 00:25:15.670
-that particular game. Wow. Okay.
-So the, the controller I
+00:23:46.070 --> 00:23:49.570
+If they haven't chosen barista
+as their final destination, We've
 
 434
-00:25:15.670 --> 00:25:19.390
-understand is a USBC. It's
-got a battery inside. It
+00:23:49.570 --> 00:23:53.920
+had amazing luck with baristas
+because they know that the
 
 435
-00:25:19.390 --> 00:25:21.550
-really acts like an Xbox
-controller. It uses the same,
+00:23:54.010 --> 00:23:59.410
+customer service side they're good
+communicators, good multitaskers. We also
 
 436
-00:25:21.550 --> 00:25:25.150
-X-Box wireless. It pairs just
-like an Xbox controller. Cause
+00:23:59.410 --> 00:24:02.080
+had amazing luck with folks
+from the Verizon store and
 
 437
-00:25:25.150 --> 00:25:27.820
-it is an Xbox controller.
-Yeah. For all intents and
+00:24:02.080 --> 00:24:07.600
+the Apple store, again, personable,
+outgoing, but like technology and
 
 438
-00:25:27.820 --> 00:25:31.240
-purposes, the Xbox thinks it's
-an actual controller and they've
+00:24:07.660 --> 00:24:09.760
+our, you know, kind of
+looking for the next step
 
 439
-00:25:31.240 --> 00:25:33.220
-used a, I know the
-exclusive lab when they were
+00:24:09.760 --> 00:24:13.030
+in their career. My wife
+and I were trying to
 
 440
-00:25:33.220 --> 00:25:37.720
-working on this and the
-Xbox hardware team even went
+00:24:13.030 --> 00:24:15.910
+teach the boys about that
+idea of that person that
 
 441
-00:25:37.720 --> 00:25:41.140
-so far is to make
-sure that as you're using
+00:24:15.910 --> 00:24:18.580
+you meet behind the counter,
+where, you know, they're going
 
 442
-00:25:41.140 --> 00:25:45.760
-this on like for online
-tournaments or stuff or things,
+00:24:18.580 --> 00:24:21.370
+somewhere. Cause they just have
+that, that spark a personality,
 
 443
-00:25:45.760 --> 00:25:50.890
-I'm sorry, it uses the
-anti cheating things that X-Box
+00:24:21.370 --> 00:24:24.610
+whether it's the person that
+puts the guacamole on your
 
 444
-00:25:50.890 --> 00:25:53.860
-would normally use anyway. So
-it's not anything that would
+00:24:24.610 --> 00:24:27.310
+food at Chipotle, you just
+go, Hey, this person's going
 
 445
-00:25:53.860 --> 00:25:58.300
-be an competitive advantage or
-anything like that. They've, they've
+00:24:27.310 --> 00:24:30.400
+to be running this place
+within a year. And those
 
 446
-00:25:58.300 --> 00:26:01.480
-tried to make sure that
-it just levels the playing
+00:24:30.400 --> 00:24:31.660
+are the kinds of people
+you want sounds like you
 
 447
-00:26:01.480 --> 00:26:04.420
-field. Speaking of leveling the
-playing field at the beginning
+00:24:31.660 --> 00:24:34.300
+want to hire. Yes, exactly.
+And like I said, we've
 
 448
-00:26:04.420 --> 00:26:07.480
-of this podcast, you told
-me that when you were
+00:24:34.300 --> 00:24:37.180
+had many, many of them
+come through and they've been
 
 449
-00:26:07.480 --> 00:26:10.420
-playing before you were effectively,
-the, you said the meat
+00:24:37.210 --> 00:24:40.840
+very successful with us. Why
+do you think that apprenticeships
 
 450
-00:26:10.710 --> 00:26:13.600
-Good for your kids. Yes.
-Is this level of, have
+00:24:40.840 --> 00:24:43.360
+kind of fell out of
+Vogue after the, you know,
 
 451
-00:26:13.600 --> 00:26:15.370
-you been able to poll
-in your kids because that
+00:24:43.360 --> 00:24:45.880
+the eighties and nineties and
+why are we rediscovering them
 
 452
-00:26:15.370 --> 00:26:19.000
-really is the, the goal,
-Right? That's the goal, the
+00:24:45.910 --> 00:24:49.030
+and almost 2020, well, you
+know, for better or worse,
 
 453
-00:26:19.000 --> 00:26:22.960
-gold standard. And I, I
-am now able to hold
+00:24:49.060 --> 00:24:51.220
+there's been this huge push
+for people to go to
 
 454
-00:26:23.020 --> 00:26:25.990
-at least hold my own.
-I get, maybe I get
+00:24:51.220 --> 00:24:55.030
+college. And I come from
+an immigrant family and I
 
 455
-00:26:25.990 --> 00:26:28.060
-maybe a couple of, or
-two or three kills in
+00:24:55.030 --> 00:24:57.280
+was the first generation among
+my family to go to
 
 456
-00:26:28.060 --> 00:26:30.580
-now, before I, before I
-get killed. So I'm a
+00:24:57.280 --> 00:24:59.470
+college. And there was really
+never any question that I
 
 457
-00:26:30.580 --> 00:26:33.820
-little more challenging me targets.
-So, but I have been
+00:24:59.470 --> 00:25:02.500
+wasn't going to go to
+college. And that was the
 
 458
-00:26:33.820 --> 00:26:36.280
-able to play almost all
-the way through fallout four
+00:25:02.500 --> 00:25:06.130
+road from, you know, my
+grandfather came from Italy as
 
 459
-00:26:36.820 --> 00:26:40.870
-with this controller in the
-combat scenes and everything else
+00:25:07.030 --> 00:25:10.060
+you know, Mason and you
+know, then his son went
 
 460
-00:26:41.980 --> 00:26:45.780
-very effectively. And so I'm
-super excited about that. And
+00:25:10.060 --> 00:25:12.040
+to community college and then
+I was able to go
 
 461
-00:26:45.780 --> 00:26:48.420
-then, I don't know if
-you saw the launch video
+00:25:12.040 --> 00:25:13.930
+to an Ivy league college
+and that's kind of the
 
 462
-00:26:48.720 --> 00:26:52.560
-that I'm in with my
-fake family there, you do
+00:25:13.930 --> 00:25:18.490
+immigrant American dream. And everybody
+has this mindset. That college
 
 463
-00:26:52.560 --> 00:26:55.560
-a fake family. Yeah. At
-the a, and w we
+00:25:18.490 --> 00:25:20.980
+is the way, you know,
+to get into these white
 
 464
-00:26:55.560 --> 00:26:57.570
-do it at the, it
-was filmed at the exclusive
+00:25:20.980 --> 00:25:25.000
+collar jobs. But you know,
+now with everybody going to
 
 465
-00:26:57.570 --> 00:27:00.660
-lab, but the game that
-I'm playing, they just took
+00:25:25.000 --> 00:25:29.290
+college and you know, and
+incurring so much student debt,
 
 466
-00:27:00.660 --> 00:27:03.120
-about 15 or 20 minutes
-of us playing the games.
+00:25:29.290 --> 00:25:31.600
+it really isn't making as
+much sense as it did
 
 467
-00:27:03.420 --> 00:27:06.390
-I'm actually really into it
-because it was like a
+00:25:31.600 --> 00:25:34.600
+in the past. And so
+I, I heard a statistic
 
 468
-00:27:06.390 --> 00:27:09.390
-street fighter game. And I
-was actually winning against the
+00:25:34.600 --> 00:25:36.070
+that used to be that
+you could work through the
 
 469
-00:27:09.390 --> 00:27:15.150
-young man that I was
-playing against. Whereas before I
+00:25:36.070 --> 00:25:38.170
+summer and be able to
+afford a year of college.
 
 470
-00:27:15.150 --> 00:27:17.280
-would have gotten an, a
-couple of shots, but now
+00:25:38.560 --> 00:25:40.960
+And today you'd need to
+work for an entire year
 
 471
-00:27:17.280 --> 00:27:22.170
-with the ability to use
-those buttons and, and remap
+00:25:40.960 --> 00:25:43.180
+full time in order to
+be able to afford a
 
 472
-00:27:22.170 --> 00:27:25.200
-the controller, it, it just
-opened things up and it
+00:25:43.180 --> 00:25:47.260
+year of college. And so
+everybody encouraging that kind of
 
 473
-00:27:25.200 --> 00:27:29.400
-just made, it makes it
-another way. I don't want
+00:25:47.260 --> 00:25:50.380
+debt to be an English
+major or something, that's not
 
 474
-00:27:29.400 --> 00:27:32.130
-to say in other ways,
-dreary existence, because it's not
+00:25:50.380 --> 00:25:53.050
+going to get them an
+immediate payback in terms of
 
 475
-00:27:32.130 --> 00:27:35.760
-really, but it's, you know,
-you want to play the
+00:25:53.050 --> 00:25:56.260
+a career. It's not making
+as much sense as it
 
 476
-00:27:35.760 --> 00:27:38.490
-games could because you're a
-gamer and it gives you
+00:25:56.260 --> 00:25:59.770
+did in the past. And
+so apprenticeships fell out of
 
 477
-00:27:38.490 --> 00:27:41.790
-that ability to feel like,
-yeah, I can, I can
+00:25:59.770 --> 00:26:03.850
+favor because you know, the
+trades, weren't a great pathway
 
 478
-00:27:41.790 --> 00:27:46.640
-participate. You know, something else
-that's worth pointing out. You
+00:26:03.850 --> 00:26:06.580
+to a middle class career,
+but at least in Colorado,
 
 479
-00:27:46.640 --> 00:27:49.520
-kept mentioning the attention to
-detail and the little things
+00:26:06.580 --> 00:26:10.090
+there's a huge need for
+the trades and they pay
 
 480
-00:27:49.850 --> 00:27:55.370
-they even made the packaging
-yes. Accessible. So like how
+00:26:10.090 --> 00:26:12.910
+really well. And with you
+can get into the trades
 
 481
-00:27:55.370 --> 00:27:57.740
-often have we all had
-to go and find a
+00:26:12.910 --> 00:26:15.910
+without actually any college debt.
+Would you think it's fair
 
 482
-00:27:57.740 --> 00:28:00.110
-knife or a struggle to
-open up the carpet? This
+00:26:15.910 --> 00:26:18.520
+to say then that software
+engineering is now part of
 
 483
-00:28:00.110 --> 00:28:03.380
-thing kind of unfolds itself,
-like a flower. And it
+00:26:18.550 --> 00:26:20.350
+the trades. Would you put
+it up there with a
 
 484
-00:28:03.380 --> 00:28:06.920
-has this amazing packaging, both
-the, the cardboard around it.
+00:26:20.350 --> 00:26:23.740
+skilled electrician? I think it
+could be a it's again,
 
 485
-00:28:06.920 --> 00:28:09.650
-And then the internal box.
-It's not packaging that you
+00:26:23.740 --> 00:26:26.260
+it's something you can learn.
+It's something you don't need
 
 486
-00:28:09.650 --> 00:28:12.290
-would want to throw. No,
-actually, I'm, I've still have
+00:26:26.260 --> 00:26:28.780
+a full on college degree
+to be really good at.
 
 487
-00:28:12.290 --> 00:28:15.080
-the beta version. And I'm
-going to, I'm trading that
+00:26:30.250 --> 00:26:33.070
+And I don't see why
+not? Yeah. Let me ask
 
 488
-00:28:15.080 --> 00:28:18.710
-in for the actual, the
-actual release version. And I
+00:26:33.070 --> 00:26:37.030
+you this though. We see
+people doing HTML and CSS.
 
 489
-00:28:18.710 --> 00:28:22.910
-can't wait to see the
-packaging because the listeners ought
+00:26:37.030 --> 00:26:39.790
+Could you bring someone in
+doing IOT or hardware or
 
 490
-00:28:22.910 --> 00:28:25.190
-to know that they spent
-even, they spent four years
+00:26:39.790 --> 00:26:42.490
+cloud development? Is it just
+about front end web development
 
 491
-00:28:25.190 --> 00:28:27.920
-on the controller, but they
-spent an entire year on
+00:26:42.490 --> 00:26:45.980
+or is it software engineering
+of all flavors? It's all
 
 492
-00:28:27.920 --> 00:28:31.850
-the packaging. And the way
-you open it is with
+00:26:45.980 --> 00:26:49.010
+flavors. I mean, it can
+be taught, right? You don't
 
 493
-00:28:31.880 --> 00:28:34.040
-a little ring that you
-just pull back and it
+00:26:49.070 --> 00:26:52.700
+and you know, in college
+probably, you know, how much
 
 494
-00:28:34.040 --> 00:28:37.310
-pulls some very, not real
-sticky tape off. And then,
+00:26:52.700 --> 00:26:55.220
+of those credits are within
+your actual major and how
 
 495
-00:28:37.310 --> 00:28:39.710
-yeah, it just unfolds like
-a flower, but then it
+00:26:55.220 --> 00:26:57.710
+much of that is all
+the stuff to make you
 
 496
-00:28:39.710 --> 00:28:44.990
-also slides out gently on
-a cardboard, a kind of
+00:26:57.710 --> 00:27:01.400
+a really well rounded individual.
+And so if you kind
 
 497
-00:28:44.990 --> 00:28:47.660
-lift if you will, so
-that you don't have to
+00:27:01.400 --> 00:27:04.130
+of scrape away all the
+other stuff and unbundle the
 
 498
-00:28:47.660 --> 00:28:49.310
-re you can just kind
-of scoop it off if
+00:27:04.130 --> 00:27:06.920
+college experience so that you're
+just learning the pieces you
 
 499
-00:28:49.310 --> 00:28:53.120
-you need to. Yeah, exactly.
-They're, they're, they're these loops
+00:27:06.920 --> 00:27:10.700
+need for your actual job,
+you know, you can be
 
 500
-00:28:53.690 --> 00:28:57.500
-and they, they set a
-standard for no teeth. Yep.
+00:27:10.700 --> 00:27:13.970
+a great software developer. You
+might not be great at
 
 501
-00:28:57.830 --> 00:29:01.130
-For the package designers, because
-people with limited mobility will
+00:27:13.970 --> 00:27:18.020
+cocktail parties talking about other
+things, but you'll know software
 
 502
-00:29:01.130 --> 00:29:04.280
-often have to use their
-teeth to, to open packaging,
+00:27:18.020 --> 00:27:22.250
+development. And you know, most
+colleges pride themselves on not
 
 503
-00:29:04.280 --> 00:29:07.130
-which is not, not the
-best out of box experience.
+00:27:22.250 --> 00:27:25.730
+being trade schools, but you
+know, there is a need
 
 504
-00:29:07.130 --> 00:29:09.410
-Yes. Now, but you get
-pretty good at it sometimes,
+00:27:25.730 --> 00:27:29.060
+for this trade of software
+developer. And we need to
 
 505
-00:29:10.640 --> 00:29:14.270
-Unfortunately. So we can get
-this where Microsoft stores and
+00:27:29.060 --> 00:27:31.970
+kind of fast track people
+into these careers just to
 
 506
-00:29:14.270 --> 00:29:17.600
-online. Yes. Right now, I
-believe it's just at the
+00:27:31.970 --> 00:27:35.930
+support the businesses that we
+have in the country Back.
 
 507
-00:29:17.600 --> 00:29:22.040
-micro stores and on back
-Microsoft stores and online. But
+00:27:36.150 --> 00:27:40.040
+I've been in software now
+for 25 years, but 15
 
 508
-00:29:22.040 --> 00:29:26.420
-I have a feeling that
-once, once production gets totally
+00:27:40.040 --> 00:27:42.110
+years ago, I went back
+to school to finish my
 
 509
-00:29:26.420 --> 00:29:28.460
-ramped up and everything, that
-you'll be able to get
+00:27:42.110 --> 00:27:45.590
+degree. So the first 10
+years of my software experience,
 
 510
-00:29:28.460 --> 00:29:31.250
-it at best buy or
-wherever, you know, Hey, you're
+00:27:46.040 --> 00:27:49.790
+I was not a degreed
+software engineer. I went back
 
 511
-00:29:31.250 --> 00:29:35.300
-at your local store, maybe.
-Yeah. That's fantastic. I'm curious.
+00:27:49.790 --> 00:27:52.340
+for myself. I didn't go
+back because I necessarily felt
 
 512
-00:29:35.300 --> 00:29:37.880
-Also, do you know if
-it has a headset adapter
+00:27:52.370 --> 00:27:54.020
+pressure. I just felt like
+it was a thing that
 
 513
-00:29:37.880 --> 00:29:39.920
-as well? Like the thing
-that I'm always impressed with
+00:27:54.020 --> 00:27:59.990
+was not completed, but a
+number of people in underrepresented
 
 514
-00:29:39.920 --> 00:29:42.550
-my Xbox controllers is I
-just plug the headphones in
+00:27:59.990 --> 00:28:02.630
+minorities expressed to me that
+there's a certain amount of
 
 515
-00:29:42.970 --> 00:29:46.600
-and they wirelessly bring the
-sound over. So back in
+00:28:02.630 --> 00:28:06.200
+privilege involved in being able
+to be 10, 15, 20
 
 516
-00:29:46.600 --> 00:29:49.360
-the day, I used to
-actually have wireless headphones that
+00:28:06.200 --> 00:28:08.660
+years into the business and
+not think about your degree
 
 517
-00:29:49.360 --> 00:29:52.060
-were custom and separate. I
-plugged into my stereo. And
+00:28:08.660 --> 00:28:12.950
+anymore. Well, some folks still,
+even with a decade plus
 
 518
-00:29:52.060 --> 00:29:55.750
-now the Xbox controller is
-itself a, a headphone transmitter.
+00:28:12.950 --> 00:28:15.770
+get asked, what school did
+you go to? And as
 
 519
-00:29:56.080 --> 00:29:58.810
-Yep. I'm not sure about
-the wireless headphones. I would
+00:28:15.770 --> 00:28:18.230
+such, like you said, the
+immigrant dream is to go
 
 520
-00:29:58.810 --> 00:30:02.620
-assume that since it's using
-it can be done, you
+00:28:18.230 --> 00:28:20.000
+to like an Ivy league
+school or a top tier
 
 521
-00:30:02.620 --> 00:30:04.900
-can use it as a
-wireless controller. I would assume
+00:28:20.000 --> 00:28:22.400
+school, as opposed to a
+state school. Do you think
 
 522
-00:30:04.900 --> 00:30:07.120
-that it acts as a
-wireless headphones. I guess that's
+00:28:22.400 --> 00:28:26.390
+that that interns or pardon
+me rather apprentices who have
 
 523
-00:30:07.120 --> 00:30:09.400
-what I'm saying, right? Well
-there, yeah. Cause there is
+00:28:26.810 --> 00:28:29.540
+become engineers and then grown
+up to senior will have
 
 524
-00:30:09.400 --> 00:30:11.140
-a three and a half
-inch or three and a
+00:28:29.540 --> 00:28:32.540
+any kind of, for lack
+of a better word, prejudice
 
 525
-00:30:11.140 --> 00:30:13.990
-half millimeter Jack on the
-left side that has a
+00:28:32.630 --> 00:28:35.180
+against them saying, well, you
+came up in a nontraditional
 
 526
-00:30:13.990 --> 00:30:16.180
-headphone above it. Yeah. You
-can use headphones with it.
+00:28:35.180 --> 00:28:37.370
+way and then they would
+have to go back to
 
 527
-00:30:17.140 --> 00:30:21.850
-Fantastic. See, I, you know,
-I think I don't have
+00:28:37.370 --> 00:28:39.890
+school. You know, I think
+in the past that may
 
 528
-00:30:21.850 --> 00:30:25.240
-mobility issues, but I have
-had mobility issues. And I
+00:28:39.890 --> 00:28:42.650
+have been the case. I'm
+actually still surprised at how
 
 529
-00:30:25.240 --> 00:30:27.520
-think this is a thing
-for those of us who
+00:28:42.650 --> 00:28:45.170
+much my education comes up
+and you know, it was
 
 530
-00:30:27.520 --> 00:30:29.920
-are listening to this podcast
-who may not have those
+00:28:45.170 --> 00:28:49.070
+20 years ago or longer
+in it. But, you know,
 
 531
-00:30:29.920 --> 00:30:33.640
-issues right now, you just
-never know I've had, I've
+00:28:49.130 --> 00:28:52.940
+especially in software development, once
+you've proven your chops, people
 
 532
-00:30:33.640 --> 00:30:36.550
-had frozen shoulder surgery where
-I had no mobility in
+00:28:52.940 --> 00:28:57.410
+want you on board and
+it really doesn't matter as
 
 533
-00:30:36.550 --> 00:30:40.570
-my left arm for two
-years. I had a carpal
+00:28:57.410 --> 00:29:00.560
+much anymore. It's really matters
+what you can do. And,
 
 534
-00:30:40.570 --> 00:30:43.570
-tunnel surgery on my right
-hand. And I've got a
+00:29:00.590 --> 00:29:03.590
+you know, even with our
+industry credentials kind of come
 
 535
-00:30:43.570 --> 00:30:45.790
-bone spur in my thumb
-right now where my right
+00:29:03.590 --> 00:29:06.920
+in and out of Vogue
+because, you know, you can
 
 536
-00:30:45.790 --> 00:30:50.890
-hand gaming is painful. We,
-we, as we, as relatively
+00:29:06.920 --> 00:29:09.350
+have all the credentials you
+need, but you could still
 
 537
-00:30:50.890 --> 00:30:55.540
-able bodied, people should not
-think about technologies like this
+00:29:09.350 --> 00:29:13.130
+not be a great software
+developer, right? So we just
 
 538
-00:30:55.540 --> 00:30:58.120
-as being, you know, Oh,
-this is just for people
+00:29:13.130 --> 00:29:16.130
+need people who can work
+well with, within a team
 
 539
-00:30:58.120 --> 00:31:00.250
-in wheelchair or this is
-just for people with serious
+00:29:16.130 --> 00:29:19.280
+and write good code and
+think critically about what they're
 
 540
-00:31:00.960 --> 00:31:03.940
-mobility issues. This is really
-about making it for everybody.
+00:29:19.280 --> 00:29:23.000
+doing. And, you know, the
+school stuff doesn't matter as
 
 541
-00:31:03.970 --> 00:31:07.030
-Like this is what inclusion
-means. It's yes. It's for
+00:29:23.000 --> 00:29:26.360
+much, but I should actually
+mention though that as being
 
 542
-00:31:07.030 --> 00:31:10.510
-players with different disabilities or
-different abilities, but it may
+00:29:26.360 --> 00:29:30.080
+a DOL apprenticeship program, when
+you get through our program,
 
 543
-00:31:10.510 --> 00:31:14.350
-be well for you. If
-someday, if, if something goes
+00:29:30.080 --> 00:29:34.970
+you qualify for 39 credits
+college credits. Oh Wow. So
 
 544
-00:31:14.350 --> 00:31:16.540
-awry in a, in a
-body part that you don't
+00:29:34.970 --> 00:29:38.030
+you could jumpstart your college
+career as an athlete. I
 
 545
-00:31:16.540 --> 00:31:18.910
-expect, I did not expect
-to get frozen shoulder or
+00:29:38.030 --> 00:29:41.860
+mean, we were accredited for
+39 credits. It depends on
 
 546
-00:31:18.910 --> 00:31:22.030
-have hand issues, but it's
-nice to know the controllers
+00:29:41.860 --> 00:29:45.130
+whether that college will take
+all 39 of those, but
 
 547
-00:31:22.030 --> 00:31:26.020
-like this exist if I
-ever need them. Yes. And
+00:29:45.130 --> 00:29:49.060
+it's a great start to
+a college degree and getting
 
 548
-00:31:26.020 --> 00:31:28.720
-it, it's just another way
-to, like you said, be
+00:29:49.060 --> 00:29:51.160
+what you need. And we're
+actually really proud of that
 
 549
-00:31:28.720 --> 00:31:32.140
-inclusive and give an Avenue
-to people so that they
+00:29:51.160 --> 00:29:56.260
+fact because, you know, we're
+recognized as an educational facility
 
 550
-00:31:32.140 --> 00:31:35.470
-can participate. Fantastic. All right.
-Well, thanks so much, John Alexander
+00:29:56.260 --> 00:29:59.260
+here because we're teaching, you
+know, all the basics of
 
 551
-00:31:35.470 --> 00:31:37.720
-for chatting with me today,
-Scott, it's always a pleasure
+00:29:59.260 --> 00:30:01.690
+software development and learning it
+on the job. And we're
 
 552
-00:31:37.720 --> 00:31:41.050
-to talk to you. I
-appreciate that this has been
+00:30:01.690 --> 00:30:05.800
+glad that, you know, other
+colleges recognize that no, no
 
 553
-00:31:41.050 --> 00:31:43.840
-another episode of Hanselminutes and
-we'll see you again next
+00:30:05.800 --> 00:30:08.380
+disrespect to boot camps, but
+there are some that are
 
 554
-00:31:43.840 --> 00:32:04.440
+00:30:08.380 --> 00:30:11.440
+saying that kind of the
+shine is off of the
+
+555
+00:30:11.440 --> 00:30:13.900
+enthusiasm around boot camps. And
+I was one of the
+
+556
+00:30:13.900 --> 00:30:16.300
+biggest events that would remain
+a large fan of bootcamps,
+
+557
+00:30:16.630 --> 00:30:21.100
+but when bootcamps became as
+expensive as my belief, you
+
+558
+00:30:21.100 --> 00:30:23.020
+know, a year and I
+would make school 25 grand
+
+559
+00:30:23.020 --> 00:30:25.600
+people were, you know, could,
+could have used the system.
+
+560
+00:30:25.600 --> 00:30:28.840
+Do you think that the
+apprenticeship program is superior to
+
+561
+00:30:28.840 --> 00:30:31.090
+bootcamps and the shine might
+be off boot camps? I
+
+562
+00:30:31.090 --> 00:30:34.630
+really do. I mean, you
+know, I built this program
+
+563
+00:30:34.630 --> 00:30:37.240
+from the ground up. We
+built it out of a
+
+564
+00:30:37.240 --> 00:30:41.860
+need to be more inclusive.
+I think bootcamps, the face
+
+565
+00:30:41.860 --> 00:30:44.620
+of the bootcamp is still
+reflective of, you know, the
+
+566
+00:30:44.620 --> 00:30:49.450
+typical tech employee, which is
+predominantly white male, but really
+
+567
+00:30:49.450 --> 00:30:52.360
+because we pay people on
+day one, it's really opened
+
+568
+00:30:52.360 --> 00:30:54.520
+the doors to all different
+kinds of people. And actually
+
+569
+00:30:54.520 --> 00:30:57.970
+without even really trying, we,
+we are incredibly diverse as
+
+570
+00:30:57.970 --> 00:31:02.530
+a company where 75% women
+minorities and veterans. And that's
+
+571
+00:31:02.530 --> 00:31:06.940
+just because we've paved the
+way for somebody who might
+
+572
+00:31:06.940 --> 00:31:09.310
+have a minimum wage job
+right now to actually get
+
+573
+00:31:09.310 --> 00:31:11.470
+into this kind of a
+career. And it really shows
+
+574
+00:31:11.470 --> 00:31:14.830
+that once you strip away
+that level of privilege, that
+
+575
+00:31:14.860 --> 00:31:17.320
+all different kinds of people
+are really interested in getting
+
+576
+00:31:17.320 --> 00:31:21.370
+involved in software. It really
+feels like if you cast
+
+577
+00:31:21.370 --> 00:31:24.370
+a wide net, if you
+cast a really wide net,
+
+578
+00:31:24.400 --> 00:31:27.130
+you will pull in a
+representative group of people and,
+
+579
+00:31:27.130 --> 00:31:31.390
+and, and you get kind
+of diversity and inclusion, I
+
+580
+00:31:31.390 --> 00:31:33.820
+wouldn't say for free, but
+because of that wide net,
+
+581
+00:31:34.000 --> 00:31:37.840
+you're getting what America looks
+like as opposed to our
+
+582
+00:31:37.840 --> 00:31:41.530
+slide, a small slice of
+it. Yes, exactly. Fantastic. Well,
+
+583
+00:31:41.530 --> 00:31:43.390
+thank you so much for
+chatting with me today. Yeah.
+
+584
+00:31:43.420 --> 00:31:45.130
+Thank you. This has been
+fun. I'm going to put
+
+585
+00:31:45.130 --> 00:31:47.560
+links to everything that the
+tectonic group is doing in
+
+586
+00:31:47.560 --> 00:31:49.510
+the show notes, and you
+can be sure to connect
+
+587
+00:31:49.510 --> 00:31:52.000
+with them and learn all
+about the great work that
+
+588
+00:31:52.000 --> 00:31:54.460
+they're doing out there in
+Boulder. Thanks so much. Thank
+
+589
+00:31:54.460 --> 00:31:57.550
+you, Scott. This has been
+another episode of Hanselminutes and
+
+590
+00:31:57.550 --> 00:32:19.440
+we'll see you again next
 week. <inaudible>.
 

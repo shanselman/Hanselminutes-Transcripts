@@ -1,3261 +1,3161 @@
 WEBVTT FILE
 
 1
-00:00:12.060 --> 00:00:17.640
+00:00:12.080 --> 00:00:17.390
 From hanselminutes.com. It's Hansel minutes,
-all weekly discussion with web
+a weekly discussion with web
 
 2
-00:00:17.640 --> 00:00:21.990
+00:00:17.390 --> 00:00:21.920
 developer and technologists and Scott
-Hanselman. This is Lawrence Ryan announced
+Hanselman. This is Lawrence Ryan announcing
 
 3
-00:00:21.990 --> 00:00:28.950
-some show number three 85
-recorded live Thursday, August 8th, 2013. Support
+00:00:21.920 --> 00:00:28.490
+show number three 83. Recorded
+live Thursday, August 1st, 2013. Support for
 
 4
-00:00:28.950 --> 00:00:32.340
-for Hansel minutes is provided
-by Teluride offering the best
+00:00:28.490 --> 00:00:32.330
+Hanselman it's provided by Tellerik
+offering the best in developer
 
 5
-00:00:32.340 --> 00:00:41.010
-in developer tools and support
-online@telerikdotcomandbyfranklin.net makers of gesture pack
+00:00:32.330 --> 00:00:42.020
+tools and support online@telerikdotcomandbyfranklin.net makers
+of gesture pack a powerful
 
 6
-00:00:41.430 --> 00:00:45.180
-a powerful gesture, recording and
-recognition system for Microsoft connect
+00:00:42.020 --> 00:00:46.190
+gesture, recording and recognition system
+for Microsoft connect for windows
 
 7
-00:00:45.180 --> 00:00:50.640
-for windows developers details. Add
-gesture, PA k.com. In this
+00:00:46.190 --> 00:00:51.290
+developers details. Add gesture P
+a k.com. In this episode,
 
 8
-00:00:50.640 --> 00:00:54.480
-episode, Scott talks with open
-source developer, John Linaro about
+00:00:51.290 --> 00:00:54.950
+Scott talks with Nicholas Sekis
+about writing front ends on
 
 9
-00:00:54.480 --> 00:00:59.330
-the no SQL movement and
-couch DB. Hi, this is
+00:00:54.950 --> 00:00:59.840
+today's web. Hi, this is
+Scott Hanselman. This is another
 
 10
-00:00:59.330 --> 00:01:01.730
-Scott Hanselman. This is another
+00:00:59.840 --> 00:01:02.180
 episode of Hansel minutes and
+on the Skype we've got
 
 11
-00:01:01.730 --> 00:01:03.830
-on the Skype right now,
-I've got Yon, lean art
+00:01:02.180 --> 00:01:06.050
+Nicholas Zacchaeus from box. How
+are you? Good. How are
 
 12
-00:01:03.860 --> 00:01:06.710
-from Berlin, Germany. How are
-you? Hey, I'm fine. How
+00:01:06.050 --> 00:01:09.440
+you? A very good. You
+gave a talk recently. That's
 
 13
-00:01:06.710 --> 00:01:09.140
-are you? I'm very well.
-Thanks for waking up with
+00:01:09.440 --> 00:01:11.840
+making the rounds that people
+are really excited about and
 
 14
-00:01:09.140 --> 00:01:11.060
-me this morning. I'm up
-at midnight and you're up
+00:01:11.840 --> 00:01:14.450
+I love it because it
+starts out. The title is
 
 15
-00:01:11.060 --> 00:01:14.660
-at eight. That's lovely. That's
-not my time, but I'm
+00:01:14.510 --> 00:01:17.960
+enough with the JavaScript already.
+This is ironic because you're
 
 16
-00:01:14.660 --> 00:01:17.780
-happy to be on the
-show. That's great. You're known
+00:01:17.960 --> 00:01:20.600
+a front end web guy.
+So what are you, what
 
 17
-00:01:17.780 --> 00:01:21.620
-in open source spaces. You've
-done a mustache and a
+00:01:20.600 --> 00:01:22.190
+are you telling us? We
+don't know. Some of us
 
 18
-00:01:21.830 --> 00:01:23.870
-couch DB, which is what
-I'm interested in talking to
+00:01:22.190 --> 00:01:25.100
+want a server side render
+everyone else is going all
 
 19
-00:01:23.870 --> 00:01:28.880
-you about. Yep. So no
-SQL. This is like the
+00:01:25.100 --> 00:01:28.850
+front end all JavaScript all
+the time. Stop the insanity.
 
 20
-00:01:28.880 --> 00:01:31.850
-hot thing that everyone talks
-about, but I think people
+00:01:30.140 --> 00:01:34.130
+Well, the basic premise is
+that we tend to be
 
 21
-00:01:31.850 --> 00:01:34.010
-who are listening to the
-show and myself included are
+00:01:34.130 --> 00:01:38.360
+using JavaScript too much and
+I love JavaScript. It's my
 
 22
-00:01:34.010 --> 00:01:37.760
-used to like kind of
-classic SQL databases, entity, relationship
+00:01:38.360 --> 00:01:42.980
+favorite language. And I've basically
+made my career around JavaScript.
 
 23
-00:01:37.760 --> 00:01:42.020
-diagrams, spending lots of time
-looking at looking at designing
+00:01:43.310 --> 00:01:45.800
+So it's not that I
+don't like it. It's just
 
 24
-00:01:42.020 --> 00:01:45.290
-schema. This is a whole
-different way of thinking about
+00:01:45.800 --> 00:01:49.250
+that I feel like as
+with most tools, you have
 
 25
-00:01:45.290 --> 00:01:49.190
-it. It's the exact opposite.
-Isn't it of a relational
+00:01:49.250 --> 00:01:53.030
+to use it in the
+right circumstance. And I generally
 
 26
-00:01:49.310 --> 00:01:53.970
-database, the aspect you mentioned
-with no SQL, definitely that
+00:01:53.030 --> 00:01:58.010
+feel like are insane and
+growing love of JavaScript has
 
 27
-00:01:53.970 --> 00:01:58.100
-that people can be freer
-and doing software rather than
+00:01:58.010 --> 00:02:01.100
+caused us to use it
+for things that are a
 
 28
-00:01:58.100 --> 00:02:00.400
-planning it. Then, then maybe
-doing it later when the
+00:02:01.100 --> 00:02:05.300
+little bit unnatural and that
+is causing problems. What kind
 
 29
-00:02:00.440 --> 00:02:05.000
-plan got approved or whatever,
-depending on a specific attribute
+00:02:05.300 --> 00:02:06.770
+of things are we using
+it for that we shouldn't
 
 30
-00:02:05.000 --> 00:02:07.040
-to know, SQL tends to
-be very hard. So it
+00:02:06.770 --> 00:02:11.000
+be using it for? I
+like to say that anything
 
 31
-00:02:07.040 --> 00:02:11.890
-can be about scaling, about
-ease of use about the
+00:02:11.000 --> 00:02:15.050
+that the browser can do
+for you automatically, you shouldn't
 
 32
-00:02:11.900 --> 00:02:14.030
-schema business that you mentioned.
-And there's all sorts of
+00:02:15.050 --> 00:02:18.410
+be trying to replicate in
+JavaScript. One of the most
 
 33
-00:02:14.030 --> 00:02:16.460
-other stuff that knows SQL
-is known for. It's kind
+00:02:18.410 --> 00:02:22.970
+common things is on initial
+page load using the JavaScript
 
 34
-00:02:16.460 --> 00:02:21.080
-of like a big hodgepodge
-of things, but yeah, the,
+00:02:23.060 --> 00:02:27.590
+to render the HTML for
+that page. It turns out
 
 35
-00:02:21.890 --> 00:02:25.100
-it requires some rethinking of
-what you may have learned
+00:02:27.590 --> 00:02:31.190
+that the browser and the
+server have actually figured that
 
 36
-00:02:25.400 --> 00:02:29.210
-in university or on the
-job. Is it a, is
+00:02:31.190 --> 00:02:35.180
+whole thing out really well.
+And by us trying to
 
 37
-00:02:29.210 --> 00:02:31.580
-it a matter of taking
-characteristics that we think of
+00:02:35.180 --> 00:02:39.080
+insert into the middle of
+it, we're actually introducing complexity
 
 38
-00:02:31.580 --> 00:02:35.480
-in a classic SQL or
-relational database and just doing
+00:02:39.080 --> 00:02:42.920
+where there doesn't need to
+be complexity. Is that only
 
 39
-00:02:35.480 --> 00:02:38.750
-the opposite or what are
-some characteristics of no SQL
+00:02:42.920 --> 00:02:45.470
+on initial page load that
+you're concerned about that, are
 
 40
-00:02:38.750 --> 00:02:43.760
-databases? It's more like going
-back to the fundamentals of
+00:02:45.470 --> 00:02:47.780
+you saying in general, the
+whole render it on the
 
 41
-00:02:43.760 --> 00:02:47.270
-data storage. So all, all
-major databases work the same
+00:02:47.780 --> 00:02:51.940
+server created on the server,
+send it across the wire
 
 42
-00:02:47.270 --> 00:02:50.510
-way that some tree data
-structure, you like data structure
+00:02:51.950 --> 00:02:55.250
+rendered on the client thing
+is pretty well understood optimized
 
 43
-00:02:50.510 --> 00:02:53.030
-for main data storage and
-indexes, and then some, maybe
+00:02:55.250 --> 00:02:59.260
+thing, and we're just not
+using it enough. Yeah. So
 
 44
-00:02:53.030 --> 00:02:58.400
-some hashes for specific purposes.
-And then, then those skills
+00:02:59.260 --> 00:03:01.180
+the first load is really
+the thing that I'm most
 
 45
-00:02:58.430 --> 00:03:02.530
-database on SQL databases just
-take the same underlying technology
+00:03:01.180 --> 00:03:04.990
+concerned about because that is
+the initial impression that you're
 
 46
-00:03:02.530 --> 00:03:06.220
-and put it together in
-different ways. So there, there
+00:03:04.990 --> 00:03:07.720
+giving to the users. So
+if that's slow, then the
 
 47
-00:03:06.220 --> 00:03:11.490
-isn't anything new and no
-SQL maybe, but, but the,
+00:03:07.720 --> 00:03:10.090
+rest of the time, they're
+going to think of that
 
 48
-00:03:11.490 --> 00:03:13.630
-the putting things together in
-a, in a more specific
+00:03:10.360 --> 00:03:13.240
+web app as being slow.
+So you want that to
 
 49
-00:03:13.630 --> 00:03:16.540
-way, and maybe introducing a
-bit of distributed systems thinking
+00:03:13.240 --> 00:03:16.420
+be as fast as possible
+later on in the cycle.
 
 50
-00:03:16.540 --> 00:03:20.530
-into how to larger, larger
-databases that then fit in
+00:03:16.420 --> 00:03:19.360
+I think it's less of
+a problem because JavaScript is
 
 51
-00:03:20.530 --> 00:03:23.770
-the single machine, but the
-underlying technologies is basically the
+00:03:19.360 --> 00:03:24.490
+really meant for managing the
+page after it's fully loaded
 
 52
-00:03:23.770 --> 00:03:28.300
-same. So it's not all
-too different for me, but
+00:03:24.550 --> 00:03:27.790
+until it is unloaded. And
+if you want to move
 
 53
-00:03:28.450 --> 00:03:30.010
-like I've been at it
-for a couple of years
+00:03:27.790 --> 00:03:31.090
+things around, then, then I
+think it makes sense. I
 
 54
-00:03:30.010 --> 00:03:32.820
-now. Well, when you say
-that the underlying technology is
+00:03:31.090 --> 00:03:34.810
+personally still would rather go
+back to the server and
 
 55
-00:03:32.820 --> 00:03:36.090
-the same, you're saying that
-things like indexes and record
+00:03:34.810 --> 00:03:37.810
+get fully rendered HTML and
+inserted into the web app.
 
 56
-00:03:36.090 --> 00:03:41.160
-retrieval, that those concepts are
-still fundamentally there. Yeah. So,
+00:03:38.260 --> 00:03:40.780
+But I think there are
+times where after you have
 
 57
-00:03:41.160 --> 00:03:42.990
-I mean, I'm, I'm pushing
-data to it. I'm doing
+00:03:40.780 --> 00:03:43.690
+a fully loaded page, it's
+okay to tweak it in
 
 58
-00:03:42.990 --> 00:03:46.260
-inserts. I'm, I've got indexes.
-I have views, you know,
+00:03:43.690 --> 00:03:47.110
+JavaScript here and there. I
+just don't like to do
 
 59
-00:03:46.290 --> 00:03:48.990
-data is still data. Four
-loops are still four loops,
+00:03:47.110 --> 00:03:50.610
+the entire page that way
+Point out in your slides
 
 60
-00:03:48.990 --> 00:03:52.410
-of course. Right? Yeah. That,
-that is, that is basically
+00:03:50.640 --> 00:03:54.120
+that a lot of pages
+popular pages, Twitter, Facebook, YouTube,
 
 61
-00:03:52.410 --> 00:03:56.280
-it. And then the, the
-difference is that maybe on
+00:03:54.120 --> 00:03:57.720
+or almost a megabyte. If
+you ignore Jesus on the
 
 62
-00:03:56.280 --> 00:03:59.640
-the, on the insertion, in
-this, in the SQL databases,
+00:03:57.720 --> 00:04:03.420
+wire, it's basically jar files
+again, except they're just JavaScript
 
 63
-00:03:59.640 --> 00:04:03.240
-this, the SQL database will
-look up the table structure
+00:04:03.420 --> 00:04:05.460
+and not Java. I mean,
+are we turning the web
 
 64
-00:04:03.240 --> 00:04:06.450
-and then enforce the particular
-schema and a NoSQL database
+00:04:05.460 --> 00:04:07.260
+into just a series of
+applets that we move from
 
 65
-00:04:06.450 --> 00:04:08.220
-may just take the data
-you have and store it
+00:04:07.260 --> 00:04:11.070
+place we move, like from
+Apple to Apple, It is
 
 66
-00:04:08.220 --> 00:04:11.100
-as adjacent block, but that's
-not, not any different from
+00:04:11.130 --> 00:04:14.040
+kind of getting to be
+like that. And I think
 
 67
-00:04:11.100 --> 00:04:13.740
-storing and change and evolve
-into a large data structure
+00:04:14.040 --> 00:04:19.170
+it's unfortunate because the web
+is a really balanced system
 
 68
-00:04:14.460 --> 00:04:17.610
-in the regular database. Right.
-But if I took a
+00:04:19.650 --> 00:04:23.010
+with between HTML and CSS
+and JavaScript. And each of
 
 69
-00:04:17.610 --> 00:04:20.400
-Jason blob and threw it
-into a column in a
+00:04:23.010 --> 00:04:27.270
+those parts are good at
+very specific things. And I
 
 70
-00:04:20.400 --> 00:04:24.090
-standard SQL database, I wouldn't
-be able to query what's
+00:04:27.270 --> 00:04:29.820
+think that it's a shame
+when we don't use it
 
 71
-00:04:24.090 --> 00:04:27.030
-inside that, you know, it
-would become this opaque bunch
+00:04:29.850 --> 00:04:32.640
+for that. Like if you
+had a child who is
 
 72
-00:04:27.030 --> 00:04:30.390
-of bytes. Right. And then
-SQL databases. Don't like doing
+00:04:32.640 --> 00:04:34.650
+really good at violin and
+said, you know what, you're
 
 73
-00:04:30.390 --> 00:04:33.120
-that too, because it's Unbound
-and its size and SQL
+00:04:34.650 --> 00:04:38.580
+going to play baseball instead,
+you're missing out on what
 
 74
-00:04:33.120 --> 00:04:36.970
-databases seem to like their
-slices nicely paid. Yeah, that
+00:04:38.580 --> 00:04:42.300
+could potentially be something incredible.
+And so the more that
 
 75
-00:04:36.970 --> 00:04:39.930
-was correct. And yeah, there's,
-there's a bunch of like
+00:04:42.300 --> 00:04:44.760
+we put stuff into JavaScript,
+I think the more we
 
 76
-00:04:39.930 --> 00:04:42.570
-optimizations that if you're you're
-you can do, if you
+00:04:44.760 --> 00:04:48.750
+actually do start heading, heading
+down that path of becoming
 
 77
-00:04:42.570 --> 00:04:47.040
-have very, very sliced, very
-I'm very record oriented. And
+00:04:48.750 --> 00:04:51.840
+more applet, like, and even
+getting to the point of
 
 78
-00:04:47.040 --> 00:04:50.280
-then there's the orthogonal version,
-like the verticals of the
+00:04:52.500 --> 00:04:56.160
+kind of being the same
+as moving between native apps.
 
 79
-00:04:50.280 --> 00:04:52.830
-world, which are the common
-databases, which slice just the
+00:04:56.580 --> 00:04:58.830
+You just have all of
+this code, that's executing all
 
 80
-00:04:52.830 --> 00:04:55.110
-other way, which is probably
-a fallen or something. And
+00:04:58.830 --> 00:05:02.700
+the time instead of what
+the web was really envisioned
 
 81
-00:04:55.110 --> 00:04:59.310
-then, and the notes equal.
-Well, we tend to not
+00:05:02.700 --> 00:05:06.930
+as at the beginning, which
+is, here's a bunch of
 
 82
-00:04:59.310 --> 00:05:03.300
-worry too much about that
-because if you introduce this
+00:05:06.930 --> 00:05:09.960
+data, here's some configuration for
+it and I'm going to
 
 83
-00:05:03.300 --> 00:05:08.400
-idea of scale, the individual
-single query performance may, may
+00:05:10.050 --> 00:05:13.560
+make this palatable to you.
+It seems like there's two
 
 84
-00:05:08.400 --> 00:05:12.750
-matter less than the overall
-system throughput. So if you
+00:05:13.560 --> 00:05:17.640
+webs though. Now there's the
+from app to app web.
 
 85
-00:05:12.750 --> 00:05:15.390
-have a thousand machines running
-a single database, making sure
+00:05:17.670 --> 00:05:20.820
+And then there's the from
+document to document kind of,
 
 86
-00:05:15.390 --> 00:05:18.570
-that they all respond to
-the request in a reasonable
+00:05:20.850 --> 00:05:24.240
+you know, the hypermedia web,
+the hypermedia web is what
 
 87
-00:05:18.570 --> 00:05:20.550
-amount of time, that's still
-fast enough for the user.
+00:05:24.240 --> 00:05:28.830
+Berners Lee wanted. And the
+application web is what YouTube
 
 88
-00:05:20.580 --> 00:05:23.550
-That's good enough then squeezing
-the loss microseconds out of
+00:05:28.830 --> 00:05:35.370
+and Twitter and Facebook want.
+Yeah, absolutely. I think though
 
 89
-00:05:23.550 --> 00:05:27.060
-a single query. That's Interesting
-because I, I know that
+00:05:35.370 --> 00:05:40.230
+that we start to make
+a, we start to separate
 
 90
-00:05:27.090 --> 00:05:30.330
-when dealing with classic kind
-of SQL server and I
+00:05:40.230 --> 00:05:43.680
+those things out too early
+in the discussion. There's a
 
 91
-00:05:30.330 --> 00:05:32.640
-come from the Microsoft SQL
-server world, but I've also
+00:05:43.680 --> 00:05:46.410
+lot of times I'll be
+talking with people and I'll
 
 92
-00:05:32.640 --> 00:05:35.580
-done work on DB too.
-And I've done work on
+00:05:46.410 --> 00:05:48.330
+say like, well, yeah, that
+totally makes sense if I'm
 
 93
-00:05:36.750 --> 00:05:40.770
-Oracle databases, scaling up is
-always easy. You know, going
+00:05:48.330 --> 00:05:52.200
+like writing a blog site,
+but if I'm doing a
 
 94
-00:05:40.770 --> 00:05:43.410
-from one to four to
-eight to 16 processors is
+00:05:52.200 --> 00:05:55.230
+serious web app, serious web
+app and air quotes, most
 
 95
-00:05:43.410 --> 00:05:46.770
-what SQL databases and SQL
-database administrators like to do,
+00:05:55.230 --> 00:05:58.730
+of the time, then I
+really can't deal with that
 
 96
-00:05:46.770 --> 00:05:49.260
-throw a memory at it,
-throw a processor at it.
+00:05:58.730 --> 00:06:00.710
+sort of progressive enhancement stuff
+because it's not going to
 
 97
-00:05:49.860 --> 00:05:52.260
-But you're saying that in
-the no SQL world, that
+00:06:00.710 --> 00:06:04.130
+get me far enough along.
+And I believe that they're
 
 98
-00:05:52.560 --> 00:05:55.590
-chopping things up and scaling
-out rather than up is
+00:06:04.130 --> 00:06:08.630
+actually not all that different
+to fundamentally all, any of
 
 99
-00:05:55.590 --> 00:05:59.900
-more appropriate. Yeah. There's definitely
-A bunch of databases in
+00:06:08.630 --> 00:06:13.670
+us doing are presenting data
+and then maybe optionally letting
 
 100
-00:05:59.900 --> 00:06:02.840
-the no SQL wealth fed
-are based around the idea
+00:06:13.670 --> 00:06:17.270
+people manipulate that data and
+how we choose to represent
 
 101
-00:06:02.840 --> 00:06:05.150
-that you can just throw
-more hardware in terms of
+00:06:17.270 --> 00:06:21.110
+it can actually end up
+being pretty much the same,
 
 102
-00:06:05.150 --> 00:06:08.800
-more machines at the problem.
-So if I were going
+00:06:21.800 --> 00:06:26.900
+regardless if it's actual text
+content or it's photo content
 
 103
-00:06:08.800 --> 00:06:10.810
-to do the kind of
-the standard, make a table
+00:06:26.900 --> 00:06:30.110
+or it's video content or
+it's audio content. This is
 
 104
-00:06:10.810 --> 00:06:13.570
-of people, how do I
-store people? Do I create
+00:06:30.110 --> 00:06:35.270
+all data that's being transmitted
+over HTTP. And we need
 
 105
-00:06:13.570 --> 00:06:15.760
-a table and create columns
-and give those columns data
+00:06:35.270 --> 00:06:37.850
+to put it into some
+sort of format that's consumable
 
 106
-00:06:15.760 --> 00:06:18.580
-to, Okay. And that, that,
-that one. Now we need
+00:06:37.850 --> 00:06:40.970
+by other people. And we
+can start out with the
 
 107
-00:06:18.580 --> 00:06:21.580
-to look at what specific
-NoSQL database you're looking at.
+00:06:40.970 --> 00:06:43.940
+same basic building blocks to
+do that, and then layer
 
 108
-00:06:22.540 --> 00:06:26.020
-The there are different versions,
-the one I'm working on
+00:06:43.940 --> 00:06:46.670
+on additional functionality on top
+of that. I don't see
 
 109
-00:06:26.020 --> 00:06:28.720
-the couch, and then other
-ones have the same idea.
+00:06:46.670 --> 00:06:50.020
+them as two completely different
+things. Why do you think
 
 110
-00:06:28.720 --> 00:06:32.170
-You just have a record
-just to do some blog.
+00:06:50.020 --> 00:06:54.370
+people feel the need to
+be reinventing or exploring and
 
 111
-00:06:32.200 --> 00:06:33.880
-That is the contents of
-the data that you want
+00:06:54.370 --> 00:06:57.940
+trying to reinvent stuff so
+much? I mean, HTTP one,
 
 112
-00:06:33.880 --> 00:06:37.180
-to store. That is name
-first name, last name, age
+00:06:57.940 --> 00:07:00.340
+one has served us very
+nicely for a very long
 
 113
-00:06:37.180 --> 00:06:39.070
-address, or whatever you want.
-And you just saw that
+00:07:00.340 --> 00:07:04.630
+time. Angle brackets are working
+nicely curly braces pretty well,
 
 114
-00:06:39.070 --> 00:06:41.140
-into the database. And that
-may or may not be
+00:07:04.900 --> 00:07:07.480
+but we've got angular and
+Ember and backbone and on
 
 115
-00:06:41.140 --> 00:06:45.010
-schema enforcement there. If you
-have other databases say like,
+00:07:07.480 --> 00:07:10.540
+and on. And I always
+say, pick a noun dot
 
 116
-00:06:45.040 --> 00:06:47.170
-cause I know you want
-to have some ideas about
+00:07:10.540 --> 00:07:14.590
+JS. And someone has a
+reinvention of the way that
 
 117
-00:06:47.170 --> 00:06:49.360
-the types you're going to
-be storing cause the system's
+00:07:14.590 --> 00:07:17.740
+the application should exist, but
+it's just text boxes over
 
 118
-00:06:49.360 --> 00:06:52.600
-going to do stuff with
-them. So this is where
+00:07:17.740 --> 00:07:21.880
+data. Why haven't we as
+a community come together and
 
 119
-00:06:52.600 --> 00:06:54.760
-the term knows Guild breaks
-up a little bit. You
+00:07:21.880 --> 00:07:25.870
+picked something as an application
+model, raw light like we
 
 120
-00:06:54.760 --> 00:06:57.190
-need to look at the
-specific database you're storing data
+00:07:25.870 --> 00:07:27.760
+did. We picked H you
+know, we agree on TCP.
 
 121
-00:06:57.190 --> 00:07:00.850
-with. Okay. So let's talk
-about couch DB. Can I
+00:07:27.760 --> 00:07:30.340
+We agree on IP. We
+agree on HTTP, but we
 
 122
-00:07:00.850 --> 00:07:03.250
-just throw it some Jason,
-it looks like a person
+00:07:30.340 --> 00:07:33.040
+just can't seem to agree
+on anything else in the
 
 123
-00:07:03.250 --> 00:07:05.110
-and it'll just say, all
-right, well, that's a person
+00:07:33.040 --> 00:07:38.950
+stack. Oh, I think that
+that speaks to our nature.
 
 124
-00:07:05.110 --> 00:07:07.990
-I'll hang onto this for
-you for later Comes to
+00:07:40.150 --> 00:07:45.130
+Our nature is more artists
+than anything else. It's like,
 
 125
-00:07:07.990 --> 00:07:09.430
-be a little extra to
-just say, Oh, that looks
+00:07:45.130 --> 00:07:47.320
+if you take any two
+artists aside and ask them
 
 126
-00:07:09.430 --> 00:07:11.920
-like Villa Jason. I'll hang
-on to that for you.
+00:07:47.320 --> 00:07:49.570
+how they're going to do
+their job, they will give
 
 127
-00:07:12.010 --> 00:07:14.140
-And it'll give you a
-key back and then you
+00:07:49.570 --> 00:07:53.500
+you vastly different methodologies about
+how they're going to go
 
 128
-00:07:14.140 --> 00:07:17.290
-can use that key later
-for retrieval. And then on
+00:07:53.500 --> 00:07:56.410
+about their work. And part
+of what drew me to
 
 129
-00:07:17.290 --> 00:07:19.600
-top of that, you can
-also create indexes for the
+00:07:56.410 --> 00:07:58.030
+the web and part of
+why I love the web
 
 130
-00:07:19.990 --> 00:07:23.830
-specific, specific properties of that
-Jason block. So if you
+00:07:58.750 --> 00:08:02.410
+is because of that artistic
+factor that comes into it,
 
 131
-00:07:23.830 --> 00:07:25.900
-want to look up people
-by first name or last
+00:08:02.440 --> 00:08:05.950
+that there is no one
+right way, most of the
 
 132
-00:07:25.900 --> 00:07:28.000
-name or age or something
-like that, you can create
+00:08:05.950 --> 00:08:09.190
+time of doing things. And
+I think that that is
 
 133
-00:07:28.000 --> 00:07:31.480
-secondary indexes to retrieve that
-data as well in a
+00:08:09.190 --> 00:08:14.560
+actually by design completely intentional
+so that we can grow
 
 134
-00:07:31.510 --> 00:07:34.960
-more query, like way Now,
-when I'm doing things to
+00:08:14.560 --> 00:08:18.850
+and explore. And I think
+that we want people to
 
 135
-00:07:34.960 --> 00:07:37.450
-two SQL servers or Oracles
-and things like that, they
+00:08:18.850 --> 00:08:21.850
+keep pushing the envelope. We
+want people to say, there
 
 136
-00:07:37.450 --> 00:07:39.640
-all have a, a, a
-socket that they open and
+00:08:21.850 --> 00:08:24.850
+might be a better way
+of doing this. And we've
 
 137
-00:07:39.640 --> 00:07:42.610
-they have some magical binary
-format. Am I speaking some
+00:08:24.850 --> 00:08:27.100
+seen a lot of really
+great things come out of
 
 138
-00:07:42.610 --> 00:07:45.280
-secret format or am I
-just posting Jason to an
+00:08:27.100 --> 00:08:30.190
+that in the past few
+years where JavaScript libraries are
 
 139
-00:07:45.280 --> 00:07:48.850
-HTTPS? That is exactly it.
-Couch TV is all built
+00:08:30.190 --> 00:08:35.290
+actually influencing what came out
+of HTML five and designers.
 
 140
-00:07:48.880 --> 00:07:51.430
-around the web and web
-standards. So it speaks all
+00:08:35.290 --> 00:08:38.410
+And what they've been doing
+in Photoshop were influencing the
 
 141
-00:07:51.430 --> 00:07:54.580
-HTP Andrei song. And you
-don't need any special software
+00:08:38.410 --> 00:08:41.770
+direction of CSS and writers
+and what they were doing
 
 142
-00:07:54.580 --> 00:07:57.400
-to use it like curl
-or browser will do. Like
+00:08:41.770 --> 00:08:46.060
+were influencing the design of
+the new HTML five sectioning
 
 143
-00:07:57.400 --> 00:07:59.620
-in fact, the, the admin
-interface of couch TV is
+00:08:46.060 --> 00:08:49.750
+elements. So I think that
+we're at the beginning of
 
 144
-00:07:59.630 --> 00:08:01.960
-just like a web app
-that uses XHR to talk
+00:08:49.750 --> 00:08:53.380
+an evolution of this medium,
+not near the end. And
 
 145
-00:08:01.960 --> 00:08:04.480
-to catch DB. There isn't
-any middleware that does anything
+00:08:53.380 --> 00:08:55.350
+that means that there's going
+to be a lot of
 
 146
-00:08:04.480 --> 00:08:07.510
-fancy. Hmm. So I could
-write my own if I
+00:08:55.350 --> 00:09:00.300
+exploration and quite frankly, a
+lot of bad ideas before
 
 147
-00:08:07.510 --> 00:08:09.670
-wanted to. I mean, it's
-just, it's just a web
+00:09:00.300 --> 00:09:03.680
+we come across the really
+good ideas. Yeah. It's going
 
 148
-00:08:09.670 --> 00:08:12.520
-service out there in the
-world. Yeah. That's, that's one
+00:09:03.680 --> 00:09:07.490
+to be interesting. I remember
+working for companies that said,
 
 149
-00:08:12.520 --> 00:08:15.010
-of the pains of coach
-Jimmy's existence. We kind of
+00:09:07.550 --> 00:09:11.180
+yes, the future of the
+web is 100% by 100%
 
 150
-00:08:15.010 --> 00:08:17.680
-decided not to write client
-libraries because you don't actually
+00:09:11.600 --> 00:09:14.990
+flash apps. Right. You know,
+one element on the HTML
 
 151
-00:08:17.680 --> 00:08:19.930
-need client libraries. So the
-first thing everyone does is
+00:09:14.990 --> 00:09:17.660
+is just an envelope. You
+just say, you know, HTML
 
 152
-00:08:19.930 --> 00:08:22.000
-try to catch the client
-library for their needs. So
+00:09:17.780 --> 00:09:20.840
+body, and then you go
+in bed and that's it.
 
 153
-00:08:22.000 --> 00:08:24.520
-there are a million of
-them that just do that
+00:09:20.990 --> 00:09:23.180
+And that's the web. And
+there was a job of
 
 154
-00:08:24.640 --> 00:08:27.370
-thing they need, but none
-of them do everything everyone
+00:09:23.180 --> 00:09:26.150
+people and they never would
+argue that like plugable virtual
 
 155
-00:08:27.370 --> 00:08:30.160
-needs and that's kind of
-an issue, but it's also
+00:09:26.150 --> 00:09:28.640
+runtimes where what it's going
+to happen. And then suddenly
 
 156
-00:08:30.160 --> 00:08:32.170
-fun that people just write
-the client libraries because it's
+00:09:29.270 --> 00:09:33.890
+flash server, light Java, all
+dead. And the runtime is
 
 157
-00:08:32.170 --> 00:08:35.710
-so damn easy. Interesting. That's
-actually the next question was
+00:09:33.890 --> 00:09:37.220
+embedded in the browser like
+people are, but then, then
 
 158
-00:08:35.710 --> 00:08:38.080
-like, okay, I'm a, like,
-I'm a.net programmer. And I'm
+00:09:37.250 --> 00:09:40.940
+even the thing that they
+have, they issued previously, they're
 
 159
-00:08:38.080 --> 00:08:40.510
-thinking I want to start
-doing work in, in couch
+00:09:40.940 --> 00:09:42.630
+going and doing the same
+thing. Like you don't have
 
 160
-00:08:40.510 --> 00:08:42.760
-DB. Should I go on
-hunt? I mean, I would
+00:09:42.680 --> 00:09:44.690
+flash sucks, right. We're not
+going to go and send
 
 161
-00:08:42.760 --> 00:08:46.540
-naturally go hunting for the
-official.net client library and it
+00:09:44.690 --> 00:09:47.930
+a whole big binary blob,
+but I'll, if Jesus call
 
 162
-00:08:46.540 --> 00:08:50.110
-just doesn't exist. Well, there
-there's like, I'm going to
+00:09:47.930 --> 00:09:53.480
+it JavaScript, then that's totally
+like totally cool. Yeah. It
 
 163
-00:08:50.110 --> 00:08:52.150
-say we can, everybody's going
-to hate me because these
+00:09:53.480 --> 00:09:58.940
+seems like we go into
+cycles with the web. I
 
 164
-00:08:52.150 --> 00:08:55.380
-are awful, but we're collecting
-these. And then a bit
+00:09:58.940 --> 00:10:01.280
+guess I, I lived through
+all that and now I
 
 165
-00:08:55.380 --> 00:08:57.270
-of a natural selection going
-on. Then the better ones
+00:10:01.280 --> 00:10:04.550
+actually, at one point in
+my career, I was like,
 
 166
-00:08:57.270 --> 00:08:59.040
-tend to pop up to
-be on the top of
+00:10:04.550 --> 00:10:06.950
+yeah, this flash thing, that's
+going to be it. Like,
 
 167
-00:08:59.040 --> 00:09:01.350
-the list on the Wiki.
-So that was some hunting
+00:10:07.280 --> 00:10:10.250
+that's the end. It's so
+pretty. It's so neat. And
 
 168
-00:09:01.350 --> 00:09:03.480
-that you can do and
-reuse of code. You can
+00:10:10.250 --> 00:10:12.560
+then I started using it
+and it, I felt a
 
 169
-00:09:03.480 --> 00:09:06.840
-just get into for easiness,
-but then like there, if
+00:10:12.560 --> 00:10:16.340
+little dirty and they said,
+well, you know, there, maybe
 
 170
-00:09:06.840 --> 00:09:09.810
-they're good, they're really thin
-layer on top of couch
+00:10:16.340 --> 00:10:20.510
+there's a better way of
+doing that. And I think
 
 171
-00:09:09.810 --> 00:09:12.710
-anyway. So if you want
-to learn couch, it's probably
+00:10:20.510 --> 00:10:24.200
+that we have gone so
+far with JavaScript that we
 
 172
-00:09:12.750 --> 00:09:15.270
-easiest to just ride your
-own and just keep going
+00:10:24.200 --> 00:10:26.450
+are now at that point
+where it's like, well, the
 
 173
-00:09:15.270 --> 00:09:17.070
-with it. But if you
-just want to get stuff
+00:10:26.450 --> 00:10:30.560
+web now is basically just
+a JavaScript delivery mechanism and
 
 174
-00:09:17.070 --> 00:09:18.840
-done, you skip that and
-take one of the existing
+00:10:30.560 --> 00:10:34.370
+that's where we want to
+do everything. And that was
 
 175
-00:09:18.840 --> 00:09:22.610
-ones. Sorry. It's definitely a
-database where I need to
+00:10:34.370 --> 00:10:36.980
+what I was sort of
+rallying against in my talk
 
 176
-00:09:22.610 --> 00:09:26.540
-love the web. Yeah. But
-you should love the web
+00:10:37.010 --> 00:10:40.400
+is that when you're just
+using a thin slice of
 
 177
-00:09:26.540 --> 00:09:32.600
-anyway. Okay. So I've got
-my person and my first
+00:10:40.400 --> 00:10:44.210
+what the web has to
+offer, you're actually missing out
 
 178
-00:09:32.600 --> 00:09:34.400
-name and my age and
-all those kinds of things.
+00:10:44.210 --> 00:10:50.300
+on opportunities, not just for
+improved performance, but improve maintainability,
 
 179
-00:09:35.030 --> 00:09:36.440
-How do I go and
-say, well, give me all
+00:10:50.810 --> 00:10:55.820
+improved index ability by search
+engines, having a more logical
 
 180
-00:09:36.440 --> 00:09:39.050
-the people with the first
-name that starts with S
+00:10:55.820 --> 00:10:58.250
+way of thinking about the
+problems that you're trying to
 
 181
-00:09:39.740 --> 00:09:41.720
-All right. So here's, here's
-the thing. That's, that's the
+00:10:58.250 --> 00:11:01.340
+solve. We're missing all of
+that. When we say JavaScript
 
 182
-00:09:41.720 --> 00:09:43.730
-most tricky to explain the
-couch to the, I guess
+00:11:01.340 --> 00:11:04.040
+has to be the only
+way of doing things In
 
 183
-00:09:44.430 --> 00:09:48.440
-the, the way we do
-querying is a bit obscure,
+00:11:04.040 --> 00:11:08.960
+your presentation, you use the
+Airbnb's redesigned from an all
 
 184
-00:09:48.530 --> 00:09:52.820
-but it, it works quite
-nicely. We're using a procedure
+00:11:08.960 --> 00:11:11.810
+kind of JavaScript way of
+thinking to one that has
 
 185
-00:09:52.820 --> 00:09:57.740
-called MapReduce and now everybody
-runs away screaming again, which
+00:11:11.810 --> 00:11:15.080
+real HTML on that first
+page load. And you say
 
 186
-00:09:57.800 --> 00:09:59.780
-requires you to write some
-Java script, which if you're
+00:11:15.080 --> 00:11:17.300
+that you can, you said
+just now you can kind
 
 187
-00:09:59.790 --> 00:10:02.180
-done that programmer, it's probably
-not your favorite thing to
+00:11:17.300 --> 00:11:20.870
+of restructure applications to be
+simpler, but wouldn't the kind
 
 188
-00:10:02.180 --> 00:10:05.180
-do, but you can still
-do. And then manage. Usually
+00:11:20.870 --> 00:11:24.980
+of logical step be that
+you'd have duplication everywhere. There'd
 
 189
-00:10:05.180 --> 00:10:08.450
-the code required to be
-written as really tiny, just
+00:11:24.980 --> 00:11:28.400
+be the rendering on the
+server side code. And then
 
 190
-00:10:08.450 --> 00:10:10.460
-a couple of lines of
-code. So basically all you
+00:11:28.850 --> 00:11:31.190
+there'd be the rendering on
+the client side code. And
 
 191
-00:10:10.460 --> 00:10:12.590
-do is write a function
-that gets applied to all
+00:11:31.190 --> 00:11:32.630
+then we would start to
+try to find ways to
 
 192
-00:10:12.590 --> 00:10:15.080
-your records. And all it
-needs to do is admit
+00:11:32.630 --> 00:11:35.060
+reuse templates in to places
+and things like that. Are
 
 193
-00:10:15.080 --> 00:10:18.230
-or return the data that
-you want to be in
+00:11:35.070 --> 00:11:36.440
+we going to get a
+split brain and try to
 
 194
-00:10:18.230 --> 00:10:21.470
-the index. So for, if
-you want to have the
+00:11:36.440 --> 00:11:42.980
+do things twice? So say
+that a lot of times
 
 195
-00:10:22.280 --> 00:10:24.320
-first, the first character you
-said with the last name,
+00:11:43.040 --> 00:11:46.730
+when I talk to people
+about this, they see the
 
 196
-00:10:24.320 --> 00:10:28.160
-right? So, so you just
-met or returned the last
+00:11:46.730 --> 00:11:50.030
+end goal as being exactly
+that is like, we're going
 
 197
-00:10:28.160 --> 00:10:30.650
-name from that function. And
-then you get an index
+00:11:50.030 --> 00:11:51.890
+to write JavaScript and it
+is going to be used
 
 198
-00:10:30.650 --> 00:10:32.930
-by last name, and then
-you can do a sub
+00:11:51.890 --> 00:11:54.190
+on the client sometimes. And
+it will be used on
 
 199
-00:10:32.930 --> 00:10:35.060
-query on that, on that
-query time was just like,
+00:11:54.190 --> 00:11:56.980
+the server. Sometimes it will
+be fantastic because at any
 
 200
-00:10:35.060 --> 00:10:38.180
-give me everyone that starts
-with a T. So I
+00:11:56.980 --> 00:11:59.530
+point in time, we can
+just flip the switch and
 
 201
-00:10:38.180 --> 00:10:40.580
-would make a function that
-takes a doc and I
+00:11:59.530 --> 00:12:01.810
+say, Oh, this should be
+server. And Oh, this should
 
 202
-00:10:40.580 --> 00:10:42.800
-would do whatever I want
-to within there in this
+00:12:01.810 --> 00:12:04.720
+be browser and everybody will
+be happy. It will all
 
 203
-00:10:42.800 --> 00:10:45.620
-case say, you know, if,
-and then go off looking
+00:12:04.780 --> 00:12:11.440
+join hands and sing kumbaya.
+In reality, there's usually one
 
 204
-00:10:45.620 --> 00:10:49.010
-at index of, Oh, so
-you wouldn't in the, in
+00:12:11.440 --> 00:12:15.760
+way that ends up working
+out best, better than the
 
 205
-00:10:49.010 --> 00:10:52.310
-the map function, you wouldn't
-look for you wouldn't program
+00:12:15.760 --> 00:12:19.840
+other way. And needing to
+go back and forth between
 
 206
-00:10:52.400 --> 00:10:56.870
-your query details as like
-extract the first character of
+00:12:20.050 --> 00:12:23.620
+client and server using the
+same code and the same
 
 207
-00:10:56.870 --> 00:10:58.850
-it, maybe, but maybe you
-want to have an index
+00:12:23.620 --> 00:12:26.560
+templates, I think is a
+nice to have and not
 
 208
-00:10:58.850 --> 00:11:02.600
-by last name. And then
-there is like indexing time
+00:12:26.560 --> 00:12:29.640
+a need to have. I've
+been on many projects who
 
 209
-00:11:02.600 --> 00:11:05.730
-of the query time. So
-at query time we created
+00:12:29.640 --> 00:12:32.080
+said like, this is an
+absolute goal for us, and
 
 210
-00:11:05.760 --> 00:11:07.040
-it and I was sorry
-at the next time to
+00:12:32.490 --> 00:12:34.690
+this is really going to
+help us in all kinds
 
 211
-00:11:07.040 --> 00:11:10.100
-create an index. So we
-put all the last names
+00:12:34.690 --> 00:12:38.200
+of different ways. And then
+ultimately it ends up going
 
 212
-00:11:10.100 --> 00:11:12.500
-into a data structure that's
-really efficient to look at.
+00:12:38.260 --> 00:12:41.410
+that well, we're just always
+going to do it in
 
 213
-00:11:12.560 --> 00:11:15.020
-And then at query time,
-we can say within that
+00:12:41.410 --> 00:12:43.540
+that one way. And the
+other way, we're not going
 
 214
-00:11:15.020 --> 00:11:17.520
-data structure, give me a
-subset of the, of the
+00:12:43.540 --> 00:12:46.870
+to end up using it
+at all. And my perspective
 
 215
-00:11:17.540 --> 00:11:19.460
-rows there. And then you
-can say, just give me
+00:12:46.900 --> 00:12:49.960
+is that when you have
+pieces of your web app
 
 216
-00:11:19.460 --> 00:11:21.770
-everything that starts with a
-T, but everything that's in
+00:12:50.500 --> 00:12:54.280
+that are really good at
+something specific, you should look
 
 217
-00:11:21.770 --> 00:11:24.350
-between starting with a T
-and starting with S excluding
+00:12:54.280 --> 00:13:00.070
+for reasons to do it
+that way and only diverge
 
 218
-00:11:24.350 --> 00:11:26.450
-the ones that stopped with
-an S. So that's everything
+00:13:00.100 --> 00:13:04.840
+when you absolutely must. So
+if it's possible to do
 
 219
-00:11:26.450 --> 00:11:29.090
-with a T, but at
-the same index can also
+00:13:04.840 --> 00:13:07.120
+something in HTML, then you
+should just do it in
 
 220
-00:11:29.090 --> 00:11:31.910
-answer it. Just give me
-everything by last name. I
+00:13:07.120 --> 00:13:10.630
+HTML without anything else. And
+then if it's possible to
 
 221
-00:11:31.910 --> 00:11:35.900
-see. So if I understand
-correctly, hence it's MapReduce first,
+00:13:10.630 --> 00:13:13.450
+do it in CSS, you
+should do it in CSS
 
 222
-00:11:35.900 --> 00:11:37.520
-I decide what are the
-records? I want to map
+00:13:13.450 --> 00:13:16.210
+before you try doing it,
+anything else. And if it's
 
 223
-00:11:37.940 --> 00:11:41.180
-this on top of, and
-then I reduced the results.
+00:13:16.210 --> 00:13:18.280
+possible to do on the
+server, you should do it
 
 224
-00:11:41.180 --> 00:11:43.130
-So I would go in
-almost like I'm getting a
+00:13:18.280 --> 00:13:22.240
+on the server, unless you
+really can't. And then once
 
 225
-00:11:43.130 --> 00:11:45.830
-view model, not the actual
-data, but have a view
+00:13:22.240 --> 00:13:25.780
+you've exhausted all of those
+options, then you go to
 
 226
-00:11:45.830 --> 00:11:50.180
-on that data. Yeah. Of
-last names. That's one function,
+00:13:25.780 --> 00:13:29.560
+JavaScript. That is the thing
+that comes at the end
 
 227
-00:11:50.180 --> 00:11:53.030
-the map function. Right. Ignore,
-reduce for now, I think
+00:13:29.560 --> 00:13:32.740
+of your journey rather than
+where you started. I see
 
 228
-00:11:53.200 --> 00:11:55.380
-too much for a half
-hour. Okay. But then I
+00:13:33.660 --> 00:13:37.620
+I've given presentations myself though,
+where I've heard people say
 
 229
-00:11:55.380 --> 00:12:00.060
-query that resulting. Yeah, exactly.
-And these mechanisms called views
+00:13:37.620 --> 00:13:40.710
+that, Oh, our little web
+farm of 10 servers doesn't
 
 230
-00:12:00.060 --> 00:12:02.970
-and country V so that's
-very fitting. Hmm. And would
+00:13:40.710 --> 00:13:43.170
+scale, you know, we're going
+to have to buy more
 
 231
-00:12:02.970 --> 00:12:05.490
-that be familiar to MVC
-people or is that just
+00:13:43.170 --> 00:13:45.990
+servers. And then we dig
+into it. And I discovered
 
 232
-00:12:05.490 --> 00:12:10.020
-a coincidence that it's called
-a view? That's a different
+00:13:45.990 --> 00:13:49.020
+that they're doing something like
+they'll have a list of
 
 233
-00:12:10.020 --> 00:12:13.620
-kind of view. Okay. Yeah.
-Okay. And so this, this
+00:13:49.020 --> 00:13:51.420
+a hundred items on the
+client, and then they will
 
 234
-00:12:13.620 --> 00:12:16.230
-emit function, this is a,
-this is a fundamental built
+00:13:51.420 --> 00:13:53.370
+post them all the way
+back to the server and
 
 235
-00:12:16.230 --> 00:12:20.550
-in function that takes this
-key value pair. Yeah. And
+00:13:53.370 --> 00:13:55.620
+have the server do something
+simple, like sort them by
 
 236
-00:12:20.550 --> 00:12:22.830
-the key is, is some
-arbitrary key, or is it
+00:13:55.620 --> 00:13:58.260
+column. And they send it
+all the way back. And
 
 237
-00:12:22.830 --> 00:12:26.310
-a meaningful, Natural key? It
-is whatever you want it
+00:13:58.260 --> 00:13:59.850
+I always use that as
+like the kind of the
 
 238
-00:12:26.310 --> 00:12:30.390
-to be. We usually use,
-at least for the secondary
+00:13:59.850 --> 00:14:03.090
+classic example of don't do
+that. You, you have more
 
 239
-00:12:30.390 --> 00:12:32.850
-nexus use some natural data,
-like the last name, the
+00:14:03.090 --> 00:14:07.170
+than 10 servers in your
+farm. You have 10 plus
 
 240
-00:12:32.850 --> 00:12:36.720
-age, the street, or whatever
-you need to be unique.
+00:14:07.170 --> 00:14:11.910
+the number of connected clients
+that have quad processors. So
 
 241
-00:12:37.580 --> 00:12:40.110
-It does not have to
-be unique. In fact, there
+00:14:12.180 --> 00:14:15.060
+aren't there things that just
+really always should have happened
 
 242
-00:12:40.110 --> 00:12:43.260
-is no unique constraint even
-possible on the secondary nexus,
+00:14:15.060 --> 00:14:18.090
+on the client, like sorting
+and filtering and type ahead
 
 243
-00:12:43.260 --> 00:12:45.780
-which is a bit of
-a limit, but yeah, we'll
+00:14:18.090 --> 00:14:21.960
+and things like that. So
+there are things that can
 
 244
-00:12:45.780 --> 00:12:48.420
-maybe have to fix that
-some time later. Well, actually,
+00:14:21.960 --> 00:14:25.980
+happen on the client and
+those are the progressive enhancements.
 
 245
-00:12:48.420 --> 00:12:51.660
-speaking of limits, one of
-the things that you say,
+00:14:26.050 --> 00:14:28.860
+Those are the things that
+you can add that improve
 
 246
-00:12:51.660 --> 00:12:54.270
-it just a couple of
-chapters into one of the,
+00:14:29.400 --> 00:14:33.660
+the user experience without dramatically
+increasing the amount of code
 
 247
-00:12:54.930 --> 00:12:58.080
-you know, what's the deal
-with couch DB wikis is
+00:14:33.660 --> 00:14:36.720
+that you need to use.
+So client side sorting. Yeah,
 
 248
-00:12:58.350 --> 00:13:01.710
-that there are some limits
-that will initially make newcomers
+00:14:36.750 --> 00:14:39.420
+absolutely. All the data is
+already there. And you want
 
 249
-00:13:01.710 --> 00:13:06.390
-feel that it's inflexible, but
-then after some, some work
+00:14:39.420 --> 00:14:42.120
+to sort sorta go ahead
+and sort it type ahead
 
 250
-00:13:06.390 --> 00:13:08.040
-you go, ah, I see
-why you did that. That's
+00:14:42.120 --> 00:14:44.430
+is interesting because sometimes you
+have to go back to
 
 251
-00:13:08.040 --> 00:13:10.710
-a useful limit. So what
-is something that would turn
+00:14:44.430 --> 00:14:48.600
+the server in order to
+match what people are typing.
 
 252
-00:13:10.710 --> 00:13:12.480
-me off and immediately make
-me think this is so
+00:14:49.380 --> 00:14:52.100
+So it, it ends up
+being a marriage of both
 
 253
-00:13:12.480 --> 00:13:16.890
-inflexible, but it makes it
-possible, Right? So the, this
+00:14:52.130 --> 00:14:55.880
+client and server in that
+case. I think that the,
 
 254
-00:13:16.890 --> 00:13:18.750
-is what we maybe talk
-about the reduce a little
+00:14:57.020 --> 00:14:58.640
+the step that you keep
+in mind is that this
 
 255
-00:13:18.750 --> 00:13:23.670
-bit. If you want to
-get score somebody like you
+00:14:58.640 --> 00:15:02.060
+becomes an optimization step, is
+that you have a way
 
 256
-00:13:23.670 --> 00:13:25.830
-have games and people have
-scores, and then you want
+00:15:02.060 --> 00:15:04.460
+of doing it, that works
+all the time. And then
 
 257
-00:13:25.830 --> 00:13:27.750
-to find out who has
-got the highest score, right?
+00:15:04.460 --> 00:15:06.770
+you figure out that for
+some people you can do
 
 258
-00:13:28.200 --> 00:13:29.880
-So you can use the
-map and the reduced to
+00:15:06.770 --> 00:15:09.350
+it in a faster way.
+And that's why I'm not
 
 259
-00:13:29.880 --> 00:13:33.150
-compute the score of everyone,
-but you can't sort by
+00:15:09.350 --> 00:15:13.340
+completely against things like using
+HTML five history, the push
 
 260
-00:13:33.180 --> 00:13:35.820
-the score anymore. That will
-be a chain men produce.
+00:15:13.340 --> 00:15:16.250
+state, and pop state, because
+I think that there is
 
 261
-00:13:35.820 --> 00:13:39.870
-And we currently don't support
-that because very fast access
+00:15:16.310 --> 00:15:19.550
+an opportunity there to say,
+instead of reloading the entire
 
 262
-00:13:39.870 --> 00:13:42.480
-to a change map produce
-like an OLT piece that
+00:15:19.550 --> 00:15:22.550
+page, maybe I can just
+go and grab a portion
 
 263
-00:13:42.480 --> 00:13:45.660
-access to chain MapReduce isn't
-really possible because you need
+00:15:22.550 --> 00:15:25.730
+of the page and insert
+that in and update the
 
 264
-00:13:45.660 --> 00:13:51.330
-a tabled skin style computation
-of, of that results. So
+00:15:25.730 --> 00:15:28.910
+URL. And then if somebody
+wants to come back directly
 
 265
-00:13:51.330 --> 00:13:52.860
-what types of it gives
-you is a list of
+00:15:28.910 --> 00:15:31.040
+to that URL, it will
+still work the way that
 
 266
-00:13:52.860 --> 00:13:55.200
-all the scores, but you
-need to sort them in
+00:15:31.040 --> 00:15:34.550
+it seems like. I think
+that a get hub was
 
 267
-00:13:55.200 --> 00:13:58.110
-whichever way you need on
-the client application, which may
+00:15:34.550 --> 00:15:36.890
+one of the first sites
+that I saw that did
 
 268
-00:13:58.110 --> 00:14:01.710
-seem very inflexible and very
-silly, but it allows countries
+00:15:36.890 --> 00:15:41.360
+this and are really beautiful.
+It's really transparent way. Whereas
 
 269
-00:14:01.710 --> 00:14:04.830
-to be, to be deployed
-on multiple machines and guarantee
+00:15:41.360 --> 00:15:44.480
+you are navigating through a
+repository, you would go from
 
 270
-00:14:04.850 --> 00:14:09.330
-fast response times at all
-times. Whereas with other systems,
+00:15:44.480 --> 00:15:47.480
+one folder to the next
+and the URL was changing
 
 271
-00:14:09.330 --> 00:14:10.980
-you will get into a
-situation. If there's a lot
+00:15:47.900 --> 00:15:49.700
+and the view of the
+folder was changing, but it
 
 272
-00:14:10.980 --> 00:14:13.440
-of data on that kind
-of query, you need to
+00:15:49.700 --> 00:15:51.770
+was not doing a full
+page. We load, it was
 
 273
-00:14:13.470 --> 00:14:16.260
-bump some buffer or run
-into some other, other like
+00:15:51.770 --> 00:15:54.500
+just pulling in the new
+middle part of the content
 
 274
-00:14:16.260 --> 00:14:19.110
-memory issues and country, but
-just give them it. Doesn't
+00:15:54.500 --> 00:15:58.670
+that you were looking at,
+right? However, if you didn't
 
 275
-00:14:19.110 --> 00:14:21.570
-give you that feature to
-like, should just shoot yourself
+00:15:58.670 --> 00:16:01.610
+support per state and pop
+state, then it would fall
 
 276
-00:14:21.570 --> 00:14:24.060
-in the foot. So in
-a, in a kind of
+00:16:01.610 --> 00:16:05.630
+back to doing a full
+page reload in older browsers.
 
 277
-00:14:24.060 --> 00:14:28.890
-a classic SQL database, you,
-you would find out later
+00:16:06.110 --> 00:16:08.420
+And that I think is
+the right way to build
 
 278
-00:14:29.160 --> 00:14:31.920
-that something was a table
-scan, you'd do some profiling
+00:16:08.420 --> 00:16:12.830
+things. As you make stuff
+work without the client side
 
 279
-00:14:31.920 --> 00:14:33.810
-and you'd go, wow. Why,
-why is that so slow?
+00:16:12.830 --> 00:16:16.540
+stuff. And then you look
+for opportunities to enhance. I
 
 280
-00:14:33.840 --> 00:14:36.360
-Oh, that turned in that
-query turned into a table
+00:16:16.540 --> 00:16:21.580
+feel though that, that like
+most modern web frameworks, don't
 
 281
-00:14:36.360 --> 00:14:38.430
-scan, and then you have
-to go off and figure
+00:16:21.580 --> 00:16:23.440
+give you that kind of
+stuff out of the box.
 
 282
-00:14:38.430 --> 00:14:40.920
-out why that reduced into
-a table scan. You're saying
+00:16:23.440 --> 00:16:25.480
+Like what you're describing feels
+like common sense, but it's
 
 283
-00:14:40.920 --> 00:14:43.470
-that couch CP simply won't
-allow you to, to get
+00:16:25.480 --> 00:16:30.670
+not easy. Common sense. Yeah.
+I guess that's the rub
 
 284
-00:14:43.470 --> 00:14:46.440
-yourself in that situation. Right?
-Yeah. I think we, for
+00:16:30.670 --> 00:16:33.070
+with common sense in general
+is that you'd like to
 
 285
-00:14:46.440 --> 00:14:48.330
-the most part, all the
-features in country B are
+00:16:33.070 --> 00:16:36.490
+say, well, yeah, that kind
+of makes sense. And then
 
 286
-00:14:48.330 --> 00:14:52.930
-built in a way that
-don't come haunting later. But
+00:16:36.490 --> 00:16:39.010
+you come back and say,
+but I have this thing
 
 287
-00:14:52.930 --> 00:14:55.720
-then that means that the
-logical operation may need to
+00:16:39.010 --> 00:16:41.500
+that I can push one
+button and deploy, and it
 
 288
-00:14:55.720 --> 00:14:59.260
-be split in its responsibilities
-between this, you know, some
+00:16:41.500 --> 00:16:44.050
+does a whole bunch of
+stuff for me. And that's
 
 289
-00:14:59.260 --> 00:15:02.050
-middleware that might do some
-additional filtering filtering or some
+00:16:44.050 --> 00:16:47.860
+where I think we fall
+into the JavaScript library culture
 
 290
-00:15:02.050 --> 00:15:07.060
-additional sorting. Yeah, that's correct.
-And we're kind of, we,
+00:16:47.860 --> 00:16:52.360
+a little bit too much
+where instead of saying, what's
 
 291
-00:15:07.060 --> 00:15:09.370
-we're very Heartline as part
-of the development team to
+00:16:52.360 --> 00:16:54.880
+the best way for me
+to do this, we end
 
 292
-00:15:09.370 --> 00:15:12.130
-not ever have features that
-are like that. We're kind
+00:16:54.880 --> 00:16:58.510
+up saying what libraries are
+already built. That kind of,
 
 293
-00:15:12.130 --> 00:15:15.850
-of like switching the whole
-like development code structure to
+00:16:58.510 --> 00:17:00.190
+sort of get me to
+where I want to go.
 
 294
-00:15:15.850 --> 00:15:18.310
-a like small core and
-many plugins kind of thing,
+00:17:00.550 --> 00:17:02.230
+And then what do I
+have to do to feed
 
 295
-00:15:19.510 --> 00:15:21.280
-because we, we found that
-people really want to have
+00:17:02.230 --> 00:17:04.810
+those libraries and make them
+happy so I can make
 
 296
-00:15:21.280 --> 00:15:24.880
-the problem solved rather than
-not being told they need
+00:17:04.810 --> 00:17:06.520
+my app work the way
+that I want it to.
 
 297
-00:15:24.880 --> 00:15:27.850
-to solve the problems differently.
-So maybe we'll have a,
+00:17:06.970 --> 00:17:11.010
+And I think that's unfortunate.
+I trace that back to,
 
 298
-00:15:27.880 --> 00:15:30.420
-we'll have a plugin that
-allows you to sort by
+00:17:11.410 --> 00:17:16.120
+to the, you know, rapid
+application development, rad movement, where
 
 299
-00:15:30.460 --> 00:15:33.910
-reduced value with the caveat
-that it may break later.
+00:17:16.120 --> 00:17:18.310
+it was like, well, you
+know, yeah, we want you
 
 300
-00:15:33.940 --> 00:15:36.490
-But if you make the
-conscious decision of like, okay,
+00:17:18.310 --> 00:17:21.010
+to know how to code,
+but we also want you
 
 301
-00:15:36.490 --> 00:15:38.380
-I'm using the feature now
-that I know might break,
+00:17:21.100 --> 00:17:24.370
+to get the shit done
+really quickly. Yeah. It doesn't,
 
 302
-00:15:38.410 --> 00:15:40.450
-but I'm never going to
-be in the position where
+00:17:25.720 --> 00:17:28.270
+Aren't you basically saying I'm
+putting words in your mouth,
 
 303
-00:15:40.450 --> 00:15:42.580
-it actually is going to
-break. I I'm able to
+00:17:28.300 --> 00:17:31.330
+but that a lot of
+people just really have no
 
 304
-00:15:42.580 --> 00:15:45.670
-use that. So we're kind
-of starting to turn it
+00:17:31.330 --> 00:17:35.200
+idea how the web is
+working. And that goes all
 
 305
-00:15:45.670 --> 00:15:48.940
-around on this one. No.
-If I was going to
+00:17:35.200 --> 00:17:37.900
+the way down to Java
+script. Like the J query
 
 306
-00:15:48.940 --> 00:15:52.690
-have some values that are,
-that are dates or something,
+00:17:37.900 --> 00:17:42.460
+is a nation of the
+developer. Yeah, absolutely. And I
 
 307
-00:15:52.690 --> 00:15:55.300
-that's a little bit more
-formal than a string, and
+00:17:42.460 --> 00:17:47.350
+think in jQuery is just
+one of the latest libraries
 
 308
-00:15:55.300 --> 00:15:58.780
-I've got a bunch of
-people, but instead of sending
+00:17:47.350 --> 00:17:49.620
+that has had that effect.
+And I think that's unfortunate
 
 309
-00:15:58.780 --> 00:16:00.400
-in birthday, let's say one
-of the records, I just
+00:17:49.620 --> 00:17:52.800
+because it's a really fantastic
+library, but for some reason,
 
 310
-00:16:00.400 --> 00:16:02.740
-put in some nonsense, Lang
-you know, something, that's not
+00:17:52.800 --> 00:17:55.440
+when people latch onto it
+and say, this is the
 
 311
-00:16:02.740 --> 00:16:06.610
-a date. So I've got
-birthdate equals Fu what is
+00:17:55.440 --> 00:17:57.840
+way that I need to
+work on the web, and
 
 312
-00:16:06.610 --> 00:16:08.350
-the database going to do
-with that? Is it going
+00:17:57.840 --> 00:18:00.480
+then don't look past it,
+they're doing their cells a
 
 313
-00:16:08.350 --> 00:16:09.520
-to reject it? Or is
-it just going to say,
+00:18:00.480 --> 00:18:03.930
+disservice. And I think in
+a certain vein backbone has
 
 314
-00:16:09.520 --> 00:16:13.210
-Hey, I'm, I'm relaxed. I'm
-chill. Yeah. I catch the
+00:18:03.930 --> 00:18:08.340
+become very similar where it
+did the same thing that
 
 315
-00:16:13.210 --> 00:16:15.940
-be is definitely relaxed. As
-soon as it's, as long
+00:18:08.340 --> 00:18:11.670
+jQuery did, which was take
+concepts that were hard to
 
 316
-00:16:15.940 --> 00:16:18.520
-as it's valid, Jason, it
-will just accept it and
+00:18:11.670 --> 00:18:14.790
+understand and boil them down
+and distill them in a
 
 317
-00:16:18.520 --> 00:16:21.700
-store it, stay. Now whether
-the data makes sense in
+00:18:14.790 --> 00:18:17.820
+way that many more people
+can now access that information.
 
 318
-00:16:21.700 --> 00:16:24.700
-your view definitions later, or
-like say you're accessing a
+00:18:18.330 --> 00:18:20.490
+The problem is then that
+I think that that is
 
 319
-00:16:24.700 --> 00:16:27.040
-field in a map function
-that doesn't exist that may
+00:18:20.490 --> 00:18:22.890
+the end all be all.
+And don't start to look
 
 320
-00:16:27.040 --> 00:16:31.780
-throw an error or your
-client side code Oreo, middleware,
+00:18:23.130 --> 00:18:27.080
+beyond that. Yeah. Yeah. I,
+I have, I've done a
 
 321
-00:16:31.810 --> 00:16:35.020
-Kurt, Lola expecting expect that
-kind of data is different
+00:18:27.080 --> 00:18:29.300
+number of talks and explained
+to people that the, the
 
 322
-00:16:35.020 --> 00:16:38.410
-matter, but then there's a
-mode. I'm not a mode,
+00:18:29.330 --> 00:18:34.180
+power of the abstraction is
+just so great that people
 
 323
-00:16:38.500 --> 00:16:40.300
-but a way in country
-to be, to enforce schema
+00:18:34.190 --> 00:18:36.320
+just don't understand how stuff
+works. They don't understand how
 
 324
-00:16:40.300 --> 00:16:43.390
-as well, which may sound
-counterintuitive is one of the
+00:18:36.320 --> 00:18:39.290
+their car works. And then
+when you say, well, you
 
 325
-00:16:44.320 --> 00:16:47.650
-whole idea of no SQL,
-nothing being schema lists at
+00:18:39.290 --> 00:18:41.540
+really got to think about
+internal combustion. It's a really
 
 326
-00:16:47.650 --> 00:16:51.850
-all. But you can tell
-the catcher if he wants
+00:18:41.540 --> 00:18:43.970
+fascinating topic. They're like, I
+don't really need to know
 
 327
-00:16:51.850 --> 00:16:53.980
-you to figure it out,
-what your data's going to
+00:18:43.970 --> 00:18:46.160
+about that. I like, I
+don't even have a key
 
 328
-00:16:53.980 --> 00:16:56.020
-look like to reject data
-that doesn't look like the
+00:18:46.160 --> 00:18:49.010
+in my car anymore. I
+just push a button right
 
 329
-00:16:56.020 --> 00:17:01.400
-one that you've defined. So
-it's kinda like my, I
+00:18:49.100 --> 00:18:51.980
+there. That's a sadness, I
+think. But at the same
 
 330
-00:17:01.450 --> 00:17:02.860
-love to think about it.
-I'd like to think about
+00:18:51.980 --> 00:18:54.140
+time, I don't know about
+you, but I am personally
 
 331
-00:17:02.860 --> 00:17:06.280
-it as like static typing
-versus dynamic typing, and then
+00:18:54.140 --> 00:18:59.930
+guilty of, of spackling over
+all the complexities of JavaScript
 
 332
-00:17:06.310 --> 00:17:08.380
-COVID should be also allows
-you to add type pins
+00:18:59.930 --> 00:19:01.970
+with jQuery. I probably spent
+a year and a half
 
 333
-00:17:08.380 --> 00:17:12.490
-basically. Right. Okay. That type
-annotations, like I think about
+00:19:02.150 --> 00:19:06.500
+ignoring JavaScript because jQuery effectively
+hid it from me where
 
 334
-00:17:13.030 --> 00:17:16.240
-when I explain TypeScript to
-people, they immediately kind of
+00:19:06.500 --> 00:19:09.620
+you enlightened enough to have
+noticed that that was happening.
 
 335
-00:17:16.240 --> 00:17:18.220
-recoil and fear, like what
-have you done to my
+00:19:09.620 --> 00:19:11.270
+Or were you guilty of
+that too? Did you spend
 
 336
-00:17:18.220 --> 00:17:20.740
-JavaScript? But then you explain,
-well, it's thrown away. It's
+00:19:11.270 --> 00:19:15.440
+some time hiding from JavaScript?
+Well, because I worked at
 
 337
-00:17:20.740 --> 00:17:23.150
-not really used. It's just
-there as a, as a,
+00:19:15.440 --> 00:19:19.280
+Yahoo for so long. I
+was much more about using
 
 338
-00:17:23.150 --> 00:17:27.490
-a sifting filter to prevent
-you from hurting yourself. And
+00:19:19.280 --> 00:19:24.830
+Yui than it was jQuery.
+Sure. And I actually was
 
 339
-00:17:27.490 --> 00:17:30.970
-then the only difference there
-is that, that, that filter
+00:19:24.830 --> 00:19:29.090
+very cognizant of finding the
+edges, like where Y you,
 
 340
-00:17:30.970 --> 00:17:33.400
-in veterinary, it's a heart
-filter. If you're a few
+00:19:29.090 --> 00:19:32.090
+I ended and then trying
+to extend that edge. So
 
 341
-00:17:33.400 --> 00:17:35.740
-stories trying to store some
-data that doesn't conform to
+00:19:32.090 --> 00:19:34.760
+I, I contributed a lot
+of code back where I
 
 342
-00:17:35.740 --> 00:17:39.400
-your specification will not get
-stories. So it's a filter
+00:19:34.760 --> 00:19:37.070
+realized that I had reached
+an edge and that was
 
 343
-00:17:39.400 --> 00:17:43.390
-on the way in. Yeah.
-And if you've already got
+00:19:37.070 --> 00:19:38.960
+kind of lousy. And I
+wanted to help fill that
 
 344
-00:17:43.420 --> 00:17:45.700
-data that's bad on the
-way in, and you want
+00:19:38.960 --> 00:19:43.760
+in. So I never really
+fell prey to that, but
 
 345
-00:17:45.700 --> 00:17:47.920
-to clean it up, you
-would want to pull it
+00:19:43.760 --> 00:19:48.200
+I knew other people who
+did, and I would also
 
 346
-00:17:47.920 --> 00:17:50.810
-back out and then put
-it back in again, The
+00:19:48.200 --> 00:19:52.280
+end up seeing this a
+lot in interviews would come
 
 347
-00:17:50.810 --> 00:17:53.000
-client will look at a
-rejection and say, Hey, this
+00:19:52.280 --> 00:19:54.230
+in and people, I would
+ask people how to do
 
 348
-00:17:53.000 --> 00:17:54.980
-doesn't look right. And then
-you can like, look at
+00:19:54.230 --> 00:19:56.840
+stuff. And they would immediately
+start saying, okay, jQuery. And
 
 349
-00:17:55.010 --> 00:17:58.100
-the definition and change, change,
-whatever needs And fix it.
+00:19:56.840 --> 00:19:59.990
+I said, okay, reality, check
+your Yahoo. And we don't
 
 350
-00:17:58.820 --> 00:18:02.360
-So it's no, the term
-knows SQL. It means that
+00:19:59.990 --> 00:20:04.490
+use jQuery. So how would
+you do this otherwise? And
 
 351
-00:18:02.360 --> 00:18:05.600
-it means like there is
-no structured query language. There
+00:20:04.490 --> 00:20:07.910
+then they wouldn't know. And
+that was frustrating for me.
 
 352
-00:18:05.600 --> 00:18:09.110
-is JavaScript. I'm using Jason
-for my storage, but is
+00:20:07.940 --> 00:20:10.250
+And for them, it was
+a little surprising, like, why
 
 353
-00:18:09.110 --> 00:18:11.360
-it really Jason, like on
-the disc or is it
+00:20:10.250 --> 00:20:13.400
+aren't you using jQuery? Isn't
+that like the standard toolkit
 
 354
-00:18:11.360 --> 00:18:16.340
-some magic sauce that is
-not Jason For all intents
+00:20:13.400 --> 00:20:17.330
+that everybody uses. And the
+fact is it's not, not
 
 355
-00:18:16.340 --> 00:18:19.730
-and purposes? It is Jason
-on the disc, but then
+00:20:17.330 --> 00:20:20.360
+everybody uses jQuery, even though
+a lot of people use
 
 356
-00:18:19.730 --> 00:18:23.060
-it is the earning representation
-of Jason cause casually he's
+00:20:20.360 --> 00:20:23.960
+jQuery 2% or something. I
+mean, it's a pillar reality
 
 357
-00:18:23.060 --> 00:18:25.310
-written in our line and
-we're doing a type conversion
+00:20:23.960 --> 00:20:27.260
+at least. Oh yeah. There's
+a lot of people that
 
 358
-00:18:25.310 --> 00:18:28.250
-internally for various reasons that
-pollute me at the moment.
+00:20:27.260 --> 00:20:30.830
+use it, but are there
+people who know what to
 
 359
-00:18:28.250 --> 00:18:33.170
-And we make, get rid
-of that eventually. But we're
+00:20:30.830 --> 00:20:33.560
+do when they reach the
+edges of it? And unfortunately,
 
 360
-00:18:33.170 --> 00:18:35.390
-storing the raw data just
-on, on disc as this.
+00:20:33.860 --> 00:20:37.670
+well, I think both fortunately,
+and unfortunately jQuery has a
 
 361
-00:18:35.990 --> 00:18:39.320
-So if I have a
-database, a couch DB database
+00:20:37.670 --> 00:20:40.580
+ton of plugins. So people
+tend to do is when
 
 362
-00:18:39.320 --> 00:18:41.390
-of all the people in
-the world, which is going
+00:20:40.580 --> 00:20:42.860
+they reach the edge of
+J query, they go and
 
 363
-00:18:41.390 --> 00:18:43.460
-to be quite large, let's
-say it takes, you know,
+00:20:43.040 --> 00:20:48.190
+they type into the Google
+jQuery, plugin, random thing that
 
 364
-00:18:43.490 --> 00:18:46.970
-10 computers. Am I chopping
-it up? Like the yellow
+00:20:48.190 --> 00:20:50.560
+I'm looking for. And they
+find 12 of them. They
 
 365
-00:18:46.970 --> 00:18:50.000
-pages where I have a
-through F on this computer
+00:20:50.570 --> 00:20:53.080
+may grab one and start
+using that and don't even
 
 366
-00:18:50.000 --> 00:18:52.460
-and L through Z on
-that computer, or how is
+00:20:53.080 --> 00:20:55.750
+stop and think like, Oh,
+you know, maybe I don't
 
 367
-00:18:52.460 --> 00:18:55.640
-that across multiple? How do
-I do that? How do
+00:20:55.750 --> 00:20:58.630
+even need a plugin for
+that. One of the things
 
 368
-00:18:55.640 --> 00:18:59.300
-I do something so big?
-So again, it depends events.
+00:20:58.630 --> 00:21:01.720
+that I've been doing at
+box has actually been to
 
 369
-00:19:00.980 --> 00:19:02.630
-I'd also like to think
-of Crutchfield as like a
+00:21:01.720 --> 00:21:06.580
+teach people vanilla Java script,
+say, okay, so is, yes,
 
 370
-00:19:02.630 --> 00:19:05.780
-toolkit to build your own
-distributed database, which is only
+00:21:06.610 --> 00:21:11.530
+there's dollar sign.is function, but
+do you know that with
 
 371
-00:19:05.780 --> 00:19:09.320
-interesting to people who like
-building distributed databases. So you
+00:21:12.130 --> 00:21:14.590
+almost the same number of
+characters, you can do a
 
 372
-00:19:09.320 --> 00:19:11.510
-can, you can think up
-your own petitioning scheme if
+00:21:14.590 --> 00:21:19.990
+regular JavaScript thing and it's
+faster. And then you're actually
 
 373
-00:19:11.510 --> 00:19:14.750
-you want, like by my
-name and then your, your
+00:21:19.990 --> 00:21:24.790
+learning something new. And it's
+been very interesting for me
 
 374
-00:19:14.750 --> 00:19:16.820
-box for the letter S
-needs to be really big
+00:21:24.790 --> 00:21:27.550
+to go through that process
+with them because some of
 
 375
-00:19:16.820 --> 00:19:23.420
-in certain groups of people.
-But there, there, the other
+00:21:27.550 --> 00:21:30.250
+them will come back to
+me. And then like, you
 
 376
-00:19:23.420 --> 00:19:26.270
-way around is just lending
-lending software to do the
+00:21:30.250 --> 00:21:33.250
+know, I'm just now starting
+to realize that I don't
 
 377
-00:19:26.270 --> 00:19:30.800
-job. There is a quite
-famous dynamo paper by Amazon.
+00:21:33.250 --> 00:21:36.340
+really understand JavaScript. Like I
+feel like I get jQuery,
 
 378
-00:19:30.920 --> 00:19:33.680
-And there is an implementation
-off that paper as kind
+00:21:36.850 --> 00:21:39.760
+but I'm now realizing that
+there's a lot more to
 
 379
-00:19:33.680 --> 00:19:36.320
-of an add on to
-couch DB that allows you
+00:21:39.760 --> 00:21:43.000
+JavaScript and just what jQuery
+does. Yeah. And it's a
 
 380
-00:19:36.320 --> 00:19:39.320
-to just specify, I'll say
-like this time computers now
+00:21:43.000 --> 00:21:46.090
+harsh reality, but I feel
+like it's part of my
 
 381
-00:19:39.320 --> 00:19:41.210
-behave like the single couch
-TV, and we'll do the
+00:21:46.090 --> 00:21:48.670
+job to prepare them for
+the harsh, cruel world that
 
 382
-00:19:41.210 --> 00:19:45.560
-partitioning for you. And we're
-in the process of merging
+00:21:48.670 --> 00:21:51.160
+is out there where they
+might not always be able
 
 383
-00:19:45.560 --> 00:19:48.500
-that plugin back into couch
-to be proper towards the
+00:21:51.160 --> 00:21:53.590
+to rely on jQuery. And
+I want them to know
 
 384
-00:19:48.500 --> 00:19:50.180
-end of the year, I
-guess, where I'll be done
+00:21:54.190 --> 00:21:58.150
+what's going on underneath because
+I can take somebody who
 
 385
-00:19:50.180 --> 00:19:51.770
-with that and have that
-release. So you don't actually
+00:21:58.150 --> 00:22:00.910
+knows JavaScript really well and
+teach them how to use
 
 386
-00:19:51.770 --> 00:19:53.450
-have to worry about anything.
-You're just stuck at another
+00:22:00.910 --> 00:22:03.580
+a library. But it's very
+hard to take somebody who
 
 387
-00:19:53.450 --> 00:19:57.230
-machine. And then things go.
-So then if who am
+00:22:03.580 --> 00:22:05.830
+only knows how to use
+a library and then go
 
 388
-00:19:57.230 --> 00:20:00.110
-I asking, am I asking
-some load balanced endpoint over
+00:22:05.830 --> 00:22:08.560
+down and teach them the
+Java script that's running underneath.
 
 389
-00:20:00.110 --> 00:20:03.260
-HTTP? Give me all of
-the people who are over
+00:22:08.770 --> 00:22:11.970
+Yeah. Yeah. The really good
+parts in the middle of
 
 390
-00:20:03.260 --> 00:20:06.380
-20 years old In that
-case, all the nodes in
+00:22:11.970 --> 00:22:15.870
+your talk. You talked about
+the four JavaScript load times,
 
 391
-00:20:06.380 --> 00:20:09.680
-that database will act as
-a proxy. So if you
+00:22:15.930 --> 00:22:18.240
+and I showed a couple
+of people here talk and
 
 392
-00:20:09.740 --> 00:20:11.630
-can ask any one node
-in the K, give me,
+00:22:18.270 --> 00:22:22.620
+almost universally the response to
+that particular slide was There's
 
 393
-00:20:11.630 --> 00:20:13.640
-give me that record. And
-if it is that record
+00:22:22.620 --> 00:22:26.940
+four, Four different times when
+JavaScript is loaded for different
 
 394
-00:20:13.640 --> 00:20:15.440
-locally, it'll just return it.
-And if it doesn't have
+00:22:26.940 --> 00:22:29.250
+contexts within which you need
+to think about is this
 
 395
-00:20:15.440 --> 00:20:17.360
-a proxy, the request to
-the note that does have
+00:22:29.250 --> 00:22:31.980
+the right time for my
+functionality to jump in? Can
 
 396
-00:20:17.360 --> 00:20:19.610
-it, because every, every node
-knows where every other key
+00:22:31.980 --> 00:22:35.010
+you maybe talk a little
+about that? Those, yeah. The
 
 397
-00:20:19.610 --> 00:20:24.260
-lives. Ah, interesting. Okay. So
-then how does that relate
+00:22:35.010 --> 00:22:37.980
+four JavaScript load times is
+something I came up with
 
 398
-00:20:24.260 --> 00:20:26.810
-to something like a Reddis
-or a memcache D it
+00:22:37.980 --> 00:22:42.570
+while I was consulting. And
+I use that to help
 
 399
-00:20:26.810 --> 00:20:30.050
-feels like we're blurring the
-lines a little bit. So
+00:22:42.930 --> 00:22:45.990
+clients figure out when they
+wanted to load certain types
 
 400
-00:20:30.050 --> 00:20:35.420
-for, for mem cache, D
-both resume Castillo, fundamentally single
+00:22:45.990 --> 00:22:48.930
+of JavaScript, because most of
+them, when I would go
 
 401
-00:20:35.480 --> 00:20:40.640
-single machine databases are programs.
-And then there's some like
+00:22:48.930 --> 00:22:53.040
+in, we're loading everything all
+at once. Sometimes at the
 
 402
-00:20:40.640 --> 00:20:44.030
-best practices around memcache D
-how to like, get to
+00:22:53.040 --> 00:22:54.870
+beginning of the page, sometimes
+at the end of the
 
 403
-00:20:44.060 --> 00:20:47.440
-sharding, like Festus, like every
-try and find has the
+00:22:54.870 --> 00:22:57.750
+page, and I would walk
+them through this process of
 
 404
-00:20:47.440 --> 00:20:50.590
-sharp key kind of thing.
-So you can have three
+00:22:57.750 --> 00:23:01.590
+figuring out what do you
+actually need? And at what
 
 405
-00:20:50.590 --> 00:20:52.330
-machines that every amount of
-cash. And then whenever you
+00:23:01.590 --> 00:23:03.930
+point in time do you
+need it for the user
 
 406
-00:20:52.330 --> 00:20:55.480
-have to add a mem
-cash machine, you'd have to
+00:23:03.930 --> 00:23:07.890
+to be successful in whatever
+they're trying to do? And
 
 407
-00:20:55.660 --> 00:20:58.060
-rechart everything, because you need
-a new key that distributes
+00:23:07.890 --> 00:23:11.220
+so the four JavaScript load
+times are in the head
 
 408
-00:20:58.060 --> 00:20:59.500
-it over four and so
-on. So that's a bit
+00:23:12.030 --> 00:23:15.510
+literally inside of the head
+tag and that you don't
 
 409
-00:20:59.500 --> 00:21:02.800
-annoying. Red is, are working
-on a cluster feature that
+00:23:15.510 --> 00:23:17.490
+want to put a lot
+of JavaScript in there. It's
 
 410
-00:21:02.800 --> 00:21:10.660
-I haven't looked into very
-detailed yet. So the, the
+00:23:17.490 --> 00:23:22.740
+usually reserved for analytics, Google
+analytics recommends that you put
 
 411
-00:21:10.660 --> 00:21:13.090
-storage engine took coach to
-be that is fundamentally single,
+00:23:22.740 --> 00:23:26.790
+their script in there. A
+lot of other analytics libraries
 
 412
-00:21:13.090 --> 00:21:15.910
-sober, but then the layer
-on top can do the
+00:23:26.820 --> 00:23:30.540
+that rely on JavaScript on
+the client side require you
 
 413
-00:21:16.070 --> 00:21:24.300
-distribution for you. Okay. And
-were trying to think about
+00:23:30.540 --> 00:23:34.890
+to put your JavaScript file
+for them in the head
 
 414
-00:21:24.360 --> 00:21:28.140
-how I want to phrase
-this. Do, do you think
+00:23:34.890 --> 00:23:37.590
+as well. And so a
+lot of times you just
 
 415
-00:21:28.140 --> 00:21:31.680
-that there is increased legitimacy
-in the, in the kind
+00:23:37.590 --> 00:23:40.260
+can't work around that. If
+you're beholden to these analytics
 
 416
-00:21:31.680 --> 00:21:34.410
-of the classic enterprise of
-no SQL because of the
+00:23:40.260 --> 00:23:43.110
+tools and say, fine, you
+put those in the head,
 
 417
-00:21:34.410 --> 00:21:37.890
-success of things like, like
-Netflix or, I mean, is
+00:23:43.410 --> 00:23:45.500
+but you try not to
+put too much in there.
 
 418
-00:21:37.890 --> 00:21:42.960
-couch to relaxed for a
-big enterprise, like some boring
+00:23:46.610 --> 00:23:50.450
+The next time is just
+before the closing body tag.
 
 419
-00:21:42.960 --> 00:21:47.280
-insurance company somewhere. So COVID
-is used in the enterprise
+00:23:50.480 --> 00:23:53.570
+That's the second one. And
+that I think is where
 
 420
-00:21:47.340 --> 00:21:50.340
-and boring media companies, at
-least that I know of,
+00:23:53.570 --> 00:23:57.860
+most people end up putting
+their JavaScript now, largely thanks
 
 421
-00:21:50.400 --> 00:21:52.080
-like the BBC is using
-it. And one of the
+00:23:57.860 --> 00:24:00.860
+to Steve Souders and the
+work that he did on
 
 422
-00:21:52.080 --> 00:21:54.270
-bigger German broad cultures is
-using it and a bunch
+00:24:00.860 --> 00:24:04.640
+high performance websites. And saying
+that if you can put
 
 423
-00:21:54.270 --> 00:21:56.850
-of others. So there's definitely
-a big names using the
+00:24:04.640 --> 00:24:07.100
+your JavaScript at the bottom,
+you'll allow the browser to
 
 424
-00:21:56.850 --> 00:22:03.270
-software. And I think the
-question in here is, does,
+00:24:07.100 --> 00:24:10.370
+render what has come in
+on the page already. So
 
 425
-00:22:03.330 --> 00:22:06.360
-does it solve a particular
-problem better than existing solutions?
+00:24:10.370 --> 00:24:13.970
+the user isn't looking at
+a blank screen and I'm
 
 426
-00:22:06.390 --> 00:22:08.700
-And does it have a
-low risk profile? That's the
+00:24:14.210 --> 00:24:17.690
+hopeful that many people are
+actually just doing their JavaScript
 
 427
-00:22:08.700 --> 00:22:12.630
-biggest thing for the enterprise?
-I guess coach to me
+00:24:17.690 --> 00:24:22.970
+there and that's fine. And
+not too controversial. The third
 
 428
-00:22:12.630 --> 00:22:15.540
-in particular is an Apache
-project, which a lot of
+00:24:22.970 --> 00:24:28.100
+loading time is after onload
+the things that you can
 
 429
-00:22:15.540 --> 00:22:17.370
-people think of kind of
-as a place where open
+00:24:28.250 --> 00:24:32.990
+defer until after onload is
+basically anything that is sort
 
 430
-00:22:17.370 --> 00:22:20.850
-source projects go to die,
-but that's kind of not
+00:24:32.990 --> 00:24:36.830
+of a secondary or tertiary
+action that the user might
 
 431
-00:22:20.850 --> 00:22:23.010
-the right thing to think
-about it. I think of
+00:24:36.830 --> 00:24:39.950
+do on a site. And
+the example that I use
 
 432
-00:22:23.010 --> 00:22:25.350
-it as a place where
-they go for legitimacy. Yeah,
+00:24:39.950 --> 00:24:43.370
+the talk was that the
+Amazon product page is that
 
 433
-00:22:25.380 --> 00:22:30.950
-exactly. That's more, more like
-it, the Apache puts, puts
+00:24:43.370 --> 00:24:45.650
+when you go to an
+Amazon product page, chances are
 
 434
-00:22:30.950 --> 00:22:34.020
-us the community around the
-project first and visibility into
+00:24:45.650 --> 00:24:49.730
+you came from a search.
+So you're not likely to
 
 435
-00:22:34.020 --> 00:22:39.570
-that community first. So a
-big enterprise we'll know way
+00:24:49.730 --> 00:24:52.880
+be doing another search immediately
+from that product page, because
 
 436
-00:22:39.570 --> 00:22:42.090
-in advance. If something big
-disruptive is going to happen
+00:24:52.880 --> 00:24:55.310
+you just did that. What
+you're really doing is trying
 
 437
-00:22:42.090 --> 00:22:44.190
-for the project, if development
-is going to slow down
+00:24:55.310 --> 00:24:57.740
+to figure out is this
+the thing that you want
 
 438
-00:22:44.190 --> 00:22:46.230
-or a big changes are
-coming, there's, everything's in the
+00:24:57.740 --> 00:24:59.900
+or not? So you scroll
+up and down and you
 
 439
-00:22:46.230 --> 00:22:48.240
-public and guaranteed to be
-in the public. There's not
+00:24:59.900 --> 00:25:03.050
+read the description and you
+decide, yeah, that's really what
 
 440
-00:22:48.240 --> 00:22:50.820
-one single company that ha
-that is behind the development
+00:25:03.050 --> 00:25:06.200
+I want you click add
+to cart. That's really important.
 
 441
-00:22:50.820 --> 00:22:53.640
-that then suddenly says, Hey,
-we're doing something different today.
+00:25:06.560 --> 00:25:10.490
+That should probably be there
+before page load finishes. So
 
 442
-00:22:53.640 --> 00:22:56.580
-Or version four breaks all
-backwards compatibility. It could look
+00:25:10.490 --> 00:25:12.560
+when you say, be there,
+you mean be available and
 
 443
-00:22:56.610 --> 00:22:59.520
-and supports for the other
-one stops right now. That
+00:25:12.560 --> 00:25:16.070
+ready to take user action.
+Yep. Ready to execute. Right.
 
 444
-00:22:59.520 --> 00:23:04.210
-kind of thing that said
-though, the proper support and
+00:25:16.070 --> 00:25:20.450
+Executed. Okay. And now that
+you've taken care of the
 
 445
-00:23:05.970 --> 00:23:08.400
-the support contracts and services
-kind of thing needs to
+00:25:20.450 --> 00:25:23.660
+most important thing that the
+user does on that page,
 
 446
-00:23:08.400 --> 00:23:11.850
-be built on top of
-that by other people. So
+00:25:24.860 --> 00:25:27.650
+now you have the opportunity
+to defer the rest of
 
 447
-00:23:11.850 --> 00:23:14.310
-there, there isn't that package
-that you can buy as
+00:25:27.650 --> 00:25:30.710
+the JavaScript until later. And
+so you may look around
 
 448
-00:23:14.310 --> 00:23:18.810
-an enterprise, but there's some
-folks that, that provide that
+00:25:30.710 --> 00:25:33.110
+that page and say, well,
+what are like the secondary
 
 449
-00:23:18.810 --> 00:23:22.980
-service. So let's talk about,
-about performance. One of the
+00:25:33.110 --> 00:25:36.920
+and the tertiary things that
+people would do? So maybe
 
 450
-00:23:22.980 --> 00:23:26.430
-things that it's kind of
-touted as is it'll slow
+00:25:36.920 --> 00:25:40.940
+they would next do another
+search because they realized that
 
 451
-00:23:26.430 --> 00:23:28.410
-down, but it won't fall
-over. Like, you know, if
+00:25:40.940 --> 00:25:44.330
+the search they put in
+wasn't specific enough. So maybe
 
 452
-00:23:28.410 --> 00:23:31.380
-you start throwing a lot
-of work at couch DB,
+00:25:44.330 --> 00:25:48.170
+you just start to load
+in the autocomplete or the
 
 453
-00:23:31.380 --> 00:23:33.360
-it will just maybe take
-a little bit longer, but
+00:25:48.170 --> 00:25:51.590
+type of head functionality after
+on load, because you know,
 
 454
-00:23:33.360 --> 00:23:36.770
-it, it doesn't tip over.
-Is that true? Yeah. That's
+00:25:51.590 --> 00:25:53.960
+they're not going to do
+it immediately, but it may
 
 455
-00:23:36.870 --> 00:23:39.510
-about it. My friend max
-often phrases it like you
+00:25:53.960 --> 00:25:57.050
+be the second or third
+thing that they do. And
 
 456
-00:23:39.720 --> 00:23:42.720
-pay all the hurt with
-cash should be upfront about
+00:25:57.350 --> 00:26:02.720
+maybe whatever the JavaScript is
+that allows you to do
 
 457
-00:23:42.720 --> 00:23:45.210
-that. It never gets any
-worse. Whereas with other databases,
+00:26:02.720 --> 00:26:05.420
+that. Zoom in on the
+book, cover or show you
 
 458
-00:23:45.230 --> 00:23:46.820
-they are really fast in
-the beginning and then they
+00:26:05.870 --> 00:26:09.050
+inside pages of the book
+cover is something that people
 
 459
-00:23:46.820 --> 00:23:50.750
-get slower over time. Kind
-of like they were basically
+00:26:09.050 --> 00:26:11.060
+do as a second or
+third option on there. And
 
 460
-00:23:50.810 --> 00:23:54.440
-operating at worst case scenario
-at all times. Why is
+00:26:11.060 --> 00:26:13.040
+maybe you want that to
+be there as well. So
 
 461
-00:23:54.440 --> 00:23:57.860
-that? Is that because of
-Earl Lang just does well
+00:26:13.040 --> 00:26:18.200
+you make sure that those
+are loaded after the initial
 
 462
-00:23:57.860 --> 00:24:02.810
-on multiple cores, there's multiple,
-multiple things that attribute to
+00:26:18.200 --> 00:26:20.660
+page load is done. So
+essentially you're kicking these off
 
 463
-00:24:02.810 --> 00:24:05.060
-it, or I think that's
-definitely one part of it.
+00:26:20.690 --> 00:26:26.960
+during window dot onload the
+fourth JavaScript loading time is
 
 464
-00:24:05.150 --> 00:24:08.840
-It does it doesn't optimize
-for the single request performance,
+00:26:26.960 --> 00:26:30.740
+on demand. And that's basically
+the user is doing something
 
 465
-00:24:08.840 --> 00:24:12.920
-like I mentioned earlier, but
-for overall system throughput and
+00:26:30.740 --> 00:26:36.080
+that signifies to you that
+an action is imminent, or
 
 466
-00:24:12.920 --> 00:24:15.710
-making sure you have always
-like saturated IO and be
+00:26:36.080 --> 00:26:39.770
+at least there's a high
+percentage that that is going
 
 467
-00:24:15.710 --> 00:24:18.410
-able to accept all the
-incoming requests as sockets and
+00:26:39.770 --> 00:26:43.920
+to happen. And that on
+the Amazon product page is
 
 468
-00:24:18.410 --> 00:24:20.840
-that kind of stuff. And
-if everything takes a little
+00:26:43.950 --> 00:26:48.990
+perhaps a wishlist. Like when
+I gave this talk a
 
 469
-00:24:20.840 --> 00:24:23.330
-longer, that's no problem. But
-then if there's like a
+00:26:48.990 --> 00:26:50.910
+couple of weeks ago, people
+in the audience actually said,
 
 470
-00:24:23.330 --> 00:24:26.300
-spike of 10,000 requests coming
-in, it'll just handle that
+00:26:50.910 --> 00:26:53.370
+but I'll use the wishlist
+all the time. But for
 
 471
-00:24:26.300 --> 00:24:30.140
-gracefully. And it's really hard
-to build that into other
+00:26:53.370 --> 00:26:55.410
+me, I don't use it
+all that often. And so
 
 472
-00:24:30.140 --> 00:24:34.630
-languages to deal with these
-spikes really easily. Don't big
+00:26:55.410 --> 00:27:00.300
+maybe I'm representative of most
+people, maybe they are, but
 
 473
-00:24:34.630 --> 00:24:37.600
-databases fall over when it
-comes to things like contention
+00:27:00.300 --> 00:27:03.240
+let's just say that I
+am. And maybe it just
 
 474
-00:24:37.600 --> 00:24:39.400
-where, you know, everyone's trying
-to get to the same
+00:27:03.240 --> 00:27:07.650
+makes sense that when I'm
+within a hundred pixels of
 
 475
-00:24:39.400 --> 00:24:42.130
-page at the same time.
-And that's, that's a computer
+00:27:08.040 --> 00:27:10.740
+where my mouse cursor is
+within a hundred pixels of
 
 476
-00:24:42.130 --> 00:24:46.420
-science problem, not necessarily a
-language or programming language problem.
+00:27:10.740 --> 00:27:13.080
+that button that you go
+out and you pull in
 
 477
-00:24:46.480 --> 00:24:50.020
-Why has custody be different?
-Well, so in the, in
+00:27:13.080 --> 00:27:17.430
+the Java script that makes
+that button work. And, you
 
 478
-00:24:50.020 --> 00:24:52.390
-the getting to the same
-record kind of scenario would
+00:27:17.430 --> 00:27:20.070
+know, on demand is basically
+a wide open area. You
 
 479
-00:24:52.390 --> 00:24:54.610
-do the proper computer science
-thing and then leave it
+00:27:20.070 --> 00:27:24.120
+can use any trigger that
+you want to start loading
 
 480
-00:24:54.610 --> 00:24:56.230
-to a caching system that
-will be in front of
+00:27:24.120 --> 00:27:26.010
+stuff in. So if you
+want to go back to
 
 481
-00:24:56.230 --> 00:24:58.630
-catcher, which is one of
-the beauties of using HTTP
+00:27:26.010 --> 00:27:29.400
+the type of head or
+auto-complete, maybe you decide that
 
 482
-00:24:58.630 --> 00:25:00.730
-as a protocol. We can
-just use any of the
+00:27:29.400 --> 00:27:31.770
+that's actually like the fourth
+or fifth thing that people
 
 483
-00:25:01.660 --> 00:25:03.460
-proxies that are available for
-that. And they all work
+00:27:31.770 --> 00:27:35.100
+do. And so you want
+to wait until somebody sets
 
 484
-00:25:03.460 --> 00:25:07.750
-really nicely. So we just
-don't solve the problem. No,
+00:27:35.100 --> 00:27:37.950
+focus into the search box
+before you start to download
 
 485
-00:25:07.750 --> 00:25:10.570
-that's interesting. Let me interrupt
-you before you forget before
+00:27:37.950 --> 00:27:42.330
+the JavaScript to pull in
+all of those suggestions, it's
 
 486
-00:25:10.570 --> 00:25:13.600
-I forget. So you're saying
-that because HTTP is the
+00:27:42.330 --> 00:27:45.030
+completely up to you, but
+it does require that you
 
 487
-00:25:13.600 --> 00:25:17.020
-transport, you, you're not just
-using the URL style, you're
+00:27:45.030 --> 00:27:48.210
+understand what your users are
+doing when they come to
 
 488
-00:25:17.020 --> 00:25:20.290
-not just using HTTP verbs,
-but other things he tags
+00:27:48.210 --> 00:27:52.530
+that page. You can't actually
+do this until you have
 
 489
-00:25:20.290 --> 00:25:22.960
-and not modified and things
-like that. That's meaningful. Well,
+00:27:52.530 --> 00:27:55.680
+the analytics and the data
+that says, I know these
 
 490
-00:25:23.110 --> 00:25:26.530
-yeah, that's correct. Okay. That's
-a really important point for
+00:27:55.680 --> 00:27:57.300
+are the things that people
+need to do when they
 
 491
-00:25:26.530 --> 00:25:30.070
-people to understand. Yeah. And
-there's one of the neat
+00:27:57.300 --> 00:28:01.200
+come, or the people do
+soon after coming and then
 
 492
-00:25:30.100 --> 00:25:32.560
-neater features of catch TV
-as a, as a real
+00:28:01.260 --> 00:28:04.460
+organizing your Java script based
+on that. So it sounds
 
 493
-00:25:32.560 --> 00:25:35.200
-time feed of stuff that
-happens in the database. So
+00:28:04.460 --> 00:28:08.840
+like there's just this, just
+the knowledge that you could
 
 494
-00:25:35.200 --> 00:25:38.410
-we can have like a
-live update of Cassius invalidate
+00:28:08.840 --> 00:28:10.940
+do that is like really
+powerful. I mean, I think
 
 495
-00:25:38.410 --> 00:25:41.080
-that key right now, because
-it's not valid anymore. So
+00:28:10.940 --> 00:28:13.040
+there's probably people who are
+listening her going, gosh, you
 
 496
-00:25:41.080 --> 00:25:44.140
-we can for hot data,
-we can preemptively updated for
+00:28:13.040 --> 00:28:16.760
+know, we do load 4k
+of JavaScript for our reviews.
 
 497
-00:25:44.140 --> 00:25:46.270
-the cash, or just at
-least tell the calf she
+00:28:16.760 --> 00:28:20.330
+I never even thought about
+events that I could use
 
 498
-00:25:46.270 --> 00:25:52.600
-can evict that particular keynote.
-What about like big bulk
+00:28:20.330 --> 00:28:23.810
+to kick to kick that
+off. And you're saying measure
 
 499
-00:25:52.600 --> 00:25:55.090
-document inserts? Is this something
-that's just for little records
+00:28:23.810 --> 00:28:25.490
+that to make sure, like
+there would be a micro
 
 500
-00:25:55.090 --> 00:25:56.560
-and stuff, or if I
-was going to go and
+00:28:25.490 --> 00:28:28.400
+optimization if you had no
+idea whether or not this
 
 501
-00:25:56.890 --> 00:26:00.130
-do, you know, big bunches
-of information, or maybe throw
+00:28:28.400 --> 00:28:30.560
+was used by one and
+a hundred users or 99
 
 502
-00:26:00.130 --> 00:26:02.740
-in some binaries and pictures
-and some PDFs and things
+00:28:30.560 --> 00:28:34.760
+out of a hundred users.
+Exactly. Okay. That's interesting. You
 
 503
-00:26:02.740 --> 00:26:06.130
-like that. All right, cool.
-That's two questions. One, the
+00:28:34.760 --> 00:28:36.620
+know, this seems like you
+could do an entire talk
 
 504
-00:26:06.160 --> 00:26:09.130
-bulk insertion is a feature
-we have just like a
+00:28:36.740 --> 00:28:39.290
+just about these kinds of
+optimizations and help people make
 
 505
-00:26:09.130 --> 00:26:12.370
-post endpoint that just takes
-a specific piece structured, Jason,
+00:28:39.290 --> 00:28:44.000
+that decision about, is this
+a premature or micro optimization,
 
 506
-00:26:12.430 --> 00:26:14.980
-that isn't standard or anything,
-but it's very trivial. It's
+00:28:44.000 --> 00:28:47.150
+like, is, is 4k a
+JavaScript worth it? Is that,
 
 507
-00:26:14.980 --> 00:26:17.800
-just a list of documents
-basically. And you can throw
+00:28:47.150 --> 00:28:48.890
+that big of a deal?
+I mean, how, how much
 
 508
-00:26:17.800 --> 00:26:19.240
-it at couch to me
-and we'll just start in
+00:28:48.890 --> 00:28:51.260
+is too much, how much
+is too little, rather if
 
 509
-00:26:19.240 --> 00:26:21.580
-bulk. And then we'll be
-faster than like starting every
+00:28:51.260 --> 00:28:54.080
+I'm going to go on
+a load functionality like that,
 
 510
-00:26:22.120 --> 00:26:28.030
-one, every single one on
-their own. And the other
+00:28:54.080 --> 00:28:56.630
+like the product zoom, when
+it seems like significant, that
 
 511
-00:26:28.030 --> 00:26:31.360
-question was binary data catch
-to be, has this idea
+00:28:56.630 --> 00:28:59.960
+could be quite a bit
+of JavaScript. Yeah. I think
 
 512
-00:26:31.360 --> 00:26:34.270
-of attachments. And if you've
-ever done that attachments and
+00:28:59.960 --> 00:29:03.950
+it's the typical death by
+a thousand paper cuts scenario
 
 513
-00:26:34.270 --> 00:26:36.640
-email, which everybody has, you
-already know how it works.
+00:29:04.460 --> 00:29:07.190
+is that you look at
+any one thing and you
 
 514
-00:26:36.640 --> 00:26:39.520
-And so the list of
-keys or key value pairs
+00:29:07.190 --> 00:29:09.680
+say, ah, that's probably not
+going to make a big
 
 515
-00:26:40.440 --> 00:26:43.110
-attached to a document that
-is just a name and
+00:29:09.680 --> 00:29:13.400
+enough difference. But if you
+start to find a bunch
 
 516
-00:26:43.110 --> 00:26:46.620
-some typing involved, and you
-can have as many of
+00:29:13.400 --> 00:29:16.580
+of those small things altogether,
+like maybe there are 20
 
 517
-00:26:46.620 --> 00:26:51.800
-you as you, as you
-like, There's, there's some other
+00:29:16.580 --> 00:29:20.120
+things on your page that
+are each 4k that only
 
 518
-00:26:51.800 --> 00:26:54.530
-databases in the world that
-also have the name couch.
+00:29:20.120 --> 00:29:23.210
+like 10% of your users
+ever use, Hey, well, that's
 
 519
-00:26:55.160 --> 00:26:59.060
-And I don't understand you.
-There was, there was one
+00:29:23.210 --> 00:29:27.470
+ADK that you can trim
+off by choosing to load
 
 520
-00:26:59.060 --> 00:27:01.970
-couch DB, and then there's
-couch base. These are different
+00:29:27.470 --> 00:29:31.250
+those on demand or even
+just after onload, if you
 
 521
-00:27:01.970 --> 00:27:04.550
-things. Is that Right? That
-is correct. And it's a
+00:29:31.250 --> 00:29:34.520
+don't want to go that
+far. And so I have,
 
 522
-00:27:04.550 --> 00:27:10.760
-bit of an unfortunate history,
-but let me explain. Couchbase
+00:29:34.690 --> 00:29:37.520
+I really found when I
+was working with companies that
 
 523
-00:27:10.940 --> 00:27:14.270
-came out of a merger
-for a company that was
+00:29:37.520 --> 00:29:41.380
+there was one significant thing
+that was a problem. It
 
 524
-00:27:14.270 --> 00:27:17.420
-doing catch to be development
-called <inaudible> and the company
+00:29:41.380 --> 00:29:45.250
+was usually a sequence of
+several things that when you
 
 525
-00:27:17.420 --> 00:27:21.350
-that was doing memcache Membase,
-he kind of things called
+00:29:45.250 --> 00:29:49.090
+add them together, ended up
+being the real problem. And
 
 526
-00:27:21.350 --> 00:27:23.840
-Membase and they merged into
-a thing called church base
+00:29:49.090 --> 00:29:51.940
+I think you're right. You
+could probably do an entire
 
 527
-00:27:23.840 --> 00:27:26.930
-and the name of the
-company and the, the product
+00:29:51.940 --> 00:29:54.820
+talk on how do you
+balance that? How do you
 
 528
-00:27:26.930 --> 00:27:30.530
-after it. And members is
-actually, we talked about memcache
+00:29:54.820 --> 00:29:58.210
+find it? You know, sometimes
+what I loved being a
 
 529
-00:27:30.530 --> 00:27:34.880
-earlier is the codifications of
-best practices for memcache servers.
+00:29:58.210 --> 00:30:01.990
+consultant was sometimes there was
+something so glaring that could
 
 530
-00:27:35.000 --> 00:27:38.150
-So it just implements a
-sharding, a scenario where you
+00:30:01.990 --> 00:30:06.970
+make a difference that you,
+people basically felt like they
 
 531
-00:27:38.150 --> 00:27:40.160
-don't have to recharge every
-time you add a new
+00:30:06.970 --> 00:30:09.370
+had got their money's worth
+within the first few hours.
 
 532
-00:27:40.160 --> 00:27:43.220
-system, or can you machine
-to the whole cluster. And
+00:30:09.760 --> 00:30:14.260
+As I had one client
+who had both Yui two
 
 533
-00:27:43.220 --> 00:27:45.530
-it does that very well.
-It also adds persistence. So
+00:30:14.620 --> 00:30:18.040
+and jQuery on the page
+at the same time. And
 
 534
-00:27:45.530 --> 00:27:48.020
-when you lose a machine
-and then it restarts, maybe
+00:30:18.040 --> 00:30:19.840
+the only reason that they
+had Yui two on the
 
 535
-00:27:48.020 --> 00:27:50.150
-you don't have to load
-the data from all the
+00:30:19.840 --> 00:30:22.210
+page was because they wanted
+to use the Yui to
 
 536
-00:27:50.150 --> 00:27:53.390
-other machines. A memory is
-if you're in a failure
+00:30:22.210 --> 00:30:26.890
+auto-complete. And so for that,
+the total size of the
 
 537
-00:27:53.390 --> 00:27:55.790
-scenario, that's a lot of
-arrows going on. You don't
+00:30:26.890 --> 00:30:31.480
+JavaScript that they needed for
+that auto-complete was over 250
 
 538
-00:27:55.790 --> 00:27:58.250
-want to have extra load
-repopulating in your notes. So
+00:30:31.480 --> 00:30:34.150
+K just for that piece
+of functionality that when I
 
 539
-00:27:58.250 --> 00:28:00.230
-you can just read from
-this and it's it's online
+00:30:34.150 --> 00:30:37.780
+asked them how frequently that
+was being used, they weren't
 
 540
-00:28:00.230 --> 00:28:02.300
-again. And it also allows
-you to store more data
+00:30:37.780 --> 00:30:43.510
+entirely sure. And so I
+looked really smart by saying,
 
 541
-00:28:02.720 --> 00:28:07.760
-than you have a memory
-available for. And at some
+00:30:43.510 --> 00:30:46.420
+well, why don't you replace
+that, you know, 250 plus
 
 542
-00:28:07.760 --> 00:28:11.240
-point they were using SQL
-Lite as the backend storage,
+00:30:46.720 --> 00:30:51.010
+K of why you, I
+too, and autocomplete with this
 
 543
-00:28:11.300 --> 00:28:13.730
-and they thought that's not
-very flexible because they couldn't,
+00:30:51.550 --> 00:30:55.690
+40 K jQuery version just,
+and you don't have to
 
 544
-00:28:13.970 --> 00:28:15.710
-it was working very well
-as a key value store,
+00:30:55.690 --> 00:30:58.780
+change anything else. Right. You're
+just eliminating over 200 K
 
 545
-00:28:15.710 --> 00:28:17.990
-but not for dynamic queries
-on the things that we're
+00:30:58.780 --> 00:31:02.320
+right from that. And, you
+know, they thought I was
 
 546
-00:28:17.990 --> 00:28:20.060
-doing. And they thought <inaudible>
-was the better backend for
+00:31:02.320 --> 00:31:06.250
+great for that. Unfortunately, a
+lot of the other cases
 
 547
-00:28:20.060 --> 00:28:25.340
-it. So these companies merged
-the products. How should it
+00:31:06.250 --> 00:31:08.500
+that I went into there
+wasn't something that glaring and
 
 548
-00:28:25.340 --> 00:28:29.480
-be like to think ology
-is now behind Couchbase, but
+00:31:08.500 --> 00:31:12.460
+obvious, it was just really
+taking inventory of, Hey, what's
 
 549
-00:28:29.480 --> 00:28:32.000
-the thing that are defining
-for, for coach to be
+00:31:12.460 --> 00:31:15.730
+going on on this page?
+What are the user expectations?
 
 550
-00:28:32.150 --> 00:28:38.900
-the, the HTTP storage and
-the multi-master replication feature, which
+00:31:15.730 --> 00:31:18.190
+What do we know that
+they're doing? And how can
 
 551
-00:28:38.900 --> 00:28:40.550
-I'd like to talk about
-a bit in a second
+00:31:18.190 --> 00:31:20.350
+we be a little bit
+smarter about when we're loading
 
 552
-00:28:41.450 --> 00:28:45.260
-are, are part of Couchbase
-as is, which is, which
+00:31:20.350 --> 00:31:24.780
+this stuff In the remaining
+few minutes, talk to me
 
 553
-00:28:45.410 --> 00:28:50.540
-adds to the confusion to,
-well, to save their, save
+00:31:24.780 --> 00:31:29.460
+about this idea that people
+aren't putting enough data and
 
 554
-00:28:50.540 --> 00:28:54.470
-their owner. Couchbase did plan
-to make it look like
+00:31:29.460 --> 00:31:32.400
+metadata and context in their
+HTML. You gave this great
 
 555
-00:28:54.470 --> 00:28:57.320
-a couch to, but engineering
-reality made it not work
+00:31:32.400 --> 00:31:36.810
+example where there's some tabs
+and you're just using JavaScript
 
 556
-00:28:57.320 --> 00:28:59.120
-out that way. So they
-focused on the thing that
+00:31:36.840 --> 00:31:39.540
+to basically initialize a bunch
+of state. Is this tab
 
 557
-00:28:59.120 --> 00:29:01.610
-they could ship in time
-to make the customers happy,
+00:31:39.540 --> 00:31:43.230
+selected, or what's going on
+here? And you can remove
 
 558
-00:29:01.970 --> 00:29:03.920
-which is catching me in
-the backend Membase in the
+00:31:43.230 --> 00:31:47.340
+JavaScript by adding more HTML
+to a solution. Can you
 
 559
-00:29:03.920 --> 00:29:07.850
-front, but they don't share
-any code. There's some code
+00:31:47.340 --> 00:31:50.790
+talk to me about that?
+Yeah. I think that HTML
 
 560
-00:29:07.850 --> 00:29:11.570
-that like Couchbase is also
-can online and see hybrid
+00:31:50.790 --> 00:31:56.580
+ends up being like the
+uncool older sibling of JavaScript
 
 561
-00:29:11.630 --> 00:29:13.640
-all data's done and see
-an old management is done
+00:31:56.580 --> 00:31:59.130
+and CSS where people kind
+of tolerate it, but they
 
 562
-00:29:13.640 --> 00:29:16.370
-an airline. So that's some
-code that is shared. And,
+00:31:59.130 --> 00:32:00.840
+don't really want to deal
+with it all that much.
 
 563
-00:29:17.210 --> 00:29:19.610
-but ultimately there are different
-systems. I see. And they
+00:32:01.380 --> 00:32:04.170
+And I think that's unfortunate
+because it represents a great
 
 564
-00:29:19.610 --> 00:29:22.790
-just, they're both named couch
-and that's unfortunate, but there
+00:32:04.170 --> 00:32:08.610
+opportunity to offload information. One
+of the things that has
 
 565
-00:29:22.790 --> 00:29:26.780
-are different things. Yeah. That's
-a historic historic accident. And
+00:32:08.610 --> 00:32:13.230
+always frustrated me about JavaScript,
+widgets that work with the
 
 566
-00:29:26.780 --> 00:29:27.830
-then what was the other
-thing that you said that
+00:32:13.230 --> 00:32:16.050
+Dom is that they end
+up setting up what I
 
 567
-00:29:27.830 --> 00:29:30.770
-you wanted to make sure
-we touched on The replication
+00:32:16.050 --> 00:32:21.240
+call a shadow object. It's
+basically an object that mimics
 
 568
-00:29:30.770 --> 00:29:34.970
-feature? If there's there's it's
-if people ask what's the
+00:32:21.240 --> 00:32:24.990
+and tracks the UI state.
+So the state that's actually
 
 569
-00:29:34.970 --> 00:29:37.130
-one, like, why would you
-use couch? And there's the
+00:32:24.990 --> 00:32:28.470
+already in the Dom, you
+also have something sitting over
 
 570
-00:29:37.160 --> 00:29:40.070
-one defining feature that everybody
-agrees is the one thing
+00:32:28.470 --> 00:32:32.640
+in JavaScript land that is
+mimicking that information. So maybe
 
 571
-00:29:40.070 --> 00:29:42.880
-that is cut to be
-is for, we called it
+00:32:32.640 --> 00:32:37.200
+you added a class of
+selected onto a tab. And
 
 572
-00:29:42.880 --> 00:29:45.880
-replication. Other people know the
-same thing as sync and
+00:32:37.200 --> 00:32:41.120
+then over in JavaScript land,
+you selected tab index is
 
 573
-00:29:46.450 --> 00:29:49.090
-well, you know, database replication
-from other databases, but ours
+00:32:41.120 --> 00:32:44.540
+one. And those two things
+actually mean the exact same
 
 574
-00:29:49.090 --> 00:29:53.470
-is a little bit different
-than I kinda think of
+00:32:44.570 --> 00:32:48.590
+thing. There's no difference, but
+over in JavaScript land, you
 
 575
-00:29:53.470 --> 00:29:56.380
-it as like the, the
-get the databases does what
+00:32:48.590 --> 00:32:51.530
+have this object that you're
+referencing all the time, and
 
 576
-00:29:56.500 --> 00:29:59.920
-it does for your application
-data. And not in the
+00:32:51.530 --> 00:32:54.230
+then you have to synchronize
+to the dome. And what
 
 577
-00:29:59.920 --> 00:30:02.500
-sense that you have like
-a lot of diffing going
+00:32:54.230 --> 00:32:57.740
+a lot of people don't
+realize is that you already
 
 578
-00:30:02.500 --> 00:30:05.200
-on and merging stuff, but
-more, I have a local
+00:32:57.740 --> 00:33:01.460
+have this data structure in
+the browser that the browser
 
 579
-00:30:05.200 --> 00:30:07.660
-copy of my data, and
-I want to show you
+00:33:01.460 --> 00:33:05.600
+creates for you called the
+Dom. And you can make
 
 580
-00:30:07.660 --> 00:30:09.220
-what I have, and then
-I can replicate it to
+00:33:05.600 --> 00:33:09.950
+use of that instead of
+creating these shadow objects that
 
 581
-00:30:09.220 --> 00:30:10.660
-you. And now you have
-the full set of data
+00:33:09.950 --> 00:33:12.440
+are just mimicking it. So
+what I like to do
 
 582
-00:30:10.660 --> 00:30:11.830
-as well, and you can
-look at it and you'll
+00:33:12.470 --> 00:33:15.560
+is take anything that is
+related to the UI state
 
 583
-00:30:11.830 --> 00:30:13.180
-find a bunch of issues
-with it and you can
+00:33:16.070 --> 00:33:19.130
+and put it specifically into
+the Dom, like into the
 
 584
-00:30:13.180 --> 00:30:16.570
-fix it. And then I
-replicated your changes back, but
+00:33:19.130 --> 00:33:22.730
+elements that you're talking about.
+And then all you need
 
 585
-00:30:16.570 --> 00:30:18.550
-you also showed it to
-your friend and they found
+00:33:22.730 --> 00:33:26.660
+to do when you want
+to get that information is
 
 586
-00:30:18.550 --> 00:30:20.020
-a bunch of issues or
-edit a bit of data
+00:33:26.930 --> 00:33:29.330
+you have the element that
+you're interested in and you
 
 587
-00:30:20.020 --> 00:30:22.750
-and they can get both
-your stuff back into my
+00:33:29.330 --> 00:33:31.550
+say, Hey, element, tell me
+what I want to know,
 
 588
-00:30:22.840 --> 00:30:24.820
-copy. And we think it's
-all good. I can push
+00:33:32.150 --> 00:33:34.820
+as opposed to the way
+that a lot of JavaScript
 
 589
-00:30:24.820 --> 00:30:27.670
-it to a live server.
-And then my continued continuous
+00:33:34.820 --> 00:33:38.060
+libraries act, which is, you
+know, we're going to hack
 
 590
-00:30:27.670 --> 00:30:29.380
-integration will pick it up
-and check all the data
+00:33:38.060 --> 00:33:41.330
+some ID onto this element.
+And then that ID is
 
 591
-00:30:29.380 --> 00:30:33.100
-again, without all our automated
-tests. And when that's all,
+00:33:41.330 --> 00:33:43.250
+going to be in like
+a hash table and the
 
 592
-00:30:33.100 --> 00:30:35.680
-okay, push it to the
-production system. Like kind of
+00:33:43.250 --> 00:33:45.710
+JavaScript. And we're going to
+look that up and figure
 
 593
-00:30:35.680 --> 00:30:38.320
-how you're thinking about doing
-code deployment with get, but
+00:33:45.710 --> 00:33:47.240
+out what the element is.
+And then all of the
 
 594
-00:30:38.320 --> 00:30:41.470
-for your application, data can
-live everywhere and that's pretty
+00:33:47.240 --> 00:33:50.180
+other metadata for it say,
+why even bother when you
 
 595
-00:30:41.470 --> 00:30:46.880
-cool and fairly unique to,
-to catch DV. That is
+00:33:50.180 --> 00:33:53.330
+click on an element, you
+have the element there, just
 
 596
-00:30:46.880 --> 00:30:50.640
-his automatic kind of imposed
-workflow versus is, are those
+00:33:53.330 --> 00:33:56.090
+let that element, tell you
+everything that there is to
 
 597
-00:30:50.640 --> 00:30:52.500
-methods that I call or
-how do I make that
+00:33:56.090 --> 00:33:59.750
+know about its current state.
+And that way you can
 
 598
-00:30:52.500 --> 00:30:57.990
-happen? Oh, so the fundamental
-procedure, as you have very
+00:33:59.750 --> 00:34:03.350
+avoid creating that shadow object
+in JavaScript, which means less
 
 599
-00:30:57.990 --> 00:31:01.740
-limited, it's just replicate this
-database to another database and
+00:34:03.350 --> 00:34:08.510
+memory, less chance for you
+to create memory leaks. And
 
 600
-00:31:01.740 --> 00:31:04.350
-this database can be a
-local or remote one, or
+00:34:08.600 --> 00:34:11.300
+you get to be a
+little more flexible because that
 
 601
-00:31:04.470 --> 00:31:06.660
-the targeted one can also
-be local or remote one.
+00:34:11.300 --> 00:34:15.860
+allows you to spend more
+time tinkering and HTML, which
 
 602
-00:31:06.700 --> 00:31:09.750
-So it can go either
-way, whichever way you want,
+00:34:15.860 --> 00:34:18.980
+is a lot harder to
+create a catastrophe in the
 
 603
-00:31:10.170 --> 00:31:13.410
-and then whatever management you
-want on top of like
+00:34:18.980 --> 00:34:25.880
+JavaScript and spend less time
+in the JavaScript as you're
 
 604
-00:31:13.410 --> 00:31:16.560
-automation automatically puts everything. There's
-some, some hooks for that,
+00:34:25.880 --> 00:34:29.810
+developing, because JavaScript is the
+most complicated part of the
 
 605
-00:31:16.560 --> 00:31:19.140
-but usually you script that
-yourself And do I just
+00:34:29.810 --> 00:34:32.870
+client side. And we do
+end up spending most of
 
 606
-00:31:19.140 --> 00:31:21.600
-declare one authoritative? Cause I
-feel like it, like, you
+00:34:32.870 --> 00:34:35.270
+our time in it as
+a web app develops over
 
 607
-00:31:21.600 --> 00:31:25.230
-know, Linus owns this, get
-one, get repository. Cause he's
+00:34:35.270 --> 00:34:39.980
+time. And so why not
+minimize that as much as
 
 608
-00:31:25.230 --> 00:31:28.020
-Linus. Cause we said so.
-Or is there a formalization
+00:34:39.980 --> 00:34:43.700
+possible and let HTML do
+some of the heavy lifting,
 
 609
-00:31:28.020 --> 00:31:30.990
-of who's on top? Nope.
-There is that's ad hoc.
+00:34:44.270 --> 00:34:48.440
+cause it's not actually a
+performance hit to do that.
 
 610
-00:31:30.990 --> 00:31:33.240
-Like whatever you want to
-be the master at semester
+00:34:48.470 --> 00:34:51.110
+It's a common misconception. I
+got that a lot after
 
 611
-00:31:33.300 --> 00:31:36.540
-or there's no master, if
-you want that. Very cool.
+00:34:51.110 --> 00:34:53.530
+my talk, where people were
+saying that you're storing all
 
 612
-00:31:36.900 --> 00:31:39.930
-Right. So people can go
-up to guide dot couch,
+00:34:53.550 --> 00:34:56.870
+this stuff in the Dom,
+but isn't touching the Dom
 
 613
-00:31:39.930 --> 00:31:43.860
-db.org. And is the whole
-book up there, the definitive
+00:34:56.870 --> 00:35:00.230
+itself just very slow. And
+what they don't realize is
 
 614
-00:31:43.860 --> 00:31:46.710
-guide. Yeah. That was a
-very sweet deal that really
+00:35:00.230 --> 00:35:04.070
+that the Dom is fundamentally
+just a data structure. And
 
 615
-00:31:46.710 --> 00:31:49.950
-allowed us to do. We
-were writing the, to documentation
+00:35:04.070 --> 00:35:06.260
+it's a structure that ends
+up getting painted onto the
 
 616
-00:31:49.950 --> 00:31:51.690
-anyway, and we told them
-like, we're not coming right
+00:35:06.260 --> 00:35:09.290
+screen. And part that's slow
+is when you do something
 
 617
-00:31:51.690 --> 00:31:53.760
-at twice, so you better
-let us opensource it. And
+00:35:09.290 --> 00:35:12.680
+to change, what's painted on
+the screen. But if you
 
 618
-00:31:53.760 --> 00:31:55.080
-they're like, yeah, that's cool.
-And we're like, Oh my
+00:35:12.680 --> 00:35:16.100
+are just saying, does this
+data structure have this attribute
 
 619
-00:31:55.080 --> 00:31:57.300
-God, it works cool. So
-we, the book is open
+00:35:16.640 --> 00:35:20.210
+or does this data structure
+have this class? All you're
 
 620
-00:31:57.300 --> 00:32:01.170
-source, the whole book. It's
-a, it's a work in
+00:35:20.210 --> 00:35:24.400
+doing is querying data, which
+is actually pretty fast, Right?
 
 621
-00:32:01.170 --> 00:32:04.200
-progress. You've got English, German,
-French, Spanish. You've got an
+00:35:24.400 --> 00:35:26.140
+And it's in memory. I
+mean the Dom, isn't some
 
 622
-00:32:04.200 --> 00:32:06.750
-English draft that's being worked
-on and people can submit
+00:35:26.140 --> 00:35:29.140
+distant database that we're calling
+select star from something on.
 
 623
-00:32:06.750 --> 00:32:09.360
-corrections as well. If they
-find any problems. Yeah. It's
+00:35:29.590 --> 00:35:33.700
+Exactly. And it's not automatically
+a performance penalty. Every time
 
 624
-00:32:09.360 --> 00:32:11.730
-all good help. You can
-forget. It's going to be
+00:35:33.700 --> 00:35:36.520
+you do something with the
+dome. Well enough with the
 
 625
-00:32:11.730 --> 00:32:14.010
-part of the official catch
-to be documentation too. So
+00:35:36.520 --> 00:35:40.710
+JavaScript, that is the name
+of your talk. And we'd
 
 626
-00:32:14.010 --> 00:32:15.750
-a lot more people can
-look at it as well.
+00:35:40.710 --> 00:35:42.750
+get up on SlideShare. I'm
+going to put links to
 
 627
-00:32:15.810 --> 00:32:21.930
-And then some new new
-ideas or error corrections. And
+00:35:42.750 --> 00:35:45.810
+that in the show notes
+and people can follow Nicholas
 
 628
-00:32:21.930 --> 00:32:25.410
-then every like every major,
-what version, Alrighty, we'll just
+00:35:45.840 --> 00:35:50.460
+at Twitter. His name is
+slick net and a checkout
 
 629
-00:32:25.410 --> 00:32:27.780
-take a cut, then print
-a book or promote an
+00:35:50.460 --> 00:35:53.070
+box, which is where Nicholas
+works. Thanks so much for
 
 630
-00:32:27.780 --> 00:32:30.750
-ebook that they can sell
-them. And a lot of
+00:35:53.070 --> 00:35:56.250
+chatting with me today. Thanks
+for having me. This has
 
 631
-00:32:30.930 --> 00:32:33.480
-the people who are listening
-to the show are.net people
+00:35:56.250 --> 00:35:58.830
+been another episode of Hanselminutes
+and we'll see you again
 
 632
-00:32:33.480 --> 00:32:37.380
-or windows people. Can we
-use couch DB on windows?
-
-633
-00:32:37.830 --> 00:32:41.600
-Yeah, of course. RN support
-for windows is very, very
-
-634
-00:32:41.600 --> 00:32:44.060
-good and can be supported
-as well. So we ship
-
-635
-00:32:44.180 --> 00:32:47.150
-windows binary with every release.
-You can just, don't like,
-
-636
-00:32:47.150 --> 00:32:49.340
-it's an installer thing and
-you can just double click
-
-637
-00:32:49.340 --> 00:32:52.180
-and install. It just runs
-as a windows service and
-
-638
-00:32:52.180 --> 00:32:54.880
-does its thing. Yeah. Or
-you can be in there's
-
-639
-00:32:54.880 --> 00:32:57.280
-some configuration there, but I
-think the minimum thing I
-
-640
-00:32:57.280 --> 00:32:59.320
-want to do is run
-it as a service. I
-
-641
-00:32:59.320 --> 00:33:01.450
-see. Very cool. And it
-looks like there's lots of
-
-642
-00:33:02.620 --> 00:33:05.110
-public C-sharp libraries. If I,
-if I don't want to
-
-643
-00:33:05.290 --> 00:33:07.990
-just talk to it myself,
-there's relax and there's sharp
-
-644
-00:33:07.990 --> 00:33:11.080
-couch and things like that.
-But like you said, I
-
-645
-00:33:11.080 --> 00:33:13.360
-can just talk to this
-with an HTTP client and
-
-646
-00:33:13.360 --> 00:33:16.960
-build my own wrappers, whatever
-it looks like my data.
-
-647
-00:33:17.740 --> 00:33:20.440
-Okay. Very cool. Well, thanks
-so much for chatting with
-
-648
-00:33:20.440 --> 00:33:22.750
-me today. I really Well,
-thanks for having me. This
-
-649
-00:33:22.750 --> 00:33:25.510
-was fun. I'll put up
-all of the links to
-
-650
-00:33:25.540 --> 00:33:28.390
-couch DB and the guide
-up on the show notes.
-
-651
-00:33:28.810 --> 00:33:31.690
-This has been another episode
-of Hanselminutes and we'll see
-
-652
-00:33:31.690 --> 00:33:32.590
-you again next week.
+00:35:58.830 --> 00:35:59.370
+next week.
 

@@ -1,3286 +1,3382 @@
 WEBVTT FILE
 
 1
-00:00:00.420 --> 00:00:03.540
+00:00:00.720 --> 00:00:03.840
 Hi, this is Scott. I
 really appreciate our sponsors because
 
 2
-00:00:03.540 --> 00:00:06.870
+00:00:03.840 --> 00:00:07.170
 they make the show possible.
 Today's show is sponsored by
 
 3
-00:00:06.870 --> 00:00:11.160
+00:00:07.200 --> 00:00:11.430
 Tellerik create compelling app experiences
 across any screen with the
 
 4
-00:00:11.160 --> 00:00:15.990
+00:00:11.430 --> 00:00:16.290
 Tellerik platform Telerx end to
 end platform. Uniquely combines industry
 
 5
-00:00:15.990 --> 00:00:19.680
+00:00:16.290 --> 00:00:19.980
 leading UI tools with cloud
 services to simplify the entire
 
 6
-00:00:19.680 --> 00:00:24.180
+00:00:19.980 --> 00:00:24.480
 app development cycle Tellerik offers
 everything.net developers need to build
 
 7
-00:00:24.180 --> 00:00:33.600
+00:00:24.480 --> 00:00:33.900
 quality apps faster. Try it
 free at tellerik.com/platform that's tellerik.com/platform
 
 8
-00:00:46.860 --> 00:00:52.800
-from hanselminutes.com. It's Hansel minutes,
-our weekly discussion with web
+00:00:47.000 --> 00:00:51.740
+From Hanselman it's dot com.
+It's Hansel minutes, a weekly
 
 9
-00:00:52.800 --> 00:00:57.930
-developer and technologist Scott Hanselman.
-This is Lawrence Ryan announcing show
+00:00:51.740 --> 00:00:56.390
+discussion with WebEx Developer and
+technologist Scott Hanselman. This is
 
 10
-00:00:57.930 --> 00:01:02.730
-number 531. In this episode,
-Scott talks with Gina Marie
+00:00:56.390 --> 00:01:01.100
+Lawrence Ryan announcing your show notes
+For 527. In this episode,
 
 11
-00:01:02.730 --> 00:01:10.380
-Miami about functional programming with
-O'Connell. Hi, this is Scott
+00:01:01.130 --> 00:01:05.480
+Scott talks with Asha Hammerly
+about practical containers and how
 
 12
-00:01:10.380 --> 00:01:13.020
-Hanselman. This is another episode
-of Hansel minutes today. I'm
+00:01:05.480 --> 00:01:11.060
+they affect workflow. Hi, this
+is Scott Hanselman. This is
 
 13
-00:01:13.020 --> 00:01:16.770
-talking with Gina Marie Miami,
-who is a functional programmer
+00:01:11.060 --> 00:01:14.060
+another episode of Hansel minutes
+today. We're talking with Audra
 
 14
-00:01:17.130 --> 00:01:18.960
-and not just a functional
-program with probably the most
+00:01:14.090 --> 00:01:17.780
+Hammerly, who is a cloud
+developer advocate with Google. Thanks
 
 15
-00:01:18.960 --> 00:01:21.960
-passionate functional program I've ever
-met. I met you at
+00:01:17.780 --> 00:01:21.230
+for chatting with me today.
+Hello, this is great. So
 
 16
-00:01:21.960 --> 00:01:27.130
-Oz con and you were
-overflowing with functional programming. I
+00:01:21.590 --> 00:01:24.650
+we're going to talk about
+containers. We're talking about microservices,
 
 17
-00:01:27.200 --> 00:01:30.890
-think that's a common narrative
-of anyone who does functional
+00:01:24.680 --> 00:01:26.930
+and I know it's funny
+to start a podcast with
 
 18
-00:01:30.890 --> 00:01:34.340
-programming for any nontrivial amount
-of time, is that you
+00:01:26.930 --> 00:01:28.910
+those two buzz words, because
+those are the buzz words.
 
 19
-00:01:34.340 --> 00:01:37.190
-just have to share the
-love Really. I mean, is
+00:01:29.780 --> 00:01:34.070
+Everyone is saying this, why
+is containers and microservices? So
 
 20
-00:01:37.460 --> 00:01:39.980
-what maybe I've been doing
-it wrong for the last
+00:01:34.070 --> 00:01:36.980
+talked about why is it?
+Have we reached peak buzzword
 
 21
-00:01:39.980 --> 00:01:43.610
-20 years. I mean, you
-were like, like, you know,
+00:01:36.980 --> 00:01:40.130
+with these two things? So
+I think it really helps
 
 22
-00:01:43.610 --> 00:01:46.520
-have you heard the news,
-have you accepted Oak camel
+00:01:40.130 --> 00:01:41.840
+to like take a step
+back and think about the
 
 23
-00:01:46.580 --> 00:01:53.330
-as your personal programming language?
-I I'm very evangelical. Let's
+00:01:41.840 --> 00:01:44.930
+problems that people have had
+with microservices. So before I
 
 24
-00:01:53.330 --> 00:01:55.640
-put it that way. I
-I'm a born again. Okay.
+00:01:44.930 --> 00:01:47.390
+was at Google, I was
+a contract developer and a
 
 25
-00:01:55.640 --> 00:02:02.690
-I'm I, I did Java
-script development for probably too
+00:01:47.390 --> 00:01:51.530
+rails developer for about eight
+years. And microservices became huge
 
 26
-00:02:02.750 --> 00:02:05.990
-long, which I guess was,
-you know, three years or
+00:01:51.530 --> 00:01:53.570
+in the rails community, but
+one of the big problems
 
 27
-00:02:05.990 --> 00:02:11.060
-whatever. And, you know, just,
-just felt like things were
+00:01:53.570 --> 00:01:58.160
+people had was deployment and
+managing huge quantities of separate
 
 28
-00:02:11.060 --> 00:02:13.970
-too hard. I couldn't reason
-about all the state in
+00:01:59.540 --> 00:02:03.260
+separate services, separate sites that
+had different scaling requirements, different
 
 29
-00:02:13.970 --> 00:02:17.150
-my program. I couldn't, I
-couldn't know where bugs would
+00:02:03.260 --> 00:02:06.320
+performance, characteristics, maybe some of
+them needed access to two
 
 30
-00:02:17.150 --> 00:02:21.220
-be. I wrote unit tests,
-unit tests didn't do anything
+00:02:06.320 --> 00:02:08.990
+databases, a primary and a
+data warehouse and others were
 
 31
-00:02:21.220 --> 00:02:25.550
-good. And I just decided
-one day that I was
+00:02:08.990 --> 00:02:12.140
+completely independent of a database
+and containers have kind of
 
 32
-00:02:25.550 --> 00:02:28.730
-going to do something different
-and saw someone using a
+00:02:12.140 --> 00:02:15.260
+come along as a potential
+solution to that big frustration.
 
 33
-00:02:28.740 --> 00:02:33.200
-camel and decided this looked
-reasonable, this looked like something
+00:02:15.710 --> 00:02:17.570
+And I had really no
+idea what containers could do
 
 34
-00:02:33.200 --> 00:02:36.290
-I could do. And I
-had tried, you know, Haskell
+00:02:17.570 --> 00:02:20.270
+until about 18 months ago.
+And I started hearing Docker,
 
 35
-00:02:36.290 --> 00:02:40.400
-I think is probably the
-most common hacker news trendy,
+00:02:20.270 --> 00:02:22.850
+talked about it, a lot
+of conferences, and now that
 
 36
-00:02:40.400 --> 00:02:43.970
-functional language. I tried Haskell
-and kind of felt like
+00:02:22.850 --> 00:02:24.410
+I've had a little experience
+with them, I think there's
 
 37
-00:02:43.970 --> 00:02:47.270
-I wasn't was missing a
-punchline maybe. I mean, it
+00:02:24.410 --> 00:02:27.800
+a lot of potential for
+folks running complicated deployments, whether
 
 38
-00:02:47.270 --> 00:02:49.370
-seemed a little bit too
-hard. It seemed like for
+00:02:27.800 --> 00:02:31.880
+that's multiple services, multiple websites
+needing to better utilize their
 
 39
-00:02:49.370 --> 00:02:52.580
-someone who didn't have a
-computer science background, you know,
+00:02:31.880 --> 00:02:36.170
+VM resources or folks who
+are just doing things that
 
 40
-00:02:52.880 --> 00:02:55.970
-all of these higher kind
-of types, you know, monads
+00:02:36.170 --> 00:02:38.330
+are cross cloud, you need
+to have, we need to
 
 41
-00:02:55.970 --> 00:03:00.070
-galore, you know, I was
-really, really lost. So Campbell
+00:02:38.330 --> 00:02:40.880
+have your stuff in multiple
+data centers and all that
 
 42
-00:03:00.070 --> 00:03:04.210
-was a really good balance
-pragmatism and you know, really
+00:02:40.880 --> 00:02:43.460
+stuff. I think containers can
+help with a lot. So
 
 43
-00:03:04.210 --> 00:03:07.330
-beautiful abstraction. So I guess
-it's, you know, it's a,
+00:02:43.460 --> 00:02:45.110
+that's kind of, I think
+why they're coming up right
 
 44
-00:03:07.360 --> 00:03:11.190
-it's a, it's a pragmatic
-language. Do you, you know,
+00:02:45.110 --> 00:02:46.820
+now. And I mean, I
+totally get that. They're a
 
 45
-00:03:11.190 --> 00:03:13.830
-some people say that they
-look for the programming language
+00:02:46.820 --> 00:02:48.860
+buzzword. I think every conference
+I've been to in the
 
 46
-00:03:13.830 --> 00:03:16.290
-of their soul and you
-know, they find it and
+00:02:48.860 --> 00:02:51.140
+last year has had a,
+container's talk of some sort,
 
 47
-00:03:16.290 --> 00:03:18.240
-it's just like, ah, this
-is what I'm supposed to
+00:02:51.830 --> 00:02:55.250
+even if I wasn't giving
+it. So yeah, I'm, I'm
 
 48
-00:03:18.240 --> 00:03:21.450
-be programming in. Do you
-think you came pre-wired this
+00:02:55.250 --> 00:02:58.460
+one of the chairs this
+year of Oz con and
 
 49
-00:03:21.450 --> 00:03:24.090
-way? Did you come out
-immediately wired for O'Connell and
+00:02:58.610 --> 00:03:02.980
+we're getting From some folks,
+folks, maybe with a little
 
 50
-00:03:24.090 --> 00:03:27.540
-didn't know it? Or did
-you wire yourself into O'Connell
+00:03:02.980 --> 00:03:07.170
+bit more historical context who
+are saying that, Oh, that's,
 
 51
-00:03:29.970 --> 00:03:35.370
-People who have, that's a
-good question. You know, I
+00:03:07.170 --> 00:03:09.610
+it's all just containers and
+microservices talks like that's just
 
 52
-00:03:35.370 --> 00:03:37.980
-had, I hadn't heard that
-before, but I like that
+00:03:09.610 --> 00:03:12.610
+the buzzword that we're going
+to use this year. And
 
 53
-00:03:37.980 --> 00:03:40.920
-metaphor of your soul being,
-you know, I don't know.
+00:03:13.180 --> 00:03:14.770
+I don't know, I don't
+know how to answer those
 
 54
-00:03:41.550 --> 00:03:45.390
-I think if I was
-a programming language, I don't
+00:03:14.770 --> 00:03:17.980
+because sometimes they are the
+buzzwords that we need today.
 
 55
-00:03:45.390 --> 00:03:48.210
-know, maybe I would be
-like COBOL or something like,
+00:03:17.980 --> 00:03:20.230
+Like this is, like you
+said more than a buzzword,
 
 56
-00:03:48.900 --> 00:03:53.640
-you know, imperative and, and
-I don't know closeted in
+00:03:20.230 --> 00:03:22.660
+it's a solution to an
+actual real world problem that
 
 57
-00:03:53.640 --> 00:03:57.030
-some way. I don't know,
-but okay. Will seems unlike
+00:03:22.660 --> 00:03:26.730
+people are having. And I
+think there's a lot of
 
 58
-00:03:57.030 --> 00:04:00.530
-myself, it's a better self,
-you know, it's a, Oh,
+00:03:26.730 --> 00:03:28.320
+pushback on the fact that
+it's a buzzword, but the
 
 59
-00:04:00.630 --> 00:04:03.750
-camel lets you be your
-best self. Maybe that's what
+00:03:28.320 --> 00:03:31.020
+bottom line is container technologies
+were really cool. The idea
 
 60
-00:04:03.750 --> 00:04:07.680
-it is. It does everything
-I could ever want it
+00:03:31.020 --> 00:03:33.600
+that you can take an
+application, package it up with
 
 61
-00:04:07.680 --> 00:04:13.110
-to do. It's got like
-it's multi paradigm. It compiles
+00:03:33.600 --> 00:03:37.530
+all of its dependencies and
+take it in a package,
 
 62
-00:04:13.110 --> 00:04:16.110
-to byte code a compiles
-and native code. It plays
+00:03:37.530 --> 00:03:39.570
+whether that's a Docker container
+or a rocket container or
 
 63
-00:04:16.110 --> 00:04:20.640
-nice with C people even
-have it running on arm,
+00:03:39.570 --> 00:03:42.690
+some custom container format is
+Google's been using containers and
 
 64
-00:04:20.670 --> 00:04:22.770
-you know? I mean, it's,
-it's all over the place
+00:03:42.690 --> 00:03:45.810
+custom container formats for quite
+a while and push that
 
 65
-00:04:23.220 --> 00:04:27.930
-and, and somehow, yeah, it's
-like an academic language, but
+00:03:45.810 --> 00:03:48.630
+out anywhere and not have
+to worry about making sure
 
 66
-00:04:27.960 --> 00:04:31.680
-you know, it favors performance.
-And as I've said, repeatedly
+00:03:48.630 --> 00:03:50.700
+that all your dependencies are
+installed. Not having to worry
 
 67
-00:04:31.710 --> 00:04:35.220
-pragmatism. So, so it's unlike
-myself. I would say that
+00:03:50.700 --> 00:03:53.370
+about if your libraries or
+library source like something like
 
 68
-00:04:35.220 --> 00:04:39.090
-I, I am not like,
-okay, So tell me if
+00:03:53.370 --> 00:03:57.150
+rubygems.org or NPM is down,
+or whether somebody pushed an
 
 69
-00:04:39.090 --> 00:04:41.700
-this is right and walk
-me through this for people
+00:03:57.150 --> 00:03:59.310
+extroversion of a library and
+you didn't get your dependencies
 
 70
-00:04:41.700 --> 00:04:44.940
-who are, maybe can say
-functional programming, but don't really
+00:03:59.310 --> 00:04:02.130
+quite right. Just knowing that
+if you have that box
 
 71
-00:04:44.940 --> 00:04:48.120
-know like what it is.
-Is it true that if
+00:04:02.670 --> 00:04:06.060
+of the application, its dependencies
+and its file system all
 
 72
-00:04:48.120 --> 00:04:51.060
-you take something like C
-or C sharp or Java
+00:04:06.060 --> 00:04:08.730
+ready to go, and you
+can push that out anywhere.
 
 73
-00:04:51.870 --> 00:04:54.960
-and you problem that you
-want to solve, it's basically
+00:04:08.760 --> 00:04:10.320
+You want to push that
+out to multiple clouds. You
 
 74
-00:04:54.960 --> 00:04:58.380
-okay, computer, here are the
-things you need to do
+00:04:10.320 --> 00:04:11.970
+want to push that out
+to your test system. You
 
 75
-00:04:58.860 --> 00:05:01.980
-in order to get the
-answer for a problem. But
+00:04:11.970 --> 00:04:13.800
+want to push that out
+to I pre-prod system that
 
 76
-00:05:01.980 --> 00:05:04.950
-with your functional programming language,
-it's just more like, kind
+00:04:13.800 --> 00:04:16.890
+your sales and marketing team
+use for making promotional videos.
 
 77
-00:05:04.950 --> 00:05:07.920
-of like, what is the
-essence of the problem mathematically
+00:04:17.460 --> 00:04:20.490
+All of that's just super
+easy at that point. And
 
 78
-00:05:07.920 --> 00:05:11.460
-and you figure it out
-the computer. Yeah. That's, that's
+00:04:20.520 --> 00:04:22.740
+it changes how you think
+about ops. It changes how
 
 79
-00:05:11.460 --> 00:05:13.680
-a good, I mean, you
-know, I don't know what
+00:04:22.740 --> 00:04:25.200
+you think about even your
+deployment pipeline. That's one of
 
 80
-00:05:13.680 --> 00:05:17.100
-the official definition of functional
-programming is. I'm only interested
+00:04:25.200 --> 00:04:26.970
+the things that I really
+struggled with when we were
 
 81
-00:05:17.100 --> 00:05:20.460
-in yours because I want
-the practitioner's perspective. Just, just
+00:04:26.970 --> 00:04:29.280
+thinking about using this for
+a huge microservices site, I
 
 82
-00:05:20.460 --> 00:05:23.280
-as a user, you know,
-I've read like, I think
+00:04:29.280 --> 00:04:32.580
+was working on a, we
+had, I think, seven different
 
 83
-00:05:23.280 --> 00:05:26.430
-I did functional JavaScript, JavaScript
-dollar and J you know,
+00:04:32.580 --> 00:04:35.340
+code bases in three different
+languages on that site, all
 
 84
-00:05:26.430 --> 00:05:29.160
-I've read all these like,
-you know, functional JavaScript books.
+00:04:35.340 --> 00:04:38.250
+to run one site. And
+we were like, okay, we
 
 85
-00:05:30.060 --> 00:05:32.250
-But now that I work
-in a functional language, I
+00:04:38.250 --> 00:04:39.840
+need to come up with
+a way to deploy this
 
 86
-00:05:32.250 --> 00:05:37.170
-guess I have some, some
-more, how can I say
+00:04:39.840 --> 00:04:42.450
+in a reasonable fashion. That
+can be, it was contract
 
 87
-00:05:37.170 --> 00:05:43.020
-this zealous opinions, I suppose
-functional programming is thinking of
+00:04:42.450 --> 00:04:44.520
+and work. So it needed
+to be something that our
 
 88
-00:05:43.830 --> 00:05:47.370
-data transformation. I guess that
-would be, I just think
+00:04:44.520 --> 00:04:47.310
+contracting client can pick up
+from us and, you know,
 
 89
-00:05:47.370 --> 00:05:52.200
-about my programs differently. Almost
-like, you know, it's yeah,
+00:04:47.310 --> 00:04:49.920
+a 50 step deployment guide
+wasn't, wasn't gonna cut it.
 
 90
-00:05:52.200 --> 00:05:54.660
-it's very declarative. It's what
-you, it's what you just
+00:04:50.460 --> 00:04:52.050
+And so we talked, we
+talked about using containers and
 
 91
-00:05:54.660 --> 00:05:57.680
-said, Scott. It's like, you,
-you think about what should
+00:04:52.050 --> 00:04:54.330
+we're working on containerizing it
+when I ended up getting
 
 92
-00:05:57.680 --> 00:06:00.110
-this do at a high
-level? I often find myself
+00:04:54.330 --> 00:04:57.150
+switched off the project. And
+the idea was that if
 
 93
-00:06:00.140 --> 00:06:03.770
-thinking about before I start
-writing a program, what did
+00:04:57.150 --> 00:04:59.250
+we could make a system
+that would build out the
 
 94
-00:06:03.770 --> 00:06:05.660
-it do? What do I
-want this to do at
+00:04:59.250 --> 00:05:01.830
+containers with Docker, all they
+would have to do is
 
 95
-00:06:05.660 --> 00:06:08.660
-the end of the day?
-What it, what is, what
+00:05:01.830 --> 00:05:04.290
+find a web host. And
+there are lots of them
 
 96
-00:06:08.660 --> 00:06:12.170
-am I talking about? And
-whatever I'm talking about, those
+00:05:04.290 --> 00:05:06.060
+who would be willing to
+host the containers in a
 
 97
-00:06:12.170 --> 00:06:18.320
-just become types. And then
-I just transform things and
+00:05:06.060 --> 00:05:10.320
+managed fashion. And that made
+the whole deployment process so
 
 98
-00:06:18.320 --> 00:06:21.920
-value some, some data. And
-that's basically what my program
+00:05:10.320 --> 00:05:13.140
+much easier for our customer
+and also for us, because
 
 99
-00:06:21.920 --> 00:06:24.050
-ends up being, which sounds
-like I don't even know
+00:05:13.140 --> 00:05:16.110
+it meant that the deployment
+was always consistent, whether that
 
 100
-00:06:24.050 --> 00:06:26.900
-what I just said, but
-that's, that's sort of, that's
+00:05:16.110 --> 00:05:18.120
+was in our disaster recovery
+system, which was in a
 
 101
-00:06:26.900 --> 00:06:30.050
-sort of what happens. It's
-very different than do this,
+00:05:18.120 --> 00:05:21.570
+completely different cloud vendor than
+our primary cloud vendor. It
 
 102
-00:06:31.610 --> 00:06:35.120
-you know, manipulate this and
-then you almost find your
+00:05:21.570 --> 00:05:23.640
+all, it all worked out
+and it was very, very
 
 103
-00:06:35.120 --> 00:06:38.330
-eye kind of going back
-up in your program to
+00:05:23.640 --> 00:05:26.370
+consistent. And I think that's
+the big thing that a
 
 104
-00:06:38.330 --> 00:06:41.720
-like manipulate some previous thing.
-Okay. Well, programs don't look
+00:05:26.370 --> 00:05:28.170
+lot of people are missing
+with containers because a lot
 
 105
-00:06:41.720 --> 00:06:44.690
-like that. There are flow.
-They, they really are just
+00:05:28.170 --> 00:05:29.490
+of the talks I've been
+seeing and a lot of
 
 106
-00:06:44.960 --> 00:06:48.470
-here's the world. Here's what
-happens in this world. And
+00:05:29.490 --> 00:05:31.440
+the blog posts are about
+the deep level. This is
 
 107
-00:06:48.470 --> 00:06:52.460
-then this is the result
-and that's, I dunno, it's,
+00:05:31.440 --> 00:05:33.540
+how we make containers work
+in the Linux kernel, but
 
 108
-00:06:52.460 --> 00:06:55.250
-it's it's it tends to
-mirror human thought a little
+00:05:33.900 --> 00:05:35.640
+the practical, how do I
+use them day to day
 
 109
-00:06:55.250 --> 00:06:58.150
-bit better. I think functional
-programming, Right? You're building kind
+00:05:35.640 --> 00:05:37.950
+as a day to day
+developer seems to be still
 
 110
-00:06:58.150 --> 00:07:01.840
-of a pipeline as you
-move shapes and structures and
+00:05:37.950 --> 00:05:39.390
+a little bit of a
+mystery. And if you just
 
 111
-00:07:01.840 --> 00:07:05.770
-data structures from one form
-to another, without concern for
+00:05:39.390 --> 00:05:41.400
+think about it as a
+way of packaging, your site
 
 112
-00:07:05.770 --> 00:07:09.820
-a state and a state
-changing randomly. Cause it doesn't
+00:05:42.000 --> 00:05:45.420
+with the dependencies and everything
+else ready to go, it
 
 113
-00:07:09.850 --> 00:07:16.480
-count. Yeah, exactly. State doesn't
-change randomly. Although Campbell is
+00:05:45.420 --> 00:05:46.710
+gets a little easier and
+it gets a little more
 
 114
-00:07:16.480 --> 00:07:18.760
-different than Haskell in the
-way that it doesn't necessarily
+00:05:46.710 --> 00:05:49.440
+obvious how that would benefit
+you. I mean, repeatability is
 
 115
-00:07:18.760 --> 00:07:21.910
-track States. So for example,
-you could write a function
+00:05:49.500 --> 00:05:52.410
+the golden standard and deployment
+as someone who also did
 
 116
-00:07:22.460 --> 00:07:24.310
-and in the middle of
-it, throw a print statement
+00:05:52.410 --> 00:05:54.540
+QA in the testing world,
+he wants stuff to be
 
 117
-00:07:24.310 --> 00:07:28.030
-in there and you know,
-that won't be nothing. That's
+00:05:54.540 --> 00:05:58.370
+the same every single time.
+Right? Yeah. It seems Like,
 
 118
-00:07:28.030 --> 00:07:31.300
-fine. You know, that's that's,
-you can do that, which
+00:05:58.580 --> 00:06:01.850
+I think you're right in,
+in so many conferences, it's
 
 119
-00:07:31.330 --> 00:07:36.460
-again, you know, is, is
-a more pragmatic approach because,
+00:06:01.880 --> 00:06:04.490
+a, you know, let's do
+Docker one Oh one and
 
 120
-00:07:36.460 --> 00:07:38.560
-you know, I enjoy being
-able to put a random
+00:06:04.490 --> 00:06:06.230
+then they're like, here's how
+we talk to the Colonel.
 
 121
-00:07:38.560 --> 00:07:42.550
-print statement in, in my
-life, but, you know, I
+00:06:06.290 --> 00:06:09.110
+And that's not, that's not
+necessarily what I want to
 
 122
-00:07:42.550 --> 00:07:44.320
-don't have, That would be
-shocked if I would like
+00:06:09.110 --> 00:06:11.090
+hear about. Right? Like I
+want to turn on the
 
 123
-00:07:44.350 --> 00:07:46.360
-who would, who would be
-against that? That seems like
+00:06:11.090 --> 00:06:13.130
+faucet and have there be
+water. I don't want to
 
 124
-00:07:46.360 --> 00:07:49.300
-a very noncontroversial thing to
-want to do. Well, then
+00:06:13.130 --> 00:06:15.080
+learn how to do plumbing.
+You know what I mean?
 
 125
-00:07:49.330 --> 00:07:51.730
-you're printing to the outside
-world. I mean, that's a
+00:06:15.080 --> 00:06:17.690
+And while plumbing may be
+fascinating, it doesn't help me
 
 126
-00:07:51.730 --> 00:07:54.340
-trivial example, but you know,
-you could do any sort
+00:06:17.690 --> 00:06:19.960
+practically in my life. Yeah.
+And I think that's the,
 
 127
-00:07:54.340 --> 00:07:58.270
-of side effect in the
-middle of your function that
+00:06:19.960 --> 00:06:21.310
+one of the big things.
+I did a series of
 
 128
-00:07:58.270 --> 00:08:01.120
-takes an in and returns
-an end. And you know,
+00:06:21.310 --> 00:06:23.620
+blog posts on how to
+do a basic rail site,
 
 129
-00:08:01.480 --> 00:08:03.400
-the type system wouldn't know
-any better. I mean, in,
+00:06:23.650 --> 00:06:27.310
+very basic rail site and
+Docker with Docker containers and
 
 130
-00:08:03.400 --> 00:08:05.940
-in, in terms of the
-signature of the function, it's,
+00:06:27.310 --> 00:06:30.550
+then deploying with Kubernetes, which
+is one of the current
 
 131
-00:08:05.940 --> 00:08:09.520
-it's unchanged. So that's, that's
-a little bit, a little
+00:06:31.690 --> 00:06:34.750
+contenders in the space of
+container management. That one happens
 
 132
-00:08:09.520 --> 00:08:11.530
-bit different. You couldn't quite
-do that in Haskell. So
+00:06:34.750 --> 00:06:37.180
+to be at least partially
+authored by Google. So I
 
 133
-00:08:11.530 --> 00:08:14.260
-it isn't exactly. I mean,
-you still have to wear
+00:06:37.180 --> 00:06:38.950
+have a little more detailed
+knowledge of it, but it's
 
 134
-00:08:14.260 --> 00:08:18.100
-your, your conscious programmer hat,
-but at the cost of,
+00:06:38.950 --> 00:06:41.440
+entirely open source. There's a
+lot of, there's more contributors
 
 135
-00:08:18.970 --> 00:08:22.450
-you know, I don't know,
-it's convenient. I so far,
+00:06:41.440 --> 00:06:43.270
+outside of Google at this
+point than there are inside,
 
 136
-00:08:22.450 --> 00:08:26.800
-I haven't really been burned
-badly with that, but, you
+00:06:43.270 --> 00:06:48.100
+which is awesome. And there
+are some pretty big stumbling
 
 137
-00:08:26.800 --> 00:08:30.100
-know, I suppose one could
-be, So one of the
+00:06:48.100 --> 00:06:50.410
+blocks. If you're thinking about
+a system like rails or
 
 138
-00:08:30.100 --> 00:08:33.760
-things that makes things like
-Ocala and functional programming languages
+00:06:50.410 --> 00:06:53.620
+a system like Django and
+containerizing, first of all, where
 
 139
-00:08:33.760 --> 00:08:37.090
-like, Oh, camel safer and
-correct me if I'm wrong
+00:06:53.620 --> 00:06:55.390
+do you put the database?
+How does that go? And
 
 140
-00:08:37.090 --> 00:08:39.160
-because I'm just learning here.
-Is it because it's a
+00:06:55.390 --> 00:06:58.600
+that's always a huge stumbling
+block for folks. Another stumbling
 
 141
-00:08:39.160 --> 00:08:44.890
-pass by value, functional programming
-language Pass by value. I
+00:06:58.600 --> 00:07:00.760
+block is, well, how do
+you deal with database migrations?
 
 142
-00:08:44.890 --> 00:08:46.930
-don't really know what that
-means. Like as opposed to
+00:07:01.570 --> 00:07:03.970
+But at the same time,
+if you do the work
 
 143
-00:08:46.930 --> 00:08:49.090
-pass by reference, I can't
-give you a reference to
+00:07:03.970 --> 00:07:07.120
+upfront and there's generally pretty
+good patterns for solving those
 
 144
-00:08:49.090 --> 00:08:51.850
-an integer and have you
-mess with it. Mm. Actually
+00:07:07.120 --> 00:07:10.420
+stumbling blocks, you also get
+some pretty cool benefits. Containers
 
 145
-00:08:51.850 --> 00:08:54.820
-you can and no camel.
-So there's actually a keyword.
+00:07:10.420 --> 00:07:15.580
+make auto-scaling fairly easy because
+you have this box, this
 
 146
-00:08:54.820 --> 00:08:56.850
-Well, not a keyword. It's
-actually just a function called
+00:07:15.820 --> 00:07:18.670
+package that is your app.
+And there's a lot of
 
 147
-00:08:56.850 --> 00:09:01.650
-ref, which makes something that
-has a mutable value to
+00:07:18.670 --> 00:07:21.220
+folks to do auto-scaling by
+just making more VMs. But
 
 148
-00:09:01.650 --> 00:09:03.330
-it. So you could say,
-you know, you could have
+00:07:21.220 --> 00:07:22.810
+the cool thing about containers
+is that I can put
 
 149
-00:09:03.330 --> 00:09:06.720
-a counter that is mutable,
-so Campbell again, another, another
+00:07:22.810 --> 00:07:25.840
+the same container multiple times
+on one VM and I
 
 150
-00:09:06.720 --> 00:09:09.390
-trade off here, anytime you
-want to make immutable data
+00:07:25.840 --> 00:07:29.410
+get additional throughput. I get
+additional capacity for my site,
 
 151
-00:09:09.390 --> 00:09:13.080
-structure or something, something mutable
-you can with explicitly with
+00:07:29.860 --> 00:07:31.870
+and that's really handy for
+all doing things like auto
 
 152
-00:09:13.080 --> 00:09:15.750
-a keyword. So it's kind
-of like, okay, you're the
+00:07:31.870 --> 00:07:35.740
+scaling and Kubernetes supports that
+as of, I believe the
 
 153
-00:09:15.750 --> 00:09:18.240
-boss. If you want to
-make this mutable, that's great.
+00:07:35.740 --> 00:07:38.410
+one, one release and some
+of the other container management
 
 154
-00:09:18.240 --> 00:09:20.340
-We're just going to represent
-this in the type system
+00:07:38.410 --> 00:07:40.930
+tools coming out from other
+cloud vendors also support that.
 
 155
-00:09:20.430 --> 00:09:24.540
-and we're going to know
-about it. So actually it's
+00:07:41.560 --> 00:07:44.410
+And so there's a lot
+of cool advantages. And the
 
 156
-00:09:24.540 --> 00:09:26.670
-like when there is a
-bug, you know exactly where
+00:07:44.410 --> 00:07:46.780
+actual day to day packaging
+up over the container is
 
 157
-00:09:26.670 --> 00:09:28.940
-to look, Oh, I was
-going to ask you like,
+00:07:46.780 --> 00:07:50.200
+not that hard because doctors
+have been great. Docker hub
 
 158
-00:09:28.940 --> 00:09:30.770
-wait a second. I thought
-we were talking about the
+00:07:50.230 --> 00:07:54.580
+has example containers for pretty
+much every web framework that
 
 159
-00:09:30.770 --> 00:09:33.320
-magic of not having state
-and side effects. And here
+00:07:54.580 --> 00:07:56.470
+you'd want as long as
+it runs on some flavor
 
 160
-00:09:33.320 --> 00:09:37.280
-you just said, well, there's
-a, like, don't eat pork.
+00:07:56.470 --> 00:07:58.720
+of Linux. So if you
+have rails, you want engine
 
 161
-00:09:37.940 --> 00:09:41.390
-If you do, here are
-some great recipes. Well look,
+00:07:58.720 --> 00:08:01.660
+X, you want Django. There's
+a, there's a container sitting
 
 162
-00:09:41.390 --> 00:09:45.650
-I think, you know, sometimes
-an imperative solution makes sense.
+00:08:01.660 --> 00:08:02.770
+out there that you can
+at least use as a
 
 163
-00:09:45.680 --> 00:09:47.840
-You know, so Kamal has
-four loops. It has wild
+00:08:02.770 --> 00:08:04.930
+starting point. And there's a
+lot of folks will say,
 
 164
-00:09:47.840 --> 00:09:52.520
-loops. It has mutable stuff.
-You can have, you know,
+00:08:04.930 --> 00:08:07.570
+those containers are big. The
+rails container in particular has
 
 165
-00:09:53.060 --> 00:09:56.570
-variable length arrays. I think.
-So. I mean, you can,
+00:08:07.960 --> 00:08:11.650
+database drivers for both my
+SQL and Postgres, and most
 
 166
-00:09:56.570 --> 00:09:59.660
-you can have these mutable
-things. It's just a, it's
+00:08:11.650 --> 00:08:13.810
+folks don't need both of
+those. Most folks would benefit
 
 167
-00:09:59.660 --> 00:10:02.090
-just, you gotta wear your
-big kid hat and know
+00:08:13.810 --> 00:08:17.080
+from only having one, but
+at least gets you started.
 
 168
-00:10:02.090 --> 00:10:05.180
-when to use them. So
-sometimes, sometimes a four loop
+00:08:17.080 --> 00:08:19.270
+It makes the barrier to
+entry, actually a lot smaller
 
 169
-00:10:05.210 --> 00:10:07.940
-is a good solution. There's,
-you know, no, one's, you
+00:08:19.270 --> 00:08:21.400
+than you get. When you're
+sitting there listening to the,
 
 170
-00:10:07.940 --> 00:10:10.370
-know, you don't have to
-use a, you know, some
+00:08:21.400 --> 00:08:22.930
+and this is how we
+act the kernel to do
 
 171
-00:10:10.370 --> 00:10:15.140
-sort of recursive, you know,
-looping through a list for
+00:08:22.930 --> 00:08:25.630
+this following thing. You just
+actually sit down and try
 
 172
-00:10:15.140 --> 00:10:17.600
-everything. You know, sometimes you
-want a sorting algorithm that's
+00:08:25.630 --> 00:08:27.820
+it. It's really not that
+hard, which surprised me a
 
 173
-00:10:17.600 --> 00:10:21.080
-going to mutate, what would
-you give it? But I
+00:08:27.820 --> 00:08:29.620
+lot. I actually did a
+talk called dev ops for
 
 174
-00:10:21.080 --> 00:10:23.750
-rarely reach for those things.
-It's interesting. Okay. Well also
+00:08:29.620 --> 00:08:32.410
+the lazy using containers as
+a way to be lazy.
 
 175
-00:10:23.750 --> 00:10:27.960
-has an object system. That's
-very great. And you know,
+00:08:32.830 --> 00:08:34.090
+Because once you have a
+bat, once you have a
 
 176
-00:10:27.960 --> 00:10:32.630
-I'd never use it. And
-actually it's funny, there was
+00:08:34.090 --> 00:08:36.550
+bundled up the deployment, part's
+actually pretty simple because you're
 
 177
-00:10:32.630 --> 00:10:35.060
-a stack overflow question the
-other day about when should
+00:08:36.550 --> 00:08:39.220
+letting Docker or some hosted
+container service, do it for
 
 178
-00:10:35.060 --> 00:10:38.750
-I use object oriented Stefano,
-camel. And the answer was
+00:08:39.220 --> 00:08:43.330
+you. So let me, let
+me go back and grab
 
 179
-00:10:38.750 --> 00:10:41.900
-well, it's never really worth
-it. And I think that's
+00:08:43.330 --> 00:08:45.400
+a couple of words and
+what you said and dig
 
 180
-00:10:41.900 --> 00:10:44.690
-funny, it's like, you know,
-this added complexity of objects
+00:08:45.400 --> 00:08:47.560
+a little bit deeper into
+them. Because one thing that
 
 181
-00:10:44.720 --> 00:10:48.110
-just isn't worth it. And
-that seems to be the
+00:08:47.560 --> 00:08:50.890
+you said was consistency. And
+then you also said a
 
 182
-00:10:48.110 --> 00:10:51.230
-viewpoint I've seen mainly in
-my limited time in the
+00:08:50.890 --> 00:08:54.070
+number of times, not worrying,
+not worrying, which made me
 
 183
-00:10:51.230 --> 00:10:56.900
-Oklahoma community. But, but yeah,
-people do use objects, but
+00:08:54.070 --> 00:08:57.300
+realize that there's been many,
+many years where we live
 
 184
-00:10:57.290 --> 00:11:01.040
-again, rarely reach for them.
-Same thing with mutable mutability.
+00:08:57.300 --> 00:09:00.540
+in fear of our deployments,
+right? And this is bigger
 
 185
-00:11:01.070 --> 00:11:03.740
-I mean, it's there, but
-you rarely reach for it.
+00:09:00.540 --> 00:09:03.660
+than continuous integration and continuous
+deployment. It's just like, I
 
 186
-00:11:04.430 --> 00:11:06.530
-Interesting. Cause what I'm trying
-to get a sense of
+00:09:03.660 --> 00:09:06.060
+don't really know if these
+15 machines in the web
 
 187
-00:11:06.530 --> 00:11:09.950
-is that every language has
-its own. You know, you
+00:09:06.060 --> 00:09:08.670
+farm all have the same
+bits on them and if
 
 188
-00:11:09.950 --> 00:11:12.380
-talk about religion or picking
-religion and how you're very
+00:09:08.670 --> 00:09:10.500
+they're consistent and if they
+are in fact what I
 
 189
-00:11:13.370 --> 00:11:17.390
-enthusiastic evangelist of this thing.
-You know, how intense of
+00:09:10.500 --> 00:09:13.580
+wanted to. Yeah. And so
+let's talk about the consistency
 
 190
-00:11:17.390 --> 00:11:19.010
-a religion is it? You
-know what I mean? Like
+00:09:13.580 --> 00:09:17.510
+side first. So there are
+lots of ways to deal
 
 191
-00:11:19.010 --> 00:11:21.620
-is it that will shout,
-not use objects when I
+00:09:17.510 --> 00:09:19.730
+with consistency. And again, I'm
+coming from a Ruby and
 
 192
-00:11:21.620 --> 00:11:22.980
-don't hear some objects, you
-can use it, but you
+00:09:19.730 --> 00:09:22.160
+node background. So I'm sure
+that other web frameworks have
 
 193
-00:11:22.980 --> 00:11:25.400
-really probably shouldn't, you know
-what I mean? It, it
+00:09:22.160 --> 00:09:24.830
+better or worse or similar
+ways of dealing with this,
 
 194
-00:11:25.440 --> 00:11:27.740
-is a bit that is
-kind of a paradox, right?
+00:09:24.830 --> 00:09:28.520
+but in Ruby land, especially
+rails, land, and even a
 
 195
-00:11:27.740 --> 00:11:30.860
-Cause it's like functional programming
-is life, but also here's
+00:09:28.520 --> 00:09:31.220
+node, you spend a lot
+of time stringing together, other
 
 196
-00:11:30.860 --> 00:11:34.340
-some objects, but I guess,
-you know, the thing is
+00:09:31.220 --> 00:09:33.770
+people's libraries. And then you're
+pulling those from some canonical
 
 197
-00:11:34.340 --> 00:11:39.290
-they represent objects in, in
-a coherent way in the
+00:09:33.770 --> 00:09:38.330
+source, whether that's NPM or
+rubygems.org or the equivalent for
 
 198
-00:11:39.290 --> 00:11:42.530
-type system. I think they
-do a pretty good job
+00:09:38.330 --> 00:09:41.630
+various other web frameworks. And
+is anyone who's done that
 
 199
-00:11:42.530 --> 00:11:48.980
-of that. But you know,
-really the only religious, I
+00:09:41.630 --> 00:09:45.470
+professionally knows those services are
+almost always a labor of
 
 200
-00:11:48.980 --> 00:11:53.170
-would say quality of Oak
-camel is all hail the
+00:09:45.470 --> 00:09:49.190
+love by the community. People
+aren't paying to keep rubygems.org
 
 201
-00:11:53.170 --> 00:11:58.690
-ML type system, all hail
-pragmatism and you know, all
+00:09:49.190 --> 00:09:52.280
+up or npm.org. It's actually
+not entirely true in Ruby
 
 202
-00:11:58.690 --> 00:12:02.230
-hail performance. Okay. Well, you
-know, has, because of just
+00:09:52.370 --> 00:09:54.500
+Ruby lands now because there's
+a group of companies that
 
 203
-00:12:02.380 --> 00:12:05.440
-how great the type inferences
-and how sound the type
+00:09:54.500 --> 00:09:57.950
+have decided to sponsor ruby.org,
+but they decided to sponsor
 
 204
-00:12:05.440 --> 00:12:08.380
-system is, you can do
-all of these static checks
+00:09:57.950 --> 00:09:59.180
+it because they needed it
+to be up and they
 
 205
-00:12:08.900 --> 00:12:11.950
-and then basically for performance,
-you erase most of the
+00:09:59.180 --> 00:10:02.720
+needed it to be consistent.
+And I've been bitten by
 
 206
-00:12:11.950 --> 00:12:15.550
-type stuff at runtime. So
-you get really blazing, fast
+00:10:02.780 --> 00:10:05.270
+a developer on my team,
+not being careful enough with
 
 207
-00:12:15.550 --> 00:12:20.620
-performance with a really sound
-type system. And that's pretty
+00:10:05.270 --> 00:10:08.900
+the version dependency and having
+a library. We needed version
 
 208
-00:12:20.620 --> 00:12:24.460
-great. And it's also, you
-know, yeah, it's just, it's,
+00:10:08.900 --> 00:10:11.150
+than some breaking way and
+only half the machines getting
 
 209
-00:12:24.540 --> 00:12:26.860
-it's like a great general
-purpose language. So like for
+00:10:11.150 --> 00:10:13.730
+it because of we did
+the rollout over a course
 
 210
-00:12:26.860 --> 00:12:29.140
-pretty much anything you could
-ever want to do, you
+00:10:13.730 --> 00:10:17.090
+of several days, or we
+auto scaled up two days
 
 211
-00:12:29.140 --> 00:12:32.860
-know, whether it's systems coding,
-whether, you know, I was,
+00:10:17.090 --> 00:10:19.280
+after a release. And in
+that two days, a new
 
 212
-00:12:32.980 --> 00:12:35.380
-I was talking to, to,
-you know, our mutual friend,
+00:10:19.280 --> 00:10:22.490
+version of something came out
+and it broke half of
 
 213
-00:12:35.380 --> 00:12:38.020
-Rachel at jet and they
-use F sharp, which is,
+00:10:22.490 --> 00:10:25.670
+the machines and someone who's
+done ops and testing. The
 
 214
-00:12:38.320 --> 00:12:42.190
-you know, a basic copy
-of <inaudible> and you know,
+00:10:25.670 --> 00:10:28.910
+worst thing in the world
+is a bug that only
 
 215
-00:12:42.190 --> 00:12:45.820
-they use F sharp for
-various end points for, you
+00:10:29.030 --> 00:10:31.760
+reprots half the time, especially
+when you can't figure out
 
 216
-00:12:45.820 --> 00:12:51.490
-know, just like funneling glue
-in between different services, you
+00:10:31.760 --> 00:10:33.710
+exactly what half the time
+is. And when you're round
 
 217
-00:12:51.490 --> 00:12:54.010
-know, so you can use
-it for anything and it
+00:10:33.710 --> 00:10:37.070
+robining requests, that makes it
+even harder. And so they,
 
 218
-00:12:54.040 --> 00:12:57.190
-pretty much works great. So
-yeah, it's, you know, you
+00:10:37.070 --> 00:10:39.380
+one of the things I
+like about containers is that
 
 219
-00:12:57.190 --> 00:12:59.770
-can use mutability, you can
-use objects, all that stuff.
+00:10:39.380 --> 00:10:42.140
+you build that container once
+and then every single machine
 
 220
-00:13:00.610 --> 00:13:02.320
-And I will say whenever
-I have a bug, I
+00:10:42.140 --> 00:10:44.720
+gets the exact same bits.
+And whether those bits are
 
 221
-00:13:02.320 --> 00:13:05.670
-always know where to look.
-Okay. So you threw a,
+00:10:44.720 --> 00:10:47.630
+the ones you want is,
+you know, that's up to
 
 222
-00:13:05.760 --> 00:13:07.920
-when people talk about subjects
-that they're really familiar with,
+00:10:47.630 --> 00:10:49.790
+your QA process and your
+build process, but at least
 
 223
-00:13:08.640 --> 00:13:11.700
-they throw out acronyms and
-terms that people aren't necessarily
+00:10:49.790 --> 00:10:52.190
+all the machines have the
+same vets and all the
 
 224
-00:13:11.700 --> 00:13:14.820
-familiar with. So you just
-threw out the, you said
+00:10:52.190 --> 00:10:56.090
+machines have the same base
+file system, too. I know
 
 225
-00:13:14.820 --> 00:13:18.630
-all hail the ML type
-system and ML was a
+00:10:56.090 --> 00:10:59.540
+lots of folks who are
+slowly upgrading, like they've, they've
 
 226
-00:13:18.630 --> 00:13:21.390
-functional programming language. That's as
-old as I am that
+00:10:59.750 --> 00:11:01.850
+put in a longterm contract
+with their called vendor for
 
 227
-00:13:21.390 --> 00:13:24.120
-Robyn Milner made in the
-seventies. What is the ML
+00:11:01.850 --> 00:11:03.950
+a specific machine type and
+they own, and now they
 
 228
-00:13:24.120 --> 00:13:28.230
-type system? What does that
-mean to camel? That ML
+00:11:03.950 --> 00:11:06.260
+need extra machines. So they're
+gonna have some of their
 
 229
-00:13:28.230 --> 00:13:32.340
-type system to Oko means?
-Yeah, that's, that's a good
+00:11:06.260 --> 00:11:08.120
+machines be an older machine
+type. And some of their
 
 230
-00:13:32.340 --> 00:13:37.500
-question. The Henry Milner algorithm
-for type stuff, you know,
+00:11:08.120 --> 00:11:11.090
+machines be a newer, more
+powerful machine type. And for
 
 231
-00:13:37.500 --> 00:13:39.810
-I'm not a, I know
-nothing about type theory, but
+00:11:11.090 --> 00:11:13.160
+the most part, it shouldn't
+matter. But if you're doing
 
 232
-00:13:40.020 --> 00:13:42.600
-we have a, we have
-like higher kind of types.
+00:11:13.160 --> 00:11:14.480
+a lot of stuff, like
+you're doing a lot of
 
 233
-00:13:42.600 --> 00:13:46.320
-So we have, you know,
-let's see when I met
+00:11:15.500 --> 00:11:20.210
+file processing image processing, video
+transcoding, maybe the difference in
 
 234
-00:13:46.320 --> 00:13:48.150
-you at the conference, I
-went to a type theory,
+00:11:20.210 --> 00:11:24.050
+disc size or the difference
+in GPU is matters. And
 
 235
-00:13:48.150 --> 00:13:51.330
-one Oh one class. Right.
-So they were talking about,
+00:11:24.230 --> 00:11:26.210
+when you have containers, you
+have a little bit more
 
 236
-00:13:51.930 --> 00:13:55.830
-you know, stuff I had
-heard before monads monitors and
+00:11:26.210 --> 00:11:29.630
+access to controlling that, especially
+if you use a attached,
 
 237
-00:13:55.830 --> 00:13:58.920
-Funkster's right. I mean all
-that stuff. So Kamal has
+00:11:29.840 --> 00:11:32.660
+attached to network discs, as
+opposed to using the disc
 
 238
-00:13:58.920 --> 00:14:03.420
-Funkster's yeah. This is the
-kind of thing where people
+00:11:32.660 --> 00:11:35.420
+inside your container. So that's
+kind of the thing on
 
 239
-00:14:03.420 --> 00:14:06.930
-say the Lambda calculus casually
-over lunch. Yeah. It's like
+00:11:35.420 --> 00:11:37.520
+the consistency and that a
+lot of that's coming from
 
 240
-00:14:07.080 --> 00:14:11.220
-modules, parameterized over modules. So,
-you know, we, so funders
+00:11:37.520 --> 00:11:39.500
+fear from my place. Cause
+I mean, I carried a
 
 241
-00:14:11.220 --> 00:14:14.430
-or something I literally never
-use, but they're there and
+00:11:39.500 --> 00:11:42.980
+pager for three years working
+in ops and QA. And
 
 242
-00:14:14.430 --> 00:14:17.880
-there's actually great ways to
-use them. The unikernel project
+00:11:42.980 --> 00:11:45.200
+the worst thing I hated
+was when something didn't RevPro
 
 243
-00:14:17.880 --> 00:14:21.960
-I work on uses Funkster's
-galore, there's even a library
+00:11:45.200 --> 00:11:48.740
+in test. And I know
+cause I've done these container
 
 244
-00:14:21.960 --> 00:14:25.460
-called funk Toria to make
-your funders better. So it's
+00:11:48.740 --> 00:11:51.500
+deployments. Now that the machine
+that I deploy, the set
 
 245
-00:14:25.980 --> 00:14:30.180
-turtles all the way down,
-you know? And so yeah,
+00:11:51.500 --> 00:11:55.450
+that I deploy locally, exactly
+the same set of code
 
 246
-00:14:30.180 --> 00:14:33.360
-we have all these, you
-know, there's, there's, there's even
+00:11:55.450 --> 00:11:57.400
+or the stuff that I
+deployed to the server that
 
 247
-00:14:33.360 --> 00:14:37.470
-polymorphic types, which are types
-where, you know, you can,
+00:11:57.400 --> 00:12:00.010
+sits under my desk is
+exactly the same code and
 
 248
-00:14:37.470 --> 00:14:39.720
-you don't necessarily have to
-specify what type they will
+00:12:00.010 --> 00:12:02.590
+will behave in exactly the
+same way when I deploy
 
 249
-00:14:39.720 --> 00:14:43.020
-be. And as the program
-goes along, you can sort
+00:12:02.590 --> 00:12:04.360
+it to the cloud. Assuming
+that the base OS is
 
 250
-00:14:43.020 --> 00:14:46.980
-of add to that type
-with different types. So it
+00:12:04.360 --> 00:12:06.640
+the same and getting the
+base of us to be
 
 251
-00:14:46.980 --> 00:14:49.200
-gives you sort of a
-dynamic typing type of thing.
+00:12:06.640 --> 00:12:11.700
+the same as easy. Yeah.
+Before containers, I felt like
 
 252
-00:14:49.210 --> 00:14:52.010
-So there's open types and
-all of these different types
+00:12:11.700 --> 00:12:14.160
+I was either fighting with
+the file system and my
 
 253
-00:14:52.010 --> 00:14:57.470
-of types that allow you
-to do dynamic ish type
+00:12:14.160 --> 00:12:17.190
+deployment to make sure it
+was consistent and reliable. And
 
 254
-00:14:57.470 --> 00:15:03.590
-things. And yeah. So, but
-basically what that means on
+00:12:17.190 --> 00:12:19.650
+I would always end up
+with one file being, you
 
 255
-00:15:03.590 --> 00:15:06.560
-a day to day basis
-for me is that when
+00:12:19.650 --> 00:12:21.060
+know, some file being out
+of date. And then of
 
 256
-00:15:06.560 --> 00:15:11.330
-I write a function that
-takes something and uses another
+00:12:21.060 --> 00:12:22.680
+course, then it's a flaky
+bug. You have to go
 
 257
-00:15:11.330 --> 00:15:13.760
-function. Like for example, let's
-say I wanted to make
+00:12:22.680 --> 00:12:26.280
+hunt down. Or on the
+other side, do everything with
 
 258
-00:15:13.760 --> 00:15:16.730
-my, you know, genus some
-that's like, let's say, let
+00:12:26.310 --> 00:12:29.040
+virtual machines, which were so
+heavy. It's like, this is
 
 259
-00:15:16.730 --> 00:15:20.630
-Gina some take I and
-J right. And then I'm
+00:12:29.040 --> 00:12:32.040
+only a hundred megabyte web
+application. Let me go and
 
 260
-00:15:20.630 --> 00:15:24.440
-going to, I plus J
-there's only one thing that
+00:12:32.040 --> 00:12:35.520
+deploy this 30 gigabyte VM
+image that gets, you know,
 
 261
-00:15:24.440 --> 00:15:26.270
-these I and J could
-ever be. And that's an
+00:12:35.530 --> 00:12:37.800
+gets me what I need.
+And it seems like containers.
 
 262
-00:15:26.270 --> 00:15:30.600
-integer. Why? Because I'm using
-a plus. So it's, it's
+00:12:38.190 --> 00:12:40.950
+Yeah, they do. Especially in
+production. They do have the
 
 263
-00:15:30.650 --> 00:15:35.210
-going to only unify with
-one type. And that unification
+00:12:40.950 --> 00:12:43.230
+disadvantage of at least I,
+I do all my development
 
 264
-00:15:35.210 --> 00:15:38.330
-is done by some very
-fancy type thing that I
+00:12:43.230 --> 00:12:45.390
+on a Mac and I
+still have to run virtual
 
 265
-00:15:38.330 --> 00:15:40.850
-really know nothing about nor
-do I really need to
+00:12:45.390 --> 00:12:49.110
+machines to host my containers.
+But it's, it's different than
 
 266
-00:15:40.850 --> 00:15:43.390
-know anything about it. So
-that's some kind of type
+00:12:49.110 --> 00:12:51.060
+when I had to do
+all my development against the
 
 267
-00:15:43.390 --> 00:15:46.300
-inference that is happening. And
-it's like, okay, I see
+00:12:51.060 --> 00:12:53.490
+virtual machine, which I did
+for nine months. Cause we
 
 268
-00:15:46.300 --> 00:15:48.190
-the two ans going in,
-there's an incoming coming out.
+00:12:53.490 --> 00:12:57.090
+deployed, we set up a,
+a virtual machine image that
 
 269
-00:15:48.190 --> 00:15:51.040
-And that's, that's the end
-of it. Exactly. And this
+00:12:57.090 --> 00:12:59.760
+we all use that mirrored
+pretty closely our production image.
 
 270
-00:15:51.040 --> 00:15:52.930
-can be kind of a
-hurdle for people who are
+00:12:59.760 --> 00:13:01.260
+And then we all had
+to, as a stage into
 
 271
-00:15:52.930 --> 00:15:55.390
-just starting. I think, because,
-you know, if you're coming
+00:13:01.260 --> 00:13:03.960
+the local virtual machine and
+do our, do all of
 
 272
-00:15:55.390 --> 00:15:58.720
-from something like Ruby or
-Python or JavaScript, you might
+00:13:03.960 --> 00:13:07.830
+our development and testing via
+SSH and SEP. And it
 
 273
-00:15:58.720 --> 00:16:04.090
-not realize what it means
-to have a fully coherent
+00:13:07.830 --> 00:13:10.410
+was just, it was, it
+was incredibly painful. But the
 
 274
-00:16:04.780 --> 00:16:08.290
-constraint system. So for example,
-you might be using a
+00:13:10.410 --> 00:13:12.120
+reason we had to do
+that was that was the
 
 275
-00:16:08.290 --> 00:16:10.450
-variable in a certain way
-and sort of a more
+00:13:12.120 --> 00:13:14.760
+only way to make it
+so that on a contracting
 
 276
-00:16:10.450 --> 00:16:14.260
-dynamic style and then unaware
-that, you know, you've actually
+00:13:14.760 --> 00:13:16.830
+team where we had people
+cycling in and out every
 
 277
-00:16:14.260 --> 00:16:17.500
-created a pretty incomplete system.
-It saves you from bugs,
+00:13:16.830 --> 00:13:20.400
+couple months, everyone's dev environment
+was close enough to production
 
 278
-00:16:17.890 --> 00:16:20.170
-for sure. But in the
-beginning you might be like,
+00:13:20.400 --> 00:13:22.680
+that we wouldn't end up
+with crazy incompatibilities when we
 
 279
-00:16:20.170 --> 00:16:22.690
-why can't I just do
-this? Why, why is it
+00:13:22.680 --> 00:13:24.930
+pushed. And that was with
+a team that was doing
 
 280
-00:16:22.690 --> 00:16:24.790
-yelling at me? Why am
-I getting these warnings from
+00:13:24.930 --> 00:13:29.040
+a good job of continuous
+integration and relatively continuous deployment
 
 281
-00:16:24.790 --> 00:16:27.400
-the compiler? Why is it,
-why is it, why is
+00:13:29.040 --> 00:13:31.020
+where to play a couple
+of times a week. And
 
 282
-00:16:27.400 --> 00:16:29.920
-it not a, I don't
-know why isn't it giving
+00:13:31.020 --> 00:13:32.520
+we did a pretty good
+job of testing and code
 
 283
-00:16:29.920 --> 00:16:31.930
-me the head on this
-list while you've you have
+00:13:32.520 --> 00:13:35.880
+reviews and we still had
+those problems. So the fact
 
 284
-00:16:31.930 --> 00:16:34.330
-a nested list and you
-didn't realize it, or you've
+00:13:35.880 --> 00:13:39.300
+that containers, we were looking
+at containers specifically because we
 
 285
-00:16:34.330 --> 00:16:38.200
-used it away where this
-function was expecting a string,
+00:13:39.300 --> 00:13:41.820
+needed something a little more
+lightweight and a little more
 
 286
-00:16:38.200 --> 00:16:40.540
-but you gave it a
-list. And even though it
+00:13:41.820 --> 00:13:44.820
+consistent. And I mean, there's
+great tools for configuring your,
 
 287
-00:16:40.540 --> 00:16:43.360
-might've worked in something like
-Python, it won't work in
+00:13:45.030 --> 00:13:47.130
+your systems. I mean, there's
+things like chef and puppet
 
 288
-00:16:43.360 --> 00:16:46.120
-Ocala because the type system
-makes sure that everything is
+00:13:47.130 --> 00:13:50.340
+and I've used them and
+they're wonderful, but they don't
 
 289
-00:16:46.120 --> 00:16:53.140
-formally correct. Camel was made
-for formal verification. This episode
+00:13:50.340 --> 00:13:52.860
+have the advantage of having
+everything be neatly packaged off
 
 290
-00:16:53.140 --> 00:16:55.300
-of Hansel minutes is brought
-to you by brain tree
+00:13:52.860 --> 00:13:54.510
+with a bow. When you
+hand it over to the
 
 291
-00:16:55.300 --> 00:16:58.270
-payments. By next year, maybe
-even next week, there could
+00:13:54.510 --> 00:13:56.700
+ops team. That's one of
+the patterns I'm actually seeing
 
 292
-00:16:58.270 --> 00:16:59.950
-be a whole new way
-to pay. Maybe it will
+00:13:56.700 --> 00:13:59.430
+a lot with teams that
+use containers is the development
 
 293
-00:16:59.950 --> 00:17:02.170
-be the next Bitcoin or
-the next Apple pay. Maybe
+00:13:59.430 --> 00:14:03.150
+team is responsible for building
+the containers. They're responsible for
 
 294
-00:17:02.170 --> 00:17:06.220
-even both fortunately brain tree's
-full stack payment platform is
+00:14:03.150 --> 00:14:05.280
+making sure that their containers
+set up and then they
 
 295
-00:17:06.220 --> 00:17:08.770
-easily adaptable to whatever the
-future holds. So you can
+00:14:05.280 --> 00:14:08.220
+pass it over the wall
+to ops as a prepackaged
 
 296
-00:17:08.770 --> 00:17:12.220
-adapt easily to, you can
-accept everything from pounds to
+00:14:08.220 --> 00:14:10.080
+Mundell that ops all they
+have to do is make
 
 297
-00:17:12.220 --> 00:17:15.100
-PayPal, to that next big
-innovation from any device with
+00:14:10.080 --> 00:14:13.110
+sure that there's enough places
+to put that container on
 
 298
-00:17:15.100 --> 00:17:18.430
-one integration. And when that
-new payment method comes out,
+00:14:13.110 --> 00:14:15.540
+the hardware, whether that's virtual
+or on prem hardware or
 
 299
-00:17:18.670 --> 00:17:20.140
-all you have to do
-is update a few lines
+00:14:15.540 --> 00:14:18.630
+whatever the team has. The
+ops team is just responsible
 
 300
-00:17:20.140 --> 00:17:24.340
-of code no late nights,
-no complicated recoding, no stress
+00:14:18.630 --> 00:14:21.480
+for deploying that container into
+the, into the data center
 
 301
-00:17:24.340 --> 00:17:26.770
-about staying ahead of the
-curve. Braintree payments is here
+00:14:21.540 --> 00:14:24.420
+and possibly helping with some
+of the networking stuff, but
 
 302
-00:17:26.770 --> 00:17:33.370
-to help. You can learn
-more@braintreepayments.com slash Hanselman that's Braintree
+00:14:24.510 --> 00:14:27.420
+actually getting all the dependencies.
+It's no longer the operations
 
 303
-00:17:33.370 --> 00:17:40.240
-payments.com/hanselman. The SDK is available
-in lots of languages, including.net
+00:14:27.420 --> 00:14:31.650
+team's responsibility. That is such
+an important point. I'm really
 
 304
-00:17:40.240 --> 00:17:46.450
-node, Java, Perl, and Python,
-Ruby, check it out. So
+00:14:31.650 --> 00:14:33.390
+glad that you brought that
+up because there've been so
 
 305
-00:17:46.450 --> 00:17:49.830
-backing up and kind of
-paraphrasing. So this type system,
+00:14:33.390 --> 00:14:37.190
+many times where I've felt
+that the responsibilities of, of
 
 306
-00:17:49.830 --> 00:17:52.950
-the, the ML type system
-or the, the Hindley Miller
+00:14:37.200 --> 00:14:40.500
+ops, you know, kind of
+their lines were blurred and
 
 307
-00:17:52.950 --> 00:17:55.590
-type system was this kind
-of classical system that was
+00:14:40.500 --> 00:14:43.350
+they were into my space
+and I wanted a certain
 
 308
-00:17:55.590 --> 00:17:58.530
-discovered and then described, and
-someone got a PhD over
+00:14:43.350 --> 00:14:46.350
+file, you know, installed on
+the machine or some global
 
 309
-00:17:58.530 --> 00:18:01.110
-it. And then you can
-make like monotypes and poly
+00:14:46.500 --> 00:14:49.170
+dependency. And I had to
+fill out forms and ask
 
 310
-00:18:01.110 --> 00:18:02.850
-types and free types and
-do all this kind of
+00:14:49.170 --> 00:14:51.650
+permission and, you know, get,
+I couldn't get into a
 
 311
-00:18:02.850 --> 00:18:06.330
-stuff. But Oak camel has
-the static type system. And
+00:14:51.650 --> 00:14:54.350
+locked machine because ultimately what
+it came down to the
 
 312
-00:18:06.330 --> 00:18:10.320
-then also does inference and
-gives you less rope with
+00:14:54.350 --> 00:14:57.650
+root cause was my app
+wasn't neatly packaged up with
 
 313
-00:18:10.320 --> 00:18:13.350
-which to hang yourself. So
-while in other languages, you
+00:14:57.770 --> 00:15:00.380
+all dependencies all the way
+down to the operating system.
 
 314
-00:18:13.350 --> 00:18:15.870
-can cast a string to
-an int and let the,
+00:15:00.770 --> 00:15:04.010
+It went down just halfway.
+And then there were, you
 
 315
-00:18:16.200 --> 00:18:19.920
-let the grenade start flying.
-You're you're more constrained in
+00:15:04.010 --> 00:15:05.540
+know, I had to give
+them a word document for
 
 316
-00:18:19.920 --> 00:18:21.900
-a language like this, cause
-it has to be correct.
+00:15:05.540 --> 00:15:07.760
+God's sake, you know, with
+a list of other, you
 
 317
-00:18:22.020 --> 00:18:24.650
-Is that fair to say?
-Totally fair to say, but,
+00:15:07.760 --> 00:15:10.840
+know, global. Yeah. I will
+admit that at some point
 
 318
-00:18:24.710 --> 00:18:28.190
-but want to denim, even
-though it is statically typed,
+00:15:10.840 --> 00:15:13.810
+in my distant past, I
+figured out what the bribery
 
 319
-00:18:28.190 --> 00:18:30.080
-it's not the same, you
-know, some people listening might
+00:15:13.810 --> 00:15:15.730
+for a particular ops team
+was. And it happened to
 
 320
-00:18:30.080 --> 00:18:33.050
-be thinking, Oh, like Java,
-not like Java in the
+00:15:15.730 --> 00:15:19.000
+be a specific kind of
+candy. And I'm more than
 
 321
-00:18:33.050 --> 00:18:36.500
-sense that you have to
-explicitly state types. You don't,
+00:15:19.000 --> 00:15:21.010
+one occasion knocked on the
+door to the knock and
 
 322
-00:18:36.500 --> 00:18:39.290
-I never have to say
-into I and J I
+00:15:21.010 --> 00:15:22.540
+with a, you know, handful
+of candy. And I'm like
 
 323
-00:18:39.290 --> 00:18:42.770
-can it's I can totally
-do that in some, in
+00:15:22.540 --> 00:15:26.740
+here now, can you please
+give me SSH access or
 
 324
-00:18:42.770 --> 00:18:45.800
-some cases where maybe you've
-I know now maybe it's
+00:15:27.490 --> 00:15:29.380
+Telnet access or whatever I
+needed so that I can
 
 325
-00:18:45.800 --> 00:18:48.620
-something, there are some cases
-where you have to explicitly
+00:15:29.380 --> 00:15:31.180
+go see the raw logs
+on this machine so I
 
 326
-00:18:48.620 --> 00:18:50.780
-give the compiler a little
-help. You might find that
+00:15:31.180 --> 00:15:33.940
+can debug this issue. And
+the thing is, I tell
 
 327
-00:18:50.780 --> 00:18:53.360
-every now and then, but
-you won't. And just the
+00:15:33.940 --> 00:15:36.010
+this story to folks and
+most of the folks who've
 
 328
-00:18:53.360 --> 00:18:56.090
-way that you use it,
-it will only unify with,
+00:15:36.010 --> 00:15:37.960
+been in the industry for
+more than four or five
 
 329
-00:18:56.090 --> 00:18:59.540
-with one type. And sometimes
-that's any type, but, you
+00:15:37.960 --> 00:15:39.880
+years, have a similar story
+where they've had to do
 
 330
-00:18:59.540 --> 00:19:02.300
-know, or like, you know,
-you'll see those in, in
+00:15:39.880 --> 00:15:43.300
+some sort of bribery or
+no late night dealing or
 
 331
-00:19:02.360 --> 00:19:05.840
-type signatures, alpha beta, right.
-You know, like let's say,
+00:15:43.540 --> 00:15:46.330
+pushing, pushing things up to
+three levels of managers in
 
 332
-00:19:06.020 --> 00:19:08.360
-you know, the type signature
-of map, right. It takes
+00:15:46.330 --> 00:15:50.110
+order to get access, to
+actually debug their, their issues
 
 333
-00:19:08.360 --> 00:19:10.820
-a let's see, it takes
-a function that takes a
+00:15:50.110 --> 00:15:53.200
+and anything that can help
+make those lines a little
 
 334
-00:19:10.820 --> 00:19:13.520
-to B it takes a
-list of a, and gives
+00:15:53.200 --> 00:15:55.180
+bit cleaner. I think it
+makes everyone happy. Cause then
 
 335
-00:19:13.520 --> 00:19:15.620
-you a list of B,
-right? So that those are
+00:15:55.210 --> 00:15:57.100
+it makes the developer happy.
+Cause they know that what
 
 336
-00:19:15.620 --> 00:19:20.660
-like generic types. But, but
-most of the time it'll,
+00:15:57.610 --> 00:15:59.920
+they've set up will be
+what actually it gets deployed.
 
 337
-00:19:20.690 --> 00:19:23.240
-it'll unify correctly for you.
-You don't have to explicitly
+00:16:00.340 --> 00:16:01.870
+And that there isn't going
+to be someone saying, no,
 
 338
-00:19:23.240 --> 00:19:27.080
-state any type. Okay. I
-got ya. Now, one of
+00:16:01.870 --> 00:16:03.760
+actually I think this other
+version of this library is
 
 339
-00:19:27.080 --> 00:19:29.300
-the cool features of O'Connell
-and other languages have this,
+00:16:03.760 --> 00:16:07.090
+safer, more secure. And at
+the same time, ops is
 
 340
-00:19:29.300 --> 00:19:32.000
-but we're talking about Oak
-camel is this concept of
+00:16:07.090 --> 00:16:09.460
+not going to have to
+deal with feeling responsible for
 
 341
-00:19:32.000 --> 00:19:35.930
-an, of an FFI or
-a foreign function interface. Have
+00:16:09.460 --> 00:16:14.230
+debugging. You know, doc has
+got 80 deployment steps. Cause
 
 342
-00:19:35.940 --> 00:19:38.690
-you used those? I haven't
-really, but I know that
+00:16:14.230 --> 00:16:15.940
+you know, I think a
+lot of us have worked
 
 343
-00:19:38.690 --> 00:19:41.450
-it makes talking to see
-really great. So if I
+00:16:15.940 --> 00:16:18.790
+on that app. You have
+to pull in all of
 
 344
-00:19:41.450 --> 00:19:43.370
-understand correctly, not only does
-it mean that you can
+00:16:18.790 --> 00:16:21.880
+these dependencies, you have to
+install these particular resources. In
 
 345
-00:19:43.370 --> 00:19:46.340
-call C, but you can
-also even make a library,
+00:16:21.880 --> 00:16:24.640
+this particular order, you have
+to start the apps. There's
 
 346
-00:19:46.340 --> 00:19:48.620
-you know, camel and then
-expose it as C. So
+00:16:24.640 --> 00:16:27.910
+a microservices app in the
+following order. Otherwise the database
 
 347
-00:19:48.620 --> 00:19:51.560
-a C programmer would actually
-not even know that it
+00:16:27.910 --> 00:16:30.760
+connections don't get resolved. And
+most of the ops folks
 
 348
-00:19:51.560 --> 00:19:55.310
-was old camel. Yeah. I've,
-I've heard this before an
+00:16:30.760 --> 00:16:32.260
+I know would love to
+get out of that business.
 
 349
-00:19:55.310 --> 00:19:59.090
-IRC. There's also a great
-library called C types. I've
+00:16:32.470 --> 00:16:35.410
+So I think the container,
+I think the containers model
 
 350
-00:19:59.090 --> 00:20:02.090
-never used it, but, but
-that's a thing and people
+00:16:35.410 --> 00:16:38.110
+where the development team deploys
+hands over this package and
 
 351
-00:20:02.090 --> 00:20:05.030
-love doing it. That's a
-thing. And people love doing
+00:16:38.110 --> 00:16:42.130
+says, make this go is
+gonna make everyone happier. Once
 
 352
-00:20:05.030 --> 00:20:07.010
-it. I think what's cool
-about that though. Is it
+00:16:42.130 --> 00:16:43.870
+we get used to it,
+then that's the big, that's
 
 353
-00:20:07.010 --> 00:20:09.860
-reminds me that old camel
-isn't an Island. It's not
+00:16:43.870 --> 00:16:46.900
+the big challenge It, and
+at that point, at that
 
 354
-00:20:09.860 --> 00:20:11.930
-like, Oh, you must be
-this way. And you must
+00:16:46.900 --> 00:16:49.000
+point, they just have to
+think about there's a box
 
 355
-00:20:11.930 --> 00:20:14.480
-live in our world. You
-know, that's a recognition that,
+00:16:49.090 --> 00:16:51.400
+and there's a port, right.
+And make it talk to
 
 356
-00:20:14.500 --> 00:20:17.600
-that you do have to
-interrupt at some point. Yeah,
+00:16:51.400 --> 00:16:55.300
+that port. Yeah. Perhaps there's
+some service discovery stuff. Although
 
 357
-00:20:17.630 --> 00:20:20.870
-no, it's, it's very much
-about interoperability. Like the project
+00:16:55.300 --> 00:16:58.000
+if you're going to use
+one of the managed slightly
 
 358
-00:20:20.870 --> 00:20:23.690
-I'm working on right now.
-So I write in Oak
+00:16:58.000 --> 00:17:02.350
+managed container services from the
+big cloud providers that that
 
 359
-00:20:23.690 --> 00:20:27.230
-camel, I compile the old
-camel bytecode. Then I take
+00:17:02.350 --> 00:17:04.870
+solves itself on its own
+and or at least they
 
 360
-00:20:27.230 --> 00:20:29.660
-that bite code and I
-use a program called JS
+00:17:04.870 --> 00:17:07.480
+have easy ways to do
+that. And most of the
 
 361
-00:20:29.830 --> 00:20:33.500
-camel, which makes JavaScript. And
-then I run this Java
+00:17:07.480 --> 00:17:09.310
+ops teams I know are
+pretty good about setting up
 
 362
-00:20:33.500 --> 00:20:37.070
-script in the node run
-time. So I'm actually writing
+00:17:09.350 --> 00:17:11.920
+the basic network rules and
+those don't change in container
 
 363
-00:20:37.070 --> 00:20:40.460
-a camel and I have
-an electron app. So it's
+00:17:11.920 --> 00:17:15.070
+land. Cause again, it's, it's
+important. It's important on a
 
 364
-00:20:40.460 --> 00:20:43.250
-like kind of like some,
-a lot of song and
+00:17:15.070 --> 00:17:19.010
+box. Can we talk about
+that for a second? You
 
 365
-00:20:43.250 --> 00:20:45.980
-dance, a lot of witchcraft,
-but it's a really nice
+00:17:19.010 --> 00:17:22.030
+you've mentioned a couple of
+different container services. Like once
 
 366
-00:20:45.980 --> 00:20:49.420
-development flow. And I'm, that's
-possible because people wrote these
+00:17:22.030 --> 00:17:24.880
+you have containers, once you've
+picked your container technology, there
 
 367
-00:20:49.420 --> 00:20:53.170
-amazing bindings to know JS
-and bindings to, you know,
+00:17:24.880 --> 00:17:27.430
+are things to manage them
+because it's very rare that
 
 368
-00:20:53.170 --> 00:20:56.320
-express and all these JavaScript
-libraries. So they did all
+00:17:27.430 --> 00:17:29.020
+you're going to have an
+app that lives in one
 
 369
-00:20:56.320 --> 00:20:58.660
-the type work ahead of
-time for me to use
+00:17:29.020 --> 00:17:31.090
+container and you upload that
+one container and that's the
 
 370
-00:20:58.660 --> 00:21:01.540
-this stuff. And, and that's,
-that's really great. The whole
+00:17:31.090 --> 00:17:33.430
+end of at the end
+of it, you might start
 
 371
-00:21:01.540 --> 00:21:04.930
-camel community is really, really
-great. I can't stress that
+00:17:33.430 --> 00:17:35.890
+it. You might get the
+container bug and now it's
 
 372
-00:21:04.930 --> 00:21:09.210
-enough. And you said this
-was called J S of,
+00:17:35.890 --> 00:17:37.600
+a dozen. And then it's
+two dozen. Next thing you
 
 373
-00:21:09.360 --> 00:21:12.960
-okay. Yes. I believe this
-came out of the, the
+00:17:37.600 --> 00:17:40.180
+know, you're managing a swarm
+of hundreds of containers. What
 
 374
-00:21:12.960 --> 00:21:17.190
-oxygen project, which had a
-couple of different, really interesting
+00:17:40.180 --> 00:17:42.640
+are some examples of containers?
+I worked for Google. We
 
 375
-00:21:17.190 --> 00:21:20.100
-things. It was, it was
-a web project. They had
+00:17:42.640 --> 00:17:46.180
+have, we are one of
+the main sponsors behind the
 
 376
-00:21:20.100 --> 00:21:23.730
-like LWT, which is a
-cooperative threading library, which is,
+00:17:46.180 --> 00:17:48.430
+Kubernetes project. We have a
+bunch of folks working on
 
 377
-00:21:24.000 --> 00:21:27.810
-you know, really bread and
-butter in O'Connell it's used
+00:17:48.430 --> 00:17:53.970
+Kubernetes and Kubernetes for folks
+who are familiar with the
 
 378
-00:21:27.810 --> 00:21:30.960
-in pretty much everything. There's
-a lot of cool stuff
+00:17:53.970 --> 00:17:56.190
+ops space and some of
+the technologies at Google, Google
 
 379
-00:21:30.960 --> 00:21:34.410
-that came out of that
-project. Thai XML is another
+00:17:56.190 --> 00:17:58.950
+runs a lot of stuff
+on something called Borg. And
 
 380
-00:21:34.410 --> 00:21:37.260
-one that's, that's pretty popular.
-So they have a lot
+00:17:58.950 --> 00:18:01.860
+what Kubernetes is, is Google
+taking a lot of the
 
 381
-00:21:37.260 --> 00:21:39.300
-of different frameworks that came
-out of that, that I
+00:18:01.860 --> 00:18:04.980
+things we learned about how
+to run containers at scale,
 
 382
-00:21:39.300 --> 00:21:43.260
-think are potentially more popular
-than, than the rest of
+00:18:05.310 --> 00:18:08.190
+the kinds of challenges that
+are common. And we took
 
 383
-00:21:43.260 --> 00:21:45.150
-the project. But I, you
-know, I, I don't really
+00:18:08.190 --> 00:18:11.130
+those lessons from Borg and
+wrote Kubernetes from scratch. And
 
 384
-00:21:45.150 --> 00:21:49.320
-know. And the, the, now
-of course the resulting JavaScript,
+00:18:11.130 --> 00:18:13.920
+what Kubernetes does is it
+says you specify what you
 
 385
-00:21:49.350 --> 00:21:52.080
-can't be really recognizable. I
-assume it looks just like
+00:18:13.920 --> 00:18:17.250
+want the system to look
+like. I have a deep
 
 386
-00:21:52.350 --> 00:21:55.530
-magic, you know, VAR one,
-VAR zero. I mean, you
+00:18:17.280 --> 00:18:20.880
+fondness for programming languages that
+are declarative, where you say
 
 387
-00:21:55.530 --> 00:21:57.600
-don't really think about it
-like that. You're using JavaScript
+00:18:20.880 --> 00:18:22.770
+what you want, not how
+to do something. And so
 
 388
-00:21:57.900 --> 00:22:00.450
-as its own runtime. Aren't
-you like a virtual machine
+00:18:22.770 --> 00:18:25.560
+you might say, I have
+this front end app container
 
 389
-00:22:00.450 --> 00:22:06.750
-of its own, Actually Bloomberg
-made John Campbell to JavaScript a
+00:18:26.220 --> 00:18:28.710
+that I want, at least
+I want six instances of
 
 390
-00:22:06.750 --> 00:22:12.270
-tool and that actually produces
-readable JavaScript. So it's possible
+00:18:28.710 --> 00:18:31.200
+it. I have a backend
+job processor that, you know,
 
 391
-00:22:12.270 --> 00:22:14.940
-that JSO came well, might
-make that a thing. I
+00:18:31.200 --> 00:18:33.000
+maybe sends out an email
+or maybe there's a video
 
 392
-00:22:14.940 --> 00:22:18.060
-don't know if it is
-a thing I don't usually
+00:18:33.000 --> 00:18:35.520
+transcoding or something in the
+background. And I want three
 
 393
-00:22:18.090 --> 00:22:20.520
-need it. I've never had
-like, usually if there's a
+00:18:35.520 --> 00:18:38.340
+instances of that. And then
+I have this database container
 
 394
-00:22:20.520 --> 00:22:22.350
-serious bug, I can kind
-of figure out what it
+00:18:38.340 --> 00:18:39.900
+and I only need one
+instance of that, but it
 
 395
-00:22:22.350 --> 00:22:25.050
-is without needing to even
-read the Java script. But
+00:18:39.900 --> 00:18:42.630
+needs a persistent disc attached
+to it because I don't
 
 396
-00:22:26.640 --> 00:22:30.210
-also because I am familiar
-with web, but, but yeah,
+00:18:42.630 --> 00:18:45.570
+want to, one of the
+pitfalls of containers is that
 
 397
-00:22:30.210 --> 00:22:33.180
-that's, that's a feature in,
-in other tools. So that's
+00:18:46.170 --> 00:18:48.690
+general best practices. You should
+be prepared for your container
 
 398
-00:22:33.180 --> 00:22:35.400
-interesting. Did you know about
-this? Like you said, you
+00:18:48.690 --> 00:18:50.640
+to die at any time.
+Not because they do, but
 
 399
-00:22:35.400 --> 00:22:38.460
-were in node and JavaScript,
-you are a web person,
+00:18:50.640 --> 00:18:53.970
+because the advantages of containers
+are that you can move
 
 400
-00:22:38.460 --> 00:22:40.680
-you didn't really feel it.
-You found Oak camel, and
+00:18:53.970 --> 00:18:56.070
+them around. And so if
+you need something like a
 
 401
-00:22:40.680 --> 00:22:43.770
-then here you are back
-compiling it into JavaScript again.
+00:18:56.070 --> 00:18:58.230
+database, which a lot of
+people are kind of iffy
 
 402
-00:22:44.700 --> 00:22:47.160
-Yeah. Well, I can't, I
-mean, the node ecosystem is
+00:18:58.230 --> 00:19:00.030
+about putting in containers, but
+I've done it and it
 
 403
-00:22:47.160 --> 00:22:50.430
-amazing and I definitely think
-a lot of functional communities
+00:19:00.030 --> 00:19:03.330
+works great. You just need
+to have a disc, some
 
 404
-00:22:50.430 --> 00:22:54.300
-can learn from JavaScript tools
-in the sense that people
+00:19:03.330 --> 00:19:05.250
+sort of block store discs,
+cause they get attached to
 
 405
-00:22:54.300 --> 00:22:57.390
-who, who write stuff in
-JavaScript tend to make things
+00:19:05.250 --> 00:19:08.130
+the container that it can
+put the database files on.
 
 406
-00:22:57.390 --> 00:23:01.860
-that are usable very quickly.
-They make great tools, even
+00:19:09.150 --> 00:19:11.430
+And with Kubernetes, you say,
+you just specify out in
 
 407
-00:23:01.860 --> 00:23:07.120
-though, you know, NPM like
-the left pad. So, you
+00:19:11.430 --> 00:19:15.090
+Yamhill or Jason, this container
+named this many instances, this
 
 408
-00:23:07.120 --> 00:23:09.780
-know, I, there was a
-lot of discussion. We have
+00:19:15.090 --> 00:19:18.150
+container named this many instances.
+And then we also provide
 
 409
-00:23:09.780 --> 00:23:13.410
-a package manager called OPM
-and it's really great. It's
+00:19:18.150 --> 00:19:20.370
+a way through your Kubernetes
+to do discovery where you
 
 410
-00:23:13.410 --> 00:23:16.530
-like the best package manager
-I've ever used. I will
+00:19:20.370 --> 00:19:23.340
+can say everything in this
+container is part of this
 
 411
-00:23:16.530 --> 00:23:19.620
-say if you're starting a
-camel, Oh, Pam get really
+00:19:23.340 --> 00:19:26.430
+service. And so you can
+hook the containers together via
 
 412
-00:23:19.620 --> 00:23:25.500
-comfortable with it. It's fabulous.
-I brought this up for
+00:19:26.430 --> 00:19:29.790
+the service names pretty easily
+and figuring out which IP
 
 413
-00:23:25.500 --> 00:23:28.170
-a reason. What was the
-reason? Yeah. So left pad.
+00:19:29.790 --> 00:19:31.800
+that is in round robining
+and stuff is all taken
 
 414
-00:23:28.200 --> 00:23:30.480
-So, you know, after that
-whole, you know, that guy
+00:19:31.800 --> 00:19:34.350
+care of for you. Once
+you have a Kubernetes cluster
 
 415
-00:23:30.480 --> 00:23:33.510
-took off that really important
-package and, you know, then
+00:19:34.350 --> 00:19:36.450
+up and running and I'm,
+I will admit for me,
 
 416
-00:23:33.780 --> 00:23:37.410
-package disappeared. Yeah. And of
-course there was a discussion,
+00:19:36.450 --> 00:19:39.090
+at least setting up a
+Kubernetes cluster is way more
 
 417
-00:23:37.410 --> 00:23:40.320
-you know, like a little
-bit of, well, Oh, Pam
+00:19:39.090 --> 00:19:42.270
+complicated than I want to
+get into. Luckily hosted Kubernetes
 
 418
-00:23:40.320 --> 00:23:42.570
-has been criticized a bit
-for being slow, you know,
+00:19:42.270 --> 00:19:46.140
+exists, Google calls it Google
+container engine. And so that's
 
 419
-00:23:42.570 --> 00:23:47.360
-there's like a review process
-and that of thing. And
+00:19:46.140 --> 00:19:48.510
+one option. There's also tools
+like Dockers forum, which I've
 
 420
-00:23:47.480 --> 00:23:48.890
-you know, it was kind
-of like, well, which is
+00:19:48.510 --> 00:19:50.970
+played with a bit, it's
+a little bit lighter weight.
 
 421
-00:23:48.890 --> 00:23:50.420
-better. I mean, you know,
-it's like you have a
+00:19:51.720 --> 00:19:55.410
+It's not designed to do
+all the niceties of service
 
 422
-00:23:50.420 --> 00:23:54.230
-sea of garbage or like
-a tiny collection of treasures,
+00:19:55.410 --> 00:19:58.740
+discovery and stuff for you.
+I know Amazon has their
 
 423
-00:23:54.230 --> 00:23:59.300
-right. It's like, which is
-better. Something like unmaintainable or
+00:19:58.740 --> 00:20:00.690
+container product. I know some
+folks who work on it
 
 424
-00:23:59.300 --> 00:24:02.060
-something that's like overly maintained.
-I don't know what the
+00:20:01.200 --> 00:20:05.160
+and it has some, again,
+some slight philosophy differences on
 
 425
-00:24:02.060 --> 00:24:04.940
-right answer is, but it's
-interesting, like the difference in
+00:20:05.370 --> 00:20:08.310
+how containers should be managed
+from Kubernetes. And that's one
 
 426
-00:24:04.940 --> 00:24:07.370
-those communities and kind of
-making tools that sort of
+00:20:08.310 --> 00:20:11.190
+of the things I find
+interesting about this space is
 
 427
-00:24:07.370 --> 00:24:12.290
-bridge those communities, Facebook just
-released reason, which is so,
+00:20:11.190 --> 00:20:13.350
+that there's a couple of
+companies who have been playing
 
 428
-00:24:12.290 --> 00:24:15.890
-so very hot. The syntax
-looks like JavaScript, but it
+00:20:13.350 --> 00:20:15.840
+in it for a while
+and actually using containers in
 
 429
-00:24:15.890 --> 00:24:18.590
-is Ocampo under the hood.
-And they even have tools
+00:20:15.840 --> 00:20:17.490
+production for a while. And
+they all seem to have
 
 430
-00:24:18.590 --> 00:24:21.230
-that turn your old camel
-project into a reason project.
+00:20:17.490 --> 00:20:20.490
+different opinions on best practices.
+And it'll be interesting over
 
 431
-00:24:22.010 --> 00:24:24.470
-So lots of cool stuff
-there, and I'm sure they
+00:20:20.490 --> 00:20:22.320
+the next year or two
+as more people pick up
 
 432
-00:24:24.470 --> 00:24:28.700
-will continue to dump talent
-into that. So, you know,
+00:20:22.320 --> 00:20:25.620
+containers to see which best
+practices seem to come out.
 
 433
-00:24:28.730 --> 00:24:31.280
-if you're listening to this
-and you're wondering, Oh, well,
+00:20:26.160 --> 00:20:28.800
+I have a fondness for
+the Kubernetes system, partly just
 
 434
-00:24:31.310 --> 00:24:33.410
-this is great, but this
-has nothing to do with
+00:20:28.800 --> 00:20:31.410
+because I'm most familiar with
+it, but also because anyone
 
 435
-00:24:33.410 --> 00:24:36.500
-my life or the things
-I build. Definitely check out
+00:20:31.410 --> 00:20:33.660
+who takes care of my
+networking and my service discovery
 
 436
-00:24:36.500 --> 00:24:41.050
-reason. Those people are really
-smart. Interesting, backing up a
+00:20:33.660 --> 00:20:36.000
+for me is going to
+get massive bonus points is
 
 437
-00:24:41.050 --> 00:24:43.330
-little bit to give people
-a little bit of context.
+00:20:36.000 --> 00:20:38.490
+I find that stuff tedious.
+So if I can just
 
 438
-00:24:43.330 --> 00:24:49.810
-You've got 1,213 packages in
-OPM. Oh, Pam, the old
+00:20:38.490 --> 00:20:40.830
+say, Hey, I need five
+versions of this container and
 
 439
-00:24:49.810 --> 00:24:52.390
-camel package manager, you've got
-over a quarter of a
+00:20:40.830 --> 00:20:43.290
+they should all respond to
+this name and we should
 
 440
-00:24:52.390 --> 00:24:55.150
-million in NPM. So that
-definitely gives you the sense
+00:20:43.290 --> 00:20:46.800
+automatically round Robin between them.
+And I can do that
 
 441
-00:24:55.150 --> 00:24:58.570
-of what's, you know, do
-you, do you want a
+00:20:46.800 --> 00:20:49.600
+all six lines of Yammel
+I'm, I'm all, I'm all
 
 442
-00:24:58.570 --> 00:25:01.750
-highly curated and exclusive library
-where everything is guaranteed to
+00:20:49.600 --> 00:20:52.360
+in on that. That's great
+because it lets me be
 
 443
-00:25:01.750 --> 00:25:04.600
-work, you know, or do
-you want 15 copies of
+00:20:52.360 --> 00:20:55.420
+lazy. So there's a lot
+of those. There's just, I
 
 444
-00:25:04.630 --> 00:25:07.480
-pad lift each one of
-which is possibly guaranteed to
+00:20:55.420 --> 00:20:56.800
+mean, those are the three
+big ones that I know
 
 445
-00:25:07.480 --> 00:25:10.960
-work? You know, I, you
-know, I think these are
+00:20:56.800 --> 00:20:58.630
+of. I'm sure there are
+more, that I'm not a
 
 446
-00:25:10.960 --> 00:25:14.320
-unanswerable questions. They are great
-on it as with all
+00:20:58.630 --> 00:21:01.060
+hundred percent aware of. And
+I know that there are
 
 447
-00:25:14.320 --> 00:25:17.080
-good religions. They are the
-great financial questions. So I'm
+00:21:01.060 --> 00:21:03.490
+more people coming out with
+different ways of managing containers
 
 448
-00:25:17.080 --> 00:25:18.880
-teasing, I'm teasing a little
-bit. I'm going to get
+00:21:03.490 --> 00:21:05.620
+every single day. Like when
+I started working on this
 
 449
-00:25:18.880 --> 00:25:21.760
-emails from angry note people
-now. Oh no, I love
+00:21:05.620 --> 00:21:09.040
+a year ago, the list
+was entirely different. So it's
 
 450
-00:25:21.760 --> 00:25:25.570
-node. Yeah. I love the
-ecosystem. I love, you know,
+00:21:09.040 --> 00:21:13.720
+one of those rapidly changing
+things based on people's opinions
 
 451
-00:25:25.750 --> 00:25:28.420
-I love working and, and
-the no JS bindings, it's
+00:21:13.720 --> 00:21:16.450
+and based just also based
+on people's experiences of running
 
 452
-00:25:28.420 --> 00:25:31.690
-its own camel, but it's
-still node, you know, it's,
+00:21:16.450 --> 00:21:19.110
+containers in production and what
+ends up being hard. Right.
 
 453
-00:25:31.720 --> 00:25:35.020
-it's still streams. It's still
-all that good stuff. It's
+00:21:19.140 --> 00:21:22.710
+Right. It seems like right
+now there's like a bit
 
 454
-00:25:35.020 --> 00:25:37.330
-still like, you know, still
-all the stuff you want
+00:21:22.710 --> 00:21:24.480
+of a, I wouldn't say
+a cold war, but you
 
 455
-00:25:37.330 --> 00:25:39.970
-to note. So, So let's
-talk, talk to me a
+00:21:24.480 --> 00:21:26.430
+know, like there's just lots
+of different people doing lots
 
 456
-00:25:39.970 --> 00:25:42.160
-little bit more about this
-reason, reason for a second.
+00:21:26.430 --> 00:21:28.770
+of different innovations. And from
+the people on the outside
 
 457
-00:25:42.160 --> 00:25:43.600
-I've read up a little
-bit about it. You didn't
+00:21:28.770 --> 00:21:31.680
+who maybe aren't doing containers,
+they're hearing all of these
 
 458
-00:25:43.600 --> 00:25:48.880
-see it at facebook.github.io/reason. And
-by the way, if this
+00:21:31.680 --> 00:21:35.340
+strange new words, whether it
+be Kubernetes or zookeeper or
 
 459
-00:25:48.880 --> 00:25:50.770
-is not proof that we've
-officially run out of things,
+00:21:35.370 --> 00:21:39.360
+misos or swarm. And they're
+wondering how all these things
 
 460
-00:25:50.770 --> 00:25:54.670
-to call things a try,
-try Googling for reason and
+00:21:39.660 --> 00:21:42.750
+plug into each other and,
+and whether the layer cake
 
 461
-00:25:54.670 --> 00:25:57.670
-finding the programming language called
-reason and not be literally
+00:21:42.840 --> 00:21:44.970
+that they would be choosing
+as a company would be
 
 462
-00:25:57.670 --> 00:26:00.790
-everything else in the planet
-called reason, but it's an
+00:21:44.970 --> 00:21:47.580
+the right layer cake. And
+then of course the bottom
 
 463
-00:26:00.790 --> 00:26:03.190
-interface to Oak camel, right?
-It's a dialect kind of
+00:21:47.580 --> 00:21:49.350
+layer of the cake would
+be the cloud that they,
 
 464
-00:26:03.190 --> 00:26:07.420
-ML language, but is this
-another, what is this? This
+00:21:49.590 --> 00:21:51.900
+that they pick that they
+put the thing on. And
 
 465
-00:26:07.430 --> 00:26:10.690
-is another old camel. That's
-a good question. I think
+00:21:51.900 --> 00:21:54.180
+in the past, you know,
+cross cloud has been kind
 
 466
-00:26:10.690 --> 00:26:13.120
-it's a lot of it
-is to be determined. It's
+00:21:54.180 --> 00:21:56.520
+of a myth. It hasn't
+like there's always been vendor
 
 467
-00:26:13.330 --> 00:26:16.180
-a new language I think
-is how it's being marketed,
+00:21:56.520 --> 00:21:58.980
+lock in at some point,
+but do you think containers
 
 468
-00:26:17.380 --> 00:26:21.250
-which is Oak Hamill. So
-it's, you know, it's got
+00:21:58.980 --> 00:22:03.750
+could allow us to really
+have a cloud portability? That's
 
 469
-00:26:21.250 --> 00:26:25.210
-the type system it's got
-all that. Goodness. But the
+00:22:03.750 --> 00:22:06.000
+my big hope. And when
+I go to conferences and
 
 470
-00:26:25.210 --> 00:26:28.630
-syntax is really just all
-it's changed, which a lot
+00:22:06.000 --> 00:22:08.190
+I'm talking to folks and
+since I work at Google
 
 471
-00:26:28.630 --> 00:26:33.040
-of people have been bemoaning
-a bit in the <inaudible>
+00:22:08.190 --> 00:22:10.380
+and I'm an advocate for
+Google cloud, I'm talking to
 
 472
-00:26:33.060 --> 00:26:36.670
-community. I mean, there are
-warts in Okemos syntax, but
+00:22:10.380 --> 00:22:13.170
+folks about Google cloud and
+very few of the big
 
 473
-00:26:36.820 --> 00:26:40.060
-I wouldn't say that the
-syntax is the most painful
+00:22:13.170 --> 00:22:15.690
+to medium sized companies. I've
+been talking to really want
 
 474
-00:26:40.060 --> 00:26:42.220
-part of a camel, like
-far from it, in my
+00:22:15.690 --> 00:22:17.910
+to stick with one cloud.
+And they're like, well, how
 
 475
-00:26:42.220 --> 00:26:45.300
-opinion. But I'm, I do
-think it's a noble task
+00:22:17.910 --> 00:22:20.670
+can we, how can we
+do this so that, you
 
 476
-00:26:45.300 --> 00:26:47.910
-to try to draw more
-people into a camel and
+00:22:20.670 --> 00:22:22.980
+know, on the off chance
+that there's a massive outage
 
 477
-00:26:47.910 --> 00:26:52.080
-remove any boundaries to getting
-started. So if that's what
+00:22:23.010 --> 00:22:28.800
+or, you know, stuff happens,
+Intercontinental fiber cables get eaten
 
 478
-00:26:52.080 --> 00:26:55.130
-the goal is, then like
-I'm all for it. Yeah.
+00:22:28.800 --> 00:22:30.930
+by it and get bitten,
+getting apart by sharks and
 
 479
-00:26:55.160 --> 00:26:57.860
-It's interesting. You know, this
-may be completely ignorant thing
+00:22:30.930 --> 00:22:33.840
+stuff, right? Lightning storms happen,
+how can we make it
 
 480
-00:26:57.860 --> 00:26:59.330
-to say. And I hope
-that people who are listening
+00:22:33.840 --> 00:22:37.320
+so that we can stay
+up? Even if this happens
 
 481
-00:26:59.330 --> 00:27:01.760
-will email me and say,
-you're ignorant, not you me,
+00:22:37.320 --> 00:22:38.940
+in one of our vendors
+go down. I mean, every
 
 482
-00:27:02.900 --> 00:27:07.040
-but, Well also email me
-if I'm accurate, I will
+00:22:38.940 --> 00:22:41.760
+major cloud provider has had
+at least a regional outage
 
 483
-00:27:07.040 --> 00:27:10.250
-forward all of my emails
-to you. So, you know,
+00:22:41.790 --> 00:22:44.340
+that people in the industry
+I've heard about. And the
 
 484
-00:27:10.310 --> 00:27:14.240
-people like JavaScript, but JavaScript
-has some problems. So then
+00:22:44.340 --> 00:22:46.980
+nice thing about containers is
+that as long as you
 
 485
-00:27:14.240 --> 00:27:16.850
-someone goes and makes, you
-know, coffee script or even
+00:22:46.980 --> 00:22:50.190
+can get Docker or whatever,
+your container runner is on
 
 486
-00:27:16.850 --> 00:27:20.630
-more dramatically TypeScript. And then
-you say, Oh, well you
+00:22:50.580 --> 00:22:53.370
+some version of Linux that
+supports it, you can move
 
 487
-00:27:20.630 --> 00:27:23.930
-can have, you know, JavaScript
-files are TypeScript. And also
+00:22:53.370 --> 00:22:55.080
+your containers anywhere and you
+can just pick them up
 
 488
-00:27:23.930 --> 00:27:27.470
-you can have TypeScript files.
-It seems like reason is
+00:22:55.080 --> 00:22:58.380
+wholesale. That doesn't deal with
+the data piece. If you're
 
 489
-00:27:27.470 --> 00:27:28.940
-like a way of saying,
-well, here's another way of
+00:22:58.440 --> 00:23:01.080
+writing to your cloud providers,
+specific storage, but most of
 
 490
-00:27:28.940 --> 00:27:31.850
-thinking about, Oh, camel and
-the old camel build, you
+00:23:01.080 --> 00:23:02.610
+the cloud providers I've talked
+to and I've been on
 
 491
-00:27:31.850 --> 00:27:34.310
-know, we're going to replace
-that. Okay. Mobility gets replaced
+00:23:02.610 --> 00:23:06.780
+panels with folks from Microsoft
+and AWS, they're all like,
 
 492
-00:27:34.310 --> 00:27:36.770
-with this thing called rebuild.
-So now you can build
+00:23:06.780 --> 00:23:08.310
+no, we, we want to
+make it so that you
 
 493
-00:27:36.770 --> 00:27:39.650
-reason files and Oak Hamill
-files. So it seems like
+00:23:08.310 --> 00:23:10.500
+can move because competition is
+good for us in this
 
 494
-00:27:39.650 --> 00:27:42.590
-to me, ignorantly, you know,
-TypeScript is to JavaScript as
+00:23:10.500 --> 00:23:13.650
+space. And I really believe
+that's true. And the nice
 
 495
-00:27:42.590 --> 00:27:44.840
-reason as to Oak camel.
-It's almost like a rapper,
+00:23:13.650 --> 00:23:15.900
+thing about containers though, is
+that unlike some of the
 
 496
-00:27:45.080 --> 00:27:47.960
-but it's compatible and it's
-friendly. And let's just see
+00:23:15.900 --> 00:23:17.970
+platform, as a service stuff,
+where you get locked into
 
 497
-00:27:47.960 --> 00:27:51.200
-where this takes us. Well,
-I think replacing old camel
+00:23:17.970 --> 00:23:20.370
+a specific runtime and a
+specific set of tools that
 
 498
-00:27:51.200 --> 00:27:54.530
-build is very noble. The
-building of camel is a
+00:23:20.370 --> 00:23:24.060
+a provider might support, if
+you, if you can do
 
 499
-00:27:54.530 --> 00:27:58.340
-hundred percent the worst part
-of Oak camel, no question.
+00:23:24.060 --> 00:23:26.010
+the upfront effort and it
+is a little more effort
 
 500
-00:27:58.850 --> 00:28:04.280
-It's very difficult. And I'm
-constantly searching man pages, documentation.
+00:23:26.010 --> 00:23:28.050
+than just deploying to something,
+that's a platform as a
 
 501
-00:28:04.550 --> 00:28:06.470
-I mean, pretty much every
-project I have to keep
+00:23:28.050 --> 00:23:30.030
+service where you're just like,
+here's my get repo go.
 
 502
-00:28:06.470 --> 00:28:08.600
-it open. It's something that's
-still really hard for me.
+00:23:31.530 --> 00:23:33.720
+If you can do the
+upfront effort, it gives you
 
 503
-00:28:09.740 --> 00:28:12.110
-Yeah. Why is it just
-like install old camel and
+00:23:33.720 --> 00:23:35.910
+more portability. I can take
+the same containers that I
 
 504
-00:28:12.110 --> 00:28:16.190
-type do it, and then
-it works. It's confusing. Like
+00:23:35.910 --> 00:23:38.820
+ran on Google container engine.
+I can run them on
 
 505
-00:28:16.190 --> 00:28:18.500
-how you set up your
-interface, files, how you like
+00:23:38.820 --> 00:23:41.820
+hardware that I have physical
+hardware that I've bought. And
 
 506
-00:28:18.500 --> 00:28:22.340
-link with like shared libraries,
-how you make libraries very
+00:23:41.820 --> 00:23:43.860
+that's what a lot of
+folks that I've been talking
 
 507
-00:28:22.340 --> 00:28:25.430
-complicated. There's a couple tools
-that make it better. The
+00:23:43.860 --> 00:23:47.120
+to are doing. They need,
+they, they're still trying to
 
 508
-00:28:25.430 --> 00:28:28.130
-other, the other thing that's
-difficult is there's the state
+00:23:47.120 --> 00:23:49.040
+convince their upper level management
+that the cloud is a
 
 509
-00:28:28.130 --> 00:28:31.280
-of the build tools is
-extremely fragmented. You know, there's
+00:23:49.040 --> 00:23:51.710
+good idea, but they want
+to be prepared for it.
 
 510
-00:28:31.280 --> 00:28:34.220
-like 20 and there's no
-consensus on what's the best
+00:23:51.710 --> 00:23:54.170
+So they're starting out by
+getting all their stuff internally,
 
 511
-00:28:34.220 --> 00:28:37.820
-one at least, you know,
-in my limited view, I'm
+00:23:54.170 --> 00:23:57.590
+containerized, partly because it lets
+them use their limited hardware
 
 512
-00:28:37.820 --> 00:28:41.240
-sure I can already, like,
-I can feel the Twitter
+00:23:57.590 --> 00:24:00.380
+resources better. They can run
+multiple apps on a VM
 
 513
-00:28:41.240 --> 00:28:44.960
-DMS. Like I can feel
-them coming, but yeah, there's
+00:24:00.380 --> 00:24:02.840
+in a ways that they
+don't collide. But also it
 
 514
-00:28:44.990 --> 00:28:47.420
-a, yeah. I mean, there's
-no real consensus. I would
+00:24:02.840 --> 00:24:04.460
+means that when it's time
+to move to the cloud
 
 515
-00:28:47.420 --> 00:28:50.030
-say that another tip to
-people who are just beginning
+00:24:04.460 --> 00:24:06.170
+or when they have that
+really good day or they
 
 516
-00:28:50.420 --> 00:28:53.780
-really look at Utah, which
-is the top level interpreter
+00:24:06.170 --> 00:24:10.190
+go viral, they can add
+capacity quickly because they have
 
 517
-00:28:54.050 --> 00:29:00.350
-just in the beginning, just
-yes, you top and do
+00:24:10.190 --> 00:24:12.050
+this image that they can
+deploy and start up in
 
 518
-00:29:00.350 --> 00:29:06.260
-that because it'll make your
-life a lot better. And,
+00:24:12.050 --> 00:24:15.590
+a couple of minutes, it's
+like a Kubernetes cluster running
 
 519
-00:29:06.440 --> 00:29:08.540
-and then look at a
-waste, a waste. This is
+00:24:15.590 --> 00:24:17.540
+rails. I can get the
+whole thing up and running,
 
 520
-00:29:08.540 --> 00:29:12.110
-a, basically it generates a,
-you know, cross platform make
+00:24:17.930 --> 00:24:20.930
+including downloading the images from
+Docker hub in less than
 
 521
-00:29:12.110 --> 00:29:15.500
-files, I believe. And anyway,
-that's got a quick start
+00:24:20.930 --> 00:24:23.900
+five minutes. And that's awesome
+compared to how long some
 
 522
-00:29:15.500 --> 00:29:17.960
-functionality, if you just want
-to set up a project
+00:24:23.900 --> 00:24:26.570
+of my deployments took with
+tools like chef and puppet,
 
 523
-00:29:17.960 --> 00:29:21.080
-and just get it to
-work, you know, I embarrassingly
+00:24:26.570 --> 00:24:28.490
+where I was having to
+do multiple passes to get
 
 524
-00:29:21.080 --> 00:29:24.830
-use make files. I mean,
-there's probably, I'm sure I'm
+00:24:28.490 --> 00:24:31.660
+all of the environment variables
+and everything set correctly. Right.
 
 525
-00:29:24.830 --> 00:29:26.810
-going to get again. I
-can feel the DMS. I'm
+00:24:31.690 --> 00:24:33.370
+And that's something that people
+almost need to see to
 
 526
-00:29:26.810 --> 00:29:30.050
-sure. I'm sure there's something
-better, but that's what I'm
+00:24:33.370 --> 00:24:35.950
+believe. Yeah, there's a, there's
+a great video done by
 
 527
-00:29:30.050 --> 00:29:33.980
-using right now to build
-my projects. Interesting. I would,
+00:24:35.950 --> 00:24:40.360
+one of my coworkers, Brian Dorsey,
+where he had one of
 
 528
-00:29:34.160 --> 00:29:35.990
-somehow I would have expected
-it just to be this
+00:24:40.360 --> 00:24:44.800
+the lead developers on Kubernetes
+timed, making a latte versus
 
 529
-00:29:35.990 --> 00:29:38.900
-like joy. Like I've heard
-everything about the programming language
+00:24:44.800 --> 00:24:47.590
+starting up a Kubernetes cluster.
+And it was, it was
 
 530
-00:29:38.900 --> 00:29:41.950
-and the environment to be
-joyous. And then it's like,
+00:24:47.590 --> 00:24:49.420
+kind of ridiculous, but it
+also pointed it out. And
 
 531
-00:29:41.950 --> 00:29:43.720
-and then you got to
-build a thing and it
+00:24:49.420 --> 00:24:51.280
+one of the demos I
+like to do with containers
 
 532
-00:29:43.720 --> 00:29:46.240
-sounds like, you know, eventually
-you hit, you know, the
+00:24:51.280 --> 00:24:53.560
+is I like to kill
+one of the VMs that
 
 533
-00:29:46.240 --> 00:29:49.540
-abstraction isn't perfect anymore. And
-then reality hits in and
+00:24:53.560 --> 00:24:55.480
+I'm using to run my
+set of containers and then
 
 534
-00:29:49.540 --> 00:29:52.410
-building stuff, You know, I'm
-sure there are people like,
+00:24:55.480 --> 00:24:58.150
+watch the scheduler, move them
+around so that I don't
 
 535
-00:29:52.440 --> 00:29:55.200
-I remember, I don't know,
-camel meetup, some guy who
+00:24:58.480 --> 00:25:02.920
+lose any capacity. And you
+know, you hope that your
 
 536
-00:29:55.200 --> 00:29:57.300
-had been doing dev ops
-for like, you know, 30
+00:25:02.920 --> 00:25:05.380
+VM doesn't die, but sometimes
+they do. You hope that
 
 537
-00:29:57.300 --> 00:30:00.990
-years, I don't know before
-the internet, before anybody like
+00:25:05.380 --> 00:25:07.840
+your hard drive doesn't die,
+but sometimes they do. And
 
 538
-00:30:01.020 --> 00:30:07.530
-before. And he was like,
-well, you know, I don't
+00:25:08.440 --> 00:25:10.690
+seeing that the whole thing
+can be reconfigured in less
 
 539
-00:30:07.530 --> 00:30:10.170
-really know what you guys
-are expecting. You know, this
+00:25:10.690 --> 00:25:13.750
+than two seconds. And it
+really is that fast is
 
 540
-00:30:10.170 --> 00:30:12.660
-is not really that bad,
-blah, blah, blah, blah, blah.
+00:25:13.750 --> 00:25:16.480
+just amazing because coming from
+a world where I did
 
 541
-00:30:12.840 --> 00:30:16.230
-But inevitably, I mean, I've
-just, just peripherally on the
+00:25:16.690 --> 00:25:20.320
+to manually, I couldn't recover
+from it. I couldn't recover
 
 542
-00:30:16.230 --> 00:30:18.900
-old camel channel. And Freenode,
-that's like the question of
+00:25:20.320 --> 00:25:23.440
+from a disc failure that
+quickly. Like I remember getting
 
 543
-00:30:18.900 --> 00:30:20.580
-the day. I mean, there
-must be at least five
+00:25:23.440 --> 00:25:26.980
+in the car with the
+ops manager, my boss and
 
 544
-00:30:20.580 --> 00:30:22.830
-questions a day about how
-to build a camel. So
+00:25:26.980 --> 00:25:30.220
+driving down to the data
+center South of Seattle and
 
 545
-00:30:23.490 --> 00:30:25.740
-yeah. So I think it's,
-you know, I think it's
+00:25:30.220 --> 00:25:33.400
+going in and dealing with
+a machine that had gone
 
 546
-00:30:25.740 --> 00:30:28.170
-going to, so that's why
-I'm also excited for reason
+00:25:33.400 --> 00:25:35.500
+bad because the data center
+had had a fire. And
 
 547
-00:30:28.170 --> 00:30:32.220
-is I just want easier
-ways to do that. So,
+00:25:35.500 --> 00:25:37.840
+like that was like, it
+was a big deal. We
 
 548
-00:30:32.430 --> 00:30:35.340
-you know, that doesn't have
-me combing documentation, but I
+00:25:37.840 --> 00:25:41.410
+were offline for three hours.
+And if we had a
 
 549
-00:30:35.340 --> 00:30:37.020
-think one day you just
-wake up and you know,
+00:25:41.410 --> 00:25:44.500
+been in the cloud and
+B been using container-based technology,
 
 550
-00:30:37.020 --> 00:30:38.940
-all the things and then
-this is no longer a
+00:25:45.520 --> 00:25:47.320
+it wouldn't have been that
+bad. We may have lost
 
 551
-00:30:38.940 --> 00:30:42.150
-problem. So once I get
-there, maybe the, but that
+00:25:47.320 --> 00:25:49.570
+a little bit of time,
+data, database replication to get
 
 552
-00:30:42.150 --> 00:30:44.490
-really is the only ugly
-part for me. I mean,
+00:25:49.570 --> 00:25:51.130
+to a different data center.
+But even if we had
 
 553
-00:30:44.490 --> 00:30:51.960
-everything else is fabulous. It's
-just that really? Yeah. So
+00:25:51.130 --> 00:25:53.500
+set up a proper disaster
+recovery with a replica, with
 
 554
-00:30:51.960 --> 00:30:54.120
-are you, what do you
-run it on? I'm looking
+00:25:53.500 --> 00:25:56.530
+a replica at another data
+center, which is considered best
 
 555
-00:30:54.120 --> 00:30:56.910
-on their website and I
-see all kinds of Linux
+00:25:56.530 --> 00:25:59.800
+practice at this point, we
+wouldn't have lost hardly any
 
 556
-00:30:56.910 --> 00:31:01.320
-flavors mentioned. I see, you
-know, Mac mentioned, but I
+00:25:59.800 --> 00:26:03.090
+time at all. And that's
+the idea that, that that
 
 557
-00:31:01.320 --> 00:31:04.650
-also see a windows gets
-kind of a yeah. And
+00:26:03.100 --> 00:26:05.560
+is the AI that's possible
+and be unlike five years
 
 558
-00:31:04.650 --> 00:31:08.550
-also windows, a bit of
-a comment and there's different
+00:26:05.560 --> 00:26:07.750
+ago. And that seemed really
+hard and required a lot
 
 559
-00:31:08.760 --> 00:31:12.150
-ports and kind of, it
-doesn't seem like it's like
+00:26:07.750 --> 00:26:12.760
+of just duplicating effort, having
+hot, hot swappable servers on
 
 560
-00:31:12.150 --> 00:31:14.760
-super Epic on windows. What's,
-what's the, what's the story.
+00:26:12.760 --> 00:26:16.030
+that. You're not using, you
+don't have to do that
 
 561
-00:31:14.760 --> 00:31:16.920
-And what's the best, the
-best operating system to try
+00:26:16.030 --> 00:26:17.980
+anymore. If you have the
+container image up, getting it
 
 562
-00:31:16.920 --> 00:31:19.560
-this on. You know, I
-don't know. I mean, Mac
+00:26:17.980 --> 00:26:21.310
+up and running is, you
+know, 10 minute process in
 
 563
-00:31:19.560 --> 00:31:23.310
-worked really great for me
-OSX, but I use fedora.
+00:26:21.310 --> 00:26:24.100
+different data center for your
+provider, possibly even less. Right.
 
 564
-00:31:23.370 --> 00:31:27.750
-So I'm the red link
-Caesar, but you know, anything
+00:26:24.880 --> 00:26:27.070
+Yeah. And people who are
+listening might be like, some
 
 565
-00:31:27.750 --> 00:31:31.350
-Unix is going to be
-great windows. I know the
+00:26:27.070 --> 00:26:28.870
+may be nodding and some,
+some may be going now
 
 566
-00:31:31.350 --> 00:31:34.320
-situation is a bit precarious.
-I'm not, I'm not really
+00:26:28.890 --> 00:26:32.230
+that's Oh, that's exaggeration. But
+it really isn't because once
 
 567
-00:31:34.320 --> 00:31:39.000
-sure. I've never tried to
-run on windows. So I
+00:26:32.230 --> 00:26:34.900
+you, you know, all of
+the, all the Lego pieces
 
 568
-00:31:39.000 --> 00:31:42.750
-don't know the answer. Well,
-I am, as we are
+00:26:34.900 --> 00:26:37.240
+are here now, we've got,
+you know, durable storage that
 
 569
-00:31:42.750 --> 00:31:46.320
-sitting here talking, installing it,
-using a wound to on
+00:26:37.240 --> 00:26:39.160
+we can rely on. And
+we, That's just the right
 
 570
-00:31:46.320 --> 00:31:48.930
-windows and see if that
-will work. So I will
+00:26:39.160 --> 00:26:42.250
+layers of abstraction. And you
+know, whether you do decide
 
 571
-00:31:48.930 --> 00:31:51.570
-have a wound to running
-on windows and see if
+00:26:42.250 --> 00:26:45.050
+to pick, you know, Docker
+swarm and compose, or whether
 
 572
-00:31:51.570 --> 00:31:53.760
-I can get something to
-go on. It's very interesting
+00:26:45.050 --> 00:26:47.550
+you decide to use that
+patchy mezzos or whatever, whatever
 
 573
-00:31:53.760 --> 00:31:56.340
-though. There seem to be
-also some different ways to
+00:26:47.550 --> 00:26:51.510
+thing that you pick, it
+does appear that the cloud
 
 574
-00:31:56.340 --> 00:31:59.100
-do it. It looks like
-it does run. Yeah. So
+00:26:51.510 --> 00:26:54.840
+vendors are allowing for choice.
+Like one of the teams
 
 575
-00:31:59.100 --> 00:32:04.260
-I just ran, Oh, Pam
-config, ENV, and what's where
+00:26:54.840 --> 00:26:56.520
+that I worked on as
+a PA was on the
 
 576
-00:32:04.260 --> 00:32:05.820
-are some places I would
-go and learn about this?
+00:26:56.520 --> 00:26:59.880
+Azure container service. And, you
+know, you might go, no,
 
 577
-00:32:05.820 --> 00:32:08.580
-What's some good code examples
-to play with. That's great.
+00:26:59.880 --> 00:27:01.380
+it's going to be Microsoft
+Azure and they're going to
 
 578
-00:32:08.580 --> 00:32:11.460
-So I've got some stuff
-on my GitHub. Let's see.
+00:27:01.380 --> 00:27:03.960
+make you use their stuff,
+but it uses swarm and
 
 579
-00:32:11.460 --> 00:32:15.570
-I've got some, I think
-there's a repository on my
+00:27:03.960 --> 00:27:05.400
+it uses misos and you
+can pick the one that
 
 580
-00:32:15.570 --> 00:32:19.410
-GitHub called example, camel example,
-dash of camels. So that's
+00:27:05.400 --> 00:27:08.490
+makes you happy. So then
+theoretically, you could run a
 
 581
-00:32:21.720 --> 00:32:28.980
-yeah. So it's good hub.com/wired
-sister. That's wired as in
+00:27:08.490 --> 00:27:11.100
+container on Google cloud. You
+could move it to AWS,
 
 582
-00:32:29.490 --> 00:32:33.690
-cables and then sister as
-in your sister and Fugler
+00:27:11.100 --> 00:27:12.900
+you could move it to
+Azure and it would just
 
 583
-00:32:34.260 --> 00:32:38.970
-example, camel. So that's D
-so slash example, dash camel,
+00:27:12.930 --> 00:27:16.710
+behave the same way everywhere.
+And presumably then they compete
 
 584
-00:32:39.560 --> 00:32:42.560
-you get a raw pository
-that me and this other
+00:27:17.040 --> 00:27:20.790
+not based on their, on
+their container. Toolings is that,
 
 585
-00:32:42.560 --> 00:32:47.240
-guy, FX factorial used to
-do presentations. If you click
+00:27:20.790 --> 00:27:22.430
+would it be all of
+us? There was some container
 
 586
-00:32:47.240 --> 00:32:52.850
-the examples directory, maybe click
-the, some odds.ml file. Here's
+00:27:22.430 --> 00:27:25.160
+to Lehman's closed source. Some
+of the, some of the
 
 587
-00:32:52.850 --> 00:32:55.850
-something functions for just summing
-odds. And this is kind
+00:27:25.160 --> 00:27:27.560
+vendors are putting out their
+own container services that are
 
 588
-00:32:55.850 --> 00:32:59.060
-of interesting. Cause you can
-see in the bottom I
+00:27:27.560 --> 00:27:31.610
+close to ours. And even
+Kubernetes, the hosted version has
 
 589
-00:32:59.060 --> 00:33:01.460
-have an imperative solution. So
-that might be, remember we
+00:27:31.610 --> 00:27:34.640
+some closed source components, but
+the base underlying Kubernetes is
 
 590
-00:33:01.460 --> 00:33:04.460
-were talking about mutability. So
-here you see that rep
+00:27:34.640 --> 00:27:38.270
+entirely open source and completely
+developed in the open that's.
 
 591
-00:33:04.460 --> 00:33:09.740
-zero as the counter, right.
-And then that bang counter
+00:27:38.270 --> 00:27:39.830
+One of the big things
+is that all the bugs
 
 592
-00:33:09.740 --> 00:33:13.210
-is sort of D referencing
-that type of idea. So
+00:27:39.830 --> 00:27:42.740
+and everything are tracked in
+the open and it's community-based.
 
 593
-00:33:13.210 --> 00:33:15.310
-I would say that old
-camel is probably of all
+00:27:43.850 --> 00:27:47.300
+And the whole idea is
+that, is that containers seem
 
 594
-00:33:15.310 --> 00:33:17.260
-the languages, the one that
-is least likely to be
+00:27:47.300 --> 00:27:48.980
+like they're a really, really
+good way to solve a
 
 595
-00:33:17.260 --> 00:33:21.520
-explained syntactically on a podcast,
-but you know what I
+00:27:48.980 --> 00:27:51.320
+lot of the problems that
+folks are having. And specifically
 
 596
-00:33:21.520 --> 00:33:26.650
-mean? Totally, totally valid. Yeah.
-I'm like, you know, list
+00:27:51.320 --> 00:27:52.910
+a lot of the problems
+that are preventing folks from
 
 597
-00:33:26.680 --> 00:33:28.690
-like list dot fold, right.
-And I'm like, Oh, that's
+00:27:52.910 --> 00:27:55.700
+adopting the cloud, cause they
+don't want to be locked
 
 598
-00:33:28.690 --> 00:33:30.520
-an Roe thingy. What do
-we call that? You know,
+00:27:55.700 --> 00:27:57.890
+in. And if you know
+that the promise of containers
 
 599
-00:33:31.030 --> 00:33:33.160
-I'm sure that there's like
-a, you know, what do
+00:27:57.890 --> 00:27:59.930
+is, and thus far, I've
+seen it to be true,
 
 600
-00:33:33.160 --> 00:33:36.520
-you call it? Hash rocket
-or super bang or I'm,
+00:28:00.380 --> 00:28:01.940
+that you can package this
+thing up and pick it
 
 601
-00:33:36.550 --> 00:33:41.020
-I'm pretty primitive. I just
-say arrow there's no other
+00:28:01.940 --> 00:28:04.190
+up and take it somewhere
+else. If your provider isn't
 
 602
-00:33:41.680 --> 00:33:45.340
-arrows. I mean, there's, there's
-a left arrow for any
+00:28:04.190 --> 00:28:06.740
+doing what you want, if
+your provider doesn't have a
 
 603
-00:33:45.340 --> 00:33:47.890
-way that doesn't it. I
-know I'm going to put
+00:28:06.740 --> 00:28:09.380
+data center in the region
+that you need, or if,
 
 604
-00:33:47.890 --> 00:33:49.630
-a link to this though
-in the show notes. So
+00:28:09.380 --> 00:28:10.850
+you know, it's just going
+to be cheaper to move
 
 605
-00:33:49.630 --> 00:33:54.070
-then people can, can see
-that. So, and then once
+00:28:10.850 --> 00:28:13.760
+it elsewhere. And I think
+everyone benefits, at least all
 
 606
-00:33:54.070 --> 00:33:55.780
-I've got this down, like,
-do I just say, Oh,
+00:28:13.770 --> 00:28:17.540
+the big cloud providers benefit
+when people have choice, because
 
 607
-00:33:55.780 --> 00:33:57.280
-camel, and the name of
-the file that it's in
+00:28:17.540 --> 00:28:20.480
+it will encourage cloud providers
+to make better tools. And
 
 608
-00:33:57.280 --> 00:33:59.080
-or how do you run
-these things? Yeah. So it's
+00:28:20.480 --> 00:28:23.090
+it will also let folks
+do actually do cross cloud
 
 609
-00:33:59.080 --> 00:34:02.020
-just a, you can use,
-okay, we'll see. Or Kamal
+00:28:23.090 --> 00:28:28.040
+for real, because it just
+seems not unwise for a
 
 610
-00:34:02.020 --> 00:34:04.720
-off. So that's the native
-code is opt and then
+00:28:28.040 --> 00:28:32.120
+really big site with really
+strict uptime requirements to necessarily
 
 611
-00:34:04.720 --> 00:34:09.610
-the bike code is C
-so yeah, just let's see.
+00:28:32.120 --> 00:28:35.480
+put all of their, all
+of their eggs in one
 
 612
-00:34:10.330 --> 00:34:14.710
-Okay. I'm, we'll see, you
-know, and then just your
+00:28:35.480 --> 00:28:37.190
+basket. So to speak. I
+know there are folks doing
 
 613
-00:34:14.710 --> 00:34:17.410
-program and it should go,
-I think just as standard
+00:28:37.190 --> 00:28:38.480
+it, and I know there
+are folks doing it very
 
 614
-00:34:17.410 --> 00:34:20.560
-out, but let's see. But
-the other thing you can
+00:28:38.480 --> 00:28:42.650
+successfully, but I also know
+that if you're not one
 
 615
-00:34:20.560 --> 00:34:23.440
-do, which I think is
-better for people just starting,
+00:28:42.650 --> 00:28:46.430
+of the huge players, it's
+frequently easier to sell your
 
 616
-00:34:23.860 --> 00:34:26.860
-it is Utah and then
-paste in Utah and then
+00:28:46.670 --> 00:28:48.800
+management chain on the cloud.
+If you can sell them
 
 617
-00:34:26.860 --> 00:34:29.500
-you use two semi-colons and
-hit enter, and then it'll
+00:28:48.920 --> 00:28:52.190
+on something that's cross-cloud that
+you can promise to them
 
 618
-00:34:29.500 --> 00:34:32.400
-evaluate whatever you drop in.
-And that's kind of, I
+00:28:52.190 --> 00:28:55.100
+that if one of your
+providers has a bad day,
 
 619
-00:34:32.410 --> 00:34:35.830
-don't know. I prefer redeveloped
-print loops for, Okay. So
+00:28:55.100 --> 00:28:57.980
+you're not going to be
+completely out of luck. And
 
 620
-00:34:35.830 --> 00:34:37.870
-Utah is the rebel and
-that's where I spend my
+00:28:58.010 --> 00:28:59.750
+at least that was my
+experience. We had a lot
 
 621
-00:34:37.870 --> 00:34:40.360
-time. Yeah. And you can
-just open them, install that.
+00:28:59.750 --> 00:29:02.330
+of problems selling folks on
+the cloud, both of the
 
 622
-00:34:41.560 --> 00:34:43.540
-Okay. Very cool. And actually,
-you know, I'm going to
+00:29:02.330 --> 00:29:05.270
+startup I worked at for
+five years and also when
 
 623
-00:34:43.540 --> 00:34:45.340
-just while we're sitting here
-for a second, I just
+00:29:05.270 --> 00:29:08.480
+I was consulting. And once
+we were able to convince
 
 624
-00:34:45.340 --> 00:34:51.700
-say, Oh, Pam install. UCAB
-that says, Oh, just make
+00:29:08.480 --> 00:29:10.970
+them that we would happily
+support across cloud solution or
 
 625
-00:34:51.700 --> 00:34:54.790
-sure that you specify opium
-in it. Oh, Pam Annette.
+00:29:10.970 --> 00:29:14.450
+one provider was the disaster
+recovery for the other. They
 
 626
-00:34:54.850 --> 00:34:59.290
-Yes. Yes, sir. It, it,
-it gives you great help.
+00:29:14.450 --> 00:29:16.460
+were much more willing to
+accept the cloud as opposed
 
 627
-00:34:59.350 --> 00:35:01.600
-It really does. Well. Yeah.
-It seems to be very,
+00:29:16.460 --> 00:29:19.310
+to having to expose, to
+wanting to buy and maintain
 
 628
-00:35:01.630 --> 00:35:03.940
-very clear on, on what
-it's doing. And it tells
+00:29:19.310 --> 00:29:21.440
+their own hardware. And we
+wanted them to be on
 
 629
-00:35:03.940 --> 00:35:06.130
-me it's giving me nice
-instructions and stuff. And then,
+00:29:21.440 --> 00:29:23.480
+the cloud just because it
+made it easier for us
 
 630
-00:35:07.180 --> 00:35:09.730
-and then I'm often doing
-it. Cool. Well, this has
+00:29:23.540 --> 00:29:25.160
+to manage. And it made
+it easier for us to
 
 631
-00:35:09.730 --> 00:35:12.400
-been super educational and we
-can learn about this, of
+00:29:25.160 --> 00:29:29.540
+upgrade systems and debatably. We
+thought it was more cost
 
 632
-00:35:12.400 --> 00:35:16.270
-course, at Oak camel.org. And
-then on your get hub,
+00:29:29.540 --> 00:29:32.120
+effective because it let us
+scale the system down when
 
 633
-00:35:16.450 --> 00:35:18.790
-your get hub name is
-wired sister, and I want
+00:29:32.120 --> 00:29:34.490
+we weren't using it. A
+lot of the products I've
 
 634
-00:35:18.790 --> 00:35:23.260
-to include your example, Oak
-camel stuff up there. And
+00:29:34.490 --> 00:29:38.390
+worked on have very particular
+time-based load curves, being able
 
 635
-00:35:23.260 --> 00:35:26.800
-then the other thing was
-J S underscore of underscore
+00:29:38.390 --> 00:29:42.130
+to dynamically scale really helps
+with cost. So yeah, there's
 
 636
-00:35:26.800 --> 00:35:29.800
-Ocala, JSO, camel. And then
-the other thing we talked
+00:29:42.130 --> 00:29:44.920
+a lot of advantages and
+I really think containers while
 
 637
-00:35:29.800 --> 00:35:33.130
-about was reason from Facebook
-would sound super interesting And,
+00:29:44.920 --> 00:29:47.140
+they're a buzzword. I do
+think that for a lot
 
 638
-00:35:33.150 --> 00:35:37.030
-and last, last, but not
-least if you're using an
+00:29:47.140 --> 00:29:49.960
+of people, they're at least
+worth investigating to see if
 
 639
-00:35:37.140 --> 00:35:40.290
-a, you know, Emacs or
-them or whatever your setup
+00:29:49.960 --> 00:29:53.170
+it might solve some of
+the current pain process pain
 
 640
-00:35:40.290 --> 00:35:44.400
-is, look into Merlin, which
-is a plugin that'll help
+00:29:53.170 --> 00:29:55.360
+prop points in your deployment
+process or in your ops
 
 641
-00:35:44.400 --> 00:35:48.390
-you get a lot of
-really cool type checking stuff.
+00:29:55.360 --> 00:29:59.110
+story. Yeah. I really liked
+the way that it formalizes
 
 642
-00:35:48.750 --> 00:35:52.410
-And that has made my
-life incredibly easy. So that's
+00:29:59.110 --> 00:30:02.440
+responsibilities. Like the part of
+this conversation that is resonated
 
 643
-00:35:52.410 --> 00:35:55.410
-just one other tool I
-would throw out there is
+00:30:02.440 --> 00:30:06.010
+with me the most is
+the, the idea of choice,
 
 644
-00:35:55.410 --> 00:35:58.760
-Merlin. Okay, cool. I will
-send all of that in
+00:30:06.070 --> 00:30:08.950
+but also the idea of
+responsibilities, like what's dev ops
 
 645
-00:35:58.760 --> 00:36:01.670
-the show notes and I
-really appreciate your time. Yeah,
+00:30:09.220 --> 00:30:12.880
+real job. And where's the
+clean bright line between what
 
 646
-00:36:01.670 --> 00:36:04.700
-absolutely. You know, take everything
-I say with a grain
+00:30:12.880 --> 00:30:14.500
+they do and what I
+do as a developer. But
 
 647
-00:36:04.700 --> 00:36:08.720
-of salt, I'm still still
-learning, but okay. What org
+00:30:14.500 --> 00:30:16.570
+then from a container perspective,
+like what's the job of
 
 648
-00:36:08.720 --> 00:36:12.470
-has great stuff. Please feel
-free to ask people on
+00:30:16.570 --> 00:30:19.270
+the operating system. What's what's
+what is the app represent?
 
 649
-00:36:12.470 --> 00:36:17.120
-IRC. They're so nice. They're
-they're not like those, I
+00:30:19.270 --> 00:30:21.670
+How cleanly is it packaged?
+And what's the job of
 
 650
-00:36:17.120 --> 00:36:21.050
-don't know these stereotypical mean
-functional programmers. They're very nice.
+00:30:21.670 --> 00:30:24.520
+the cloud that the thing
+sits on and ultimately who
 
 651
-00:36:22.250 --> 00:36:24.350
-I know what the stereotype
-would be. Maybe like ranger
+00:30:24.520 --> 00:30:27.730
+owns your, who owns your
+uptime, right. You know, you
 
 652
-00:36:24.350 --> 00:36:28.310
-hats and like, you know,
-those strappy sandals or something.
+00:30:27.730 --> 00:30:30.580
+do. And if you want
+to go with a hybrid
 
 653
-00:36:28.340 --> 00:36:31.040
-I don't know, but they're
-not that they're very nice.
+00:30:30.580 --> 00:30:32.620
+cloud where the cloud is
+with another cloud providers or
 
 654
-00:36:31.820 --> 00:36:34.100
-Very cool. Well, thank you
-so much, Gina Marie Miami
+00:30:32.630 --> 00:30:36.190
+backup, that's absolutely your right.
+And you should have a
 
 655
-00:36:34.400 --> 00:36:37.640
-for your time today. Yeah,
-no problem. This has been
+00:30:36.190 --> 00:30:40.000
+technology stack that supports that
+hopefully formalize the mean, my
 
 656
-00:36:37.640 --> 00:36:40.340
-another episode of Hanselminutes and
-we'll see you again next
+00:30:40.000 --> 00:30:42.400
+big hope is that this
+will make everything a little
 
 657
-00:36:40.340 --> 00:36:40.640
-week.
+00:30:42.400 --> 00:30:45.130
+cleaner and a little easier
+and a lot less messy
+
+658
+00:30:45.280 --> 00:30:48.100
+in between the steps of
+making something cool and sharing
+
+659
+00:30:48.100 --> 00:30:51.040
+that something cool with the
+rest of the world. And
+
+660
+00:30:51.100 --> 00:30:52.960
+we'll see, I mean, this
+is still new days for
+
+661
+00:30:52.960 --> 00:30:55.180
+a lot of this technology.
+I mean, Kubernetes only went
+
+662
+00:30:55.180 --> 00:30:58.840
+one last fall, I believe.
+And Docker swarm and compose
+
+663
+00:30:59.020 --> 00:31:01.960
+that store, that all that
+stuff's under active development, the
+
+664
+00:31:01.970 --> 00:31:04.720
+container services from other cloud
+providers are under active development.
+
+665
+00:31:05.290 --> 00:31:06.970
+And I'm guessing in the
+next six months to a
+
+666
+00:31:06.970 --> 00:31:10.240
+year, maybe longer, I'm not
+a prognosticator and we'll start
+
+667
+00:31:10.240 --> 00:31:12.040
+it. We'll be starting to
+see some best practices in
+
+668
+00:31:12.040 --> 00:31:14.020
+this area. And I definitely
+have some opinions and I've
+
+669
+00:31:14.020 --> 00:31:16.570
+shared some of them, but
+I'm also just curious to
+
+670
+00:31:16.570 --> 00:31:18.580
+see what people do with
+this, what people do with
+
+671
+00:31:18.580 --> 00:31:21.250
+this technology and how it
+helps them make cool things
+
+672
+00:31:21.250 --> 00:31:24.190
+faster. Yeah. It definitely seems
+like it's here to stay.
+
+673
+00:31:24.190 --> 00:31:27.580
+It's not just buzzwords. Yeah.
+I definitely agree. Cool. Well,
+
+674
+00:31:27.580 --> 00:31:29.650
+thanks so much for chatting
+with me today. This was
+
+675
+00:31:29.650 --> 00:31:32.800
+lovely. Thank you. This has
+been another episode of Hanselminutes
+
+676
+00:31:32.830 --> 00:31:41.670
+and we'll see you again
+next week. <inaudible>.
 
